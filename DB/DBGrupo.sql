@@ -99,29 +99,6 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
 
-CREATE TABLE IF NOT EXISTS `@grupo@`.`articulos_circumstancias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_articulo` int(11) DEFAULT NULL,
-  `id_familia` int(11) DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL,
-  `id_familia_cliente` int(11) DEFAULT NULL,
-  `id_subfamilia_cliente` int(11) DEFAULT NULL,
-  `id_proveedor` int(11) DEFAULT NULL,
-  `id_agente` int(11) DEFAULT NULL,
-  `importe_porc_aumento` double DEFAULT '0',
-  `importe_moneda_aumento` double DEFAULT '0',
-  `importe_fijo` double DEFAULT '0',
-  `dto_aumento_fijo` double DEFAULT '0',
-  `dto_aumento_porc` double DEFAULT '0',
-  `dto_fijo` double DEFAULT '0',
-  `fecha_inicio` date DEFAULT NULL,
-  `fecha_final` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`articulos_prov_frec` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `id_articulo` INT(11) NULL DEFAULT NULL ,
@@ -140,11 +117,12 @@ DEFAULT CHARACTER SET = utf8;
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`avisos` (
   `id` INT(11) NOT NULL ,
   `id_tipoaviso` INT(11) NULL DEFAULT NULL ,
-  `id_origen` INT(11) NULL DEFAULT NULL ,
-  `id_usuario` INT(11) NULL DEFAULT NULL ,
+  `id_usuario_origen` INT(11) NULL DEFAULT NULL ,
+  `id_usuario_destino` INT(11) NULL DEFAULT NULL ,
   `aviso` TEXT NULL DEFAULT NULL ,
   `fecha_hora_aviso` DATETIME NULL DEFAULT NULL ,
-  `completado` TINYINT(1) NULL DEFAULT NULL ,
+  `completado` TINYINT(1) NULL DEFAULT '0' ,
+  `id_empresa` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`)  )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

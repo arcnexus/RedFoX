@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>842</width>
-    <height>484</height>
+    <width>1110</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,24 +29,6 @@
      <property name="icon">
       <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="QTableView" name="tabla">
-     <property name="styleSheet">
-      <string notr="true">alternate-background-color: rgb(255, 255, 255);
-font: 8pt &quot;Sans&quot;;
-background-color: rgb(248, 245, 194);</string>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
      </property>
     </widget>
    </item>
@@ -83,6 +65,31 @@ background-color: rgb(248, 245, 194);</string>
      </property>
     </widget>
    </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="btnEditar">
+     <property name="text">
+      <string>Editar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QPushButton" name="btnDeshacer">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Deshacer</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="6">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
@@ -92,80 +99,55 @@ background-color: rgb(248, 245, 194);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="4" column="6">
+      <item row="0" column="0" colspan="7">
+       <widget class="QFrame" name="frame_4">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_18">
+           <property name="text">
+            <string>Descripción:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="txtDescripcion"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="5" column="6">
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>93</width>
+          <width>40</width>
           <height>20</height>
          </size>
         </property>
        </spacer>
       </item>
-      <item row="4" column="4">
-       <widget class="QLabel" name="label_11">
+      <item row="8" column="1">
+       <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Variación:</string>
+         <string>Importe Fijo:</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>Variación %:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QLineEdit" name="txt_variacion_porc">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLineEdit" name="txt_pvp_fijo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Dto Fijo:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="5">
-       <widget class="QLineEdit" name="txt_dto_fijo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
+      <item row="9" column="0">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -178,150 +160,195 @@ background-color: rgb(248, 245, 194);</string>
         </property>
        </spacer>
       </item>
-      <item row="1" column="0" colspan="7">
-       <widget class="QFrame" name="frame_3">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+      <item row="5" column="5">
+       <widget class="QDateEdit" name="txtHasta">
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Cliente:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="txt_codigo_cliente">
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLineEdit" name="txt_nombre_cliente">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_3">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Proveedor:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="txt_codigo_proveedor">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="txt_nombre_proveedor">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_4">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Agente:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QLineEdit" name="txt_codigo_agente">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QLineEdit" name="txt_nombre_agente">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QRadioButton" name="radCliente">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QRadioButton" name="radProveedor">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QRadioButton" name="radAgente">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QDateEdit" name="txtDesde">
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
        </widget>
       </item>
       <item row="5" column="4">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Hasta:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4" colspan="2">
+       <widget class="QLabel" name="label_16">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Variaciones por descuentos</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="5">
+       <widget class="QLineEdit" name="txt_dto_aumento_fijo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="2">
+       <widget class="QLineEdit" name="txt_importe_moneda_aumento">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1" colspan="2">
+       <widget class="QLabel" name="label_15">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Variaciones sobre el PVP</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLineEdit" name="txt_importe_fijo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Variación %:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5">
+       <widget class="QLineEdit" name="txt_dto_fijo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="2">
+       <widget class="QLineEdit" name="txt_importe_porc_aumento">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="4">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Dto Fijo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Variación:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Válido desde:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="4">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Variación:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="3">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>93</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="10" column="4">
        <widget class="QLabel" name="label_10">
         <property name="text">
          <string>Variación %:</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="5">
-       <widget class="QLineEdit" name="txt_variacion_porc_dto">
+      <item row="10" column="5">
+       <widget class="QLineEdit" name="txt_dto_aumento_porc">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -333,20 +360,27 @@ background-color: rgb(248, 245, 194);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="5">
-       <widget class="QLineEdit" name="txt_variacion_dto">
+      <item row="4" column="1" colspan="5">
+       <widget class="QLabel" name="label_17">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
-         <string>0,00</string>
+         <string>Periodo de validez</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="7">
+      <item row="1" column="0" colspan="7">
        <widget class="QFrame" name="frame_2">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -442,6 +476,9 @@ background-color: rgb(248, 245, 194);</string>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
           </widget>
          </item>
          <item row="2" column="1">
@@ -465,111 +502,230 @@ background-color: rgb(248, 245, 194);</string>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Importe Fijo:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Variación:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="txt_variacion_pvp">
+      <item row="0" column="7" rowspan="11">
+       <widget class="QTableView" name="tabla">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">alternate-background-color: rgb(255, 255, 255);
+font: 8pt &quot;Sans&quot;;
+background-color: rgb(248, 245, 194);</string>
         </property>
-        <property name="text">
-         <string>0,00</string>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
         </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
        </widget>
       </item>
-      <item row="4" column="3">
-       <spacer name="horizontalSpacer_2">
+      <item row="3" column="1">
+       <spacer name="verticalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Vertical</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>93</width>
-          <height>20</height>
+          <width>20</width>
+          <height>40</height>
          </size>
         </property>
        </spacer>
       </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_13">
+      <item row="2" column="0" colspan="7">
+       <widget class="QFrame" name="frame_3">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Cliente:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="txt_codigo_cliente">
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="txt_nombre_cliente">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Proveedor:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="txt_codigo_proveedor">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="txt_nombre_proveedor">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_4">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Agente:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QLineEdit" name="txt_codigo_agente">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QLineEdit" name="txt_nombre_agente">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="radCliente">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="radProveedor">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="radAgente">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="6" column="1" colspan="2">
+       <widget class="QPushButton" name="btnGenerarAvisoInicio">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Generar un aviso para cuando la oferta entre en vigor (Puede ser a un usuario en concreto o a todos ellos.</string>
+        </property>
         <property name="text">
-         <string>Valido desde:</string>
+         <string>Generar aviso.</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/aviso_orange.png</normaloff>:/Icons/PNG/aviso_orange.png</iconset>
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QDateEdit" name="txtDesde">
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <item row="6" column="4" colspan="2">
+       <widget class="QPushButton" name="btnGenerarAvisoFin">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
-        <property name="displayFormat">
-         <string>dd/MM/yyyy</string>
+        <property name="toolTip">
+         <string>Generar un aviso para cuando la oferta  finalice (Puede ser a un usuario en concreto o a todos ellos.</string>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLabel" name="label_14">
         <property name="text">
-         <string>Hasta:</string>
+         <string>Generar aviso.</string>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="5">
-       <widget class="QDateEdit" name="txtHasta">
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="displayFormat">
-         <string>dd/MM/yyyy</string>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/aviso_orange.png</normaloff>:/Icons/PNG/aviso_orange.png</iconset>
         </property>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="btnEditar">
-     <property name="text">
-      <string>Editar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="3">
-    <widget class="QPushButton" name="btnDeshacer">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Deshacer</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-     </property>
     </widget>
    </item>
   </layout>
@@ -593,13 +749,12 @@ background-color: rgb(248, 245, 194);</string>
   <tabstop>txt_nombre_agente</tabstop>
   <tabstop>txtDesde</tabstop>
   <tabstop>txtHasta</tabstop>
-  <tabstop>txt_pvp_fijo</tabstop>
-  <tabstop>txt_variacion_pvp</tabstop>
-  <tabstop>txt_variacion_porc</tabstop>
+  <tabstop>txt_importe_fijo</tabstop>
+  <tabstop>txt_importe_moneda_aumento</tabstop>
+  <tabstop>txt_importe_porc_aumento</tabstop>
   <tabstop>txt_dto_fijo</tabstop>
-  <tabstop>txt_variacion_dto</tabstop>
-  <tabstop>txt_variacion_porc_dto</tabstop>
-  <tabstop>tabla</tabstop>
+  <tabstop>txt_dto_aumento_fijo</tabstop>
+  <tabstop>txt_dto_aumento_porc</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
@@ -618,8 +773,8 @@ background-color: rgb(248, 245, 194);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>682</x>
-     <y>461</y>
+     <x>1100</x>
+     <y>600</y>
     </hint>
     <hint type="destinationlabel">
      <x>765</x>

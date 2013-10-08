@@ -126,6 +126,7 @@ void Articulo::Recuperar(int id)
 void Articulo::Cargar(QSqlRecord registro)
 {
     this->id = registro.field("id").value().toInt();
+    this->kit = registro.value("kit").toBool();
     this->codigo = registro.field("codigo").value().toString();
     this->codigo_barras = registro.field("codigo_barras").value().toString();
     this->codigo_fabricante = registro.field("codigo_fabricante").value().toString();

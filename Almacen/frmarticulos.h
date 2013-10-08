@@ -118,7 +118,7 @@ private slots:
 
     void on_btnExcepciones_clicked();
 
-    void on_pushButton_clicked();
+    void on_btnKit_2_clicked();
 
     void on_btnAnadir_oferta_clicked();
 
@@ -141,6 +141,9 @@ private slots:
     void on_chkOferta_web_toggled(bool checked);
 
     void on_btnExcepciones_3_clicked();
+
+
+    void on_btnKit_clicked();
 
 public slots:
     void AnadirSeccion();

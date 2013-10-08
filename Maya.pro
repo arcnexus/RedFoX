@@ -191,7 +191,9 @@ SOURCES += main.cpp\
     TPV/tpv.cpp \
     barraavisos.cpp \
     Auxiliares/refresca_ofertas.cpp \
-    Auxiliares/frmcambiarusuario.cpp
+    Auxiliares/frmcambiarusuario.cpp \
+    Auxiliares/avisos.cpp \
+    Auxiliares/frmnuevosavisos.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -348,6 +350,8 @@ HEADERS  += mainwindow.h \
     barraavisos.h \
     Auxiliares/refresca_ofertas.h \
     Auxiliares/frmcambiarusuario.h \
+    Auxiliares/avisos.h \
+    Auxiliares/frmnuevosavisos.h
 
 
 
@@ -425,7 +429,8 @@ FORMS    += mainwindow.ui \
     TPV/frmabrircaja.ui \
     TPV/frmtpv.ui \
     barraavisos.ui \
-    Auxiliares/frmcambiarusuario.ui
+    Auxiliares/frmcambiarusuario.ui \
+    Auxiliares/frmnuevosavisos.ui
 
 RESOURCES += \
     maya.qrc \

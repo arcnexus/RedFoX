@@ -331,6 +331,8 @@ void FrmArticulos::LLenarCampos()
         ui->chkmostrar_web->setChecked(true);
     else
        ui->chkmostrar_web->setChecked(false);
+
+   ui->lblkit->setVisible(oArticulo->kit);
    //-----------------------------
    // Recuperamos imagen desde BD
    //-----------------------------
@@ -2023,7 +2025,7 @@ void FrmArticulos::on_btnExcepciones_clicked()
     excepciones.exec();
 }
 
-void FrmArticulos::on_pushButton_clicked()
+void FrmArticulos::on_btnKit_2_clicked()
 {
     QModelIndex index = ui->tabla->currentIndex();
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
@@ -2187,4 +2189,9 @@ void FrmArticulos::on_chkOferta_web_toggled(bool checked)
 void FrmArticulos::on_btnExcepciones_3_clicked()
 {
     on_btnExcepciones_clicked();
+}
+
+void FrmArticulos::on_btnKit_clicked()
+{
+    on_btnKit_2_clicked();
 }

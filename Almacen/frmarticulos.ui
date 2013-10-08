@@ -24,27 +24,7 @@
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_10">
-   <item row="0" column="3">
-    <widget class="QLabel" name="lbl_en_promocion">
-     <property name="maximumSize">
-      <size>
-       <width>150</width>
-       <height>19</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 85, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>En Promoción</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="4">
+   <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -129,7 +109,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -158,7 +138,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -187,7 +167,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -216,7 +196,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="text">
@@ -239,7 +219,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -271,7 +251,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -303,7 +283,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -332,7 +312,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -361,7 +341,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -390,7 +370,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="text">
@@ -409,11 +389,34 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btnKit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Kits</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/kits.png</normaloff>:/Icons/PNG/kits.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_cerrar">
             <property name="minimumSize">
              <size>
               <width>115</width>
-              <height>45</height>
+              <height>40</height>
              </size>
             </property>
             <property name="text">
@@ -434,7 +437,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
          </layout>
         </widget>
        </item>
-       <item row="1" column="1" colspan="3">
+       <item row="1" column="1" colspan="5">
         <widget class="QTabWidget" name="Pestanas">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -457,7 +460,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <property name="styleSheet">
@@ -494,6 +497,13 @@ font: 12pt &quot;Sans Serif&quot;;</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout">
+              <item row="0" column="4">
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Margen min:</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="3">
                <widget class="QDoubleSpinBox" name="txtMargen">
                 <property name="styleSheet">
@@ -516,33 +526,6 @@ font: 12pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="7">
-               <widget class="QLabel" name="label_20">
-                <property name="text">
-                 <string>%Descuento Promocional:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>Margen:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="6">
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>315</width>
-                  <height>17</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_5">
                 <property name="text">
@@ -550,10 +533,25 @@ font: 12pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="4">
-               <widget class="QLabel" name="label_13">
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="txtCoste_real">
+                <property name="minimumSize">
+                 <size>
+                  <width>87</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 170, 255);</string>
+                </property>
                 <property name="text">
-                 <string>Margen min:</string>
+                 <string>0,00</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -582,6 +580,26 @@ font: 12pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Margen:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>315</width>
+                  <height>17</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item row="0" column="5">
                <widget class="QDoubleSpinBox" name="txtMargen_min">
                 <property name="styleSheet">
@@ -601,36 +619,10 @@ font: 12pt &quot;Sans Serif&quot;;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="txtCoste_real">
-                <property name="minimumSize">
-                 <size>
-                  <width>87</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 170, 255);</string>
-                </property>
+              <item row="0" column="7">
+               <widget class="QLabel" name="label_20">
                 <property name="text">
-                 <string>0,00</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0" colspan="4">
-               <widget class="QPushButton" name="btnExcepciones_2">
-                <property name="text">
-                 <string>Excepciones</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
+                 <string>%Descuento Promocional:</string>
                 </property>
                </widget>
               </item>
@@ -5830,6 +5822,71 @@ alternate-background-color: rgb(255, 255, 255);</string>
          </widget>
         </widget>
        </item>
+       <item row="0" column="5">
+        <widget class="QLabel" name="lblkit">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(170, 85, 127);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>KIT</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="lbl_en_promocion">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>En Promoción</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
@@ -5928,6 +5985,12 @@ background-color: rgb(248, 245, 194);</string>
              <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/excepciones.png</normaloff>:/Icons/PNG/excepciones.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
            </widget>
           </item>
           <item row="0" column="1" colspan="2">
@@ -5972,13 +6035,19 @@ background-color: rgb(248, 245, 194);</string>
            <widget class="QComboBox" name="cboModo"/>
           </item>
           <item row="7" column="0" colspan="3">
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="btnKit_2">
             <property name="text">
-             <string>Crear / Editar kit</string>
+             <string> kits</string>
             </property>
             <property name="icon">
              <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/kits.png</normaloff>:/Icons/PNG/kits.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -5991,6 +6060,12 @@ background-color: rgb(248, 245, 194);</string>
              <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
            </widget>
           </item>
          </layout>
@@ -6000,7 +6075,7 @@ background-color: rgb(248, 245, 194);</string>
      </widget>
     </widget>
    </item>
-   <item row="0" column="0" colspan="3">
+   <item row="0" column="0" colspan="5">
     <widget class="QLabel" name="label_70">
      <property name="maximumSize">
       <size>

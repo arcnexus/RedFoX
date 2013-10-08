@@ -191,6 +191,31 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
+
+CREATE TABLE IF NOT EXISTS `@empresa@`.`articulos_excepciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(100) NULL,
+  `id_articulo` int(11) DEFAULT NULL,
+  `id_familia` int(11) DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `id_familia_cliente` int(11) DEFAULT NULL,
+  `id_subfamilia_cliente` int(11) DEFAULT NULL,
+  `id_proveedor` int(11) DEFAULT NULL,
+  `id_agente` int(11) DEFAULT NULL,
+  `importe_porc_aumento` double DEFAULT '0',
+  `importe_moneda_aumento` double DEFAULT '0',
+  `importe_fijo` double DEFAULT '0',
+  `dto_aumento_fijo` double DEFAULT '0',
+  `dto_aumento_porc` double DEFAULT '0',
+  `dto_fijo` double DEFAULT '0',
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_final` date DEFAULT NULL,
+  `id_aviso_ini` INT(11) DEFAULT NULL,
+  `id_aviso_fin` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE IF NOT EXISTS `@empresa@`.`articulos_ofertas` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_articulo` INT NULL,

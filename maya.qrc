@@ -188,5 +188,6 @@
         <file>PNG/close.png</file>
         <file>PNG/mostrar.png</file>
         <file>PNG/redfox.png</file>
+        <file>PNG/aviso_orange.png</file>
     </qresource>
 </RCC>
