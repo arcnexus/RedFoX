@@ -493,6 +493,9 @@ color: rgb(255, 255, 255);</string>
          </item>
          <item row="1" column="2">
           <widget class="QLineEdit" name="txt_codigo_articulo">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -556,15 +559,11 @@ background-color: rgb(248, 245, 194);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Cliente:</string>
+         <item row="2" column="2">
+          <widget class="QLineEdit" name="txtcodigo_sub_familia_cliente">
+           <property name="enabled">
+            <bool>false</bool>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="txt_codigo_cliente">
            <property name="maximumSize">
             <size>
              <width>120</width>
@@ -576,28 +575,11 @@ background-color: rgb(248, 245, 194);</string>
            </property>
            <property name="placeholderText">
             <string>F1 - Buscar</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLineEdit" name="txt_nombre_cliente">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_3">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Proveedor:</string>
            </property>
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QLineEdit" name="txt_codigo_proveedor">
+          <widget class="QLineEdit" name="txt_codigo_familia_cliente">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -615,27 +597,24 @@ background-color: rgb(248, 245, 194);</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="txt_nombre_proveedor">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_4">
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_19">
            <property name="enabled">
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Agente:</string>
+            <string>Familia:</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="radFamilia_cliente">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
           <widget class="QLineEdit" name="txt_codigo_agente">
            <property name="enabled">
             <bool>false</bool>
@@ -654,7 +633,7 @@ background-color: rgb(248, 245, 194);</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
+         <item row="4" column="4">
           <widget class="QLineEdit" name="txt_nombre_agente">
            <property name="enabled">
             <bool>false</bool>
@@ -674,17 +653,136 @@ background-color: rgb(248, 245, 194);</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="3" column="0">
           <widget class="QRadioButton" name="radProveedor">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="4" column="0">
           <widget class="QRadioButton" name="radAgente">
            <property name="text">
             <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Cliente:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="txt_codigo_cliente">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="txt_nombre_cliente">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="label_3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Proveedor:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLineEdit" name="txt_codigo_proveedor">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="placeholderText">
+            <string>F1 - Buscar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="4">
+          <widget class="QLineEdit" name="txt_nombre_proveedor">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLabel" name="label_4">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Agente:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="txtDescripcion_familia_cliente">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_20">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Sub-Familia:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="radSubfamilia_cliente">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="4">
+          <widget class="QLineEdit" name="txtDescripcion_subfamilia">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>
@@ -731,6 +829,7 @@ background-color: rgb(248, 245, 194);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>txtDescripcion</tabstop>
   <tabstop>radArticulo</tabstop>
   <tabstop>txt_codigo_articulo</tabstop>
   <tabstop>txt_descripcion_articulo</tabstop>
@@ -741,14 +840,23 @@ background-color: rgb(248, 245, 194);</string>
   <tabstop>radCliente</tabstop>
   <tabstop>txt_codigo_cliente</tabstop>
   <tabstop>txt_nombre_cliente</tabstop>
+  <tabstop>radFamilia_cliente</tabstop>
+  <tabstop>txt_codigo_familia_cliente</tabstop>
+  <tabstop>txtDescripcion_familia_cliente</tabstop>
+  <tabstop>radSubfamilia_cliente</tabstop>
+  <tabstop>txtcodigo_sub_familia_cliente</tabstop>
+  <tabstop>txtDescripcion_subfamilia</tabstop>
   <tabstop>radProveedor</tabstop>
   <tabstop>txt_codigo_proveedor</tabstop>
   <tabstop>txt_nombre_proveedor</tabstop>
   <tabstop>radAgente</tabstop>
   <tabstop>txt_codigo_agente</tabstop>
   <tabstop>txt_nombre_agente</tabstop>
+  <tabstop>tabla</tabstop>
   <tabstop>txtDesde</tabstop>
   <tabstop>txtHasta</tabstop>
+  <tabstop>btnGenerarAvisoInicio</tabstop>
+  <tabstop>btnGenerarAvisoFin</tabstop>
   <tabstop>txt_importe_fijo</tabstop>
   <tabstop>txt_importe_moneda_aumento</tabstop>
   <tabstop>txt_importe_porc_aumento</tabstop>
@@ -779,6 +887,230 @@ background-color: rgb(248, 245, 194);</string>
     <hint type="destinationlabel">
      <x>765</x>
      <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radFamilia</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_5</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>75</x>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radCliente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_2</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>43</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>95</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radArticulo</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>40</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>72</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radArticulo</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txt_codigo_articulo</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>183</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radFamilia</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txt_codigo_familia</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radCliente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txt_codigo_cliente</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radProveedor</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_3</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>70</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radProveedor</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txt_codigo_proveedor</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>45</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>181</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radAgente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_4</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>67</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radAgente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txt_codigo_agente</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>40</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radFamilia_cliente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_19</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>208</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>68</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radFamilia_cliente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txt_codigo_familia_cliente</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>40</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radSubfamilia_cliente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_20</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>238</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radSubfamilia_cliente</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>txtcodigo_sub_familia_cliente</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>35</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>237</y>
     </hint>
    </hints>
   </connection>

@@ -21,6 +21,12 @@ FrmExcepciones::FrmExcepciones(QWidget *parent) :
     m->setQuery("select id,");
     ui->txt_codigo_articulo->installEventFilter(this);
     ui->txt_codigo_cliente->installEventFilter(this);
+    ui->txt_codigo_familia->installEventFilter(this);
+    ui->txt_codigo_proveedor->installEventFilter(this);
+    ui->txt_codigo_agente->installEventFilter(this);
+    ui->txt_codigo_familia_cliente->installEventFilter(this);
+    ui->txtcodigo_sub_familia_cliente->installEventFilter(this);
+
     setControlsReadOnly(true);
 
     //------------------------
@@ -55,6 +61,8 @@ void FrmExcepciones::cargar_articulo(int id_art)
         ui->txt_descripcion_articulo->setText(i.value().value("descripcion").toString());
         ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_con_iva").toDouble(),
                                                                                   'f',Configuracion_global->decimales)));
+        ui->txt_codigo_familia->clear();
+        ui->txtDescFamilia->clear();
 
     }
     ui->txtDescripcion->setText(ui->txt_descripcion_articulo->text()+" / "+ui->txt_nombre_cliente->text());
@@ -75,6 +83,7 @@ void FrmExcepciones::cargar_cliente(int id_cliente)
     while (ic.hasNext())
     {
         ic.next();
+        clear_contra();
         ui->txt_codigo_cliente->setText(ic.value().value("codigo_cliente").toString());
         ui->txt_nombre_cliente->setText(ic.value().value("nombre_fiscal").toString());
         tarifa = ic.value().value("tarifa_cliente").toInt();
@@ -92,6 +101,77 @@ void FrmExcepciones::cargar_cliente(int id_cliente)
 
     }
     ui->txtDescripcion->setText(ui->txt_descripcion_articulo->text()+" / "+ui->txt_nombre_cliente->text());
+}
+
+void FrmExcepciones::cargar_familia(int id_familia)
+{
+    QString error;
+    QMap <int,QSqlRecord> f;
+    f= SqlCalls::SelectRecord("familias",QString("id=%1").arg(id_familia),Configuracion_global->groupDB,error);
+    if(error.isEmpty())
+    {
+        ui->txt_codigo_familia->setText(f.value(id_familia).value("codigo").toString());
+        ui->txtDescFamilia->setText(f.value(id_familia).value("familia").toString());
+        ui->txt_codigo_articulo->clear();
+        ui->txt_descripcion_articulo->clear();
+    }
+}
+
+void FrmExcepciones::cargar_proveedor(int id_proveedor)
+{
+    QString error;
+    QMap <int, QSqlRecord> p;
+    p = SqlCalls::SelectRecord("proveedores",QString("id=%1").arg(id_proveedor),Configuracion_global->groupDB, error);
+    if(error.isEmpty())
+    {
+        clear_contra();
+        ui->txt_codigo_proveedor->setText(p.value(id_proveedor).value("codigo").toString());
+        ui->txt_nombre_proveedor->setText(p.value(id_proveedor).value("proveedor").toString());
+    }
+}
+
+void FrmExcepciones::cargar_agente(int id_agente)
+{
+    QString error;
+    QMap <int, QSqlRecord> a;
+    a = SqlCalls::SelectRecord("agentes",QString("id=%1").arg(id_agente),Configuracion_global->groupDB, error);
+    if(error.isEmpty())
+    {
+        clear_contra();
+        ui->txt_codigo_agente->setText(a.value(id_agente).value("codigo").toString());
+        ui->txt_nombre_agente->setText(a.value(id_agente).value("nombre").toString());
+    }
+}
+
+void FrmExcepciones::cargar_familia_cliente(int id_fam)
+{
+    QString error;
+    QMap <int, QSqlRecord> a;
+    a = SqlCalls::SelectRecord("maestro_familia_cliente",QString("id=%1").arg(id_fam),Configuracion_global->groupDB, error);
+    if(error.isEmpty())
+    {
+        clear_contra();
+        ui->txt_codigo_familia_cliente->setText(a.value(id_fam).value("id").toString());
+        ui->txtDescripcion_familia_cliente->setText(a.value(id_fam).value("descripcion").toString());
+    }
+}
+
+void FrmExcepciones::cargar_subfamilia_cliente(int id_subfam)
+{
+    QString error;
+    QMap <int, QSqlRecord> a;
+    a = SqlCalls::SelectRecord("maestro_subfamilia_cliente",QString("id=%1").arg(id_subfam),Configuracion_global->groupDB, error);
+    if(error.isEmpty())
+    {
+        QString cod_fam_cli,fam_cli;
+        cod_fam_cli = ui->txt_codigo_familia_cliente->text();
+        fam_cli = ui->txtDescripcion_familia_cliente->text();
+        clear_contra();
+        ui->txtcodigo_sub_familia_cliente->setText(a.value(id_subfam).value("id").toString());
+        ui->txtDescripcion_subfamilia->setText(a.value(id_subfam).value("descripcion").toString());
+        ui->txt_codigo_familia_cliente->setText(cod_fam_cli);
+        ui->txtDescripcion_familia_cliente->setText(fam_cli);
+    }
 }
 
 void FrmExcepciones::buscar_id_cliente(QString cod_cli)
@@ -114,6 +194,35 @@ void FrmExcepciones::buscar_id_articulo(QString cod_art)
     cargar_articulo(id_art);
 }
 
+void FrmExcepciones::buscar_id_familia(QString cod_fam)
+{
+    QString error;
+    int id_fam = SqlCalls::SelectOneField("familias","id",QString("codigo = %1").arg(cod_fam),
+                                          Configuracion_global->groupDB,error).toInt();
+    this->id_familia = id_fam;
+    modelo->setQuery(QString("select id, descripcion from articulos_excepciones where id_familia = %1").arg(this->id_familia),
+                    Configuracion_global->empresaDB);
+    cargar_familia(id_fam);
+}
+
+void FrmExcepciones::buscar_id_proveedor(QString cod_prov)
+{
+    QString error;
+    int id_prov = SqlCalls::SelectOneField("proveedores","id",QString("codigo = %1").arg(cod_prov),
+                                          Configuracion_global->groupDB,error).toInt();
+    this->id_proveedor = id_prov;
+    cargar_proveedor(id_prov);
+}
+
+void FrmExcepciones::buscar_id_agente(QString cod_agen)
+{
+    QString error;
+    int id_agen = SqlCalls::SelectOneField("agentes","id",QString("codigo = %1").arg(cod_agen),
+                                          Configuracion_global->groupDB,error).toInt();
+    this->id_agente = id_agen;
+    cargar_proveedor(id_agen);
+}
+
 bool FrmExcepciones::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
@@ -127,6 +236,31 @@ bool FrmExcepciones::eventFilter(QObject *obj, QEvent *event)
         {
             if(keyEvent->key() == Qt::Key_F1)
                 consultar_cliente();
+        }
+        if (obj == ui->txt_codigo_familia)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_familia();
+        }
+        if(obj == ui->txt_codigo_proveedor)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_proveedor();
+        }
+        if(obj == ui->txt_codigo_agente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_agente();
+        }
+        if(obj == ui->txt_codigo_familia_cliente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_familia_cliente();
+        }
+        if(obj == ui->txtcodigo_sub_familia_cliente)
+        {
+            if(keyEvent->key() == Qt::Key_F1)
+                consultar_subfamilia_cliente();
         }
         return false;
     }
@@ -185,6 +319,138 @@ void FrmExcepciones::consultar_cliente()
     }
 }
 
+void FrmExcepciones::consultar_familia()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "codigo" <<"familia";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Familias");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo,familia from familias");
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Código") <<tr("Familia");
+    tamanos <<"0" << "100"  <<"300";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+
+    consulta.set_titulo("Busqueda de Familias");
+    if(consulta.exec())
+    {
+        int id_familia = consulta.get_id();
+
+        cargar_familia(id_familia);
+    }
+}
+
+void FrmExcepciones::consultar_proveedor()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "codigo" <<"proveedor" <<"cif";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("proveedores");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo,proveedor,cif from proveedores");
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Código") <<tr("Proveedor") << tr("CIF");
+    tamanos <<"0" << "100"  <<"300" << "120";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+
+    consulta.set_titulo("Busqueda de Proveedores");
+    if(consulta.exec())
+    {
+        int id_proveedor = consulta.get_id();
+
+        cargar_proveedor(id_proveedor);
+    }
+}
+
+void FrmExcepciones::consultar_agente()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "codigo" <<"nombre" <<"dni";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Agentes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo,nombre,dni from agentes");
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Código") <<tr("Agente") <<tr("DNI/NIE");
+    tamanos <<"0" << "100"  <<"300" <<"120";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+
+    consulta.set_titulo("Busqueda de Agentes");
+    if(consulta.exec())
+    {
+        int id_agente = consulta.get_id();
+
+        cargar_agente(id_agente);
+    }
+
+}
+
+void FrmExcepciones::consultar_familia_cliente()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "descripcion";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Grupo clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,descripcion from maestro_familia_cliente;");
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Descripción");
+    tamanos <<"0" << "450";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+
+    consulta.set_titulo("Busqueda de Grupos de Cliente");
+    if(consulta.exec())
+    {
+        int id_fam_cli = consulta.get_id();
+
+        cargar_familia_cliente(id_fam_cli);
+    }
+}
+
+void FrmExcepciones::consultar_subfamilia_cliente()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "descripcion";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Grupo clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL(QString("select id,descripcion from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1;").arg(
+                         this->id_familia_cliente));
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Descripción");
+    tamanos <<"0" << "450";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+
+    consulta.set_titulo("Busqueda de Subgrupos de Cliente");
+    if(consulta.exec())
+    {
+        int id_subfam_cli = consulta.get_id();
+
+        cargar_subfamilia_cliente(id_subfam_cli);
+    }
+}
+
 void FrmExcepciones::clear()
 {
     ui->txtDesde->setDate(QDate::currentDate());
@@ -196,6 +462,10 @@ void FrmExcepciones::clear()
     ui->txt_codigo_cliente->clear();
     ui->txt_codigo_familia->clear();
     ui->txt_codigo_proveedor->clear();
+    ui->txt_codigo_familia_cliente->clear();
+    ui->txtcodigo_sub_familia_cliente->clear();
+    ui->txtDescripcion_familia_cliente->clear();
+    ui->txtDescripcion_subfamilia->clear();
     ui->txt_descripcion_articulo->clear();
     ui->txt_dto_fijo->setText(0);
     ui->txt_nombre_agente->clear();
@@ -207,6 +477,21 @@ void FrmExcepciones::clear()
     ui->txt_importe_moneda_aumento->setText("0,00");
 }
 
+void FrmExcepciones::clear_contra()
+{
+    ui->txt_codigo_familia_cliente->clear();
+    ui->txt_codigo_proveedor->clear();
+    ui->txt_codigo_agente->clear();
+    ui->txtcodigo_sub_familia_cliente->clear();
+    ui->txt_codigo_cliente->clear();
+
+    ui->txtDescripcion_familia_cliente->clear();
+    ui->txt_nombre_proveedor->clear();
+    ui->txt_nombre_agente->clear();
+    ui->txtDescripcion_subfamilia->clear();
+    ui->txt_nombre_cliente->clear();
+}
+
 void FrmExcepciones::cargar_excepcion(int id)
 {
     QMap <int,QSqlRecord> ex;
@@ -214,8 +499,16 @@ void FrmExcepciones::cargar_excepcion(int id)
     ex = SqlCalls::SelectRecord("articulos_excepciones",QString("id=%1").arg(id),Configuracion_global->empresaDB,error);
     if(error.isEmpty())
     {
-        cargar_articulo(ex.value(id).value("id_articulo").toInt());
-        cargar_cliente(ex.value(id).value("id_cliente").toInt());
+        this->id_aviso_ini = ex.value(id).value("id_aviso_ini").toInt();
+        this->id_aviso_fin = ex.value(id).value("id_aviso_fin").toInt();
+        this->id = id;
+        this->id_agente = ex.value(id).value("id_agente").toInt();
+        this->id_articulo = ex.value(id).value("id_articulo").toInt();
+        cargar_articulo(this->id_articulo);
+        this->id_cliente = ex.value(id).value("id_cliente").toInt();
+        cargar_cliente(this->id_cliente);
+        this->id_familia = ex.value(id).value("id_familia").toInt();
+        cargar_familia(this->id_familia);
         ui->txtDescripcion->setText(ex.value(id).value("descripcion").toString());
     } else
     {
@@ -345,10 +638,11 @@ void FrmExcepciones::on_btnGenerarAvisoInicio_clicked()
     Avisos oAviso(this);
     QString error;
     frna.setFecha(ui->txtDesde->date());
-    frna.setHora(QTime(9,0));
+    frna.setHora(QTime(0,1));
     frna.setText(tr("Inicio excepcion: %1").arg(ui->txtDescripcion->text()));
     if(frna.exec() == QDialog::Accepted)
     {
+        h_aviso["id_tipoaviso"] = frna.get_id_tipoaviso();
         h_aviso["fecha_hora_aviso"] = QDateTime(frna.getFecha(),frna.getHora());
         h_aviso["aviso"] = frna.getText();
         h_aviso["id_usuario_destino"] = frna.get_id_usuario_destino();
@@ -356,8 +650,109 @@ void FrmExcepciones::on_btnGenerarAvisoInicio_clicked()
         h_aviso["id_empresa"] = Configuracion_global->idEmpresa;
 
         int new_id = oAviso.add_notice(h_aviso);
+        this->id_aviso_ini = new_id;
         if(new_id == -1)
             QMessageBox::warning(this,tr("Gestión de excepciones"),
                                  tr("Atención: Ocurrió un error al insertar el aviso de inicio: %1").arg(error));
+       else{
+            TimedMessageBox *m = new TimedMessageBox(this,tr("Se ha creado un nuevo aviso"));
+            ui->btnGenerarAvisoInicio->setEnabled(false);
+        }
+    }
+
+}
+
+void FrmExcepciones::on_btnGenerarAvisoFin_clicked()
+{
+    QHash<QString,QVariant> h_aviso;
+    frmNuevosAvisos frna(this);
+    Avisos oAviso(this);
+    QString error;
+    frna.setFecha(ui->txtHasta->date());
+    frna.setHora(QTime(24,0));
+    frna.setText(tr("Atención: Finaliza excepcion: %1").arg(ui->txtDescripcion->text()));
+    if(frna.exec() == QDialog::Accepted)
+    {
+        h_aviso["id_tipoaviso"] = frna.get_id_tipoaviso();
+        h_aviso["fecha_hora_aviso"] = QDateTime(frna.getFecha(),frna.getHora());
+        h_aviso["aviso"] = frna.getText();
+        h_aviso["id_usuario_destino"] = frna.get_id_usuario_destino();
+        h_aviso["id_usuario_origen"] = Configuracion_global->id_usuario_activo;
+        h_aviso["id_empresa"] = Configuracion_global->idEmpresa;
+
+        int new_id = oAviso.add_notice(h_aviso);
+        this->id_aviso_fin = new_id;
+        if(new_id == -1)
+            QMessageBox::warning(this,tr("Gestión de excepciones"),
+                                 tr("Atención: Ocurrió un error al insertar el aviso de finalización: %1").arg(error));
+       else{
+            TimedMessageBox *m = new TimedMessageBox(this,tr("Se ha creado un nuevo aviso"));
+            ui->btnGenerarAvisoFin->setEnabled(false);
+        }
+    }
+}
+
+void FrmExcepciones::on_txt_codigo_familia_editingFinished()
+{
+    blockSignals(true);
+    buscar_id_familia(ui->txt_codigo_familia->text());
+    blockSignals(false);
+}
+
+void FrmExcepciones::on_txt_codigo_cliente_editingFinished()
+{
+    blockSignals(true);
+    buscar_id_cliente(ui->txt_codigo_cliente->text());
+    blockSignals(false);
+}
+
+void FrmExcepciones::on_txt_codigo_proveedor_editingFinished()
+{
+    blockSignals(true);
+    buscar_id_proveedor(ui->txt_codigo_proveedor->text());
+    blockSignals(false);
+}
+
+void FrmExcepciones::on_txt_codigo_agente_editingFinished()
+{
+    blockSignals(true);
+    buscar_id_agente(ui->txt_codigo_agente->text());
+    blockSignals(false);
+}
+
+void FrmExcepciones::on_txtDesde_editingFinished()
+{
+    //--------------------------------------------------------------------
+    // si se creo aviso y se cambia la fecha se modifica también el aviso
+    //--------------------------------------------------------------------
+    if(this->id_aviso_ini >-1)
+    {
+        QHash <QString,QVariant> avi;
+        avi["fecha_hora_aviso"] = QDateTime(ui->txtDesde->date(),QTime(0,1));
+        QString error;
+        bool success = SqlCalls::SqlUpdate( avi,"avisos",Configuracion_global->groupDB,QString("id=%1").arg(this->id_aviso_ini),
+                                            error);
+        if(!success)
+            QMessageBox::warning(this,tr("Gestión de excepciones"),tr("Ocurrió un error al actualizar aviso inicio excepción: %1").arg(error),
+                                 tr("Aceptar"));
+        else
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Se actualizó la fecha del aviso"));
+     }
+}
+
+void FrmExcepciones::on_txtHasta_editingFinished()
+{
+    if(this->id_aviso_fin >-1)
+    {
+        QHash <QString,QVariant> avi;
+        avi["fecha_hora_aviso"] = QDateTime(ui->txtHasta->date(),QTime(23,59));
+        QString error;
+        bool success = SqlCalls::SqlUpdate( avi,"avisos",Configuracion_global->groupDB,QString("id=%1").arg(this->id_aviso_fin),
+                                            error);
+        if(!success)
+            QMessageBox::warning(this,tr("Gestión de excepciones"),tr("Ocurrió un error al actualizar aviso fin de excepción: %1").arg(error),
+                                 tr("Aceptar"));
+        else
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Se actualizó la fecha del aviso"));
     }
 }

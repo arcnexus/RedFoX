@@ -19,16 +19,19 @@ public:
     void setHora(QTime hora);
     void setText(QString texto);
     void setEmpresa(int id_empresa);
+    void setId_tipoaviso(int id_tipoaviso);
     QDate getFecha();
     QTime getHora();
     QString getText();
     int get_id_Empresa();
     int get_id_usuario_destino();
+    int get_id_tipoaviso();
 
 private:
     Ui::frmNuevosAvisos *ui;
     QSqlQueryModel *m_empresas;
     QSqlQueryModel *m_usuarios;
+    QSqlQueryModel *m_avisos;
 };
 
 #endif // FRMNUEVOSAVISOS_H

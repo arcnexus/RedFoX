@@ -9,10 +9,14 @@ frmNuevosAvisos::frmNuevosAvisos(QWidget *parent) :
     ui->setupUi(this);
     m_empresas = new QSqlQueryModel(this);
     m_usuarios = new QSqlQueryModel(this);
+    m_avisos = new QSqlQueryModel(this);
     m_empresas->setQuery("select nombre from empresas",Configuracion_global->groupDB);
     m_usuarios->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
+    m_avisos->setQuery("select tipoaviso from tiposaviso",Configuracion_global->groupDB);
+
     ui->cboEmpresa->setModel(m_empresas);
     ui->cboUsuarios->setModel(m_usuarios);
+    ui->cboTipoAviso->setModel(m_avisos);
 }
 
 frmNuevosAvisos::~frmNuevosAvisos()
@@ -45,6 +49,15 @@ void frmNuevosAvisos::setEmpresa(int id_empresa)
 
 }
 
+void frmNuevosAvisos::setId_tipoaviso(int id_tipoaviso)
+{
+    QString error;
+    QString tipoaviso = SqlCalls::SelectOneField("tiposaviso","tipoaviso",QString("id=%1").arg(id_tipoaviso),
+                                               Configuracion_global->groupDB,error).toString();
+    int index = ui->cboTipoAviso->findText(tipoaviso);
+    ui->cboTipoAviso->setCurrentIndex(index);
+}
+
 QDate frmNuevosAvisos::getFecha()
 {
     return ui->txtFecha->date();
@@ -57,7 +70,7 @@ QTime frmNuevosAvisos::getHora()
 
 QString frmNuevosAvisos::getText()
 {
-    ui->txtAviso->toPlainText();
+    return ui->txtAviso->toPlainText();
 }
 
 int frmNuevosAvisos::get_id_Empresa()
@@ -73,6 +86,14 @@ int frmNuevosAvisos::get_id_usuario_destino()
 {
     QString error;
     int id = SqlCalls::SelectOneField("usuarios","id",QString("nombre ='%1'").arg(ui->cboUsuarios->currentText()),
+                                      Configuracion_global->groupDB,error).toInt();
+    return id;
+}
+
+int frmNuevosAvisos::get_id_tipoaviso()
+{
+    QString error;
+    int id = SqlCalls::SelectOneField("tiposaviso","id",QString("tipoaviso ='%1'").arg(ui->cboTipoAviso->currentText()),
                                       Configuracion_global->groupDB,error).toInt();
     return id;
 }
