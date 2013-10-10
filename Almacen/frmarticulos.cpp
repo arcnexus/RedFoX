@@ -2225,3 +2225,14 @@ void FrmArticulos::on_btnAnadir_clicked()
     ui->stackedWidget->setCurrentIndex(0);
     on_botAnadir_clicked();
 }
+
+void FrmArticulos::on_btnBorrarKit_clicked()
+{
+    if(QMessageBox::question(this,tr("Gestión Artículos"),tr("¿Eliminar el kit?\nATENCIÓN: ESTA OPCIÓN NO SE PUEDE DESHACER"),
+                             tr("No"),tr("Borrar")))
+    {
+        QModelIndex index = ui->tabla->currentIndex();
+        int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0)).toInt();
+        QMap <int,QSqlRecord> map;
+    }
+}

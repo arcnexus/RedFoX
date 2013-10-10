@@ -147,6 +147,8 @@ private slots:
 
     void on_btnAnadir_clicked();
 
+    void on_btnBorrarKit_clicked();
+
 public slots:
     void AnadirSeccion();
 

@@ -19,8 +19,12 @@ void DelegateKit::paint(QPainter *painter, const QStyleOptionViewItem &option, c
      painter->setBrush(QBrush(QColor(0,128,0)));
      painter->setPen(QColor("black"));
      if(index.model()->data(index,Qt::DisplayRole).toInt() == 1)
-        painter->drawRoundedRect(option.rect.x()+5, option.rect.y()+5, option.rect.width()-10, option.rect.height()-10,10,10);
-
+     {
+         int w = qMin(option.rect.width(),option.rect.height());
+       // painter->drawRoundedRect(option.rect.x()+5, option.rect.y()+5, option.rect.width()-10, option.rect.height()-10,10,10);
+         painter->drawEllipse(option.rect.center(),w/3,w/3);
+     }
+    painter->restore();
 }
 
 
