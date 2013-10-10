@@ -110,13 +110,6 @@ background-color: rgb(248, 245, 194);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="4" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Filtro:</string>
-        </property>
-       </widget>
-      </item>
       <item row="10" column="4">
        <widget class="QLabel" name="label_6">
         <property name="text">
@@ -124,7 +117,10 @@ background-color: rgb(248, 245, 194);</string>
         </property>
        </widget>
       </item>
-      <item row="12" column="0" colspan="6">
+      <item row="2" column="1" colspan="5">
+       <widget class="QComboBox" name="cboOrden"/>
+      </item>
+      <item row="13" column="0" colspan="6">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="btnGuardar">
@@ -167,10 +163,40 @@ background-color: rgb(248, 245, 194);</string>
         </item>
        </layout>
       </item>
-      <item row="8" column="0">
-       <widget class="QLabel" name="label_4">
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Código:</string>
+         <string>Descripción:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5">
+       <widget class="QDoubleSpinBox" name="spinPVP">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="minimum">
+         <double>-10000000.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000000000.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1" colspan="5">
+       <widget class="QLineEdit" name="txtBuscar">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Cantidad:</string>
         </property>
        </widget>
       </item>
@@ -200,43 +226,38 @@ background-color: rgb(248, 245, 194);</string>
         </item>
        </layout>
       </item>
-      <item row="2" column="1" colspan="5">
-       <widget class="QComboBox" name="cboOrden"/>
-      </item>
-      <item row="11" column="0" colspan="2">
-       <widget class="QCheckBox" name="chkStock">
-        <property name="text">
-         <string>Quitar de stock</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1" colspan="5">
-       <widget class="QLineEdit" name="txtBuscar">
+      <item row="9" column="1" colspan="5">
+       <widget class="QLineEdit" name="txtDescripcion">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="0">
-       <widget class="QLabel" name="label_3">
+      <item row="8" column="4">
+       <widget class="QLabel" name="label_9">
         <property name="text">
-         <string>Cantidad:</string>
+         <string>PVP:</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="5">
-       <widget class="QDoubleSpinBox" name="spinPVP">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Buscar por:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Código:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QDoubleSpinBox" name="spinCantidad">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="minimum">
-         <double>-10000000.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>1000000000.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -260,6 +281,13 @@ alternate-background-color: rgb(222, 255, 222);</string>
         </attribute>
        </widget>
       </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Filtro:</string>
+        </property>
+       </widget>
+      </item>
       <item row="8" column="1" colspan="2">
        <widget class="QLineEdit" name="txtCodigo">
         <property name="minimumSize">
@@ -273,12 +301,15 @@ alternate-background-color: rgb(222, 255, 222);</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="1">
-       <widget class="QSpinBox" name="spinCantidad">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Sentido:</string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="1" colspan="3">
+       <widget class="QComboBox" name="cboSentido"/>
       </item>
       <item row="10" column="5">
        <widget class="QLineEdit" name="txtDto">
@@ -305,43 +336,47 @@ alternate-background-color: rgb(222, 255, 222);</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Descripción:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1" colspan="5">
-       <widget class="QLineEdit" name="txtDescripcion">
+      <item row="11" column="0" colspan="6">
+       <widget class="QFrame" name="frame_2">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(170, 152, 158);</string>
         </property>
-       </widget>
-      </item>
-      <item row="8" column="4">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>PVP:</string>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Buscar por:</string>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
         </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Crear Kits (Descontará stock productos kit):</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="spinCant">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnAnadirKits">
+           <property name="text">
+            <string>Añadir</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>Sentido:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1" colspan="3">
-       <widget class="QComboBox" name="cboSentido"/>
       </item>
      </layout>
     </widget>
@@ -357,7 +392,6 @@ alternate-background-color: rgb(222, 255, 222);</string>
   <tabstop>txtDescripcion</tabstop>
   <tabstop>spinCantidad</tabstop>
   <tabstop>txtDto</tabstop>
-  <tabstop>chkStock</tabstop>
   <tabstop>btnGuardar</tabstop>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>pushButton</tabstop>

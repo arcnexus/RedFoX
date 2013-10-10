@@ -12,8 +12,8 @@ struct lineaDetalle
 {
     int idLinea;
     QString codigo;
-    int cantidad;
-    int cantidad_old;
+    float cantidad;
+    float cantidad_old;
     QString descripcion;
     double precio;
     double subtotal;

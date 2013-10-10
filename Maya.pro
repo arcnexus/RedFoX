@@ -193,7 +193,8 @@ SOURCES += main.cpp\
     Auxiliares/refresca_ofertas.cpp \
     Auxiliares/frmcambiarusuario.cpp \
     Auxiliares/avisos.cpp \
-    Auxiliares/frmnuevosavisos.cpp
+    Auxiliares/frmnuevosavisos.cpp \
+    Auxiliares/delegatekit.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -351,7 +352,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/refresca_ofertas.h \
     Auxiliares/frmcambiarusuario.h \
     Auxiliares/avisos.h \
-    Auxiliares/frmnuevosavisos.h
+    Auxiliares/frmnuevosavisos.h \
+    Auxiliares/delegatekit.h
 
 
 

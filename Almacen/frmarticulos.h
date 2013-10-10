@@ -145,6 +145,8 @@ private slots:
 
     void on_btnKit_clicked();
 
+    void on_btnAnadir_clicked();
+
 public slots:
     void AnadirSeccion();
 

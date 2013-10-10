@@ -13,6 +13,7 @@
 #include "../Busquedas/db_consulta_view.h"
 #include "../Almacen/frmexcepciones.h"
 #include "../Almacen/frmkit.h"
+#include "../Auxiliares/delegatekit.h"
 
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
@@ -69,7 +70,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     // llenar tabla artículos
     //--------------------------
     m = new QSqlQueryModel(this);
-    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa "
+    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit,descripcion from vistaart_tarifa "
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     m->setQuery(cSQL, Configuracion_global->groupDB);
     ui->tabla->setModel(m);
@@ -499,9 +500,9 @@ void FrmArticulos::formato_tabla()
 {
     QStringList titulo;
     titulo <<"id" << tr("Código") << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("P.V.P.")
-          <<tr("PVP+IVA") << tr("descripción") ;
+          <<tr("PVP+IVA") << tr("KIT")<< tr("descripción") ;
     QVariantList col_size;
-    col_size << 0<<100<<100<<100<<50<<70<<70<<400;
+    col_size << 0<<100<<100<<100<<50<<70<<70<<25<<400;
     for(int i =0;i<titulo.size();i++)
     {
         m->setHeaderData(i,Qt::Horizontal,titulo.at(i));
@@ -511,6 +512,7 @@ void FrmArticulos::formato_tabla()
     ui->tabla->setItemDelegateForColumn(4, new MonetaryDelegate);
     ui->tabla->setItemDelegateForColumn(5, new MonetaryDelegate);
     ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->tabla->setItemDelegateForColumn(7,new DelegateKit);
 
 }
 
@@ -531,7 +533,7 @@ else
     mode ="DESC";
 QString arg1 = ui->txtBuscar->text();
 
-QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
+QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit,descripcion from vistaart_tarifa where "+
         campo+" like '%"+arg1.trimmed()+"%' and tarifa ="+
         QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
@@ -2030,10 +2032,32 @@ void FrmArticulos::on_btnKit_2_clicked()
     QModelIndex index = ui->tabla->currentIndex();
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oArticulo->Recuperar(id);
+    if(!oArticulo->kit)
+    {
+        if(QMessageBox::question(this,tr("Gestión de Artículos"),tr("¿El Artículo no es un kit, ¿desea convertirlo a kit?"),
+                                 tr("No"),tr("Convertir"))== QMessageBox::Accepted);
+        {
+            QHash <QString, QVariant> h;
+            QString error;
+            h["kit"] = true;
+            bool success = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),
+                                               error);
+            if(success){
+                oArticulo->kit = true;
+                TimedMessageBox *t = new TimedMessageBox(this,tr("Articulo convertido en kit"));
+            } else
+            {
+                QMessageBox::warning(this,tr("Gestión de Artículos"),
+                                     tr("Atención: No se puede convertir: %1").arg(error));
+            }
+        }
 
-    FrmKit kit(this);
-    kit.set_articulo(oArticulo->codigo);
-    kit.exec();
+    }
+    if(oArticulo->kit){
+        FrmKit kit(this);
+        kit.set_articulo(oArticulo->codigo);
+        kit.exec();
+    }
 }
 
 void FrmArticulos::on_btnAnadir_oferta_clicked()
@@ -2194,4 +2218,10 @@ void FrmArticulos::on_btnExcepciones_3_clicked()
 void FrmArticulos::on_btnKit_clicked()
 {
     on_btnKit_2_clicked();
+}
+
+void FrmArticulos::on_btnAnadir_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+    on_botAnadir_clicked();
 }
