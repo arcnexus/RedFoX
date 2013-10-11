@@ -104,6 +104,9 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void on_cboDireccionesEntrega_currentIndexChanged(const QString &arg1);
+
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

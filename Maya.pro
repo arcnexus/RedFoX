@@ -191,7 +191,12 @@ SOURCES += main.cpp\
     TPV/tpv.cpp \
     barraavisos.cpp \
     Auxiliares/refresca_ofertas.cpp \
-    Auxiliares/barrabusqueda.cpp
+    Auxiliares/barrabusqueda.cpp \
+    Auxiliares/frmcambiarusuario.cpp \
+    Auxiliares/avisos.cpp \
+    Auxiliares/frmnuevosavisos.cpp \
+    Auxiliares/delegatekit.cpp
+
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -347,7 +352,11 @@ HEADERS  += mainwindow.h \
     TPV/tpv.h \
     barraavisos.h \
     Auxiliares/refresca_ofertas.h \
-    Auxiliares/barrabusqueda.h
+    Auxiliares/barrabusqueda.h \
+    Auxiliares/frmcambiarusuario.h \
+    Auxiliares/avisos.h \
+    Auxiliares/frmnuevosavisos.h \
+    Auxiliares/delegatekit.h
 
 
 
@@ -425,7 +434,9 @@ FORMS    += mainwindow.ui \
     TPV/frmabrircaja.ui \
     TPV/frmtpv.ui \
     barraavisos.ui \
-    Auxiliares/barrabusqueda.ui
+    Auxiliares/barrabusqueda.ui \
+    Auxiliares/frmcambiarusuario.ui \
+    Auxiliares/frmnuevosavisos.ui
 
 RESOURCES += \
     maya.qrc \

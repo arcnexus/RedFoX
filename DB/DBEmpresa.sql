@@ -190,6 +190,55 @@ AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+
+
+CREATE TABLE IF NOT EXISTS `@empresa@`.`articulos_excepciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(100) NULL,
+  `id_articulo` int(11) DEFAULT NULL,
+  `id_familia` int(11) DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `id_familia_cliente` int(11) DEFAULT NULL,
+  `id_subfamilia_cliente` int(11) DEFAULT NULL,
+  `id_proveedor` int(11) DEFAULT NULL,
+  `id_agente` int(11) DEFAULT NULL,
+  `importe_porc_aumento` double DEFAULT '0',
+  `importe_moneda_aumento` double DEFAULT '0',
+  `importe_fijo` double DEFAULT '0',
+  `dto_aumento_fijo` double DEFAULT '0',
+  `dto_aumento_porc` double DEFAULT '0',
+  `dto_fijo` double DEFAULT '0',
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_final` date DEFAULT NULL,
+  `id_aviso_ini` INT(11) DEFAULT NULL,
+  `id_aviso_fin` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `@empresa@`.`articulos_ofertas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
+  `descripcion` VARCHAR(100) NULL,
+  `oferta_32` TINYINT NULL,
+  `oferta_dto` TINYINT NULL,
+  `oferta_precio_final` TINYINT NULL,
+  `oferta_web` TINYINT NULL,
+  `unidades` FLOAT NULL,
+  `regalo` FLOAT NULL,
+  `dto_local` FLOAT NULL,
+  `dto_web` FLOAT NULL,
+  `precio_final` DOUBLE NULL,
+  `comentarios` TEXT NULL,
+  `fecha_inicio` DATE NULL,
+  `fecha_fin` DATE NULL,
+  `activa` TINYINT(1) NULL DEFAULT '0',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_unicode_ci;
+
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `id` INT(11) NOT NULL AUTO_INCREMENT , 
   `serie` CHAR(1) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
@@ -528,6 +577,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `ejercicio` INT(5) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -536,13 +586,16 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cajas` (
   `desc_caja` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cierrecaja` (
   `id` INT(11) NOT NULL ,
-  `fecha_hora_abertura` DATETIME NULL DEFAULT NULL ,
-  `fecha_hora_cierre` DATETIME NULL DEFAULT NULL ,
+  `fecha_abertura` DATE NULL DEFAULT NULL ,
+  `fecha_cierre` DATE NULL DEFAULT NULL ,
+  `hora_abertura` TIME NULL DEFAULT NULL ,
+  `hora_cierre` TIME NULL DEFAULT NULL ,
   `vales_emitidos` DOUBLE NULL DEFAULT NULL ,
   `entregas_a_cuenta` DOUBLE NULL DEFAULT NULL ,
   `intresos_efectivo` DOUBLE NULL DEFAULT NULL ,
@@ -553,6 +606,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cierrecaja` (
   `importe_abertura_dia` DOUBLE NULL DEFAULT NULL ,
   `importe_cierre` DOUBLE NULL DEFAULT NULL ,
   `id_usuario` INT(11) NULL DEFAULT NULL ,
+  `id_usuario_cierre` INT(11) NULL DEFAULT NULL ,
   `importe_real_caja` DOUBLE NULL DEFAULT NULL ,
   `descuadre` DOUBLE NULL DEFAULT NULL ,
   `descuentos` DOUBLE NULL DEFAULT NULL ,
@@ -563,6 +617,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cierrecaja` (
   `ejercicio` INT(5) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -589,6 +644,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`clientes_deuda` (
   `importe_internet` DOUBLE NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -601,6 +657,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`desglose_caja` (
   `id_moneda` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -756,6 +813,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_alb` (
   `porc_rec` FLOAT NULL  DEFAULT '0' ,
   `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
 
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
@@ -802,8 +860,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_fac` (
   `iva` DOUBLE NULL DEFAULT '0' ,	
   `porc_rec` FLOAT NULL  DEFAULT '0' ,
   `rec` DOUBLE NULL DEFAULT '0' ,
-
   `total` DOUBLE NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -852,6 +910,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_ped` (
   `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
   `cantidad_a_servir` FLOAT NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -900,7 +959,8 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_pre` (
   `porc_rec` FLOAT NULL  DEFAULT '0' ,
   `rec` DOUBLE NULL DEFAULT '0' ,
   `total` DOUBLE NULL DEFAULT '0' ,
-  PRIMARY KEY (`id`) )
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,  
+PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
@@ -918,6 +978,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_res` (
   `fecha_reserva` DATE NULL DEFAULT NULL ,
   `reservado_hasta` DATE NULL DEFAULT NULL ,
   `importe_dto` DOUBLE NULL DEFAULT '0' ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -940,6 +1001,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_tpv` (
   `total` DOUBLE NULL DEFAULT '0' ,
   `subtotal` DOUBLE NULL DEFAULT '0' ,
   `fecha_linea` DATE NULL DEFAULT NULL ,
+  `promocion` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   INDEX `id_Articulo` (`id_articulo` ASC) )
 ENGINE = InnoDB

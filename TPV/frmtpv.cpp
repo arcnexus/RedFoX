@@ -5,6 +5,7 @@
 #include <QColor>
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate_totals.h"
+#include "../Auxiliares/refresca_ofertas.h"
 
 
 
@@ -24,12 +25,13 @@ FrmTPV::FrmTPV(QWidget *parent) :
     this->tipo_dto_tarifa = 0;
 
     oTpv = new tpv(this);
+    oRefresca = new refresca_ofertas(this);
+    ui->frame_ticket->setCurrentIndex(0);
+    ui->frameTeclado->setCurrentIndex(0);
+    ui->frmcontrol->setCurrentIndex(0);
 
 
-    //---------------
-    // Eventos
-    //---------------
-    ui->txtCodigo->installEventFilter(this);
+
 
     cargar_ticket(1);
 
@@ -47,11 +49,31 @@ FrmTPV::FrmTPV(QWidget *parent) :
     // Ofertas
     //----------------
     model_ofertas = new QSqlQueryModel(this);
-    model_ofertas->setQuery("select id,descripcion from articulos where mostrar_en_cuadro = 1",Configuracion_global->groupDB);
-    ui->tabla_ofertas->setModel(model_ofertas);
-    ui->tabla_ofertas->setColumnHidden(0,true);
-    model_ofertas->setHeaderData(1,Qt::Horizontal,tr("Artículo"));
+    oRefresca->model = model_ofertas; //Esto estaba al reves
+    oRefresca->tabla = ui->tabla_ofertas;
 
+
+//    oRefresca->start(); //no empieces el thread hasta que no hayas puesto las variables
+
+
+    //---------------
+    // Eventos
+    //---------------
+    this->installEventFilter(this);
+
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
+
+
+    //--------------------
+    // Carga de objetos
+    //--------------------
+    QSqlQueryModel * model_cajas = new QSqlQueryModel(this);
+    model_cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
+    ui->cboCajas->setModel(model_cajas);
 
 }
 
@@ -106,26 +128,18 @@ void FrmTPV::cargar_lineas(int id_cab)
     double precio= 0;
     double importe = 0;
     double total_ticket = 0;
+    double base_ticket = 0;
+    double iva_ticket = 0;
     double subtotal1 = 0;
     double subtotal2 = 0;
     double subtotal3 = 0;
     double subtotal4 = 0;
-    double base1 = 0;
-    double base2 = 0;
-    double base3 = 0;
-    double base4 = 0;
+
     double dto1 = 0;
     double dto2 = 0;
     double dto3 = 0;
     double dto4 = 0;
-    double iva1 = 0;
-    double iva2 = 0;
-    double iva3 = 0;
-    double iva4 = 0;
-    double total1 = 0;
-    double total2 = 0;
-    double total3 = 0;
-    double total4 = 0;
+
 
 
     int pos = -1;
@@ -157,7 +171,7 @@ void FrmTPV::cargar_lineas(int id_cab)
         //---------------------
         // totales
         //---------------------
-        total_ticket += importe;
+        base_ticket += importe;
 
         //---------------------
         // Desglose
@@ -165,30 +179,21 @@ void FrmTPV::cargar_lineas(int id_cab)
         if(porc_iva == oTpv->porc_iva1)
         {
             subtotal1 += importe;
-            base1 += importe;
-            iva1 += (base1 *(porc_iva/100));
-            total1 += importe;
         }
         if(porc_iva == oTpv->porc_iva2)
         {
             subtotal2 += importe;
-            base2 += importe;
-            iva2 += (base2 *(porc_iva/100));
-            total2 += importe;
+
         }
         if(porc_iva == oTpv->porc_iva3)
         {
             subtotal3 += importe;
-            base3 += importe;
-            iva3 += (base3 *(porc_iva/100));
-            total3 += importe;
+
         }
         if(porc_iva == oTpv->porc_iva4)
         {
             subtotal4 += importe;
-            base4 += importe;
-            iva4 += (base4 *(porc_iva/100));
-            total4 += importe;
+
         }
 
 
@@ -330,30 +335,19 @@ void FrmTPV::cargar_lineas(int id_cab)
                 if(porc_iva == oTpv->porc_iva1)
                 {
                     dto1 += valor_esp;
-                    base1 += valor_esp;
-                    iva1 += (base1 *(porc_iva/100));
-                    total1 += base1+iva1;
                 }
                 if(porc_iva == oTpv->porc_iva2)
                 {
                     dto2 += valor_esp;
-                    base2 += valor_esp;
-                    iva2 += (base2 *(porc_iva/100));
-                    total2 += base2 + iva2;
+
                 }
                 if(porc_iva == oTpv->porc_iva3)
                 {
                     dto3 += valor_esp;
-                    base3 += importe;
-                    iva3 += (base3 *(porc_iva/100));
-                    total3 += importe;
                 }
                 if(porc_iva == oTpv->porc_iva4)
                 {
                     dto4 += valor_esp;
-                    base4 += importe;
-                    iva4 += (base4 *(porc_iva/100));
-                    total4 += importe;
                 }
 
 
@@ -382,20 +376,32 @@ void FrmTPV::cargar_lineas(int id_cab)
     oTpv->dto3 = dto3;
     oTpv->dto4 = dto4;
 
-    oTpv->base1 = base1;
-    oTpv->base2 = base2;
-    oTpv->base3 = base3;
-    oTpv->base4 = base4;
+    oTpv->base1 = subtotal1 - dto1;
+    oTpv->base2 = subtotal2 - dto2;
+    oTpv->base3 = subtotal3 - dto3;
+    oTpv->base4 = subtotal4 - dto3;
 
-    oTpv->iva1 = iva1;
-    oTpv->iva2 = iva2;
-    oTpv->iva3 = iva3;
-    oTpv->iva4 = iva4;
+    oTpv->iva1 = oTpv->base1 *(oTpv->porc_iva1 /100);
+    oTpv->iva2 = oTpv->base2 * (oTpv->porc_iva2 /100);
+    oTpv->iva3 = oTpv->base3 * (oTpv->porc_iva3 /100);
+    oTpv->iva4 = oTpv->base4 * (oTpv->porc_iva4 /100);
 
-    oTpv->total1 = base1 + iva1;
-    oTpv->total2 = base2 + iva2;
-    oTpv->total3 = base3 + iva3;
-    oTpv->total4 = base4 + iva4;
+    oTpv->total1 = oTpv->base1 + oTpv->iva1;
+    oTpv->total2 = oTpv->base2 + oTpv->iva2;
+    oTpv->total3 = oTpv->base3 + oTpv->iva3;
+    oTpv->total4 = oTpv->base4 + oTpv->iva4;
+
+    base_ticket = oTpv->base1+oTpv->base2+oTpv->base3+oTpv->base4;
+
+    iva_ticket = oTpv->iva1 + oTpv->iva2 + oTpv->iva3 + oTpv->iva4;
+    total_ticket  = base_ticket + iva_ticket;
+
+    ui->lbl_base_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(base_ticket,'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
+    ui->lbl_iva_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(iva_ticket,'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
+    ui->lbl_total_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(total_ticket,'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
 
 }
 
@@ -421,89 +427,7 @@ void FrmTPV::on_btnBuscar_clicked()
 void FrmTPV::on_txtCodigo_editingFinished()
 {
     ui->txtCodigo->blockSignals(true);
-    if(ui->btnScanear->isChecked()){
-        Articulo oArt;
-        QMap <int,QSqlRecord> art;
-        QString error,clausula;
-        clausula = QString("codigo ='%1'").arg(ui->txtCodigo->text());
-        art = SqlCalls::SelectRecord("vistaart_tarifa",clausula,Configuracion_global->groupDB,error);
-        int id_articulo = 0;
-        QMapIterator <int,QSqlRecord> iter(art);
-        while(iter.hasNext()){
-            iter.next();
-            id_articulo = iter.value().value("id").toInt();
-        }
-
-        if(id_articulo > 0)
-        {
-            //-----------------------
-            // Inserto lineas venta
-            //-----------------------
-            // CAPTURO DATOS
-            //-----------------------
-
-            QString codigo,descripcion;
-            double precio;
-            codigo = art.value(id_articulo).value("codigo").toString();
-            descripcion = art.value(id_articulo).value("descripcion_reducida").toString();
-
-            if(this->tipo_dto_tarifa == 1)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto1").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 2)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto2").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 3)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto3").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 4)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                        *(art.value(id_articulo).value("porc_dto4").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 5)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto5").toDouble()/100));
-            else if (this->tipo_dto_tarifa == 6)
-                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
-                                                                         *(art.value(id_articulo).value("porc_dto6").toDouble()/100));
-            else
-                precio = art.value(id_articulo).value("pvp").toDouble();
-
-            //--------------
-            // IVA
-            //--------------
-            double iva_art = art.value(id_articulo).value("tipo_iva").toDouble();
-
-            //--------------------
-            // INSERCIÓN DE DATOS
-            //--------------------
-            QHash <QString,QVariant> h;
-            h["id_cab"] = this->id;
-            h["id_articulo"] = id_articulo;
-            h["codigo"] = codigo;
-            h["descripcion"] = descripcion;
-            h["precio"] = precio;
-            h["porc_iva"] = iva_art;
-            h["cantidad"] = 1;
-            h["importe"] = precio;
-            h["total"] = precio;
-
-            int new_id = SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
-            if(new_id == -1)
-                QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar: %1").arg(error),tr("Aceptar"));
-            else
-            {
-                cargar_lineas(this->id);
-                ui->tablaLineas_tiquet_actual->selectRow(this->row_tabla);
-                ui->txtCodigo->clear();
-            }
-
-        } else{
-            if(!ui->txtCodigo->text().isEmpty()) {
-                QMessageBox::warning(this,tr("Gestión de artículos"),tr("No se encuentra el artículo"),tr("Aceptar"));
-                ui->txtCodigo->clear();
-            }
-        }
-    } else if(ui->btnDto->isChecked())
+    if(ui->btnDto->isChecked())
     {
        ui->btnDto->setChecked(false);
        int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
@@ -513,13 +437,22 @@ void FrmTPV::on_txtCodigo_editingFinished()
        h["descripcion"] = tr("Descuento manual:").arg(ui->txtCodigo->text());
        h["tipo"] = "p";
        h["valor"] = ui->txtCodigo->text().toDouble();
-       int new_id = SqlCalls::SqlInsert(h,"lin_tpv_2",Configuracion_global->empresaDB,error);
-       if(new_id == -1)
-           QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar linea descuento"),tr("Aceptar"));
+       // -----------------------------------------------------------------------
+       // Si ya existe una línea de dto la borramos para substituir por la nueva
+       //------------------------------------------------------------------------
+       bool succes = SqlCalls::SqlDelete("lin_tpv_2",Configuracion_global->empresaDB,QString("id_cab=%1").arg(id),error);
+       if(succes){
+           // ------------------
+           // Insertamos línea
+           //-------------------
+           int new_id = SqlCalls::SqlInsert(h,"lin_tpv_2",Configuracion_global->empresaDB,error);
+           if(new_id == -1)
+               QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar linea descuento"),tr("Aceptar"));
+       }
        ui->txtCodigo->clear();
        cargar_lineas(this->id);
-       ui->btnScanear->setChecked(true);
-       on_btnScanear_clicked(true);
+      // ui->btnScanear->setChecked(true);
+
 
     } else if(ui->btnCantidad->isChecked())
     {
@@ -536,6 +469,8 @@ void FrmTPV::on_txtCodigo_editingFinished()
 
 
         cargar_lineas(this->id);
+//        if(this->scanning)
+//            ui->btnScanear->setChecked(true);
     } else if(ui->btnPrecio->isChecked())
     {
         int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
@@ -548,18 +483,32 @@ void FrmTPV::on_txtCodigo_editingFinished()
         if(!updated)
             QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
 
-
-        cargar_lineas(this->id);
+        if(ui->frame_ticket->currentIndex() == 0)
+        {
+            cargar_lineas(this->id);
+           // ui->btnScanear->setChecked(true);
+        }
+//    } else if(!ui->btnScanear->isChecked())
+//        if(ui->frame_ticket->currentIndex() ==0)
+//            ui->btnScanear->setChecked(true);
     }
     ui->txtCodigo->blockSignals(false);
-
+    //if(ui->frame_ticket->currentIndex() == 0)
+       // on_btnScanear_clicked(true);
+//    if(this->scanning)
+//        on_btnIntro_clicked();
 }
 
-void FrmTPV::on_btnScanear_clicked(bool checked)
+void FrmTPV::on_btnScanear_toggled(bool checked)
 {
     if(checked)
     {
-
+        ui->txtCodigo->clear();
+        ui->txtCodigo->setEnabled(true);
+        ui->btnCalculadora->setChecked(false);
+        ui->btnCantidad->setChecked(false);
+        ui->btnPrecio->setChecked(false);
+        ui->btnDto->setChecked(false);
         ui->txtCodigo->setFocus();
         ui->txtCodigo->setStyleSheet("background-color: rgb(0,200,0); font: 12pt 'Sans Serif';");
     } else
@@ -575,7 +524,7 @@ void FrmTPV::on_btnbotones_clicked()
     ui->frame_ticket->setGraphicsEffect(fade_effect);
     QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
     animationOp->setEasingCurve(QEasingCurve::Linear);
-    animationOp->setDuration(1000);
+    animationOp->setDuration(500);
     animationOp->setStartValue(1.0);
     animationOp->setEndValue(0.0);
     connect(animationOp,SIGNAL(finished()),this,SLOT(fin_fade_buttons()));
@@ -671,7 +620,22 @@ void FrmTPV::fin_fade_lista()
 
 void FrmTPV::on_btn1_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("1"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("1"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("1"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("1"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("1"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("1"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("1"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("1"));
 }
 
 void FrmTPV::on_btnBack_clicked()
@@ -681,42 +645,162 @@ void FrmTPV::on_btnBack_clicked()
 
 void FrmTPV::on_btn2_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("2"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("2"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("2"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("2"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("2"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("2"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("2"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("2"));
 }
 
 void FrmTPV::on_btn3_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("3"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("3"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("3"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("3"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("3"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("3"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("3"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("3"));
 }
 
 void FrmTPV::on_btn4_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("4"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("4"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("4"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("4"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("4"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("4"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("4"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("4"));
 }
 
 void FrmTPV::on_btn5_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("5"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("5"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("5"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("5"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("5"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("5"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("5"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("5"));
 }
 
 void FrmTPV::on_btn6_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("6"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("6"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("6"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("6"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("6"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("6"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("6"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("6"));
 }
 
 void FrmTPV::on_btn7_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("7"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("7"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("7"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("7"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("7"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("7"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("7"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("7"));
 }
 
 void FrmTPV::on_btn8_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("8"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("8"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("8"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("8"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("8"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("8"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("8"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("8"));
 }
 
 void FrmTPV::on_btn9_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("9"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("9"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("9"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("9"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("9"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("9"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("9"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("9"));
 }
 
 void FrmTPV::on_btnIntro_clicked()
@@ -740,11 +824,100 @@ void FrmTPV::on_btnIntro_clicked()
             ui->txtCodigo->setText(Configuracion_global->toFormatoMoneda(QString::number(resultado,'f',
                                                                   Configuracion_global->decimales_campos_totales)));
 
-    } else
+    } else if(!ui->frame_ticket->currentIndex()==3) // modo teclado
     {
         on_txtCodigo_editingFinished();
         ui->txtCodigo->clear();
+    } else if(ui->frame_ticket->currentIndex() == 3) // modo cobro ticket
+    {
+        calcularcambio();
     }
+
+    if(ui->btnScanear->isChecked()){
+        QMap <int,QSqlRecord> art;
+        QString error,clausula;
+        clausula = QString("codigo ='%1'").arg(ui->txtCodigo->text());
+        art = SqlCalls::SelectRecord("vistaart_tarifa",clausula,Configuracion_global->groupDB,error);
+        int id_articulo = 0;
+        QMapIterator <int,QSqlRecord> iter(art);
+        while(iter.hasNext()){
+            iter.next();
+            id_articulo = iter.value().value("id").toInt();
+        }
+
+        if(id_articulo > 0)
+        {
+            //-----------------------
+            // Inserto lineas venta
+            //-----------------------
+            // CAPTURO DATOS
+            //-----------------------
+
+            QString codigo,descripcion;
+            double precio;
+            codigo = art.value(id_articulo).value("codigo").toString();
+            descripcion = art.value(id_articulo).value("descripcion_reducida").toString();
+
+            if(this->tipo_dto_tarifa == 1)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto1").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 2)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto2").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 3)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto3").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 4)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                        *(art.value(id_articulo).value("porc_dto4").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 5)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto5").toDouble()/100));
+            else if (this->tipo_dto_tarifa == 6)
+                precio = art.value(id_articulo).value("pvp").toDouble()-(art.value(id_articulo).value("pvp").toDouble()
+                                                                         *(art.value(id_articulo).value("porc_dto6").toDouble()/100));
+            else
+                precio = art.value(id_articulo).value("pvp").toDouble();
+
+            //--------------
+            // IVA
+            //--------------
+            double iva_art = art.value(id_articulo).value("tipo_iva").toDouble();
+
+            //--------------------
+            // INSERCIÓN DE DATOS
+            //--------------------
+            QHash <QString,QVariant> h;
+            h["id_cab"] = this->id;
+            h["id_articulo"] = id_articulo;
+            h["codigo"] = codigo;
+            h["descripcion"] = descripcion;
+            h["precio"] = precio;
+            h["porc_iva"] = iva_art;
+            h["cantidad"] = 1;
+            h["importe"] = precio;
+            h["total"] = precio;
+
+            int new_id = SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
+            if(new_id == -1)
+                QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar: %1").arg(error),tr("Aceptar"));
+            else
+            {
+                cargar_lineas(this->id);
+                ui->tablaLineas_tiquet_actual->selectRow(this->row_tabla);
+                ui->txtCodigo->clear();
+            }
+
+        } else{
+            if(!ui->txtCodigo->text().isEmpty()) {
+                QMessageBox::warning(this,tr("Gestión de artículos"),tr("No se encuentra el artículo"),tr("Aceptar"));
+                ui->txtCodigo->clear();
+            }
+        }
+        ui->btnScanear->setChecked(true);
+        ui->txtCodigo->setFocus();
+    }
+
 }
 
 void FrmTPV::on_btnSumar_clicked()
@@ -817,10 +990,12 @@ void FrmTPV::on_btnPorc_clicked()
 
 void FrmTPV::on_btnCalculadora_clicked(bool checked)
 {
-    ui->btnPorc->setEnabled(checked);
+    ui->btnPorc->setEnabled(false);
     ui->btnMultiplicar->setEnabled(checked);
     ui->btnDividir->setEnabled(checked);
     ui->btnPrecio->setChecked(!checked);
+    ui->btnScanear->setChecked(false);
+    ui->txtCodigo->setEnabled(true);
     ui->txtCodigo->clear();
     ui->txtCodigo->setFocus();
 }
@@ -829,9 +1004,186 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(keyEvent->key() ==Qt::Key_Escape)
+            return true;
+        if(keyEvent->key() ==Qt::Key_E && ui->frame_ticket->currentIndex() ==3)
+        {
+            ui->btnEfectivo->setChecked(true);
+            on_btnEfectivo_clicked(true);
+            ui->txtEfectivo->setSelection(0,100);
+            return true;
+        }
+
+        if(keyEvent->key() == Qt::Key_T && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnTarjeta->setChecked(true);
+            on_btnTarjeta_clicked(true);
+            ui->txtTarjeta->setSelection(0,100);
+            return true;
+        }
+        if (keyEvent->key() ==Qt::Key_H && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnCheque->setChecked(true);
+            on_btnCheque_clicked(true);
+            ui->txtCheque->setSelection(0,100);
+            return true;
+        }
+        if( keyEvent->key() == Qt::Key_C && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnCredito->setChecked(true);
+            on_btnCredito_clicked(true);
+            ui->txtCredito->setSelection(0,100);
+            return  true;
+        }
+
+        if(keyEvent->key() == Qt::Key_V && ui->frame_ticket->currentIndex() == 3)
+        {
+            ui->btnVales->setChecked(true);
+            on_btnVales_clicked(true);
+            ui->txtVales->setSelection(0,100);
+            return true;
+        }
+
+        if(keyEvent->key() == Qt::Key_I && ui->frame_ticket->currentIndex() ==3)
+        {
+            ui->btnInternet->setChecked(true);
+            on_btnInternet_clicked(true);
+            ui->txtInternet->setSelection(0,100);
+            return true;
+        }
+
+        if(keyEvent->key() == Qt::Key_O && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnContinuarEdicionTicket_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_B  && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnCobrar__clicked(); // cobrar una vez entrados los datos btnCobrar_
+        }
+
+        if(keyEvent->key() == Qt::Key_N && ui->frame_ticket->currentIndex() ==3)
+        {
+            on_btnCobrar_imprimir_nuevo_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_A && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnComprar_imprimir_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_U && ui->frame_ticket->currentIndex() == 3)
+        {
+            on_btnCobrar_nuevo_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_F1)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            ui->btnCantidad->setChecked(true);
+            on_btnCantidad_clicked(true);
+            ui->txtCodigo->setFocus();
+        }
+        if(keyEvent->key() == Qt::Key_F2)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            ui->btnDto->setChecked(true);
+            on_btnDto_clicked(true);
+        }
+        if(keyEvent->key() == Qt::Key_F3)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            ui->btnScanear->setChecked(true);
+            //on_btnScanear_clicked(true);
+
+        }
+        if(keyEvent->key() == Qt::Key_F4)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            ui->btnPrecio->setChecked(true);
+            on_btnPrecio_clicked(true);
+
+        }
+        if(keyEvent->key() == Qt::Key_F5)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnBuscarArt_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_F6)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnAnadir_ticket_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_F7)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnPoner_en_espera_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_F8)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnCobrar_clicked(); // entrar los datos de cobro btncobrar
+        }
+
+        if(keyEvent->key() == Qt::Key_F9)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnTraspasar_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_F10)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnAsignarCliente_clicked();
+        }
+
+        if(keyEvent->key() == Qt::Key_F11)
+        {
+            if(ui->frame_ticket->currentIndex() == 3)
+            {
+               on_btnContinuarEdicionTicket_clicked();
+            }
+            on_btnBorrar_linea_clicked();
+        }
 
         if(obj == ui->txtCodigo)
             {
+            if(keyEvent->key() == Qt::Key_Enter)
+                    on_btnIntro_clicked();
+
             if (ui->btnCalculadora->isChecked())
             {
                 if(keyEvent->key() == 42) // *
@@ -893,15 +1245,24 @@ void FrmTPV::llenar_campos()
 
 void FrmTPV::on_btn0_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().append("0"));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("0"));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("0"));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append("0"));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append("0"));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append("0"));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append("0"));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append("0"));
 }
 
-
-
-void FrmTPV::on_btnScanear_clicked()
-{
-    ui->txtCodigo->setFocus();
-}
 
 void FrmTPV::on_lblDependiente_linkActivated(const QString &link)
 {
@@ -910,12 +1271,15 @@ void FrmTPV::on_lblDependiente_linkActivated(const QString &link)
 
 void FrmTPV::on_btnDto_clicked(bool checked)
 {
-    ui->btnScanear->setChecked(false);
-    ui->btnCalculadora->setChecked(false);
-    ui->btnCantidad->setChecked(false);
-    ui->btnPrecio->setChecked(false);
+    this->scanning = false;
     if(checked)
    {
+        ui->btnScanear->setChecked(false);
+        ui->btnCalculadora->setChecked(false);
+        ui->btnCantidad->setChecked(false);
+        ui->btnPrecio->setChecked(false);
+        ui->txtCodigo->setEnabled(true);
+        ui->txtCodigo->clear();
         ui->txtCodigo->setFocus();
         ui->txtCodigo->setStyleSheet("color:rgb(255,255,255);background-color: rgb(200,0,0); font: 12pt 'Sans Serif';");
     } else
@@ -924,14 +1288,16 @@ void FrmTPV::on_btnDto_clicked(bool checked)
 
 void FrmTPV::on_btnCantidad_clicked(bool checked)
 {
-    ui->btnScanear->setChecked(false);
-    ui->btnCalculadora->setChecked(false);
-    ui->btnDto->setChecked(false);
-    ui->btnPrecio->setChecked(false);
+    this->scanning = false;
     if(checked)
-   {
+    {
+        ui->btnScanear->setChecked(false);
+        ui->btnCalculadora->setChecked(false);
+        ui->btnDto->setChecked(false);
+        ui->btnPrecio->setChecked(false);
+        ui->txtCodigo->clear();
         ui->txtCodigo->setFocus();
-        ui->txtCodigo->setStyleSheet("color:rgb(255,255,255);background-color: rgb(0,200,0); font: 12pt 'Sans Serif';");
+        ui->txtCodigo->setStyleSheet("color:rgb(0,0,100);background-color: rgb(200,250,0); font: 12pt 'Sans Serif';");
     } else
         ui->txtCodigo->setStyleSheet("color:rgb(0,0,0);background-color:rgb(255, 255, 191); font: 12pt 'Sans Serif';");
 }
@@ -965,12 +1331,15 @@ void FrmTPV::on_btnBorrar_linea_clicked()
 
 void FrmTPV::on_btnPrecio_clicked(bool checked)
 {
-    ui->btnScanear->setChecked(false);
-    ui->btnCalculadora->setChecked(false);
-    ui->btnCantidad->setChecked(false);
-    ui->btnDto->setChecked(false);
+
     if(checked)
    {
+        ui->btnScanear->setChecked(false);
+        ui->btnCalculadora->setChecked(false);
+        ui->btnCantidad->setChecked(false);
+        ui->btnDto->setChecked(false);
+        ui->txtCodigo->clear();
+        ui->txtCodigo->setEnabled(true);
         ui->txtCodigo->setFocus();
         ui->txtCodigo->setStyleSheet("color:rgb(255,255,255);background-color: rgb(0,200,200); font: 12pt 'Sans Serif';");
     } else
@@ -979,15 +1348,28 @@ void FrmTPV::on_btnPrecio_clicked(bool checked)
 
 void FrmTPV::on_btnCobrar_clicked()
 {
-    this->teclado_height = ui->frameTeclado->height();
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    this->ticket_height = ui->frame_ticket->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
     animation->setDuration(600);
-    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
-    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
 
     //animation->setEasingCurve(QEasingCurve::OutBounce);
-    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_teclado()));
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_cobro()));
     animation->start();
+}
+void FrmTPV::final_anim_cobro()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+    animation->setDuration(800);
+    animation->setStartValue(QSize(ui->frame_ticket->width(),0));
+    animation->setEndValue(QSize(ui->frame_ticket->width(),this->ticket_height));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frame_ticket->setCurrentIndex(3);
+    animation->start();
+    calcularcambio();
+    ui->txtEfectivo->setFocus();
 }
 
 void FrmTPV::final_anim_teclado()
@@ -998,11 +1380,8 @@ void FrmTPV::final_anim_teclado()
     animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
 
     animation->setEasingCurve(QEasingCurve::OutBounce);
-    ui->frameTeclado->setCurrentIndex(1);
+    ui->frameTeclado->setCurrentIndex(0);
     animation->start();
-    calcularcambio();
-    ui->txtEfectivo->setSelection(0,100);
-    ui->txtEfectivo->setFocus();
 }
 
 void FrmTPV::on_btnTeclado_clicked()
@@ -1018,17 +1397,7 @@ void FrmTPV::on_btnTeclado_clicked()
     animation->start();
 }
 
-void FrmTPV::final_anim_cobro()
-{
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
-    animation->setDuration(800);
-    animation->setStartValue(QSize(ui->frameTeclado->width(),0));
-    animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
 
-    animation->setEasingCurve(QEasingCurve::OutBounce);
-    ui->frameTeclado->setCurrentIndex(0);
-    animation->start();
-}
 
 void FrmTPV::on_txtEfectivo_editingFinished()
 {
@@ -1048,6 +1417,15 @@ void FrmTPV::on_txtTarjeta_editingFinished()
 
 void FrmTPV::calcularcambio()
 {
+    ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtEfectivo->text()));
+    ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtTarjeta->text()));
+    ui->txtCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtCheque->text()));
+    ui->txtCredito->setText(Configuracion_global->toFormatoMoneda(ui->txtCredito->text()));
+    ui->txtVales->setText(Configuracion_global->toFormatoMoneda(ui->txtVales->text()));
+    ui->txtInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtInternet->text()));
+
+
+
     double efectivo,tarjeta,cheque,credito,internet,vales,pagado, pendiente,cambio;
     efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
     tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
@@ -1123,4 +1501,320 @@ void FrmTPV::on_btnDesglose_clicked()
                           oTpv->dto4,oTpv->base1,oTpv->base2,oTpv->base3, oTpv->base4,oTpv->porc_iva1,oTpv->porc_iva2,
                           oTpv->porc_iva3,oTpv->porc_iva4,oTpv->iva1,oTpv->iva2,oTpv->iva3,oTpv->iva4,oTpv->total1,
                           oTpv->total2,oTpv->total3,oTpv->total4);
+}
+
+void FrmTPV::on_btnBuscarArt_clicked()
+{
+    this->teclado_height = ui->frameTeclado->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_busqueda()));
+    animation->start();
+    ui->txtbuscar_art->setFocus();
+
+}
+
+void FrmTPV::final_anim_busqueda()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(800);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),0));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),this->teclado_height));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frameTeclado->setCurrentIndex(1);
+    animation->start();
+    calcularcambio();
+    ui->txtEfectivo->setSelection(0,100);
+    ui->txtEfectivo->setFocus();
+    on_txtbuscar_art_textEdited("");
+}
+
+void FrmTPV::on_rt_clicked()
+{
+    this->teclado_height = ui->frameTeclado->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frameTeclado, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frameTeclado->width(),ui->frameTeclado->height()));
+    animation->setEndValue(QSize(ui->frameTeclado->width(),0));
+
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_teclado()));
+    animation->start();
+}
+
+void FrmTPV::on_txtbuscar_art_textEdited(const QString &arg1)
+{
+    QMap <int, QSqlRecord> art;
+    QString error;
+    QString clausulas;
+    clausulas = "%"+arg1+"%";
+    art = SqlCalls::SelectRecord("vistaart_tarifa",clausulas,Configuracion_global->groupDB,error);
+    QMapIterator <int,QSqlRecord> iterator(art);
+    while(iterator.hasNext())
+    {
+        iterator.next();
+
+    }
+}
+
+void FrmTPV::on_btnAbrirCaja_clicked()
+{
+    this->control_width = ui->frmcontrol->width();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(0,ui->frmcontrol->height()));
+
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_abrir_caja()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_abrir_caja()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(0,ui->frmcontrol->height()));
+    animation->setEndValue(QSize(520,ui->frmcontrol->height()));
+    ui->frmcontrol->setCurrentIndex(1);
+    ui->spinHorarioAbertura->setTime(QTime::currentTime());
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    animation->start();
+}
+
+void FrmTPV::on_btnContinuarEdicionTicket_clicked()
+{
+    this->ticket_height = ui->frame_ticket->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
+
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_edicion_ticket()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+    animation->setDuration(800);
+    animation->setStartValue(QSize(ui->frame_ticket->width(),0));
+    animation->setEndValue(QSize(ui->frame_ticket->width(),this->ticket_height));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frame_ticket->setCurrentIndex(0);
+    animation->start();
+}
+
+void FrmTPV::on_btnEfectivo_clicked(bool checked)
+{
+    if(checked)
+    {
+        ui->txtEfectivo->clear();
+        ui->btnTarjeta->setChecked(false);
+        ui->btnCheque->setChecked(false);
+        ui->btnCredito->setChecked(false);
+        ui->btnVales->setChecked(false);
+        ui->btnInternet->setChecked(false);
+        calcularcambio();
+        ui->txtEfectivo->setFocus();
+    }
+}
+
+void FrmTPV::on_btnTarjeta_clicked(bool checked)
+{
+    if (checked)
+    {
+        ui->txtTarjeta->clear();
+        ui->btnEfectivo->setChecked(false);
+        ui->btnCheque->setChecked(false);
+        ui->btnCredito->setChecked(false);
+        ui->btnVales->setChecked(false);
+        ui->btnInternet->setChecked(false);
+        calcularcambio();
+        ui->txtTarjeta->setText(ui->txtPendiente->text());
+        ui->txtTarjeta->setFocus();
+    }
+}
+
+void FrmTPV::on_btnCheque_clicked(bool checked)
+{
+    if(checked)
+    {
+        ui->txtCheque->clear();
+        ui->btnTarjeta->setChecked(false);
+        ui->btnEfectivo->setChecked(false);
+        ui->btnCredito->setChecked(false);
+        ui->btnVales->setChecked(false);
+        ui->btnInternet->setChecked(false);
+        calcularcambio();
+        ui->txtCheque->setFocus();
+    }
+}
+
+void FrmTPV::on_btnCredito_clicked(bool checked)
+{
+    if(checked)
+    {
+        ui->txtCredito->clear();
+        ui->btnTarjeta->setChecked(false);
+        ui->btnCheque->setChecked(false);
+        ui->btnCredito->setChecked(false);
+        ui->btnVales->setChecked(false);
+        ui->btnInternet->setChecked(false);
+        calcularcambio();
+        ui->txtCredito->setFocus();
+    }
+
+}
+
+void FrmTPV::on_btnVales_clicked(bool checked)
+{
+    if(checked)
+    {
+        ui->txtVales->clear();
+        ui->btnTarjeta->setChecked(false);
+        ui->btnCheque->setChecked(false);
+        ui->btnCredito->setChecked(false);
+        ui->btnEfectivo->setChecked(false);
+        ui->btnInternet->setChecked(false);
+        calcularcambio();
+        ui->txtVales->setFocus();
+    }
+}
+
+void FrmTPV::on_btnInternet_clicked(bool checked)
+{
+    if(checked)
+    {
+        ui->txtInternet->clear();
+        ui->btnTarjeta->setChecked(false);
+        ui->btnCheque->setChecked(false);
+        ui->btnCredito->setChecked(false);
+        ui->btnVales->setChecked(false);
+        ui->btnEfectivo->setChecked(false);
+        calcularcambio();
+        ui->txtInternet->setFocus();
+    }
+}
+
+void FrmTPV::on_btnPunto_decimal_clicked()
+{
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().append(","));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().append(","));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().append(","));
+        if(ui->btnCredito->isChecked())
+            ui->txtCredito->setText(ui->txtCredito->text().append(","));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().append(","));
+        if(ui->btnInternet->isChecked())
+            ui->txtInternet->setText(ui->txtInternet->text().append(","));
+    } else
+        ui->txtCodigo->setText(ui->txtCodigo->text().append(","));
+}
+
+void FrmTPV::on_btnPoner_en_espera_clicked()
+{
+
+}
+
+void FrmTPV::on_btnCobrar__clicked()
+{
+    // TODO - Cobrar ticket
+    this->ticket_height = ui->frame_ticket->height();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
+
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
+    animation->start();
+}
+
+void FrmTPV::on_btnCobrar_imprimir_nuevo_clicked()
+{
+
+}
+
+void FrmTPV::on_btnComprar_imprimir_clicked()
+{
+
+}
+
+void FrmTPV::on_btnCobrar_nuevo_clicked()
+{
+
+}
+
+void FrmTPV::on_btnTraspasar_clicked()
+{
+
+}
+
+void FrmTPV::on_btnAsignarCliente_clicked()
+{
+
+}
+
+void FrmTPV::on_btnCancelar_caja_clicked()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(0,ui->frmcontrol->height()));
+
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_abrir_caja_cancelado()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_abrir_caja_cancelado()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(this->control_width,ui->frmcontrol->height()));
+
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    ui->frmcontrol->setCurrentIndex(0);
+    animation->start();
+}
+
+void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
+{
+    QHash <QString, QVariant> caja;
+    QString error;
+    caja["fecha_abertura"] = ui->calendarioAbertura->selectedDate();
+    caja["hora_abertura"] = ui->spinHorarioAbertura->text();
+    caja["id_usuario"] = Configuracion_global->id_usuario_activo;
+    caja["importe_abertura_dia"] = Configuracion_global->MonedatoDouble(ui->txtImporteAbertura->text());
+    caja["id_caja"] = SqlCalls::SelectOneField("cajas","id",QString("desc_caja= '%1'").arg(ui->cboCajas->currentText()),
+                                               Configuracion_global->empresaDB,error).toInt();
+    QStringList clausulas;
+    clausulas << QString("fecha_abertura = %1").arg(ui->calendarioAbertura->selectedDate().toString("yyyyMMdd"))
+              << QString("id_caja = %1").arg(caja.value("id_caja").toInt());
+    int id_val = SqlCalls::SelectOneField("cierrecaja","id",clausulas,Configuracion_global->empresaDB,error).toInt();
+    if(id_val > 0)
+        QMessageBox::warning(this,tr("Gestión de Caja"),tr("La caja ya está abierta para este día"),tr("Aceptar"));
+    else
+    {
+        int new_id = SqlCalls::SqlInsert(caja,"cierrecaja",Configuracion_global->empresaDB,error);
+        if(new_id == -1)
+            QMessageBox::warning(this,tr("Gestión de Caja"),tr("Ocurrió un error al abrir_caja : %1").arg(error),
+                                 tr("Aceptar"));
+        else
+        {
+            TimedMessageBox * t;
+            t = new TimedMessageBox(this,"Se ha abierto la caja.");
+        }
+    }
 }

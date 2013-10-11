@@ -91,6 +91,8 @@ private slots:
                               double dto3,double dto4,double base1, double base2, double base3, double base4, float porc_iva1,
                               float porc_iva2, float porc_iva3, float porc_iva4, double iva1, double iva2, double iva3, double iva4,
                               double total1,double total2,double total3,double total4);
+    void on_lineUsuarioActivo_clicked();
+
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

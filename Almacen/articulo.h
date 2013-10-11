@@ -15,6 +15,7 @@ public:
     QString descripcion;
     QString descripcion_reducida;
     int id_proveedor;
+    bool kit;
     QString proveedor;
     QString cCodProveedor;
     int id_familia;

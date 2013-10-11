@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 //#include "openrptLibs/include/data.h"
+#include "../Auxiliares/frmcambiarusuario.h"
 Configuracion * Configuracion_global = 0;
 
 void MainWindow::crear_barraMantenimiento()
@@ -715,7 +716,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QApplication::processEvents();
 
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-    ui->txtcCategoria->setText(settings.value("cCategoria").toString());
 
 // QString error;
 // QStringList w;
@@ -969,4 +969,10 @@ bool MainWindow::eventFilter(QObject * t, QEvent * e)
             showAvisos();
     }
     return false;
+}
+
+void MainWindow::on_lineUsuarioActivo_clicked()
+{
+    frmCambiarUsuario fUsuarios;
+    fUsuarios.exec();
 }

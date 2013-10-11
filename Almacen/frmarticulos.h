@@ -24,6 +24,7 @@ public:
     QSqlQueryModel *modelProv;
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
+    QSqlQueryModel * model_ofertas;
 
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
@@ -107,7 +108,36 @@ private slots:
 
     void on_btnExcepciones_clicked();
 
-    void on_pushButton_clicked();
+    void on_btnKit_2_clicked();
+
+    void on_btnAnadir_oferta_clicked();
+
+    void on_btnguardar_oferta_clicked();
+
+    void on_chkArticulo_promocionado_toggled(bool checked);
+
+    void on_tabla_ofertas_clicked(const QModelIndex &index);
+
+    void on_btnDeshacer_oferta_clicked();
+    
+
+    
+    void on_chkOferta_32_toggled(bool checked);
+
+    void on_chkOferta_dto_toggled(bool checked);
+
+    void on_chkOferta_pvp_toggled(bool checked);
+
+    void on_chkOferta_web_toggled(bool checked);
+
+    void on_btnExcepciones_3_clicked();
+
+
+    void on_btnKit_clicked();
+
+    void on_btnAnadir_clicked();
+
+    void on_btnBorrarKit_clicked();
 
     void mostrarBusqueda();
     void ocultarBusqueda();
@@ -140,8 +170,12 @@ private:
     QPushButton* shortCut;
     QSqlQueryModel *m;
 
+
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+    bool nueva_oferta;
+    int id_oferta = 0;
+
 };
 
 #endif // FRMARTICULOS_H

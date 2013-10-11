@@ -30,11 +30,10 @@ frmClientes::frmClientes(QWidget *parent) :
     formato_tabla_busquedas();
 
      h_Buscar["Población"]="poblacion";
+     h_Buscar["Teléfono"] = "telefono1";
      h_Buscar["Código cliente"]="codigo_cliente";
      h_Buscar["Cif / Nif"] = "cif_nif";
      h_Buscar["Nombre Fiscal"]="nombre_fiscal";
-
-
 
 
     // -----------------

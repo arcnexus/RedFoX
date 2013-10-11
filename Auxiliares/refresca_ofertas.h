@@ -14,6 +14,9 @@ protected:
 
 signals:
 
+public:
+    QSqlQueryModel * model;
+    QTableView * tabla;
 public slots:
 
 };

@@ -1430,28 +1430,21 @@ color: rgb(255, 255, 255);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_11">
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_41">
-                <property name="text">
-                 <string>Provincia:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1" colspan="2">
+              <item row="3" column="1" colspan="2">
                <widget class="QLineEdit" name="txtDireccion2_entrega">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="3" column="0">
                <widget class="QLabel" name="label_42">
                 <property name="text">
                  <string>Direccion 2:</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
+              <item row="4" column="1">
                <widget class="QLineEdit" name="txtCp_entrega">
                 <property name="maximumSize">
                  <size>
@@ -1467,28 +1460,28 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QLabel" name="label_43">
                 <property name="text">
                  <string>Dirección 1:</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="4" column="0">
                <widget class="QLabel" name="label_44">
                 <property name="text">
                  <string>Población:</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="2">
+              <item row="4" column="2">
                <widget class="QLineEdit" name="txtPoblacion_entrega">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
+              <item row="7" column="1">
                <spacer name="verticalSpacer_6">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -1501,28 +1494,31 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </spacer>
               </item>
-              <item row="4" column="2">
+              <item row="5" column="2">
                <widget class="QLineEdit" name="txtProvincia_entrega">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0">
+              <item row="6" column="0">
                <widget class="QLabel" name="label_45">
                 <property name="text">
                  <string>Pais:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1" colspan="2">
+              <item row="2" column="1" colspan="2">
                <widget class="QLineEdit" name="txtDireccion1_entrega">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0" colspan="3">
+              <item row="6" column="2">
+               <widget class="QComboBox" name="cboPais_entrega"/>
+              </item>
+              <item row="1" column="0" colspan="3">
                <widget class="QLabel" name="label_46">
                 <property name="styleSheet">
                  <string notr="true">background-color: #304163;
@@ -1536,8 +1532,15 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="2">
-               <widget class="QComboBox" name="cboPais_entrega"/>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_41">
+                <property name="text">
+                 <string>Provincia:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="3">
+               <widget class="QComboBox" name="cboDireccionesEntrega"/>
               </item>
              </layout>
             </widget>
