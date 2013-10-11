@@ -105,24 +105,22 @@ private slots:
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
-
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tablaContactos_doubleClicked(const QModelIndex &index);
-
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 private:
     Ui::frmProveedores *ui;
     QAction menuButton;
     QPushButton *push;
     QSqlQueryModel *model;
     void formato_tabla(QSqlQueryModel *modelo);
-    void filter_table();
+
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMPROVEEDORES_H

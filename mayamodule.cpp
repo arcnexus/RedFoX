@@ -32,25 +32,11 @@ bool MayaModule::userHaveAcces(int id_user)
     return (_user_level != SinAcceso);
 }
 
-void MayaModule::mouseMoveEvent(QMouseEvent * mouse)
-{
-    int x = mouse->pos().x();
-
-    if(x > this->width()-6 && _b_reducida)
-    {
-        emit showBusqueda();
-        _b_reducida = false;
-    }
-    if(x < this->width()-300 && !_b_reducida)
-    {
-        emit hideBusqueda();
-        _b_reducida = true;
-    }
-}
-
 void MayaModule::_showBarraBusqueda(BarraBusqueda *b)
 {
-    b->setGeometry(0,0,0,this->height()-80);
+    if(!_b_reducida)
+        return;
+    b->setGeometry(0,40,0,this->height()-60);
     b->show();
     QPropertyAnimation* animation0 = new QPropertyAnimation(b, "size",this);
     connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
@@ -72,31 +58,65 @@ void MayaModule::_showBarraBusqueda(BarraBusqueda *b)
 
     connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
     group->start();
+     _b_reducida = false;
 }
 
 void MayaModule::_hideBarraBusqueda(BarraBusqueda *b)
 {
+    if(_b_reducida)
+        return;
     QPropertyAnimation* animation0 = new QPropertyAnimation(b, "size",this);
     connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
-    animation0->setDuration(1000);
-    animation0->setEasingCurve(QEasingCurve::OutElastic);
+    animation0->setDuration(100);
+    animation0->setEasingCurve(QEasingCurve::Linear);
 
     animation0->setStartValue(QSize(250,b->height()));
-    animation0->setEndValue(QSize(0,b->height()));
+    animation0->setEndValue(QSize(20,b->height()));
 
     QPropertyAnimation* animation = new QPropertyAnimation(b, "pos",this);
-    animation->setDuration(1000);
-    animation->setEasingCurve(QEasingCurve::OutElastic);
+    animation->setDuration(100);
+    animation->setEasingCurve(QEasingCurve::Linear);
     animation->setStartValue(QPoint(this->width()-250,b->pos().y()));
-    animation->setEndValue(QPoint(this->width(),b->pos().y()));
+    animation->setEndValue(QPoint(this->width()-20,b->pos().y()));
 
     QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
     group->addAnimation(animation);
     group->addAnimation(animation0);
 
     connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
-    connect(group,SIGNAL(finished()),b,SLOT(hide()));
     group->start();
+    _b_reducida = true;
+}
+
+void MayaModule::_resizeBarraBusqueda(BarraBusqueda *b)
+{
+    b->resize(b->width(),this->height()-60);
+    if(_b_reducida)
+        b->move(this->width()-19,40);
+    else
+        b->move(this->width()-b->width(),40);
+}
+
+bool MayaModule::eventFilter(QObject *, QEvent *e)
+{
+    if(e->type()==QEvent::HoverMove)
+    {
+        QHoverEvent * ev = reinterpret_cast<QHoverEvent *>(e);
+        int x = ev->pos().x();
+
+        //if(x > this->width()-6 && _b_reducida)
+        //    emit showBusqueda();
+
+        if(x < this->width()-300 && !_b_reducida)
+            emit hideBusqueda();
+    }
+    else if(e->type() == QEvent::KeyRelease)
+    {
+        QKeyEvent * ev = reinterpret_cast<QKeyEvent *>(e);
+        if(ev->key() == Qt::Key_Escape)
+            return true;
+    }
+    return false;
 }
 
 void MayaModule::tryRegisterModule(module_zone zone, QString name)

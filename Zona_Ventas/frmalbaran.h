@@ -29,6 +29,7 @@ public:
     QString ModuleMenuPath(){return tr("");}
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+    void setUpBusqueda();
 signals:
 
 private slots:
@@ -70,24 +71,9 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_txtBuscar_textEdited(const QString &arg1);
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
-
     void on_btnForzar_edicion_clicked();
 
-
-    void on_btnAnadir_2_clicked();
-
     void on_btnFacturar_clicked();
-
-    void on_btnImprimir_2_clicked();
-
-    void on_btnborrar_2_clicked();
-
-    void on_btnEditar_2_clicked();
 
     void on_spinporc_Dto_editingFinished();
 
@@ -95,6 +81,7 @@ private slots:
 
     void mostrarBusqueda();
     void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;
@@ -105,13 +92,15 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     void formato_tabla();
-    void filter_table();
+
     void calcular_iva_gastos();
     TimedMessageBox *t;
     QSqlQueryModel *series;
     bool eventFilter(QObject *obj, QEvent *event);
 
     BarraBusqueda* m_busqueda;
+    QLabel* lblimpreso;
+    QLabel* lblfacturado;
 };
 
 #endif // FRMALBARAN_H

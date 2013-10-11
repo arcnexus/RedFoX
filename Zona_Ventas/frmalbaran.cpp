@@ -14,6 +14,64 @@
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
 
+void FrmAlbaran::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+
+    QStringList orden;
+    orden <<tr("Albarán")<<tr("Fecha")<<tr("Cif")<<tr("Cliente");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaran::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+    QPushButton* add2 = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir albarán"),this);
+    connect(add2,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
+    m_busqueda->addWidget(add2);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar albarán"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/impresora2.png"),tr("Imprimir albarán"),this);
+    connect(print,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
+    m_busqueda->addWidget(print);
+
+    QHBoxLayout* lay = new QHBoxLayout();
+    lblimpreso = new QLabel(tr("Impreso"),this);
+    lblfacturado = new QLabel(tr("FActurado"),this);
+    QString style = "background-color: rgb(255, 0, 0);color: rgb(255, 255, 255);";
+    lblimpreso->setStyleSheet(style);
+    lblfacturado->setStyleSheet(style);
+    lblimpreso->setAlignment(Qt::AlignHCenter);
+    lblfacturado->setAlignment(Qt::AlignHCenter);
+
+    lay->addWidget(lblimpreso);
+    lay->addWidget(lblfacturado);
+    m_busqueda->addLayout(lay);
+
+    lblfacturado->setVisible(false);
+    lblimpreso->setVisible(false);
+
+    QPushButton* borrar = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar Albarán"),this);
+    connect(borrar,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    m_busqueda->addWidget(borrar);
+
+    if(Configuracion_global->nivel == 7)
+    {
+        QPushButton* Forzar_edicion = new QPushButton(QIcon(":/Icons/PNG/abrecaja.png"),tr("Forzar edición"),this);
+        connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));
+        m_busqueda->addWidget(Forzar_edicion);
+    }
+}
+
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmAlbaran),
@@ -22,7 +80,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {
     ui->setupUi(this);
-    this->setMouseTracking(true);
 
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);
@@ -90,8 +147,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->btnBuscar->setEnabled(true);
     oAlbaran->id = -1;
     ui->btnSiguiente->setEnabled(true);
-    ui->lblfacturado->setVisible(false);
-    ui->lblimpreso->setVisible(false);
+
     //--------------
     // llenar tabla
     //--------------
@@ -104,12 +160,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     //--------------------
     // llenar cboBusqueda
     //--------------------
-    QStringList dbIndex;
-    dbIndex << tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
-    ui->cboOrden->addItems(dbIndex);
-    QStringList modo;
-    modo <<tr("Z-A") << tr("A-Z");
-    ui->cboModo->addItems(modo);
+
     ui->radBusqueda->setChecked(true);
     ui->stackedWidget->setCurrentIndex(1);
     //---------------------
@@ -120,10 +171,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->cboporc_iva_gasto1->setModel(iva);
     ui->cboporc_iva_gasto2->setModel(iva);
     ui->cboporc_iva_gasto3->setModel(iva);
-    if(Configuracion_global->nivel == 7)
-        ui->btnForzar_edicion->setVisible(true);
-    else
-        ui->btnForzar_edicion->setVisible(false);
+
     //-------------
     // Series
     //-------------
@@ -132,18 +180,17 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->cboSerie->setModel(series);
 
     ui->frameRad->setVisible(false);
-    ui->txtBuscar->setFocus();
 
     //-----------------
     // EVENTS
     //-----------------
+    this->installEventFilter(this);
     ui->txtcodigo_cliente->installEventFilter(this);
     ui->txtcp->installEventFilter(this);
     ui->txtCp_entrega->installEventFilter(this);
 
-    m_busqueda = new BarraBusqueda(this);
-    connect(this,&MayaModule::showBusqueda,this,&FrmAlbaran::mostrarBusqueda);
-    connect(m_busqueda,&BarraBusqueda::closeME,this,&FrmAlbaran::ocultarBusqueda);
+
+    setUpBusqueda();
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -198,7 +245,7 @@ void FrmAlbaran::LLenarCampos() {
     } else {
         ui->lbimpreso->setVisible(false);
     }
-    ui->lblimpreso->setVisible(lEstado);
+    lblimpreso->setVisible(lEstado);
     lEstado = oAlbaran->facturado;
     if ((lEstado == true)) {
         ui->lbfacturado->setVisible(true);
@@ -495,10 +542,7 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->txtalbaran->setReadOnly(true);
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
-    ui->btn_borrar->setEnabled(state);
-    ui->cboOrden->setEnabled(state);
-    ui->txtBuscar->setReadOnly(!state);
-    ui->cboModo->setEnabled(state);
+    ui->btn_borrar->setEnabled(state);    
     ui->btnFacturar->setEnabled(state);
 
     helper.blockTable(state);
@@ -646,6 +690,8 @@ void FrmAlbaran::on_btnAnterior_clicked()
 void FrmAlbaran::on_btnAnadir_clicked()
 {
     in_edit = false;
+    ui->radEdicion->setChecked(true);
+
     VaciarCampos();    
     LLenarAlbaran();
     //-----------------------
@@ -714,6 +760,8 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
 void FrmAlbaran::on_btnEditar_clicked()
 {
     in_edit = true;
+    ui->radEdicion->setChecked(true);
+
     if (oAlbaran->editable == true)
     {
             BloquearCampos(false);
@@ -1158,25 +1206,23 @@ void FrmAlbaran::formato_tabla()
     ui->table2->setItemDelegateForColumn(5,new MonetaryDelegate);
 }
 
-void FrmAlbaran::filter_table()
+void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
 {
-    //<< tr("Albarán") <<tr("Fecha") <<tr("cif") <<tr("cliente");
+    ui->stackedWidget->setCurrentIndex(1);
     QHash <QString,QString> h;
     h[tr("Albarán")] = "albaran";
     h[tr("Fecha")] = "fecha";
-    h[tr("cif")] = "cif";
-    h[tr("cliente")] = "cliente";
-    QString order = h.value(ui->cboOrden->currentText());
-    QString arg1 = ui->txtBuscar->text();
-    QString modo;
-    if(ui->cboModo->currentText() == tr("A-Z"))
+    h[tr("Cif")] = "cif";
+    h[tr("Cliente")] = "cliente";
+    QString order = h.value(orden);
+
+    if (modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
 
-    m->setQuery("select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+arg1.trimmed()+
+    m->setQuery("select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+texto.trimmed()+
                     "%' order by "+order +" "+modo,Configuracion_global->empresaDB);
-    //qDebug() << m->query().lastQuery();
 }
 
 void FrmAlbaran::calcular_iva_gastos()
@@ -1202,12 +1248,15 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
         }
         return false;
     }
+    else if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }
 
 void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
 {
-    Q_UNUSED(arg1);
-    filter_table();
+   // Q_UNUSED(arg1);
+   // filter_table();
 }
 
 void FrmAlbaran::on_table2_clicked(const QModelIndex &index)
@@ -1232,28 +1281,6 @@ void FrmAlbaran::on_table2_doubleClicked(const QModelIndex &index)
 void FrmAlbaran::on_btnBuscar_clicked()
 {
     ui->radBusqueda->setChecked(true);
-    on_txtBuscar_textEdited(ui->txtBuscar->text());
-}
-
-void FrmAlbaran::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-
-}
-
-void FrmAlbaran::on_btnLimpiar_clicked()
-{
-    ui->txtBuscar->clear();
-    ui->cboModo->setCurrentIndex(0);
-    ui->cboOrden->setCurrentIndex(0);
-    filter_table();
-}
-
-void FrmAlbaran::on_cboModo_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
 }
 
 void FrmAlbaran::on_btnForzar_edicion_clicked()
@@ -1274,14 +1301,6 @@ void FrmAlbaran::on_btnForzar_edicion_clicked()
         else
             QMessageBox::warning(this,tr("Editar albarán"),tr("Ocurrió un error : ")+error,tr("OK"));
     }
-}
-
-
-
-void FrmAlbaran::on_btnAnadir_2_clicked()
-{
-    ui->radEdicion->setChecked(true);
-    on_btnAnadir_clicked();
 }
 
 void FrmAlbaran::on_btnFacturar_clicked()
@@ -1493,23 +1512,6 @@ void FrmAlbaran::on_btnFacturar_clicked()
             QMessageBox::information(this,tr("Traspasar albarán"),tr("Este albarán ya ha sido traspasado\nNo puede traspasar dos veces el mismo albarán"),
                                          tr("Aceptar"));
     }
-}
-
-void FrmAlbaran::on_btnImprimir_2_clicked()
-{
-    on_btnImprimir_clicked();
-}
-
-void FrmAlbaran::on_btnborrar_2_clicked()
-{
-    on_btn_borrar_clicked();
-    on_txtBuscar_textEdited(ui->txtBuscar->text());
-}
-
-void FrmAlbaran::on_btnEditar_2_clicked()
-{
-    ui->radEdicion->setChecked(true);
-    on_btnEditar_clicked();
 }
 
 void FrmAlbaran::on_spinporc_Dto_editingFinished()

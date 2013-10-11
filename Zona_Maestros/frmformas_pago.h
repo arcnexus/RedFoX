@@ -22,7 +22,7 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     
-    QPushButton* wantShortCut(bool& ok) {ok = false; return push;}
+    QPushButton* wantShortCut(bool& ok) {ok = false; return 0;}
 
 private slots:
     void on_tabla_buscar_doubleClicked(const QModelIndex &index);
@@ -43,17 +43,7 @@ private slots:
 
     void on_btndeshacer_2_clicked();
 
-    void on_stackedWidget_currentChanged(int arg1);
-
-    void on_btnAnadir_2_clicked();
-
     void on_btnEditar_2_clicked();
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
 
     void on_btn_borrar_clicked();
 
@@ -61,19 +51,25 @@ private slots:
 
     void on_txtcod_cuenta_contable_editingFinished();
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmFormas_pago *ui;
     QSqlQueryModel *m;
     QAction menuButton;
-    QPushButton * push;
     vencimientos * oVtos;
     bool anadiendo,buscando;
     void bloquear_campos(bool state);
     void llenar_campos();
     void llenar_objeto();
-    void refrescar_tabla();
+
     bool eventFilter(QObject *obj, QEvent *event);
     void consultar_cuenta();
+
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMFORMAS_PAGO_H

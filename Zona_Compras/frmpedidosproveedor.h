@@ -32,6 +32,8 @@ public:
 signals:
 
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 private slots:
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle *ld);
@@ -59,29 +61,28 @@ private slots:
     void cargar_tabla_entregas();
     void on_btnImprimir_clicked();
 
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tabla_doubleClicked(const QModelIndex &index);
 
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_btnBuscar_clicked();
 
-    void on_cboModo_currentIndexChanged(const QString &arg1);
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_btnLimpiar_clicked();
-
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
 
     void formatotabla();
-    void filter_table();
+
     void on_btnSiguiente_clicked();
 
     void on_btnAnterior_clicked();
 
-private:
+
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
+
     PedidoProveedor pedido;
 
     Ui::FrmPedidosProveedor *ui;

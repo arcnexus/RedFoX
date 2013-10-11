@@ -65,27 +65,11 @@ private slots:
 
     void on_radBusqueda_toggled(bool checked);
 
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
-    void on_btnBuscar_clicked();
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_btnAnadir_2_clicked();
-
-    void on_btnEditar_2_clicked();
-
     void on_btnImprimir_2_clicked();
-
-    void on_btnBorrar_2_clicked();
 
     void on_spin_porc_dto_pp_editingFinished();
 
@@ -100,6 +84,10 @@ private slots:
     void SpinGastoDist1_valueChanged(double arg1);
     void SpinGastoDist2_valueChanged(double arg1);
     void SpinGastoDist3_valueChanged(double arg1);
+
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::frmPedidos *ui;
 
@@ -109,7 +97,7 @@ private:
     void BloquearCampos(bool state);
     void LLenarPedido();
     void formato_tabla();
-    void filter_table();
+
     void calcular_iva_gastos();
     void buscar_transportista();
 
@@ -125,6 +113,10 @@ private:
     QSqlQueryModel *m;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
+
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMPEDidOS_H

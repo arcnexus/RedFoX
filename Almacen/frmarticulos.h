@@ -99,19 +99,9 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_cboOrden_busquedas_currentIndexChanged(const QString &arg1);
-
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
 
     void on_btnExcepciones_2_clicked();
 
@@ -119,6 +109,9 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 public slots:
     void AnadirSeccion();
 
@@ -133,7 +126,7 @@ private:
     void VaciarCampos();
     void ChangeValues_TablaProveedores(int row, int column);
     void formato_tabla();
-    void filter_table();
+
 
     QListView *lista;
     QDialog *ventana;
@@ -146,6 +139,9 @@ private:
     QAction menuButton;
     QPushButton* shortCut;
     QSqlQueryModel *m;
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMARTICULOS_H

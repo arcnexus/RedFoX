@@ -76,8 +76,6 @@ private slots:
 
     void on_cboVer_currentTextChanged(const QString &arg1);
 
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_btnAsignarTransportista_clicked();
 
     void on_tabla_facturas_doubleClicked(const QModelIndex &index);
@@ -88,8 +86,6 @@ private slots:
     void on_btnArticulos_clicked();
 
     void on_cboseries_currentIndexChanged(const QString &arg1);
-
-    void on_btnClear_clicked();
 
     void on_cboBuscar_currentIndexChanged(const QString &arg1);
 
@@ -105,6 +101,9 @@ private slots:
 
     void on_btnGuardar_clicked();
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -120,9 +119,12 @@ private:
     QHash<QString,QString> h_Buscar;
     QSqlQueryModel *m_facturas;
     void formato_tabla_facturas(QSqlQueryModel &modelo);
-    void filtro_tabla();
+
     bool eventFilter(QObject *obj, QEvent *event);
     void buscar_poblacion(int tipo);
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMFACTURAS_H

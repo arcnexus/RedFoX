@@ -66,20 +66,6 @@ frmProveedores::frmProveedores(QWidget *parent) :
     // -----------------------
     ui->btnGuardarContacto->setVisible(false);
 
-    //------------------------
-    // Combo ordenar por
-    //------------------------
-    QStringList orden;
-    orden <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono") << tr("Persona contacto");
-    ui->cboOrden->addItems(orden);
-
-    //------------------------
-    // COMBO Modo
-    //------------------------
-    QStringList modo;
-    modo << tr("A-Z") << tr("Z-A");
-    ui->cboModo->addItems(modo);
-
     //---------------------------
     // TABLA PRINCIPAL BUSQUEDAS
     //---------------------------
@@ -100,6 +86,8 @@ frmProveedores::frmProveedores(QWidget *parent) :
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     BloquearCampos(true);
     ui->stackedWidget->setCurrentIndex(1);
+
+    setUpBusqueda();
 }
 
 frmProveedores::~frmProveedores()
@@ -328,9 +316,6 @@ void frmProveedores::BloquearCampos(bool state)
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
-    ui->cboOrden->setEnabled(state);
-    ui->txtBuscar->setReadOnly(!state);
-    ui->cboModo->setEnabled(state);
     ui->btnAnadir_persona_contacto->setEnabled(!state);
 
 
@@ -1171,7 +1156,7 @@ void frmProveedores::formato_tabla(QSqlQueryModel *modelo)
    }
 }
 
-void frmProveedores::filter_table()
+void frmProveedores::filter_table(QString texto, QString orden, QString modo)
 {
     QHash <QString, QString> h;
     h["Proveedor"] = "proveedor";
@@ -1179,10 +1164,9 @@ void frmProveedores::filter_table()
     h["CIF"] = "cif";
     h["Teléfono"] = "telefono1";
     h["Persona contacto"] = "persona_contacto";
-    QString campo = h.value(ui->cboOrden->currentText());
-    QString arg1 = ui->txtBuscar->text();
-    QString modo;
-    if(ui->cboModo->currentText() == tr("A-Z"))
+    QString campo = h.value(orden);
+
+    if(modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
@@ -1190,10 +1174,30 @@ void frmProveedores::filter_table()
 
     model = new QSqlQueryModel(this);
     QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores "
-            "where " +campo+" like '%"+arg1.trimmed()+"%' order by "+campo+" "+modo;
+            "where " +campo+" like '%"+texto.trimmed()+"%' order by "+campo+" "+modo;
 
     model->setQuery(cSQL,Configuracion_global->groupDB);
-    ui->tabla->setModel(model);
+}
+
+void frmProveedores::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono") << tr("Persona contacto");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&frmProveedores::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
 }
 
 void frmProveedores::on_tabla_clicked(const QModelIndex &index)
@@ -1211,36 +1215,24 @@ void frmProveedores::on_tabla_doubleClicked(const QModelIndex &index)
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-
-
-void frmProveedores::on_btnLimpiar_clicked()
-{
-    ui->cboModo->setCurrentIndex(0);
-    ui->cboOrden->setCurrentIndex(0);
-    ui->txtBuscar->clear();
-    filter_table();
-}
-
-void frmProveedores::on_cboOrden_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-void frmProveedores::on_cboModo_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-void frmProveedores::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
 void frmProveedores::on_tablaContactos_doubleClicked(const QModelIndex &index)
 {
+    editar_contacto();
+}
 
-        editar_contacto();
+void frmProveedores::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void frmProveedores::ocultarBusqueda()
+{
+    _hideBarraBusqueda(m_busqueda);
+}
+
+bool frmProveedores::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }

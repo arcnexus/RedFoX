@@ -18,6 +18,9 @@ BarraAvisos > QStackedWidget
 {
     background: none;
 }
+BarraBusqueda{
+    background-color: rgba(170, 170, 127,0);
+}
 
 QTableView::header
 {

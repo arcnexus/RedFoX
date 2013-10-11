@@ -42,10 +42,10 @@ signals:
     void hideBusqueda();
 public slots:
 protected:
-    void mouseMoveEvent(QMouseEvent *);
     void _showBarraBusqueda(BarraBusqueda* b);
     void _hideBarraBusqueda(BarraBusqueda* b);
-
+    void _resizeBarraBusqueda(BarraBusqueda* b);
+    bool eventFilter(QObject *, QEvent *);
 private:
     void tryRegisterModule(module_zone zone , QString name);
     void RegisterModule(module_zone zone , QString name);

@@ -63,16 +63,13 @@ private slots:
 
     void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
 
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
-
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;
@@ -85,9 +82,14 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     void formato_tabla();
-    void filter_table();
+
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 signals:
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 
 #endif // FRMALBARANPROVEEDOR_H

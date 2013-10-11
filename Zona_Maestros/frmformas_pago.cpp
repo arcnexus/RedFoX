@@ -6,9 +6,7 @@
 FrmFormas_pago::FrmFormas_pago(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmFormas_pago),
-  menuButton(QIcon(":/Icons/PNG/fpagos.png"),tr("Formas de Pago"),this),
-  push(new QPushButton(QIcon(":/Icons/PNG/transport.png"),"",this))
-
+    menuButton(QIcon(":/Icons/PNG/fpagos.png"),tr("Formas de Pago"),this)
 {
     ui->setupUi(this);
     //-------------------
@@ -36,16 +34,13 @@ FrmFormas_pago::FrmFormas_pago(QWidget *parent) :
         ui->tabla_buscar->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    QStringList orden,modo;
 
-    orden <<  tr("Código") << tr("Descripción");
-    modo << tr("A-Z") <<tr("Z-A");
-    ui->cboOrden->addItems(orden);
-    ui->cboModo->addItems(modo);
     ui->stackedWidget->setCurrentIndex(0);
-    ui->txtBuscar->setFocus();
+
     oVtos = new vencimientos(this);
     bloquear_campos(true);
+
+    setUpBusqueda();
 }
 
 FrmFormas_pago::~FrmFormas_pago()
@@ -103,22 +98,19 @@ void FrmFormas_pago::llenar_objeto()
 
 }
 
-void FrmFormas_pago::refrescar_tabla()
+void FrmFormas_pago::filter_table(QString texto, QString orden, QString modo)
 {
-    // <<  tr("Código") << tr("Descripción")
     QHash <QString,QString> h;
     h[tr("Código")] = "codigo";
     h[tr("Descripción")] = "forma_pago";
-    QString order = h.value(ui->cboOrden->currentText());
-    QString arg1 = ui->txtBuscar->text();
-    QString modo;
-    if(ui->cboModo->currentText() == tr("A-Z"))
+    QString order = h.value(orden);
+    if(modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
 
     m->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos,"
-                "numero_plazos, cuenta_cont_pago  from formpago where "+order+" like '%"+arg1.trimmed()+
+                "numero_plazos, cuenta_cont_pago  from formpago where "+order+" like '%"+texto.trimmed()+
                 "%' order by "+order +" "+modo,Configuracion_global->groupDB);
 }
 
@@ -134,8 +126,10 @@ bool FrmFormas_pago::eventFilter(QObject *obj, QEvent *event)
                 consultar_cuenta();
             }
         }
-        return false;
     }
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }
 
 void FrmFormas_pago::consultar_cuenta()
@@ -179,6 +173,43 @@ void FrmFormas_pago::consultar_cuenta()
     buscando = false;
 }
 
+void FrmFormas_pago::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  <<  tr("Código") << tr("Descripción");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmFormas_pago::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    m_busqueda->addWidget(add);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    m_busqueda->addWidget(print);
+
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    m_busqueda->addWidget(del);
+}
+
 void FrmFormas_pago::on_btnSiguiente_2_clicked()
 {
     QStringList opciones, extras;
@@ -200,11 +231,11 @@ void FrmFormas_pago::on_btnAnterior_2_clicked()
 void FrmFormas_pago::on_btnBuscar_2_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
-    ui->txtBuscar->setFocus();
 }
 
 void FrmFormas_pago::on_btnAnadir_3_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     anadiendo = true;
     oVtos->clear();
     llenar_campos();
@@ -252,8 +283,6 @@ void FrmFormas_pago::on_btnEditar_3_clicked()
     bloquear_campos(false);
     Configuracion_global->groupDB.transaction();
     ui->txtcod_forma_pago->setFocus();
-
-
 }
 
 void FrmFormas_pago::on_btnGuardar_2_clicked()
@@ -279,19 +308,6 @@ void FrmFormas_pago::on_btndeshacer_2_clicked()
     bloquear_campos(true);
 }
 
-
-void FrmFormas_pago::on_stackedWidget_currentChanged(int arg1)
-{
-    if(arg1 == 0)
-        refrescar_tabla();
-}
-
-void FrmFormas_pago::on_btnAnadir_2_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(1);
-    on_btnAnadir_3_clicked();
-}
-
 void FrmFormas_pago::on_btnEditar_2_clicked()
 {
     QModelIndex  index = ui->tabla_buscar->currentIndex();
@@ -303,27 +319,6 @@ void FrmFormas_pago::on_btnEditar_2_clicked()
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(1);
     on_btnEditar_3_clicked();
-}
-
-void FrmFormas_pago::on_btnLimpiar_clicked()
-{
-    ui->cboModo->setCurrentIndex(1);
-    ui->cboOrden->setCurrentIndex(1);
-    ui->txtBuscar->clear();
-    refrescar_tabla();
-    ui->txtBuscar->setFocus();
-}
-
-void FrmFormas_pago::on_cboOrden_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    refrescar_tabla();
-}
-
-void FrmFormas_pago::on_cboModo_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    refrescar_tabla();
 }
 
 void FrmFormas_pago::on_btn_borrar_clicked()
@@ -364,4 +359,14 @@ void FrmFormas_pago::on_txtcod_cuenta_contable_editingFinished()
                                                       Configuracion_global->contaDB,error).toString());
     if(!error.isEmpty())
         QMessageBox::warning(this,tr("Formas de pago"),tr("Error al asociar cuenta contable: %1").arg(error),tr("Aceptar"));
+}
+
+void FrmFormas_pago::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void FrmFormas_pago::ocultarBusqueda()
+{
+     _hideBarraBusqueda(m_busqueda);
 }

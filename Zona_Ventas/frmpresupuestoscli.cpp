@@ -116,25 +116,10 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->tabla->setModel(m);
     formato_tabla();
 
-    //------------------------
-    // orden
-    //------------------------
-    QStringList orden;
-    orden << tr("presupuesto") <<tr("cliente") << tr("teléfono");
-    ui->cboOrden->addItems(orden);
-
-    //--------------------
-    // modo
-    //--------------------
-    QStringList modo;
-    modo <<tr("Z-A") << tr("A-Z");
-    ui->cboModo->addItems(modo);
-
-    //----------------------
+       //----------------------
     // Busqueda
     //----------------------
     ui->stackedWidget->setCurrentIndex(1);
-    ui->txtBuscar->setFocus();
 
     //---------------------
     // Eventos
@@ -143,7 +128,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtcp->installEventFilter(this);
     ui->txtCP_entrega->installEventFilter(this);
 
-
+    setUpBusqueda();
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -567,9 +552,6 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtpresupuesto->setReadOnly(true);
-    ui->txtBuscar->setReadOnly(!state);
-    ui->cboOrden->setEnabled(state);
-    ui->cboModo->setEnabled(state);
     ui->btnImprimir->setEnabled(true);
     ui->btn_convertir->setEnabled(state);
 }
@@ -704,9 +686,8 @@ void FrmPresupuestosCli::on_btnGuardar_clicked()
 
 void FrmPresupuestosCli::on_btnBuscar_clicked()
 {
-    filter_table();
     ui->stackedWidget->setCurrentIndex(1);
-    ui->txtBuscar->setFocus();
+    mostrarBusqueda();
 }
 
 void FrmPresupuestosCli::on_botBuscarCliente_clicked()
@@ -1673,23 +1654,23 @@ void FrmPresupuestosCli::formato_tabla()
     }
 }
 
-void FrmPresupuestosCli::filter_table()
+void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo)
 {
 
     QHash <QString,QString> h;
     h[tr("presupuesto")] = "presupuesto";
     h[tr("cliente")] = "cliente";
     h[tr("teléfono")] = "telefono";
-    QString arg1 = ui->txtBuscar->text();
-    QString orden = h.value(ui->cboOrden->currentText());
-    QString modo;
-    if(ui->cboModo->currentText() == tr("A-Z"))
+
+    QString order = h.value(orden);
+
+    if(modo == tr("A-Z"))
         modo = "";
     else
         modo = "Desc";
 
-    m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+orden+
-                " like '%"+arg1+"%' order by "+orden+" "+modo, Configuracion_global->empresaDB);
+    m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+order+
+                " like '%"+texto+"%' order by "+order+" "+modo, Configuracion_global->empresaDB);
 }
 
 void FrmPresupuestosCli::buscar_poblacion(int tipo)
@@ -1742,9 +1723,41 @@ void FrmPresupuestosCli::buscar_poblacion(int tipo)
 
 }
 
-void FrmPresupuestosCli::on_txtBuscar_textEdited(const QString &arg1)
+void FrmPresupuestosCli::setUpBusqueda()
 {
-    filter_table();
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  << tr("presupuesto") <<tr("cliente") << tr("teléfono");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmPresupuestosCli::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    m_busqueda->addWidget(add);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    m_busqueda->addWidget(print);
+
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    m_busqueda->addWidget(del);
 }
 
 void FrmPresupuestosCli::on_tabla_clicked(const QModelIndex &index)
@@ -1752,7 +1765,6 @@ void FrmPresupuestosCli::on_tabla_clicked(const QModelIndex &index)
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(id));
     //LLenarCampos();
-
 }
 
 void FrmPresupuestosCli::on_tabla_doubleClicked(const QModelIndex &index)
@@ -1769,20 +1781,6 @@ void FrmPresupuestosCli::on_btn_convertir_clicked()
 
 }
 
-void FrmPresupuestosCli::on_cboOrden_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-void FrmPresupuestosCli::on_cboModo_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-
-
 void FrmPresupuestosCli::on_btnDesbloquear_clicked()
 {
     QModelIndex index = ui->tabla->currentIndex();
@@ -1798,29 +1796,6 @@ void FrmPresupuestosCli::on_btnDesbloquear_clicked()
     LLenarCampos();
     ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(true);
-}
-
-void FrmPresupuestosCli::on_btnLimpiar_clicked()
-{
-    ui->cboModo->setCurrentIndex(-1);
-    ui->cboOrden->setCurrentIndex(-1);
-    ui->txtBuscar->clear();
-    filter_table();
-    ui->txtBuscar->setFocus();
-}
-
-void FrmPresupuestosCli::on_cboOrden_currentIndexChanged(int index)
-{
-    Q_UNUSED(index);
-    filter_table();
-    ui->txtBuscar->setFocus();
-}
-
-void FrmPresupuestosCli::on_cboModo_currentIndexChanged(int index)
-{
-    Q_UNUSED(index);
-    filter_table();
-    ui->txtBuscar->setFocus();
 }
 
 void FrmPresupuestosCli::on_btnAnadir_2_clicked()
@@ -1899,6 +1874,16 @@ void FrmPresupuestosCli::on_spin_porc_dto_pp_editingFinished()
     helper.fillTable("empresa","lin_pre",filter);
 }
 
+void FrmPresupuestosCli::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void FrmPresupuestosCli::ocultarBusqueda()
+{
+    _hideBarraBusqueda(m_busqueda);
+}
+
 bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
@@ -1918,7 +1903,8 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 buscar_poblacion(2);
         }
-        return false;
     }
-
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }

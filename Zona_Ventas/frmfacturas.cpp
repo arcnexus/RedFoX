@@ -71,19 +71,6 @@ frmFacturas::frmFacturas( QWidget *parent) :
     h_Buscar["CIF / NIF"] = "cif";
     h_Buscar["Total"] = "total";
 
-    ui->cboBuscar->addItem("Factura");
-    ui->cboBuscar->addItem("Código cliente");
-    ui->cboBuscar->addItem("Cliente");
-    ui->cboBuscar->addItem("Fecha Factura");
-    ui->cboBuscar->addItem("CIF/NIF");
-    ui->cboBuscar->addItem("Total");
-
-    //-----------------
-    // MODO
-    //-----------------
-    QStringList modo;
-    modo  <<tr("Z-A") << tr("A-Z");
-    ui->cboModo->addItems(modo);
 
     //-----------------
     // tablafacturas
@@ -107,12 +94,12 @@ frmFacturas::frmFacturas( QWidget *parent) :
     series2_l.append(tr("TODAS"));
     while (series2.next())
         series2_l.append(series2.record().value("serie").toString());
-    ui->cboseries->addItems(series2_l);
+ /*   ui->cboseries->addItems(series2_l);
     if(!Configuracion_global->serie.isEmpty())
     {
         int index = ui->cboseries->findText(Configuracion_global->serie);
         ui->cboseries->setCurrentIndex(index);
-    }
+    }*/
 
     BloquearCampos(true);
     /* -----------------------------------------
@@ -177,10 +164,6 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->btnImprimir->setEnabled(false);
     ui->btnBuscar->setEnabled(true);
     ui->cboVer->setEnabled(true);
-    ui->cboBuscar->setEnabled(true);
-    ui->txtBuscar->setEnabled(true);
-    ui->txtBuscar->setReadOnly(false);
-    ui->cboseries->setEnabled(true);
     oFactura->id = -1;
 
     //-------------
@@ -191,6 +174,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->txtCp_entrega->installEventFilter(this);
     ui->tabla_facturas->installEventFilter(this);
 
+    setUpBusqueda();
 }
 
 frmFacturas::~frmFacturas()
@@ -510,12 +494,7 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btnAsignarTransportista->setEnabled(!state);
     ui->btnBuscar->setEnabled(state);
     ui->cboVer->setEnabled(state);
-    ui->cboBuscar->setEnabled(state);
-    ui->txtBuscar->setEnabled(state);
-    ui->txtBuscar->setReadOnly(!state);
-    ui->cboseries->setEnabled(state);
-    ui->cboModo->setEnabled(state);
-}
+  }
 
 void frmFacturas::LLenarFactura() {
     oFactura->codigo_cliente = (ui->txtcodigo_cliente->text());
@@ -1075,6 +1054,7 @@ void frmFacturas::on_radEditar_toggled(bool checked)
 
 void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
 {
+    /*
     m_facturas = new QSqlQueryModel(this);
     QString indice_tabla = h_Buscar.value(arg1);
     if(indice_tabla.isEmpty())
@@ -1120,14 +1100,9 @@ void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
 
     m_facturas->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->tabla_facturas->setModel(m_facturas);
-    formato_tabla_facturas(*m_facturas);
+    formato_tabla_facturas(*m_facturas);*/
 }
 
-void frmFacturas::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filtro_tabla();
-}
 
 void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
 {
@@ -1146,22 +1121,24 @@ void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
     }
 }
 
-void frmFacturas::filtro_tabla()
+void frmFacturas::filter_table(QString texto, QString orden, QString modo)
 {
-    QString indice_tabla = h_Buscar.value(ui->cboBuscar->currentText());
+    QString indice_tabla = h_Buscar.value(orden);
     if(indice_tabla.isEmpty())
         indice_tabla = "factura";
-    QString modo;
-    if (ui->cboModo->currentText() == tr("A-Z"))
+
+    if (modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
+
     QString order;
     if(indice_tabla == "factura")
         order = "fecha+serie+factura";
     else
         order = indice_tabla;
 
+    /*
     if(ui->cboseries->currentText() == tr("TODAS"))
     {
         if (ui->cboVer->currentText() == "Borradores")
@@ -1189,7 +1166,7 @@ void frmFacturas::filtro_tabla()
                                  " and serie ='"+ui->cboseries->currentText() +"'"
                                  " order by "+order +" "+modo,Configuracion_global->empresaDB);
 
-    }
+    }*/
     //qDebug() << m_facturas->query().lastQuery();
 
     ui->tabla_facturas->setModel(m_facturas);
@@ -1219,8 +1196,10 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
         if (obj == ui->tabla_facturas)
             if(keyEvent->key() == Qt::Key_Return)
                 on_tabla_facturas_doubleClicked(ui->tabla_facturas->currentIndex());
-        return false;
     }
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }
 
 void frmFacturas::buscar_poblacion(int tipo)
@@ -1270,6 +1249,43 @@ void frmFacturas::buscar_poblacion(int tipo)
                                  tr("Aceptar"));
     }
 
+}
+
+void frmFacturas::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  <<  tr("Factura") << tr("Código cliente") << tr("Cliente") << tr("Fecha Factura") << tr("CIF/NIF") << tr("Total");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&frmFacturas::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    m_busqueda->addWidget(add);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    m_busqueda->addWidget(print);
+
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    m_busqueda->addWidget(del);
 }
 
 void frmFacturas::on_btnAsignarTransportista_clicked()
@@ -1326,32 +1342,18 @@ void frmFacturas::on_btnArticulos_clicked()
 void frmFacturas::on_cboseries_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
-    filtro_tabla();
 }
 
-void frmFacturas::on_btnClear_clicked()
-{
-    ui->cboseries->setCurrentIndex(0);
-    ui->cboBuscar->setCurrentIndex(0);
-    ui->txtBuscar->setText("");
-    m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+
-                         " order by fecha+serie+factura desc limit 0,500",Configuracion_global->empresaDB);
-    ui->txtBuscar->setFocus();
-
-}
 
 void frmFacturas::on_cboBuscar_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
-    filtro_tabla();
 
 }
 
 void frmFacturas::on_cboModo_currentIndexChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
-    filtro_tabla();
 }
 
 void frmFacturas::on_btnBorrar_clicked()
@@ -1507,4 +1509,14 @@ void frmFacturas::on_btnGuardar_clicked()
             Configuracion_global->contaDB.rollback();
     }
 
+}
+
+void frmFacturas::mostrarBusqueda()
+{
+     _showBarraBusqueda(m_busqueda);
+}
+
+void frmFacturas::ocultarBusqueda()
+{
+     _hideBarraBusqueda(m_busqueda);
 }

@@ -75,11 +75,7 @@ private slots:
 
     void on_btnImprimir_clicked();
 
-
-
     void on_radBusqueda_toggled(bool checked);
-
-    void on_txtBuscar_textEdited(const QString &arg1);
 
     void on_tabla_clicked(const QModelIndex &index);
 
@@ -87,18 +83,7 @@ private slots:
 
     void on_btn_convertir_clicked();
 
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
-
-
     void on_btnDesbloquear_clicked();
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboOrden_currentIndexChanged(int index);
-
-    void on_cboModo_currentIndexChanged(int index);
 
     void on_btnAnadir_2_clicked();
 
@@ -110,6 +95,9 @@ private slots:
 
     void on_spin_porc_dto_pp_editingFinished();
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;
@@ -127,8 +115,10 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
 
     void formato_tabla();
-    void filter_table();
     void buscar_poblacion(int tipo);
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

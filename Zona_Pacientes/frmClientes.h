@@ -99,19 +99,9 @@ private slots:
 
     void on_radEditar_toggled(bool checked);
 
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tabla_busquedas_doubleClicked(const QModelIndex &index);
 
-    void on_btnclear_clicked();
-
     void on_tabla_busquedas_clicked(const QModelIndex &index);
-
-    void on_btnLimpiar_clicked();
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
 
     void on_btnGuardardireccionAlternativa_clicked();
 
@@ -121,6 +111,9 @@ private slots:
 
     void on_btnExcepciones_clicked();
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
@@ -135,9 +128,14 @@ private:
     bool Anadirdireccion /*= false*/;
     int iddireccionAlternativa;
     void formato_tabla_busquedas();
-    void filter_table();
+
     QAction menuButton;
     QPushButton * push;
     QHash<QString,QString> h_Buscar;
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
+
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 #endif

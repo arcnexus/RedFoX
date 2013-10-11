@@ -91,24 +91,28 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     ui->tabla->setModel(m);
     formato_tabla();
 
-    //-----------------------
-    // Combo indices
-    //-----------------------
-    QStringList order;
-    order << tr("albarán") << tr("fecha") <<tr("cif/nif") <<tr("Proveedor");
-    ui->cboOrden->addItems(order);
+    ui->stackedWidget->setCurrentIndex(1);
+    setUpBusqueda();
+}
 
-    //-----------------------
-    // combo mode
-    //-----------------------
+void FrmAlbaranProveedor::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden << tr("Albarán") << tr("Fecha") <<tr("Cif/Nif") <<tr("Proveedor");
+    m_busqueda->setOrderCombo(orden);
+
     QStringList modo;
     modo << tr("A-Z") << tr("Z-A");
-    ui->cboModo->addItems(modo);
+    m_busqueda->setModeCombo(modo);
 
-    ui->stackedWidget->setCurrentIndex(1);
-
-
-
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaranProveedor::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -222,10 +226,6 @@ void FrmAlbaranProveedor::bloquearcampos(bool estado)
     ui->btnFacturar->setEnabled(!estado);
     helper.blockTable(estado);
     // activo controles que deben estar activos.
-    ui->txtBuscar->setReadOnly(!estado);
-    ui->cboOrden->setEnabled(estado);
-    ui->cboModo->setEnabled(estado);
-
 }
 
 void FrmAlbaranProveedor::formato_tabla()
@@ -244,23 +244,24 @@ void FrmAlbaranProveedor::formato_tabla()
 
 }
 
-void FrmAlbaranProveedor::filter_table()
+void FrmAlbaranProveedor::filter_table(QString texto, QString orden, QString modo)
 {
+    ui->stackedWidget->setCurrentIndex(1);
+
     QHash <QString,QString> h;
-    h[tr("albarán")] = "albaran";
-    h[tr("fecha")] = "fecha";
-    h[tr("cif/nif")] = "cif_proveedor";
+    h[tr("Albarán")] = "albaran";
+    h[tr("Fecha")] = "fecha";
+    h[tr("Cif/Nif")] = "cif_proveedor";
     h[tr("Proveedor")] = "proveedor";
-    QString order = h.value(ui->cboOrden->currentText());
-    QString arg1 = ui->txtBuscar->text();
-    QString modo;
-    if (ui->cboModo->currentText() == tr("A-Z"))
+    QString order = h.value(orden);
+
+    if (modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
 
     m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
-                    "where "+order+" like '%"+arg1.trimmed()+"%' order by "+order+" "+modo,Configuracion_global->empresaDB);
+                    "where "+order+" like '%"+texto.trimmed()+"%' order by "+order+" "+modo,Configuracion_global->empresaDB);
 
 }
 
@@ -649,8 +650,6 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
 void FrmAlbaranProveedor::on_btnBuscar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
-    ui->txtBuscar->setFocus();
-
     helper.resizeTable();
 }
 
@@ -740,12 +739,6 @@ void FrmAlbaranProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &a
         m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order,Configuracion_global->empresaDB);
 }
 
-void FrmAlbaranProveedor::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
 void FrmAlbaranProveedor::on_tabla_clicked(const QModelIndex &index)
 {
     QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
@@ -765,14 +758,18 @@ void FrmAlbaranProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-void FrmAlbaranProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)
+void FrmAlbaranProveedor::mostrarBusqueda()
 {
-    Q_UNUSED(arg1);
-    filter_table();
+    _showBarraBusqueda(m_busqueda);
 }
 
-void FrmAlbaranProveedor::on_cboModo_currentIndexChanged(const QString &arg1)
+void FrmAlbaranProveedor::ocultarBusqueda()
 {
-    Q_UNUSED(arg1);
-    filter_table();
+    _hideBarraBusqueda(m_busqueda);
+}
+bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }

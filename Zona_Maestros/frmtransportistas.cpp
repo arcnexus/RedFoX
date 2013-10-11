@@ -5,11 +5,7 @@
 FrmTransportistas::FrmTransportistas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmTransportistas),
-    menuButton(QIcon(":/Icons/PNG/transport.png"),tr("Transportistas"),this),
-    push(new QPushButton(QIcon(":/Icons/PNG/transport.png"),"",this))
-
-
-
+    menuButton(QIcon(":/Icons/PNG/transport.png"),tr("Transportistas"),this)
 {
     ui->setupUi(this);
 
@@ -32,8 +28,7 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
     ui->cbopais->setModel(paises);
     Bloquear_campos(true);
 
-    push->setStyleSheet("background-color: rgb(133, 170, 142)");
-    push->setToolTip(tr("Gestión de transportistas"));
+    setUpBusqueda();
 }
 
 FrmTransportistas::~FrmTransportistas()
@@ -43,6 +38,7 @@ FrmTransportistas::~FrmTransportistas()
 
 void FrmTransportistas::on_btnAnadir_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     Bloquear_campos(false);
     anadiendo = true;
     oTransportista.anadir();
@@ -126,9 +122,10 @@ bool FrmTransportistas::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 consultar_proveedor();
         }
-        return false;
     }
-
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }
 
 void FrmTransportistas::on_btnGuardar_clicked()
@@ -212,6 +209,43 @@ void FrmTransportistas::llenar_contactos(int id_proveedor)
 
 }
 
+void FrmTransportistas::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  <<  tr("Código") << tr("Descripción");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmTransportistas::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
+    m_busqueda->addWidget(add);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    m_busqueda->addWidget(print);
+
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+   // connect(del,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    m_busqueda->addWidget(del);
+}
+
 void FrmTransportistas::on_btnAnterior_clicked()
 {
     QStringList condiciones,extras;
@@ -224,7 +258,6 @@ void FrmTransportistas::on_btnAnterior_clicked()
 void FrmTransportistas::on_btnBuscar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
-    ui->txtBuscar->setFocus();
 }
 
 void FrmTransportistas::on_btnEditar_2_clicked()
@@ -277,4 +310,30 @@ void FrmTransportistas::on_tablaContactos_clicked(const QModelIndex &index)
         ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
         ui->txtemail_contacto->setText(queryContactos.record().value("email").toString());
     }
+}
+
+void FrmTransportistas::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void FrmTransportistas::ocultarBusqueda()
+{
+    _hideBarraBusqueda(m_busqueda);
+}
+
+void FrmTransportistas::filter_table(QString texto, QString orden, QString modo)
+{
+    QHash <QString,QString> h;
+    h[tr("Código")] = "codigo";
+    h[tr("Descripción")] = "forma_pago";
+    QString order = h.value(orden);
+    if(modo == tr("A-Z"))
+        modo = "";
+    else
+        modo = "DESC";
+
+    m->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos,"
+                "numero_plazos, cuenta_cont_pago  from formpago where "+order+" like '%"+texto.trimmed()+
+                "%' order by "+order +" "+modo,Configuracion_global->groupDB);
 }

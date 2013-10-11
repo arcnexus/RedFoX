@@ -97,20 +97,6 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->tabla->setModel(m);
     formato_tabla();
 
-    //-------------
-    // ordenar por
-    //-------------
-    QStringList order;
-    order << tr("Pedido") <<tr("Cliente") <<tr("Fecha");
-    ui->cboOrden->addItems(order);
-
-    //-------------
-    // MODO
-    //-------------
-    QStringList modo;
-    modo << tr("Z-A") << tr("A-Z") ;
-    ui->cboModo->addItems(modo);
-
     //--------------------
     // %Iva combos gastos
     //--------------------
@@ -129,9 +115,9 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //-------------------
     // Modo Busqueda
     //-------------------
-    ui->radBusqueda->setChecked(true);
+
     ui->stackedWidget->setCurrentIndex(1);
-    ui->frame_modos->setVisible(false);
+
 
     connect(ui->cboporc_iva_gasto1,SIGNAL(currentIndexChanged(int)),
             this,SLOT(cboporc_iva_gasto1_currentIndexChanged(int)));
@@ -158,6 +144,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //----------------------
     ui->txtcodigo_cliente->installEventFilter(this);
     ui->txtcodigo_transportista->installEventFilter(this);
+
+    setUpBusqueda();
 }
 
 FrmPedidos::~FrmPedidos()
@@ -480,10 +468,7 @@ void FrmPedidos::BloquearCampos(bool state)
     ui->botBuscarCliente->setEnabled(!state);
     ui->txtpedido->setReadOnly(true);
     ui->btn_borrar->setEnabled(state);
-    ui->txtBuscar->setReadOnly(!state);
-    ui->cboOrden->setEnabled(state);
-    ui->txtBuscar->setFocus();
-    ui->cboModo->setEnabled(state);
+
     ui->chklporc_rec->setEnabled(false);
     ui->spiniva_gasto1->setEnabled(false);
     ui->spiniva_gasto2->setEnabled(false);
@@ -588,7 +573,7 @@ void FrmPedidos::formato_tabla()
     ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate);
 }
 
-void FrmPedidos::filter_table()
+void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
 {
     //  tr("Pedido") <<tr("Cliente") <<tr("Fecha")
     QHash <QString,QString> h;
@@ -596,16 +581,15 @@ void FrmPedidos::filter_table()
     h[tr("Cliente")] = "cliente";
     h[tr("Fecha")] = "fecha";
     h[tr("Total")] = "total_pedido";
-    QString order = h.value(ui->cboOrden->currentText());
-    QString arg1 = ui->txtBuscar->text();
-    QString modo;
-    if (ui->cboModo->currentText() == tr("A-Z"))
+    QString order = h.value(orden);
+
+    if (modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
 
     m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli "
-                    "where "+order+" like '%" + arg1.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
+                    "where "+order+" like '%" + texto.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
 
 }
 
@@ -668,10 +652,47 @@ bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 on_botBuscarCliente_clicked();
         }
-
-        return false;
     }
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
+}
 
+void FrmPedidos::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  << tr("Pedido") <<tr("Cliente") <<tr("Fecha");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmPedidos::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    m_busqueda->addWidget(add);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    m_busqueda->addWidget(print);
+
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    m_busqueda->addWidget(del);
 }
 
 void FrmPedidos::on_btnSiguiente_clicked()
@@ -1564,15 +1585,6 @@ void FrmPedidos::on_radBusqueda_toggled(bool checked)
 
 }
 
-
-void FrmPedidos::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-
-
-}
-
 void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
 {
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
@@ -1586,57 +1598,16 @@ void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
     LLenarCampos();
-    ui->radEdicion->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(1);
     BloquearCampos(true);
 }
 
-void FrmPedidos::on_btnBuscar_clicked()
-{
-    ui->radBusqueda->setChecked(true);
-}
-
-void FrmPedidos::on_btnLimpiar_clicked()
-{
-    ui->txtBuscar->clear();
-    ui->cboModo->setCurrentIndex(0);
-    ui->cboOrden->setCurrentIndex(0);
-
-}
-
-void FrmPedidos::on_cboModo_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-void FrmPedidos::on_cboOrden_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-void FrmPedidos::on_btnAnadir_2_clicked()
-{
-    ui->radEdicion->setChecked(true);
-    on_btnAnadir_clicked();
-}
-
-void FrmPedidos::on_btnEditar_2_clicked()
-{
-    ui->radEdicion->setChecked(true);
-    on_btnEditar_clicked();
-}
 
 void FrmPedidos::on_btnImprimir_2_clicked()
 {
     on_btnImprimir_clicked();
 }
 
-void FrmPedidos::on_btnBorrar_2_clicked()
-{
-    on_btn_borrar_clicked();
-    on_txtBuscar_textEdited(ui->txtBuscar->text());
-}
 
 void FrmPedidos::on_spin_porc_dto_pp_editingFinished()
 {
@@ -1731,4 +1702,14 @@ void FrmPedidos::SpinGastoDist3_valueChanged(double arg1)
 {
     Q_UNUSED(arg1);
     calcular_iva_gastos();
+}
+
+void FrmPedidos::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void FrmPedidos::ocultarBusqueda()
+{
+    _hideBarraBusqueda(m_busqueda);
 }

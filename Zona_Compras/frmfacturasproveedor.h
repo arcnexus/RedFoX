@@ -57,21 +57,15 @@ private slots:
     void on_btnBuscar_clicked();
     void resizeTable(int x);
 
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_txtBuscar_textEdited(const QString &arg1);
-
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
-    void on_cboBuscar_currentIndexChanged(const QString &arg1);
-
-    void on_cbogastos_currentIndexChanged(const QString &arg1);
-
-    void on_btnClear_clicked();
-
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 private:
     Ui::FrmFacturasProveedor *ui;
     Table_Helper helper;
@@ -81,7 +75,10 @@ private:
     QPushButton* push;
     QSqlQueryModel *m;
     void formato_tabla();
-    void filter_table();
+
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 signals:
 
 };

@@ -25,6 +25,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     oArticulo = new Articulo();
     modArt = new QSqlQueryModel();
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(1);
+
     // Cargar valores IVA
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
@@ -75,19 +77,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     m->setQuery(cSQL, Configuracion_global->groupDB);
     ui->tabla->setModel(m);
     formato_tabla();
-    //-------------------------
-    // Combo campos de búsqueda
-    //-------------------------
-    QStringList busquedas;
 
-    busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
-    ui->cboOrden->addItems(busquedas);
-    //--------------------
-    // combo modo
-    //--------------------
-    QStringList modo;
-    modo << tr("A-Z") << tr("Z-A");
-    ui->cboModo->addItems(modo);
 
     //-----------------------------------------
     // CONEXIONES
@@ -110,6 +100,48 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
     this->installEventFilter(this);
     ui->btn_cerrar->setVisible(closeBtn);
+
+    setUpBusqueda();
+}
+
+void FrmArticulos::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+
+    QStringList orden;
+    orden << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmArticulos::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+    QPushButton* excep = new QPushButton(QIcon(":/Icons/PNG/excepciones.png"),tr("Excepciones"),this);
+    connect(excep,SIGNAL(clicked()),this,SLOT(on_btnExcepciones_clicked()));
+    m_busqueda->addWidget(excep);
+
+    QPushButton* kit = new QPushButton(QIcon(":/Icons/PNG/kits.png"),tr("Crear/Editar Kit"),this);
+    connect(kit,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked()));
+    m_busqueda->addWidget(kit);
+
+    QPushButton* borra_kit = new QPushButton(QIcon(":/Icons/PNG/Delete.png"),tr("Borrar Kit"),this);
+    //connect(borra_kit,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));//TODO ??
+    m_busqueda->addWidget(borra_kit);
+}
+void FrmArticulos::mostrarBusqueda()
+{
+    _showBarraBusqueda(m_busqueda);
+}
+
+void FrmArticulos::ocultarBusqueda()
+{
+    _hideBarraBusqueda(m_busqueda);
 }
 
 FrmArticulos::~FrmArticulos()
@@ -253,9 +285,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnAnadirTarifa->setEnabled(!state);
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
-    ui->txtBuscar->setReadOnly(!state);
-    ui->cboOrden->setEnabled(state);
-    ui->cboModo->setEnabled(state);
+
     // activo controles que deben estar activos.
     ui->checkBox->setEnabled(true);
 
@@ -533,29 +563,29 @@ void FrmArticulos::formato_tabla()
 
 }
 
-void FrmArticulos::filter_table()
+void FrmArticulos::filter_table(QString texto, QString orden, QString modo)
 {
+    ui->stackedWidget->setCurrentIndex(1);
     // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
-QHash <QString, QString> lista;
-lista[tr("Descripción")] = "descripcion";
-lista[tr("Código")] = "codigo";
-lista[tr("Código Barras")] = "codigo_barras";
-lista[tr("Ref. Proveedor")] = "codigo_proveedor";
+    QHash <QString, QString> lista;
+    lista[tr("Descripción")] = "descripcion";
+    lista[tr("Código")] = "codigo";
+    lista[tr("Código Barras")] = "codigo_barras";
+    lista[tr("Ref. Proveedor")] = "codigo_proveedor";
 
-QString campo = lista.value(ui->cboOrden->currentText());
-QString mode;
-if(ui->cboModo->currentText() == tr("A-Z"))
-    mode = "";
-else
-    mode ="DESC";
-QString arg1 = ui->txtBuscar->text();
+    QString campo = lista.value(orden);
+    QString mode;
+    if(modo == tr("A-Z"))
+        mode = "";
+    else
+        mode ="DESC";
 
-QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
-        campo+" like '%"+arg1.trimmed()+"%'  order by "+campo +" "+mode;
+    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,descripcion from vistaart_tarifa where "+
+            campo+" like '%"+texto.trimmed()+"%'  order by "+campo +" "+mode;
 
-m->setQuery(cSQL,Configuracion_global->groupDB);
-ui->tabla->setModel(m);
-formato_tabla();
+    m->setQuery(cSQL,Configuracion_global->groupDB);
+    ui->tabla->setModel(m);
+    formato_tabla();
 }
 
 void FrmArticulos::rellenar_grafica_proveedores()
@@ -674,7 +704,9 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 {
     if(event->type() == QEvent::Show)
         actualizar();
-    return false;
+    else if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(target,event);
 }
 
 
@@ -1967,22 +1999,7 @@ void FrmArticulos::on_txtcoste_editingFinished()
 
 void FrmArticulos::on_btnBuscar_clicked()
 {
-    ui->txtBuscar->setText("");
     ui->stackedWidget->setCurrentIndex(1);
-    ui->txtBuscar->setFocus();
-}
-
-void FrmArticulos::on_cboOrden_busquedas_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-
-}
-
-void FrmArticulos::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
 }
 
 void FrmArticulos::on_tabla_clicked(const QModelIndex &index)
@@ -2004,25 +2021,7 @@ void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
 
 }
 
-void FrmArticulos::on_btnLimpiar_clicked()
-{
-    ui->cboModo->setCurrentIndex(0);
-    ui->cboOrden->setCurrentIndex(0);
-    ui->txtBuscar->clear();
-    filter_table();
-}
 
-void FrmArticulos::on_cboOrden_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
-void FrmArticulos::on_cboModo_currentIndexChanged(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
 
 void FrmArticulos::on_btnExcepciones_2_clicked()
 {

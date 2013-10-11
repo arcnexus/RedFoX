@@ -90,24 +90,9 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(model);
-    formatotabla();
+    formatotabla();    
 
-    //----------------------------
-    // lleno combo orden busquedas
-    //----------------------------
-    QStringList lista;
-    lista << tr("pedido") <<tr("fecha") <<tr("recepción") <<tr("codigo_proveedor") <<tr("proveedor");
-    lista << tr("cif/nif");
-    ui->cboOrden->addItems(lista);
-
-    //----------------------------
-    // Combo modo
-    //----------------------------
-    QStringList modo;
-    modo << tr("A-Z") << tr("Z-A");
-    ui->cboModo->addItems(modo);
-
-
+    setUpBusqueda();
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
@@ -448,9 +433,7 @@ void FrmPedidosProveedor::bloquearcampos(bool estado)
     ui->botBuscarCliente->setEnabled(!estado);
     helper.blockTable(estado);
     // activo controles que deben estar activos.
-    ui->cboOrden->setEnabled(estado);
-    ui->cboModo->setEnabled(estado);
-    ui->txtBuscar->setReadOnly(!estado);
+
 
 
 }
@@ -765,6 +748,27 @@ void FrmPedidosProveedor::on_btnAnterior_clicked()
         TimedMessageBox * t = new TimedMessageBox(this,tr("Principio de archivo alcanzado"));
 }
 
+void FrmPedidosProveedor::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+    this->installEventFilter(this);
+
+    QStringList orden;
+    orden  << tr("pedido") <<tr("fecha") <<tr("recepción") <<tr("codigo_proveedor") <<tr("proveedor");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmPedidosProveedor::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+}
+
 void FrmPedidosProveedor::on_btnAnadirEntregas_clicked()
 {
     frmAddEntregasCuenta frmEntregas(this);
@@ -798,13 +802,6 @@ void FrmPedidosProveedor::on_btnImprimir_clicked()
     //TODO imprimir
 }
 
-
-void FrmPedidosProveedor::on_txtBuscar_textEdited(const QString &arg1)
-{
-    Q_UNUSED(arg1);
-    filter_table();
-}
-
 void FrmPedidosProveedor::formatotabla()
 {
     QStringList columnas;
@@ -820,8 +817,10 @@ void FrmPedidosProveedor::formatotabla()
     ui->tabla->setColumnHidden(0,true);
 }
 
-void FrmPedidosProveedor::filter_table()
+void FrmPedidosProveedor::filter_table(QString texto, QString orden, QString modo)
 {
+    ui->stackedWidget->setCurrentIndex(1);
+
     QHash <QString,QString> h;
     h[tr("pedido")] ="pedido";
     h[tr("fecha")] = "fecha";
@@ -829,16 +828,15 @@ void FrmPedidosProveedor::filter_table()
     h[tr("codigo_proveedor")] ="codigo_proveedor";
     h[tr("proveedor")] = "proveedor";
 
-    QString orden = h.value(ui->cboOrden->currentText());
-    QString arg1 = ui->txtBuscar->text();
-    QString modo;
-    if(ui->cboModo->currentText()==tr("A-Z"))
+    QString order = h.value(orden);
+
+    if(modo==tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
 
     model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
-                    Configuracion_global->cEjercicio+" and "+orden+ " like '%"+arg1+ "%' order by "+orden +" "+modo,
+                    Configuracion_global->cEjercicio+" and "+order+ " like '%"+texto.trimmed()+ "%' order by "+orden +" "+modo,
                     Configuracion_global->empresaDB);
 }
 
@@ -864,27 +862,21 @@ void FrmPedidosProveedor::on_tabla_clicked(const QModelIndex &index)
 
 void FrmPedidosProveedor::on_btnBuscar_clicked()
 {
-    ui->txtBuscar->clear();
     ui->stackedWidget->setCurrentIndex(1);
-    ui->txtBuscar->setFocus();
 }
 
-void FrmPedidosProveedor::on_cboModo_currentIndexChanged(const QString &arg1)
+void FrmPedidosProveedor::mostrarBusqueda()
 {
-    Q_UNUSED(arg1);
-    filter_table();
+    _showBarraBusqueda(m_busqueda);
 }
 
-void FrmPedidosProveedor::on_cboOrden_currentIndexChanged(const QString &arg1)
+void FrmPedidosProveedor::ocultarBusqueda()
 {
-    Q_UNUSED(arg1);
-    filter_table();
+    _hideBarraBusqueda(m_busqueda);
 }
-
-void FrmPedidosProveedor::on_btnLimpiar_clicked()
+bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
 {
-    ui->cboModo->setCurrentIndex(0);
-    ui->cboOrden->setCurrentIndex(0);
-    ui->txtBuscar->clear();
-    filter_table();
+    if(event->type() == QEvent::Resize)
+        _resizeBarraBusqueda(m_busqueda);
+    return MayaModule::eventFilter(obj,event);
 }

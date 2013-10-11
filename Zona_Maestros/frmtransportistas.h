@@ -22,7 +22,7 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     
-    QPushButton* wantShortCut(bool& ok){ok = false; return push;}
+    QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
     
 private slots:
     void on_btnAnadir_clicked();
@@ -41,11 +41,13 @@ private slots:
 
     void on_tablaContactos_clicked(const QModelIndex &index);
 
+    void mostrarBusqueda();
+    void ocultarBusqueda();
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmTransportistas *ui;
     transportistas oTransportista;
     QAction menuButton;
-    QPushButton *push;
     QSqlQueryModel *model;
     void Bloquear_campos(bool state);
     void cargar_en_objeto();
@@ -56,6 +58,9 @@ private:
     void consultar_proveedor();
     QSqlQueryModel *m;
     void llenar_contactos(int id_proveedor);
+
+    BarraBusqueda* m_busqueda;
+    void setUpBusqueda();
 };
 
 #endif // FRMTRANSPORTISTAS_H
