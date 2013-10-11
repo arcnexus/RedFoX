@@ -23,6 +23,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     shortCut(new QPushButton(QIcon(":/Icons/PNG/Box.png"),"",this))
 
 {
+    id_oferta = 0;
     modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();
     modArt = new QSqlQueryModel();

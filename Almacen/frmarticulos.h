@@ -174,7 +174,7 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
     bool nueva_oferta;
-    int id_oferta = 0;
+    int id_oferta;
 
 };
 
