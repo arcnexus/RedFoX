@@ -125,23 +125,6 @@ color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QPushButton" name="btnEditar">
-         <property name="text">
-          <string>Editar empresa</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../maya.qrc">
-           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>22</width>
-           <height>23</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1" colspan="3">
         <widget class="QPushButton" name="btnAddEmpresa">
          <property name="text">
@@ -161,6 +144,23 @@ color: rgb(255, 255, 255);</string>
          <property name="icon">
           <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="4">
+        <widget class="QPushButton" name="btnEditar">
+         <property name="text">
+          <string>Editar empresa</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../maya.qrc">
+           <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>22</width>
+           <height>23</height>
+          </size>
          </property>
         </widget>
        </item>

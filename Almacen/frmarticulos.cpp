@@ -26,7 +26,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     id_oferta = 0;
     modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();
-    modArt = new QSqlQueryModel();
+    modArt = new QSqlQueryModel(this);
+    model_ofertas = new QSqlQueryModel(this);
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(1);
 
@@ -375,9 +376,8 @@ void FrmArticulos::LLenarCampos()
   //--------------------------
   // LLENO  OFERTAS
   //--------------------------
-  model_ofertas->setQuery(QString("select id,descripcion,fecha_inicio,"
-                                  " fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id),
-                          Configuracion_global->empresaDB);
+  QString cSQL = QString("select id,descripcion,fecha_inicio,fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id);
+  model_ofertas->setQuery(cSQL, Configuracion_global->empresaDB);
 
   ui->chkOferta_32->setChecked(false);
   ui->chkOferta_dto->setChecked(false);
