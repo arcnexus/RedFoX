@@ -2,6 +2,7 @@ QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView, QS
 QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
 {
     font: normal;
+    font: 10pt "Cantarell";
     /*color: black;*/
 }
 
@@ -401,7 +402,7 @@ QToolTip {
     border: 2px solid darkkhaki;
     padding: 5px;
     background-color:yellow;
-    color:white;
+    color:black;
     border-radius: 3px;
     opacity: 200;
 }

@@ -57,8 +57,8 @@ void FrmAlbaran::setUpBusqueda()
     lay->addWidget(lblfacturado);
     m_busqueda->addLayout(lay);
 
-    lblfacturado->setVisible(false);
-    lblimpreso->setVisible(false);
+//    lblfacturado->setVisible(false);
+//    lblimpreso->setVisible(false);
 
     QPushButton* borrar = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar Albarán"),this);
     connect(borrar,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));

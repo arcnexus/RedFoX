@@ -124,9 +124,23 @@ void FrmArticulos::setUpBusqueda()
     connect(this,&MayaModule::hideBusqueda,this,&FrmArticulos::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
+    QPushButton * addproduct = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(addproduct,SIGNAL(clicked()),this,SLOT(on_botAnadir_clicked()));
+    m_busqueda->addWidget(addproduct);
+
+    QPushButton * editproduct = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(editproduct,SIGNAL(clicked()),this,SLOT(on_botEditar_clicked()));
+    m_busqueda->addWidget(editproduct);
+
+    QPushButton * deleteproduct = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
+    connect(deleteproduct,SIGNAL(clicked()),this,SLOT(on_botBorrar_clicked()));
+    m_busqueda->addWidget(deleteproduct);
+    m_busqueda->addSpacer();
+
     QPushButton* excep = new QPushButton(QIcon(":/Icons/PNG/excepciones.png"),tr("Excepciones"),this);
     connect(excep,SIGNAL(clicked()),this,SLOT(on_btnExcepciones_clicked()));
     m_busqueda->addWidget(excep);
+
 
     QPushButton* kit = new QPushButton(QIcon(":/Icons/PNG/kits.png"),tr("Crear/Editar Kit"),this);
     connect(kit,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked()));
@@ -155,6 +169,7 @@ FrmArticulos::~FrmArticulos()
 
 void FrmArticulos::on_botAnadir_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     QSqlQuery querySecciones(Configuracion_global->groupDB);
     querySecciones.prepare("select id from secciones order by id desc limit 1 ");
     if (querySecciones.exec()){
@@ -582,6 +597,7 @@ void FrmArticulos::rellenar_grafica_proveedores()
 
 void FrmArticulos::on_botEditar_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     bloquearCampos(false);
     ui->txtcodigo->setFocus();
 

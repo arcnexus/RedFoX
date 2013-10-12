@@ -739,6 +739,7 @@ void frmClientes::on_btnGuardar_clicked()
 
 void frmClientes::on_btnAnadir_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     emit block();
     bloquearCampos(false);
     VaciarCampos();
@@ -917,6 +918,7 @@ void frmClientes::txtcif_nif_editingFinished()
 
 void frmClientes::on_btnEditar_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     emit block();
         bloquearCampos(false);
         ui->txtcodigo_cliente->setEnabled(false);
@@ -1590,21 +1592,23 @@ void frmClientes::setUpBusqueda()
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
-    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
-    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
     m_busqueda->addWidget(add);
 
-    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
-    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
     m_busqueda->addWidget(edit);
 
-    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
    // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
     m_busqueda->addWidget(print);
 
-    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
     m_busqueda->addWidget(del);
+
+    m_busqueda->addSpacer();
 
     QPushButton* exec = new QPushButton(QIcon(":/Icons/PNG/excepciones.png"),tr("Excepciones"),this);
     connect(exec,SIGNAL(clicked()),this,SLOT(on_btnExcepciones_clicked()));

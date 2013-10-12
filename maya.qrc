@@ -191,5 +191,6 @@
         <file>PNG/aviso_orange.png</file>
         <file>PNG/blue.png</file>
         <file>PNG/orange.png</file>
+        <file>PNG/search2.png</file>
     </qresource>
 </RCC>

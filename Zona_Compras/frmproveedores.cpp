@@ -366,12 +366,14 @@ void frmProveedores::on_btnGuardar_clicked()
 
 void frmProveedores::on_btnEditar_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(false);
     ui->txtcodigo->setFocus();
 }
 
 void frmProveedores::on_btnAnadir_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     oProveedor->Vaciar();
     oProveedor->Anadir();
     LLenarCampos();
@@ -1198,6 +1200,19 @@ void frmProveedores::setUpBusqueda()
     connect(this,&MayaModule::hideBusqueda,this,&frmProveedores::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
+    QPushButton *AddProvider = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(AddProvider,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
+    m_busqueda->addWidget(AddProvider);
+
+    QPushButton *EditProvider = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(EditProvider,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
+    m_busqueda->addWidget(EditProvider);
+
+    QPushButton *EraseProvider = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
+    connect(EraseProvider,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
+    m_busqueda->addWidget(EraseProvider);
+
+    m_busqueda->addSpacer();
 }
 
 void frmProveedores::on_tabla_clicked(const QModelIndex &index)

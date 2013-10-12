@@ -39,6 +39,11 @@ void BarraBusqueda::addWidget(QWidget *w)
     ui->layout->addWidget(w);
 }
 
+void BarraBusqueda::addSpacer()
+{
+    ui->layout->addSpacerItem(new QSpacerItem(10,10,QSizePolicy::Preferred,QSizePolicy::Expanding));
+}
+
 void BarraBusqueda::addLayout(QLayout *l)
 {
     ui->layout->addLayout(l);
@@ -92,8 +97,8 @@ void BarraBusqueda::resizeEvent(QResizeEvent *)
     {
         painter.setRenderHint(QPainter::Antialiasing);
 
-        QColor darkBlue ( 182,159,64,230);
-
+       // QColor darkBlue ( 182,159,64,230);
+        QColor darkBlue (126,184,121,230);
         painter.setPen  (Qt::NoPen/*QPen  (darkBlue)*/);
         painter.setBrush(QBrush(darkBlue));
 
@@ -109,7 +114,7 @@ void BarraBusqueda::resizeEvent(QResizeEvent *)
         if(width()>20)
             painter.drawRoundedRect(20,0,width()-20,height(),20,20);
 
-        QPixmap p(":/Icons/PNG/search.png");
+        QPixmap p(":/Icons/PNG/search2.png");
         painter.drawPixmap(QRect(2,50,20,20),p);
     }
 }
