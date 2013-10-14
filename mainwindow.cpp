@@ -145,8 +145,6 @@ void MainWindow::crear_barraVentas()
         ui->shortCutContainer->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding,QSizePolicy::Preferred));
 }
 
-
-
 void MainWindow::crear_barraCompras()
 {
     bool addSpacer = false;
@@ -359,10 +357,9 @@ void MainWindow::addShortCut(QPushButton *button)
     connect(button,SIGNAL(clicked()),this,SLOT(handle_toolBar()));
 }
 
-
 void MainWindow::loadMantenModules(QSplashScreen* splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de clientes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de clientes") ,Qt::AlignLeft,Qt::white);
 
     frmClientes* Clientes = new frmClientes(this);
     if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -372,7 +369,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     else
         Clientes->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de proveedores") );
+    splash->showMessage(tr("Cargando modulos... Modulo de proveedores")  ,Qt::AlignLeft,Qt::white);
     frmProveedores * Proveedores = new frmProveedores(this);
     if(Proveedores->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -382,7 +379,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
         Proveedores->deleteLater();
 
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Transportistas") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Transportistas")  ,Qt::AlignLeft,Qt::white);
     FrmTransportistas * Transportistas = new FrmTransportistas(this);
     if(Transportistas->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -391,7 +388,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     else
         Transportistas->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Formas de Pago") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Formas de Pago")  ,Qt::AlignLeft,Qt::white);
     FrmFormas_pago * fpagos = new FrmFormas_pago(this);
     if(fpagos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -410,7 +407,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
 
 void MainWindow::loadAlmacenModules(QSplashScreen* splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de articulos") );
+    splash->showMessage(tr("Cargando modulos... Modulo de articulos") ,Qt::AlignLeft,Qt::white );
     FrmArticulos* Articulos = new FrmArticulos(this);
     if(Articulos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -419,7 +416,7 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
     else
         Articulos->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de articulos") );
+    splash->showMessage(tr("Cargando modulos... Modulo de articulos") ,Qt::AlignLeft,Qt::white );
     frmInventario* Inventario = new frmInventario(this);
     if(Inventario->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -434,10 +431,9 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
         x->deleteLater();
 }
 
-
 void MainWindow::loadVentasModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de presupuestos") );
+    splash->showMessage(tr("Cargando modulos... Modulo de presupuestos")  ,Qt::AlignLeft,Qt::white);
 
     FrmPresupuestosCli* Presupcli = new FrmPresupuestosCli(this);
     if(Presupcli->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -445,7 +441,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         Presupcli->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de pedidos") );
+    splash->showMessage(tr("Cargando modulos... Modulo de pedidos")  ,Qt::AlignLeft,Qt::white);
 
     FrmPedidos* Pedidos = new FrmPedidos(this);
     if(Pedidos->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -455,7 +451,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         Pedidos->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de albaranes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de albaranes")  ,Qt::AlignLeft,Qt::white);
 
     FrmAlbaran* Albaran = new FrmAlbaran(this);
     if(Albaran->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -465,7 +461,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         Albaran->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de facturación de albaranes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de facturación de albaranes")  ,Qt::AlignLeft,Qt::white);
 
     FrmFacturarAlabaranes* frmFactura_multiple = new FrmFacturarAlabaranes(this);
     if(frmFactura_multiple->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -475,7 +471,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         frmFactura_multiple->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de facturas") );
+    splash->showMessage(tr("Cargando modulos... Modulo de facturas")  ,Qt::AlignLeft,Qt::white);
 
     frmFacturas* Facturas = new frmFacturas(this);
     if(Facturas->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -485,7 +481,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         Facturas->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Ventas: gestión de cobros")  ,Qt::AlignLeft,Qt::white);
 
     frmGestionCobros* frmgestcobros = new frmGestionCobros(this);
     if(frmgestcobros->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -495,7 +491,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         frmgestcobros->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de TPV") );
+    splash->showMessage(tr("Cargando modulos... Modulo de TPV")  ,Qt::AlignLeft,Qt::white);
 
     FrmTPV * frm_tpv = new FrmTPV(this);
     connect(frm_tpv,SIGNAL(mostrar_desglose(double,double,double,double,double,double,double,double,double,double,double,
@@ -513,7 +509,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
 
 void MainWindow::loadComprasModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") ,Qt::AlignLeft,Qt::white );
 
     FrmOrden_Pedido_Producto * frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
     if(frmOrden_Ped_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -523,7 +519,7 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     else
         frmOrden_Ped_pro->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: pedidos") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: pedidos")  ,Qt::AlignLeft,Qt::white);
 
     FrmPedidosProveedor* FrmPedidos_pro = new FrmPedidosProveedor(this);
     if(FrmPedidos_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -534,7 +530,7 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
         FrmPedidos_pro->deleteLater();
 
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Recepción de Pedidos")  ,Qt::AlignLeft,Qt::white);
     Frmrecepcion_pedidos* frmRecep_pedidos = new Frmrecepcion_pedidos(this);
     if(frmRecep_pedidos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -543,7 +539,7 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     else
         frmRecep_pedidos->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: albaranes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: albaranes")  ,Qt::AlignLeft,Qt::white);
     FrmAlbaranProveedor* FrmAlbaran_pro = new FrmAlbaranProveedor(this);
     if(FrmAlbaran_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -552,7 +548,7 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     else
         FrmAlbaran_pro->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: facturas") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Compras: facturas") ,Qt::AlignLeft,Qt::white );
     FrmFacturasProveedor* frmFacturas_pro = new FrmFacturasProveedor(this);
     if(frmFacturas_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -564,7 +560,7 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
 
 void MainWindow::loadUtilsModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Utilidades: Agenda") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Utilidades: Agenda")  ,Qt::AlignLeft,Qt::white);
     AgendaForm* agendaForm = new AgendaForm(this);
     if(agendaForm->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -573,7 +569,7 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
     else
         agendaForm->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Editor de reportes") );
+    splash->showMessage(tr("Cargando modulos... Editor de reportes") ,Qt::AlignLeft,Qt::white );
     RepDesignModule * reportWindow = new RepDesignModule(this);
     if(reportWindow->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -585,7 +581,7 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
 
 void MainWindow::loadAminModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
     frmConfigmaya* c = new frmConfigmaya(this);
     if(c->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -594,7 +590,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
     else
         c->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
     FrmEmpresas* e = new FrmEmpresas(this);
     if(e->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -603,7 +599,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
     else
         e->deleteLater();
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Usuarios") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Usuarios")  ,Qt::AlignLeft,Qt::white);
     FrmUsuarios* u = new FrmUsuarios(this);
     if(u->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -615,7 +611,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
 
 void MainWindow::loadContaModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Cuadro de cuentas") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Cuadro de cuentas")  ,Qt::AlignLeft,Qt::white);
     frmCuadro_cuentas* f = new frmCuadro_cuentas(this);
     if(f->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -625,7 +621,7 @@ void MainWindow::loadContaModules(QSplashScreen *splash)
         f->deleteLater();
 
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes") );
+    splash->showMessage(tr("Cargando modulos... Modulo de Contabilidad: Diario de apuntes")  ,Qt::AlignLeft,Qt::white);
     FrmEntrada_apuntes * frmentrada_apuntes = new FrmEntrada_apuntes(this);
     if(frmentrada_apuntes->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -638,7 +634,7 @@ void MainWindow::loadContaModules(QSplashScreen *splash)
 
 void MainWindow::loadSecMedModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Extension de Clinica") );
+    splash->showMessage(tr("Cargando modulos... Extension de Clinica")  ,Qt::AlignLeft,Qt::white);
     ClinicaExt* e = new ClinicaExt(this);
     if(!e->Extensions().isEmpty())
         _clinicaExtensions.append(e);
@@ -664,23 +660,8 @@ void MainWindow::updateDivisas()
     }
 }
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{    
-    ui->setupUi(this);
-
-    this->installEventFilter(this);
-    this->setMouseTracking(true);
-
-    on_edit = false;
-    avisos_reducido = true;
-
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
-    timer->start(300000);
-    llenaravisos();
-
+void MainWindow::loadModules()
+{
     QPixmap pixmap(":/Icons/PNG/Neux.png");
     QSplashScreen splash(pixmap);
     splash.show();
@@ -715,7 +696,30 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QApplication::processEvents();
 
-    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+    updateDivisas();
+    m_avisos = new BarraAvisos(this);
+    connect(m_avisos,SIGNAL(closeMe()),this,SLOT(hideAvisos()));
+    m_avisos->hide();
+}
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{    
+    ui->setupUi(this);
+
+    this->installEventFilter(this);
+    this->setMouseTracking(true);
+
+    on_edit = false;
+    avisos_reducido = true;
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
+    timer->start(300000);
+    llenaravisos();
+
+//    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
 
 // QString error;
 // QStringList w;
@@ -744,11 +748,7 @@ MainWindow::MainWindow(QWidget *parent) :
 // i.next();
 // qDebug() << i.value();
 // }
-// qDebug() << map.value(7).value("nombre").toString();
-    updateDivisas();
-    m_avisos = new BarraAvisos(this);
-    connect(m_avisos,SIGNAL(closeMe()),this,SLOT(hideAvisos()));
-    m_avisos->hide();
+// qDebug() << map.value(7).value("nombre").toString();   
 }
 
 void MainWindow::block_main()

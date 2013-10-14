@@ -72,9 +72,12 @@ public:
     void showInfo();
 
     void updateDivisas();
+    void loadModules();
 protected:
     bool eventFilter(QObject *t, QEvent *e);
 private slots:
+
+
     void actualizar_divisas(float valor_divisa, QString divisaDest);
 
     void block_main();

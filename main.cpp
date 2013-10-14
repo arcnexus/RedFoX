@@ -235,6 +235,7 @@ int main(int argc, char *argv[])
            //w.show();
            //w.setWindowState(Qt::WindowMinimized);
            w.showMaximized();
+           w.loadModules();
 //#else
 //           QRect dr= QApplication::desktop()->rect();
 //           int ancho = dr.width();
