@@ -9,10 +9,10 @@ ReportRenderer::ReportRenderer(QObject *parent) :
 {
 }
 
-QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules, bool& error)
+QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool& error)
 {
     QPainter p(printer);
-    m_doc = preRender(&p,in,queryClausules,error);
+    m_doc = preRender(&p,in,queryClausules,params,error);
 
     QFile f("/home/arcnexus/rep.xml");
     if(f.open(QFile::WriteOnly))
@@ -178,11 +178,12 @@ void ReportRenderer::Print(QPrinter *printer)
 void ReportRenderer::PreRender()
 {
     bool error;
-    render( printer ,DocIn , queryClausules, error);
+    _params[":fecha"] = QDate::currentDate().toString("dd-MM-yyyy");
+    render( printer ,DocIn , queryClausules, _params, error);
     emit end();
 }
 
-QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<QString,QString> queryClausules, bool &error)
+QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool &error)
 {
     QTime t;
     t.start();
@@ -310,9 +311,23 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     QListIterator<QDomNode> sectionIt(SectionNodes);
     QList<QDomNode> parsedSections;
     while(sectionIt.hasNext())
-    {
+    {                
         QDomNode n = sectionIt.next();
         QDomElement ele = n.toElement();
+
+        //PARSE SECTIOS PARAMS
+        QDomNodeList l = ele.childNodes();
+        for(int i=0 ; i< l.size(); i++)
+        {
+            QDomElement _e = l.at(i).toElement();
+            if(_e.attribute("id")== "Param")
+            {
+                QString value = params.value(_e.attribute("Arg"));
+                _e.setAttribute("id","Label");
+                _e.setAttribute("Text",value);
+            }
+        }
+        //END PARSE SECTIOS PARAMS
 
         bool iSql = ele.attribute("haveSqlInterno").toDouble();
         QString cla = ele.attribute("ClausulaInterna");
@@ -573,7 +588,66 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         }
     }
 
+    //PARSE PARAMS
 
+    if(haveRHeader)
+    {
+       QDomNodeList l = RHeaderElement.childNodes();
+       for(int i=0 ; i< l.size(); i++)
+       {
+           QDomElement _e = l.at(i).toElement();
+           if(_e.attribute("id")== "Param")
+           {
+               QString value = params.value(_e.attribute("Arg"));
+               _e.setAttribute("id","Label");
+               _e.setAttribute("Text",value);
+           }
+       }
+    }
+    if(havePHeader)
+    {
+        QDomNodeList l = PHeaderElement.childNodes();
+        for(int i=0 ; i< l.size(); i++)
+        {
+            QDomElement _e = l.at(i).toElement();
+            if(_e.attribute("id")== "Param")
+            {
+                QString value = params.value(_e.attribute("Arg"));
+                _e.setAttribute("id","Label");
+                _e.setAttribute("Text",value);
+            }
+        }
+    }
+    if(havePFooter)
+    {
+        QDomNodeList l = PFootElement.childNodes();
+        for(int i=0 ; i< l.size(); i++)
+        {
+            QDomElement _e = l.at(i).toElement();
+            if(_e.attribute("id")== "Param")
+            {
+                QString value = params.value(_e.attribute("Arg"));
+                _e.setAttribute("id","Label");
+                _e.setAttribute("Text",value);
+            }
+        }
+    }
+    if(haveRFooter)
+    {
+        QDomNodeList l = RFootElement.childNodes();
+        for(int i=0 ; i< l.size(); i++)
+        {
+            QDomElement _e = l.at(i).toElement();
+            if(_e.attribute("id")== "Param")
+            {
+                QString value = params.value(_e.attribute("Arg"));
+                _e.setAttribute("id","Label");
+                _e.setAttribute("Text",value);
+            }
+        }
+    }
+
+    //END PARSE PARAMS
 
     QDomNode pageNode = startPage(usable,PFooterSiz, RHeaderSiz ,RFooterSiz,doc,havePHeader&&PHeaderOnAll,PHeaderElement,selects,haveRHeader,RHeaderElement);
     parseFooters(RFootElement , haveRFooter , PFootElement , havePFooter , selects);
@@ -803,6 +877,16 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     qDebug() << doc.childNodes().size();
     return doc;
 }
+QMap<QString, QString> ReportRenderer::params() const
+{
+    return _params;
+}
+
+void ReportRenderer::setParams(const QMap<QString, QString> &params)
+{
+    _params = params;
+}
+
 
 void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, double dpiY, int printResolution)
 {

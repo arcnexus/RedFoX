@@ -195,7 +195,9 @@ SOURCES += main.cpp\
     Auxiliares/frmcambiarusuario.cpp \
     Auxiliares/avisos.cpp \
     Auxiliares/frmnuevosavisos.cpp \
-    Auxiliares/delegatekit.cpp
+    Auxiliares/delegatekit.cpp \
+    EditorReports/reportparama.cpp \
+    EditorReports/editparamdlg.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -356,7 +358,9 @@ HEADERS  += mainwindow.h \
     Auxiliares/frmcambiarusuario.h \
     Auxiliares/avisos.h \
     Auxiliares/frmnuevosavisos.h \
-    Auxiliares/delegatekit.h
+    Auxiliares/delegatekit.h \
+    EditorReports/reportparama.h \
+    EditorReports/editparamdlg.h
 
 
 
@@ -436,7 +440,8 @@ FORMS    += mainwindow.ui \
     barraavisos.ui \
     Auxiliares/barrabusqueda.ui \
     Auxiliares/frmcambiarusuario.ui \
-    Auxiliares/frmnuevosavisos.ui
+    Auxiliares/frmnuevosavisos.ui \
+    EditorReports/editparamdlg.ui
 
 RESOURCES += \
     maya.qrc \

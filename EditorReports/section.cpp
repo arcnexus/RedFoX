@@ -143,6 +143,8 @@ void Section::_parseElementTag(QDomElement ele, QPointF point, QList<Container *
             _insertField(ele,point, itemPool);
         else if(ele.attribute("id")== "RelationalField")
             _insertRelField(ele,point, itemPool);
+        else if(ele.attribute("id")== "Param")
+            _insertRepParam(ele,point, itemPool);
     }
 }
 
@@ -203,6 +205,15 @@ void Section::_insertField(QDomElement ele, QPointF point, QList<Container *> &i
 void Section::_insertRelField(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
     RelationalField * fld = new RelationalField(_parent)   ;
+    fld->setMargins(this->margin);
+    fld->parseXml(ele,point);
+    itemPool.append(fld );
+    this->_items.append(fld);
+}
+
+void Section::_insertRepParam(QDomElement ele, QPointF point, QList<Container *> &itemPool)
+{
+    reportParama * fld = new reportParama(_parent)   ;
     fld->setMargins(this->margin);
     fld->parseXml(ele,point);
     itemPool.append(fld );

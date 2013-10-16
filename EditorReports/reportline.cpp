@@ -68,7 +68,7 @@ void ReportLine::parseXml(QDomElement element , QPointF origin)
 
     this->setpenWidth(element.attribute("penWidth").toDouble());
     this->setpenColor(ColorFromString(element.attribute("penColor")));
-    this->setpenStyle(static_cast<Qt::PenStyle>(element.attribute("penStyle").toDouble()));
+    this->setpenStyle(static_cast<Qt::PenStyle>(element.attribute("penStyle").toInt()));
 
     element.attribute("Orientacion") == "V" ? setOrientacion(Vertical)
                                  : setOrientacion(Horizontal);

@@ -35,6 +35,7 @@ public:
     Q_PROPERTY(double margenInferior READ margenInferior WRITE setmargenInferior NOTIFY margenInferiroChanged)
     Q_PROPERTY(double margenIzquierdo READ margenIzquierdo WRITE setmargenIzquierdo NOTIFY margenIzquierdoChanged)
     Q_PROPERTY(double margenDerecho READ margenDerecho WRITE setmargenDerecho NOTIFY margenDerechoChanged)
+    Q_PROPERTY(docType tipoDoc READ tipoDoc WRITE settipoDoc NOTIFY tipoDocChanged)
 
     Q_ENUMS (_Orientacion)
     enum _Orientacion { Retrato , Apaisado };
@@ -47,7 +48,11 @@ public:
                   Custom};
 
     Q_ENUMS (itemType)
-    enum itemType { RoundRectIt , Label, Linea , CodeBarIt , Imagen, Campo , CampoRelacional};
+    enum itemType { RoundRectIt , Label, Linea , CodeBarIt , Imagen, Campo , CampoRelacional , Parametro};
+
+    Q_ENUMS (docType)
+    enum docType { Report , etiqueta , sobre };
+
     _Orientacion Orientacion() const;
 
     QRectF margin();
@@ -83,6 +88,8 @@ public:
 
     static qreal cmToPx(double cm);
     static qreal pxTocm(int px);
+    docType tipoDoc() const;
+
 signals:
     
     void orientacionChanged(_Orientacion arg);
@@ -92,6 +99,8 @@ signals:
     void margenIzquierdoChanged(double arg);
     void margenDerechoChanged(double arg);
     void itemInserted();
+
+    void tipoDocChanged(docType arg);
 
 public slots:
 
@@ -104,6 +113,8 @@ public slots:
     void setmargenDerecho(double arg);
 
     void reCalculateSeccion(Section * = 0);
+    void settipoDoc(docType arg);
+
 private slots:
     void itemMoved(Container *);
 private:
@@ -132,10 +143,12 @@ private:
     void insertImagen(Section *);
     void insertCampo(Section *sec);
     void insertCampoRelacional(Section *sec);
+    void insertParametro(Section *sec);
 
     double m_margenInferiro;
     double m_margenIzquierdo;
     double m_margenDerecho;
+    docType m_tipoDoc;
 };
 
 #endif // PAPER_H

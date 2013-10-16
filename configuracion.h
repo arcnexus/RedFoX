@@ -230,9 +230,9 @@ public:
     void updateTablaDivisas(QString current);
 
 
-    static void ImprimirDirecto(QString report, QMap<QString,QString> queryClausules);
-    static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules);
-    static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules);
+    static void ImprimirDirecto(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
+    static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params);
+    static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
 public slots:
     void format_text();    
 private slots:

@@ -1234,7 +1234,7 @@ void Configuracion::updateTablaDivisas(QString current)
     }
 }
 
-void Configuracion::ImprimirDirecto(QString report, QMap<QString, QString> queryClausules)
+void Configuracion::ImprimirDirecto(QString report, QMap<QString, QString> queryClausules , QMap<QString, QString> params)
 {
     QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
     QString error;
@@ -1257,12 +1257,12 @@ void Configuracion::ImprimirDirecto(QString report, QMap<QString, QString> query
             return;
         }
         bool error;
-        r.render(&printer,doc ,queryClausules,error);
+        r.render(&printer,doc ,queryClausules,params,error);
         r.Print(&printer);
     }
 }
 
-void Configuracion::ImprimirPDF(QString report, QMap<QString, QString> queryClausules)
+void Configuracion::ImprimirPDF(QString report, QMap<QString, QString> queryClausules,QMap<QString, QString> params)
 {
     QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
     QString error;
@@ -1299,12 +1299,12 @@ void Configuracion::ImprimirPDF(QString report, QMap<QString, QString> queryClau
             return;
         }
         bool error;
-        r.render(&printer,doc ,queryClausules,error);
+        r.render(&printer,doc ,queryClausules,params,error);
         r.Print(&printer);
     }
 }
 
-void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> queryClausules)
+void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> queryClausules, QMap<QString, QString> params)
 {
     QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
     QString error;
@@ -1327,7 +1327,7 @@ void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> query
             return;
         }
         bool error;
-        r.render(&printer,doc ,queryClausules,error);
+        r.render(&printer,doc ,queryClausules,params,error);
         QPrintPreviewDialog predlg(&printer);
         connect(&predlg,SIGNAL(paintRequested(QPrinter*)),&r,SLOT(Print(QPrinter*)));
         predlg.exec();

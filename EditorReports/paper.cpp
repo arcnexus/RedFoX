@@ -23,6 +23,7 @@ Paper::Paper(QGraphicsItem *parent) :
     _inserting = false;
     mySize = A4;
     m_orientacion = Retrato;
+    m_tipoDoc = Report;
 }
 
 QRectF Paper::margin()
@@ -104,6 +105,9 @@ void Paper::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
             switch (_insertingType)
             {
+            case Paper::Parametro:
+                insertParametro(target);
+                break;
             case Paper::CampoRelacional:
                 insertCampoRelacional(target);
                 break;
@@ -142,8 +146,11 @@ void Paper::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Paper::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    SectionEditorDlg dlg(this,qApp->activeWindow());
-    dlg.exec();
+    if(this->tipoDoc() == Report)
+    {
+        SectionEditorDlg dlg(this,qApp->activeWindow());
+        dlg.exec();
+    }
 }
 
 qreal Paper::cmToPx(double cm)
@@ -156,6 +163,11 @@ qreal Paper::pxTocm(int px)
 {
     double inch = px/96.0;
     return inch/0.3937008;
+}
+
+Paper::docType Paper::tipoDoc() const
+{
+    return m_tipoDoc;
 }
 
 void Paper::insertRoundRect(Section * sec)
@@ -233,6 +245,18 @@ void Paper::insertCampoRelacional(Section * sec)
     RelationalField * fld = new RelationalField(this)   ;
     fld->setMargins(this->margin());
     fld->setSize(150,20);
+    fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
+    connect(fld,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(fld);
+    itemPool.append(fld );
+}
+
+void Paper::insertParametro(Section *sec)
+{
+    reportParama * fld = new reportParama(this)   ;
+    fld->setMargins(this->margin());
+    fld->setSize(150,20);
+    fld->setText("Parametro");
     fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
     connect(fld,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
     sec->_items.append(fld);
@@ -325,6 +349,19 @@ void Paper::reCalculateSeccion(Section * secSender)
                 position += sec->Height()+1;
             }
         }
+    }
+}
+
+void Paper::settipoDoc(Paper::docType arg)
+{
+    if (m_tipoDoc != arg) {
+        m_tipoDoc = arg;
+        if(arg == etiqueta)
+        {
+            seccionPool.clear();
+            addSection(tr("Etiqueta") ,Section::Detail);
+        }
+        emit tipoDocChanged(arg);
     }
 }
 
@@ -523,6 +560,7 @@ bool Paper::parseXML(QString xml, QString & error)
         else
         {
             QDomNode child = root.firstChild();
+            this->settipoDoc(static_cast<docType>(child.toElement().attribute("DocType").toInt()));
             while (!child.isNull()) //Papers TODO multipage report?
             {
                 QDomNode sections = child.firstChild();
@@ -612,6 +650,7 @@ int Paper::save(QString file)
         QDomElement root = doc.createElement("FoxReports");
 
         QDomElement paperNode = doc.createElement("Paper");
+        paperNode.setAttribute("DocType",QString::number(static_cast<int>(this->tipoDoc())));
 
         QDomElement siz = doc.createElement("Size");
         siz.setAttribute("w", QString::number( pxTocm(this->paper().width ()), 'f', 2));

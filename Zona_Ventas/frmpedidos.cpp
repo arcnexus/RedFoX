@@ -1550,22 +1550,26 @@ void FrmPedidos::on_btnImprimir_clicked()
             {
                 ui->lbimpreso->setVisible(true);
                 int valor = dlg_print.get_option();
-                QMap <QString,QString> parametros;
-                parametros["Empresa.ped_cli"] = QString("id = %1").arg(oPedido->id);
-                parametros["Empresa.lin_ped"] = QString("id_cab = %1").arg(oPedido->id);
+                QMap <QString,QString> parametros_sql;
+                parametros_sql["Empresa.ped_cli"] = QString("id = %1").arg(oPedido->id);
+                parametros_sql["Empresa.lin_ped"] = QString("id_cab = %1").arg(oPedido->id);
                 QString report = "ped_cli_"+QString::number(oCliente3->ididioma);
+
+
+                QMap <QString,QString> parametros;
+                //TODO parametros
                 switch (valor) {
                 case 1: // Impresora
-                    Configuracion::ImprimirDirecto(report,parametros);
+                    Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                     break;
                 case 2: // email
                     // TODO - enviar pdf por mail
                     break;
                 case 3: // PDF
-                    Configuracion::ImprimirPDF(report,parametros);
+                    Configuracion::ImprimirPDF(report,parametros_sql,parametros);
                     break;
                 case 4: //preview
-                    Configuracion::ImprimirPreview(report,parametros);
+                    Configuracion::ImprimirPreview(report,parametros_sql,parametros);
                     break;
                 default:
                     break;

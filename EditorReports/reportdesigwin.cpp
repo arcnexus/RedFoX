@@ -50,6 +50,7 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     connect(ui->actionImagen,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionCampo,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionCampo_Relacional,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
+    connect(ui->actionParametro,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
 }
 
 ReportDesigWin::~ReportDesigWin()
@@ -79,6 +80,8 @@ void ReportDesigWin::element_toggled(bool arg1)
             paper.prepareItemInsert(Paper::Campo);
         else if(send == ui->actionCampo_Relacional)
             paper.prepareItemInsert(Paper::CampoRelacional);
+        else if(send == ui->actionParametro)
+            paper.prepareItemInsert(Paper::Parametro);
     }
     else
         paper.stopInsertingItems();

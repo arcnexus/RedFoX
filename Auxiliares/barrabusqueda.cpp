@@ -2,6 +2,10 @@
 #include "ui_barrabusqueda.h"
 #include <QPainter>
 #include <QMouseEvent>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QTextEdit>
+#include <QDateEdit>
 BarraBusqueda::BarraBusqueda(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BarraBusqueda)
@@ -47,6 +51,51 @@ void BarraBusqueda::addSpacer()
 void BarraBusqueda::addLayout(QLayout *l)
 {
     ui->layout->addLayout(l);
+}
+
+void BarraBusqueda::block(bool state)
+{
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(state);
+    }
+    // ComboBox
+    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
+    QComboBox *ComboBox;
+    foreach (ComboBox, ComboBoxList) {
+        ComboBox->setEnabled(!state);
+    }
+
+    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox *DSpinBox;
+    foreach (DSpinBox, DSpinBoxList) {
+        DSpinBox->setReadOnly(state);
+    }
+    // CheckBox
+    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
+    QCheckBox *CheckBox;
+    foreach (CheckBox, CheckBoxList) {
+        CheckBox->setEnabled(!state);
+    }
+    // QTextEdit
+    QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
+    QTextEdit *TextEdit;
+    foreach (TextEdit,TextEditList) {
+        TextEdit->setReadOnly(state);
+    }
+    // QDateEdit
+    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
+    QDateEdit *DateEdit;
+    foreach (DateEdit, DateEditList) {
+        DateEdit->setEnabled(!state);
+    }
+    // QPushButton
+    QList<QPushButton *> btnList = this->findChildren<QPushButton *>();
+    QPushButton *btn;
+    foreach (btn, btnList) {
+        btn->setEnabled(!state);
+    }
 }
 
 void BarraBusqueda::paintEvent(QPaintEvent *pe)
