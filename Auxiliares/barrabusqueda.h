@@ -20,6 +20,7 @@ public:
     void addWidget(QWidget* w);
     void addSpacer();
     void addLayout(QLayout *l);
+    void block(bool state);
 signals:
     void doSearch(QString texto, QString orden, QString modo);
     void showMe();

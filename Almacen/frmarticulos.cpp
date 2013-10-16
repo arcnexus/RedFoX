@@ -67,7 +67,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
         tarifa_model->setHeaderData(i+1, Qt::Horizontal, headers.at(i));
 
     ui->tablaProveedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    bloquearCampos(true);
+
     reformateado = false;
     //--------------------------
     // llenar tabla artículos
@@ -104,6 +104,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
 
     setUpBusqueda();
+
+    bloquearCampos(true);
 }
 
 void FrmArticulos::setUpBusqueda()
@@ -306,6 +308,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     // activo controles que deben estar activos.
     ui->checkBox->setEnabled(true);
 
+    m_busqueda->block(!state);
 }
 
 void FrmArticulos::LLenarCampos()
