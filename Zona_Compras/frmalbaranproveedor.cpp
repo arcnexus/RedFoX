@@ -113,6 +113,23 @@ void FrmAlbaranProveedor::setUpBusqueda()
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
     connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaranProveedor::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+    QPushButton *btnAdd = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(btnAdd,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
+    m_busqueda->addWidget(btnAdd);
+
+    QPushButton *btnEdit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(btnEdit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
+    m_busqueda->addWidget(btnEdit);
+
+    QPushButton *btnDelete = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
+    connect(btnDelete,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
+    m_busqueda->addWidget(btnDelete);
+
+    QPushButton *btnPrint = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
+    connect(btnDelete,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
+    m_busqueda->addWidget(btnPrint);
+    m_busqueda->addSpacer();
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -772,4 +789,9 @@ bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
     return MayaModule::eventFilter(obj,event);
+}
+
+void FrmAlbaranProveedor::on_btnImprimir_clicked()
+{
+
 }

@@ -1174,7 +1174,7 @@ void frmProveedores::filter_table(QString texto, QString orden, QString modo)
         modo = "DESC";
 
 
-    model = new QSqlQueryModel(this);
+
     QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores "
             "where " +campo+" like '%"+texto.trimmed()+"%' order by "+campo+" "+modo;
 

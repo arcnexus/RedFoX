@@ -70,6 +70,8 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void on_btnImprimir_clicked();
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;

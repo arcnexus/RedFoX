@@ -471,6 +471,7 @@ void FrmPedidosProveedor::anadir_pedido()
     oPedido_proveedor->recuperar(id);
     this->id = id;
     emit block();
+    ui->stackedWidget->setCurrentIndex(0);
     llenar_campos();
     bloquearcampos(false);
     }
@@ -491,6 +492,7 @@ void FrmPedidosProveedor::guardar_pedido()
 
 void FrmPedidosProveedor::editar_pedido()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     bloquearcampos(false);
     emit block();
     ui->txtcodigo_proveedor->setFocus();
@@ -766,6 +768,21 @@ void FrmPedidosProveedor::setUpBusqueda()
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
     connect(this,&MayaModule::hideBusqueda,this,&FrmPedidosProveedor::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+    QPushButton *btnAdd = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(btnAdd,SIGNAL(clicked()),this,SLOT(anadir_pedido()));
+    m_busqueda->addWidget(btnAdd);
+
+    QPushButton *btnEdit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(btnEdit,SIGNAL(clicked()),this,SLOT(editar_pedido()));
+    m_busqueda->addWidget(btnEdit);
+
+    QPushButton *btnDelete = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
+    connect(btnDelete,SIGNAL(clicked()),this,SLOT(borrar_pedido()));
+    m_busqueda->addWidget(btnDelete);
+
+    m_busqueda->addSpacer();
+
 
 }
 
