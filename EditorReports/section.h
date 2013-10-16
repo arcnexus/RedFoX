@@ -16,6 +16,7 @@
 #include "reportimage.h"
 #include "reportfield.h"
 #include "relationalfield.h"
+#include "reportparama.h"
 //#include "container.h"
 
 
@@ -99,6 +100,7 @@ protected:
     void _insertImage(QDomElement ele, QPointF point , QList<Container *> &itemPool);
     void _insertField(QDomElement ele, QPointF point , QList<Container *> &itemPool);
     void _insertRelField(QDomElement ele, QPointF point , QList<Container *> &itemPool);
+    void _insertRepParam(QDomElement ele, QPointF point , QList<Container *> &itemPool);
 
 };
 

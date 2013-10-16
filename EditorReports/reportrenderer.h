@@ -18,7 +18,7 @@ class ReportRenderer : public QObject
     Q_OBJECT
 public:
     explicit ReportRenderer(QObject *parent = 0);
-    QDomDocument render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules, bool& error);
+    QDomDocument render(QPrinter* printer , QDomDocument in , QMap<QString,QString> queryClausules, QMap<QString, QString> params, bool& error);
     QPrinter *getPrinter() const;
     void setPrinter(QPrinter *value);
 
@@ -27,6 +27,9 @@ public:
 
     QMap<QString, QString> getQueryClausules() const;
     void setQueryClausules(const QMap<QString, QString> &value);
+
+    QMap<QString, QString> params() const;
+    void setParams(const QMap<QString, QString> &params);
 
 signals:
     void end();
@@ -40,10 +43,11 @@ private:
     QString getRelationField(QString s , QSqlRecord r);
     QDomNode startPage(double pageUsable, int RFooterSiz, int RHSiz, int RFootSiz, QDomDocument doc , bool pageHeader , QDomNode pHeaderNode, QMap<QString,QSqlRecord> selects, bool reporHeader = false, QDomNode rHeaderNode = QDomNode());
     void parseFooters(QDomNode RFooter , bool haveRfooter , QDomNode PFooter , bool havePFooter ,QMap<QString,QSqlRecord> selects );
-    QDomDocument preRender(QPainter *painter, QDomDocument in , QMap<QString,QString> queryClausules, bool& error);
+    QDomDocument preRender(QPainter *painter, QDomDocument in , QMap<QString,QString> queryClausules, QMap<QString, QString> params, bool& error);
     QDomDocument m_doc;
     QDomDocument DocIn;
     QMap<QString,QString> queryClausules;
+    QMap<QString,QString> _params;
 
     void drawRect(QDomElement e , QPainter * painter , double dpiX , double dpiY, int printResolution);
     void drawLabel(QDomElement e , QPainter * painter , double dpiX , double dpiY);

@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>1061</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">
@@ -51,6 +51,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionTexto"/>
+   <addaction name="actionParametro"/>
    <addaction name="actionCampo"/>
    <addaction name="actionCampo_Relacional"/>
    <addaction name="actionCodeBars"/>
@@ -214,6 +215,18 @@
    </property>
    <property name="text">
     <string>Guardar en BD</string>
+   </property>
+  </action>
+  <action name="actionParametro">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/text-shadow.png</normaloff>:/icons/text-shadow.png</iconset>
+   </property>
+   <property name="text">
+    <string>Parametro</string>
    </property>
   </action>
  </widget>
