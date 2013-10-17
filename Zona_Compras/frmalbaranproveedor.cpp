@@ -69,7 +69,6 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     // ------------------------------
     // control estado widgets
     //-------------------------------
-    bloquearcampos(true);
     ui->btnAnterior->setEnabled(false);
     ui->btnBorrar->setEnabled(false);
     ui->btnImprimir->setEnabled(false);
@@ -92,7 +91,11 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     formato_tabla();
 
     ui->stackedWidget->setCurrentIndex(1);
+
     setUpBusqueda();
+
+    bloquearcampos(true);
+
 }
 
 void FrmAlbaranProveedor::setUpBusqueda()
@@ -178,71 +181,72 @@ void FrmAlbaranProveedor::llenar_tabla_entregas()
     }
 }
 
-void FrmAlbaranProveedor::bloquearcampos(bool estado)
+void FrmAlbaranProveedor::bloquearcampos(bool state)
 {
 
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(estado);
+        lineEdit->setReadOnly(state);
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(!estado);
+        ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // SpinBox
 //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
 //    QSpinBox *SpinBox;
 //    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(!estado);
+//        SpinBox->setReadOnly(!state);
 //        //qDebug() << lineEdit->objectName();
 //   }
 //DoubleSpinBox
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(estado);
+        DSpinBox->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(!estado);
+        CheckBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(estado);
+        TextEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(!estado);
+        DateEdit->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->btnAnadir->setEnabled(estado);
-    ui->btnAnterior->setEnabled(estado);
-    ui->btnBorrar->setEnabled(estado);
-    ui->btnDeshacer->setEnabled(!estado);
-    ui->btnEditar->setEnabled(estado);
-    ui->btnGuardar->setEnabled(!estado);
-    ui->btnSiguiente->setEnabled(estado);
-    ui->btnAnadirLinea->setEnabled(!estado);
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
+    ui->btnBorrar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
+    ui->btnAnadirLinea->setEnabled(!state);
 
-    ui->btn_borrarLinea->setEnabled(!estado);
-    ui->botBuscarCliente->setEnabled(!estado);
-    ui->btnFacturar->setEnabled(!estado);
-    helper.blockTable(estado);
+    ui->btn_borrarLinea->setEnabled(!state);
+    ui->botBuscarCliente->setEnabled(!state);
+    ui->btnFacturar->setEnabled(!state);
+    helper.blockTable(state);
     // activo controles que deben estar activos.
+    m_busqueda->block(!state);
 }
 
 void FrmAlbaranProveedor::formato_tabla()
@@ -599,6 +603,7 @@ void FrmAlbaranProveedor::on_btnEditar_clicked()
 {
     bloquearcampos(false);
     emit block();
+    ui->stackedWidget->setCurrentIndex(0);
     ui->txtcodigo_proveedor->setFocus();
 }
 
@@ -701,6 +706,7 @@ void FrmAlbaranProveedor::on_btnAnadir_clicked()
     emit block();
     llenar_campos();
     bloquearcampos(false);
+    ui->stackedWidget->setCurrentIndex(0);
     ui->txtcodigo_proveedor->setFocus();
 }
 
@@ -793,5 +799,12 @@ bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
 
 void FrmAlbaranProveedor::on_btnImprimir_clicked()
 {
+    //TODO - IMPTIMIR
+}
 
+void FrmAlbaranProveedor::on_btnDeshacer_clicked()
+{
+    oAlbPro->Recuperar(oAlbPro->id);
+    llenar_campos();
+    bloquearcampos(true);
 }

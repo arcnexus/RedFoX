@@ -43,7 +43,7 @@ private slots:
     void desglose3Changed(double base, double iva, double re, double total);
     void desglose4Changed(double base, double iva, double re, double total);
 
-    void bloquearcampos(bool estado);
+    void bloquearcampos(bool state);
     void buscar_proveeedor();
     void anadir_pedido();
     void guardar_pedido();

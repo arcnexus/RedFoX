@@ -18,7 +18,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->setupUi(this);
 
     oPedido_proveedor = new PedidoProveedor(this);
-    bloquearcampos(true);
+
     ui->lbimpreso->setVisible(false);
     ui->lblnombreProveedor->clear();
     ui->lblnumero_pedido->clear();
@@ -92,7 +92,10 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->tabla->setModel(model);
     formatotabla();    
 
-    setUpBusqueda();
+        setUpBusqueda();
+
+    bloquearcampos(true);
+
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
@@ -369,70 +372,71 @@ void FrmPedidosProveedor::desglose4Changed(double base, double iva, double re, d
 }
 
 
-void FrmPedidosProveedor::bloquearcampos(bool estado)
+void FrmPedidosProveedor::bloquearcampos(bool state)
 {
 
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(estado);
+        lineEdit->setReadOnly(state);
     }
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
     foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(!estado);
+        ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // SpinBox
 //    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
 //    QSpinBox *SpinBox;
 //    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(!estado);
+//        SpinBox->setReadOnly(!state);
 //        //qDebug() << lineEdit->objectName();
 //   }
 //DoubleSpinBox
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
-        DSpinBox->setReadOnly(estado);
+        DSpinBox->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
     foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(!estado);
+        CheckBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
     // QTextEdit
     QList<QTextEdit *> TextEditList = this->findChildren<QTextEdit *>();
     QTextEdit *TextEdit;
     foreach (TextEdit,TextEditList) {
-        TextEdit->setReadOnly(estado);
+        TextEdit->setReadOnly(state);
         //qDebug() << lineEdit->objectName();
     }
     // QDateEdit
     QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
     QDateEdit *DateEdit;
     foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(!estado);
+        DateEdit->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
 
-    ui->btnAnadir->setEnabled(estado);
-    ui->btnAnterior->setEnabled(estado);
-    ui->btn_borrar->setEnabled(estado);
-    ui->btnDeshacer->setEnabled(!estado);
-    ui->btnEditar->setEnabled(estado);
-    ui->btnGuardar->setEnabled(!estado);
-    ui->btnSiguiente->setEnabled(estado);
-    ui->btnAnadirLinea->setEnabled(!estado);
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
+    ui->btn_borrar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
+    ui->btnAnadirLinea->setEnabled(!state);
 
-    ui->btn_borrarLinea->setEnabled(!estado);
-    ui->botBuscarCliente->setEnabled(!estado);
-    helper.blockTable(estado);
+    ui->btn_borrarLinea->setEnabled(!state);
+    ui->botBuscarCliente->setEnabled(!state);
+    helper.blockTable(state);
     // activo controles que deben estar activos.
+    m_busqueda->block(!state);
 
 
 

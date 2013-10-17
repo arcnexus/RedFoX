@@ -662,7 +662,7 @@ void MainWindow::updateDivisas()
 
 void MainWindow::loadModules()
 {
-    QPixmap pixmap(":/Icons/PNG/Neux.png");
+    QPixmap pixmap(":/Icons/PNG/Neux_red_fox.png");
     QSplashScreen splash(pixmap);
     splash.show();
 

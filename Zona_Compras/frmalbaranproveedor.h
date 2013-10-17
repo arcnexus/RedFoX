@@ -72,6 +72,8 @@ private slots:
     void filter_table(QString texto, QString orden, QString modo);
     void on_btnImprimir_clicked();
 
+    void on_btnDeshacer_clicked();
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Table_Helper helper;

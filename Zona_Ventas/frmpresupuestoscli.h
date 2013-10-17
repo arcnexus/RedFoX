@@ -85,10 +85,6 @@ private slots:
 
     void on_btnDesbloquear_clicked();
 
-    void on_btnAnadir_2_clicked();
-
-    void on_btnEditar_2_clicked();
-
     void on_btnImprimir_2_clicked();
 
     void on_spin_porc_dto_editingFinished();

@@ -64,6 +64,7 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void borrarFactura();
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:

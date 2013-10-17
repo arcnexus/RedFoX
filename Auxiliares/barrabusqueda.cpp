@@ -43,6 +43,11 @@ void BarraBusqueda::addWidget(QWidget *w)
     ui->layout->addWidget(w);
 }
 
+void BarraBusqueda::addLayoutZ1(QLayout *z)
+{
+    ui->zona1->setLayout(z);
+}
+
 void BarraBusqueda::addSpacer()
 {
     ui->layout->addSpacerItem(new QSpacerItem(10,10,QSizePolicy::Preferred,QSizePolicy::Expanding));

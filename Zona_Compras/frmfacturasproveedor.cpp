@@ -15,10 +15,8 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     ui->setupUi(this);
     oFacPro = new FacturasProveedor(this);
     oFacPro->id = 0;
-    bloquearcampos(true);
 
     ui->combo_pais->setModel(Configuracion_global->paises_model);
-    //ui->combo_pais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de facturas de proveedores/acreeedores"));
 
@@ -73,7 +71,7 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     //  tabla
     //-----------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id,factura,fecha,cif_proveedor,telefono,proveedor,total,tipo_gasto from fac_pro order by factura desc",
+    m->setQuery("select id,factura,fecha,cif_proveedor,telefono,proveedor,total from fac_pro order by factura desc",
                 Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
 
@@ -93,6 +91,8 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     ui->stackedWidget->setCurrentIndex(1);
 
     setUpBusqueda();
+
+    bloquearcampos(true);
 }
 
 FrmFacturasProveedor::~FrmFacturasProveedor()
@@ -311,6 +311,8 @@ void FrmFacturasProveedor::bloquearcampos(bool state)
     helper.blockTable(state);
     // activo controles que deben estar activos.
 
+    m_busqueda->block(!state);
+
 
 
 }
@@ -392,6 +394,7 @@ void FrmFacturasProveedor::on_btnAnadir_clicked()
     emit block();
     llenar_campos();
     bloquearcampos(false);
+    ui->stackedWidget->setCurrentIndex(0);
     ui->txtcodigo_proveedor->setFocus();
 }
 
@@ -602,6 +605,7 @@ void FrmFacturasProveedor::on_botBuscarCliente_clicked()
 void FrmFacturasProveedor::on_btnEditar_clicked()
 {
     bloquearcampos(false);
+    ui->stackedWidget->setCurrentIndex(0);
     emit block();
     ui->txtcodigo_proveedor->setFocus();
 }
@@ -665,15 +669,22 @@ void FrmFacturasProveedor::filter_table(QString texto, QString orden, QString mo
 //    else
 //        tg = ui->cbogastos->currentText();
 
-    if(QString(tg).isEmpty())
-        m->setQuery("select id,factura,fecha,cif_proveedor,telefono,proveedor,total,tipo_gasto from fac_pro "
-                    "where "+order+" like '%"+texto.trimmed()+"%' order by "+order+" "+modo,
+    if(QString(tg).isEmpty()){
+       QString cSQL = "select id,factura,fecha,cif_proveedor,telefono,proveedor,total from fac_pro "
+                "where "+order+" like '%"+texto.trimmed()+"%' order by "+order+" "+modo;
+        m->setQuery(cSQL,
                     Configuracion_global->empresaDB);
+    }
 //    else
 //        m->setQuery("select id,factura,fecha,cif_proveedor,telefono,proveedor,total,tipo_gasto from fac_pro "
 //                    "where "+order+" like '%"+arg1.trimmed()+"%' and tipo_gasto ='"+tg+"' order by "+order+" "+modo,
 //                    Configuracion_global->empresaDB);
 
+}
+
+void FrmFacturasProveedor::borrarFactura()
+{
+  // TODO - BORRAR FACTURA PROVEEDOR
 }
 
 void FrmFacturasProveedor::setUpBusqueda()
@@ -694,6 +705,20 @@ void FrmFacturasProveedor::setUpBusqueda()
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
     connect(this,&MayaModule::hideBusqueda,this,&FrmFacturasProveedor::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+    QPushButton * btnAdd = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(btnAdd,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
+    m_busqueda->addWidget(btnAdd);
+
+    QPushButton * btnEdit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(btnEdit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
+    m_busqueda->addWidget(btnEdit);
+
+    QPushButton * btnDelete = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
+    connect(btnDelete,SIGNAL(clicked()),this,SLOT(borrarFactura()));
+    m_busqueda->addWidget(btnDelete);
+
+    m_busqueda->addSpacer();
 }
 
 void FrmFacturasProveedor::on_tabla_clicked(const QModelIndex &index)

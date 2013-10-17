@@ -2869,7 +2869,7 @@ color: rgb(255, 255, 255);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 0, 0);
+      <string notr="true">background-color: rgb(170, 85, 127);
 color: rgb(255, 255, 255);
 font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>

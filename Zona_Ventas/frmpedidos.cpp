@@ -77,7 +77,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     convertir_menu->addAction(aFactura_action);
 
     ui->btn_convertir->setMenu(convertir_menu);
-    BloquearCampos(true);
+
 
     ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
     ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
@@ -146,6 +146,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->txtcodigo_transportista->installEventFilter(this);
 
     setUpBusqueda();
+
+    BloquearCampos(true);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -417,63 +419,6 @@ void FrmPedidos::VaciarCampos()
     helper.fillTable("empresa","lin_ped","id_Cab = -1");
 }
 
-void FrmPedidos::BloquearCampos(bool state)
-{
-    helper.blockTable(state);
-    ui->btnAnadirLinea->setEnabled(!state);
-    ui->btn_borrarLinea->setEnabled(!state);
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(state);
-    }
-    // ComboBox
-    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
-    QComboBox *ComboBox;
-    foreach (ComboBox, ComboBoxList) {
-        ComboBox->setEnabled(!state);
-    }
-    // DoubleSpinBox
-    QList<QDoubleSpinBox *> DblSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-    QDoubleSpinBox *DblSpinBox;
-    foreach (DblSpinBox, DblSpinBoxList) {
-        DblSpinBox->setEnabled(!state);
-    }
-    // CheckBox
-    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
-    QCheckBox *CheckBox;
-    foreach (CheckBox, CheckBoxList) {
-        CheckBox->setEnabled(!state);
-    }
-    // QTextEdit
-    QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
-    QTextEdit *textEdit;
-    foreach (textEdit,textEditList) {
-        textEdit->setReadOnly(state);
-    }
-    // QDateEdit
-    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
-    QDateEdit *DateEdit;
-    foreach (DateEdit, DateEditList) {
-        DateEdit->setEnabled(!state);
-    }
-
-    ui->btnAnadir->setEnabled(state);
-    ui->btnAnterior->setEnabled(state);
-    ui->btnBuscar->setEnabled(state);
-    ui->btnDeshacer->setEnabled(!state);
-    ui->btnEditar->setEnabled(state);    
-    ui->btnGuardar->setEnabled(!state);
-    ui->btnSiguiente->setEnabled(state);
-    ui->botBuscarCliente->setEnabled(!state);
-    ui->txtpedido->setReadOnly(true);
-    ui->btn_borrar->setEnabled(state);
-
-    ui->chklporc_rec->setEnabled(false);
-    ui->spiniva_gasto1->setEnabled(false);
-    ui->spiniva_gasto2->setEnabled(false);
-    ui->spiniva_gasto3->setEnabled(false);
-}
 
 void FrmPedidos::LLenarPedido()
 {
@@ -575,6 +520,7 @@ void FrmPedidos::formato_tabla()
 
 void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
 {
+    ui->stackedWidget->setCurrentIndex(1);
     //  tr("Pedido") <<tr("Cliente") <<tr("Fecha")
     QHash <QString,QString> h;
     h[tr("Pedido")] = "pedido";
@@ -678,23 +624,84 @@ void FrmPedidos::setUpBusqueda()
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
-    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
-    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
     m_busqueda->addWidget(add);
 
-    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
-    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
     m_busqueda->addWidget(edit);
 
-    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
    // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
     m_busqueda->addWidget(print);
 
-    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
     m_busqueda->addWidget(del);
 }
 
+
+
+void FrmPedidos::BloquearCampos(bool state)
+{
+    helper.blockTable(state);
+    ui->btnAnadirLinea->setEnabled(!state);
+    ui->btn_borrarLinea->setEnabled(!state);
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(state);
+    }
+    // ComboBox
+    QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
+    QComboBox *ComboBox;
+    foreach (ComboBox, ComboBoxList) {
+        ComboBox->setEnabled(!state);
+    }
+    // DoubleSpinBox
+    QList<QDoubleSpinBox *> DblSpinBoxList = this->findChildren<QDoubleSpinBox *>();
+    QDoubleSpinBox *DblSpinBox;
+    foreach (DblSpinBox, DblSpinBoxList) {
+        DblSpinBox->setEnabled(!state);
+    }
+    // CheckBox
+    QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
+    QCheckBox *CheckBox;
+    foreach (CheckBox, CheckBoxList) {
+        CheckBox->setEnabled(!state);
+    }
+    // QTextEdit
+    QList<QTextEdit *> textEditList = this->findChildren<QTextEdit *>();
+    QTextEdit *textEdit;
+    foreach (textEdit,textEditList) {
+        textEdit->setReadOnly(state);
+    }
+    // QDateEdit
+    QList<QDateEdit *> DateEditList = this->findChildren<QDateEdit *>();
+    QDateEdit *DateEdit;
+    foreach (DateEdit, DateEditList) {
+        DateEdit->setEnabled(!state);
+    }
+
+    ui->btnAnadir->setEnabled(state);
+    ui->btnAnterior->setEnabled(state);
+    ui->btnBuscar->setEnabled(state);
+    ui->btnDeshacer->setEnabled(!state);
+    ui->btnEditar->setEnabled(state);
+    ui->btnGuardar->setEnabled(!state);
+    ui->btnSiguiente->setEnabled(state);
+    ui->botBuscarCliente->setEnabled(!state);
+    ui->txtpedido->setReadOnly(true);
+    ui->btn_borrar->setEnabled(state);
+
+    ui->chklporc_rec->setEnabled(false);
+    ui->spiniva_gasto1->setEnabled(false);
+    ui->spiniva_gasto2->setEnabled(false);
+    ui->spiniva_gasto3->setEnabled(false);
+
+    m_busqueda->block(!state);
+}
 void FrmPedidos::on_btnSiguiente_clicked()
 {
     int pedido = oPedido->id;
@@ -750,6 +757,7 @@ void FrmPedidos::on_btnAnterior_clicked()
 
 void FrmPedidos::on_btnAnadir_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     VaciarCampos();
     BloquearCampos(false);
     ui->txtpedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
@@ -765,6 +773,7 @@ void FrmPedidos::on_btnAnadir_clicked()
 
 void FrmPedidos::on_btnEditar_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     if (oPedido->editable)
     {
         BloquearCampos(false);
@@ -1593,7 +1602,7 @@ void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
 {
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
-    //LLenarCampos();
+    LLenarCampos();
     BloquearCampos(true);
 }
 
@@ -1602,7 +1611,7 @@ void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
     LLenarCampos();
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(true);
 }
 

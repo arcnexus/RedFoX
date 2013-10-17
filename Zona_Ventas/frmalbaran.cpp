@@ -106,9 +106,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
-
-    BloquearCampos(true);
-
     helper.set_Tipo(false);
     helper.help_table(ui->Lineas);
 
@@ -188,9 +185,11 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->txtcodigo_cliente->installEventFilter(this);
     ui->txtcp->installEventFilter(this);
     ui->txtCp_entrega->installEventFilter(this);
+    ui->table2->installEventFilter(this);
 
 
     setUpBusqueda();
+    BloquearCampos(true);
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -330,6 +329,11 @@ void FrmAlbaran::LLenarCampos() {
         int index = ui->cbo_forma_pago->findText(fp);
         ui->cbo_forma_pago->setCurrentIndex(index);
     }
+    //----------------------------
+    // Barra Busquedas
+    //----------------------------
+    lblfacturado->setVisible(oAlbaran->facturado);
+    lblimpreso->setVisible(oAlbaran->impreso);
 
 }
 void FrmAlbaran::LLenarCamposCliente()
@@ -546,6 +550,7 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btnFacturar->setEnabled(state);
 
     helper.blockTable(state);
+    m_busqueda->block(!state);
 }
 
 void FrmAlbaran::LLenarAlbaran()
@@ -1241,11 +1246,20 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
 //            if(keyEvent->key() == Qt::Key_F1)
 //                buscar_transportista();
 //        }
+        if(keyEvent->key() ==Qt::Key_Escape)
+            return true;
         if(obj == ui->txtcodigo_cliente)
         {
             if(keyEvent->key() == Qt::Key_F1)
                 on_botBuscarCliente_clicked();
         }
+//        if(obj == ui->table2)
+//        {
+//            if(keyEvent->key() == Qt::Key_Down)
+//                on_table2_clicked(ui->table2->currentIndex());
+//            if(keyEvent->key() == Qt::Key_Up)
+//                on_table2_clicked(ui->table2->currentIndex());
+//        }
         return false;
     }
     else if(event->type() == QEvent::Resize)
@@ -1584,3 +1598,5 @@ void FrmAlbaran::ocultarBusqueda()
 {
     _hideBarraBusqueda(m_busqueda);
 }
+
+

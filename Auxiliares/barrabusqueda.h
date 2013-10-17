@@ -18,6 +18,7 @@ public:
     void setOrderCombo(QStringList l);
     void setModeCombo(QStringList l);
     void addWidget(QWidget* w);
+    void addLayoutZ1(QLayout *z);
     void addSpacer();
     void addLayout(QLayout *l);
     void block(bool state);

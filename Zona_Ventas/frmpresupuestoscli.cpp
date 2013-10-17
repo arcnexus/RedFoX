@@ -99,7 +99,6 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
-    BloquearCampos(true);
     ui->btnBorrar->setEnabled(false);
     ui->btnEditar->setEnabled(false);
     ui->btn_convertir->setEnabled(false);
@@ -129,6 +128,9 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->txtCP_entrega->installEventFilter(this);
 
     setUpBusqueda();
+
+    BloquearCampos(true);
+
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -554,6 +556,7 @@ void FrmPresupuestosCli::BloquearCampos(bool state)
     ui->txtpresupuesto->setReadOnly(true);
     ui->btnImprimir->setEnabled(true);
     ui->btn_convertir->setEnabled(state);
+    m_busqueda->block(!state);
 }
 
 void FrmPresupuestosCli::on_chklAprovado_stateChanged(int arg1)
@@ -631,6 +634,7 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     ui->txtcodigo_cliente->setFocus();
     editando = false;
     emit block();
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void FrmPresupuestosCli::on_btnEditar_clicked()
@@ -640,6 +644,7 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
         BloquearCampos(false);
         editando = true;
         emit block();
+        ui->stackedWidget->setCurrentIndex(0);
     }
     else
     {
@@ -1665,6 +1670,7 @@ void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo
     h[tr("cliente")] = "cliente";
     h[tr("teléfono")] = "telefono";
 
+    ui->stackedWidget->setCurrentIndex(1);
     QString order = h.value(orden);
 
     if(modo == tr("A-Z"))
@@ -1746,21 +1752,22 @@ void FrmPresupuestosCli::setUpBusqueda()
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
-    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
-    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_3_clicked()));
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
+    connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
     m_busqueda->addWidget(add);
 
-    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
-    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
     m_busqueda->addWidget(edit);
 
-    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
    // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
     m_busqueda->addWidget(print);
 
-    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
-    connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
     m_busqueda->addWidget(del);
+
 }
 
 void FrmPresupuestosCli::on_tabla_clicked(const QModelIndex &index)
@@ -1801,17 +1808,6 @@ void FrmPresupuestosCli::on_btnDesbloquear_clicked()
     BloquearCampos(true);
 }
 
-void FrmPresupuestosCli::on_btnAnadir_2_clicked()
-{
-    on_btnAnadir_clicked();
-    ui->stackedWidget->setCurrentIndex(0);
-}
-
-void FrmPresupuestosCli::on_btnEditar_2_clicked()
-{
-    on_tabla_doubleClicked(ui->tabla->currentIndex());
-    on_btnEditar_clicked();
-}
 
 void FrmPresupuestosCli::on_btnImprimir_2_clicked()
 {
