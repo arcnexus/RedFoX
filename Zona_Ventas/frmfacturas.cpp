@@ -87,6 +87,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     //----------------
     // Cargar Series
     //----------------
+    cboSeries = new QComboBox(this);
     QSqlQueryModel * model_series = new QSqlQueryModel(this);
     model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
     ui->cbo_serie->setModel(model_series);
@@ -95,6 +96,8 @@ frmFacturas::frmFacturas( QWidget *parent) :
     series2_l.append(tr("TODAS"));
     while (series2.next())
         series2_l.append(series2.record().value("serie").toString());
+
+
  /*   ui->cboseries->addItems(series2_l);
     if(!Configuracion_global->serie.isEmpty())
     {
@@ -1164,6 +1167,11 @@ void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
 
 void frmFacturas::filter_table(QString texto, QString orden, QString modo)
 {
+    this->texto = texto;
+    this->orden = orden;
+    this->modo = modo;
+    this->serie = cboSeries->currentText();
+
     ui->stackedWidget->setCurrentIndex(1);
     QString indice_tabla = h_Buscar.value(orden);
     if(indice_tabla.isEmpty())
@@ -1199,13 +1207,13 @@ void frmFacturas::filter_table(QString texto, QString orden, QString modo)
             m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                                  " where factura = 'BORRADOR' and "+indice_tabla+
                                  " like '%"+texto+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
-                                 " and serie ='"+cboSeries->currentText() +"'"+
+                                 " and serie ='"+this->serie +"'"+
                                  " order by "+order +" "+modo,Configuracion_global->empresaDB);
         else
             m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
                                  " where factura <> 'BORRADOR' and "+indice_tabla+
                                  " like '%"+texto+"%'  and ejercicio = "+Configuracion_global->cEjercicio+
-                                 " and serie ='"+cboSeries->currentText() +"'"
+                                 " and serie ='"+this->serie +"'"
                                  " order by "+order +" "+modo,Configuracion_global->empresaDB);
 
     }
@@ -1311,14 +1319,14 @@ void frmFacturas::setUpBusqueda()
     connect(this,&MayaModule::hideBusqueda,this,&frmFacturas::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
-    QComboBox *cboSeries = new QComboBox(this);
+
     QLabel *lblserie = new QLabel(tr("Serie:"));
     cboSeries->addItems(series2_l);
     QHBoxLayout *layoutserie = new QHBoxLayout;
     layoutserie->addWidget(lblserie);
     layoutserie->addWidget(cboSeries);
     m_busqueda->addLayoutZ1(layoutserie);
-    // TODO _ connect(cboSeries,SIGNAL(currentIndexChanged(QString)),this,
+    connect(cboSeries,SIGNAL(currentIndexChanged(QString)),this,SLOT(on_cboseries_currentIndexChanged(QString)));
 
     QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
     connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
@@ -1390,7 +1398,8 @@ void frmFacturas::on_btnArticulos_clicked()
 
 void frmFacturas::on_cboseries_currentIndexChanged(const QString &arg1)
 {
-    Q_UNUSED(arg1);
+    this->serie = arg1;
+    filter_table(this->texto,this->orden,this->modo);
 }
 
 
@@ -1598,9 +1607,4 @@ void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(const QString &ar
     }
 }
 
-void frmFacturas::series_changed(QString text)
-{
-    Q_UNUSED(text);
-    // TODO - Controlar series
 
-}

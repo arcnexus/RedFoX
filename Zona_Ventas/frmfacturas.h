@@ -105,7 +105,6 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
     void on_cboDireccionesEntrega_currentIndexChanged(const QString &arg1);
-    void series_changed(QString text);
 
 
 private:
@@ -131,6 +130,10 @@ private:
     void setUpBusqueda();
     QComboBox* cboSeries;
     QStringList series2_l;
+    QString texto;
+    QString orden;
+    QString modo;
+    QString serie;
 };
 
 #endif // FRMFACTURAS_H

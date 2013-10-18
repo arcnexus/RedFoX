@@ -408,12 +408,15 @@ void FrmUsuarios::crear_User()
 {
     QSqlQuery add_user(Configuracion_global->groupDB);
 
-    add_user.prepare("INSERT INTO usuarios (nombre,contrasena,categoria) "
-                     "VALUES (:nombre,:contrasena,:categoria)");
+    add_user.prepare("INSERT INTO usuarios (nombre,contrasena,categoria,cuenta_smtp,usuario_mail,password_mail) "
+                     "VALUES (:nombre,:contrasena,:categoria,:cuenta_smtp,:usuario_mail,:password_mail)");
 
     add_user.bindValue(":nombre","");
     add_user.bindValue(":contrasena","");
     add_user.bindValue(":categoria","");
+    add_user.bindValue(":cuenta_smtp",ui->txtcuenta_smtp->text());
+    add_user.bindValue(":usuario_mail",ui->txtusuario_mail->text());
+    add_user.bindValue(":password_mail",ui->txtpassword_mail->text());
 
     int last_id=-1;
     if(add_user.exec())
@@ -435,11 +438,13 @@ void FrmUsuarios::crear_User()
 
 void FrmUsuarios::llenar_user(QSqlRecord record)
 {
-    ui->txt_id_user->setText(record.value(0).toString());
-    ui->txt_nombre_user->setText(record.value(1).toString());
-    ui->txt_pass_user->setText(record.value(2).toString());
-    ui->txt_categoria_user->setText(record.value(4).toString());
-
+    ui->txt_id_user->setText(record.value("id").toString());
+    ui->txt_nombre_user->setText(record.value("nombre").toString());
+    ui->txt_pass_user->setText(record.value("contrasena").toString());
+    ui->txt_categoria_user->setText(record.value("categoria").toString());
+    ui->txtcuenta_smtp->setText(record.value("cuenta_smtp").toString());
+    ui->txtusuario_mail->setText(record.value("usuario_mail").toString());
+    ui->txtpassword_mail->setText(record.value("password_mail").toString());
     llenarModulos(record.value(0).toInt());
 }
 
@@ -468,10 +473,14 @@ void FrmUsuarios::on_botGuardar_user_clicked()
 {
     int id=ui->txt_id_user->text().toInt();
     QSqlQuery q(Configuracion_global->groupDB);
-    q.prepare("UPDATE usuarios SET nombre=:name, categoria=:cat WHERE id=:id;");
+    q.prepare("UPDATE usuarios SET nombre=:name, categoria=:cat, cuenta_smtp=:cuenta_smtp,"
+              "usuario_mail =:usuario_mail,password_mail =:password_mail WHERE id=:id;");
     q.bindValue(":name",ui->txt_nombre_user->text());
     //q.bindValue(":lvl",ui->spin_nacceso_user->value());
     q.bindValue(":cat",ui->txt_categoria_user->text());
+    q.bindValue(":cuenta_smtp",ui->txtcuenta_smtp->text());
+    q.bindValue(":usuario_mail",ui->txtusuario_mail->text());
+    q.bindValue(":password_mail",ui->txtpassword_mail->text());
     q.bindValue(":id",id);
 
     if(q.exec())

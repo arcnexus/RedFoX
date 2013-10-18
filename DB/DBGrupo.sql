@@ -861,6 +861,10 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`usuarios` (
   `contrasena` VARCHAR(45) NULL DEFAULT NULL ,
   `nivel_acceso` INT(4) NULL DEFAULT NULL ,
   `categoria` VARCHAR(45) NULL DEFAULT NULL ,
+  `cuenta_smtp` VARCHAR(100) NULL DEFAULT NULL ,
+  `usuario_mail` VARCHAR(100) NULL DEFAULT NULL ,
+  `password_mail` VARCHAR(30) NULL DEFAULT NULL ,
+
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC) )
 ENGINE = InnoDB
