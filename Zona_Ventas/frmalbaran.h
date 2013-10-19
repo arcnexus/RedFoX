@@ -82,7 +82,8 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
-
+    void on_table2_row_moved(QModelIndex actual,QModelIndex previous);
+    void on_cboseries_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::FrmAlbaran *ui;
@@ -103,6 +104,11 @@ private:
     BarraBusqueda* m_busqueda;
     QLabel* lblimpreso;
     QLabel* lblfacturado;
+    QComboBox* cboseries;
+    QString texto;
+    QString orden;
+    QString modo;
+    QString serie;
 };
 
 #endif // FRMALBARAN_H

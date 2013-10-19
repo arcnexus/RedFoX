@@ -14,64 +14,6 @@
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
 
-void FrmAlbaran::setUpBusqueda()
-{
-    m_busqueda = new BarraBusqueda(this);
-    this->setMouseTracking(true);
-    this->setAttribute(Qt::WA_Hover);
-
-    QStringList orden;
-    orden <<tr("Albarán")<<tr("Fecha")<<tr("Cif")<<tr("Cliente");
-    m_busqueda->setOrderCombo(orden);
-
-    QStringList modo;
-    modo << tr("A-Z") << tr("Z-A");
-    m_busqueda->setModeCombo(modo);
-
-    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaran::ocultarBusqueda);
-    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
-
-    QPushButton* add2 = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir albarán"),this);
-    connect(add2,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
-    m_busqueda->addWidget(add2);
-
-    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar albarán"),this);
-    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
-    m_busqueda->addWidget(edit);
-
-    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/impresora2.png"),tr("Imprimir albarán"),this);
-    connect(print,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
-    m_busqueda->addWidget(print);
-
-    QHBoxLayout* lay = new QHBoxLayout();
-    lblimpreso = new QLabel(tr("Impreso"),this);
-    lblfacturado = new QLabel(tr("FActurado"),this);
-    QString style = "background-color: rgb(255, 0, 0);color: rgb(255, 255, 255);";
-    lblimpreso->setStyleSheet(style);
-    lblfacturado->setStyleSheet(style);
-    lblimpreso->setAlignment(Qt::AlignHCenter);
-    lblfacturado->setAlignment(Qt::AlignHCenter);
-
-    lay->addWidget(lblimpreso);
-    lay->addWidget(lblfacturado);
-    m_busqueda->addLayout(lay);
-
-//    lblfacturado->setVisible(false);
-//    lblimpreso->setVisible(false);
-
-    QPushButton* borrar = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar Albarán"),this);
-    connect(borrar,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
-    m_busqueda->addWidget(borrar);
-
-    if(Configuracion_global->nivel == 7)
-    {
-        QPushButton* Forzar_edicion = new QPushButton(QIcon(":/Icons/PNG/abrecaja.png"),tr("Forzar edición"),this);
-        connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));
-        m_busqueda->addWidget(Forzar_edicion);
-    }
-}
-
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmAlbaran),
@@ -153,6 +95,9 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
    // ui->tabla->setModel(m);
     ui->table2->setModel(m);
     formato_tabla();
+    connect(ui->table2->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this,SLOT(on_table2_row_moved(QModelIndex,QModelIndex)));
+
 
     //--------------------
     // llenar cboBusqueda
@@ -172,9 +117,13 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     //-------------
     // Series
     //-------------
+    cboseries = new QComboBox(this);
     series = new QSqlQueryModel(this);
     series->setQuery("select serie from series", Configuracion_global->empresaDB);
     ui->cboSerie->setModel(series);
+    cboseries->setModel(series);
+
+
 
     ui->frameRad->setVisible(false);
 
@@ -196,6 +145,9 @@ FrmAlbaran::~FrmAlbaran()
 {
     delete ui;
 }
+
+
+
 
 
 void FrmAlbaran::LLenarCampos() {
@@ -1213,21 +1165,106 @@ void FrmAlbaran::formato_tabla()
 
 void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
 {
+    this->texto = texto;
+    this->orden = orden;
+    this->modo = modo;
+    this->serie = cboseries->currentText();
     ui->stackedWidget->setCurrentIndex(1);
     QHash <QString,QString> h;
     h[tr("Albarán")] = "albaran";
     h[tr("Fecha")] = "fecha";
     h[tr("Cif")] = "cif";
     h[tr("Cliente")] = "cliente";
-    QString order = h.value(orden);
+    QString order = h.value(this->orden);
+    QString cSQL;
 
     if (modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
+    cSQL = "select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+texto.trimmed()+
+            "%' and serie = '"+this->serie+"' order by "+order +" "+this->modo;
+    m->setQuery(cSQL,Configuracion_global->empresaDB);
+}
 
-    m->setQuery("select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+texto.trimmed()+
-                    "%' order by "+order +" "+modo,Configuracion_global->empresaDB);
+void FrmAlbaran::setUpBusqueda()
+{
+    m_busqueda = new BarraBusqueda(this);
+    this->setMouseTracking(true);
+    this->setAttribute(Qt::WA_Hover);
+
+    QStringList orden;
+    orden <<tr("Albarán")<<tr("Fecha")<<tr("Cif")<<tr("Cliente");
+    m_busqueda->setOrderCombo(orden);
+
+    QStringList modo;
+    modo << tr("A-Z") << tr("Z-A");
+    m_busqueda->setModeCombo(modo);
+
+    connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
+    connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaran::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
+
+    QHBoxLayout *layoutZ1 = new QHBoxLayout(this);
+    QLabel* lblseries = new QLabel(this);
+    lblseries->setText(tr("Series:"));
+
+    layoutZ1->addWidget(lblseries);
+    layoutZ1->addWidget(cboseries);
+    m_busqueda->addLayoutZ1(layoutZ1);
+    connect(cboseries,SIGNAL(currentIndexChanged(QString)),this,SLOT(on_cboseries_currentIndexChanged(QString)));
+
+    QPushButton* add2 = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir albarán"),this);
+    connect(add2,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
+    m_busqueda->addWidget(add2);
+
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar albarán"),this);
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
+    m_busqueda->addWidget(edit);
+
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/impresora2.png"),tr("Imprimir albarán"),this);
+    connect(print,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
+    m_busqueda->addWidget(print);
+
+    QHBoxLayout* lay = new QHBoxLayout();
+    lblimpreso = new QLabel(tr("Impreso"),this);
+    lblfacturado = new QLabel(tr("FActurado"),this);
+    QString style = "background-color: rgb(255, 0, 0);color: rgb(255, 255, 255);";
+    lblimpreso->setStyleSheet(style);
+    lblfacturado->setStyleSheet(style);
+    lblimpreso->setAlignment(Qt::AlignHCenter);
+    lblfacturado->setAlignment(Qt::AlignHCenter);
+
+    lay->addWidget(lblimpreso);
+    lay->addWidget(lblfacturado);
+    m_busqueda->addLayout(lay);
+
+//    lblfacturado->setVisible(false);
+//    lblimpreso->setVisible(false);
+
+    QPushButton* borrar = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar Albarán"),this);
+    connect(borrar,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    m_busqueda->addWidget(borrar);
+    this->orden = "Albarán";
+
+    if(Configuracion_global->nivel == 7)
+    {
+        QPushButton* Forzar_edicion = new QPushButton(QIcon(":/Icons/PNG/abrecaja.png"),tr("Forzar edición"),this);
+        connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));
+        m_busqueda->addWidget(Forzar_edicion);
+    }
+}
+
+void FrmAlbaran::on_table2_row_moved(QModelIndex actual, QModelIndex previous)
+{
+    Q_UNUSED(previous);
+    on_table2_clicked(actual);
+}
+
+void FrmAlbaran::on_cboseries_currentIndexChanged(const QString &arg1)
+{
+    this->serie = arg1;
+    filter_table(this->texto,this->orden,this->modo);
 }
 
 void FrmAlbaran::calcular_iva_gastos()

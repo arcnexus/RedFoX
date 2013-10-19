@@ -88,6 +88,7 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void on_table_row_changed(QModelIndex actual,QModelIndex previous);
 private:
     Ui::frmPedidos *ui;
 

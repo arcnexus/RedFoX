@@ -96,6 +96,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
     formato_tabla();
+    connect(ui->tabla->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this,SLOT(on_table_row_changed(QModelIndex,QModelIndex)));
 
     //--------------------
     // %Iva combos gastos
@@ -537,6 +539,12 @@ void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
     m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli "
                     "where "+order+" like '%" + texto.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
 
+}
+
+void FrmPedidos::on_table_row_changed(QModelIndex actual, QModelIndex previous)
+{
+    Q_UNUSED(previous);
+    on_tabla_clicked(actual);
 }
 
 void FrmPedidos::calcular_iva_gastos()

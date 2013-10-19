@@ -496,6 +496,8 @@ void FrmPedidosProveedor::guardar_pedido()
 
 void FrmPedidosProveedor::editar_pedido()
 {
+    if(ui->stackedWidget->currentIndex() == 1)
+        llenar_campos();
     ui->stackedWidget->setCurrentIndex(0);
     bloquearcampos(false);
     emit block();
@@ -608,8 +610,8 @@ void FrmPedidosProveedor::llenar_campos()
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
     helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     helper.fillTable("empresa","lin_ped_pro",filter);
-    helper.resizeTable();
-    cargar_tabla_entregas();
+//    helper.resizeTable();
+//    cargar_tabla_entregas();
 
 }
 
@@ -864,8 +866,7 @@ void FrmPedidosProveedor::filter_table(QString texto, QString orden, QString mod
 
 void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
 {
-    QSqlQueryModel* mymodel = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(mymodel,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(0);
@@ -874,10 +875,9 @@ void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
 
 void FrmPedidosProveedor::on_tabla_clicked(const QModelIndex &index)
 {
-    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
-    llenar_campos();
+    //llenar_campos();
 
 }
 
