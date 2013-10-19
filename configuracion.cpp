@@ -1313,7 +1313,7 @@ void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> query
     {
         ReportRenderer r;
         QPrinter printer;
-        QPrintDialog dlg(&printer);
+       // QPrintDialog dlg(&printer);
         r.setPrinter(&printer);
         QString errorStr;
         int errorLine;

@@ -11,16 +11,9 @@ ReportRenderer::ReportRenderer(QObject *parent) :
 
 QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool& error)
 {
-    QPainter p(printer);
+    QPainter p;//(printer);
     m_doc = preRender(&p,in,queryClausules,params,error);
 
-    QFile f("/home/arcnexus/rep.xml");
-    if(f.open(QFile::WriteOnly))
-    {
-        QTextStream t(&f);
-        m_doc.save(t,4);
-    }
-    f.close();
     return m_doc;
 }
 
