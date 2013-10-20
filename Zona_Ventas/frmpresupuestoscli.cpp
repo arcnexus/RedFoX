@@ -130,6 +130,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     setUpBusqueda();
 
     BloquearCampos(true);
+    ui->tabla->selectRow(0);
 
 }
 
@@ -1680,6 +1681,8 @@ void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo
 
     m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+order+
                 " like '%"+texto+"%' order by "+order+" "+modo, Configuracion_global->empresaDB);
+    if(ui->stackedWidget->currentIndex() == 0)
+        ui->stackedWidget->setCurrentIndex(1);
 }
 
 void FrmPresupuestosCli::buscar_poblacion(int tipo)
@@ -1767,6 +1770,8 @@ void FrmPresupuestosCli::setUpBusqueda()
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
     m_busqueda->addWidget(del);
+
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
 
 }
 
@@ -1876,6 +1881,7 @@ void FrmPresupuestosCli::on_spin_porc_dto_pp_editingFinished()
 void FrmPresupuestosCli::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmPresupuestosCli::ocultarBusqueda()
@@ -1902,6 +1908,12 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 buscar_poblacion(2);
         }
+        if(keyEvent->key() ==Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
+        if(keyEvent->key() == Qt::Key_Return)
+            if(ui->stackedWidget->currentIndex() ==1)
+                on_tabla_doubleClicked(ui->tabla->currentIndex());
     }
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);

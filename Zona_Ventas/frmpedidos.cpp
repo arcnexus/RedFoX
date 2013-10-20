@@ -98,6 +98,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     formato_tabla();
     connect(ui->tabla->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this,SLOT(on_table_row_changed(QModelIndex,QModelIndex)));
+    //ui->tabla->selectRow(0);
 
     //--------------------
     // %Iva combos gastos
@@ -141,6 +142,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     formas_pago->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
     ui->cboFormapago->setModel(formas_pago);
 
+
     //----------------------
     // Control de eventos
     //----------------------
@@ -150,6 +152,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     setUpBusqueda();
 
     BloquearCampos(true);
+    ui->tabla->selectRow(0);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -600,8 +603,14 @@ bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 on_botBuscarCliente_clicked();
         }
-        if((keyEvent->key() == Qt::Key_F1) & (obj != ui->txtcodigo_cliente) &(obj != ui->txtcodigo_transportista))
-            mostrarBusqueda();
+        if(keyEvent->key() == Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
+        if(keyEvent->key() == Qt::Key_Return)
+            if(ui->stackedWidget->currentIndex() == 1)
+                on_tabla_doubleClicked(ui->tabla->currentIndex());
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
     }
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
@@ -1609,7 +1618,7 @@ void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
 {
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
-    LLenarCampos();
+    //LLenarCampos();
     BloquearCampos(true);
 }
 

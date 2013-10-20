@@ -147,19 +147,6 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
 
-
-//    actionGuardaBorrador = new QAction("Guardar borrador",this);
-//    actionGuardaFactura = new QAction("Guardar factura",this);
-//    menu_guardar = new QMenu(this);
-
-//    connect(actionGuardaBorrador,SIGNAL(triggered()),this,SLOT(Guardar_factura()));
-//    connect(actionGuardaFactura,SIGNAL(triggered()),this,SLOT(Guardar_factura()));
-
-//    menu_guardar->addAction(actionGuardaFactura);
-//    menu_guardar->addAction(actionGuardaBorrador);
-
-//    ui->btnGuardar->setMenu(menu_guardar);
-
     VaciarCampos();
     ui->btnEditar->setEnabled(false);
     ui->btnSiguiente->setEnabled(true);
@@ -180,6 +167,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     setUpBusqueda();
 
     BloquearCampos(true);
+    ui->tabla_facturas->selectRow(0);
 }
 
 frmFacturas::~frmFacturas()
@@ -1377,6 +1365,7 @@ void frmFacturas::on_tabla_facturas_doubleClicked(const QModelIndex &index)
      ui->stackedWidget->setCurrentIndex(0);
      ui->btnEditar->setEnabled(true);
      ui->btnImprimir->setEnabled(true);
+     ocultarBusqueda();
 }
 
 void frmFacturas::on_tabla_facturas_clicked(const QModelIndex &index)

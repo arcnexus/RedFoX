@@ -139,6 +139,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
 
     setUpBusqueda();
     BloquearCampos(true);
+    ui->table2->selectRow(0);
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -1183,7 +1184,7 @@ void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
     else
         modo = "DESC";
     cSQL = "select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+texto.trimmed()+
-            "%' and serie = '"+this->serie+"' order by "+order +" "+this->modo;
+            "%' and serie = '"+this->serie+"' order by "+order +" "+modo;
     m->setQuery(cSQL,Configuracion_global->empresaDB);
 }
 
@@ -1253,6 +1254,7 @@ void FrmAlbaran::setUpBusqueda()
         connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));
         m_busqueda->addWidget(Forzar_edicion);
     }
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->table2,SLOT(setFocus()));
 }
 
 void FrmAlbaran::on_table2_row_moved(QModelIndex actual, QModelIndex previous)
@@ -1290,13 +1292,12 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 on_botBuscarCliente_clicked();
         }
-//        if(obj == ui->table2)
-//        {
-//            if(keyEvent->key() == Qt::Key_Down)
-//                on_table2_clicked(ui->table2->currentIndex());
-//            if(keyEvent->key() == Qt::Key_Up)
-//                on_table2_clicked(ui->table2->currentIndex());
-//        }
+        if(keyEvent->key() == Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
+        if(keyEvent->key() == Qt::Key_Return)
+            if(ui->stackedWidget->currentIndex() == 1)
+                on_table2_doubleClicked(ui->table2->currentIndex());
         return false;
     }
     else if(event->type() == QEvent::Resize)
@@ -1629,6 +1630,7 @@ void FrmAlbaran::on_spinPorc_dto_pp_editingFinished()
 void FrmAlbaran::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmAlbaran::ocultarBusqueda()
