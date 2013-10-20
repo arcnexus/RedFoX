@@ -333,8 +333,7 @@ alternate-background-color: rgb(255, 255, 213);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Aceptar</string>

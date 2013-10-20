@@ -100,29 +100,31 @@ frmClientes::frmClientes(QWidget *parent) :
     QSqlQueryModel *qTarifa = new QSqlQueryModel(this);
     qTarifa->setQuery("select descripcion, id from codigotarifa",Configuracion_global->groupDB);
     ui->cbotarifa_cliente->setModel(qTarifa);
-
-    // Rellenar Paises:
+    //------------------
+    // Rellenar Paises
+    //------------------
     ui->cboPais->setModel(Configuracion_global->paises_model);
-  //  ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
-
     ui->cbopaisAlternativa->setModel(Configuracion_global->paises_model);
- //   ui->cbopaisAlternativa->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
+    //------------------------
     // rellenar combo idiomas
+    //------------------------
     QSqlQueryModel *qmidiomas = new QSqlQueryModel(this);
     qmidiomas->setQuery("select idioma from idiomas order by idioma", Configuracion_global->groupDB);
     ui->cboidiomaDocumentos->setModel(qmidiomas);
-    //oCliente->Recuperar("Select * from clientes");
-    //LLenarCampos();
-    //rellenar cbotipos_dto
+    //------------------------
+    // rellenar descuentos
+    //------------------------
     QStringList tipos_dto;
     tipos_dto <<"1" <<"2" << "3" << "4" << "5" << "6";
     ui->cbotipo_dto->addItems(tipos_dto);
     bloquearCampos(true);
     this->Altas = false;
     ui->blinkink->setVisible(false);
-    //Connect signals /slots.
 
+    //-----------------------
+    //Connect signals /slots.
+    //-----------------------
     connect(ui->txtPrimerApellido,SIGNAL(editingFinished()),this,SLOT(txtPrimerApellido_editingFinished()));
     connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(txtSegundoApellido_editingFinished()));
     connect(ui->txtnombre,SIGNAL(editingFinished()),this,SLOT(txtnombre_editingFinished()));
@@ -151,8 +153,15 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
+    connect(ui->tabla_busquedas->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this,SLOT(on_tabla_busquedas_row_changed(QModelIndex,QModelIndex)));
 
     setUpBusqueda();
+
+    //--------------------
+    // Procesar eventos
+    //--------------------
+    ui->tabla_busquedas->installEventFilter(this);
 }
 
 frmClientes::~frmClientes()
@@ -1543,6 +1552,7 @@ void frmClientes::on_tabla_busquedas_doubleClicked(const QModelIndex &index)
     int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
     oCliente->Recuperar(id);
     LLenarCampos();
+    ocultarBusqueda();
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -1562,6 +1572,8 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
 {
     QString index = h_Buscar.value(orden);
 
+    if(ui->stackedWidget->currentIndex() ==0)
+        ui->stackedWidget->setCurrentIndex(1);
     if(modo == tr("A-Z"))
         modo = "";
     else
@@ -1569,7 +1581,15 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
 
     m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
                          " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo,Configuracion_global->groupDB);
-    formato_tabla_busquedas();
+    //formato_tabla_busquedas();
+    ui->tabla_busquedas->selectRow(0);
+
+}
+
+void frmClientes::on_tabla_busquedas_row_changed(QModelIndex current, QModelIndex previous)
+{
+    Q_UNUSED("previous");
+    on_tabla_busquedas_clicked(current);
 }
 
 void frmClientes::setUpBusqueda()
@@ -1613,12 +1633,31 @@ void frmClientes::setUpBusqueda()
     QPushButton* exec = new QPushButton(QIcon(":/Icons/PNG/excepciones.png"),tr("Excepciones"),this);
     connect(exec,SIGNAL(clicked()),this,SLOT(on_btnExcepciones_clicked()));
     m_busqueda->addWidget(exec);
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla_busquedas,SLOT(setFocus()));
 }
 
 bool frmClientes::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(ui->stackedWidget->currentIndex()==1)
+        {
+
+            if(keyEvent->key() == Qt::Key_Return)
+            {
+                on_tabla_busquedas_doubleClicked(ui->tabla_busquedas->currentIndex());
+                return true;
+            }
+        }
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
+        if(keyEvent->key() == Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
+    }
     return MayaModule::eventFilter(obj,event);
 }
 
@@ -1733,6 +1772,7 @@ void frmClientes::on_btnExcepciones_clicked()
 void frmClientes::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void frmClientes::ocultarBusqueda()

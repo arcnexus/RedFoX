@@ -80,7 +80,7 @@ void db_consulta_view::set_titulo(QString titulo)
 void db_consulta_view::set_headers(QStringList cabecera)
 {
     for (int i = 0; i< cabecera.size();i++)
-        modelo->setHeaderData(i+1, Qt::Horizontal, cabecera.at(i));
+        modelo->setHeaderData(i, Qt::Horizontal, cabecera.at(i));
         ui->resultado_list->setColumnHidden(0,true);
 
     this->headers = cabecera;

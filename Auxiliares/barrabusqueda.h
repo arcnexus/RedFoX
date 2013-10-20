@@ -22,9 +22,13 @@ public:
     void addSpacer();
     void addLayout(QLayout *l);
     void block(bool state);
+    void doFocustoText();
 signals:
     void doSearch(QString texto, QString orden, QString modo);
+    void key_Down_Pressed();
     void showMe();
+private:
+    bool eventFilter(QObject *obj, QEvent *event);
 private slots:
     void on_btnLimpiar_clicked();
     void textChanged(const QString&);

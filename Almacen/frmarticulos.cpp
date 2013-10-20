@@ -30,8 +30,9 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     model_ofertas = new QSqlQueryModel(this);
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(1);
-
+    //--------------------
     // Cargar valores IVA
+    //--------------------
     //Configuracion_global->CargarDatos();
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
@@ -53,6 +54,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     // Control objetos
     //---------------------
     ui->lbl_en_promocion->setVisible(false);
+
     // --------------------
     // TARIFAS
     //---------------------
@@ -151,10 +153,14 @@ void FrmArticulos::setUpBusqueda()
     QPushButton* borra_kit = new QPushButton(QIcon(":/Icons/PNG/Delete.png"),tr("Borrar Kit"),this);
     //connect(borra_kit,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));//TODO ??
     m_busqueda->addWidget(borra_kit);
+
+
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
 }
 void FrmArticulos::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmArticulos::ocultarBusqueda()
@@ -551,7 +557,9 @@ void FrmArticulos::formato_tabla()
 
 void FrmArticulos::filter_table(QString texto, QString orden, QString modo)
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    if(ui->stackedWidget->currentIndex() == 0)
+        ui->stackedWidget->setCurrentIndex(1);
+
     // busquedas << tr("Descripción") <<tr("Código") <<tr("Código Barras") <<tr("Ref. Proveedor");
     QHash <QString, QString> lista;
     lista[tr("Descripción")] = "descripcion";
@@ -573,6 +581,7 @@ QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,
     m->setQuery(cSQL,Configuracion_global->groupDB);
     ui->tabla->setModel(m);
     formato_tabla();
+    ui->tabla->selectRow(0);
 }
 
 void FrmArticulos::rellenar_grafica_proveedores()
@@ -698,6 +707,20 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
         actualizar();
     else if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
+
+    QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+
+    if(keyEvent->key() == Qt::Key_Return)
+    {
+        on_tabla_doubleClicked(ui->tabla->currentIndex());
+        return true;
+    }
+     if(keyEvent->key() == Qt::Key_Escape)
+        return true;
+    if(keyEvent->key() == Qt::Key_F1)
+        mostrarBusqueda();
+
     return MayaModule::eventFilter(target,event);
 }
 
@@ -2004,11 +2027,13 @@ void FrmArticulos::on_tabla_clicked(const QModelIndex &index)
 void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
 {
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+    if(ui->stackedWidget->currentIndex() == 1)
+        ui->stackedWidget->setCurrentIndex(0);
     oArticulo->Recuperar(id);
     LLenarCampos();
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->stackedWidget->setCurrentIndex(0);
     ui->botEditar->setEnabled(true);
+
+    ocultarBusqueda();
 
 
 }

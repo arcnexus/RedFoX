@@ -828,7 +828,7 @@ void Table_Helper::searchArticulo()
 {
     db_consulta_view consulta;
     QStringList campos;
-    campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante" << "coste";
+    campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante"  << "coste";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("articulos");
     consulta.set_db("Maya");
@@ -852,7 +852,8 @@ void Table_Helper::searchArticulo()
     else if(this->tipo_dto_tarifa ==6)
         consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
                      "porc_dto6/100))) as pvp from vistaart_tarifa");
-    //consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste from articulos");
+    else if(this->tipo_dto_tarifa == 0)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,pvp from vistaart_tarifa");
     QStringList cabecera;
     QVariantList tamanos;
     QVariantList moneda;

@@ -89,6 +89,7 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by albaran desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
     formato_tabla();
+    ui->tabla->selectRow(0);
 
     ui->stackedWidget->setCurrentIndex(1);
 
@@ -133,6 +134,8 @@ void FrmAlbaranProveedor::setUpBusqueda()
     connect(btnDelete,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
     m_busqueda->addWidget(btnPrint);
     m_busqueda->addSpacer();
+
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -283,6 +286,7 @@ void FrmAlbaranProveedor::filter_table(QString texto, QString orden, QString mod
 
     m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro "
                     "where "+order+" like '%"+texto.trimmed()+"%' order by "+order+" "+modo,Configuracion_global->empresaDB);
+    ui->tabla->selectRow(0);
 
 }
 
@@ -767,7 +771,7 @@ void FrmAlbaranProveedor::on_tabla_clicked(const QModelIndex &index)
     QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
     int id = Configuracion_global->devolver_id_tabla(model,index);
     oAlbPro->Recuperar(id);
-    llenar_campos();
+    //llenar_campos();
 
 }
 
@@ -779,11 +783,13 @@ void FrmAlbaranProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     llenar_campos();
     bloquearcampos(true);
     ui->stackedWidget->setCurrentIndex(0);
+    ocultarBusqueda();
 }
 
 void FrmAlbaranProveedor::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmAlbaranProveedor::ocultarBusqueda()
@@ -794,12 +800,25 @@ bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
+    QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+
+    if(keyEvent->key() == Qt::Key_Return)
+    {
+        on_tabla_doubleClicked(ui->tabla->currentIndex());
+        return true;
+    }
+     if(keyEvent->key() == Qt::Key_Escape)
+        return true;
+    if(keyEvent->key() == Qt::Key_F1)
+        if(ui->btnEditar->isEnabled())
+            mostrarBusqueda();
     return MayaModule::eventFilter(obj,event);
 }
 
 void FrmAlbaranProveedor::on_btnImprimir_clicked()
 {
-    //TODO - IMPTIMIR
+    //TODO - IMPRIMIR
 }
 
 void FrmAlbaranProveedor::on_btnDeshacer_clicked()

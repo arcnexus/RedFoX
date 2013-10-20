@@ -91,10 +91,16 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
                     Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(model);
     formatotabla();    
+    ui->tabla->selectRow(0);
 
         setUpBusqueda();
 
     bloquearcampos(true);
+
+    //----------------------
+    // Events
+    //----------------------
+    ui->tabla->installEventFilter(this);
 
 }
 
@@ -789,6 +795,8 @@ void FrmPedidosProveedor::setUpBusqueda()
 
     m_busqueda->addSpacer();
 
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
+
 
 }
 
@@ -861,6 +869,8 @@ void FrmPedidosProveedor::filter_table(QString texto, QString orden, QString mod
     model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" and "+order+ " like '%"+texto.trimmed()+ "%' order by "+orden +" "+modo,
                     Configuracion_global->empresaDB);
+    ui->tabla->selectRow(0);
+
 }
 
 
@@ -870,6 +880,7 @@ void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(0);
+    ocultarBusqueda();
 
 }
 
@@ -889,6 +900,7 @@ void FrmPedidosProveedor::on_btnBuscar_clicked()
 void FrmPedidosProveedor::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmPedidosProveedor::ocultarBusqueda()
@@ -899,5 +911,17 @@ bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(keyEvent->key() == Qt::Key_Return)
+            on_tabla_doubleClicked(ui->tabla->currentIndex());
+        if(keyEvent->key() == Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
+
+    }
     return MayaModule::eventFilter(obj,event);
 }

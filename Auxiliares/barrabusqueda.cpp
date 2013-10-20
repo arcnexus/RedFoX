@@ -19,6 +19,7 @@ BarraBusqueda::BarraBusqueda(QWidget *parent) :
     connect(ui->cboModo,SIGNAL(currentIndexChanged(QString)),this,SLOT(textChanged(QString)));
     connect(ui->txtBuscar,SIGNAL(textEdited(QString)),this,SLOT(textChanged(QString)));
     connect(ui->cboOrden,SIGNAL(currentIndexChanged(QString)),this,SLOT(textChanged(QString)));
+    ui->txtBuscar->installEventFilter(this);
 }
 
 BarraBusqueda::~BarraBusqueda()
@@ -101,6 +102,23 @@ void BarraBusqueda::block(bool state)
     foreach (btn, btnList) {
         btn->setEnabled(!state);
     }
+}
+
+void BarraBusqueda::doFocustoText()
+{
+    ui->txtBuscar->setFocus();
+}
+
+bool BarraBusqueda::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(obj == ui->txtBuscar)
+            if(keyEvent->key() == Qt::Key_Down)
+                emit key_Down_Pressed();
+    }
+    return false;
 }
 
 void BarraBusqueda::paintEvent(QPaintEvent *pe)

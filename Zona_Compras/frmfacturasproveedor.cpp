@@ -76,6 +76,7 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     ui->tabla->setModel(m);
 
     formato_tabla();
+    ui->tabla->selectRow(0);
 
     //-----------------
     // Modo
@@ -649,6 +650,8 @@ void FrmFacturasProveedor::formato_tabla()
 void FrmFacturasProveedor::filter_table(QString texto, QString orden, QString modo)
 {
     //<< tr("Factura") << tr("Fecha") << tr("Pedido") << tr("Proveedor") <<tr("Teléfono") << tr("Total");
+    if(ui->stackedWidget->currentIndex() == 0)
+        ui->stackedWidget->setCurrentIndex(1);
     QHash <QString,QString> h;
     h[tr("Factura")] = "factura";
     h[tr("Fecha")] ="fecha";
@@ -719,6 +722,7 @@ void FrmFacturasProveedor::setUpBusqueda()
     m_busqueda->addWidget(btnDelete);
 
     m_busqueda->addSpacer();
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
 }
 
 void FrmFacturasProveedor::on_tabla_clicked(const QModelIndex &index)
@@ -726,7 +730,7 @@ void FrmFacturasProveedor::on_tabla_clicked(const QModelIndex &index)
     QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tabla->model());
     int id = Configuracion_global->devolver_id_tabla(model,index);
     oFacPro->recuperar_factura(id);
-    llenar_campos();
+    //llenar_campos();
 }
 
 void FrmFacturasProveedor::on_tabla_doubleClicked(const QModelIndex &index)
@@ -737,17 +741,38 @@ void FrmFacturasProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     llenar_campos();
     bloquearcampos(true);
     ui->stackedWidget->setCurrentIndex(0);
+    ocultarBusqueda();
 }
 
 bool FrmFacturasProveedor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
+
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(ui->stackedWidget->currentIndex()==1)
+        {
+
+            if(keyEvent->key() == Qt::Key_Return)
+            {
+                on_tabla_doubleClicked(ui->tabla->currentIndex());
+                return true;
+            }
+        }
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
+        if(keyEvent->key() == Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
+    }
     return MayaModule::eventFilter(obj,event);
 }
 void FrmFacturasProveedor::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmFacturasProveedor::ocultarBusqueda()

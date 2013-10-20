@@ -539,6 +539,7 @@ void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
     m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli "
                     "where "+order+" like '%" + texto.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
 
+    ui->tabla->selectRow(0);
 }
 
 void FrmPedidos::on_table_row_changed(QModelIndex actual, QModelIndex previous)
@@ -553,13 +554,6 @@ void FrmPedidos::calcular_iva_gastos()
     ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
     ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
     helper.calculatotal();
-//   totalChanged(Configuracion_global->MonedatoDouble(ui->txtbase->text())-ui->SpinGastoDist1->value(),
-//                 Configuracion_global->MonedatoDouble(ui->txtdto->text()),
-//                 Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())-ui->SpinGastoDist1->value(),
-//                 Configuracion_global->MonedatoDouble(ui->txtiva->text()) - ui->spiniva_gasto1->value(),
-//                 Configuracion_global->MonedatoDouble(ui->txtrec->text()),
-//                 Configuracion_global->MonedatoDouble(ui->txttotal->text()),
-    //                 "");
 }
 
 void FrmPedidos::buscar_transportista()
@@ -606,6 +600,8 @@ bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1)
                 on_botBuscarCliente_clicked();
         }
+        if((keyEvent->key() == Qt::Key_F1) & (obj != ui->txtcodigo_cliente) &(obj != ui->txtcodigo_transportista))
+            mostrarBusqueda();
     }
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
@@ -647,6 +643,9 @@ void FrmPedidos::setUpBusqueda()
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
     m_busqueda->addWidget(del);
+
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
+
 }
 
 
@@ -1620,6 +1619,7 @@ void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
     LLenarCampos();
     ui->stackedWidget->setCurrentIndex(0);
+    ocultarBusqueda();
     BloquearCampos(true);
 }
 
@@ -1728,6 +1728,7 @@ void FrmPedidos::SpinGastoDist3_valueChanged(double arg1)
 void FrmPedidos::mostrarBusqueda()
 {
     _showBarraBusqueda(m_busqueda);
+    m_busqueda->doFocustoText();
 }
 
 void FrmPedidos::ocultarBusqueda()
