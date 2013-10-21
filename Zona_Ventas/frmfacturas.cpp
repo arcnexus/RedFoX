@@ -159,10 +159,16 @@ frmFacturas::frmFacturas( QWidget *parent) :
     //-------------
     // Eventos
     //-------------
-    ui->txtcodigo_cliente->installEventFilter(this);
-    ui->txtcp->installEventFilter(this);
-    ui->txtCp_entrega->installEventFilter(this);
-    ui->tabla_facturas->installEventFilter(this);
+//    ui->txtcodigo_cliente->installEventFilter(this);
+//    ui->txtcp->installEventFilter(this);
+//    ui->txtCp_entrega->installEventFilter(this);
+//    ui->tabla_facturas->installEventFilter(this);
+
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 
     setUpBusqueda();
 
@@ -1230,9 +1236,14 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
                 buscar_poblacion(2);
         }
+        if(keyEvent->key() == Qt::Key_F1)
+            if(ui->btnEditar->isEnabled())
+                mostrarBusqueda();
         if (obj == ui->tabla_facturas)
             if(keyEvent->key() == Qt::Key_Return)
                 on_tabla_facturas_doubleClicked(ui->tabla_facturas->currentIndex());
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
     }
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
@@ -1331,6 +1342,8 @@ void frmFacturas::setUpBusqueda()
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
     m_busqueda->addWidget(del);
+
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()), ui->tabla_facturas,SLOT(setFocus()));
 }
 
 void frmFacturas::on_btnAsignarTransportista_clicked()
@@ -1562,6 +1575,7 @@ void frmFacturas::on_btnGuardar_clicked()
 void frmFacturas::mostrarBusqueda()
 {
      _showBarraBusqueda(m_busqueda);
+     m_busqueda->doFocustoText();
 }
 
 void frmFacturas::ocultarBusqueda()

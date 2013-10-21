@@ -97,6 +97,15 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
 
     bloquearcampos(true);
 
+    //--------------------
+    // CONTROL DE EVENTOS
+    //--------------------
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
+
 }
 
 void FrmAlbaranProveedor::setUpBusqueda()

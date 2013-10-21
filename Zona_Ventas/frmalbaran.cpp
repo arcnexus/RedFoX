@@ -131,10 +131,16 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     // EVENTS
     //-----------------
     this->installEventFilter(this);
-    ui->txtcodigo_cliente->installEventFilter(this);
-    ui->txtcp->installEventFilter(this);
-    ui->txtCp_entrega->installEventFilter(this);
-    ui->table2->installEventFilter(this);
+//    ui->txtcodigo_cliente->installEventFilter(this);
+//    ui->txtcp->installEventFilter(this);
+//    ui->txtCp_entrega->installEventFilter(this);
+//    ui->table2->installEventFilter(this);
+
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 
 
     setUpBusqueda();
@@ -1203,7 +1209,7 @@ void FrmAlbaran::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaran::ocultarBusqueda);
+    //connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaran::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
     QHBoxLayout *layoutZ1 = new QHBoxLayout(this);
@@ -1328,6 +1334,7 @@ void FrmAlbaran::on_table2_doubleClicked(const QModelIndex &index)
     ui->stackedWidget->setCurrentIndex(0);
     ui->radEdicion->setChecked(true);
     ui->btnEditar->setEnabled(true);
+    ocultarBusqueda();
 }
 
 void FrmAlbaran::on_btnBuscar_clicked()

@@ -94,6 +94,14 @@ FrmFacturasProveedor::FrmFacturasProveedor(QWidget *parent, bool showCerrar) :
     setUpBusqueda();
 
     bloquearcampos(true);
+    //---------------------------
+    // CONTROL DE EVENTOS
+    //---------------------------
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 }
 
 FrmFacturasProveedor::~FrmFacturasProveedor()

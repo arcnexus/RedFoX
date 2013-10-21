@@ -114,9 +114,12 @@ bool BarraBusqueda::eventFilter(QObject *obj, QEvent *event)
     if(event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if(obj == ui->txtBuscar)
+        if(obj == ui->txtBuscar){
             if(keyEvent->key() == Qt::Key_Down)
                 emit key_Down_Pressed();
+            if(keyEvent->key() == Qt::Key_F2)
+                emit key_F2_Pressed();
+        }
     }
     return false;
 }
@@ -153,6 +156,7 @@ void BarraBusqueda::mousePressEvent(QMouseEvent * e)
     if(e->pos().x() < 21)
         if(e->pos().y()>40 && e->pos().y() < 80)
             emit showMe();
+
 }
 
 void BarraBusqueda::resizeEvent(QResizeEvent *)

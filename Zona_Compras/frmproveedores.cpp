@@ -88,6 +88,15 @@ frmProveedores::frmProveedores(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(1);
 
     setUpBusqueda();
+
+    //------------------------
+    // CONTROL DE EVENTOS
+    //------------------------
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 }
 
 frmProveedores::~frmProveedores()

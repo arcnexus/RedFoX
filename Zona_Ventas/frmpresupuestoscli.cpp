@@ -123,9 +123,14 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     //---------------------
     // Eventos
     //---------------------
-    ui->txtcodigo_cliente->installEventFilter(this);
-    ui->txtcp->installEventFilter(this);
-    ui->txtCP_entrega->installEventFilter(this);
+//    ui->txtcodigo_cliente->installEventFilter(this);
+//    ui->txtcp->installEventFilter(this);
+//    ui->txtCP_entrega->installEventFilter(this);
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 
     setUpBusqueda();
 

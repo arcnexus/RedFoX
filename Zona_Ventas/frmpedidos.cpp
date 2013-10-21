@@ -146,8 +146,13 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //----------------------
     // Control de eventos
     //----------------------
-    ui->txtcodigo_cliente->installEventFilter(this);
-    ui->txtcodigo_transportista->installEventFilter(this);
+//    ui->txtcodigo_cliente->installEventFilter(this);
+//    ui->txtcodigo_transportista->installEventFilter(this);
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 
     setUpBusqueda();
 

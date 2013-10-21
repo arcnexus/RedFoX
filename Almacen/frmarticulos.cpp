@@ -108,6 +108,15 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     setUpBusqueda();
 
     bloquearCampos(true);
+
+    //----------------------
+    // CONTROL DE EVENTOS
+    //----------------------
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 }
 
 void FrmArticulos::setUpBusqueda()

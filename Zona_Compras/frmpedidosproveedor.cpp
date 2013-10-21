@@ -100,7 +100,12 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     //----------------------
     // Events
     //----------------------
-    ui->tabla->installEventFilter(this);
+    //ui->tabla->installEventFilter(this);
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 
 }
 

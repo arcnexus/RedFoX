@@ -26,6 +26,7 @@ public:
 signals:
     void doSearch(QString texto, QString orden, QString modo);
     void key_Down_Pressed();
+    void key_F2_Pressed();
     void showMe();
 private:
     bool eventFilter(QObject *obj, QEvent *event);
