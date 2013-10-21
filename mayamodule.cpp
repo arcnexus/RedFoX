@@ -68,14 +68,14 @@ void MayaModule::_hideBarraBusqueda(BarraBusqueda *b)
         return;
     QPropertyAnimation* animation0 = new QPropertyAnimation(b, "size",this);
     connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
-    animation0->setDuration(100);
+    animation0->setDuration(300);
     animation0->setEasingCurve(QEasingCurve::Linear);
 
     animation0->setStartValue(QSize(250,b->height()));
     animation0->setEndValue(QSize(20,b->height()));
 
     QPropertyAnimation* animation = new QPropertyAnimation(b, "pos",this);
-    animation->setDuration(100);
+    animation->setDuration(200);
     animation->setEasingCurve(QEasingCurve::Linear);
     animation->setStartValue(QPoint(this->width()-250,b->pos().y()));
     animation->setEndValue(QPoint(this->width()-20,b->pos().y()));

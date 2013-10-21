@@ -1315,7 +1315,7 @@ void frmFacturas::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    connect(this,&MayaModule::hideBusqueda,this,&frmFacturas::ocultarBusqueda);
+    //connect(this,&MayaModule::hideBusqueda,this,&frmFacturas::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
@@ -1344,6 +1344,7 @@ void frmFacturas::setUpBusqueda()
     m_busqueda->addWidget(del);
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()), ui->tabla_facturas,SLOT(setFocus()));
+    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
 }
 
 void frmFacturas::on_btnAsignarTransportista_clicked()

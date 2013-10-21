@@ -1261,6 +1261,7 @@ void FrmAlbaran::setUpBusqueda()
         m_busqueda->addWidget(Forzar_edicion);
     }
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->table2,SLOT(setFocus()));
+    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
 }
 
 void FrmAlbaran::on_table2_row_moved(QModelIndex actual, QModelIndex previous)

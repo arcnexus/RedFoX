@@ -1777,6 +1777,7 @@ void FrmPresupuestosCli::setUpBusqueda()
     m_busqueda->addWidget(del);
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
+    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
 
 }
 
