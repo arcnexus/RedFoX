@@ -1688,6 +1688,8 @@ void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo
                 " like '%"+texto+"%' order by "+order+" "+modo, Configuracion_global->empresaDB);
     if(ui->stackedWidget->currentIndex() == 0)
         ui->stackedWidget->setCurrentIndex(1);
+    ui->tabla->selectRow(0);
+
 }
 
 void FrmPresupuestosCli::buscar_poblacion(int tipo)
@@ -1756,7 +1758,7 @@ void FrmPresupuestosCli::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    connect(this,&MayaModule::hideBusqueda,this,&FrmPresupuestosCli::ocultarBusqueda);
+    //connect(this,&MayaModule::hideBusqueda,this,&FrmPresupuestosCli::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
@@ -1795,6 +1797,7 @@ void FrmPresupuestosCli::on_tabla_doubleClicked(const QModelIndex &index)
     LLenarCampos();
     ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(true);
+    ocultarBusqueda();
 }
 
 void FrmPresupuestosCli::on_btn_convertir_clicked()
@@ -1920,6 +1923,8 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent->key() == Qt::Key_Return)
             if(ui->stackedWidget->currentIndex() ==1)
                 on_tabla_doubleClicked(ui->tabla->currentIndex());
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
     }
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);

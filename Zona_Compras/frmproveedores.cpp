@@ -377,6 +377,7 @@ void frmProveedores::on_btnEditar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(false);
+    ocultarBusqueda();
     ui->txtcodigo->setFocus();
 }
 
@@ -387,6 +388,7 @@ void frmProveedores::on_btnAnadir_clicked()
     oProveedor->Anadir();
     LLenarCampos();
     BloquearCampos(false);
+    ocultarBusqueda();
     ui->txtcodigo->setFocus();
 }
 

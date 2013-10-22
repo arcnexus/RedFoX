@@ -1192,6 +1192,7 @@ void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
     cSQL = "select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+texto.trimmed()+
             "%' and serie = '"+this->serie+"' order by "+order +" "+modo;
     m->setQuery(cSQL,Configuracion_global->empresaDB);
+    //ui->table2->selectRow(0);
 }
 
 void FrmAlbaran::setUpBusqueda()

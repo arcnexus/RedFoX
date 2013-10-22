@@ -814,6 +814,7 @@ void frmClientes::on_btnAnadir_clicked()
     }
 
     dlg->deleteLater();
+    ocultarBusqueda();
 
 
 }
@@ -938,6 +939,7 @@ void frmClientes::on_btnEditar_clicked()
         ui->txtcodigo_cliente->setEnabled(false);
         set_blink();
         ui->txtcif_nif->setFocus();
+        ocultarBusqueda();
 }
 void frmClientes::bloquearCampos(bool state) {
 
