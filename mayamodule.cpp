@@ -59,6 +59,7 @@ void MayaModule::_showBarraBusqueda(BarraBusqueda *b)
     connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
     group->start();
      _b_reducida = false;
+     b->setShow(true);
 
 }
 
@@ -87,6 +88,7 @@ void MayaModule::_hideBarraBusqueda(BarraBusqueda *b)
     connect(group,SIGNAL(finished()),group,SLOT(deleteLater()));
     group->start();
     _b_reducida = true;
+    b->setShow(false);
 }
 
 void MayaModule::_resizeBarraBusqueda(BarraBusqueda *b)

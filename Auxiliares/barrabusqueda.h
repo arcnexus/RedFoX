@@ -23,11 +23,16 @@ public:
     void addLayout(QLayout *l);
     void block(bool state);
     void doFocustoText();
+
+    bool isShow();
+    void setShow(bool b);
+
 signals:
     void doSearch(QString texto, QString orden, QString modo);
     void key_Down_Pressed();
-    void key_F2_Pressed();
+    //void key_F2_Pressed();
     void showMe();
+    void hideMe();
 private:
     bool eventFilter(QObject *obj, QEvent *event);
 private slots:
@@ -40,6 +45,7 @@ protected:
     void paintEvent(QPaintEvent *pe);
     Ui::BarraBusqueda *ui;
     QPixmap* m_Cache;
+    bool m_show;
 };
 
 #endif // BARRABUSQUEDA_H

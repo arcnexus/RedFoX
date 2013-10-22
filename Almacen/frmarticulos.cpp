@@ -209,6 +209,7 @@ void FrmArticulos::on_botAnadir_clicked()
             //ui->lblImagenArticulo->setPixmap(QPixmap::fromImage());
             ui->txtcodigo->setFocus();
         }
+        ocultarBusqueda();
     }
 }
 
@@ -630,6 +631,7 @@ void FrmArticulos::on_botEditar_clicked()
     ui->btnAnadir_oferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
     ui->btnEditarOferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
     ui->btnBorrar_oferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
+    ocultarBusqueda();
 }
 
 void FrmArticulos::on_botBorrar_clicked()

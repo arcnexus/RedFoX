@@ -1210,7 +1210,7 @@ void FrmAlbaran::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaran::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
     QHBoxLayout *layoutZ1 = new QHBoxLayout(this);
@@ -1261,6 +1261,7 @@ void FrmAlbaran::setUpBusqueda()
         connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));
         m_busqueda->addWidget(Forzar_edicion);
     }
+
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->table2,SLOT(setFocus()));
     connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
 }
@@ -1301,8 +1302,16 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
                 on_botBuscarCliente_clicked();
         }
         if(keyEvent->key() == Qt::Key_F1)
+        {
             if(ui->btnEditar->isEnabled())
-                mostrarBusqueda();
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+                return true;
+             }
+        }
         if(keyEvent->key() == Qt::Key_Return)
             if(ui->stackedWidget->currentIndex() == 1)
                 on_table2_doubleClicked(ui->table2->currentIndex());

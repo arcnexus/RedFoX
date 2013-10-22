@@ -6,6 +6,7 @@
 #include <QCheckBox>
 #include <QTextEdit>
 #include <QDateEdit>
+#include <QDebug>
 BarraBusqueda::BarraBusqueda(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BarraBusqueda)
@@ -109,6 +110,16 @@ void BarraBusqueda::doFocustoText()
     ui->txtBuscar->setFocus();
 }
 
+bool BarraBusqueda::isShow()
+{
+    return m_show;
+}
+
+void BarraBusqueda::setShow(bool b)
+{
+    m_show = b;
+}
+
 bool BarraBusqueda::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::KeyPress)
@@ -117,8 +128,7 @@ bool BarraBusqueda::eventFilter(QObject *obj, QEvent *event)
         if(obj == ui->txtBuscar){
             if(keyEvent->key() == Qt::Key_Down)
                 emit key_Down_Pressed();
-            if(keyEvent->key() == Qt::Key_F2)
-                emit key_F2_Pressed();
+
         }
     }
     return false;
@@ -154,8 +164,13 @@ void BarraBusqueda::textChanged(const QString &)
 void BarraBusqueda::mousePressEvent(QMouseEvent * e)
 {
     if(e->pos().x() < 21)
-        if(e->pos().y()>40 && e->pos().y() < 80)
-            emit showMe();
+        if(e->pos().y()>20 && e->pos().y() < 100)
+        {
+            if(this->width()<50)
+                emit showMe();
+            else
+                emit hideMe();
+        }
 
 }
 
