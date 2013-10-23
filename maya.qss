@@ -159,7 +159,7 @@ QListView::item:hover
 {
     border-radius: 5px;
     color= rgb(0,0,0);
-    background-color: rgb(225,225,225);
+    /*background-color: rgb(225,225,225);*/
 
 }
 

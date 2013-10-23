@@ -1615,7 +1615,7 @@ void frmClientes::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&frmClientes::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
@@ -1641,7 +1641,7 @@ void frmClientes::setUpBusqueda()
     connect(exec,SIGNAL(clicked()),this,SLOT(on_btnExcepciones_clicked()));
     m_busqueda->addWidget(exec);
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla_busquedas,SLOT(setFocus()));
-    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
+    //connect(m_busqueda,SIGNAL(key_F1_Pressed()),this,SLOT(ocultarBusqueda()));
 }
 
 bool frmClientes::eventFilter(QObject *obj, QEvent *event)

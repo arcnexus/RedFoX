@@ -166,10 +166,10 @@ void BarraBusqueda::mousePressEvent(QMouseEvent * e)
     if(e->pos().x() < 21)
         if(e->pos().y()>20 && e->pos().y() < 100)
         {
-            if(this->width()<50)
-                emit showMe();
-            else
+            if(this->isShow())
                 emit hideMe();
+            else
+                emit showMe();
         }
 
 }

@@ -327,6 +327,8 @@ void frmProveedores::BloquearCampos(bool state)
     ui->btnSiguiente->setEnabled(state);
     ui->btnAnadir_persona_contacto->setEnabled(!state);
 
+    m_busqueda->block(!state);
+
 
 
 
@@ -1211,7 +1213,7 @@ void frmProveedores::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&frmProveedores::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
     QPushButton *AddProvider = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
@@ -1281,9 +1283,18 @@ bool frmProveedores::eventFilter(QObject *obj, QEvent *event)
         }
         if(keyEvent->key() == Qt::Key_Escape)
             return true;
+
         if(keyEvent->key() == Qt::Key_F1)
+        {
             if(ui->btnEditar->isEnabled())
-                mostrarBusqueda();
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+                return true;
+             }
+        }
     }
     return MayaModule::eventFilter(obj,event);
 }

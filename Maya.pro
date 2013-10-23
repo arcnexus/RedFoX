@@ -530,7 +530,7 @@ unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lcryptopp
 INCLUDEPATH += $$PWD/../../../../usr/include
 DEPENDPATH += $$PWD/../../../../usr/include
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcryptopp.a
+unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcrypt-2.17.so
 
 unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
 
