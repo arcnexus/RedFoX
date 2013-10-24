@@ -27,6 +27,8 @@ public:
     void cargar_ticket(int id);
     void cargar_lineas(int id_cab);
     tpv *oTpv;
+    int caja;
+    QString serie_defecto;
 
 
 public slots:
@@ -111,7 +113,9 @@ private slots:
 
     void on_txtCheque_editingFinished();
 
-    void on_txtCredito_editingFinished();
+    void on_txtDomiciliacion_editingFinished();
+
+    void on_txtTransferencia_editingFinished();
 
     void on_txtVales_editingFinished();
 
@@ -122,6 +126,7 @@ private slots:
     void on_lista_tickets_doubleClicked(const QModelIndex &index);
 
     void on_btnDesglose_clicked();
+    void final_anim_desglose();
 
     void on_btnBuscarArt_clicked();
     void final_anim_busqueda();
@@ -140,7 +145,7 @@ private slots:
 
     void on_btnCheque_clicked(bool checked);
 
-    void on_btnCredito_clicked(bool checked);
+    void on_btnDomiciliacion_clicked(bool checked);
 
     void on_btnVales_clicked(bool checked);
 
@@ -170,6 +175,21 @@ private slots:
     void final_anim_abrir_caja_cancelado();
     void on_btnConfirmarAbertura_caja_clicked();
 
+    void on_btnOcultar_clicked();
+
+    void on_txtImporteAbertura_editingFinished();
+
+    void on_btnCerrarCaja_clicked();
+
+    void on_btnExtrasCaja_clicked();
+
+    void on_btnRetirardinero_clicked();
+
+    void on_btnInsertarDinero_clicked();
+
+    void on_btnDevolucionTicket_clicked();
+
+    void on_btnTransferencia_clicked(bool checked);
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -192,6 +212,7 @@ private:
 
     void estructura_lista();
     void llenar_campos();
+
 signals:
     void mostrar_desglose(double subtotal1,double subtotal2, double subtotal3,double subtotal4,double dto1,double dto2,
                           double dto3,double dto4,double base1, double base2, double base3, double base4, float porc_iva1,

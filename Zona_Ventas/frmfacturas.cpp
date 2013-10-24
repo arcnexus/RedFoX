@@ -1237,8 +1237,15 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
                 buscar_poblacion(2);
         }
         if(keyEvent->key() == Qt::Key_F1)
-            if(ui->btnEditar->isEnabled())
-                mostrarBusqueda();
+        {
+            if(ui->btnEditar->isEnabled()){
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+            }
+            return true;
+        }
         if (obj == ui->tabla_facturas)
             if(keyEvent->key() == Qt::Key_Return)
                 on_tabla_facturas_doubleClicked(ui->tabla_facturas->currentIndex());
@@ -1315,7 +1322,7 @@ void frmFacturas::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&frmFacturas::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 

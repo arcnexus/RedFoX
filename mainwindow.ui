@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="maya.qrc">
-    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
+    <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
   </property>
   <property name="iconSize">
    <size>
@@ -556,7 +556,7 @@ color: rgb(255, 255, 127);</string>
      <x>0</x>
      <y>0</y>
      <width>1245</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="defaultUp">

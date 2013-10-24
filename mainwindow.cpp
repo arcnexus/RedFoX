@@ -494,10 +494,6 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     splash->showMessage(tr("Cargando modulos... Modulo de TPV")  ,Qt::AlignLeft,Qt::white);
 
     FrmTPV * frm_tpv = new FrmTPV(this);
-    connect(frm_tpv,SIGNAL(mostrar_desglose(double,double,double,double,double,double,double,double,double,double,double,
-                                            double,float,float,float,float,double,double,double,double,double,double,double,double)),
-            this,SLOT(tpv_mostrar_desglose(double,double,double,double,double,double,double,double,double,double,double,double,
-                                           float,float,float,float,double,double,double,double,double,double,double,double)));
 
     if(frm_tpv->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -844,20 +840,20 @@ void MainWindow::blockMe(bool state)
 
 void MainWindow::showAvisos()
 {
-    avisos_reducido = false;
-    m_avisos->setGeometry(0,70,0,this->height()-80);
-    m_avisos->show();
-    QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
+//    avisos_reducido = false;
+//    m_avisos->setGeometry(0,70,0,this->height()-80);
+//    m_avisos->show();
+//    QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
 
-    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
+//    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
 
-    animation0->setDuration(1000);
-    animation0->setEasingCurve(QEasingCurve::OutElastic);
+//    animation0->setDuration(1000);
+//    animation0->setEasingCurve(QEasingCurve::OutElastic);
 
-    animation0->setStartValue(QSize(0,m_avisos->height()));
-    animation0->setEndValue(QSize(500,m_avisos->height()));
+//    animation0->setStartValue(QSize(0,m_avisos->height()));
+//    animation0->setEndValue(QSize(500,m_avisos->height()));
 
-    animation0->start();
+//    animation0->start();
 }
 
 
@@ -946,18 +942,7 @@ void MainWindow::hideAvisos()
     m_avisos->setPagina(0);
 }
 
-void MainWindow::tpv_mostrar_desglose(double subtotal1, double subtotal2, double subtotal3, double subtotal4, double dto1,
-                                      double dto2, double dto3, double dto4, double base1, double base2, double base3,
-                                      double base4, float porc_iva1, float porc_iva2, float porc_iva3, float porc_iva4,
-                                      double iva1, double iva2, double iva3, double iva4, double total1, double total2,
-                                      double total3, double total4)
-{
-    m_avisos->setPagina(1);
-    m_avisos->set_tpv_desgloses(subtotal1, subtotal2, subtotal3, subtotal4,  dto1, dto2, dto3, dto4, base1,  base2, base3,
-                                base4, porc_iva1, porc_iva2,  porc_iva3, porc_iva4, iva1,  iva2,  iva3, iva4,  total1, total2,
-                                total3, total4);
-    showAvisos();
-}
+
 
 bool MainWindow::eventFilter(QObject * t, QEvent * e)
 {

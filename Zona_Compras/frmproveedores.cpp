@@ -25,7 +25,6 @@ frmProveedores::frmProveedores(QWidget *parent) :
 {
     ui->setupUi(this);
     oProveedor->id = 0;
-    BloquearCampos(true);
     ui->txtfecha_alta->setDate(QDate::currentDate());
     ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
     //---------------------------
@@ -84,11 +83,10 @@ frmProveedores::frmProveedores(QWidget *parent) :
     connect(ui->tablaContactos, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_contactos(const QPoint&)));
     connect(ui->tablaPagos,SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(menu_deudas(const QPoint&)));
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
-    BloquearCampos(true);
     ui->stackedWidget->setCurrentIndex(1);
 
     setUpBusqueda();
-
+    BloquearCampos(true);
     //------------------------
     // CONTROL DE EVENTOS
     //------------------------

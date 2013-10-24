@@ -197,7 +197,12 @@ SOURCES += main.cpp\
     Auxiliares/frmnuevosavisos.cpp \
     Auxiliares/delegatekit.cpp \
     EditorReports/reportparama.cpp \
-    EditorReports/editparamdlg.cpp
+    EditorReports/editparamdlg.cpp \
+    TPV/frmcierrecaja.cpp \
+    TPV/frmextrascaja.cpp \
+    TPV/frmretirardecaja.cpp \
+    TPV/frminsertardinerocaja.cpp \
+    TPV/frmdevolucionticket.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -360,7 +365,12 @@ HEADERS  += mainwindow.h \
     Auxiliares/frmnuevosavisos.h \
     Auxiliares/delegatekit.h \
     EditorReports/reportparama.h \
-    EditorReports/editparamdlg.h
+    EditorReports/editparamdlg.h \
+    TPV/frmcierrecaja.h \
+    TPV/frmextrascaja.h \
+    TPV/frmretirardecaja.h \
+    TPV/frminsertardinerocaja.h \
+    TPV/frmdevolucionticket.h
 
 
 
@@ -441,7 +451,12 @@ FORMS    += mainwindow.ui \
     Auxiliares/barrabusqueda.ui \
     Auxiliares/frmcambiarusuario.ui \
     Auxiliares/frmnuevosavisos.ui \
-    EditorReports/editparamdlg.ui
+    EditorReports/editparamdlg.ui \
+    TPV/frmcierrecaja.ui \
+    TPV/frmextrascaja.ui \
+    TPV/frmretirardecaja.ui \
+    TPV/frminsertardinerocaja.ui \
+    TPV/frmdevolucionticket.ui
 
 RESOURCES += \
     maya.qrc \

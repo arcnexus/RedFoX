@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FrmDevolucionTicket</class>
+ <widget class="QDialog" name="FrmDevolucionTicket">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1010</width>
+    <height>472</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Devolución de Tickets de caja.</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbldesglose2">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Tickets</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3">
+    <widget class="QLabel" name="lbldesglose2_2">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Lineas ticket</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QTableView" name="tabla_cabeceras"/>
+   </item>
+   <item row="1" column="1" colspan="3">
+    <widget class="QTableWidget" name="tablalineas"/>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>267</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Devolución</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/undo2.png</normaloff>:/Icons/PNG/undo2.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QPushButton" name="pushButton_4">
+     <property name="text">
+      <string>Cancelar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/close.png</normaloff>:/Icons/PNG/close.png</iconset>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmDevolucionTicket</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>701</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>450</x>
+     <y>436</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

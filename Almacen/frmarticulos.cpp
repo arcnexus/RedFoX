@@ -590,8 +590,8 @@ QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,
         QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
     m->setQuery(cSQL,Configuracion_global->groupDB);
-    ui->tabla->setModel(m);
-    formato_tabla();
+    //ui->tabla->setModel(m);
+    //formato_tabla();
     ui->tabla->selectRow(0);
 }
 
@@ -721,18 +721,28 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
         _resizeBarraBusqueda(m_busqueda);
 
     QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-
-
-    if(keyEvent->key() == Qt::Key_Return)
+    if(event->type() == QEvent::KeyPress)
     {
-        on_tabla_doubleClicked(ui->tabla->currentIndex());
-        return true;
-    }
-     if(keyEvent->key() == Qt::Key_Escape)
-        return true;
-    if(keyEvent->key() == Qt::Key_F1)
-        mostrarBusqueda();
+        if(keyEvent->key() == Qt::Key_Return)
+        {
+            on_tabla_doubleClicked(ui->tabla->currentIndex());
+            return true;
+        }
+         if(keyEvent->key() == Qt::Key_Escape)
+            return true;
+        if(keyEvent->key() == Qt::Key_F1)
+        {
+            if(ui->botEditar->isEnabled())
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
 
+            }
+            return true;
+        }
+    }
     return MayaModule::eventFilter(target,event);
 }
 

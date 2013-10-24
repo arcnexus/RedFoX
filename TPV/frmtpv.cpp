@@ -6,6 +6,11 @@
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate_totals.h"
 #include "../Auxiliares/refresca_ofertas.h"
+#include "../TPV/frmcierrecaja.h"
+#include "../TPV/frmextrascaja.h"
+#include "../TPV/frmretirardecaja.h"
+#include "../TPV/frminsertardinerocaja.h"
+#include "../TPV/frmdevolucionticket.h"
 
 
 
@@ -74,6 +79,9 @@ FrmTPV::FrmTPV(QWidget *parent) :
     QSqlQueryModel * model_cajas = new QSqlQueryModel(this);
     model_cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
     ui->cboCajas->setModel(model_cajas);
+    QSqlQueryModel * model_users = new QSqlQueryModel(this);
+    model_users->setQuery("select nombre from usuarios", Configuracion_global->groupDB);
+    ui->cboUsuarioAbertura->setModel(model_users);
 
 }
 
@@ -402,7 +410,63 @@ void FrmTPV::cargar_lineas(int id_cab)
                                                                       Configuracion_global->decimales_campos_totales)));
     ui->lbl_total_ticket->setText(Configuracion_global->toFormatoMoneda(QString::number(total_ticket,'f',
                                                                       Configuracion_global->decimales_campos_totales)));
+    //--------------------------------
+    // LLENAR CAMPOS DESGLOSE
+    //--------------------------------
+    ui->txtSubtotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->subtotal1,'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+    ui->txtSubtotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->subtotal2,'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+    ui->txtSubtotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->subtotal3,'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+    ui->txtSubtotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->subtotal4,'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
 
+    ui->txtBase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->base1,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtBase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->base2,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtBase3->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->base3,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtBase4->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->base4,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+
+    ui->txtIva1->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->iva1,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtIva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->iva2,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtIva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->iva3,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtIva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->iva4,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+
+    ui->txtDto1->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->dto1,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtDto2->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->dto2,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtDto3->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->dto3,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtDto4->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->dto4,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+
+    ui->txtTotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->total1,'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
+    ui->txtTotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->total2,'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
+    ui->txtTotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->total3,'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
+    ui->txtTotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oTpv->total4,'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
+
+    ui->lblIva1->setText(tr("IVA: %1").arg(QString::number(oTpv->porc_iva1,'f',2)));
+    ui->lblIva1_2->setText(tr("IVA: %1").arg(QString::number(oTpv->porc_iva2,'f',2)));
+    ui->lblIva1_3->setText(tr("IVA: %1").arg(QString::number(oTpv->porc_iva3,'f',2)));
+    ui->lblIva1_4->setText(tr("IVA: %1").arg(QString::number(oTpv->porc_iva4,'f',2)));
+
+    ui->lbldesglose1->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva1,'f',2)));
+    ui->lbldesglose2->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva2,'f',2)));
+    ui->lbldesglose3->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva3,'f',2)));
+    ui->lbldesglose4->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva4,'f',2)));
 }
 
 void FrmTPV::cargar_ofertas()
@@ -524,7 +588,7 @@ void FrmTPV::on_btnbotones_clicked()
     ui->frame_ticket->setGraphicsEffect(fade_effect);
     QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
     animationOp->setEasingCurve(QEasingCurve::Linear);
-    animationOp->setDuration(500);
+    animationOp->setDuration(300);
     animationOp->setStartValue(1.0);
     animationOp->setEndValue(0.0);
     connect(animationOp,SIGNAL(finished()),this,SLOT(fin_fade_buttons()));
@@ -536,11 +600,10 @@ void FrmTPV::on_btnbotones_clicked()
 void FrmTPV::on_btnticket_clicked()
 {
     QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
-    //this->setGraphicsEffect(fade_effect);
     ui->frame_ticket->setGraphicsEffect(fade_effect);
     QPropertyAnimation *animationOp = new QPropertyAnimation(fade_effect, "opacity");
     animationOp->setEasingCurve(QEasingCurve::Linear);
-    animationOp->setDuration(500);
+    animationOp->setDuration(300);
     animationOp->setStartValue(1.0);
     animationOp->setEndValue(0.0);
     connect(animationOp,SIGNAL(finished()),this,SLOT(fin_fade_ticket()));
@@ -570,7 +633,7 @@ void FrmTPV::fin_fade_ticket2()
     ui->frame_ticket->setGraphicsEffect(fade_effect);
     QPropertyAnimation *animationOp2 = new QPropertyAnimation(fade_effect, "opacity");
     animationOp2->setEasingCurve(QEasingCurve::Linear);
-    animationOp2->setDuration(500);
+    animationOp2->setDuration(300);
     animationOp2->setStartValue(0.0);
     animationOp2->setEndValue(1.0);
     animationOp2->start();
@@ -583,7 +646,7 @@ void FrmTPV::fin_fade_buttons()
     ui->frame_ticket->setGraphicsEffect(fade_effect);
     QPropertyAnimation *animationOp2 = new QPropertyAnimation(fade_effect, "opacity");
     animationOp2->setEasingCurve(QEasingCurve::Linear);
-    animationOp2->setDuration(500);
+    animationOp2->setDuration(300);
     animationOp2->setStartValue(0.0);
     animationOp2->setEndValue(1.0);
     animationOp2->start();
@@ -628,8 +691,10 @@ void FrmTPV::on_btn1_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("1"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("1"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("1"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("1"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("1"));
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("1"));
         if(ui->btnInternet->isChecked())
@@ -653,8 +718,11 @@ void FrmTPV::on_btn2_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("2"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("2"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("2"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("2"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("2"));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("2"));
         if(ui->btnInternet->isChecked())
@@ -673,8 +741,11 @@ void FrmTPV::on_btn3_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("3"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("3"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("3"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("3"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("3"));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("3"));
         if(ui->btnInternet->isChecked())
@@ -693,8 +764,11 @@ void FrmTPV::on_btn4_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("4"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("4"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("4"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append(""));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append(""));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("4"));
         if(ui->btnInternet->isChecked())
@@ -713,8 +787,11 @@ void FrmTPV::on_btn5_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("5"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("5"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("5"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("5"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("5"));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("5"));
         if(ui->btnInternet->isChecked())
@@ -733,8 +810,11 @@ void FrmTPV::on_btn6_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("6"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("6"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("6"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("6"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("6"));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("6"));
         if(ui->btnInternet->isChecked())
@@ -753,8 +833,11 @@ void FrmTPV::on_btn7_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("7"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("7"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("7"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("7"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("7"));
+;
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("7"));
         if(ui->btnInternet->isChecked())
@@ -773,8 +856,11 @@ void FrmTPV::on_btn8_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("8"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("8"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("8"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("8"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("8"));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("8"));
         if(ui->btnInternet->isChecked())
@@ -793,8 +879,11 @@ void FrmTPV::on_btn9_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("9"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("9"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("9"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("9"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("9"));
+
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("9"));
         if(ui->btnInternet->isChecked())
@@ -1028,11 +1117,18 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
             ui->txtCheque->setSelection(0,100);
             return true;
         }
-        if( keyEvent->key() == Qt::Key_C && ui->frame_ticket->currentIndex()==3)
+        if( keyEvent->key() == Qt::Key_D && ui->frame_ticket->currentIndex()==3)
         {
-            ui->btnCredito->setChecked(true);
-            on_btnCredito_clicked(true);
-            ui->txtCredito->setSelection(0,100);
+            ui->btnDomiciliacion->setChecked(true);
+            on_btnDomiciliacion_clicked(true);
+            ui->txtDomiciliacion->setSelection(0,100);
+            return  true;
+        }
+        if( keyEvent->key() == Qt::Key_R && ui->frame_ticket->currentIndex()==3)
+        {
+            ui->btnTransferencia->setChecked(true);
+            on_btnTransferencia_clicked(true);
+            ui->txtTransferencia->setSelection(0,100);
             return  true;
         }
 
@@ -1253,8 +1349,10 @@ void FrmTPV::on_btn0_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append("0"));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append("0"));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append("0"));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("0"));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("0"));
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append("0"));
         if(ui->btnInternet->isChecked())
@@ -1420,20 +1518,22 @@ void FrmTPV::calcularcambio()
     ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtEfectivo->text()));
     ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtTarjeta->text()));
     ui->txtCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtCheque->text()));
-    ui->txtCredito->setText(Configuracion_global->toFormatoMoneda(ui->txtCredito->text()));
+    ui->txtTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtTransferencia->text()));
+    ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(ui->txtDomiciliacion->text()));
     ui->txtVales->setText(Configuracion_global->toFormatoMoneda(ui->txtVales->text()));
     ui->txtInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtInternet->text()));
 
 
 
-    double efectivo,tarjeta,cheque,credito,internet,vales,pagado, pendiente,cambio;
+    double efectivo,tarjeta,cheque,domiciliacion,transferencia,internet,vales,pagado, pendiente,cambio;
     efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
     tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
     cheque = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
-    credito = Configuracion_global->MonedatoDouble(ui->txtCredito->text());
+    domiciliacion = Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text());
+    transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
     internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
     vales = Configuracion_global->MonedatoDouble(ui->txtVales->text());
-    pagado = efectivo + tarjeta + cheque + credito + internet + vales;
+    pagado = efectivo + tarjeta + cheque + domiciliacion + transferencia + internet + vales;
     pendiente = Configuracion_global->MonedatoDouble(ui->lbl_total_ticket->text()) - pagado;
     if(pendiente <0)
         pendiente = 0;
@@ -1457,11 +1557,19 @@ void FrmTPV::on_txtCheque_editingFinished()
     calcularcambio();
 }
 
-void FrmTPV::on_txtCredito_editingFinished()
+void FrmTPV::on_txtDomiciliacion_editingFinished()
 {
-    ui->txtCredito->blockSignals(true);
-    ui->txtCredito->setText(Configuracion_global->toFormatoMoneda(ui->txtCredito->text()));
-    ui->txtCredito->blockSignals(false);
+    ui->txtDomiciliacion->blockSignals(true);
+    ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(ui->txtDomiciliacion->text()));
+    ui->txtDomiciliacion->blockSignals(false);
+    calcularcambio();
+}
+
+void FrmTPV::on_txtTransferencia_editingFinished()
+{
+    ui->txtTransferencia->blockSignals(true);
+    ui->txtTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtTransferencia->text()));
+    ui->txtTransferencia->blockSignals(false);
     calcularcambio();
 }
 
@@ -1483,7 +1591,11 @@ void FrmTPV::on_txtInternet_editingFinished()
 
 void FrmTPV::on_btnAnadir_ticket_clicked()
 {
-
+    QHash <QString,QVariant> t;
+    t["caja"] = this->caja;
+    t["serie"] = this->serie_defecto;
+    t["fecha"] = QDate::currentDate();
+    t["hora"] = QTime::currentTime().toString("hh:MM:ss");
 
 }
 
@@ -1495,13 +1607,6 @@ void FrmTPV::on_lista_tickets_doubleClicked(const QModelIndex &index)
 
 }
 
-void FrmTPV::on_btnDesglose_clicked()
-{
-    emit mostrar_desglose(oTpv->subtotal1,oTpv->subtotal2,oTpv->subtotal3,oTpv->subtotal4,oTpv->dto1,oTpv->dto2,oTpv->dto3,
-                          oTpv->dto4,oTpv->base1,oTpv->base2,oTpv->base3, oTpv->base4,oTpv->porc_iva1,oTpv->porc_iva2,
-                          oTpv->porc_iva3,oTpv->porc_iva4,oTpv->iva1,oTpv->iva2,oTpv->iva3,oTpv->iva4,oTpv->total1,
-                          oTpv->total2,oTpv->total3,oTpv->total4);
-}
 
 void FrmTPV::on_btnBuscarArt_clicked()
 {
@@ -1618,7 +1723,8 @@ void FrmTPV::on_btnEfectivo_clicked(bool checked)
         ui->txtEfectivo->clear();
         ui->btnTarjeta->setChecked(false);
         ui->btnCheque->setChecked(false);
-        ui->btnCredito->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
+        ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
         calcularcambio();
@@ -1633,7 +1739,8 @@ void FrmTPV::on_btnTarjeta_clicked(bool checked)
         ui->txtTarjeta->clear();
         ui->btnEfectivo->setChecked(false);
         ui->btnCheque->setChecked(false);
-        ui->btnCredito->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
+        ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
         calcularcambio();
@@ -1649,7 +1756,8 @@ void FrmTPV::on_btnCheque_clicked(bool checked)
         ui->txtCheque->clear();
         ui->btnTarjeta->setChecked(false);
         ui->btnEfectivo->setChecked(false);
-        ui->btnCredito->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
+        ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
         calcularcambio();
@@ -1657,18 +1765,35 @@ void FrmTPV::on_btnCheque_clicked(bool checked)
     }
 }
 
-void FrmTPV::on_btnCredito_clicked(bool checked)
+void FrmTPV::on_btnDomiciliacion_clicked(bool checked)
 {
     if(checked)
     {
-        ui->txtCredito->clear();
+        ui->txtDomiciliacion->clear();
+
         ui->btnTarjeta->setChecked(false);
         ui->btnCheque->setChecked(false);
-        ui->btnCredito->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
         calcularcambio();
-        ui->txtCredito->setFocus();
+        ui->txtTransferencia->setFocus();
+    }
+
+}
+void FrmTPV::on_btnTransferencia_clicked(bool checked)
+{
+    if(checked)
+    {
+        ui->txtTransferencia->clear();
+
+        ui->btnTarjeta->setChecked(false);
+        ui->btnCheque->setChecked(false);
+        ui->btnTransferencia->setChecked(false);
+        ui->btnVales->setChecked(false);
+        ui->btnInternet->setChecked(false);
+        calcularcambio();
+        ui->txtTransferencia->setFocus();
     }
 
 }
@@ -1680,7 +1805,8 @@ void FrmTPV::on_btnVales_clicked(bool checked)
         ui->txtVales->clear();
         ui->btnTarjeta->setChecked(false);
         ui->btnCheque->setChecked(false);
-        ui->btnCredito->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
+
         ui->btnEfectivo->setChecked(false);
         ui->btnInternet->setChecked(false);
         calcularcambio();
@@ -1695,7 +1821,8 @@ void FrmTPV::on_btnInternet_clicked(bool checked)
         ui->txtInternet->clear();
         ui->btnTarjeta->setChecked(false);
         ui->btnCheque->setChecked(false);
-        ui->btnCredito->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
+        ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnEfectivo->setChecked(false);
         calcularcambio();
@@ -1713,8 +1840,10 @@ void FrmTPV::on_btnPunto_decimal_clicked()
             ui->txtTarjeta->setText(ui->txtTarjeta->text().append(","));
         if(ui->btnCheque->isChecked())
             ui->txtCheque->setText(ui->txtCheque->text().append(","));
-        if(ui->btnCredito->isChecked())
-            ui->txtCredito->setText(ui->txtCredito->text().append(","));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append(","));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().append(","));
         if(ui->btnVales->isChecked())
             ui->txtVales->setText(ui->txtVales->text().append(","));
         if(ui->btnInternet->isChecked())
@@ -1803,9 +1932,10 @@ void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
     clausulas << QString("fecha_abertura = %1").arg(ui->calendarioAbertura->selectedDate().toString("yyyyMMdd"))
               << QString("id_caja = %1").arg(caja.value("id_caja").toInt());
     int id_val = SqlCalls::SelectOneField("cierrecaja","id",clausulas,Configuracion_global->empresaDB,error).toInt();
-    if(id_val > 0)
+    if(id_val > 0) {
         QMessageBox::warning(this,tr("Gestión de Caja"),tr("La caja ya está abierta para este día"),tr("Aceptar"));
-    else
+        on_btnCancelar_caja_clicked();
+    } else
     {
         int new_id = SqlCalls::SqlInsert(caja,"cierrecaja",Configuracion_global->empresaDB,error);
         if(new_id == -1)
@@ -1815,6 +1945,86 @@ void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
         {
             TimedMessageBox * t;
             t = new TimedMessageBox(this,"Se ha abierto la caja.");
+           on_btnCancelar_caja_clicked();
         }
     }
+}
+
+void FrmTPV::on_btnDesglose_clicked()
+{
+    this->control_width = ui->frmcontrol->width();
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(0,ui->frmcontrol->height()));
+
+   // animation->setEasingCurve(QEasingCurve::OutBounce);
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_desglose()));
+    animation->start();
+}
+
+void FrmTPV::final_anim_desglose()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(0,ui->frmcontrol->height()));
+    animation->setEndValue(QSize(520,ui->frmcontrol->height()));
+    ui->frmcontrol->setCurrentIndex(2);
+    ui->spinHorarioAbertura->setTime(QTime::currentTime());
+    animation->setEasingCurve(QEasingCurve::OutBounce);
+    animation->start();
+}
+
+
+
+
+
+
+void FrmTPV::on_btnOcultar_clicked()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
+    animation->setDuration(600);
+    animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
+    animation->setEndValue(QSize(0,ui->frmcontrol->height()));
+    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_abrir_caja_cancelado()));
+    animation->start();
+
+}
+
+void FrmTPV::on_txtImporteAbertura_editingFinished()
+{
+    blockSignals(true);
+    ui->txtImporteAbertura->setText(Configuracion_global->toFormatoMoneda(ui->txtImporteAbertura->text()));
+    blockSignals(false);
+
+}
+
+void FrmTPV::on_btnCerrarCaja_clicked()
+{
+    FrmCierreCaja cierre;
+    cierre.exec();
+}
+
+void FrmTPV::on_btnExtrasCaja_clicked()
+{
+    frmExtrasCaja extras;
+    extras.exec();
+}
+
+void FrmTPV::on_btnRetirardinero_clicked()
+{
+    FrmRetirardeCaja retirar;
+    retirar.exec();
+}
+
+void FrmTPV::on_btnInsertarDinero_clicked()
+{
+    FrmInsertarDineroCaja insertar;
+    insertar.exec();
+}
+
+void FrmTPV::on_btnDevolucionTicket_clicked()
+{
+    FrmDevolucionTicket devolucion;
+    devolucion.exec();
 }

@@ -21,6 +21,7 @@ BarraBusqueda::BarraBusqueda(QWidget *parent) :
     connect(ui->txtBuscar,SIGNAL(textEdited(QString)),this,SLOT(textChanged(QString)));
     connect(ui->cboOrden,SIGNAL(currentIndexChanged(QString)),this,SLOT(textChanged(QString)));
     ui->txtBuscar->installEventFilter(this);
+    m_show = false;
 }
 
 BarraBusqueda::~BarraBusqueda()

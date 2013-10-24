@@ -609,8 +609,16 @@ bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
                 on_botBuscarCliente_clicked();
         }
         if(keyEvent->key() == Qt::Key_F1)
+        {
             if(ui->btnEditar->isEnabled())
-                mostrarBusqueda();
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+            }
+            return true;
+        }
         if(keyEvent->key() == Qt::Key_Return)
             if(ui->stackedWidget->currentIndex() == 1)
                 on_tabla_doubleClicked(ui->tabla->currentIndex());
@@ -638,7 +646,7 @@ void FrmPedidos::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&FrmPedidos::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 

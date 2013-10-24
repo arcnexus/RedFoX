@@ -32,9 +32,6 @@
    <iconset>
     <normaloff>:/Icons/PNG/Maya.png</normaloff>:/Icons/PNG/Maya.png</iconset>
   </property>
-  <property name="autoFillBackground">
-   <bool>false</bool>
-  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
@@ -42,7 +39,7 @@
    <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="paginaedicion">
       <layout class="QGridLayout" name="gridLayout_27">
@@ -744,9 +741,6 @@
            </disabled>
           </palette>
          </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -755,7 +749,7 @@
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
+           <string notr="true"/>
           </property>
           <attribute name="title">
            <string>Cliente</string>

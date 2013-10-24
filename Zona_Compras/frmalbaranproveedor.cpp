@@ -124,7 +124,7 @@ void FrmAlbaranProveedor::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&FrmAlbaranProveedor::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
     QPushButton *btnAdd = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
@@ -145,7 +145,8 @@ void FrmAlbaranProveedor::setUpBusqueda()
     m_busqueda->addSpacer();
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
-    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
+    //connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
+    m_busqueda->hideMe();
 }
 
 FrmAlbaranProveedor::~FrmAlbaranProveedor()
@@ -812,17 +813,29 @@ bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
         _resizeBarraBusqueda(m_busqueda);
     QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
-
-    if(keyEvent->key() == Qt::Key_Return)
+    if(event->type() == QEvent::KeyPress)
     {
-        on_tabla_doubleClicked(ui->tabla->currentIndex());
+        if(keyEvent->key() == Qt::Key_Return)
+        {
+            on_tabla_doubleClicked(ui->tabla->currentIndex());
+            return true;
+        }
+
+         if(keyEvent->key() == Qt::Key_Escape)
+            return true;
+
+         if(keyEvent->key() == Qt::Key_F1)
+         {
+             if(ui->btnEditar->isEnabled())
+             {
+                 if(m_busqueda->isShow())
+                     ocultarBusqueda();
+                 else
+                     mostrarBusqueda();
+             }
+         }
         return true;
     }
-     if(keyEvent->key() == Qt::Key_Escape)
-        return true;
-    if(keyEvent->key() == Qt::Key_F1)
-        if(ui->btnEditar->isEnabled())
-            mostrarBusqueda();
     return MayaModule::eventFilter(obj,event);
 }
 

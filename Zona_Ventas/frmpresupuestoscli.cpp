@@ -641,6 +641,7 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     editando = false;
     emit block();
     ui->stackedWidget->setCurrentIndex(0);
+    ocultarBusqueda();
 }
 
 void FrmPresupuestosCli::on_btnEditar_clicked()
@@ -658,6 +659,7 @@ void FrmPresupuestosCli::on_btnEditar_clicked()
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo presupuesto y facture de nuevo, o pida al administrador que le desbloquee el presupuesto. "),tr("OK"));
     }
+    ocultarBusqueda();
 }
 
 void FrmPresupuestosCli::on_btnGuardar_clicked()
@@ -1758,7 +1760,7 @@ void FrmPresupuestosCli::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&FrmPresupuestosCli::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this, SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
@@ -1918,8 +1920,16 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
                 buscar_poblacion(2);
         }
         if(keyEvent->key() ==Qt::Key_F1)
+        {
             if(ui->btnEditar->isEnabled())
-                mostrarBusqueda();
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+            }
+            return true;
+        }
         if(keyEvent->key() == Qt::Key_Return)
             if(ui->stackedWidget->currentIndex() ==1)
                 on_tabla_doubleClicked(ui->tabla->currentIndex());

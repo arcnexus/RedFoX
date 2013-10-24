@@ -1663,8 +1663,16 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent->key() == Qt::Key_Escape)
             return true;
         if(keyEvent->key() == Qt::Key_F1)
+        {
             if(ui->btnEditar->isEnabled())
-                mostrarBusqueda();
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+
+            }
+        }
     }
     return MayaModule::eventFilter(obj,event);
 }
