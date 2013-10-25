@@ -5,6 +5,7 @@ EditCodeBarDlg::EditCodeBarDlg(CodeBar *code, QWidget *parent) :
     EditDinamycItemDlg(parent),
     ui(new Ui::EditCodeBarDlg)
 {
+    pre = new CodeBar(0);
     ui->setupUi(this);
     ui->comboZona->addItems(zonas());
     QStringList l = code->sql().split(".");
@@ -20,7 +21,7 @@ EditCodeBarDlg::EditCodeBarDlg(CodeBar *code, QWidget *parent) :
     this->code = code;
     ui->graphicsView->setScene(&scene);
 
-    pre = new CodeBar(0);
+
     pre->setcode("*123456789*");
     pre->setvisibleCode(code->visibleCode());
     scene.addItem(pre);
