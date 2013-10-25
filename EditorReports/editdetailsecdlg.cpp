@@ -12,6 +12,13 @@ EditDetailSecDlg::EditDetailSecDlg(DetailSection* sec , QWidget *parent) :
     ui->comboZonaInterna->addItems(zonas());
     if(sec)
     {
+        if(sec->Blocked())
+        {
+            ui->iGroup->hide();
+            ui->cabChk->hide();
+            ui->footChk->hide();
+            ui->lineEdit->setReadOnly(true);
+        }
         ui->cabChk->setChecked(sec->header());
         ui->footChk->setChecked(sec->foot());
         ui->lineEdit->setText(sec->SectionName());

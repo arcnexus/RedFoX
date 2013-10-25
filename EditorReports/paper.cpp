@@ -1,5 +1,7 @@
 #include "paper.h"
 #include "sectioneditordlg.h"
+#include "editdetailsecdlg.h"
+
 //using namespace Paper_size;
 struct _size {
         double width;
@@ -23,23 +25,30 @@ Paper::Paper(QGraphicsItem *parent) :
     _inserting = false;
     mySize = A4;
     m_orientacion = Retrato;
-    m_tipoDoc = Report;
+    m_tipoDoc = _Report;
+    m_lblPrinter = false;
 }
 
 QRectF Paper::margin()
 {
-    return QRectF(cmToPx(margenSuperior()),
+    return QRectF(cmToPx(margenIzquierdo()),
                   cmToPx(margenSuperior()),
-                  this->rect().width() - cmToPx(margenSuperior()) - cmToPx(margenSuperior())- 5,
-                  this->rect().height()- cmToPx(margenSuperior()) - cmToPx(margenSuperior())- 5);
+                  this->rect().width() - cmToPx(margenIzquierdo()) - cmToPx(margenDerecho())- 5,
+                  this->rect().height()- cmToPx(margenSuperior()) - cmToPx(margenInferior())- 5);
 }
 
 QRectF Paper::paper()
 {
     return QRectF(0,
                   0,
-                  this->rect().width() -  5,
-                  this->rect().height()-  5);
+                  this->rect().width() -  4,
+                  this->rect().height()-  4);
+}
+
+QSizeF Paper::paperSize()
+{
+    return QSizeF(m_cmW,
+                  m_cmH);
 }
 
 Paper::_Sizes Paper::StandartSize()
@@ -146,28 +155,88 @@ void Paper::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Paper::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    if(this->tipoDoc() == Report)
+    if(tipoDoc() == _Report)
     {
         SectionEditorDlg dlg(this,qApp->activeWindow());
+        dlg.exec();
+    }
+    else
+    {
+        EditDetailSecDlg dlg(reinterpret_cast<DetailSection *>(seccionPool.at(0)),qApp->activeWindow());
         dlg.exec();
     }
 }
 
 qreal Paper::cmToPx(double cm)
 {
-    double inch = cm * 0.3937008;
+    double inch = cm * 0.3947368421052632;
     return inch * 96.0;
 }
 
 qreal Paper::pxTocm(int px)
 {
     double inch = px/96.0;
-    return inch/0.3937008;
+    return inch/0.3947368421052632;
 }
 
 Paper::docType Paper::tipoDoc() const
 {
     return m_tipoDoc;
+}
+
+double Paper::lblDistH() const
+{
+    return m_lblDistH;
+}
+
+double Paper::lblDistV() const
+{
+    return m_lblDistV;
+}
+
+int Paper::lblColumnCount() const
+{
+    return m_lblColumnCount;
+}
+
+int Paper::lblRowCount() const
+{
+    return m_lblRowCount;
+}
+
+bool Paper::lblPrinter() const
+{
+    return m_lblPrinter;
+}
+
+double Paper::lblPaperH() const
+{
+    return m_lblPaperH;
+}
+
+double Paper::lblPaperW() const
+{
+    return m_lblPaperW;
+}
+
+double Paper::lblPaperMarginS() const
+{
+    return m_lblPaperMarginS;
+}
+
+double Paper::lblPaperMarginInf() const
+{
+    return m_lblPaperMarginInf;
+}
+
+double Paper::lblPaperMarginIzq() const
+{
+    return m_lblPaperMarginIzq;
+}
+
+double Paper::lblPaperMarginDer() const
+{
+    return m_lblPaperMarginDer;
 }
 
 void Paper::insertRoundRect(Section * sec)
@@ -269,6 +338,8 @@ double Paper::margenSuperior() const {
 
 void Paper::setSize(double w, double h)
 {
+    m_cmH = h;
+    m_cmW = w;
     this->setRect(0,0,cmToPx(w)+5,cmToPx(h)+5);
     scene()->setSceneRect(-10,-10,rect().width()+200,rect().height()+15);
 }
@@ -356,12 +427,113 @@ void Paper::settipoDoc(Paper::docType arg)
 {
     if (m_tipoDoc != arg) {
         m_tipoDoc = arg;
-        if(arg == etiqueta)
-        {
-            seccionPool.clear();
+        QListIterator<Section*> secIt(seccionPool);
+
+        while(secIt.hasNext())
+            secIt.next()->deleteLater();
+        seccionPool.clear();
+
+        if(arg == _etiqueta)
+        {            
             addSection(tr("Etiqueta") ,Section::Detail);
+            seccionPool.at(0)->setHeight(this->paper().height()+2);
+            reinterpret_cast<DetailSection*>(seccionPool.at(0))->setBlocked(true);
+        }
+        if(arg == _sobre)
+        {
+            addSection(tr("Sobre") ,Section::Detail);
+            seccionPool.at(0)->setHeight(this->paper().height()+2);
+            reinterpret_cast<DetailSection*>(seccionPool.at(0))->setBlocked(true);
         }
         emit tipoDocChanged(arg);
+    }
+}
+
+void Paper::setlblDistH(double arg)
+{
+    if (m_lblDistH != arg) {
+        m_lblDistH = arg;
+        emit lblDistHChanged(arg);
+    }
+}
+
+void Paper::setlblDistV(double arg)
+{
+    if (m_lblDistV != arg) {
+        m_lblDistV = arg;
+        emit lblDistVChanged(arg);
+    }
+}
+
+void Paper::setlblColumnCount(int arg)
+{
+    if (m_lblColumnCount != arg) {
+        m_lblColumnCount = arg;
+        emit lblColumnCountChanged(arg);
+    }
+}
+
+void Paper::setlblRowCount(int arg)
+{
+    if (m_lblRowCount != arg) {
+        m_lblRowCount = arg;
+        emit lblRowCountChanged(arg);
+    }
+}
+
+void Paper::setlblPrinter(bool arg)
+{
+    if (m_lblPrinter != arg) {
+        m_lblPrinter = arg;
+        emit lblPrinterChanged(arg);
+    }
+}
+
+void Paper::setlblPaperH(double arg)
+{
+    if (m_lblPaperH != arg) {
+        m_lblPaperH = arg;
+        emit lblPaperHChanged(arg);
+    }
+}
+
+void Paper::setlblPaperW(double arg)
+{
+    if (m_lblPaperW != arg) {
+        m_lblPaperW = arg;
+        emit lblPaperWChanged(arg);
+    }
+}
+
+void Paper::setlblPaperMarginS(double arg)
+{
+    if (m_lblPaperMarginS != arg) {
+        m_lblPaperMarginS = arg;
+        emit lblPaperMarginSChanged(arg);
+    }
+}
+
+void Paper::setlblPaperMarginInf(double arg)
+{
+    if (m_lblPaperMarginInf != arg) {
+        m_lblPaperMarginInf = arg;
+        emit lblPaperMarginInfChanged(arg);
+    }
+}
+
+void Paper::setlblPaperMarginIzq(double arg)
+{
+    if (m_lblPaperMarginIzq != arg) {
+        m_lblPaperMarginIzq = arg;
+        emit lblPaperMarginIzqChanged(arg);
+    }
+}
+
+void Paper::setlblPaperMarginDer(double arg)
+{
+    if (m_lblPaperMarginDer != arg) {
+        m_lblPaperMarginDer = arg;
+        emit lblPaperMarginDerChanged(arg);
     }
 }
 
@@ -396,6 +568,10 @@ void Paper::setSize(_Sizes siz, double w, double h, _Orientacion o)
             this->setSize(StandarSizes[siz].width/10 , StandarSizes[siz].heigth/10);
         else
             this->setSize(StandarSizes[siz].heigth/10 , StandarSizes[siz].width/10);
+    }
+    else
+    {
+        this->setSize(w,h);
     }
 }
 
@@ -560,26 +736,38 @@ bool Paper::parseXML(QString xml, QString & error)
         else
         {
             QDomNode child = root.firstChild();
-            this->settipoDoc(static_cast<docType>(child.toElement().attribute("DocType").toInt()));
+
             while (!child.isNull()) //Papers TODO multipage report?
             {
+                QDomElement _aux = child.toElement();
+
+
+                this->m_orientacion = _aux.attribute("Orientation") == "V" ? Retrato : Apaisado;
+
+                this->setSize(static_cast<_Sizes>(_aux.attribute("StandartSize").toInt()),
+                              _aux.attribute("w").toDouble(),
+                              _aux.attribute("h").toDouble(),
+                              this->m_orientacion);
+
+                this->setmargenDerecho  (_aux.attribute("marginRigth") .toDouble());
+                this->setmargenIzquierdo(_aux.attribute("marginLeft")  .toDouble());
+                this->setmargenSuperior (_aux.attribute("marginTop")   .toDouble());
+                this->setmargenInferior (_aux.attribute("marginBottom").toDouble());            
+
+                this->settipoDoc(static_cast<docType>(_aux.attribute("DocType").toInt()));
+                QListIterator<Section*> secIt2(seccionPool);
+
+                while(secIt2.hasNext())
+                    secIt2.next()->deleteLater();
+
+                this->seccionPool.clear();
+
                 QDomNode sections = child.firstChild();
                 while (!sections.isNull())
                 {
                     QDomElement secEle = sections.toElement();
 
-                    if(secEle.tagName() == "Size")
-                        this->setSize(secEle.attribute("w").toDouble(),secEle.attribute("h").toDouble());
-                    if(secEle.tagName() == "Size")
-                        this->m_orientacion = secEle.attribute("type") == "V" ? Retrato : Apaisado;
-                    else if(secEle.tagName() == "Margin")
-                    {
-                        this->setmargenDerecho(secEle.attribute("rigth").toDouble());
-                        this->setmargenIzquierdo(secEle.attribute("left").toDouble());
-                        this->setmargenSuperior(secEle.attribute("top").toDouble());
-                        this->setmargenInferior(secEle.attribute("bottom").toDouble());
-                    }
-                    else if(secEle.tagName() == "Section")
+                    if(secEle.tagName() == "Section")
                     {
                         int typeOfSection = secEle.attribute("id").toDouble();
                         Section::SectionType type = static_cast<Section::SectionType>(typeOfSection);
@@ -631,11 +819,32 @@ bool Paper::parseXML(QString xml, QString & error)
                     sections = sections.nextSibling();
                 }
                 child = child.nextSibling();
+
+                if(tipoDoc() == _etiqueta)
+                {
+                    seccionPool.at(0)->setHeight(this->paper().height()+2);
+                    reinterpret_cast<DetailSection*>(seccionPool.at(0))->setBlocked(true);
+
+                    setlblDistH(_aux.attribute("lblDistH") .toDouble());
+                    setlblDistV(_aux.attribute("lblDistV") .toDouble());
+                    setlblColumnCount(_aux.attribute("lblColumnCount") .toInt());
+                    setlblRowCount(_aux.attribute("lblRowCount") .toInt());
+                    setlblPrinter(_aux.attribute("lblPrinter") .toInt());
+
+                    setlblPaperH(_aux.attribute("lblPaperH") .toDouble());
+                    setlblPaperW(_aux.attribute("lblPaperW") .toDouble());
+                    setlblPaperMarginS(_aux.attribute("lblPaperMarginS") .toDouble());
+                    setlblPaperMarginInf(_aux.attribute("lblPaperMarginInf") .toDouble());
+                    setlblPaperMarginIzq(_aux.attribute("lblPaperMarginIzq") .toDouble());
+                    setlblPaperMarginDer(_aux.attribute("lblPaperMarginDer") .toDouble());
+                }
             }
         }
     }
     for(int i= 0;i < itemPool.size();i++)
         connect(itemPool.at(i),SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+
+    this->scene()->update();
     return true;
 }
 
@@ -651,29 +860,34 @@ int Paper::save(QString file)
 
         QDomElement paperNode = doc.createElement("Paper");
         paperNode.setAttribute("DocType",QString::number(static_cast<int>(this->tipoDoc())));
+        paperNode.setAttribute("w", QString::number( m_cmW, 'f', 4));
+        paperNode.setAttribute("h", QString::number( m_cmH, 'f', 4));
+        paperNode.setAttribute("StandartSize",this->mySize);
+        paperNode.setAttribute("Orientation",this->m_orientacion == Retrato ? "V" : "H");
+        paperNode.setAttribute("marginTop",QString::number(this->margenSuperior(), 'f', 4));
+        paperNode.setAttribute("marginBottom",QString::number(this->margenInferior(), 'f', 4));
+        paperNode.setAttribute("marginLeft",QString::number(this->margenIzquierdo(), 'f', 4));
+        paperNode.setAttribute("marginRigth",QString::number(this->margenDerecho(), 'f', 4));
 
-        QDomElement siz = doc.createElement("Size");
-        siz.setAttribute("w", QString::number( pxTocm(this->paper().width ()), 'f', 2));
-        siz.setAttribute("h", QString::number( pxTocm(this->paper().height()), 'f', 2));
+        if(tipoDoc() == _etiqueta)
+        {
+            paperNode.setAttribute("lblDistH",QString::number(lblDistH(), 'f', 4));
+            paperNode.setAttribute("lblDistV",QString::number(lblDistV(), 'f', 4));
 
-        QDomElement din = doc.createElement("StandartSize");
-        din.setAttribute("type",this->mySize);
+            paperNode.setAttribute("lblColumnCount",QString::number(lblColumnCount()));
+            paperNode.setAttribute("lblRowCount",QString::number(lblRowCount()));
+            paperNode.setAttribute("lblPrinter",QString::number(lblPrinter()));
 
-        QDomElement orientacion = doc.createElement("Orientation");
-        orientacion.setAttribute("type",this->m_orientacion == Retrato ? "V" : "H");
-
-        QDomElement margin = doc.createElement("Margin");
-        margin.setAttribute("top",QString::number(this->margenSuperior(), 'f', 2));
-        margin.setAttribute("bottom",QString::number(this->margenInferior(), 'f', 2));
-        margin.setAttribute("left",QString::number(this->margenIzquierdo(), 'f', 2));
-        margin.setAttribute("rigth",QString::number(this->margenDerecho(), 'f', 2));
+            paperNode.setAttribute("lblPaperH",QString::number(lblPaperH(), 'f', 4));
+            paperNode.setAttribute("lblPaperW",QString::number(lblPaperW(), 'f', 4));
+            paperNode.setAttribute("lblPaperMarginS",QString::number(lblPaperMarginS(), 'f', 4));
+            paperNode.setAttribute("lblPaperMarginInf",QString::number(lblPaperMarginInf(), 'f', 4));
+            paperNode.setAttribute("lblPaperMarginIzq",QString::number(lblPaperMarginIzq(), 'f', 4));
+            paperNode.setAttribute("lblPaperMarginDer",QString::number(lblPaperMarginDer(), 'f', 4));
+        }
 
         doc.appendChild(root);
         root.appendChild(paperNode);
-        paperNode.appendChild(siz);
-        paperNode.appendChild(din);
-        paperNode.appendChild(orientacion);
-        paperNode.appendChild(margin);
 
         QList<Section*>::Iterator it;
         QList<Container*> usedItems;
@@ -714,28 +928,34 @@ QDomDocument Paper::preview()
 
     QDomElement paperNode = doc.createElement("Paper");
 
-    QDomElement siz = doc.createElement("Size");
-    siz.setAttribute("w", QString::number( pxTocm(this->paper().width ()), 'f', 2));
-    siz.setAttribute("h", QString::number( pxTocm(this->paper().height()), 'f', 2));
+    paperNode.setAttribute("DocType",QString::number(static_cast<int>(this->tipoDoc())));
+    paperNode.setAttribute("w", QString::number( m_cmW, 'f', 4));
+    paperNode.setAttribute("h", QString::number( m_cmH, 'f', 4));
+    paperNode.setAttribute("StandartSize",this->mySize);
+    paperNode.setAttribute("Orientation",this->m_orientacion == Retrato ? "V" : "H");
+    paperNode.setAttribute("marginTop",QString::number(this->margenSuperior(), 'f', 4));
+    paperNode.setAttribute("marginBottom",QString::number(this->margenInferior(), 'f', 4));
+    paperNode.setAttribute("marginLeft",QString::number(this->margenIzquierdo(), 'f', 4));
+    paperNode.setAttribute("marginRigth",QString::number(this->margenDerecho(), 'f', 4));
 
-    QDomElement din = doc.createElement("StandartSize");
-    din.setAttribute("type",this->mySize);
+    if(tipoDoc() == _etiqueta)
+    {
+        paperNode.setAttribute("lblDistH",QString::number(lblDistH(), 'f', 4));
+        paperNode.setAttribute("lblDistV",QString::number(lblDistV(), 'f', 4));
 
-    QDomElement orientacion = doc.createElement("Orientation");
-    orientacion.setAttribute("type",this->m_orientacion == Retrato ? "V" : "H");
+        paperNode.setAttribute("lblColumnCount",QString::number(lblColumnCount()));
+        paperNode.setAttribute("lblRowCount",QString::number(lblRowCount()));
+        paperNode.setAttribute("lblPrinter",QString::number(lblPrinter()));
 
-    QDomElement margin = doc.createElement("Margin");
-    margin.setAttribute("top",QString::number(this->margenSuperior(), 'f', 2));
-    margin.setAttribute("bottom",QString::number(this->margenInferior(), 'f', 2));
-    margin.setAttribute("left",QString::number(this->margenIzquierdo(), 'f', 2));
-    margin.setAttribute("rigth",QString::number(this->margenDerecho(), 'f', 2));
-
+        paperNode.setAttribute("lblPaperH",QString::number(lblPaperH(), 'f', 4));
+        paperNode.setAttribute("lblPaperW",QString::number(lblPaperW(), 'f', 4));
+        paperNode.setAttribute("lblPaperMarginS",QString::number(lblPaperMarginS(), 'f', 4));
+        paperNode.setAttribute("lblPaperMarginInf",QString::number(lblPaperMarginInf(), 'f', 4));
+        paperNode.setAttribute("lblPaperMarginIzq",QString::number(lblPaperMarginIzq(), 'f', 4));
+        paperNode.setAttribute("lblPaperMarginDer",QString::number(lblPaperMarginDer(), 'f', 4));
+    }
     doc.appendChild(root);
     root.appendChild(paperNode);
-    paperNode.appendChild(siz);
-    paperNode.appendChild(din);
-    paperNode.appendChild(orientacion);
-    paperNode.appendChild(margin);
 
     QList<Section*>::Iterator it;
     QList<Container*> usedItems;

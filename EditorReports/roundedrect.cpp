@@ -56,8 +56,8 @@ QDomElement RoundedRect::xml(QDomDocument doc, QPointF relPos, QList<Section *> 
     mainNode.setAttribute("Color2",ColorString(m_color2));
     mainNode.setAttribute("GradientUsed",m_useGradient);
     mainNode.setAttribute("GradientDirection",m_GradientDirection == Vertical ? "V" : "H");
-    mainNode.setAttribute("RadiousX",m_RadiousX);
-    mainNode.setAttribute("RadiousY",m_RadiousY);
+    mainNode.setAttribute("RadiousX",QString::number(m_RadiousX , 'f', 4));
+    mainNode.setAttribute("RadiousY",QString::number(m_RadiousY , 'f', 4));
 
     return mainNode;
 }

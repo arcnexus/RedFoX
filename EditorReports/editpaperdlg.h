@@ -20,6 +20,18 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_chkRolloEtiq_toggled(bool checked);
+
+    void on_spinPorFila_valueChanged(int arg1);
+
+    void on_spinPorColum_valueChanged(int arg1);
+
+    void on_rdbReport_toggled(bool checked);
+
+    void on_rdbEtiqueta_toggled(bool checked);
+
+    void on_rdbSobre_toggled(bool checked);
+
 private:
     Ui::EditPaperDlg *ui;
     Paper* paper;

@@ -37,6 +37,20 @@ public:
     Q_PROPERTY(double margenDerecho READ margenDerecho WRITE setmargenDerecho NOTIFY margenDerechoChanged)
     Q_PROPERTY(docType tipoDoc READ tipoDoc WRITE settipoDoc NOTIFY tipoDocChanged)
 
+    Q_PROPERTY(double lblDistH READ lblDistH WRITE setlblDistH NOTIFY lblDistHChanged)
+    Q_PROPERTY(double lblDistV READ lblDistV WRITE setlblDistV NOTIFY lblDistVChanged)
+    Q_PROPERTY(int lblColumnCount READ lblColumnCount WRITE setlblColumnCount NOTIFY lblColumnCountChanged)
+    Q_PROPERTY(int lblRowCount READ lblRowCount WRITE setlblRowCount NOTIFY lblRowCountChanged)
+    Q_PROPERTY(bool lblPrinter READ lblPrinter WRITE setlblPrinter NOTIFY lblPrinterChanged)
+
+    Q_PROPERTY(double lblPaperW READ lblPaperW WRITE setlblPaperW NOTIFY lblPaperWChanged)
+    Q_PROPERTY(double lblPaperH READ lblPaperH WRITE setlblPaperH NOTIFY lblPaperHChanged)
+    Q_PROPERTY(double lblPaperMarginS READ lblPaperMarginS WRITE setlblPaperMarginS NOTIFY lblPaperMarginSChanged)
+    Q_PROPERTY(double lblPaperMarginInf READ lblPaperMarginInf WRITE setlblPaperMarginInf NOTIFY lblPaperMarginInfChanged)
+    Q_PROPERTY(double lblPaperMarginIzq READ lblPaperMarginIzq WRITE setlblPaperMarginIzq NOTIFY lblPaperMarginIzqChanged)
+    Q_PROPERTY(double lblPaperMarginDer READ lblPaperMarginDer WRITE setlblPaperMarginDer NOTIFY lblPaperMarginDerChanged)
+
+
     Q_ENUMS (_Orientacion)
     enum _Orientacion { Retrato , Apaisado };
 
@@ -51,12 +65,13 @@ public:
     enum itemType { RoundRectIt , Label, Linea , CodeBarIt , Imagen, Campo , CampoRelacional , Parametro};
 
     Q_ENUMS (docType)
-    enum docType { Report , etiqueta , sobre };
+    enum docType { _Report , _etiqueta , _sobre, _mail };
 
     _Orientacion Orientacion() const;
 
     QRectF margin();
     QRectF paper();
+    QSizeF paperSize();
     _Sizes StandartSize();
 
     double margenSuperior() const;
@@ -90,6 +105,19 @@ public:
     static qreal pxTocm(int px);
     docType tipoDoc() const;
 
+    double lblDistH() const;
+    double lblDistV() const;
+    int lblColumnCount() const;
+    int lblRowCount() const;
+    bool lblPrinter() const;
+
+    double lblPaperH() const;
+    double lblPaperW() const;
+    double lblPaperMarginS() const;
+    double lblPaperMarginInf() const;
+    double lblPaperMarginIzq() const;
+    double lblPaperMarginDer() const;
+
 signals:
     
     void orientacionChanged(_Orientacion arg);
@@ -101,6 +129,17 @@ signals:
     void itemInserted();
 
     void tipoDocChanged(docType arg);
+    void lblDistHChanged(double arg);
+    void lblDistVChanged(double arg);
+    void lblColumnCountChanged(int arg);
+    void lblRowCountChanged(int arg);
+    void lblPrinterChanged(bool arg);
+    void lblPaperHChanged(double arg);
+    void lblPaperWChanged(double arg);
+    void lblPaperMarginSChanged(double arg);
+    void lblPaperMarginInfChanged(double arg);
+    void lblPaperMarginIzqChanged(double arg);
+    void lblPaperMarginDerChanged(double arg);
 
 public slots:
 
@@ -114,6 +153,19 @@ public slots:
 
     void reCalculateSeccion(Section * = 0);
     void settipoDoc(docType arg);
+
+    void setlblDistH(double arg);
+    void setlblDistV(double arg);
+    void setlblColumnCount(int arg);
+    void setlblRowCount(int arg);
+    void setlblPrinter(bool arg);
+
+    void setlblPaperH(double arg);
+    void setlblPaperW(double arg);
+    void setlblPaperMarginS(double arg);
+    void setlblPaperMarginInf(double arg);
+    void setlblPaperMarginIzq(double arg);
+    void setlblPaperMarginDer(double arg);
 
 private slots:
     void itemMoved(Container *);
@@ -149,6 +201,20 @@ private:
     double m_margenIzquierdo;
     double m_margenDerecho;
     docType m_tipoDoc;
+    double m_lblDistH;
+    double m_lblDistV;
+    int m_lblColumnCount;
+    int m_lblRowCount;
+    bool m_lblPrinter;
+    double m_lblPaperH;
+    double m_lblPaperW;
+    double m_lblPaperMarginS;
+    double m_lblPaperMarginInf;
+    double m_lblPaperMarginIzq;
+    double m_lblPaperMarginDer;
+
+    double m_cmW;
+    double m_cmH;
 };
 
 #endif // PAPER_H

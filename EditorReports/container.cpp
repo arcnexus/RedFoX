@@ -142,11 +142,11 @@ void Container::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Container::apendXML(QDomElement &element, QDomDocument doc , QPointF relPos)
 {
-    element.setAttribute("x",(int)this->pos().x() - (int)relPos.x());
-    element.setAttribute("y",(int)this->pos().y() - (int)relPos.y());
+    element.setAttribute("x",QString::number(this->pos().x() - relPos.x(), 'f', 4));
+    element.setAttribute("y",QString::number(this->pos().y() - relPos.y(), 'f', 4));
 
-    element.setAttribute("w",(int)this->rect().width());
-    element.setAttribute("h",(int)this->rect().height());
+    element.setAttribute("w",QString::number(this->rect().width() , 'f', 4));
+    element.setAttribute("h",QString::number(this->rect().height(), 'f', 4));
 }
 
 QString Container::ColorString(QColor c)

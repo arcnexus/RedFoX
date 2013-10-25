@@ -12,6 +12,7 @@ class DetailSection : public Section
     Q_PROPERTY(QColor color1 READ color1 WRITE setcolor1 NOTIFY color1Changed)
     Q_PROPERTY(bool use2Colors READ use2Colors WRITE setuse2Colors NOTIFY use2ColorsChanged)
     Q_PROPERTY(QColor color2 READ color2 WRITE setcolor2 NOTIFY color2Changed)
+    Q_PROPERTY(bool Blocked READ Blocked WRITE setBlocked NOTIFY BlockedChanged)
 public:
     explicit DetailSection(QGraphicsItem *parent = 0);
     
@@ -32,6 +33,8 @@ public:
 
     QString ColorString(QColor c);
     QColor  ColorFromString(QString s);
+    bool Blocked() const;
+
 signals:
     
     void SqlGlobalChanged(QString arg);
@@ -43,6 +46,8 @@ signals:
     void use2ColorsChanged(bool arg);
     void color2Changed(QColor arg);
 
+    void BlockedChanged(bool arg);
+
 public slots:
     void setFoot(bool foot);
     void setHeader(bool b);
@@ -53,7 +58,8 @@ public slots:
     void setcolorear(bool arg);
     void setcolor1(QColor arg);
     void setuse2Colors(bool arg);
-    void setcolor2(QColor arg);
+    void setcolor2(QColor arg);    
+    void setBlocked(bool arg);
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -87,6 +93,7 @@ private:
     QColor m_color1;
     bool m_use2Colors;
     QColor m_color2;
+    bool m_Blocked;
 };
 
 #endif // DETAILSECTION_H
