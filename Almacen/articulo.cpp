@@ -409,9 +409,6 @@ void Articulo::Vender(int id, int cantidad, double pvp)
 {
 }
 
-void Articulo::Devolucion(int id, int cantidad, double importe, QString cMotivo, QString fechaDevolucion)
-{
-}
 
 void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
 {
@@ -713,10 +710,245 @@ bool Articulo::cambiar_pvp()
 
 }
 
-bool Articulo::agregarStock(int id, int value)
+bool Articulo::agregarStock(char accion, int id, int cantidad, double importe,QDate fecha)
 {
-    // TODO controlar stock
-    return true;
+    QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL;
+    QString error;
+    bool updated = true;
+    // ACTUALIZAR STOCK Y ACUMULADOS FICHA ARTICULO
+    if(accion == 'v')
+        cSQL = "update articulos set unidades_vendidas = unidades_vendidas - "+QString::number(cantidad,'f',2)+" "+
+           "importe_acumulado_ventas = importe_acumulado_ventas - "+QString::number(importe,
+                                                                                   'f',Configuracion_global->decimales_campos_totales)+
+           " where id = "+QString::number(id);
+    else
+        cSQL = "update articulos set unidades_compradas = unidades_compradas - "+QString::number(cantidad,'f',2)+" "+
+                "importe_acumulado_compras = importe_acumulado_compras - "+QString::number(importe,
+                                                                                        'f',Configuracion_global->decimales_campos_totales)+
+                " where id = "+QString::number(id);
+
+    if(!art.exec(cSQL)){
+       updated = false;
+       QMessageBox::warning(qApp->activeWindow(),tr("Actualizar stock"),tr("No se pueden actualizar los acumulados de artículo"),tr("Aceptar"));
+    }
+    bool cont_stock = SqlCalls::SelectOneField("articulos","controlar_stock",
+                                               QString("id=%1").arg(id),
+                                               Configuracion_global->groupDB,error).toBool();
+    if(error.isEmpty())
+
+    {
+        if(cont_stock)
+        {
+            if(accion == 'v')
+                cSQL = "update articulos set stock_real = stock_real + "+QString::number(cantidad,'f',2)+
+                    " stock_fisico_almacen = stock_fisico_almacen + " +QString::number(cantidad,'f',2) +
+                    " where id = " + QString::number(id);
+            else
+
+                cSQL = "update articulos set stock_real = stock_real - "+QString::number(cantidad,'f',2)+
+                    " stock_fisico_almacen = stock_fisico_almacen - "  +QString::number(cantidad,'f',2) +
+                    " where id = " + QString::number(id);
+
+            if(!art.exec(cSQL)){
+                updated = false;
+                QMessageBox::warning(qApp->activeWindow(),tr("Actualizar stock"),tr("No se puede actualizar el stock"),tr("Aceptar"));
+            }
+        }
+    } else
+        updated = false;
+
+    // ACUMULADOS MENSUALES.
+    QSqlQuery acumulados(Configuracion_global->empresaDB);
+    int mes = fecha.month();
+    float cantidadm = cantidad;
+    double total =importe;
+    switch (mes) {
+    case 1:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_enero = unid_vent_enero - " + QString::number(cantidadm) +
+                    " acum_vent_enero = acum_vent_enero -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_enero = unid_comp_enero - " + QString::number(cantidadm) +
+                    " acum_comp_enero = acum_comp_enero -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 2:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_febrero = unid_vent_febrero - " + QString::number(cantidadm) +
+                    " acum_vent_febrero = acum_vent_febrero -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_febrero = unid_comp_febrero - " + QString::number(cantidadm) +
+                    " acum_comp_febrero = acum_comp_febrero -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+
+    case 3:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_marzo = unid_vent_marzo - " + QString::number(cantidadm) +
+                    " acum_vent_marzo = acum_vent_marzo -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_marzo = unid_comp_marzo - " + QString::number(cantidadm) +
+                    " acum_comp_marzo = acum_comp_marzo -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 4:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_abril = unid_vent_abril - " + QString::number(cantidadm) +
+                    " acum_vent_abril = acum_vent_abril -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_abril = unid_comp_abril - " + QString::number(cantidadm) +
+                    " acum_comp_abril = acum_comp_abril -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 5:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_mayo = unid_vent_mayo - " + QString::number(cantidadm) +
+                    " acum_vent_mayo = acum_vent_mayo -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_mayo = unid_comp_mayo - " + QString::number(cantidadm) +
+                    " acum_comp_mayo = acum_comp_mayo -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 6:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_junio = unid_vent_junio - " + QString::number(cantidadm) +
+                    " acum_vent_junio = acum_vent_junio -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_junio = unid_comp_junio - " + QString::number(cantidadm) +
+                    " acum_comp_junio = acum_comp_junio -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+
+    case 7:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_julio = unid_vent_julio - " + QString::number(cantidadm) +
+                    " acum_vent_julio = acum_vent_julio -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_julio = unid_comp_julio - " + QString::number(cantidadm) +
+                    " acum_comp_julio = acum_comp_julio -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 8:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_agosto = unid_vent_agosto - " + QString::number(cantidadm) +
+                    " acum_vent_agosto = acum_vent_agosto -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_agosto = unid_comp_agosto - " + QString::number(cantidadm) +
+                    " acum_comp_agosto = acum_comp_agosto -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+
+    case 9:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_septiembre = unid_vent_septiembre - " + QString::number(cantidadm) +
+                    " acum_vent_septiembre = acum_vent_septiembre -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_septiembre = unid_comp_septiembre - " + QString::number(cantidadm) +
+                    " acum_comp_septiembre = acum_comp_septiembre -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 10:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_octubre = unid_vent_octubre - " + QString::number(cantidadm) +
+                    " acum_vent_octubre = acum_vent_octubre -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_octubre = unid_comp_octubre - " + QString::number(cantidadm) +
+                    " acum_comp_octubre = acum_comp_octubre -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 11:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_noviembre = unid_vent_noviembre - " + QString::number(cantidadm) +
+                    " acum_vent_noviembre = acum_vent_noviembre -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_noviembre = unid_comp_noviembre - " + QString::number(cantidadm) +
+                    " acum_comp_noviembre = acum_comp_noviembre -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+    case 12:
+        if(accion == 'v')
+            cSQL = "update acum_articulos set unid_vent_diciembre = unid_vent_diciembre - " + QString::number(cantidadm) +
+                    " acum_vent_diciembre = acum_vent_diciembre -"+ QString::number(total) +
+                    " unid_vent_acumulado = unid_vent_acumulado - "+QString::number(cantidadm) +
+                    " acum_vent_ejercicio = acum_vent_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        else
+            cSQL = "update acum_articulos set unid_comp_diciembre = unid_comp_diciembre - " + QString::number(cantidadm) +
+                    " acum_comp_diciembre = acum_comp_diciembre -"+ QString::number(total) +
+                    " unid_comp_acumulado = unid_comp_acumulado - "+QString::number(cantidadm) +
+                    " acum_comp_ejercicio = acum_comp_ejercicio - " +QString::number(total) +
+                    " where id_articulo = " + QString::number(id);
+        break;
+
+
+    default:
+        break;
+    }
+    if(!acumulados.exec(cSQL))
+    {
+        updated = false;
+        QMessageBox::warning(qApp->activeWindow(),tr("Actualizar stock"),tr("Ocurrió un error  al actualizar los acumulados de  articulo/empresa"),
+                             tr("Aceptar"));
+    }
+
+ return updated;
+
 }
 
 QString Articulo::auto_codigo()

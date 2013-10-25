@@ -88,7 +88,6 @@ public:
     void Vaciar();
     void Borrar(int nid);
     static void Vender(int id, int cantidad, double pvp);
-    void Devolucion(int id, int cantidad, double importe, QString cMotivo, QString fechaDevolucion);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
@@ -106,7 +105,7 @@ public:
                                        QString oferta, double pvd_real, int id_divisa);
     bool cambiarProveedorPrincipal(int id,int id_proveedor);
     bool cambiar_pvp();
-    static bool agregarStock(int id, int value);
+    static bool agregarStock(char accion, int id, int cantidad, double importe, QDate fecha);
     float asigna_dto_linea(int id_art, int id_cliente, float dto_esp, float dto_lin);
 
     QString auto_codigo();

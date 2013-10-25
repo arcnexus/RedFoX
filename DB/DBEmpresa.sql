@@ -684,7 +684,7 @@ COLLATE = utf8_unicode_ci;
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`devoluciones` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `ticket` INT(11) NULL DEFAULT '0' ,
-  `fecha_devolucion` DATE NULL DEFAULT NULL ,
+  `fecha_devolucion` DATETIME NULL DEFAULT NULL ,
   `atendido_por` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_cliente` INT(11) NULL DEFAULT '0' ,
   `cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

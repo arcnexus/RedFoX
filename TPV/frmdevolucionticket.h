@@ -17,11 +17,13 @@ public:
 
 private:
     Ui::FrmDevolucionTicket *ui;
+    void cargarlineas(int id_cab);
 
     QSqlQueryModel *tickets;
 private slots:
     void refrescar_lineas(QModelIndex current, QModelIndex previous);
 
+    void on_pushButton_clicked();
 };
 
 #endif // FRMDEVOLUCIONTICKET_H

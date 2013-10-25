@@ -2,6 +2,7 @@
 #define FRMCIERRECAJA_H
 
 #include <QDialog>
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class FrmCierreCaja;

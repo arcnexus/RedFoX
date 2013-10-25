@@ -59,10 +59,18 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QTableView" name="tabla_cabeceras"/>
+    <widget class="QTableView" name="tabla_cabeceras">
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
    </item>
    <item row="1" column="1" colspan="3">
-    <widget class="QTableWidget" name="tablalineas"/>
+    <widget class="QTableWidget" name="tablaLineas_tiquet_actual">
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
    </item>
    <item row="2" column="1">
     <spacer name="horizontalSpacer">

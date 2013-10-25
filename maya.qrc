@@ -192,5 +192,7 @@
         <file>PNG/blue.png</file>
         <file>PNG/orange.png</file>
         <file>PNG/search2.png</file>
+        <file>PNG/inicio.png</file>
+        <file>PNG/open.png</file>
     </qresource>
 </RCC>
