@@ -11,24 +11,81 @@ ReportRenderer::ReportRenderer(QObject *parent) :
 
 QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool& error)
 {
-    QPainter p(printer);
+    QPainter p;//(printer);
     m_doc = preRender(&p,in,queryClausules,params,error);
 
-    QFile f("/home/arcnexus/rep.xml");
+    for(int i=0;i<2;i++){        
+    QDomNode root = m_doc.firstChild();
+    QDomNode page = root.firstChild();
+    while(!page.isNull())
+    {
+        if(!page.hasChildNodes())
+        {
+            QDomNode _aux = page;
+            page = page.nextSiblingElement("Page");
+            root.removeChild(_aux);
+        }
+        else
+        {
+            QDomNode section = page.firstChild();
+            while(!section.isNull())
+            {
+                if(!section.hasChildNodes())
+                {
+                    QDomNode _aux = section;
+                    section = section.nextSibling();
+                    page.removeChild(_aux);
+                }
+                else
+                    section = section.nextSibling();
+            }
+            page = page.nextSiblingElement("Page");
+        }
+    }
+    }
+    m_doc.firstChild().toElement().setAttribute("pages", m_doc.firstChild().childNodes().size());
+   /* QFile f("C:/file/m_doc.xml");
     if(f.open(QFile::WriteOnly))
     {
-        QTextStream t(&f);
-        m_doc.save(t,4);
-    }
-    f.close();
+        QTextStream out(&f);
+        const int Indent = 4;
+        m_doc.save(out,Indent);
+    }*/
     return m_doc;
+}
+
+void ReportRenderer::drawElement(qreal dpix, QPainter* painter, QDomElement element, int printResolution, qreal dpiy)
+{
+    //TODO other items
+    if(element.attribute("id")== "RoundRect")
+        drawRect(element, painter,dpix,dpiy,printResolution);
+    else if(element.attribute("id")== "Label")
+        drawLabel(element, painter,dpix,dpiy);
+    else if(element.attribute("id")== "Line")
+        drawLine(element, painter,dpix,dpiy,printResolution);
+    else if(element.attribute("id")== "CodeBar")
+        drawCodeBar(element, painter,dpix,dpiy);
+    else if(element.attribute("id")== "Image")
+        drawImage(element, painter,dpix,dpiy);
 }
 
 void ReportRenderer::Print(QPrinter *printer)
 {
     QDomElement ele = m_doc.documentElement();
 
-    printer->setPageSizeMM(QSizeF(ele.attribute("w").toDouble()*10.0,ele.attribute("h").toDouble()*10.0));
+     bool lblPrinter(ele.attribute("lblPrinter") .toInt());
+     double lblDistV(ele.attribute("lblDistV") .toDouble());
+     double mx = ele.attribute("mx").toDouble();
+     double my = ele.attribute("my").toDouble();
+
+     if(!lblPrinter)
+         printer->setPageSizeMM(QSizeF(ele.attribute("w").toDouble()*10.0,ele.attribute("h").toDouble()*10.0));
+     else
+     {
+         double _auxDist = (ele.childNodes().size()+1)*Paper::pxTocm(lblDistV)*10.0;
+         _auxDist += my;
+         printer->setPageSizeMM(QSizeF(ele.attribute("w").toDouble()*10.0,ele.attribute("h").toDouble()*10.0*(ele.childNodes().size()+1)+_auxDist));
+     }
 
     QSize margins(printer->paperRect().left() - printer->pageRect().left(), printer->paperRect().top() - printer->pageRect().top());
 
@@ -39,139 +96,164 @@ void ReportRenderer::Print(QPrinter *printer)
     int printResolution = printer->resolution();
 
     painter.translate(margins.width(),margins.height());
-    double mx = ele.attribute("mx").toDouble();
-    double my = ele.attribute("my").toDouble();
+
     double usable = ele.attribute("usable").toDouble();
     double width = Paper::cmToPx(ele.attribute("w").toDouble()) - ele.attribute("mr").toDouble() - mx;
     painter.translate( mx * dpix , my * dpiy);
 
     QDomNodeList pages = ele.childNodes();
-    for(int i=0;i<pages.size();i++)
+    Paper::docType t = static_cast<Paper::docType>(ele.attribute("DocType").toInt());
+    if(t == Paper::_Report || t==Paper::_sobre)
     {
-        painter.save();
-        QDomNodeList sections = pages.at(i).childNodes();
-        for(int s = 0;s<sections.size();s++)
+        for(int i=0;i<pages.size();i++)
         {
-            QDomElement cSec = sections.at(s).toElement();
-            int id = cSec.attribute("id").toDouble();
-            if(id < 2)// Report | Page Headers
+            painter.save();
+            QDomNodeList sections = pages.at(i).childNodes();
+            for(int s = 0;s<sections.size();s++)
             {
-                QDomNodeList elements = cSec.childNodes();
-                for(int e = 0;e<elements.size();e++)
+                QDomElement cSec = sections.at(s).toElement();
+                int id = cSec.attribute("id").toDouble();
+                if(id < 2)// Report | Page Headers
                 {
-                    QDomElement element = elements.at(e).toElement();
-                    //TODO other items
-                    if(element.attribute("id")== "RoundRect")
-                        drawRect(element, &painter,dpix,dpiy,printResolution);
-                    else if(element.attribute("id")== "Label")
-                        drawLabel(element, &painter,dpix,dpiy);
-                    else if(element.attribute("id")== "Line")
-                        drawLine(element, &painter,dpix,dpiy,printResolution);
-                    else if(element.attribute("id")== "CodeBar")
-                        drawCodeBar(element, &painter,dpix,dpiy);
-                    else if(element.attribute("id")== "Image")
-                        drawImage(element, &painter,dpix,dpiy);
+                    QDomNodeList elements = cSec.childNodes();
+                    for(int e = 0;e<elements.size();e++)
+                    {
+                        QDomElement element = elements.at(e).toElement();
+                        drawElement(dpix, &painter, element, printResolution, dpiy);
+                    }
+                    int siz = cSec.attribute("size").toDouble();
+                    painter.translate(0,siz* dpiy);
                 }
-                int siz = cSec.attribute("size").toDouble();
-                painter.translate(0,siz* dpiy);
+                else if(id == 2) // Detail Section
+                {
+                    QDomNodeList parts = cSec.childNodes();
+                    for(int p=0;p<parts.size();p++)
+                    {
+                        QDomElement cPart = parts.at(p).toElement();
+                        if(cPart.attribute("colored").toDouble())
+                        {
+                            painter.save();
+                            painter.setPen(Qt::NoPen);
+                            painter.setBrush(ColorFromString(cPart.attribute("color")));
+                            painter.drawRect(0,0,width * dpix ,cPart.attribute("size").toDouble() * dpiy);
+                            painter.restore();
+                        }
+                        QDomNodeList elements = cPart.childNodes();
+                        for(int e = 0;e<elements.size();e++)
+                        {
+                            QDomElement element = elements.at(e).toElement();
+                            drawElement(dpix, &painter, element, printResolution, dpiy);
+                        }
+                        int siz = cPart.attribute("size").toDouble();
+                        painter.translate(0,siz* dpiy);
+                    }
+                }
+                else // Report | Page footer
+                {
+                    if(s==sections.size()-1) //last section on page
+                    {
+                        int siz = cSec.attribute("size").toDouble();
+                        painter.save();
+                        painter.resetTransform();
+                        painter.translate(margins.width(),margins.height());
+                        painter.translate( mx * dpix , my * dpiy);
+                        int offset = usable - siz;
+                        painter.translate( 0, offset * dpiy);
+                        QDomNodeList elements = cSec.childNodes();
+                        for(int e = 0;e<elements.size();e++)
+                        {
+                            QDomElement element = elements.at(e).toElement();
+                            drawElement(dpix, &painter, element, printResolution, dpiy);
+                        }
+                        painter.restore();
+                    }
+                    else
+                    {
+                        int siz = cSec.attribute("size").toDouble();
+                        int sizNext = sections.at(s+1).toElement().attribute("size").toDouble();
+                        painter.save();
+                        painter.resetTransform();
+                        painter.translate(margins.width(),margins.height());
+                        painter.translate( mx * dpix , my * dpiy);
+                        int offset = usable - siz - sizNext;
+                        painter.translate( 0, offset * dpiy);
+                        QDomNodeList elements = cSec.childNodes();
+                        for(int e = 0;e<elements.size();e++)
+                        {
+                            QDomElement element = elements.at(e).toElement();
+                            drawElement(dpix, &painter, element, printResolution, dpiy);
+                        }
+                        painter.restore();
+                        painter.translate(0,siz* dpiy);
+                    }
+                }
             }
-            else if(id == 2) // Detail Section
+            painter.restore();
+            if(i!=pages.size()-1)
+                printer->newPage();
+        }
+    }
+    else if(t == Paper::_etiqueta)
+    {
+        double lblDistH(ele.attribute("lblDistH") .toDouble());
+
+        int lblColumnCount(ele.attribute("lblColumnCount") .toInt());
+        int lblRowCount(ele.attribute("lblRowCount") .toInt());
+
+
+        double lblPaperH(ele.attribute("lblPaperH") .toDouble());
+        double lblPaperW(ele.attribute("lblPaperW") .toDouble());
+        double lblPaperMarginS(ele.attribute("lblPaperMarginS") .toDouble());
+        double lblPaperMarginInf(ele.attribute("lblPaperMarginInf") .toDouble());
+        double lblPaperMarginIzq(ele.attribute("lblPaperMarginIzq") .toDouble());
+        double lblPaperMarginDer(ele.attribute("lblPaperMarginDer") .toDouble());
+
+        double lblW =ele.attribute("lblW") .toDouble();
+        double lblH =ele.attribute("lblH") .toDouble();
+
+        int c = 0, r = 0;
+        for(int i=0;i<pages.size();i++)
+        {
+            QDomNodeList sections = pages.at(i).childNodes();
+
+            painter.save();
+            if(c>lblColumnCount-1)
             {
+                c=0;
+                r++;
+            }
+            if(r>lblRowCount-1 && !lblPrinter)
+            {
+                c=0;
+                r=0;
+                if(i!=pages.size()-1)
+                {
+                    printer->newPage();
+                }
+            }
+
+            double x = c*dpix*lblW + c*dpix*lblDistH;
+            double y = r*dpiy*lblH + r*dpiy*lblDistV;
+            painter.translate( x , y);
+
+            for(int s = 0;s<sections.size();s++)
+            {
+                QDomElement cSec = sections.at(s).toElement();
                 QDomNodeList parts = cSec.childNodes();
                 for(int p=0;p<parts.size();p++)
                 {
                     QDomElement cPart = parts.at(p).toElement();
-                    if(cPart.attribute("colored").toDouble())
-                    {
-                        painter.save();
-                        painter.setPen(Qt::NoPen);
-                        painter.setBrush(ColorFromString(cPart.attribute("color")));
-                        painter.drawRect(0,0,width * dpix ,cPart.attribute("size").toDouble() * dpiy);
-                        painter.restore();
-                    }
                     QDomNodeList elements = cPart.childNodes();
                     for(int e = 0;e<elements.size();e++)
                     {
                         QDomElement element = elements.at(e).toElement();
-                        //TODO other items
-                        if(element.attribute("id")== "RoundRect")
-                            drawRect(element, &painter,dpix,dpiy,printResolution);
-                        else if(element.attribute("id")== "Label")
-                            drawLabel(element, &painter,dpix,dpiy);
-                        else if(element.attribute("id")== "Line")
-                            drawLine(element, &painter,dpix,dpiy,printResolution);
-                        else if(element.attribute("id")== "CodeBar")
-                            drawCodeBar(element, &painter,dpix,dpiy);
-                        else if(element.attribute("id")== "Image")
-                            drawImage(element, &painter,dpix,dpiy);
+                        drawElement(dpix, &painter, element, printResolution, dpiy);
                     }
-                    int siz = cPart.attribute("size").toDouble();
-                    painter.translate(0,siz* dpiy);
                 }
             }
-            else // Report | Page footer
-            {
-                if(s==sections.size()-1) //last section on page
-                {
-                    int siz = cSec.attribute("size").toDouble();
-                    painter.save();
-                    painter.resetTransform();
-                    painter.translate(margins.width(),margins.height());
-                    painter.translate( mx * dpix , my * dpiy);
-                    int offset = usable - siz;
-                    painter.translate( 0, offset * dpiy);
-                    QDomNodeList elements = cSec.childNodes();
-                    for(int e = 0;e<elements.size();e++)
-                    {
-                        QDomElement element = elements.at(e).toElement();
-                        //TODO other items
-                        if(element.attribute("id")== "RoundRect")
-                            drawRect(element, &painter,dpix,dpiy,printResolution);
-                         else if(element.attribute("id")== "Label")
-                            drawLabel(element, &painter,dpix,dpiy);
-                        else if(element.attribute("id")== "Line")
-                            drawLine(element, &painter,dpix,dpiy,printResolution);
-                        else if(element.attribute("id")== "CodeBar")
-                            drawCodeBar(element, &painter,dpix,dpiy);
-                        else if(element.attribute("id")== "Image")
-                            drawImage(element, &painter,dpix,dpiy);
-                    }
-                    painter.restore();
-                }
-                else
-                {
-                    int siz = cSec.attribute("size").toDouble();
-                    int sizNext = sections.at(s+1).toElement().attribute("size").toDouble();
-                    painter.save();
-                    painter.resetTransform();
-                    painter.translate(margins.width(),margins.height());
-                    painter.translate( mx * dpix , my * dpiy);
-                    int offset = usable - siz - sizNext;
-                    painter.translate( 0, offset * dpiy);
-                    QDomNodeList elements = cSec.childNodes();
-                    for(int e = 0;e<elements.size();e++)
-                    {
-                        QDomElement element = elements.at(e).toElement();
-                        //TODO other items
-                        if(element.attribute("id")== "RoundRect")
-                            drawRect(element, &painter,dpix,dpiy,printResolution);
-                         else if(element.attribute("id")== "Label")
-                            drawLabel(element, &painter,dpix,dpiy);
-                        else if(element.attribute("id")== "Line")
-                            drawLine(element, &painter,dpix,dpiy,printResolution);
-                        else if(element.attribute("id")== "CodeBar")
-                            drawCodeBar(element, &painter,dpix,dpiy);
-                        else if(element.attribute("id")== "Image")
-                            drawImage(element, &painter,dpix,dpiy);
-                    }
-                    painter.restore();
-                    painter.translate(0,siz* dpiy);
-                }
-            }
+            c++;
+            painter.restore();            
         }
-        painter.restore();
-        if(i!=pages.size()-1)
-            printer->newPage();
     }
 }
 
@@ -185,9 +267,6 @@ void ReportRenderer::PreRender()
 
 QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool &error)
 {
-    QTime t;
-    t.start();
-
     QDomElement Inroot = in.documentElement();
     if (Inroot.tagName() != "FoxReports") {
         error = true;
@@ -220,28 +299,79 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     double usable = 0;
 
     QDomNode child = Inroot.firstChild();
+
+    QDomElement _aux = child.toElement();
+
+    Paper::docType t =  static_cast<Paper::docType>(_aux.attribute("DocType").toInt());
+
+    if(t == Paper::_Report || t== Paper::_sobre)
+    {
+        usable =  Paper::cmToPx(_aux.attribute("h").toDouble());
+        root.setAttribute("h",_aux.attribute("h"));
+        root.setAttribute("w",_aux.attribute("w"));
+        usable -= Paper::cmToPx(_aux.attribute("marginTop").toDouble());
+        usable -= Paper::cmToPx(_aux.attribute("marginBottom").toDouble());
+        root.setAttribute("my",QString::number(Paper::cmToPx(_aux.attribute("marginTop").toDouble()), 'f', 4));
+        root.setAttribute("mx",QString::number(Paper::cmToPx(_aux.attribute("marginLeft").toDouble()), 'f', 4));
+        root.setAttribute("mr",QString::number(Paper::cmToPx(_aux.attribute("marginRigth").toDouble()), 'f', 4));
+    }
+    else if(t == Paper::_etiqueta)
+    {
+        root.setAttribute("lblW",QString::number(Paper::cmToPx(_aux.attribute("w").toDouble()), 'f', 4));
+        root.setAttribute("lblH",QString::number(Paper::cmToPx(_aux.attribute("h").toDouble()), 'f', 4));
+        root.setAttribute("mx",QString::number(Paper::cmToPx(_aux.attribute("lblPaperMarginIzq").toDouble()), 'f', 4));
+        root.setAttribute("mr",QString::number(Paper::cmToPx(_aux.attribute("lblPaperMarginDer").toDouble()), 'f', 4));
+
+        usable -= Paper::cmToPx(_aux.attribute("lblPaperMarginS").toDouble());
+        usable -= Paper::cmToPx(_aux.attribute("lblPaperMarginInf").toDouble());
+
+        bool lblPrinter = _aux.attribute("lblPrinter").toInt();
+        if(lblPrinter)
+        {
+            //FIXME Margen superior en impresora tickets
+            root.setAttribute("my",QString::number(Paper::cmToPx(_aux.attribute("lblPaperMarginS").toDouble()), 'f', 4));
+            double w =  _aux.attribute("lblPaperMarginIzq").toDouble() +
+                        _aux.attribute("lblPaperMarginDer").toDouble() +
+                        _aux.attribute("w").toDouble();
+            root.setAttribute("h",_aux.attribute("h"));
+            root.setAttribute("w",QString::number(w,'f',4));
+        }
+        else
+        {
+            root.setAttribute("my",QString::number(Paper::cmToPx(_aux.attribute("lblPaperMarginS").toDouble()), 'f', 4));
+            root.setAttribute("h",_aux.attribute("lblPaperH"));
+            root.setAttribute("w",_aux.attribute("lblPaperW"));
+        }
+
+    }
+    root.setAttribute("usable",QString::number(usable, 'f', 4));
+
+    root.setAttribute("DocType",_aux.attribute("DocType"));
+
+
+    if(t == Paper::_etiqueta)
+    {
+        root.setAttribute("lblDistH",QString::number(Paper::cmToPx(_aux.attribute("lblDistH").toDouble()), 'f', 4));
+        root.setAttribute("lblDistV",QString::number(Paper::cmToPx(_aux.attribute("lblDistV").toDouble()), 'f', 4));
+
+        root.setAttribute("lblColumnCount",_aux.attribute("lblColumnCount"));
+        root.setAttribute("lblRowCount",_aux.attribute("lblRowCount"));
+        root.setAttribute("lblPrinter",_aux.attribute("lblPrinter"));
+
+        root.setAttribute("lblPaperH",_aux.attribute("lblPaperH"));
+        root.setAttribute("lblPaperW",_aux.attribute("lblPaperW"));
+        root.setAttribute("lblPaperMarginS",_aux.attribute("lblPaperMarginS"));
+        root.setAttribute("lblPaperMarginInf",_aux.attribute("lblPaperMarginInf"));
+        root.setAttribute("lblPaperMarginIzq",_aux.attribute("lblPaperMarginIzq"));
+        root.setAttribute("lblPaperMarginDer",_aux.attribute("lblPaperMarginDer"));
+    }
     while (!child.isNull())
     {
         QDomNode sections = child.firstChild();
         while (!sections.isNull())
         {
             QDomElement secEle = sections.toElement();
-            if(secEle.tagName() == "Size")
-            {
-                usable =  Paper::cmToPx(secEle.attribute("h").toDouble());
-                root.setAttribute("h",secEle.attribute("h"));
-                root.setAttribute("w",secEle.attribute("w"));
-            }
-            else if(secEle.tagName() == "Margin")
-            {
-                usable -= Paper::cmToPx(secEle.attribute("top").toDouble());
-                usable -= Paper::cmToPx(secEle.attribute("bottom").toDouble());
-                root.setAttribute("my",QString::number(Paper::cmToPx(secEle.attribute("top").toDouble()), 'f', 2));
-                root.setAttribute("mx",QString::number(Paper::cmToPx(secEle.attribute("left").toDouble()), 'f', 2));
-                root.setAttribute("usable",QString::number(usable, 'f', 2));
-                root.setAttribute("mr",QString::number(Paper::cmToPx(secEle.attribute("left").toDouble()), 'f', 2));
-            }
-            else if(secEle.tagName() == "Section")
+            if(secEle.tagName() == "Section")
             {
                 Section::SectionType t = static_cast<Section::SectionType>(secEle.attribute("id").toInt());
                 switch (t) {
@@ -873,8 +1003,6 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     }
 
     root.setAttribute("pages",ipageCount);
-    qDebug() << "elapsed:" << t.elapsed();
-    qDebug() << doc.childNodes().size();
     return doc;
 }
 QMap<QString, QString> ReportRenderer::params() const
@@ -895,7 +1023,7 @@ void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, dou
     pos.setX(e.attribute("x").toDouble() * dpiX);
     pos.setY(e.attribute("y").toDouble() * dpiY);
 
-    QSize siz;
+    QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX);
     siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
@@ -907,8 +1035,8 @@ void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, dou
     color2 = ColorFromString(e.attribute("Color2"));
 
     double r1, r2;
-    r1 = e.attribute("RadiousX").toDouble();
-    r2 = e.attribute("RadiousY").toDouble();
+    r1 = e.attribute("RadiousX").toDouble()* dpiX;
+    r2 = e.attribute("RadiousY").toDouble()* dpiY;
 
     bool vGrad , gUsed;
     gUsed = e.attribute("GradientUsed").toDouble();
@@ -943,10 +1071,10 @@ void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, dou
     {
         painter->setBrush(QBrush(color1));
     }
-    QRectF rr(penW/2.0,
-             penW/2.0,
-             r.width()- penW,
-             r.height()- penW);
+    QRectF rr(pen.widthF()/2.0,
+              pen.widthF()/2.0,
+              r.width()- pen.widthF(),
+              r.height()- pen.widthF());
     painter->drawRoundedRect(rr,r1,r2);
     painter->restore();
 }

@@ -144,8 +144,9 @@ void ReportDesigWin::on_actionVista_Previa_triggered()
     pDlg->setValue(0);
     pDlg->show();
 
-    QPrinter * printer = new QPrinter();
-    QPrintDialog dlg(printer,this);//Default printer
+    QPrinter * printer = new QPrinter(QPrinter::HighResolution);
+
+   // QPrintDialog dlg(printer,this);//Default printer
 
     QDomDocument doc = paper.preview();
     render = new ReportRenderer();

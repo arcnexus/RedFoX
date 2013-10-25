@@ -31,6 +31,7 @@ public:
     QMap<QString, QString> params() const;
     void setParams(const QMap<QString, QString> &params);
 
+    void drawElement(qreal dpix, QPainter *painter, QDomElement element, int printResolution, qreal dpiy);
 signals:
     void end();
 public slots:

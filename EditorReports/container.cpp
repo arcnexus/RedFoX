@@ -1,4 +1,5 @@
 #include "container.h"
+#include <QKeyEvent>
 
 Container::Container(QGraphicsItem *parent) :
     QGraphicsRectItem(parent)
@@ -33,6 +34,10 @@ void Container::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         painter->setPen(QPen(Qt::DotLine));
         QGraphicsRectItem::paint(painter,option,widget);
     }
+    else
+    {
+        this->ungrabKeyboard();
+    }
     painter->restore();
 }
 
@@ -49,6 +54,7 @@ void Container::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void Container::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->grabKeyboard();
     QGraphicsItem::mousePressEvent(event);
     if(this->isSelected())
     {
@@ -142,11 +148,11 @@ void Container::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Container::apendXML(QDomElement &element, QDomDocument doc , QPointF relPos)
 {
-    element.setAttribute("x",(int)this->pos().x() - (int)relPos.x());
-    element.setAttribute("y",(int)this->pos().y() - (int)relPos.y());
+    element.setAttribute("x",QString::number(this->pos().x() - relPos.x(), 'f', 4));
+    element.setAttribute("y",QString::number(this->pos().y() - relPos.y(), 'f', 4));
 
-    element.setAttribute("w",(int)this->rect().width());
-    element.setAttribute("h",(int)this->rect().height());
+    element.setAttribute("w",QString::number(this->rect().width() , 'f', 4));
+    element.setAttribute("h",QString::number(this->rect().height(), 'f', 4));
 }
 
 QString Container::ColorString(QColor c)
@@ -220,4 +226,36 @@ void Container::setMargins(const QRectF &value)
 void Container::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     editMe();
+}
+
+void Container::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+    case Qt::Key_Up :
+        if(event->modifiers() == Qt::ControlModifier)
+            this->moveBy(0,-10);
+        else
+            this->moveBy(0,-1);
+        break;
+    case Qt::Key_Down :
+        if(event->modifiers() == Qt::ControlModifier)
+            this->moveBy(0,10);
+        else
+            this->moveBy(0,1);
+        break;
+    case Qt::Key_Left :
+        if(event->modifiers() == Qt::ControlModifier)
+            this->moveBy(-10,0);
+        else
+            this->moveBy(-1,0);
+        break;
+    case Qt::Key_Right :
+        if(event->modifiers() == Qt::ControlModifier)
+            this->moveBy(10,0);
+        else
+            this->moveBy(1,0);
+        break;
+    default:
+        break;
+    }
 }

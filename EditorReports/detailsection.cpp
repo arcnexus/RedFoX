@@ -7,6 +7,7 @@ DetailSection::DetailSection(QGraphicsItem *parent) :
     onResizeHead = onResizeFoot = false;
     m_header = m_foot = false;
     m_colorear = m_use2Colors = false;
+    m_Blocked = false;
 }
 
 bool DetailSection::header() const
@@ -68,6 +69,8 @@ void DetailSection::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void DetailSection::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
+    if(Blocked())
+        return;
     QRectF r(QPointF(rect().width()-wTxtCab,m_headerSize-hTxtCab/2),QSize(wTxtCab,hTxtCab));
     QRectF r2(QPointF(rect().width()-wTxtCab,rect().height() - m_footSize - hTxtFoot),QSize(wTxtCab,hTxtFoot));
     if((r.contains(event->pos()) && m_header) || (r2.contains(event->pos()) &&  m_foot))
@@ -78,6 +81,8 @@ void DetailSection::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
 void DetailSection::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
+    if(Blocked())
+        return;
     QRectF r(QPointF(rect().width()-wTxtCab,m_headerSize-hTxtCab/2),QSize(wTxtCab,hTxtCab));
     QRectF r2(QPointF(rect().width()-wTxtCab,rect().height() - m_footSize - hTxtFoot),QSize(wTxtCab,hTxtFoot));
     if((r.contains(event->pos()) && m_header) || (r2.contains(event->pos()) && m_foot))
@@ -88,6 +93,8 @@ void DetailSection::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void DetailSection::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+   // if(Blocked())
+   //     return;
     QRectF r(QPointF(rect().width()-wTxtCab,m_headerSize-hTxtCab/2),QSize(wTxtCab,hTxtCab));
     QRectF r2(QPointF(rect().width()-wTxtCab,rect().height() - m_footSize - hTxtFoot),QSize(wTxtCab,hTxtFoot));
     if(r.contains(event->pos()) && m_header)
@@ -106,6 +113,8 @@ void DetailSection::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void DetailSection::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(Blocked())
+        return;
     if(onResizeHead)
     {
         if(this->rect().top() + event->pos().ry()> 20)
@@ -183,6 +192,11 @@ QColor DetailSection::ColorFromString(QString s)
     return c;
 }
 
+bool DetailSection::Blocked() const
+{
+    return m_Blocked;
+}
+
 void DetailSection::_parseElementsBlock(QDomNode eleNode , QPointF point, QList<Container *> &itemPool)
 {
     while(!eleNode.isNull())
@@ -226,13 +240,13 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
     node.setAttribute("alternative",m_use2Colors);
     node.setAttribute("color2",ColorString(m_color2));
 
-    QPointF br(rect().bottomRight().x()-1,rect().bottomRight().y()-1);
-    QPointF tl(rect().topLeft().x()+1,rect().topLeft().y()+1);
+    QPointF br(rect().bottomRight().x(),rect().bottomRight().y());
+    QPointF tl(rect().topLeft().x(),rect().topLeft().y());
     if(m_header)
     {
         QDomElement headerNode = doc.createElement("Header");
         headerNode.setAttribute("size",m_headerSize);
-        QRectF aux(tl,QPointF(br.x(),tl.y()+m_headerSize-2));
+        QRectF aux(tl,QPointF(br.x(),tl.y()+m_headerSize));
         QRectF headerRect(mapRectToScene(aux));
 
         QList<QGraphicsItem*>items =this->scene()->items(headerRect);
@@ -406,5 +420,13 @@ void DetailSection::setcolor2(QColor arg) {
     if (m_color2 != arg) {
         m_color2 = arg;
         emit color2Changed(arg);
+    }
+}
+
+void DetailSection::setBlocked(bool arg)
+{
+    if (m_Blocked != arg) {
+        m_Blocked = arg;
+        emit BlockedChanged(arg);
     }
 }

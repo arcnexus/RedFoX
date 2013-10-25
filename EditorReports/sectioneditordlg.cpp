@@ -9,6 +9,17 @@ SectionEditorDlg::SectionEditorDlg(Paper *paper, QWidget *parent) :
     ui->setupUi(this);
     this->paper = paper;
 
+    if(paper->tipoDoc() == Paper::_etiqueta)
+    {
+        ui->cabPage->setVisible(false);
+        ui->footPageChk->setVisible(false);
+        ui->cabRepChk->setVisible(false);
+        ui->footRepChk->setVisible(false);
+        ui->btnAdd->setVisible(false);
+        ui->btnBorrar->setVisible(false);
+        ui->btnDown->setVisible(false);
+        ui->btnUp->setVisible(false);
+    }
     //QList<Section*> sections = paper->getSeccionPool();
     QListIterator<Section*> it(paper->getSeccionPool());
     while(it.hasNext())
@@ -43,9 +54,7 @@ SectionEditorDlg::SectionEditorDlg(Paper *paper, QWidget *parent) :
     connect(ui->cabRepChk,SIGNAL(toggled(bool)),this,SLOT(cabRepChk_toggled(bool)));
     connect(ui->footPageChk,SIGNAL(toggled(bool)),this,SLOT(footPageChk_toggled(bool)));
     connect(ui->footRepChk,SIGNAL(toggled(bool)),this,SLOT(footRepChk_toggled(bool)));
-    connect(ui->cabPage,SIGNAL(toggled(bool)),this,SLOT(cabPage_toggled(bool)));
-
-
+    connect(ui->cabPage,SIGNAL(toggled(bool)),this,SLOT(cabPage_toggled(bool)));    
 }
 
 SectionEditorDlg::~SectionEditorDlg()
