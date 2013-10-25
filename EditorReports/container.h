@@ -57,6 +57,8 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
+    void keyPressEvent(QKeyEvent *event);
+
     void apendXML(QDomElement & element, QDomDocument doc, QPointF relPos);
 
     QString ColorString(QColor c);
