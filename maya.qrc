@@ -194,5 +194,6 @@
         <file>PNG/search2.png</file>
         <file>PNG/inicio.png</file>
         <file>PNG/open.png</file>
+        <file>PNG/partial.png</file>
     </qresource>
 </RCC>

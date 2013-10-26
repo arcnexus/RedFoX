@@ -16,6 +16,9 @@ public:
     explicit FrmCierreCaja(QWidget *parent = 0);
     ~FrmCierreCaja();
 
+private slots:
+    void on_btnAceptar_clicked();
+
 private:
     Ui::FrmCierreCaja *ui;
 };
