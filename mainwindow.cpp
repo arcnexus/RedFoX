@@ -693,9 +693,6 @@ void MainWindow::loadModules()
     QApplication::processEvents();
 
     updateDivisas();
-    m_avisos = new BarraAvisos(this);
-    connect(m_avisos,SIGNAL(closeMe()),this,SLOT(hideAvisos()));
-    m_avisos->hide();
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -707,8 +704,15 @@ MainWindow::MainWindow(QWidget *parent) :
     this->installEventFilter(this);
     this->setMouseTracking(true);
 
+    m_avisos = new BarraAvisos(this);
+    m_avisos->show();
+    m_avisos->setGeometry(0,70,20,80);
+
+
+    connect(m_avisos,SIGNAL(hideMe()),this,SLOT(hideAvisos()));
+    connect(m_avisos,SIGNAL(showMe()),this,SLOT(showAvisos()));
+
     on_edit = false;
-    avisos_reducido = true;
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
@@ -840,20 +844,19 @@ void MainWindow::blockMe(bool state)
 
 void MainWindow::showAvisos()
 {
-//    avisos_reducido = false;
-//    m_avisos->setGeometry(0,70,0,this->height()-80);
-//    m_avisos->show();
-//    QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
+    m_avisos->setGeometry(0,70,0,this->height()-80);
+    QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
 
-//    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
+    connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
 
-//    animation0->setDuration(1000);
-//    animation0->setEasingCurve(QEasingCurve::OutElastic);
+    animation0->setDuration(1000);
+    animation0->setEasingCurve(QEasingCurve::OutElastic);
 
-//    animation0->setStartValue(QSize(0,m_avisos->height()));
-//    animation0->setEndValue(QSize(500,m_avisos->height()));
+    animation0->setStartValue(QSize(20,m_avisos->height()));
+    animation0->setEndValue(QSize(400,m_avisos->height()));
 
-//    animation0->start();
+    animation0->start();
+    m_avisos->setShow(true);
 }
 
 
@@ -871,6 +874,7 @@ void MainWindow::handle_permisosAgenda()
 
 void MainWindow::llenaravisos()
 {
+   // m_avisos->setColor(QColor(50,50,50));
     /*
     QMap <int,QSqlRecord> map;
     QStringList clausulas,headers;
@@ -928,30 +932,26 @@ void MainWindow::hideAvisos()
     QPropertyAnimation* animation0 = new QPropertyAnimation(m_avisos, "size",this);
 
     connect(animation0,SIGNAL(finished()),animation0,SLOT(deleteLater()));
-    connect(animation0,SIGNAL(finished()),m_avisos,SLOT(hide()));
     connect(animation0,SIGNAL(finished()),this,SLOT(update()));
 
     animation0->setDuration(100);
     animation0->setEasingCurve(QEasingCurve::Linear);
 
     animation0->setStartValue(QSize(m_avisos->width(),m_avisos->height()));
-    animation0->setEndValue(QSize(0,m_avisos->height()));
+    animation0->setEndValue(QSize(20,m_avisos->height()));
 
     animation0->start();
-    avisos_reducido = true;
     m_avisos->setPagina(0);
+    m_avisos->setShow(false);
 }
 
 
 
 bool MainWindow::eventFilter(QObject * t, QEvent * e)
 {
-    if(e->type() == QEvent::HoverMove)
+    if(e->type() == QEvent::Resize)
     {
-        QHoverEvent * mouse = static_cast<QHoverEvent *>(e);
-        int x = mouse->pos().x();
-        if(x < 6 && avisos_reducido)
-            showAvisos();
+        m_avisos->resize(m_avisos->width(),this->height()-60);
     }
     return false;
 }

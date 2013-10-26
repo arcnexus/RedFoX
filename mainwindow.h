@@ -90,13 +90,14 @@ private slots:
 
     void llenaravisos();
     void hideAvisos();
+    void showAvisos();
     void on_lineUsuarioActivo_clicked();
 
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);
     void blockMe(bool state);
-    void showAvisos();
+
 
     void loadVentasModules(QSplashScreen *splash);
     void loadComprasModules(QSplashScreen *splash);
@@ -135,7 +136,6 @@ private:
 
     QHash<QPushButton*,QWidget*> _shortCuts;
 
-    bool avisos_reducido;
     BarraAvisos * m_avisos;
 };
 

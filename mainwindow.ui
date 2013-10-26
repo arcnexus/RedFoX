@@ -46,6 +46,9 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>18</number>
+    </property>
     <item>
      <widget class="QFrame" name="frameusuario">
       <property name="minimumSize">
@@ -556,7 +559,7 @@ color: rgb(255, 255, 127);</string>
      <x>0</x>
      <y>0</y>
      <width>1245</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">

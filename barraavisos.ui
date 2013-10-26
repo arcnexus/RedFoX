@@ -10,53 +10,28 @@
     <height>501</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
+    <number>30</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnClose">
-       <property name="maximumSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="EditorReports/resource.qrc">
-         <normaloff>:/icons/cross.png</normaloff>:/icons/cross.png</iconset>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
@@ -65,7 +40,7 @@
      <widget class="QWidget" name="main_avisos">
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget">
+        <widget class="QTableWidget" name="tabla_avisos">
          <property name="styleSheet">
           <string notr="true">background: none;</string>
          </property>
@@ -77,8 +52,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="EditorReports/resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

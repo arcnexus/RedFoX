@@ -12,7 +12,7 @@ QStackedWidget
 }
 
 BarraAvisos{
-    background-color:rgba(182,159,64,230);
+    background-color:rgba(182,159,64,0);
 }
 
 BarraAvisos > QStackedWidget
