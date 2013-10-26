@@ -16,3 +16,8 @@ FrmCierreCaja::~FrmCierreCaja()
 {
     delete ui;
 }
+
+void FrmCierreCaja::on_btnAceptar_clicked()
+{
+    close();
+}

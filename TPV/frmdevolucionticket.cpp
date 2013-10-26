@@ -10,16 +10,30 @@ FrmDevolucionTicket::FrmDevolucionTicket(QWidget *parent) :
 {
     ui->setupUi(this);
     //-------------------
+    // Controles
+    //-------------------
+    ui->txtImporteMax->setText("9.999.999,99");
+    ui->txtImportemin->setText("0,00");
+    ui->dateDesde->setDate(QDate::currentDate().addYears(-1));
+    ui->dateHasta->setDate(QDate::currentDate());
+    //-------------------
     // Tabla tickets
     //-------------------
     tickets = new QSqlQueryModel(this);
-    tickets->setQuery("select id,caja,fecha,hora,serie,ticket,importe from cab_tpv",Configuracion_global->empresaDB);
+    QString cSQL = "select id,caja,fecha,hora,serie,ticket,importe from cab_tpv where fecha >'"+
+            ui->dateDesde->date().toString("yyyyMMdd")+"' and fecha < '" +
+            ui->dateHasta->date().toString("yyyyMMdd")+"' and nombre_cliente like '%"+
+            ui->txtCliente->text().trimmed()+"%' and importe > "+
+            QString::number(Configuracion_global->MonedatoDouble(ui->txtImportemin->text()),'f',2) +
+            " and importe < "+ QString::number(Configuracion_global->MonedatoDouble(ui->txtImporteMax->text()),'f',2);
+    qDebug() << cSQL;
+    tickets->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->tabla_cabeceras->setModel(tickets);
 
     QStringList headers;
     QVariantList sizes;
     headers << "id" <<tr("Caja") <<tr("Fecha") << tr("Hora") <<tr("Serie") <<tr("Ticket") <<tr("Total");
-    sizes << 0 << 45 << 70  <<45 << 45 << 75 << 80;
+    sizes << 0 << 45 << 90  <<45 << 45 << 75 << 80;
     for(int i = 0; i<sizes.size();i++)
     {
         ui->tabla_cabeceras->setColumnWidth(i,sizes.at(i).toInt());
@@ -239,8 +253,13 @@ void FrmDevolucionTicket::refrescar_lineas(QModelIndex current, QModelIndex prev
 
 }
 
-void FrmDevolucionTicket::on_pushButton_clicked()
+void FrmDevolucionTicket::on_btnDevolucion_clicked()
 {
     frmCausaDevolucion causa;
     causa.exec();
+}
+
+void FrmDevolucionTicket::on_btnParcial_clicked()
+{
+
 }

@@ -23,7 +23,8 @@ private:
 private slots:
     void refrescar_lineas(QModelIndex current, QModelIndex previous);
 
-    void on_pushButton_clicked();
+    void on_btnDevolucion_clicked();
+    void on_btnParcial_clicked();
 };
 
 #endif // FRMDEVOLUCIONTICKET_H

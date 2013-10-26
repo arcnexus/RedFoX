@@ -1952,6 +1952,7 @@ void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
 
 void FrmTPV::on_btnDesglose_clicked()
 {
+    ui->btnDesglose->setEnabled(false);
     this->control_width = ui->frmcontrol->width();
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
     animation->setDuration(600);
@@ -1982,6 +1983,7 @@ void FrmTPV::final_anim_desglose()
 
 void FrmTPV::on_btnOcultar_clicked()
 {
+    ui->btnDesglose->setEnabled(true);
     QPropertyAnimation *animation = new QPropertyAnimation(ui->frmcontrol, "size",this);
     animation->setDuration(600);
     animation->setStartValue(QSize(ui->frmcontrol->width(),ui->frmcontrol->height()));
