@@ -27,7 +27,6 @@ frmClientes::frmClientes(QWidget *parent) :
     m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",
                          Configuracion_global->groupDB);
     ui->tabla_busquedas->setModel(m_clientes);
-    formato_tabla_busquedas();
 
      h_Buscar["Población"]="poblacion";
      h_Buscar["Teléfono"] = "telefono1";
@@ -118,7 +117,7 @@ frmClientes::frmClientes(QWidget *parent) :
     QStringList tipos_dto;
     tipos_dto <<"1" <<"2" << "3" << "4" << "5" << "6";
     ui->cbotipo_dto->addItems(tipos_dto);
-    bloquearCampos(true);
+
     this->Altas = false;
     ui->blinkink->setVisible(false);
 
@@ -157,7 +156,8 @@ frmClientes::frmClientes(QWidget *parent) :
             this,SLOT(on_tabla_busquedas_row_changed(QModelIndex,QModelIndex)));
 
     setUpBusqueda();
-
+    formato_tabla_busquedas();
+    bloquearCampos(true);
     //--------------------
     // Procesar eventos
     //--------------------
@@ -1006,6 +1006,7 @@ void frmClientes::bloquearCampos(bool state) {
     ui->btndel_TipoCliente->setEnabled(!state);
     ui->btnVer_OtrosContactos->setEnabled(state);
     ui->btnEditardireccionAlternativa->setEnabled(!state);
+    m_busqueda->block(!state);
 
 }
 

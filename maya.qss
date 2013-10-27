@@ -8,7 +8,7 @@ QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
 
 QStackedWidget
 {
-    background-color: rgb(243, 243, 243);
+   /* background-color: rgb(243, 243, 243); */
 }
 
 BarraAvisos{
@@ -23,10 +23,14 @@ BarraBusqueda{
     background-color: rgba(170, 170, 127,0);
 }
 
-QTableView::header
+/*QTableView::header
 {
     color: #363b31;
 }
+QTableView
+{
+color :#000000;
+}*/
 
 
 *[mandatoryField="true"]
@@ -69,12 +73,12 @@ QTabBar::tab
 
 }
 
-QTabBar::tab:selected, QTabBar::tab:hover
+QTabBar::tab:hover
 {
 
     /*background:#ecf1f0;*/
-    background-color: rgb(214, 208, 255);
-    color:#000000;
+    /*background-color: rgb(214, 208, 255); */
+    color:#a7c65c;
 }
 QTabWidget::tab
 {
@@ -83,6 +87,7 @@ QTabWidget::tab
 
 QTabBar::tab:selected
 {
+    color: #ffcc02;
    /* border-color: #4c6088;
     border-bottom-color: #4c6088;*/
 
@@ -139,7 +144,8 @@ QTabBar QButton
 
      QTabWidget::pane
      { /* The tab widget frame */
-         border: 1px dotted #000000;
+         border: 1px dotted #ffcc02;
+         /*background-color: #bbc5d7;*/
          border-radius:5px;
 
 
@@ -308,9 +314,10 @@ QGroupBox::title {
         image: url(:/Icons/images/right_arrow.png) ;
     }
     QTableView, QTableWidet {
-         background-color: white;
+         color:rgb(0,0,0);
+         /*background-color: white;*/
          selection-background-color:#4476C1;
-         selection-color: white;
+         /*selection-color: white;*/
          alternate-background-color: rgb(255, 255, 127);
      }
 
@@ -360,12 +367,12 @@ QMenu::item {
   }
 
 
- QComboBox::item:selected { /* when user selects item using mouse or keyboard */
+ /*QComboBox::item:selected { /* when user selects item using mouse or keyboard */
      background-color: rgb(170, 170, 127);
  }
 
  QComboBox:editable {
-     background: rgb(248, 245, 194);
+     /*background: rgb(248, 245, 194);*/
  }
 
 
@@ -379,7 +386,7 @@ QMenu::item {
      border-left-style: solid; /* just a single line */
      border-top-right-radius: 3px; /* same radius as the QComboBox */
      border-bottom-right-radius: 3px;
-     color:#2E9AFE;
+     /*color:#2E9AFE;*/
  }
 
 
@@ -396,7 +403,7 @@ QComboBox::down-arrow::disabled{
 QComboBox QAbstractItemView {
     border: 2px solid darkgray;
     selection-background-color: lightgray;
-}
+}*/
 
 QToolTip {
     border: 2px solid darkkhaki;

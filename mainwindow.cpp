@@ -875,8 +875,7 @@ void MainWindow::handle_permisosAgenda()
 void MainWindow::llenaravisos()
 {
    // m_avisos->setColor(QColor(50,50,50));
-    /*
-    QMap <int,QSqlRecord> map;
+    /*QMap <int,QSqlRecord> map;
     QStringList clausulas,headers;
     QString error;
     clausulas << QString("id_usuario = %1").arg(Configuracion_global->id_usuario_activo);

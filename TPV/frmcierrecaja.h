@@ -20,8 +20,12 @@ private slots:
     void on_btnAceptar_clicked();
 
 
+    void on_btnIniciar_cierre_clicked();
+
 private:
     Ui::FrmCierreCaja *ui;
+    bool facturas_en_cierre;
+    double importe_fijo_cierre;
 };
 
 #endif // FRMCIERRECAJA_H
