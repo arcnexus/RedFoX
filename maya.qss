@@ -34,8 +34,10 @@ color :#000000;
 
 
 *[mandatoryField="true"]
-
-{ background-color: yellow }
+{
+    background-color: #f3eea6;
+    color:black;
+}
 
 
 QTextEdit{
@@ -144,7 +146,7 @@ QTabBar QButton
 
      QTabWidget::pane
      { /* The tab widget frame */
-         border: 1px dotted #ffcc02;
+         border: 1px /*dotted #ffcc02;*/
          /*background-color: #bbc5d7;*/
          border-radius:5px;
 

@@ -95,9 +95,6 @@ font: 75 8pt &quot;Cantarell&quot;;</string>
        <height>16777215</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #ecefed;</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -130,9 +127,6 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="2" column="3">
        <widget class="QDateEdit" name="txtFechaFin">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
         </property>
@@ -154,9 +148,6 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="1" column="3">
        <widget class="QDateEdit" name="txtFecha_ini">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
         </property>
@@ -170,11 +161,7 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item row="6" column="2" colspan="2">
-       <widget class="QLineEdit" name="txtproveedor">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtproveedor"/>
       </item>
       <item row="6" column="0">
        <widget class="QLabel" name="label_3">
@@ -232,9 +219,6 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item row="1" column="1" rowspan="2" colspan="8">
     <widget class="QFrame" name="frame_2">
-     <property name="styleSheet">
-      <string notr="true">background-color: #ecefed;</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -316,9 +300,6 @@ alternate-background-color: rgb(255, 253, 219);</string>
             <height>16777215</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
          </widget>
         </item>
         <item>
@@ -330,9 +311,6 @@ alternate-background-color: rgb(255, 253, 219);</string>
         </item>
         <item>
          <widget class="QDateEdit" name="txtFecha_albaran">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
           <property name="displayFormat">
            <string>dd/MM/yyyy</string>
           </property>
@@ -353,9 +331,6 @@ alternate-background-color: rgb(255, 253, 219);</string>
             <height>16777215</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
          </widget>
         </item>
         <item>
@@ -367,9 +342,6 @@ alternate-background-color: rgb(255, 253, 219);</string>
         </item>
         <item>
          <widget class="QDateEdit" name="txtFecha_factura">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
           <property name="displayFormat">
            <string>dd/MM/yyyy</string>
           </property>

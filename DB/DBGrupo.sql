@@ -107,6 +107,18 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
+
+CREATE TABLE IF NOT EXISTS `@grupo@`.`articulos_volumen` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_producto` INT NULL,
+  `desde` FLOAT NULL,
+  `hasta` FLOAT NULL,
+  `precio` DOUBLE NULL,
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARACTER SET = utf8;
+
 CREATE  TABLE IF NOT EXISTS `@grupo@`.`avisos` (
   `id` INT(11) NOT NULL ,
   `id_tipoaviso` INT(11) NULL DEFAULT NULL ,

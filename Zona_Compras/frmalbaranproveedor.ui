@@ -48,9 +48,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 0);</string>
-         </property>
          <property name="text">
           <string>ALBARAN:</string>
          </property>
@@ -63,9 +60,6 @@
            <width>120</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 127);</string>
          </property>
          <property name="text">
           <string>TextLabel</string>
@@ -80,9 +74,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 0);</string>
-         </property>
          <property name="text">
           <string>PROVEEDOR:</string>
          </property>
@@ -90,9 +81,6 @@
        </item>
        <item row="0" column="3">
         <widget class="QLabel" name="lblproveedor">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 127);</string>
-         </property>
          <property name="text">
           <string>TextLabel</string>
          </property>
@@ -101,12 +89,9 @@
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab_5">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Cabecera de Albarán</string>
           </attribute>
@@ -132,9 +117,6 @@
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item>
@@ -151,9 +133,6 @@
                   <width>0</width>
                   <height>27</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="displayFormat">
                  <string>dd/MM/yyyy</string>
@@ -212,9 +191,6 @@
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="3" column="1" colspan="7">
@@ -224,9 +200,6 @@
                   <width>0</width>
                   <height>27</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -259,9 +232,6 @@
                   <height>27</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="5" column="1" colspan="4">
@@ -277,9 +247,6 @@
                   <width>16777215</width>
                   <height>16777215</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -329,9 +296,6 @@
                   <height>27</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="3" column="0">
@@ -372,9 +336,6 @@
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="0" column="1">
@@ -390,9 +351,6 @@
                   <width>100</width>
                   <height>16777215</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -410,9 +368,6 @@
                   <height>27</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
              </layout>
@@ -421,9 +376,6 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tab_6">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Líneas de albarán</string>
           </attribute>
@@ -474,6 +426,11 @@
            </item>
            <item row="1" column="0" colspan="3">
             <widget class="QTableWidget" name="Lineas">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(171, 171, 171);
+color: rgb(0, 0, 0);
+alternate-background-color: rgb(240,240,240);</string>
+             </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAsNeeded</enum>
              </property>
@@ -595,9 +552,6 @@
           </layout>
          </widget>
          <widget class="QWidget" name="tab_7">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Procesos</string>
           </attribute>
@@ -629,9 +583,6 @@
                <width>120</width>
                <height>16777215</height>
               </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
@@ -773,9 +724,6 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
             </widget>
            </item>
            <item row="0" column="2" colspan="4">
@@ -807,9 +755,6 @@ color: rgb(255, 255, 255);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_8">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Desglose</string>
           </attribute>
@@ -818,8 +763,8 @@ color: rgb(255, 255, 255);</string>
             <layout class="QGridLayout" name="gridLayout_14">
              <item row="0" column="1">
               <widget class="QLabel" name="label_30">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+               <property name="enabled">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>BASE</string>
@@ -829,17 +774,13 @@ color: rgb(255, 255, 255);</string>
              <item row="2" column="6">
               <widget class="QLineEdit" name="txttotal2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -855,7 +796,7 @@ color: rgb(0, 64, 64);</string>
              <item row="1" column="4">
               <widget class="QLineEdit" name="txtporc_rec1">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -868,10 +809,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -887,17 +824,13 @@ color: rgb(0, 64, 64);</string>
              <item row="1" column="3">
               <widget class="QLineEdit" name="txtiva1">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -913,7 +846,7 @@ color: rgb(0, 64, 64);</string>
              <item row="1" column="2">
               <widget class="QLineEdit" name="txtporc_iva1">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -926,10 +859,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -945,17 +874,13 @@ color: rgb(0, 64, 64);</string>
              <item row="3" column="5">
               <widget class="QLineEdit" name="txtrec3">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -970,14 +895,14 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_34">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>17</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(72, 124, 19);</string>
                </property>
                <property name="text">
                 <string>R:</string>
@@ -987,7 +912,7 @@ color: rgb(0, 64, 64);</string>
              <item row="3" column="4">
               <widget class="QLineEdit" name="txtporc_rec3">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -1000,10 +925,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1019,17 +940,13 @@ color: rgb(0, 64, 64);</string>
              <item row="3" column="1">
               <widget class="QLineEdit" name="txtbase3">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1045,17 +962,13 @@ color: rgb(0, 64, 64);</string>
              <item row="5" column="6">
               <widget class="QLineEdit" name="txttotal_2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1103,17 +1016,13 @@ color: rgb(0, 64, 64);</string>
              <item row="1" column="5">
               <widget class="QLineEdit" name="txtrec1">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1129,17 +1038,13 @@ color: rgb(0, 64, 64);</string>
              <item row="4" column="3">
               <widget class="QLineEdit" name="txtiva4">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1155,7 +1060,7 @@ color: rgb(0, 64, 64);</string>
              <item row="4" column="2">
               <widget class="QLineEdit" name="txtporc_iva4">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -1168,10 +1073,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1187,17 +1088,13 @@ color: rgb(0, 64, 64);</string>
              <item row="5" column="5">
               <widget class="QLineEdit" name="txtimporte_rec_total">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1212,14 +1109,14 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="5" column="0">
               <widget class="QLabel" name="label_31">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>17</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(72, 124, 19);</string>
                </property>
                <property name="text">
                 <string>T:</string>
@@ -1229,17 +1126,13 @@ color: rgb(0, 64, 64);</string>
              <item row="2" column="1">
               <widget class="QLineEdit" name="txtbase2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1255,17 +1148,13 @@ color: rgb(0, 64, 64);</string>
              <item row="4" column="1">
               <widget class="QLineEdit" name="txtbase4">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1280,14 +1169,14 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="4" column="0">
               <widget class="QLabel" name="label_32">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>17</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(72, 124, 19);</string>
                </property>
                <property name="text">
                 <string>EX.:</string>
@@ -1296,8 +1185,8 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="label_63">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+               <property name="enabled">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>%IVA</string>
@@ -1307,17 +1196,13 @@ color: rgb(0, 64, 64);</string>
              <item row="5" column="3">
               <widget class="QLineEdit" name="txttotal_iva">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1332,8 +1217,8 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="0" column="3">
               <widget class="QLabel" name="label_60">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+               <property name="enabled">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>IVA</string>
@@ -1343,17 +1228,13 @@ color: rgb(0, 64, 64);</string>
              <item row="1" column="1">
               <widget class="QLineEdit" name="txtbase1">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1368,14 +1249,14 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_33">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>17</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(72, 124, 19);</string>
                </property>
                <property name="text">
                 <string>S.R.:</string>
@@ -1384,14 +1265,14 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_35">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>17</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(72, 124, 19);</string>
                </property>
                <property name="text">
                 <string>N:</string>
@@ -1401,17 +1282,13 @@ color: rgb(0, 64, 64);</string>
              <item row="2" column="3">
               <widget class="QLineEdit" name="txtiva2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1427,17 +1304,13 @@ color: rgb(0, 64, 64);</string>
              <item row="4" column="6">
               <widget class="QLineEdit" name="txttotal4">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1453,17 +1326,13 @@ color: rgb(0, 64, 64);</string>
              <item row="5" column="1">
               <widget class="QLineEdit" name="txtbase_total">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1479,17 +1348,13 @@ color: rgb(0, 64, 64);</string>
              <item row="3" column="6">
               <widget class="QLineEdit" name="txttotal3">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1504,8 +1369,8 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="0" column="6">
               <widget class="QLabel" name="label_61">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+               <property name="enabled">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>TOTAL</string>
@@ -1515,17 +1380,13 @@ color: rgb(0, 64, 64);</string>
              <item row="4" column="5">
               <widget class="QLineEdit" name="txtrec4">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1541,17 +1402,13 @@ color: rgb(0, 64, 64);</string>
              <item row="2" column="5">
               <widget class="QLineEdit" name="txtrec2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1567,7 +1424,7 @@ color: rgb(0, 64, 64);</string>
              <item row="2" column="4">
               <widget class="QLineEdit" name="txtporc_rec2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -1580,10 +1437,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1599,17 +1452,13 @@ color: rgb(0, 64, 64);</string>
              <item row="3" column="3">
               <widget class="QLineEdit" name="txtiva3">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1625,7 +1474,7 @@ color: rgb(0, 64, 64);</string>
              <item row="3" column="2">
               <widget class="QLineEdit" name="txtporc_iva3">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -1638,10 +1487,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1657,7 +1502,7 @@ color: rgb(0, 64, 64);</string>
              <item row="2" column="2">
               <widget class="QLineEdit" name="txtporc_iva2">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
@@ -1670,10 +1515,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1689,17 +1530,13 @@ color: rgb(0, 64, 64);</string>
              <item row="1" column="6">
               <widget class="QLineEdit" name="txttotal1">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
                  <height>27</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1714,8 +1551,8 @@ color: rgb(0, 64, 64);</string>
              </item>
              <item row="0" column="5">
               <widget class="QLabel" name="label_62">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+               <property name="enabled">
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>R.E.</string>
@@ -1740,19 +1577,12 @@ color: rgb(0, 64, 64);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_9">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Comentarios</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="0">
-            <widget class="QTextEdit" name="txtcomentario">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-            </widget>
+            <widget class="QTextEdit" name="txtcomentario"/>
            </item>
           </layout>
          </widget>
@@ -1770,7 +1600,8 @@ color: rgb(0, 64, 64);</string>
          <item>
           <widget class="QLineEdit" name="txtsubtotal">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -1793,7 +1624,8 @@ color: rgb(0, 64, 64);</string>
          <item>
           <widget class="QLineEdit" name="txtimporte_descuento">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -1819,7 +1651,8 @@ color: rgb(0, 64, 64);</string>
             </sizepolicy>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -1839,7 +1672,8 @@ color: rgb(0, 64, 64);</string>
          <item>
           <widget class="QLineEdit" name="txtiva_total">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -1865,7 +1699,8 @@ color: rgb(0, 64, 64);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -1885,7 +1720,8 @@ color: rgb(0, 64, 64);</string>
          <item>
           <widget class="QLineEdit" name="txttotal">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>

@@ -53,7 +53,11 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //---------------------
     // Control objetos
     //---------------------
+
     ui->lbl_en_promocion->setVisible(false);
+
+    // PROMOCION
+    ui->chkOferta_32->setDisabled(true);
 
     // --------------------
     // TARIFAS
@@ -628,9 +632,11 @@ void FrmArticulos::on_botEditar_clicked()
     //-------------------
     // OFERTAS
     //-------------------
-    ui->btnAnadir_oferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
-    ui->btnEditarOferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
-    ui->btnBorrar_oferta->setEnabled(ui->chkArticulo_promocionado->isChecked());
+    bool promoted = ui->chkArticulo_promocionado->isChecked();
+    ui->framePromocion->setEnabled(promoted);
+    ui->btnAnadir_oferta->setEnabled(promoted);
+    ui->btnEditarOferta->setEnabled(promoted);
+    ui->btnBorrar_oferta->setEnabled(promoted);
     ocultarBusqueda();
 }
 
@@ -2189,9 +2195,13 @@ void FrmArticulos::on_chkArticulo_promocionado_toggled(bool checked)
 {
     if(ui->botGuardar->isEnabled())
     {
-        ui->btnAnadir_oferta->setChecked(checked);
-        ui->btnEditarOferta->setChecked(checked);
-        ui->btnBorrar_oferta->setChecked(checked);
+        ui->framePromocion->setEnabled(checked);
+
+        ui->btnAnadir_oferta->setEnabled(checked);
+        ui->btnEditarOferta->setEnabled(checked);
+        ui->btnBorrar_oferta->setEnabled(checked);
+
+
     }
 }
 
