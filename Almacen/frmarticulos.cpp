@@ -7,6 +7,7 @@
 
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
+#include "../Auxiliares/delegatekit.h"
 
 #include "../Auxiliares/readonlydelegate.h"
 #include "frmlistadosarticulo.h"
@@ -27,7 +28,6 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     modelProv = new QSqlQueryModel(this);
     oArticulo = new Articulo();
     modArt = new QSqlQueryModel(this);
-    model_ofertas = new QSqlQueryModel(this);
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(1);
     //--------------------
@@ -55,9 +55,26 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //---------------------
 
     ui->lbl_en_promocion->setVisible(false);
+    //---------------------
+    // PROMOCIONES
+    //---------------------
+    promociones = new QSqlQueryModel(this);
+    promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",
+                          Configuracion_global->empresaDB);
 
-    // PROMOCION
-    ui->chkOferta_32->setDisabled(true);
+    ui->tabla_ofertas->setModel(promociones);
+    QStringList headers_o;
+    QVariantList sizes_o;
+    headers_o << "id" << tr("Act.") << tr("Descripción") ;
+    sizes_o << 0 << 50 << 350;
+    for(int i = 0; i<sizes_o.size();i++)
+    {
+        ui->tabla_ofertas->setColumnWidth(i,sizes_o.at(i).toInt());
+        promociones->setHeaderData(i,Qt::Horizontal,headers_o.at(i));
+    }
+    ui->tabla_ofertas->setColumnHidden(0,true);
+    ui->tabla_ofertas->setItemDelegateForColumn(1, new DelegateKit);
+
 
     // --------------------
     // TARIFAS
@@ -325,9 +342,22 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnAnadirTarifa->setEnabled(!state);
     ui->btnEditartarifa->setEnabled(!state);
     ui->btnBorrarTarifa->setEnabled(!state);
+    ui->btnActivarOferta->setEnabled(!state);
 
+    //----------------------------------------------------
     // activo controles que deben estar activos.
+    //----------------------------------------------------
     ui->checkBox->setEnabled(true);
+
+    //----------------------------------------------------
+    // desactivo controles que deben estar desactivados
+    //----------------------------------------------------
+    ui->chkOfertaActiva->setEnabled(false);
+    ui->chkOferta_32->setEnabled(false);
+    ui->chkOferta_dto->setEnabled(false);
+    ui->chkOferta_pvp->setEnabled(false);
+    ui->chkOferta_web->setEnabled(false);
+
 
     m_busqueda->block(!state);
 }
@@ -412,16 +442,12 @@ void FrmArticulos::LLenarCampos()
   ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
   ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
 
-  //--------------------------
-  // LLENO  OFERTAS
-  //--------------------------
-  QString cSQL = QString("select id,descripcion,fecha_inicio,fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id);
-  model_ofertas->setQuery(cSQL, Configuracion_global->empresaDB);
+  //-----------------------------
+  // LLENO  OFERTAS/promociones
+  //-----------------------------
+  promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 ").arg(oArticulo->id),
+                        Configuracion_global->empresaDB);
 
-  ui->chkOferta_32->setChecked(false);
-  ui->chkOferta_dto->setChecked(false);
-  ui->chkOferta_pvp->setChecked(false);
-  ui->chkOferta_web->setChecked(false);
   // ------------------
   // LLENO TABLAS DATOS
   //-------------------
@@ -484,6 +510,8 @@ void FrmArticulos::CargarCamposEnArticulo()
 //    this->id_web = registro.field("id_web").value().toInt();
   //  oArticulo->stock_fisico_almacen = ui->txtstock_fisico_almacen->text().toInt();
     oArticulo->articulo_promocionado = ui->chkArticulo_promocionado->isChecked();
+    oArticulo->oferta32 = ui->chkOferta_32->isChecked();
+    //oArticulo->oferta_dto = ui->chk
 
     oArticulo->porc_dto = ui->txtdto->text().toFloat();
     oArticulo->coste_real = ui->txtCoste_real->text().replace(".","").replace(",",".").toDouble();
@@ -2057,11 +2085,11 @@ void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     if(ui->stackedWidget->currentIndex() == 1)
         ui->stackedWidget->setCurrentIndex(0);
-    oArticulo->Recuperar(id);
-    LLenarCampos();
+   // oArticulo->Recuperar(id);
+   // LLenarCampos();
     ui->botEditar->setEnabled(true);
 
-    ocultarBusqueda();
+    //ocultarBusqueda();
 
 
 }
@@ -2124,6 +2152,12 @@ void FrmArticulos::on_btnAnadir_oferta_clicked()
     ui->chkOferta_dto->setChecked(false);
     ui->chkOferta_pvp->setChecked(false);
     ui->chkOferta_web->setChecked(false);
+    ui->chkOferta_32->setEnabled(true);
+    ui->chkOferta_dto->setEnabled(true);
+    ui->chkOferta_pvp->setEnabled(true);
+    ui->chkOferta_web->setEnabled(true);
+    ui->txtOferta_Descripcion_promocion->setEnabled(true);
+    ui->lblDescripcion_oferta->setEnabled(true);
 
     ui->txtOfertaDtoOferta->setText("0");
     ui->txtOfertaregalo_de->setText("0");
@@ -2132,7 +2166,7 @@ void FrmArticulos::on_btnAnadir_oferta_clicked()
     ui->txtOferta_Fecha_ini->setDate(QDate::currentDate());
     ui->txtOferta_por_cada->setText("0");
     ui->txtoferta_pvp_fijo->setText("0,00");
-    ui->chkOfertaActiva->setEnabled(true);
+
     ui->btnguardar_oferta->setEnabled(true);
     ui->btnDeshacer_oferta->setEnabled(true);
     ui->btnAnadir_oferta->setEnabled(false);
@@ -2141,54 +2175,62 @@ void FrmArticulos::on_btnAnadir_oferta_clicked()
     ui->botDeshacer->setEnabled(false);
     ui->framePromocion->setEnabled(true);
     ui->frame_comentarios->setEnabled(true);
+    ui->txtOferta_Descripcion_promocion->setFocus();
 }
 
 void FrmArticulos::on_btnguardar_oferta_clicked()
 {
-    ui->btnguardar_oferta->setEnabled(false);
-    ui->btnDeshacer_oferta->setEnabled(false);
-    ui->btnAnadir_oferta->setEnabled(true);
-    ui->btnEditarOferta->setEnabled(true);
-    ui->botGuardar->setEnabled(true);
-    ui->botDeshacer->setEnabled(true);
-
-    QHash <QString, QVariant> oferta;
-
-    oferta["id_articulo"] = oArticulo->id;
-    oferta["descripcion"] = ui->txtOferta_Descripcion_promocion->text();
-    oferta["oferta_32"] =ui->chkOferta_32->isChecked();
-    oferta["oferta_dto"] = ui->chkOferta_dto->isChecked();
-    oferta["oferta_precio_final"] = ui->chkOferta_pvp->isChecked();
-    oferta["oferta_web"] = ui->chkOferta_web->isChecked();
-    oferta["unidades"] = ui->txtOferta_por_cada->text().toFloat();
-    oferta["regalo"] = ui->txtOfertaregalo_de->text().toFloat();
-    oferta["dto_local"] = ui->txtOfertaDtoOferta->text().toFloat();
-    oferta["dto_web"] =ui->txtOferta_dto_web->text().toFloat();
-    oferta["precio_final"] = ui->txtoferta_pvp_fijo->text().toDouble();
-    oferta["comentarios"] = ui->txtOferta_comentarios_promocion->toPlainText();
-    oferta["fecha_inicio"] =ui->txtOferta_Fecha_ini->date();
-    oferta["fecha_fin"] = ui->txtOferta_Fecha_fin->date();
-    oferta["activa"] = ui->chkOfertaActiva->isChecked();
-    int new_id;
-    bool success;
-    QString error;
-    if(nueva_oferta)
+    if(!ui->txtOferta_Descripcion_promocion->text().isEmpty())
     {
-        nueva_oferta = false;
-        new_id = SqlCalls::SqlInsert(oferta,"articulos_ofertas",Configuracion_global->empresaDB,error);
-        if(new_id>-1)
-            TimedMessageBox *t = new TimedMessageBox(this,tr("Se ha creado la oferta"));
-    } else
-    {
-        success = SqlCalls::SqlUpdate(oferta,"articulos_ofertas",Configuracion_global->empresaDB,QString("id =%1").arg(this->id_oferta),
-                                      error);
-        if(!success)
-            QMessageBox::warning(this,tr("Gestión de artículos"),tr("Se ha producido un error al actualizar la oferta: %1").arg(error));
+        ui->btnguardar_oferta->setEnabled(false);
+        ui->btnDeshacer_oferta->setEnabled(false);
+        ui->btnAnadir_oferta->setEnabled(true);
+        ui->btnEditarOferta->setEnabled(true);
+        ui->botGuardar->setEnabled(true);
+        ui->botDeshacer->setEnabled(true);
 
+        QHash <QString, QVariant> oferta;
+
+        oferta["id_articulo"] = oArticulo->id;
+        oferta["descripcion"] = ui->txtOferta_Descripcion_promocion->text();
+        oferta["oferta_32"] =ui->chkOferta_32->isChecked();
+        oferta["oferta_dto"] = ui->chkOferta_dto->isChecked();
+        oferta["oferta_precio_final"] = ui->chkOferta_pvp->isChecked();
+        oferta["oferta_web"] = ui->chkOferta_web->isChecked();
+        oferta["unidades"] = ui->txtOferta_por_cada->text().toFloat();
+        oferta["regalo"] = ui->txtOfertaregalo_de->text().toFloat();
+        oferta["dto_local"] = ui->txtOfertaDtoOferta->text().toFloat();
+        oferta["dto_web"] =ui->txtOferta_dto_web->text().toFloat();
+        oferta["precio_final"] = ui->txtoferta_pvp_fijo->text().toDouble();
+        oferta["comentarios"] = ui->txtOferta_comentarios_promocion->toPlainText();
+        oferta["fecha_inicio"] =ui->txtOferta_Fecha_ini->date();
+        oferta["fecha_fin"] = ui->txtOferta_Fecha_fin->date();
+        oferta["activa"] = ui->chkOfertaActiva->isChecked();
+        int new_id;
+        bool success;
+        QString error;
+        if(nueva_oferta)
+        {
+            nueva_oferta = false;
+            new_id = SqlCalls::SqlInsert(oferta,"articulos_ofertas",Configuracion_global->empresaDB,error);
+            if(new_id>-1)
+                TimedMessageBox *t = new TimedMessageBox(this,tr("Se ha creado la oferta"));
+        } else
+        {
+            success = SqlCalls::SqlUpdate(oferta,"articulos_ofertas",Configuracion_global->empresaDB,QString("id =%1").arg(this->id_oferta),
+                                          error);
+            if(!success)
+                QMessageBox::warning(this,tr("Gestión de artículos"),tr("Se ha producido un error al actualizar la oferta: %1").arg(error));
+
+        }
+        promociones->setQuery(QString("select id,descripcion,activa from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
+                                Configuracion_global->empresaDB);
     }
-    model_ofertas->setQuery(QString("select id,descripcion,fecha_inicio,"
-                                    " fecha_fin from articulos_ofertas where id_articulo = %1 order by id desc").arg(oArticulo->id),
-                            Configuracion_global->empresaDB);
+    else
+        {
+            QMessageBox::warning(this,tr("Gestión de artículos"),tr("Debe especificar una descripción antes de poder guardar"),
+                                 tr("Aceptar"));
+        }
 }
 
 void FrmArticulos::on_chkArticulo_promocionado_toggled(bool checked)
@@ -2202,7 +2244,10 @@ void FrmArticulos::on_chkArticulo_promocionado_toggled(bool checked)
         ui->btnBorrar_oferta->setEnabled(checked);
 
 
-    }
+    } /*else
+        QMessageBox::warning(this,tr("Gestión de artículos"),
+                             tr("Debe estar en modo edición de articulo para poder modificar/crear una oferta"),
+                             tr("Aceptar"));*/
 }
 
 void FrmArticulos::on_btnDeshacer_oferta_clicked()
@@ -2236,39 +2281,6 @@ void FrmArticulos::on_tabla_ofertas_clicked(const QModelIndex &index)
     }
 }
 
-void FrmArticulos::on_chkOferta_32_toggled(bool checked)
-{
-    if(ui->btnguardar_oferta->isEnabled())
-        ui->frame_tipo_32->setEnabled(checked);
-    else
-        ui->frame_tipo_32->setEnabled(false);
-}
-
-void FrmArticulos::on_chkOferta_dto_toggled(bool checked)
-{
-    if(ui->btnguardar_oferta->isEnabled())
-        ui->frame_dto->setEnabled(checked);
-    else
-        ui->frame_dto->setEnabled(false);
-}
-
-void FrmArticulos::on_chkOferta_pvp_toggled(bool checked)
-{
-    if(ui->btnguardar_oferta->isEnabled())
-        ui->frame_pvp_fijo->setEnabled(checked);
-    else
-        ui->frame_pvp_fijo->setEnabled(false);
-}
-
-
-
-void FrmArticulos::on_chkOferta_web_toggled(bool checked)
-{
-    if(ui->btnguardar_oferta->isEnabled())
-        ui->frame_ofertaweb->setEnabled(checked);
-    else
-        ui->frame_ofertaweb->setEnabled(false);
-}
 
 void FrmArticulos::on_btnExcepciones_3_clicked()
 {
@@ -2294,5 +2306,30 @@ void FrmArticulos::on_btnBorrarKit_clicked()
         QModelIndex index = ui->tabla->currentIndex();
         int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0)).toInt();
         QMap <int,QSqlRecord> map;
+        // TODO - Terminar borrar kit;
     }
+}
+
+void FrmArticulos::on_btnEditarOferta_clicked()
+{
+    ui->txtOferta_Descripcion_promocion->setEnabled(true);
+    ui->chkOferta_32->setEnabled(true);
+    ui->chkOferta_dto->setEnabled(true);
+    ui->chkOferta_pvp->setEnabled(true);
+    ui->chkOferta_pvp->setEnabled(true);
+    ui->frame_tipo_32->setEnabled(ui->chkOferta_32->isChecked());
+}
+
+
+
+void FrmArticulos::on_chkOferta_32_toggled(bool checked)
+{
+    ui->frame_tipo_32->setEnabled(checked);
+    ui->txtOferta_por_cada->setEnabled(checked);
+    ui->txtOfertaregalo_de->setEnabled(checked);
+    ui->lbl_por_cada->setEnabled(checked);
+    ui->lbl_unidades->setEnabled(checked);
+    ui->lbl_regalo_de->setEnabled(checked);
+    ui->lbl_unidades_2->setEnabled(checked);
+
 }

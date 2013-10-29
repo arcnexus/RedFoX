@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>Desglose de cobro</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 253, 215);</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1" colspan="2">
     <widget class="QLabel" name="label">
@@ -53,6 +50,7 @@ color: rgb(255, 255, 255);</string>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -84,6 +82,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="txtCheque">
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -101,6 +100,7 @@ background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -132,6 +132,7 @@ background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -149,6 +150,7 @@ background-color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="txtEfectivo">
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -201,6 +203,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="txtTransferencia">
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -228,7 +231,7 @@ color: rgb(255, 255, 255);</string>
    <item row="16" column="1" colspan="2">
     <widget class="QLabel" name="label_8">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 0, 0);
+      <string notr="true">background-color: rgb(255, 170, 0);
 color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -268,6 +271,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="txtTarjeta">
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -282,6 +286,7 @@ background-color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="txtInternet">
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -313,6 +318,7 @@ color: rgb(255, 255, 255);</string>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 85, 0);
 background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">

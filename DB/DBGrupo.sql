@@ -85,6 +85,10 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`articulos` (
   `margen` DOUBLE NULL DEFAULT NULL ,
   `margen_min` DOUBLE NULL DEFAULT NULL ,
   `coste_real` DOUBLE NULL DEFAULT NULL ,
+  `oferta_32` TINYINT(1) NOT NULL DEFAULT '0',
+  `oferta_dto` TINYINT(1) NOT NULL DEFAULT '0',
+  `oferta_dto_web` TINYINT(1) NOT NULL DEFAULT '0' ,
+  `oferta_pvp_final` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `cCodigo_UNIQUE` (`codigo` ASC) )
 ENGINE = InnoDB

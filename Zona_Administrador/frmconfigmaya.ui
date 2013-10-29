@@ -48,9 +48,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
        </widget>
       </item>
       <item row="0" column="2">
@@ -73,9 +70,6 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
@@ -186,16 +180,10 @@ color: rgb(255,255,255);</string>
        <height>158</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="Pagina_general">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>General</string>
       </attribute>
@@ -208,9 +196,6 @@ color: rgb(255,255,255);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
         </widget>
        </item>
        <item row="0" column="1" colspan="2">
@@ -220,9 +205,6 @@ color: rgb(255,255,255);</string>
            <width>122</width>
            <height>0</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -239,9 +221,6 @@ color: rgb(255,255,255);</string>
            <width>60</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -295,9 +274,6 @@ color: rgb(255,255,255);</string>
       </layout>
      </widget>
      <widget class="QWidget" name="Pagina_contabilidad">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>Parametros contabilidad</string>
       </attribute>
@@ -319,9 +295,6 @@ color: rgb(255,255,255);</string>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
           </widget>
          </item>
          <item row="0" column="2">
@@ -338,9 +311,6 @@ color: rgb(255,255,255);</string>
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>
@@ -359,9 +329,6 @@ color: rgb(255,255,255);</string>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
           </widget>
          </item>
          <item row="1" column="2">
@@ -378,9 +345,6 @@ color: rgb(255,255,255);</string>
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>
@@ -399,9 +363,6 @@ color: rgb(255,255,255);</string>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
           </widget>
          </item>
          <item row="3" column="0">
@@ -418,9 +379,6 @@ color: rgb(255,255,255);</string>
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>
@@ -456,9 +414,6 @@ color: rgb(255,255,255);</string>
       </layout>
      </widget>
      <widget class="QWidget" name="Pagina_Vademecums">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>Bases de Datos Medicina</string>
       </attribute>
@@ -485,9 +440,6 @@ color: rgb(255,255,255);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
         </widget>
        </item>
        <item row="0" column="3">
@@ -504,9 +456,6 @@ color: rgb(255,255,255);</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -532,9 +481,6 @@ color: rgb(255,255,255);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
         </widget>
        </item>
        <item row="1" column="3">
@@ -551,9 +497,6 @@ color: rgb(255,255,255);</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -579,9 +522,6 @@ color: rgb(255,255,255);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
         </widget>
        </item>
        <item row="2" column="3">
@@ -598,9 +538,6 @@ color: rgb(255,255,255);</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
@@ -626,9 +563,6 @@ color: rgb(255,255,255);</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
          <property name="text">
           <string/>
          </property>
@@ -648,9 +582,6 @@ color: rgb(255,255,255);</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string/>
@@ -673,19 +604,12 @@ color: rgb(255,255,255);</string>
       </layout>
      </widget>
      <widget class="QWidget" name="tab">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>BD TiendaWEB</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="3" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPasswordDBWeb">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtPasswordDBWeb"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_10">
@@ -695,25 +619,13 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="4" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPuerto_DBWeb">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtPuerto_DBWeb"/>
        </item>
        <item row="2" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtUsuarioDBweb">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtUsuarioDBweb"/>
        </item>
        <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtHostWeb">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtHostWeb"/>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_14">
@@ -730,11 +642,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtnombre_bdWeb">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtnombre_bdWeb"/>
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_13">
@@ -783,9 +691,6 @@ color: rgb(255,255,255);</string>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>DBMedi_tec</string>
       </attribute>
@@ -798,11 +703,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="txtnombre_bd_MediTec">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtnombre_bd_MediTec"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_34">
@@ -812,11 +713,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="txtHostBD_MediTec">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtHostBD_MediTec"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_35">
@@ -826,11 +723,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="txtUsuarioDB_MediTec">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtUsuarioDB_MediTec"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_17">
@@ -840,11 +733,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="txtPasswordDB_MediTec">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtPasswordDB_MediTec"/>
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_16">
@@ -854,11 +743,7 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QLineEdit" name="txtPuerto_DB_MediTec">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtPuerto_DB_MediTec"/>
        </item>
        <item row="5" column="1">
         <spacer name="verticalSpacer_6">
@@ -907,18 +792,10 @@ color: rgb(255,255,255);</string>
        </widget>
       </item>
       <item row="6" column="2">
-       <widget class="QLineEdit" name="txtPuerto">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtPuerto"/>
       </item>
       <item row="4" column="2">
-       <widget class="QLineEdit" name="txtUsuario">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtUsuario"/>
       </item>
       <item row="6" column="1">
        <widget class="QLabel" name="label_4">
@@ -931,9 +808,6 @@ color: rgb(255,255,255);</string>
        <widget class="QRadioButton" name="radSqlite">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
         </property>
         <property name="text">
          <string>SQLite</string>
@@ -955,25 +829,15 @@ color: rgb(255,255,255);</string>
         <property name="enabled">
          <bool>false</bool>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
        </widget>
       </item>
       <item row="5" column="2">
-       <widget class="QLineEdit" name="txtPassword">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtPassword"/>
       </item>
       <item row="3" column="3">
        <widget class="QLabel" name="label_5">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
         </property>
         <property name="text">
          <string>direccion BD:</string>
@@ -998,11 +862,7 @@ color: rgb(255,255,255);</string>
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QLineEdit" name="txtHost">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtHost"/>
       </item>
       <item row="4" column="1">
        <widget class="QLabel" name="label_2">

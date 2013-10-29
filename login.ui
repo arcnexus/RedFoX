@@ -615,7 +615,9 @@
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);
-border-color: rgb(192, 192, 255);</string>
+color: rgb(0, 0, 0);
+border-color: rgb(192, 192, 255);
+</string>
           </property>
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
@@ -632,6 +634,7 @@ border-color: rgb(192, 192, 255);</string>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-color: rgb(192, 192, 255);
 </string>
           </property>

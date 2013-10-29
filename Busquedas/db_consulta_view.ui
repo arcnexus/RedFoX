@@ -100,7 +100,7 @@ color: rgb(255,255,255);</string>
        <widget class="QLineEdit" name="lineaTextoBuscar">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 252, 205);</string>
+color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>

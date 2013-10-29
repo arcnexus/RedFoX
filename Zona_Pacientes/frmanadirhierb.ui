@@ -33,9 +33,6 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="pagina_nombre">
-         <property name="styleSheet">
-          <string notr="true">background-color: #ecefed;</string>
-         </property>
          <attribute name="title">
           <string>Buscar por nombre</string>
          </attribute>
@@ -48,11 +45,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="txtTexto_producto">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="txtTexto_producto"/>
           </item>
           <item row="0" column="2">
            <widget class="QPushButton" name="btn_buscar_producto">
@@ -67,10 +60,6 @@
           </item>
           <item row="1" column="0" colspan="3">
            <widget class="QTableView" name="tabla_producto">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(219, 255, 207);</string>
-            </property>
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
@@ -85,9 +74,6 @@ alternate-background-color: rgb(219, 255, 207);</string>
          </layout>
         </widget>
         <widget class="QWidget" name="pagina_laboratorio">
-         <property name="styleSheet">
-          <string notr="true">background-color: #ecefed;</string>
-         </property>
          <attribute name="title">
           <string>Buscar  por laboratorio</string>
          </attribute>
@@ -95,11 +81,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="0">
-             <widget class="QLineEdit" name="lineEdit">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="lineEdit"/>
             </item>
             <item row="0" column="1">
              <widget class="QPushButton" name="pushButton">
@@ -113,11 +95,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
              </widget>
             </item>
             <item row="1" column="0" colspan="2">
-             <widget class="QTableView" name="tableView">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QTableView" name="tableView"/>
             </item>
             <item row="2" column="0" colspan="2">
              <widget class="QPushButton" name="pushButton_2">
@@ -135,27 +113,16 @@ alternate-background-color: rgb(219, 255, 207);</string>
           <item row="0" column="1">
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QLineEdit" name="lineEdit_2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="lineEdit_2"/>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QTableView" name="tableView_2"/>
             </item>
            </layout>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="pagina_laboratorio_2">
-         <property name="styleSheet">
-          <string notr="true">background-color: #ecefed;</string>
-         </property>
          <attribute name="title">
           <string>Buscar por patología</string>
          </attribute>
@@ -170,11 +137,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txt_patologia">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="txt_patologia"/>
             </item>
             <item row="0" column="2">
              <widget class="QPushButton" name="btn_buscar">
@@ -184,11 +147,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
              </widget>
             </item>
             <item row="1" column="0" colspan="3">
-             <widget class="QTableView" name="tabla_patologias">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QTableView" name="tabla_patologias"/>
             </item>
             <item row="2" column="0" colspan="3">
              <widget class="QPushButton" name="btn_ver_producto_por_patologia">
@@ -202,27 +161,16 @@ alternate-background-color: rgb(219, 255, 207);</string>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QLineEdit" name="txt_filtro_producto_por_patologias">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="txt_filtro_producto_por_patologias"/>
             </item>
             <item>
-             <widget class="QTableView" name="tabla_producto_patologias">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QTableView" name="tabla_producto_patologias"/>
             </item>
            </layout>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="pagina_componente">
-         <property name="styleSheet">
-          <string notr="true">background-color: #ecefed;</string>
-         </property>
          <attribute name="title">
           <string>Buscar por componente</string>
          </attribute>
@@ -237,11 +185,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txt_componente">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="txt_componente"/>
             </item>
             <item row="0" column="2">
              <widget class="QPushButton" name="btn_buscar_componente">
@@ -251,11 +195,7 @@ alternate-background-color: rgb(219, 255, 207);</string>
              </widget>
             </item>
             <item row="1" column="0" colspan="3">
-             <widget class="QTableView" name="tabla_componentes">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QTableView" name="tabla_componentes"/>
             </item>
             <item row="2" column="0" colspan="3">
              <widget class="QPushButton" name="btn_ver_producto_por_componente">
@@ -269,18 +209,10 @@ alternate-background-color: rgb(219, 255, 207);</string>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <widget class="QLineEdit" name="txt_filtrar_por_componente">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QLineEdit" name="txt_filtrar_por_componente"/>
             </item>
             <item>
-             <widget class="QTableView" name="tabla_producto_componente">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
-             </widget>
+             <widget class="QTableView" name="tabla_producto_componente"/>
             </item>
            </layout>
           </item>

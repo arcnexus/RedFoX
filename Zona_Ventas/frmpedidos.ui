@@ -57,10 +57,6 @@ color: rgb(255, 255, 255);</string>
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">
-color: rgb(0, 0, 0);</string>
-         </property>
          <property name="text">
           <string>PEDIDO:</string>
          </property>
@@ -73,9 +69,6 @@ color: rgb(0, 0, 0);</string>
            <width>120</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 127);</string>
          </property>
          <property name="text">
           <string>TextLabel</string>
@@ -90,10 +83,6 @@ color: rgb(0, 0, 0);</string>
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">
-color: rgb(0, 0, 0);</string>
-         </property>
          <property name="text">
           <string>CLIENTE:</string>
          </property>
@@ -101,9 +90,6 @@ color: rgb(0, 0, 0);</string>
        </item>
        <item row="0" column="3">
         <widget class="QLabel" name="lblTopcliente">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 0, 127);</string>
-         </property>
          <property name="text">
           <string>TextLabel</string>
          </property>
@@ -115,12 +101,9 @@ color: rgb(0, 0, 0);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab_5">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Cabecera Pedido</string>
           </attribute>
@@ -142,9 +125,6 @@ color: rgb(0, 0, 0);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
               </widget>
              </item>
              <item>
@@ -161,9 +141,6 @@ color: rgb(0, 0, 0);</string>
                  <width>0</width>
                  <height>25</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="displayFormat">
                 <string>dd/MM/yyyy</string>
@@ -290,9 +267,6 @@ color: rgb(255,255,255);</string>
                     <height>16777215</height>
                    </size>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 235, 206);</string>
-                  </property>
                   <property name="placeholderText">
                    <string>F1 - Buscar</string>
                   </property>
@@ -338,9 +312,6 @@ color: rgb(255,255,255);</string>
                   <height>25</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="0" column="0">
@@ -371,9 +342,6 @@ color: rgb(255,255,255);</string>
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="6" column="1" colspan="7">
@@ -390,9 +358,6 @@ color: rgb(255,255,255);</string>
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="2" column="1" colspan="7">
@@ -402,9 +367,6 @@ color: rgb(255,255,255);</string>
                   <width>0</width>
                   <height>25</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -423,9 +385,6 @@ color: rgb(255,255,255);</string>
                   <height>25</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="5" column="0">
@@ -443,9 +402,6 @@ color: rgb(255,255,255);</string>
                   <height>25</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="5" column="1">
@@ -461,9 +417,6 @@ color: rgb(255,255,255);</string>
                   <width>100</width>
                   <height>16777215</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -488,9 +441,6 @@ color: rgb(255,255,255);</string>
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                </widget>
               </item>
               <item row="12" column="0">
@@ -510,10 +460,6 @@ color: rgb(255,255,255);</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
                 </property>
                </widget>
               </item>
@@ -535,10 +481,6 @@ color: rgb(0, 64, 64);</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
-                </property>
                 <property name="displayFormat">
                  <string>dd/MM/yyyy</string>
                 </property>
@@ -558,10 +500,6 @@ color: rgb(0, 64, 64);</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
-                </property>
                </widget>
               </item>
               <item row="7" column="1" colspan="2">
@@ -575,11 +513,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="11" column="5">
-               <widget class="QDoubleSpinBox" name="spin_porc_dto_especial">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-               </widget>
+               <widget class="QDoubleSpinBox" name="spin_porc_dto_especial"/>
               </item>
               <item row="11" column="4">
                <widget class="QLabel" name="label_50">
@@ -589,11 +523,7 @@ color: rgb(0, 64, 64);</string>
                </widget>
               </item>
               <item row="11" column="3">
-               <widget class="QDoubleSpinBox" name="spin_porc_dto_pp">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-               </widget>
+               <widget class="QDoubleSpinBox" name="spin_porc_dto_pp"/>
               </item>
               <item row="11" column="2">
                <widget class="QLabel" name="label_48">
@@ -661,9 +591,6 @@ color: rgb(255, 255, 255);</string>
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
                 <property name="displayFormat">
                  <string>dd/MM/yyyy</string>
                 </property>
@@ -707,9 +634,6 @@ color: rgb(255, 255, 255);</string>
                     <width>120</width>
                     <height>16777215</height>
                    </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="text">
                    <string>0,00</string>
@@ -790,9 +714,6 @@ color: rgb(255, 255, 255);</string>
                     <height>25</height>
                    </size>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
                  </widget>
                 </item>
                 <item row="6" column="0">
@@ -816,9 +737,6 @@ color: rgb(255, 255, 255);</string>
                     <height>25</height>
                    </size>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
                  </widget>
                 </item>
                 <item row="7" column="2">
@@ -829,11 +747,7 @@ color: rgb(255, 255, 255);</string>
                  </widget>
                 </item>
                 <item row="8" column="1" colspan="3">
-                 <widget class="QLineEdit" name="txtemail_alternativo">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtemail_alternativo"/>
                 </item>
                 <item row="4" column="1" colspan="3">
                  <widget class="QLineEdit" name="txtdireccion1_entrega">
@@ -842,9 +756,6 @@ color: rgb(255, 255, 255);</string>
                     <width>0</width>
                     <height>25</height>
                    </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
@@ -861,9 +772,6 @@ color: rgb(255, 255, 255);</string>
                     <width>100</width>
                     <height>16777215</height>
                    </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                  </widget>
                 </item>
@@ -891,9 +799,6 @@ color: rgb(255, 255, 255);</string>
                     <height>16777215</height>
                    </size>
                   </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
                  </widget>
                 </item>
                 <item row="5" column="0">
@@ -904,11 +809,7 @@ color: rgb(255, 255, 255);</string>
                  </widget>
                 </item>
                 <item row="2" column="3">
-                 <widget class="QLineEdit" name="txtTransportista">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtTransportista"/>
                 </item>
                 <item row="2" column="1" colspan="2">
                  <widget class="QLineEdit" name="txtcodigo_transportista">
@@ -923,9 +824,6 @@ color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="whatsThis">
                    <string/>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 235, 206);</string>
                   </property>
                   <property name="placeholderText">
                    <string>F1 - Buscar</string>
@@ -948,9 +846,6 @@ color: rgb(255, 255, 255);</string>
                   <width>0</width>
                   <height>25</height>
                  </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
@@ -1026,9 +921,6 @@ color: rgb(255, 255, 255);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_6">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Líneas pedido</string>
           </attribute>
@@ -1178,9 +1070,6 @@ color: rgb(255, 255, 255);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_7">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Desglose</string>
           </attribute>
@@ -1191,10 +1080,6 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLineEdit" name="txtiva1">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1212,10 +1097,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1231,10 +1112,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txtbase1">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1252,10 +1129,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1271,10 +1144,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txtiva4">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1324,10 +1193,6 @@ color: rgb(0, 64, 64);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -1349,10 +1214,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1442,10 +1303,6 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="3" column="0">
                  <widget class="QLineEdit" name="txtGastoDist3">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                  </property>
                   <property name="placeholderText">
                    <string>Descripcion...</string>
                   </property>
@@ -1453,10 +1310,6 @@ color: rgb(23, 76, 7);</string>
                 </item>
                 <item row="1" column="1">
                  <widget class="QDoubleSpinBox" name="SpinGastoDist1">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                  </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
@@ -1467,10 +1320,6 @@ color: rgb(23, 76, 7);</string>
                 </item>
                 <item row="2" column="1">
                  <widget class="QDoubleSpinBox" name="SpinGastoDist2">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                  </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
@@ -1520,10 +1369,6 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="2" column="0">
                  <widget class="QLineEdit" name="txtGastoDist2">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                  </property>
                   <property name="placeholderText">
                    <string>Descripcion...</string>
                   </property>
@@ -1531,9 +1376,6 @@ color: rgb(23, 76, 7);</string>
                 </item>
                 <item row="3" column="1">
                  <widget class="QDoubleSpinBox" name="SpinGastoDist3">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
@@ -1558,10 +1400,6 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="1" column="0">
                  <widget class="QLineEdit" name="txtGastoDist1">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(23, 76, 7);</string>
-                  </property>
                   <property name="placeholderText">
                    <string>Descripcion...</string>
                   </property>
@@ -1654,10 +1492,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1690,10 +1524,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1709,10 +1539,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txtbase3">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1782,10 +1608,6 @@ color: rgb(0, 64, 64);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -1802,10 +1624,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1821,10 +1639,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txtiva2">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1852,10 +1666,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1882,10 +1692,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -1907,10 +1713,6 @@ color: rgb(0, 64, 64);</string>
                  <width>45</width>
                  <height>16777215</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1937,10 +1739,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txttotal_recargo_2">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1980,10 +1778,6 @@ color: rgb(0, 64, 64);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -2006,10 +1800,6 @@ color: rgb(0, 64, 64);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -2026,10 +1816,6 @@ color: rgb(0, 64, 64);</string>
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -2045,10 +1831,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txtrec4">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -2072,10 +1854,6 @@ color: rgb(0, 64, 64);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -2098,10 +1876,6 @@ color: rgb(0, 64, 64);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -2117,10 +1891,6 @@ color: rgb(0, 64, 64);</string>
               <widget class="QLineEdit" name="txtbase2">
                <property name="enabled">
                 <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -2217,26 +1987,15 @@ color: rgb(255, 255, 255);</string>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_8">
-          <property name="styleSheet">
-           <string notr="true">background-color: #ecefed;</string>
-          </property>
           <attribute name="title">
            <string>Comentarios</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="3" column="0">
-            <widget class="QTextEdit" name="txtcomentarios_alternativo">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-            </widget>
+            <widget class="QTextEdit" name="txtcomentarios_alternativo"/>
            </item>
            <item row="1" column="0">
-            <widget class="QTextEdit" name="txtcomentario">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-            </widget>
+            <widget class="QTextEdit" name="txtcomentario"/>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="label_52">
@@ -2300,8 +2059,8 @@ color: rgb(255, 255, 255);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -2333,8 +2092,8 @@ color: rgb(0, 64, 64);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -2354,8 +2113,8 @@ color: rgb(0, 64, 64);</string>
          <item>
           <widget class="QLineEdit" name="txtDto_pp">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -2393,8 +2152,8 @@ color: rgb(0, 64, 64);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -2429,8 +2188,8 @@ color: rgb(0, 64, 64);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -2456,8 +2215,8 @@ color: rgb(0, 64, 64);</string>
             <bool>false</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -2489,8 +2248,8 @@ color: rgb(0, 64, 64);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>

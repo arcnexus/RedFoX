@@ -32,11 +32,6 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 127);
-font: 75 8pt &quot;Cantarell&quot;;</string>
-     </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
@@ -268,10 +263,6 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="1" column="0" colspan="2">
        <widget class="QTableWidget" name="tablaLineas">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 253, 219);</string>
-        </property>
         <property name="alternatingRowColors">
          <bool>true</bool>
         </property>

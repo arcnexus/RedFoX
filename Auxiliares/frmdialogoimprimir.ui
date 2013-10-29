@@ -33,9 +33,6 @@
    </item>
    <item row="2" column="1" colspan="3">
     <widget class="QFrame" name="frame_email">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(218, 218, 218);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -54,9 +51,6 @@
        <widget class="QLineEdit" name="txtEmail">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
@@ -78,9 +72,6 @@
    </item>
    <item row="1" column="1" colspan="3">
     <widget class="QFrame" name="frame">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(218, 218, 218);</string>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

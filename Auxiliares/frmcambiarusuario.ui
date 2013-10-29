@@ -17,9 +17,6 @@
    <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(170, 170, 127);</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
@@ -39,9 +36,6 @@
      </item>
      <item row="1" column="2">
       <widget class="QLineEdit" name="lineEdit_2">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>

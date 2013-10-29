@@ -44,7 +44,8 @@ background-color: rgb(248, 245, 194);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 127);</string>
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -107,7 +108,8 @@ background-color: rgb(248, 245, 194);</string>
          <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="spinCant">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -203,7 +205,8 @@ alternate-background-color: rgb(222, 255, 222);</string>
          <item row="1" column="1" colspan="3">
           <widget class="QLineEdit" name="txtDescripcion">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
@@ -223,7 +226,8 @@ alternate-background-color: rgb(222, 255, 222);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
@@ -244,7 +248,8 @@ alternate-background-color: rgb(222, 255, 222);</string>
          <item row="0" column="3">
           <widget class="QDoubleSpinBox" name="spinPVP">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -267,7 +272,8 @@ alternate-background-color: rgb(222, 255, 222);</string>
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="spinCantidad">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
           </widget>
          </item>
@@ -293,7 +299,8 @@ alternate-background-color: rgb(222, 255, 222);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>0,00</string>
@@ -308,6 +315,9 @@ alternate-background-color: rgb(222, 255, 222);</string>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Buscar por:</string>
         </property>
@@ -315,6 +325,9 @@ alternate-background-color: rgb(222, 255, 222);</string>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_10">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Sentido:</string>
         </property>
@@ -322,6 +335,9 @@ alternate-background-color: rgb(222, 255, 222);</string>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Filtro:</string>
         </property>
@@ -330,15 +346,24 @@ alternate-background-color: rgb(222, 255, 222);</string>
       <item row="4" column="1" colspan="6">
        <widget class="QLineEdit" name="txtBuscar">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1" colspan="4">
-       <widget class="QComboBox" name="cboSentido"/>
+       <widget class="QComboBox" name="cboSentido">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1" colspan="6">
-       <widget class="QComboBox" name="cboOrden"/>
+       <widget class="QComboBox" name="cboOrden">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -360,17 +385,10 @@ alternate-background-color: rgb(222, 255, 222);</string>
          <height>16777215</height>
         </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLineEdit" name="txtDesc_kit">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="txtDesc_kit"/>
      </item>
      <item row="0" column="3">
       <widget class="QLabel" name="label_8">
@@ -386,9 +404,6 @@ alternate-background-color: rgb(222, 255, 222);</string>
          <width>120</width>
          <height>16777215</height>
         </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>0,00</string>

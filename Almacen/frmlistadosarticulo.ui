@@ -48,7 +48,8 @@ color: rgb(0, 0, 0);</string>
       <item row="0" column="1" colspan="2">
        <widget class="QLineEdit" name="lineEdit">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>
@@ -73,7 +74,8 @@ color: rgb(0, 0, 0);</string>
       <item row="1" column="1" colspan="2">
        <widget class="QLineEdit" name="lineEdit_2">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>

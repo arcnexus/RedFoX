@@ -37,16 +37,10 @@ background-color: #304163;</string>
        <height>137</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>Orden de pedido por proveedor</string>
       </attribute>
@@ -157,9 +151,6 @@ background-color: #304163;</string>
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
          <property name="text">
           <string>0</string>
          </property>
@@ -200,9 +191,6 @@ background-color: #304163;</string>
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
          <property name="text">
           <string>A</string>
          </property>
@@ -223,20 +211,13 @@ background-color: #304163;</string>
            <height>0</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
          <property name="text">
           <string>Z</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2" colspan="8">
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="lineEdit"/>
        </item>
        <item row="3" column="5">
         <widget class="QLabel" name="label_4">
@@ -251,9 +232,6 @@ background-color: #304163;</string>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>Orden de pedido por producto</string>
       </attribute>
@@ -295,9 +273,6 @@ background-color: #304163;</string>
            <width>120</width>
            <height>16777215</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>0</string>
@@ -345,9 +320,6 @@ background-color: #304163;</string>
            <width>208</width>
            <height>0</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Z</string>
@@ -400,9 +372,6 @@ background-color: #304163;</string>
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
-         </property>
          <property name="text">
           <string>A</string>
          </property>
@@ -421,9 +390,6 @@ background-color: #304163;</string>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_5">
-      <property name="styleSheet">
-       <string notr="true">background-color: #ecefed;</string>
-      </property>
       <attribute name="title">
        <string>Ordenes Realizadas</string>
       </attribute>
@@ -484,9 +450,6 @@ background-color: #304163;</string>
    </item>
    <item row="2" column="0">
     <widget class="QTableWidget" name="tableWidget">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
-     </property>
      <property name="columnCount">
       <number>10</number>
      </property>
@@ -509,9 +472,6 @@ background-color: #304163;</string>
        <width>0</width>
        <height>61</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #ecefed;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -564,9 +524,6 @@ background-color: #304163;</string>
           <width>100</width>
           <height>16777215</height>
          </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 127);</string>
         </property>
         <property name="text">
          <string>0,00</string>

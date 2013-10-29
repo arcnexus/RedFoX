@@ -45,9 +45,6 @@
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="frame">
          <bool>true</bool>
         </property>
@@ -65,9 +62,6 @@
       </item>
       <item>
        <widget class="QDateEdit" name="txtFechaAnalitica">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
         </property>
@@ -103,9 +97,6 @@
       </item>
       <item>
        <widget class="QLineEdit" name="txtNombrePaciente">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="readOnly">
          <bool>false</bool>
         </property>
@@ -181,12 +172,7 @@
     </widget>
    </item>
    <item row="2" column="0" colspan="2">
-    <widget class="QTableWidget" name="tablaAnalitica">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255,255, 255);
-alternate-background-color: rgb(255, 253, 104);</string>
-     </property>
-    </widget>
+    <widget class="QTableWidget" name="tablaAnalitica"/>
    </item>
   </layout>
  </widget>

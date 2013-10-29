@@ -176,6 +176,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->margen = registro.field("margen").value().toDouble();
     this->margen_min = registro.field("margen_min").value().toDouble();
     this->coste_real = registro.field("coste_real").value().toDouble();
+    this->oferta32 = registro.field("oferta_32").value().toBool();
 
     // Recupero proveedor
     QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);

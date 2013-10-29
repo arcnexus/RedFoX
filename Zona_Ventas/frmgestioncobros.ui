@@ -16,10 +16,6 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="3" column="1" colspan="3">
     <widget class="QTableView" name="tabla_deuda">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(227, 255, 203);</string>
-     </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
@@ -76,7 +72,8 @@ alternate-background-color: rgb(227, 255, 203);</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(167, 255, 143);</string>
+      <string notr="true">background-color: rgb(167, 255, 143);
+color: rgb(0, 0, 0);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -110,9 +107,6 @@ alternate-background-color: rgb(227, 255, 203);</string>
        <width>364</width>
        <height>0</height>
       </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 244, 187);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -213,19 +207,10 @@ alternate-background-color: rgb(227, 255, 203);</string>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txtbuscar_cliente">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);</string>
-             </property>
-            </widget>
+            <widget class="QLineEdit" name="txtbuscar_cliente"/>
            </item>
            <item>
             <widget class="QTableView" name="tabla_clientes">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255, 211);
-font: 7pt &quot;Cantarell&quot;;</string>
-             </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -254,9 +239,6 @@ font: 7pt &quot;Cantarell&quot;;</string>
       </item>
       <item row="1" column="1">
        <widget class="QDateEdit" name="txtfecha_fin">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
         </property>
@@ -271,9 +253,6 @@ font: 7pt &quot;Cantarell&quot;;</string>
       </item>
       <item row="1" column="0">
        <widget class="QDateEdit" name="txtfecha_ini">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
         </property>

@@ -47,6 +47,9 @@ background-color: #304163;</string>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
        <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>De fecha:</string>
         </property>
@@ -54,6 +57,9 @@ background-color: #304163;</string>
       </item>
       <item row="0" column="4">
        <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>a Fecha:</string>
         </property>
@@ -62,7 +68,8 @@ background-color: #304163;</string>
       <item row="0" column="5">
        <widget class="QDateEdit" name="dateEdit_2">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
         </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
@@ -71,6 +78,9 @@ background-color: #304163;</string>
       </item>
       <item row="1" column="0" colspan="2">
        <widget class="QRadioButton" name="radioButton">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Facturar  Todos</string>
         </property>
@@ -78,6 +88,9 @@ background-color: #304163;</string>
       </item>
       <item row="1" column="2" colspan="2">
        <widget class="QRadioButton" name="radioButton_3">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Facturar Seleccionados</string>
         </property>
@@ -85,6 +98,9 @@ background-color: #304163;</string>
       </item>
       <item row="1" column="4" colspan="2">
        <widget class="QRadioButton" name="radioButton_2">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Facturar un solo cliente</string>
         </property>
@@ -92,6 +108,9 @@ background-color: #304163;</string>
       </item>
       <item row="2" column="0" colspan="2">
        <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>FActurar albaranes de:</string>
         </property>
@@ -123,7 +142,8 @@ background-color: #304163;</string>
       <item row="2" column="2" colspan="5">
        <widget class="QLineEdit" name="lineEdit">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>
@@ -141,7 +161,8 @@ color: rgb(255, 255, 255);</string>
       <item row="0" column="1">
        <widget class="QDateEdit" name="dateEdit">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
         </property>
         <property name="displayFormat">
          <string>dd/MM/yyyy</string>
@@ -152,11 +173,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QTableView" name="tableView">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 127);</string>
-     </property>
-    </widget>
+    <widget class="QTableView" name="tableView"/>
    </item>
   </layout>
  </widget>

@@ -74,7 +74,10 @@ public:
     double margen;
     double margen_min;
     double coste_real;
-
+    bool oferta32;
+    bool oferta__dto_web;
+    bool oferta_dto;
+    bool oferta_precio_fijo;
     Articulo(QObject* parent = 0);
     //-----------
     // Metodos

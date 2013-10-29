@@ -5,6 +5,10 @@ QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
     font: 10pt "Cantarell";
     /*color: black;*/
 }
+QTableView
+{
+    color:black
+}
 
 QStackedWidget
 {

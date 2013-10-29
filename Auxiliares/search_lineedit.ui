@@ -34,10 +34,6 @@
    </property>
    <item>
     <widget class="QLineEdit" name="lineEdit">
-     <property name="styleSheet">
-      <string notr="true">border-color: rgba(255, 255, 255,0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
      <property name="frame">
       <bool>false</bool>
      </property>
@@ -50,7 +46,7 @@ background-color: rgb(255, 255, 255);</string>
 border-color: rgba(255, 255, 255, 0);</string>
      </property>
      <property name="icon">
-      <iconset resource="../Maya.qrc">
+      <iconset resource="../maya.qrc">
        <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
      </property>
      <property name="flat">
@@ -61,7 +57,7 @@ border-color: rgba(255, 255, 255, 0);</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Maya.qrc"/>
+  <include location="../maya.qrc"/>
  </resources>
  <connections/>
 </ui>

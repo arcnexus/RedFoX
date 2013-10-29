@@ -17,7 +17,7 @@
    <item row="1" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout">
@@ -57,10 +57,6 @@ background-color: rgb(248, 245, 194);</string>
        </property>
        <item row="1" column="0" colspan="3">
         <widget class="QFrame" name="frame">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(236, 239, 237);
-background-color: rgb(165, 201, 255);</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -83,9 +79,6 @@ background-color: rgb(165, 201, 255);</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -96,11 +89,7 @@ background-color: rgb(165, 201, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txtTransportista">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="txtTransportista"/>
           </item>
          </layout>
         </widget>
@@ -122,9 +111,6 @@ background-color: rgb(165, 201, 255);</string>
               <height>16777215</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
            </widget>
           </item>
           <item row="0" column="0">
@@ -136,9 +122,6 @@ background-color: rgb(165, 201, 255);</string>
           </item>
           <item row="0" column="2">
            <widget class="QLineEdit" name="txtProveedor">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -164,10 +147,6 @@ background-color: rgb(165, 201, 255);</string>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0" colspan="5">
            <widget class="QTableView" name="tablaContactos">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 254, 202);</string>
-            </property>
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
@@ -181,9 +160,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="4" column="1">
            <widget class="QLineEdit" name="txtDescripcionT2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -191,9 +167,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="3" column="3" colspan="2">
            <widget class="QLineEdit" name="txtTelefono1">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -215,9 +188,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="3" column="1">
            <widget class="QLineEdit" name="txtDescripcionT1">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -225,9 +195,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="6" column="3" colspan="2">
            <widget class="QLineEdit" name="txtMovil1">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -235,9 +202,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="5" column="1">
            <widget class="QLineEdit" name="txtDescripcionT3">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -252,9 +216,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="5" column="3" colspan="2">
            <widget class="QLineEdit" name="txtTelefono3">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -276,9 +237,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="4" column="3" colspan="2">
            <widget class="QLineEdit" name="txtTelefono2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -286,9 +244,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="7" column="3" colspan="2">
            <widget class="QLineEdit" name="txtMovil2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -296,9 +251,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="1" column="1" colspan="4">
            <widget class="QLineEdit" name="txtNombre">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -320,9 +272,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="2" column="1" colspan="4">
            <widget class="QLineEdit" name="txtCargo">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -337,9 +286,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="6" column="1">
            <widget class="QLineEdit" name="txtDescripcionM1">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -361,9 +307,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="7" column="1">
            <widget class="QLineEdit" name="txtDescripcionM2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -392,9 +335,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
           </item>
           <item row="8" column="1" colspan="4">
            <widget class="QLineEdit" name="txtemail_contacto">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -422,9 +362,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
            <width>16777215</width>
            <height>35</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 235, 167);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -756,9 +693,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="11" column="2" colspan="8">
              <widget class="QLineEdit" name="txtpersona_contacto">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -771,9 +705,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <width>120</width>
                 <height>16777215</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -789,9 +720,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="0" column="6" colspan="4">
              <widget class="QDateEdit" name="txtfecha_alta">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -812,9 +740,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="4" column="1" colspan="4">
              <widget class="QLineEdit" name="txtprovincia">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -846,9 +771,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="1" column="1" colspan="9">
              <widget class="QLineEdit" name="txtdireccion1">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -856,9 +778,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="10" column="1" colspan="8">
              <widget class="QLineEdit" name="txtweb">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -866,9 +785,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="2" column="1" colspan="9">
              <widget class="QLineEdit" name="txtdireccion2">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -892,9 +808,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
               <property name="autoFillBackground">
                <bool>false</bool>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -908,9 +821,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <height>16777215</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -918,9 +828,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
             </item>
             <item row="8" column="1" colspan="9">
              <widget class="QLineEdit" name="txtemail">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -952,9 +859,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <height>16777215</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -967,9 +871,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <width>133</width>
                 <height>16777215</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -984,9 +885,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <height>16777215</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
-              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -999,9 +897,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <width>133</width>
                 <height>16777215</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -1028,9 +923,6 @@ alternate-background-color: rgb(255, 254, 202);</string>
                 <width>133</width>
                 <height>16777215</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>

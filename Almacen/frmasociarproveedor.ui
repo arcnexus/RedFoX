@@ -28,11 +28,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLineEdit" name="txtBuscarProveedores">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtBuscarProveedores"/>
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="btnFiltrar">
@@ -52,11 +48,7 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
-       <widget class="QTableView" name="tablaproveedores">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QTableView" name="tablaproveedores"/>
       </item>
      </layout>
      <zorder>tablaproveedores</zorder>
@@ -85,9 +77,6 @@
       </item>
       <item row="2" column="2">
        <widget class="QLineEdit" name="txtPVD">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="text">
          <string>0,00</string>
         </property>
@@ -98,9 +87,6 @@
       </item>
       <item row="3" column="2">
        <widget class="QLineEdit" name="txtpvd_real">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="text">
          <string>0,00</string>
         </property>
@@ -117,18 +103,10 @@
        </widget>
       </item>
       <item row="6" column="2">
-       <widget class="QLineEdit" name="txtDescoferta">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtDescoferta"/>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="txtCodigo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtCodigo"/>
       </item>
       <item row="6" column="0" colspan="2">
        <widget class="QLabel" name="label_3">
@@ -173,9 +151,6 @@
       </item>
       <item row="5" column="2">
        <widget class="QLineEdit" name="txtCambioDivisa">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="text">
          <string>0,00</string>
         </property>

@@ -89,7 +89,7 @@
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -426,11 +426,6 @@
            </item>
            <item row="1" column="0" colspan="3">
             <widget class="QTableWidget" name="Lineas">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(171, 171, 171);
-color: rgb(0, 0, 0);
-alternate-background-color: rgb(240,240,240);</string>
-             </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAsNeeded</enum>
              </property>

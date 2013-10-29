@@ -121,11 +121,7 @@ background-color: rgb(248, 245, 194);</string>
     </widget>
    </item>
    <item row="0" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtBuscar">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="txtBuscar"/>
    </item>
    <item row="0" column="3">
     <widget class="QComboBox" name="cboOrder"/>

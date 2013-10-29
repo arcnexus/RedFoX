@@ -27,7 +27,7 @@
    <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -2125,7 +2125,7 @@ alternate-background-color: rgb(255, 255,210);</string>
            <item row="6" column="0" colspan="2">
             <widget class="QFrame" name="frame_pvp_fijo">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="maximumSize">
               <size>
@@ -2214,7 +2214,7 @@ color: rgb(255, 255, 255);</string>
            <item row="3" column="0" colspan="2">
             <widget class="QFrame" name="frame_tipo_32">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2224,9 +2224,9 @@ color: rgb(255, 255, 255);</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_24">
               <item row="1" column="0">
-               <widget class="QLabel" name="label_58">
+               <widget class="QLabel" name="lbl_por_cada">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="maximumSize">
                  <size>
@@ -2242,7 +2242,7 @@ color: rgb(255, 255, 255);</string>
               <item row="1" column="1">
                <widget class="QLineEdit" name="txtOferta_por_cada">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -2265,9 +2265,9 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="1" column="2">
-               <widget class="QLabel" name="label_59">
+               <widget class="QLabel" name="lbl_unidades">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="maximumSize">
                  <size>
@@ -2281,9 +2281,9 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="1" column="3">
-               <widget class="QLabel" name="label_56">
+               <widget class="QLabel" name="lbl_regalo_de">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="maximumSize">
                  <size>
@@ -2299,7 +2299,7 @@ color: rgb(255, 255, 255);</string>
               <item row="1" column="4">
                <widget class="QLineEdit" name="txtOfertaregalo_de">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -2322,9 +2322,9 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="1" column="5">
-               <widget class="QLabel" name="label_60">
+               <widget class="QLabel" name="lbl_unidades_2">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="maximumSize">
                  <size>
@@ -2340,7 +2340,7 @@ color: rgb(255, 255, 255);</string>
               <item row="0" column="0" colspan="6">
                <widget class="QLabel" name="label_57">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -2412,7 +2412,7 @@ color: rgb(255, 255, 255);</string>
            <item row="4" column="0" colspan="2">
             <widget class="QFrame" name="frame_dto">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2495,7 +2495,7 @@ color: rgb(255, 255, 255);</string>
            <item row="5" column="0" colspan="2">
             <widget class="QFrame" name="frame_ofertaweb">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -2592,7 +2592,7 @@ color: rgb(255, 255, 255);</string>
            <item row="1" column="0" rowspan="2" colspan="2">
             <widget class="QFrame" name="framePromocion">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -2601,92 +2601,23 @@ color: rgb(255, 255, 255);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_34">
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_51">
+              <item row="3" column="0">
+               <widget class="QLabel" name="lblDescripcion_oferta">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="text">
                  <string>Descripción:</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
+              <item row="3" column="1">
                <widget class="QLineEdit" name="txtOferta_Descripcion_promocion">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="mandatoryField" stdset="0">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QCheckBox" name="chkOferta_32">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string> Oferta 3*2</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QCheckBox" name="chkOferta_dto">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Oferta % dto</string>
-                </property>
-                <property name="checked">
                  <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QCheckBox" name="chkOferta_pvp">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Oferta precio final</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QCheckBox" name="chkOferta_web">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Descuento especial web</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="btnEditarOferta">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Editar</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
                 </property>
                </widget>
               </item>
@@ -2710,7 +2641,76 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="chkOferta_32">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string> Oferta 3*2</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="chkOferta_dto">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Oferta % dto</string>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QCheckBox" name="chkOferta_pvp">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Oferta precio final</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QCheckBox" name="chkOferta_web">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Descuento especial web</string>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="0">
+               <widget class="QPushButton" name="btnEditarOferta">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Editar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
                <widget class="QPushButton" name="btnguardar_oferta">
                 <property name="enabled">
                  <bool>false</bool>
@@ -2792,33 +2792,15 @@ color: rgb(255, 255, 255);</string>
                <layout class="QGridLayout" name="gridLayout_6">
                 <item row="1" column="0" colspan="5">
                  <widget class="QTableView" name="tabla_ofertas">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(213, 218, 255);
-alternate-background-color: rgb(255, 255, 255);</string>
-                  </property>
                   <property name="alternatingRowColors">
                    <bool>true</bool>
                   </property>
-                 </widget>
-                </item>
-                <item row="2" column="4">
-                 <widget class="QPushButton" name="btnBorrar_oferta">
-                  <property name="enabled">
+                  <attribute name="horizontalHeaderStretchLastSection">
+                   <bool>true</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderVisible">
                    <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Borrar</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../maya.qrc">
-                    <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
-                  </property>
+                  </attribute>
                  </widget>
                 </item>
                 <item row="0" column="0" colspan="5">
@@ -2838,6 +2820,40 @@ color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1" colspan="4">
+                 <widget class="QPushButton" name="btnBorrar_oferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Borrar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../maya.qrc">
+                    <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="btnActivarOferta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Activar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../maya.qrc">
+                    <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
                   </property>
                  </widget>
                 </item>

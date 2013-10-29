@@ -80,7 +80,7 @@
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -493,10 +493,6 @@
            </item>
            <item row="1" column="0" colspan="5">
             <widget class="QTableWidget" name="Lineas">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255, 219);</string>
-             </property>
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAsNeeded</enum>
              </property>
@@ -619,10 +615,6 @@ alternate-background-color: rgb(255, 255, 219);</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 192);
-color: rgb(0, 64, 64);</string>
                 </property>
                 <property name="displayFormat">
                  <string>dd/MM/yyyy</string>
@@ -854,7 +846,8 @@ color: rgb(0, 64, 64);</string>
            <item row="2" column="1" rowspan="3">
             <widget class="QGroupBox" name="groupBox_3">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(170, 170, 127);</string>
+              <string notr="true">background-color: rgb(170, 170, 127);
+color: rgb(0, 0, 0);</string>
              </property>
              <property name="title">
               <string>Entregas a cuenta:</string>
@@ -1778,6 +1771,10 @@ color: rgb(0, 64, 64);</string>
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1806,6 +1803,10 @@ color: rgb(0, 64, 64);</string>
               <width>1000</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>0,00</string>
@@ -1839,6 +1840,10 @@ color: rgb(0, 64, 64);</string>
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1865,6 +1870,10 @@ color: rgb(0, 64, 64);</string>
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+            </property>
             <property name="text">
              <string>0,00</string>
             </property>
@@ -1884,6 +1893,10 @@ color: rgb(0, 64, 64);</string>
            <widget class="QLineEdit" name="txttotal_recargo">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>0,00</string>
@@ -1910,6 +1923,10 @@ color: rgb(0, 64, 64);</string>
               <width>1000</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>0,00</string>

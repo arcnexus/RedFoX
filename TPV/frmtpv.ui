@@ -124,9 +124,6 @@ color: rgb(212, 214, 255);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -134,7 +131,7 @@ color: rgb(212, 214, 255);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="stackedWidgetticketPage1">
          <layout class="QGridLayout" name="gridLayout">
@@ -676,7 +673,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           <item row="0" column="0">
            <widget class="QPushButton" name="btnAbrirCaja">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Abrir
@@ -697,7 +695,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           <item row="0" column="1">
            <widget class="QPushButton" name="btnCerrarCaja">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Cerrar
@@ -718,7 +717,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           <item row="1" column="0">
            <widget class="QPushButton" name="btnRetirardinero">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Retirar
@@ -739,7 +739,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           <item row="1" column="1">
            <widget class="QPushButton" name="btnInsertarDinero">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Insertar dinero</string>
@@ -759,7 +760,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
           <item row="3" column="0">
            <widget class="QPushButton" name="btnEmitirVale">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Emitir
@@ -780,7 +782,8 @@ Vale</string>
           <item row="3" column="1">
            <widget class="QPushButton" name="btnDevolucionTicket">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Devolución
@@ -814,7 +817,8 @@ Vale</string>
           <item row="2" column="0">
            <widget class="QPushButton" name="btnExtrasCaja">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Extras -Caja</string>
@@ -858,6 +862,7 @@ Vale</string>
            <widget class="QLineEdit" name="txtInternet">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -872,6 +877,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <widget class="QLineEdit" name="txtVales">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -930,7 +936,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>[n] - Cobrar + Imprimir+nuevo</string>
@@ -977,7 +984,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>[o] - Continuar edición ticket</string>
@@ -1006,6 +1014,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <widget class="QLineEdit" name="txtCheque">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -1020,6 +1029,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <widget class="QLineEdit" name="txtDomiciliacion">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -1039,7 +1049,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>[u] - Cobrar + nuevo</string>
@@ -1081,7 +1092,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>[a] - Cobrar + Imprimir</string>
@@ -1105,6 +1117,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <widget class="QLineEdit" name="txtTarjeta">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -1137,6 +1150,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <widget class="QLineEdit" name="txtEfectivo">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -1156,7 +1170,8 @@ font: 12pt &quot;Sans Serif&quot;;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 255, 127);</string>
+             <string notr="true">background-color: rgb(170, 255, 127);
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>[b] - Cobrar y volver a ticket</string>
@@ -1245,6 +1260,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <widget class="QLineEdit" name="txtTransferencia">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 font: 12pt &quot;Sans Serif&quot;;</string>
             </property>
             <property name="text">
@@ -1412,6 +1428,7 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1429,6 +1446,7 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="text">
@@ -1446,6 +1464,7 @@ background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1463,6 +1482,7 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1480,6 +1500,7 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="text">
@@ -1497,6 +1518,7 @@ background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1568,6 +1590,7 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1677,6 +1700,7 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1812,6 +1836,7 @@ background-color: rgb(255, 255, 191);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1829,6 +1854,7 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1867,6 +1893,7 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1884,6 +1911,7 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -1901,6 +1929,7 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="text">
@@ -1918,6 +1947,7 @@ background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="text">
@@ -2047,6 +2077,7 @@ color: rgb(255, 255, 255);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="text">
@@ -2064,6 +2095,7 @@ background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);
 background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="text">
@@ -2081,7 +2113,7 @@ background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
-color: rgb(255, 255, 255);</string>
+color: rgb(0, 0, 0);</string>
             </property>
             <property name="text">
              <string>Intro</string>
@@ -2126,7 +2158,8 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
           <item row="0" column="1">
            <widget class="QLineEdit" name="txtbuscar_art">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
             </property>
            </widget>
           </item>
@@ -2302,9 +2335,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
       <layout class="QGridLayout" name="gridLayout_8">
        <item row="5" column="0">
         <widget class="QFrame" name="frame_4">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(232, 232, 232);</string>
-         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -2328,9 +2358,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
                 <width>60</width>
                 <height>16777215</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
@@ -2464,9 +2491,6 @@ font: 12pt &quot;Sans Serif&quot;;</string>
               <width>120</width>
               <height>16777215</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">
              <string>0,00</string>

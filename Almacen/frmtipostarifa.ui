@@ -48,9 +48,6 @@
           <height>16777215</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
        </widget>
       </item>
       <item row="1" column="0">
@@ -67,11 +64,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="txtDescripcion">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txtDescripcion"/>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_6">
@@ -81,11 +74,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="cboPais">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="cboPais"/>
       </item>
       <item row="2" column="2">
        <widget class="QLabel" name="label_7">
@@ -95,11 +84,7 @@
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QComboBox" name="cboMoneda">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="cboMoneda"/>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_13">
@@ -116,9 +101,6 @@
           <height>16777215</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
@@ -133,9 +115,6 @@
       </item>
       <item row="3" column="3">
        <widget class="QDoubleSpinBox" name="spnMargen_min">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
@@ -228,46 +207,22 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLineEdit" name="txtporc_dto1">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="txtporc_dto1"/>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="txtporc_dto2">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="txtporc_dto2"/>
         </item>
         <item row="1" column="2">
-         <widget class="QLineEdit" name="txtporc_dto3">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="txtporc_dto3"/>
         </item>
         <item row="1" column="3">
-         <widget class="QLineEdit" name="txtporc_dto4">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="txtporc_dto4"/>
         </item>
         <item row="1" column="4">
-         <widget class="QLineEdit" name="txtporc_dto5">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="txtporc_dto5"/>
         </item>
         <item row="1" column="5">
-         <widget class="QLineEdit" name="txtporc_dto6">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="txtporc_dto6"/>
         </item>
        </layout>
       </item>
@@ -334,6 +289,9 @@ color: rgb(255, 255, 255);</string>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="5">
        <widget class="QPushButton" name="btnCerrar">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Cerrar</string>
         </property>
@@ -364,6 +322,9 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="btnGuardar">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Guardar</string>
         </property>
@@ -381,6 +342,9 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="0" column="3">
        <widget class="QPushButton" name="btnDeshacer">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Deshacer</string>
         </property>
@@ -398,6 +362,9 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="btnEditar">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Editar</string>
         </property>
@@ -415,6 +382,9 @@ color: rgb(255, 255, 255);</string>
       </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="btnAnadir">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
         <property name="text">
          <string>Añadir tarifa</string>
         </property>
@@ -442,6 +412,51 @@ color: rgb(255, 255, 255);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
+      <item row="8" column="2">
+       <widget class="QPushButton" name="btnAgregarTarifa">
+        <property name="text">
+         <string>Agregar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QRadioButton" name="radGrupoArticulo">
+        <property name="text">
+         <string>por Grupo Artículo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QRadioButton" name="radSubSubFamilia">
+        <property name="text">
+         <string>por Sub-Sub-Familia</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QRadioButton" name="radTodos">
+        <property name="text">
+         <string>Todos los productos y servicios</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="radSeccion">
+        <property name="text">
+         <string>Por Seccion</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QRadioButton" name="radFamilia">
+        <property name="text">
+         <string>por Familia</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0" colspan="3">
        <widget class="QLabel" name="label_12">
         <property name="maximumSize">
@@ -462,94 +477,13 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QRadioButton" name="radTodos">
-        <property name="text">
-         <string>Todos los productos y servicios</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QRadioButton" name="radSeccion">
-        <property name="text">
-         <string>Por Seccion</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QRadioButton" name="radFamilia">
-        <property name="text">
-         <string>por Familia</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QRadioButton" name="radSubfamilia">
-        <property name="text">
-         <string>por Sub-Familia</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QRadioButton" name="radSubSubFamilia">
-        <property name="text">
-         <string>por Sub-Sub-Familia</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QRadioButton" name="radGrupoArticulo">
-        <property name="text">
-         <string>por Grupo Artículo</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="2">
-       <widget class="QPushButton" name="btnAgregarTarifa">
-        <property name="text">
-         <string>Agregar</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSeccion">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1" colspan="2">
-       <widget class="QComboBox" name="cboFamilia">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSubFamilia">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="cboFamilia"/>
       </item>
-      <item row="5" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSubSubFamilia">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+      <item row="7" column="1" colspan="2">
+       <widget class="QComboBox" name="cboGrupoArticulo"/>
       </item>
-      <item row="6" column="1" colspan="2">
-       <widget class="QComboBox" name="cboGrupoArticulo">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0" colspan="2">
+      <item row="8" column="0" colspan="2">
        <widget class="QLabel" name="lblDescArt">
         <property name="styleSheet">
          <string notr="true">color: rgb(0, 0, 127);</string>
@@ -558,6 +492,22 @@ color: rgb(255,255,255);</string>
          <string>desc- articulo</string>
         </property>
        </widget>
+      </item>
+      <item row="6" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSubSubFamilia"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QRadioButton" name="radSubfamilia">
+        <property name="text">
+         <string>por Sub-Familia</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSubFamilia"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QComboBox" name="cboSeccion"/>
       </item>
      </layout>
     </widget>
@@ -575,7 +525,6 @@ color: rgb(255,255,255);</string>
   <tabstop>btnCerrar</tabstop>
   <tabstop>radTodos</tabstop>
   <tabstop>radSeccion</tabstop>
-  <tabstop>cboSeccion</tabstop>
   <tabstop>radFamilia</tabstop>
   <tabstop>cboFamilia</tabstop>
   <tabstop>radSubfamilia</tabstop>

@@ -353,9 +353,6 @@ color: rgb(255, 255, 255);</string>
           <height>0</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
         <property name="text">
          <string>0</string>
         </property>
@@ -372,11 +369,7 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="txt_nombre_user">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txt_nombre_user"/>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_39">
@@ -389,9 +382,6 @@ color: rgb(255, 255, 255);</string>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLineEdit" name="txt_pass_user">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
           </property>
@@ -414,11 +404,7 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item row="3" column="1" colspan="2">
-       <widget class="QLineEdit" name="txt_categoria_user">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="txt_categoria_user"/>
       </item>
       <item row="4" column="0" colspan="2">
        <widget class="QLabel" name="label_3">

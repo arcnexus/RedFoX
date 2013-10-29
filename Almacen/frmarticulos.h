@@ -24,8 +24,7 @@ public:
     QSqlQueryModel *modelProv;
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
-    QSqlQueryModel * model_ofertas;
-
+    QSqlQueryModel *promociones;
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
@@ -121,14 +120,6 @@ private slots:
     void on_btnDeshacer_oferta_clicked();
     
 
-    
-    void on_chkOferta_32_toggled(bool checked);
-
-    void on_chkOferta_dto_toggled(bool checked);
-
-    void on_chkOferta_pvp_toggled(bool checked);
-
-    void on_chkOferta_web_toggled(bool checked);
 
     void on_btnExcepciones_3_clicked();
 
@@ -142,6 +133,10 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void on_btnEditarOferta_clicked();
+
+    void on_chkOferta_32_toggled(bool checked);
+
 public slots:
     void AnadirSeccion();
 
