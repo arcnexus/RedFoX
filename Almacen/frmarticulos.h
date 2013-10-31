@@ -25,6 +25,7 @@ public:
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
     QSqlQueryModel *promociones;
+    QSqlQueryModel *volumen;
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
@@ -137,6 +138,24 @@ private slots:
 
     void on_chkOferta_32_toggled(bool checked);
 
+    void on_chkOferta_dto_toggled(bool checked);
+
+    void on_chkOferta_web_toggled(bool checked);
+
+    void on_chkOferta_pvp_toggled(bool checked);
+
+    void on_btnActivarOferta_clicked();
+
+    void on_btnBorrar_oferta_clicked();
+
+    void on_btnAnadir_volumen_clicked();
+
+    void on_txtPrecio_volumen_editingFinished();
+
+    void on_btnEditar_volumen_clicked();
+
+    void on_btnGuardar_volumen_clicked();
+
 public slots:
     void AnadirSeccion();
 
@@ -145,6 +164,7 @@ private:
     Ui::FrmArticulos *ui;
     bool eventFilter(QObject *target, QEvent *event);
     bool Altas;
+    bool new_volumen;
     void bloquearCampos(bool state);
     void LLenarCampos();
     void CargarCamposEnArticulo();

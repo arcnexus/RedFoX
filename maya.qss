@@ -3,8 +3,17 @@ QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
 {
     font: normal;
     font: 10pt "Cantarell";
-    /*color: black;*/
+
 }
+QTextEdit:enabled, QSpinBox,QDoubleSpinBox, QComboBox, QLineEdit, QDateEdit, QDateTimeEdit
+    {
+    color: black;
+    background-color:#f6f6f0;
+}/*
+QLineEdit:read-only,QTextEdit {
+    background-color: #787878;
+    }
+*/
 QTableView
 {
     color:black
@@ -37,9 +46,15 @@ color :#000000;
 }*/
 
 
-*[mandatoryField="true"]
+*[codeField="true"]
 {
     background-color: #f3eea6;
+    color:black;
+}
+
+*[locateField="true"]
+{
+    background-color: #e7e5bf;
     color:black;
 }
 

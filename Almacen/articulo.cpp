@@ -176,7 +176,6 @@ void Articulo::Cargar(QSqlRecord registro)
     this->margen = registro.field("margen").value().toDouble();
     this->margen_min = registro.field("margen_min").value().toDouble();
     this->coste_real = registro.field("coste_real").value().toDouble();
-    this->oferta32 = registro.field("oferta_32").value().toBool();
 
     // Recupero proveedor
     QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
@@ -306,6 +305,7 @@ void Articulo::Guardar()
     articulo["margen"] = this->margen;
     articulo["margen_min"] = this->margen_min;
     articulo["coste_real"] = this->coste_real;
+    articulo["articulo_promocionado"] = this->articulo_promocionado;
 
     bool success = SqlCalls::SqlUpdate(articulo,"articulos",Configuracion_global->groupDB,
                                        QString("id = %1").arg(this->id),error);
@@ -364,13 +364,6 @@ void Articulo::Vaciar()
     this->etiquetas = 0;
     this->localizacion_en_almacen = "";
     this->articulo_promocionado = false;
-    this->descripcion_promocion = "";
-    this->tipo_oferta = 0;
-    this->por_cada = 0;
-    this->regalo_de = 0;
-    this->porc_dto_web = 0;
-    this->oferta_pvp_fijo = 0;
-    this->comentario_oferta = "";
     this->margen = 0;
     this->margen_min = 0;
     this->nstock_fisico_almacen =0;

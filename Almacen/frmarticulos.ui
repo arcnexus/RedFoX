@@ -27,7 +27,7 @@
    <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -434,6 +434,71 @@ Editar
          </layout>
         </widget>
        </item>
+       <item row="0" column="5">
+        <widget class="QLabel" name="lblkit">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>KIT</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="lbl_en_promocion">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>19</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>En Promoción</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="1" column="1" colspan="5">
         <widget class="QTabWidget" name="Pestanas">
          <property name="sizePolicy">
@@ -454,7 +519,7 @@ Editar
           </font>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <property name="styleSheet">
@@ -717,7 +782,7 @@ Editar
                   <height>16777215</height>
                  </size>
                 </property>
-                <property name="mandatoryField" stdset="0">
+                <property name="codeField" stdset="0">
                  <bool>true</bool>
                 </property>
                </widget>
@@ -760,6 +825,9 @@ Editar
                   <width>120</width>
                   <height>16777215</height>
                  </size>
+                </property>
+                <property name="testField" stdset="0">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1051,6 +1119,9 @@ Editar
                <height>24</height>
               </size>
              </property>
+             <property name="locateField" stdset="0">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="3" column="2" colspan="4">
@@ -1137,10 +1208,16 @@ Editar
                 <item>
                  <widget class="QLineEdit" name="txtseccion">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locateField" stdset="0">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1193,10 +1270,16 @@ Editar
                 <item>
                  <widget class="QLineEdit" name="txtfamilia">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locateField" stdset="0">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1246,10 +1329,16 @@ Editar
                 <item>
                  <widget class="QLineEdit" name="txtsubfamilia">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locateField" stdset="0">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1299,10 +1388,16 @@ Editar
                 <item>
                  <widget class="QLineEdit" name="txtcSubSubFamilia">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locateField" stdset="0">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1352,10 +1447,16 @@ Editar
                 <item>
                  <widget class="QLineEdit" name="txtcGupoArt">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="locateField" stdset="0">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1415,10 +1516,6 @@ Editar
                  <width>16777215</width>
                  <height>299</height>
                 </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255,210);</string>
                </property>
                <property name="editTriggers">
                 <set>QAbstractItemView::AllEditTriggers</set>
@@ -2180,7 +2277,7 @@ color: rgb(255, 255, 255);</string>
                </spacer>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="label_64">
+               <widget class="QLabel" name="lbl_oferta_importe">
                 <property name="text">
                  <string>Importe:</string>
                 </property>
@@ -2379,13 +2476,6 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="6">
-            <widget class="QCheckBox" name="chkOfertaActiva">
-             <property name="text">
-              <string>Oferta Activa</string>
-             </property>
-            </widget>
-           </item>
            <item row="7" column="0">
             <spacer name="verticalSpacer_3">
              <property name="orientation">
@@ -2461,7 +2551,7 @@ color: rgb(255, 255, 255);</string>
                </spacer>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="label_62">
+               <widget class="QLabel" name="lbl_oferta_dto">
                 <property name="text">
                  <string>% Descuento:</string>
                 </property>
@@ -2524,14 +2614,14 @@ color: rgb(255, 255, 255);</string>
                </spacer>
               </item>
               <item>
-               <widget class="QLabel" name="label_66">
+               <widget class="QLabel" name="lbl_dto_web">
                 <property name="text">
                  <string>Dto Especial web:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_67">
+               <widget class="QLabel" name="lbl_dto_web2">
                 <property name="text">
                  <string>% Descuento:</string>
                 </property>
@@ -2858,6 +2948,189 @@ color: rgb(255, 255, 255);</string>
                  </widget>
                 </item>
                </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Precios por volumen</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_40">
+           <item row="0" column="3">
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>218</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>218</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <widget class="QFrame" name="frame_3">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_41">
+              <item row="0" column="0" colspan="2">
+               <widget class="QFrame" name="frame_19">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_32">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>desde</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_38">
+                   <property name="text">
+                    <string>precio:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="txtPrecio_volumen">
+                   <property name="text">
+                    <string>0,00</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_17">
+                   <property name="text">
+                    <string>hasta</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QDoubleSpinBox" name="spinDesde">
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QDoubleSpinBox" name="spinHasta">
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="2" rowspan="3">
+               <widget class="QTableView" name="tabla_volumenes"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="btnAnadir_volumen">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Añadir</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btnGuardar_volumen">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Guardar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="btnEditar_volumen">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Editar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="btnDeshacer_volumen">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Deshacer</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -5827,71 +6100,6 @@ alternate-background-color: rgb(255, 255, 255);</string>
          </widget>
         </widget>
        </item>
-       <item row="0" column="5">
-        <widget class="QLabel" name="lblkit">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>KIT</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QLabel" name="lbl_en_promocion">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>19</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 85, 0);
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="text">
-          <string>En Promoción</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <spacer name="horizontalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
@@ -6135,6 +6343,39 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>txtImporte_ventas_agosto</tabstop>
   <tabstop>btnRetirarLote</tabstop>
   <tabstop>btnEditarLote</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>btnExcepciones_3</tabstop>
+  <tabstop>btnKit</tabstop>
+  <tabstop>txtCoste_real</tabstop>
+  <tabstop>txtdto</tabstop>
+  <tabstop>txtseccion</tabstop>
+  <tabstop>botBuscarSeccion</tabstop>
+  <tabstop>botBuscarFamilia</tabstop>
+  <tabstop>botBuscarSubfamilia</tabstop>
+  <tabstop>botBuscarSubSubFamilia</tabstop>
+  <tabstop>botBuscarGrupo</tabstop>
+  <tabstop>txtOfertaregalo_de</tabstop>
+  <tabstop>txtOferta_Fecha_fin</tabstop>
+  <tabstop>txtOferta_Fecha_ini</tabstop>
+  <tabstop>chkMostrar_en_cuadro</tabstop>
+  <tabstop>btnAnadir_oferta</tabstop>
+  <tabstop>chkOferta_pvp</tabstop>
+  <tabstop>chkOferta_web</tabstop>
+  <tabstop>btnEditarOferta</tabstop>
+  <tabstop>btnguardar_oferta</tabstop>
+  <tabstop>btnDeshacer_oferta</tabstop>
+  <tabstop>tabla_ofertas</tabstop>
+  <tabstop>btnBorrar_oferta</tabstop>
+  <tabstop>btnActivarOferta</tabstop>
+  <tabstop>tabla</tabstop>
+  <tabstop>tabla_volumenes</tabstop>
+  <tabstop>btnAnadir_volumen</tabstop>
+  <tabstop>btnEditar_volumen</tabstop>
+  <tabstop>btnGuardar_volumen</tabstop>
+  <tabstop>btnDeshacer_volumen</tabstop>
+  <tabstop>spinDesde</tabstop>
+  <tabstop>spinHasta</tabstop>
+  <tabstop>txtPrecio_volumen</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

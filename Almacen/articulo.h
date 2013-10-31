@@ -63,21 +63,10 @@ public:
     int unidades_vendidas;
     double coste;
     bool articulo_promocionado;
-    QString descripcion_promocion;
-    int tipo_oferta;
     bool mostrar_en_cuadro;
-    int por_cada;
-    int regalo_de;
-    float porc_dto_web;
-    double oferta_pvp_fijo;
-    QString comentario_oferta;
     double margen;
     double margen_min;
     double coste_real;
-    bool oferta32;
-    bool oferta__dto_web;
-    bool oferta_dto;
-    bool oferta_precio_fijo;
     Articulo(QObject* parent = 0);
     //-----------
     // Metodos
