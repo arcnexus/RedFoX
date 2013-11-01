@@ -156,6 +156,22 @@ private slots:
 
     void on_btnGuardar_volumen_clicked();
 
+    void on_tabla_volumenes_clicked(const QModelIndex &index);
+
+    void on_btnDeshacer_volumen_clicked();
+
+    void on_btnBorrar_volumen_clicked();
+
+    void on_btnBorrarImagen_1_clicked();
+
+    void on_btnBorrarimagen_2_clicked();
+
+    void on_btnBorrarImagen_3_clicked();
+
+    void on_btnBorrarimagen_4_clicked();
+
+    void on_Pestanas_currentChanged(int index);
+
 public slots:
     void AnadirSeccion();
 

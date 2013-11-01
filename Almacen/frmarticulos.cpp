@@ -149,6 +149,8 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
 
     bloquearCampos(true);
 
+
+
     //----------------------
     // CONTROL DE EVENTOS
     //----------------------
@@ -346,6 +348,10 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->botCambiarImagen_2->setEnabled(!state);
     ui->botCambiarImagen_3->setEnabled(!state);
     ui->botCambiarImagen_4->setEnabled(!state);
+    ui->btnBorrarImagen_1->setEnabled(!state);
+    ui->btnBorrarimagen_2->setEnabled(!state);
+    ui->btnBorrarImagen_3->setEnabled(!state);
+    ui->btnBorrarimagen_4->setEnabled(!state);
     ui->botBuscarGrupo->setEnabled(!state);
     ui->btnBuscarProveedor->setEnabled(!state);
     ui->btnAnadirProveedores->setEnabled(!state);
@@ -378,6 +384,10 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->chkOferta_dto->setEnabled(false);
     ui->chkOferta_pvp->setEnabled(false);
     ui->chkOferta_web->setEnabled(false);
+
+    ui->spinDesde->setEnabled(false);
+    ui->spinHasta->setEnabled(false);
+    ui->txtPrecio_volumen->setEnabled(false);
 
 
     m_busqueda->block(!state);
@@ -443,6 +453,10 @@ void FrmArticulos::LLenarCampos()
    //-----------------------------
    // Recuperamos imagen desde BD
    //-----------------------------
+   ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+   ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+   ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+   ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
    oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
                            ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
 
@@ -468,12 +482,14 @@ void FrmArticulos::LLenarCampos()
   //-----------------------------
   promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
                         Configuracion_global->empresaDB);
+  ui->tabla_ofertas->selectRow(0);
 
   //----------------------------------
   // LLENO VENTAS POR VOLUMEN COMPRA
   //----------------------------------
   volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(
                         oArticulo->id),Configuracion_global->groupDB);
+  ui->tabla_volumenes->selectRow(0);
 
   // ------------------
   // LLENO TABLAS DATOS
@@ -2017,22 +2033,22 @@ void FrmArticulos::togglechkmostrarvalores_comparativa()
 
 void FrmArticulos::on_botCambiarImagen_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_1,"bImagen");
+    CambiarImagen_clicked(ui->lblImagenArticulo_1,"imagen");
 }
 
 void FrmArticulos::on_botCambiarImagen_2_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_2,"bImagen2");
+    CambiarImagen_clicked(ui->lblImagenArticulo_2,"imagen2");
 }
 
 void FrmArticulos::on_botCambiarImagen_3_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_3,"bImagen3");
+    CambiarImagen_clicked(ui->lblImagenArticulo_3,"imagen3");
 }
 
 void FrmArticulos::on_botCambiarImagen_4_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_4,"bImagen4");
+    CambiarImagen_clicked(ui->lblImagenArticulo_4,"imagen4");
 }
 
 void FrmArticulos::actualizar()
@@ -2485,7 +2501,7 @@ void FrmArticulos::on_btnEditar_volumen_clicked()
     ui->txtPrecio_volumen->setEnabled(true);
     ui->spinDesde->setFocus();
     ui->spinDesde->selectAll();
-    new_volumen = true;
+    new_volumen = false;
 
 }
 
@@ -2515,13 +2531,117 @@ void FrmArticulos::on_btnGuardar_volumen_clicked()
             QMessageBox::warning(this,tr("Gestión de Artículos"),
                                  tr("Se ha producido un error al insertar precio segun volumen: %1").arg(error));
 
-    }   else{
-        int id_vol;
-        QModelIndex index;
-        id_vol = ui->tabla_volumenes->model()->data(ui->tabla_volumenes->model()->index(index.row(),0)).toInt();
-        bool succes = SqlCalls::SqlUpdate(h,"articulos_volumen",Configuracion_global->groupDB,QString("id = %1").arg(id_vol),error);
-        if(!succes)
-            QMessageBox::warning(this,tr("Gestión de Artículos"),
-                                 tr("Se ha producido un error al editar precio segun volumen: %1").arg(error));
+    }   else
+    {
+            int id_vol;
+            QModelIndex index;
+            index = ui->tabla_volumenes->currentIndex();
+            id_vol = ui->tabla_volumenes->model()->data(ui->tabla_volumenes->currentIndex().model()->index(index.row(),0)).toInt();
+
+            bool succes = SqlCalls::SqlUpdate(h,"articulos_volumen",Configuracion_global->groupDB,QString("id = %1").arg(id_vol),error);
+            if(!succes)
+                QMessageBox::warning(this,tr("Gestión de Artículos"),
+                                     tr("Se ha producido un error al editar precio segun volumen: %1").arg(error));
+
     }
+    volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(oArticulo->id),
+                      Configuracion_global->groupDB);
+}
+
+void FrmArticulos::on_tabla_volumenes_clicked(const QModelIndex &index)
+{
+    int id = ui->tabla_volumenes->model()->data(index.model()->index(index.row(),0)).toInt();
+    QMap <int, QSqlRecord> m;
+    QString error;
+    m = SqlCalls::SelectRecord("articulos_volumen",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+    if(error.isEmpty())
+    {
+        ui->spinDesde->setValue(m.value(id).value("desde").toFloat());
+        ui->spinHasta->setValue(m.value(id).value("hasta").toFloat());
+        ui->txtPrecio_volumen->setText(Configuracion_global->toFormatoMoneda(m.value(id).value("precio").toString()));
+    }
+}
+
+void FrmArticulos::on_btnDeshacer_volumen_clicked()
+{
+    ui->btnAnadir_volumen->setEnabled(true);
+    ui->btnEditar_volumen->setEnabled(true);
+    ui->botGuardar->setEnabled(true);
+    ui->botDeshacer->setEnabled(true);
+    ui->btnGuardar_volumen->setEnabled(false);
+    ui->btnDeshacer_volumen->setEnabled(false);
+    ui->spinDesde->setEnabled(false);
+    ui->spinHasta->setEnabled(false);
+    ui->txtPrecio_volumen->setEnabled(false);
+    on_tabla_volumenes_clicked(ui->tabla_volumenes->currentIndex());
+}
+
+void FrmArticulos::on_btnBorrar_volumen_clicked()
+{
+    QModelIndex index = ui->tabla_volumenes->currentIndex();
+    int id = ui->tabla_volumenes->model()->data(ui->tabla_volumenes->model()->index(index.row(),0)).toInt();
+    if(QMessageBox::question(this,tr("Gestión de producto"),tr("¿Desea borrar esta oferta por volumen? \n Esta opción no se puede deshacer"),
+                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
+    {
+        QString error;
+        bool succes = SqlCalls::SqlDelete("articulos_volumen",Configuracion_global->groupDB,QString("id=%1").arg(id),error);
+        if (!succes)
+            QMessageBox::warning(this,tr("Gestión de productos"),tr("Ocurrió un error al borrar oferta por volumen : %1").arg(error));
+    }
+    volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(oArticulo->id),
+                      Configuracion_global->groupDB);
+
+}
+
+void FrmArticulos::on_btnBorrarImagen_1_clicked()
+{
+    QHash <QString, QVariant> h;
+    QString error;
+    h["imagen"] = 'NULL';
+    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    if(!succes)
+        QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
+    else
+          ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+}
+
+void FrmArticulos::on_btnBorrarimagen_2_clicked()
+{
+    QHash <QString, QVariant> h;
+    QString error;
+    h["imagen2"] = "";
+    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    if(!succes)
+        QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
+    else
+          ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+}
+
+void FrmArticulos::on_btnBorrarImagen_3_clicked()
+{
+    QHash <QString, QVariant> h;
+    QString error;
+    h["imagen3"] = "";
+    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    if(!succes)
+        QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
+    else
+          ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+}
+
+void FrmArticulos::on_btnBorrarimagen_4_clicked()
+{
+    QHash <QString, QVariant> h;
+    QString error;
+    h["imagen4"] = "";
+    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    if(!succes)
+        QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
+    else
+          ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+}
+
+void FrmArticulos::on_Pestanas_currentChanged(int index)
+{
+    int i = 0;
 }

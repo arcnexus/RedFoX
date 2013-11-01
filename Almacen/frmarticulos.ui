@@ -519,7 +519,7 @@ color: rgb(255, 255, 255);</string>
           </font>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <property name="styleSheet">
@@ -1665,7 +1665,7 @@ color: rgb(255, 255, 255);</string>
             </layout>
            </item>
            <item>
-            <widget class="OpenChart" name="graf_prov" native="true">
+            <widget class="OpenChart" name="graf_prov">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -1678,7 +1678,7 @@ color: rgb(255, 255, 255);</string>
                <height>232</height>
               </size>
              </property>
-             <property name="Title" stdset="0">
+             <property name="Title">
               <string>PVD Distribuidores</string>
              </property>
              <property name="Etiquetas" stdset="0">
@@ -1690,7 +1690,7 @@ color: rgb(255, 255, 255);</string>
              <property name="Leyenda" stdset="0">
               <bool>false</bool>
              </property>
-             <property name="animationDuration" stdset="0">
+             <property name="animationDuration">
               <number>700</number>
              </property>
             </widget>
@@ -3073,8 +3073,18 @@ color: rgb(255, 255, 255);</string>
                 </layout>
                </widget>
               </item>
-              <item row="0" column="2" rowspan="3">
-               <widget class="QTableView" name="tabla_volumenes"/>
+              <item row="0" column="2" rowspan="2">
+               <widget class="QTableView" name="tabla_volumenes">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+               </widget>
               </item>
               <item row="1" column="0">
                <widget class="QPushButton" name="btnAnadir_volumen">
@@ -3132,6 +3142,17 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btnBorrar_volumen">
+                <property name="text">
+                 <string>Borrar</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -3142,7 +3163,7 @@ color: rgb(255, 255, 255);</string>
            <string>Imagenes Artículo</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_23">
-           <item row="2" column="5">
+           <item row="2" column="9">
             <widget class="QLabel" name="lblImagenArticulo_2">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3179,9 +3200,19 @@ color: rgb(255, 255, 255);</string>
               <string>Cambiar
 Imagen.</string>
              </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="3" column="4">
             <widget class="QLabel" name="lblImagenArticulo_3">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3209,7 +3240,7 @@ Imagen.</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="4">
+           <item row="3" column="6">
             <widget class="QPushButton" name="botCambiarImagen_4">
              <property name="enabled">
               <bool>false</bool>
@@ -3217,6 +3248,16 @@ Imagen.</string>
              <property name="text">
               <string>Cambiar
 Imagen.</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -3229,9 +3270,19 @@ Imagen.</string>
               <string>Cambiar
 Imagen.</string>
              </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
             </widget>
            </item>
-           <item row="2" column="2">
+           <item row="2" column="4">
             <widget class="QLabel" name="lblImagenArticulo_1">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3259,7 +3310,7 @@ Imagen.</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="4">
+           <item row="2" column="6">
             <widget class="QPushButton" name="botCambiarImagen_2">
              <property name="enabled">
               <bool>false</bool>
@@ -3268,9 +3319,19 @@ Imagen.</string>
               <string>Cambiar
 Imagen.</string>
              </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
             </widget>
            </item>
-           <item row="3" column="5">
+           <item row="3" column="9">
             <widget class="QLabel" name="lblImagenArticulo_4">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3295,6 +3356,86 @@ Imagen.</string>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="btnBorrarImagen_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Borrar</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="7">
+            <widget class="QPushButton" name="btnBorrarimagen_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Borrar</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="7">
+            <widget class="QPushButton" name="btnBorrarimagen_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Borrar</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="btnBorrarImagen_1">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Borrar</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -3341,11 +3482,11 @@ Imagen.</string>
                </widget>
               </item>
               <item>
-               <widget class="OpenChart" name="grafica" native="true">
+               <widget class="OpenChart" name="grafica">
                 <property name="useTitle" stdset="0">
                  <bool>true</bool>
                 </property>
-                <property name="Title" stdset="0">
+                <property name="Title">
                  <string>Compras/Ventas Ejercicio /unidades</string>
                 </property>
                 <property name="Etiquetas" stdset="0">
@@ -4667,11 +4808,11 @@ background-color: rgb(239, 239, 239);</string>
                </widget>
               </item>
               <item>
-               <widget class="OpenChart" name="Grafica_comparativa" native="true">
+               <widget class="OpenChart" name="Grafica_comparativa">
                 <property name="useTitle" stdset="0">
                  <bool>true</bool>
                 </property>
-                <property name="Title" stdset="0">
+                <property name="Title">
                  <string>Comparativa venta articulo entre empresas/ejercicios</string>
                 </property>
                 <property name="Etiquetas" stdset="0">

@@ -407,7 +407,7 @@ void Articulo::Vender(int id, int cantidad, double pvp)
 void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
 {
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
-    qryArticulo.prepare("Select bImagen,bImagen2,bImagen3,bImagen4 from articulos where id = :id");
+    qryArticulo.prepare("Select imagen,imagen2,imagen3,imagen4 from articulos where id = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
         if (qryArticulo.next()){
@@ -415,34 +415,34 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
             // imagen1
             //--------
             QSqlRecord registro =  qryArticulo.record();
-            QByteArray ba1 = registro.field("bImagen").value().toByteArray();
+            QByteArray ba1 = registro.field("imagen").value().toByteArray();
             QPixmap pm1;
             pm1.loadFromData(ba1);
-            if(!registro.field("bImagen").value().isNull())
+            if(!registro.field("imagen").value().isNull());
                 label->setPixmap(pm1);
             //--------
             // imagen2
             //--------
-            ba1 = registro.field("bImagen2").value().toByteArray();
+            ba1 = registro.field("imagen2").value().toByteArray();
             QPixmap pm12;
             pm12.loadFromData(ba1);
-            if(!registro.field("bImagen2").value().isNull())
+            if(!registro.field("imagen2").value().isNull())
                 label2->setPixmap(pm12);
             //--------
             // imagen3
             //--------
-            ba1 = registro.field("bImagen3").value().toByteArray();
+            ba1 = registro.field("imagen3").value().toByteArray();
             QPixmap pm13;
             pm13.loadFromData(ba1);
-            if(!registro.field("bImagen3").value().isNull())
+            if(!registro.field("imagen3").value().isNull())
                 label3->setPixmap(pm13);
             //--------
             // imagen4
             //--------
-            ba1 = registro.field("bImagen4").value().toByteArray();
+            ba1 = registro.field("imagen4").value().toByteArray();
             QPixmap pm14;
             pm14.loadFromData(ba1);
-            if(!registro.field("bImagen4").value().isNull())
+            if(!registro.field("imagen4").value().isNull())
                 label4->setPixmap(pm14);
         } else
             QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
