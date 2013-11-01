@@ -2641,7 +2641,4 @@ void FrmArticulos::on_btnBorrarimagen_4_clicked()
           ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
 }
 
-void FrmArticulos::on_Pestanas_currentChanged(int index)
-{
-    int i = 0;
-}
+
