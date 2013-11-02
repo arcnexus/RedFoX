@@ -1099,7 +1099,7 @@ void ReportRenderer::drawLabel(QDomElement e, QPainter *painter, double dpiX, do
     pos.setX(e.attribute("x").toDouble() * dpiX);
     pos.setY(e.attribute("y").toDouble() * dpiY);
 
-    QSize siz;
+    QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
     siz.setHeight(e.attribute("h").toDouble()* dpiY+10);
 
@@ -1158,7 +1158,7 @@ void ReportRenderer::drawLine(QDomElement e, QPainter *painter, double dpiX, dou
     pos.setX(e.attribute("x").toDouble() * dpiX);
     pos.setY(e.attribute("y").toDouble() * dpiY);
 
-    QSize siz;
+    QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX);
     siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
@@ -1190,7 +1190,7 @@ void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, do
     pos.setX(e.attribute("x").toDouble() * dpiX);
     pos.setY(e.attribute("y").toDouble() * dpiY);
 
-    QSize siz;
+    QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
     siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
@@ -1224,26 +1224,47 @@ void ReportRenderer::drawCodeBar(QDomElement e, QPainter *painter, double dpiX, 
     pos.setX(e.attribute("x").toDouble() * dpiX);
     pos.setY(e.attribute("y").toDouble() * dpiY);
 
-    QSize siz;
+    QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
-    siz.setHeight(e.attribute("h").toDouble()* dpiY);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY+10);
+
+    int codeSize = (e.attribute("codeSize").toInt());
+    int barSize = (e.attribute("barSize").toInt());
+    bool vertical = (e.attribute("vertical").toInt());
 
     painter->save();
 
     painter->translate(pos);
-    QRectF r(QPointF(0,0),siz);
 
-    QFont f1 = painter->font();
 
-    QFont f("Free 3 of 9 Extended",30);
+    QFont f1 = QFont(painter->font().family(),codeSize);
+
+    QFont f("Free 3 of 9 Extended",barSize);
     painter->setFont(f);
 
-    painter->drawText(r,Qt::AlignTop|Qt::AlignHCenter,m_code);
-
-    if(m_visibleCode)
+    if(vertical)
     {
-        painter->setFont(f1);
-        painter->drawText(r,Qt::AlignBottom|Qt::AlignJustify|Qt::TextJustificationForced,m_code);
+        QRectF _r(QPointF(0,0),siz);
+        QRectF r(0,0,siz.height(),siz.width()+codeSize*dpiX);
+        painter->translate(_r.bottomLeft());
+        painter->rotate(270);
+        painter->drawText(r,Qt::TextWordWrap|Qt::AlignCenter,m_code);
+        if(m_visibleCode)
+        {
+            painter->setFont(f1);
+            painter->drawText(r,Qt::AlignBottom|Qt::AlignCenter|Qt::TextJustificationForced,m_code);
+        }
+    }
+    else
+    {
+        QRectF r(QPointF(0,0),siz);
+        painter->drawText(r,Qt::AlignTop|Qt::AlignHCenter,m_code);
+
+        if(m_visibleCode)
+        {
+            painter->setFont(f1);
+            painter->drawText(r,Qt::AlignBottom|Qt::AlignCenter|Qt::TextJustificationForced,m_code);
+        }
     }
     painter->restore();
 }

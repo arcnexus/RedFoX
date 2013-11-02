@@ -25,6 +25,12 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
 
+    void on_spinBarSize_valueChanged(int arg1);
+
+    void on_spinFontSize_valueChanged(int arg1);
+
+    void on_checkVertical_toggled(bool checked);
+
 private:
     Ui::EditCodeBarDlg *ui;
     QGraphicsScene scene;
