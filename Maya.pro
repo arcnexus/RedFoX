@@ -203,7 +203,8 @@ SOURCES += main.cpp\
     TPV/frmretirardecaja.cpp \
     TPV/frminsertardinerocaja.cpp \
     TPV/frmdevolucionticket.cpp \
-    TPV/frmcausadevolucion.cpp
+    TPV/frmcausadevolucion.cpp \
+    TPV/frmcantidad.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -372,7 +373,8 @@ HEADERS  += mainwindow.h \
     TPV/frmretirardecaja.h \
     TPV/frminsertardinerocaja.h \
     TPV/frmdevolucionticket.h \
-    TPV/frmcausadevolucion.h
+    TPV/frmcausadevolucion.h \
+    TPV/frmcantidad.h
 
 
 
@@ -459,7 +461,8 @@ FORMS    += mainwindow.ui \
     TPV/frmretirardecaja.ui \
     TPV/frminsertardinerocaja.ui \
     TPV/frmdevolucionticket.ui \
-    TPV/frmcausadevolucion.ui
+    TPV/frmcausadevolucion.ui \
+    TPV/frmcantidad.ui
 
 RESOURCES += \
     maya.qrc \

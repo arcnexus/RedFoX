@@ -4,12 +4,18 @@ QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
     font: normal;
     font: 10pt "Cantarell";
 
+
 }
 QTextEdit:enabled, QSpinBox,QDoubleSpinBox, QComboBox, QLineEdit, QDateEdit, QDateTimeEdit
     {
     color: black;
    /* background-color:#f6f6f0;*/
 }
+QLineEdit
+{
+       border-radius: 5px;
+}
+
 QScrollBar:vertical
 {
     border: none;
@@ -183,12 +189,8 @@ QTabBar::tab
 
 }
 
-
 QTabBar::tab:hover
 {
-
-    /*background:#ecf1f0;*/
-    /*background-color: rgb(214, 208, 255); */
     color:#a7c65c;
 }
 QTabWidget::tab
@@ -252,12 +254,6 @@ QTabWidget::down-button
     border-top-width: 0;
 }
 
-QTabWidget::pane
-{ /* The tab widget frame */
-    border: 1px;
-    border-radius:5px;
-}
-
 QListView
 {
        show-decoration-selected: 1;
@@ -268,13 +264,19 @@ QListView::item:hover
     background-color: Yellow;
     color:blue;
 }
-.QFrame
-{
-    border-radius: 5px;
-    color= rgb(0,0,0);
-}
 
-QLineEdit:focus, QFrame:focus
+ QFrame {
+     border: 1px solid grey;
+     border-radius: 4px;
+ }
+ QLabel
+ {
+    border:0px;
+ }
+
+
+
+QLineEdit:focus
 {
     border-width: 1.5px;
     padding: 0px;
@@ -315,6 +317,7 @@ QCheckBox::indicator:checked:hover,QGroupBox::indicator:checked:hover {
 QCheckBox::indicator:checked:pressed,QGroupBox::indicator:checked:pressed {
     image: url(:Icons/images/checkbox_checked_pressed.png);
 }
+
 QGroupBox::title {
      subcontrol-origin: margin;
      subcontrol-position: top center; /* position at the top center */
@@ -367,7 +370,7 @@ QMenu
 {
      background-color: rgb(170, 170, 127);
      border: 1px solid black;
- }
+}
 
 QMenu::item
 {
@@ -382,8 +385,6 @@ QMenu::item:selected
       background-color: rgb(170, 170, 127);
       color: white;
 }
-
-
 
 QToolTip
 {

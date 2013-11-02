@@ -1149,9 +1149,9 @@ void FrmArticulos::TablaTrazabilidad_clicked(QModelIndex)
 void FrmArticulos::graficar(QString Tipo)
 {
     if(ui->radGrafica_unidades->isChecked())
-        GraficaUnidades();
+       GraficaUnidades();
     else
-        GraficaImportes();
+       GraficaImportes();
 }
 
 void FrmArticulos::GraficaUnidades()

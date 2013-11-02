@@ -481,6 +481,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`empresas` ( `id` INT(11) NOT NULL AUTO_IN
   `cuenta_mail` VARCHAR(150) NULL DEFAULT NULL ,
   `importe_cierre` DOUBLE NULL DEFAULT '0' ,
   `facturas_en_cierre` TINYINT(1) NULL DEFAULT '0' ,
+  `tpv_forzar_cantidad` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
   ENGINE = InnoDB AUTO_INCREMENT = 1 
   DEFAULT CHARACTER SET = utf8;

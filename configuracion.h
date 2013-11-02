@@ -110,6 +110,7 @@ public:
     bool mostrar_siempre; // si está activo mostrará los 0 en decimales a partir de estandar (2) hasta valor decimales
     bool medic;
     bool internacional;
+    bool tpv_forzar_cantidad;
     QString divisa_local;
     QString cod_divisa_local;
     QString divisa_local_reducida;

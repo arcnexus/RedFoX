@@ -11,7 +11,7 @@
 #include "../TPV/frmretirardecaja.h"
 #include "../TPV/frminsertardinerocaja.h"
 #include "../TPV/frmdevolucionticket.h"
-
+#include "../TPV/frmcantidad.h"
 
 
 FrmTPV::FrmTPV(QWidget *parent) :
@@ -491,6 +491,36 @@ void FrmTPV::on_btnBuscar_clicked()
 void FrmTPV::on_txtCodigo_editingFinished()
 {
     ui->txtCodigo->blockSignals(true);
+    //-----------------------
+    // NUEVO ARTÍCULO
+    //-----------------------
+    if(ui->btnScanear->isChecked())
+    {
+        float cantidad;
+        cantidad = 1;
+        QString error;
+
+        if(Configuracion_global->tpv_forzar_cantidad)
+        {
+            frmcantidad cantid(this);
+            cantid.exec();
+            cantidad = cantid.getCantidad();
+        }
+        //---------------------
+        // BUSCAR CÓDIGO
+        //---------------------
+        QMap <int,QSqlRecord> m;
+        m = SqlCalls::SelectRecord("articulos",QString("codigo = %1").arg(ui->txtCodigo->text()),Configuracion_global->groupDB,
+                                   error);
+        //Todo - Buscar datos
+
+
+
+        ui->txtCodigo->setText("");
+    }
+    //-----------------------
+    // APLICAMOS DTO
+    //-----------------------
     if(ui->btnDto->isChecked())
     {
        ui->btnDto->setChecked(false);
@@ -520,6 +550,9 @@ void FrmTPV::on_txtCodigo_editingFinished()
 
     } else if(ui->btnCantidad->isChecked())
     {
+        //-----------------------------
+        // CAMBIAMOS CANTIDAD
+        //-----------------------------
         int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
         double importe = Configuracion_global->MonedatoDouble(
                     ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),3)->text());
@@ -537,6 +570,9 @@ void FrmTPV::on_txtCodigo_editingFinished()
 //            ui->btnScanear->setChecked(true);
     } else if(ui->btnPrecio->isChecked())
     {
+        //---------------------
+        // CAMBIAMOS PRECIO
+        //---------------------
         int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
         double cantidad = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),2)->text().toDouble();
         QHash <QString,QVariant> h;
