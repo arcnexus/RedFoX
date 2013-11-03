@@ -1,7 +1,6 @@
 #include "frmtpv.h"
 #include "ui_frmtpv.h"
 #include <QGraphicsOpacityEffect>
-#include "../Almacen/articulo.h"
 #include <QColor>
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate_totals.h"
@@ -30,6 +29,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
     this->tipo_dto_tarifa = 0;
 
     oTpv = new tpv(this);
+    oArticulo = new Articulo(this);
     oRefresca = new refresca_ofertas(this);
     ui->frame_ticket->setCurrentIndex(0);
     ui->frameTeclado->setCurrentIndex(0);
@@ -94,6 +94,7 @@ void FrmTPV::cargar_ticket(int id)
 {
     QMap <int,QSqlRecord> tpv;
     QString error;
+    oTpv->id = id;
     tpv = SqlCalls::SelectRecord("cab_tpv",QString("id =%1").arg(id),Configuracion_global->empresaDB,error);
     ui->lblTicket->setText(QString::number(tpv.value(id).value("ticket").toInt()));
     if(!tpv.value(id).value("nombre_cliente").toString().isEmpty())
@@ -491,9 +492,11 @@ void FrmTPV::on_btnBuscar_clicked()
 void FrmTPV::on_txtCodigo_editingFinished()
 {
     ui->txtCodigo->blockSignals(true);
-    //-----------------------
-    // NUEVO ARTÍCULO
-    //-----------------------
+    //--------------------------------
+    //--------------------------------
+    // NUEVA LINEA DE VENTA ARTÍCULO
+    //--------------------------------
+    //................................
     if(ui->btnScanear->isChecked())
     {
         float cantidad;
@@ -506,13 +509,27 @@ void FrmTPV::on_txtCodigo_editingFinished()
             cantid.exec();
             cantidad = cantid.getCantidad();
         }
-        //---------------------
-        // BUSCAR CÓDIGO
-        //---------------------
-        QMap <int,QSqlRecord> m;
-        m = SqlCalls::SelectRecord("articulos",QString("codigo = %1").arg(ui->txtCodigo->text()),Configuracion_global->groupDB,
-                                   error);
-        //Todo - Buscar datos
+        QHash <QString, QVariant> art;
+        art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,0,0);
+        QHash <QString,QVariant> lin;
+        lin["id_cab"] = oTpv->id;
+        lin["id_articulo"] = art.value("id").toInt();
+        lin["codigo"] = ui->txtCodigo->text();
+        lin["descripcion"] = art.value("descripcion_reducida").toString();
+        lin["precio"] = art.value("precio").toDouble();
+        lin["cantidad"] = art.value("cantidad").toFloat();
+        lin["importe"] = art.value("cantidad").toFloat() * art.value("precio").toDouble();
+        lin["porc_iva"] = art.value("tipo_iva").toFloat();
+        lin["iva"] = lin.value("importe").toDouble() * (lin.value("porc_iva").toFloat()/100);
+        lin["total"] = lin.value("importe").toDouble() + lin.value("iva").toFloat();
+        lin["fecha_linea"] = QDate::currentDate();
+        lin["promocion"] = art.value("promocionado").toBool();
+        int new_id = SqlCalls::SqlInsert(lin,"lin_tpv",Configuracion_global->empresaDB,error);
+        if(new_id <0)
+        {
+            QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al crear una nueva línea: %1").arg(error));
+        } else
+           cargar_lineas(oTpv->id);
 
 
 

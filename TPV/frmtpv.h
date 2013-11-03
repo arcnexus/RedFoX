@@ -5,6 +5,7 @@
 #include "../mayamodule.h"
 #include "../TPV/tpv.h"
 # include "../Auxiliares/refresca_ofertas.h"
+#include "../Almacen/articulo.h"
 namespace Ui {
 class FrmTPV;
 }
@@ -205,6 +206,7 @@ private:
     int ticket_height;
     int control_width;
     bool scanning;
+    Articulo *oArticulo;
 
     QSqlQueryModel *model_lista_tpv;
     QSqlQueryModel *model_ofertas;

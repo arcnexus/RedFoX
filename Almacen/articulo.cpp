@@ -399,8 +399,198 @@ void Articulo::Borrar(int nid)
     }
 }
 
-void Articulo::Vender(int id, int cantidad, double pvp)
+QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tipo_dto_tarifa,int id_familia_cliente)
 {
+    //---------------------
+    // BUSCAR CÓDIGO
+    //---------------------
+    QMap <int,QSqlRecord> m;
+    QString error;
+    float dto;
+    m = SqlCalls::SelectRecord("vistaart_tarifa",QString("codigo = '%1'").arg(codigo).toUpper(),Configuracion_global->groupDB,
+                               error);
+    QMapIterator <int,QSqlRecord> i(m);
+    QHash <QString, QVariant> h;
+    while(i.hasNext())
+    {
+        i.next();
+        h["id"] = i.value().value("id").toInt();
+        h["codigo"] = i.value().value("codigo").toString();
+        h["descripcion"] = i.value().value("descripcion").toString();
+        h["descripcion_reducida"] = i.value().value("descripcion_reducida").toString();
+        h["codigo_barras"] = i.value().value("codigo_barras").toString();
+        h["codigo_fabricante"] = i.value().value("codigo_fabricante").toString();
+        h["pvp_con_iva"] = i.value().value("pvp_con_iva").toDouble();
+        h["precio"] = i.value().value("pvp").toDouble();
+        h["cantidad"] = cantidad;
+        h["tipo_iva"] = i.value().value("tipo_iva").toFloat();
+
+        switch (tipo_dto_tarifa) {
+        case 1:
+            dto = i.value().value("porc_dto1").toFloat();
+            break;
+        case 2:
+            dto = i.value().value("porc_dto2").toFloat();
+            break;
+        case 3:
+            dto = i.value().value("porc_dto3").toFloat();
+            break;
+        case 4:
+            dto = i.value().value("porc_dto4").toFloat();
+            break;
+        case 5:
+            dto = i.value().value("porc_dto5").toFloat();
+            break;
+        case 6:
+            dto = i.value().value("porc_dto6").toFloat();
+            break;
+        default:
+            dto =0;
+            break;
+        }
+        // PROMOCIONES ARTÍCULO
+        if(this->articulo_promocionado)
+        {
+            QStringList filter;
+            filter << QString("id=%1").arg(i.value().value("id").toInt());
+            filter << "activa = 0";
+
+            QMap <int,QSqlRecord> p;
+            p=SqlCalls::SelectRecord("articulos_ofertas",filter, Configuracion_global->empresaDB,error);
+            if(error.isEmpty())
+            {
+                //-------------
+                // Oferta 3*2
+                //-------------
+                if(p.value(i.value().value("id").toInt()).value("oferta32").toBool())
+                {
+                    float por_cada = p.value(i.value().value("id").toInt()).value("unidades").toFloat();
+                    float regalo = p.value(i.value().value("id").toInt()).value("regalo").toFloat();
+                    int cant = cantidad / por_cada;
+                    h["regalo"] = cant * regalo;
+                    h["promocionado"] = true;
+                }
+                //--------------
+                // Oferta web
+                //--------------
+                if(p.value(i.value().value("id").toInt()).value("oferta_web").toBool())
+                {
+                    float dto_web = p.value(i.value().value("id").toInt()).value("dto_web").toFloat();
+                    if(dto_web > dto){
+                        dto = dto_web;
+                        h["promocionado"] = true;
+                    }
+                }
+                //--------------
+                // Oferta dto
+                //--------------
+                if(p.value(i.value().value("id").toInt()).value("oferta_dto").toBool())
+                {
+                    float dto_local = p.value(i.value().value("id").toInt()).value("dto_local").toFloat();
+                    if(dto_local > dto){
+                        dto = dto_local;
+                        h["promocionado"] = true;
+                    }
+                }
+                //----------------------
+                // Oferta precio final
+                //----------------------
+                if(p.value(i.value().value("id").toInt()).value("oferta_precio_final").toBool())
+                {
+                    if(p.value(i.value().value("id").toInt()).value("precio_final").toDouble()<h.value("precio").toDouble()) {
+                        h["precio"] = p.value(i.value().value("id").toInt()).value("precio_final").toDouble();
+                        h["promocionado"] = true;
+                    }
+                }
+
+            }
+
+        }
+        //--------------------------
+        // Control de Execpciones
+        //--------------------------
+
+        QMap <int,QSqlRecord> e;
+        // Articulo directo.
+        e = SqlCalls::SelectRecord("articulos_exepciones",QString("id_cab= %1").arg(this->id),Configuracion_global->empresaDB,error);
+        QMapIterator<int,QSqlRecord> ex(e);
+        if(ex.hasNext()) {
+            while (ex.hasNext()) {
+                ex.next();
+                if(ex.value().value("importe_fijo").toDouble()>0)
+                    h["precio"] = ex.value().value("importe_fijo").toDouble();
+                if(ex.value().value("dto_fijo").toFloat()>0)
+                    h["dto"] = ex.value().value("dto_fijo");
+                if(ex.value().value("importe_moneda_aumento").toDouble()>0)
+                    h["precio"] = h.value("precio").toDouble() + ex.value().value("importe_moneda_aumento").toDouble();
+                if(ex.value().value("dto_aumento_fijo").toFloat()>0)
+                    h["dto"] = h.value("dto").toFloat() + ex.value().value("dto_aumento_fijo").toFloat();
+                if(ex.value().value("importe_porc_aumento").toDouble()>0)
+                    h["precio"] = h.value("precio").toDouble() +(h.value("precio").toDouble() *
+                                                                 (ex.value().value("importe_porc_aumento").toDouble()/100));
+                if(ex.value().value("dto_aumento_porc").toFloat()>0)
+                    h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
+                                                               ex.value().value("dto_aumento_porc").toFloat()/100));
+            }
+        } else
+        {
+            //familia
+            e = SqlCalls::SelectRecord("articulos_excepciones",QString("id_familia=%1").arg(this->id_familia),Configuracion_global->empresaDB,error);
+            if(e.size()>0)
+            {
+                QMapIterator<int,QSqlRecord> ae(e);
+                while (ae.hasNext())
+                {
+                    ae.next();
+                    if(ae.value().value("importe_fijo").toDouble()>0)
+                        h["precio"] = ae.value().value("importe_fijo").toDouble();
+                    if(ae.value().value("dto_fijo").toFloat()>0)
+                        h["dto"] = ae.value().value("dto_fijo");
+                    if(ae.value().value("importe_moneda_aumento").toDouble()>0)
+                        h["precio"] = h.value("precio").toDouble() + ae.value().value("importe_moneda_aumento").toDouble();
+                    if(ae.value().value("dto_aumento_fijo").toFloat()>0)
+                        h["dto"] = h.value("dto").toFloat() + ae.value().value("dto_aumento_fijo").toFloat();
+                    if(ae.value().value("importe_porc_aumento").toDouble()>0)
+                        h["precio"] = h.value("precio").toDouble() +(h.value("precio").toDouble() *
+                                                                     (ae.value().value("importe_porc_aumento").toDouble()/100));
+                    if(ae.value().value("dto_aumento_porc").toFloat()>0)
+                        h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
+                                                                   ae.value().value("dto_aumento_porc").toFloat()/100));
+
+                }
+            } else
+            {
+                // familia_cliente
+                e=SqlCalls::SelectRecord("articulos_excepciones",QString("id_familia_cliente=%1").arg(id_familia_cliente),
+                                         Configuracion_global->empresaDB,error);
+                if(e.size() >0)
+                {
+                    QMapIterator<int,QSqlRecord> ae(e);
+                    while (ae.hasNext())
+                    {
+                        ae.next();
+                        if(ae.value().value("importe_fijo").toDouble()>0)
+                            h["precio"] = ae.value().value("importe_fijo").toDouble();
+                        if(ae.value().value("dto_fijo").toFloat()>0)
+                            h["dto"] = ae.value().value("dto_fijo");
+                        if(ae.value().value("importe_moneda_aumento").toDouble()>0)
+                            h["precio"] = h.value("precio").toDouble() + ae.value().value("importe_moneda_aumento").toDouble();
+                        if(ae.value().value("dto_aumento_fijo").toFloat()>0)
+                            h["dto"] = h.value("dto").toFloat() + ae.value().value("dto_aumento_fijo").toFloat();
+                        if(ae.value().value("importe_porc_aumento").toDouble()>0)
+                            h["precio"] = h.value("precio").toDouble() +(h.value("precio").toDouble() *
+                                                                         (ae.value().value("importe_porc_aumento").toDouble()/100));
+                        if(ae.value().value("dto_aumento_porc").toFloat()>0)
+                            h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
+                                                                       ae.value().value("dto_aumento_porc").toFloat()/100));
+                    }
+                }
+            } // TODO - EXCEPCIONES AGENTES Y OTRAS EXCEPCIONES
+
+        }
+
+    }
+    return h;
 }
 
 
