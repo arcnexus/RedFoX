@@ -24,6 +24,14 @@ Login::Login(QWidget *parent) :
         frmConfigmaya frmConf;
         if(frmConf.exec()==QDialog::Accepted)
             TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
+    } else
+    {
+        QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+        QString nombreusuario = settings.value("cUsuarioActivo").toString();
+        QString contrasena = Configuracion_global->DeCrypt(settings.value("contrasenaactiva").toString());
+        Configuracion_global->caja = settings.value("cajaactiva").toString();
+        ui->lineUsuario->setText(nombreusuario);
+        ui->linePassword->setText(contrasena);
     }
 
     if(Configuracion_global->CargarDatosBD())
@@ -255,8 +263,8 @@ void Login::init()
     ui->cboEmpresa->addItems(_empresas.value(0).first);
 	this->ui->lineUsuario->setFocus();
 
-    this->ui->lineUsuario->setText("marc");
-	this->ui->linePassword->setText("patata");
+   // this->ui->lineUsuario->setText("marc");
+    //this->ui->linePassword->setText("patata");
 }
 
 void Login::on_pushButton_2_clicked()

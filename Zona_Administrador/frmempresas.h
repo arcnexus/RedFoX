@@ -52,6 +52,8 @@ private slots:
 
     void on_btnEditar_clicked();
 
+    void on_btnConfigTerminal_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;

@@ -1,6 +1,7 @@
 #include "frmempresas.h"
 #include "ui_frmempresas.h"
 #include "addgroupfrom.h"
+#include "../Zona_Administrador/frmconfigurar_terminal.h"
 
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -798,4 +799,10 @@ void FrmEmpresas::on_btnEditar_clicked()
         ui->btnEditar->setText(tr("Editar"));
         oEmpresa.Guardar();
     }
+}
+
+void FrmEmpresas::on_btnConfigTerminal_clicked()
+{
+    frmConfigurar_terminal terminal;
+    terminal.exec();
 }

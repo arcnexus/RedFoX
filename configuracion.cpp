@@ -272,24 +272,8 @@ QString Configuracion::setTipoIva(int idIva)
 
 void Configuracion::Cargar_paises()
 {
-   // paises = new QSqlQueryModel(this);
-   // paises.clear();
-//    QSqlQuery query(groupDB);
-//    if(query.exec("SELECT * FROM paises order by pais"))
-//    {
-//        while(query.next())
-//        {
-//            QString key = query.record().value("pais").toString();
-//            paises.insert(key,query.record());
-//        }
-//    }
-//    if(paises_model == 0)
-//    {
+
     paises_model->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
-       // paises_model = new QSqlTableModel(this,groupDB);
-       // paises_model->setTable("paises");
-//    }
-//    paises_model->select();
 }
 
 int Configuracion::Devolver_id_pais(QString pais)

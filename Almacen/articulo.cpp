@@ -411,9 +411,11 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tipo_
                                error);
     QMapIterator <int,QSqlRecord> i(m);
     QHash <QString, QVariant> h;
+    h["found"] = false;
     while(i.hasNext())
     {
         i.next();
+        h["found"] = true;
         h["id"] = i.value().value("id").toInt();
         h["codigo"] = i.value().value("codigo").toString();
         h["descripcion"] = i.value().value("descripcion").toString();

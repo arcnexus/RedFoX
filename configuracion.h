@@ -117,6 +117,7 @@ public:
     double margen;
     double margen_minimo;
     bool activar_seguimiento;
+    QString caja;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;

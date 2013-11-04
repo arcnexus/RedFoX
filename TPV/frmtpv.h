@@ -191,6 +191,8 @@ private slots:
     void on_btnDevolucionTicket_clicked();
 
     void on_btnTransferencia_clicked(bool checked);
+    void on_lista_tickets_clicked(const QModelIndex &index);
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;

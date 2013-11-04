@@ -576,6 +576,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `numero_factura` INT(11) NULL DEFAULT '0' ,
   `id_cierre` INT(11) NULL DEFAULT NULL ,
   `ejercicio` INT(5) NULL DEFAULT NULL ,
+  `serie` VARCHAR(5) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

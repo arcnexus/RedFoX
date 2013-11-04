@@ -204,7 +204,8 @@ SOURCES += main.cpp\
     TPV/frminsertardinerocaja.cpp \
     TPV/frmdevolucionticket.cpp \
     TPV/frmcausadevolucion.cpp \
-    TPV/frmcantidad.cpp
+    TPV/frmcantidad.cpp \
+    Zona_Administrador/frmconfigurar_terminal.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -374,7 +375,8 @@ HEADERS  += mainwindow.h \
     TPV/frminsertardinerocaja.h \
     TPV/frmdevolucionticket.h \
     TPV/frmcausadevolucion.h \
-    TPV/frmcantidad.h
+    TPV/frmcantidad.h \
+    Zona_Administrador/frmconfigurar_terminal.h
 
 
 
@@ -462,7 +464,8 @@ FORMS    += mainwindow.ui \
     TPV/frminsertardinerocaja.ui \
     TPV/frmdevolucionticket.ui \
     TPV/frmcausadevolucion.ui \
-    TPV/frmcantidad.ui
+    TPV/frmcantidad.ui \
+    Zona_Administrador/frmconfigurar_terminal.ui
 
 RESOURCES += \
     maya.qrc \

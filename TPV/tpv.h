@@ -9,7 +9,7 @@ class tpv : public QObject
     Q_OBJECT
 public:
     explicit tpv(QObject *parent = 0);
-    int nuevoticket();
+    int nuevoticket(QString serie, QString caja);
     int ticket;
     int id_usuario;
 
@@ -41,13 +41,14 @@ public:
     double importe_cheque, importe_credito, importe_vale, importe_dto_redondeo, importe_cambio, entregado_a_cuenta;
     int numero_pedido, numero_albaran, numero_factura, id_cierre, ejercicio;
     bool editable;
+    QString serie;
 
 
     void recuperar(int id);
 
 
 private:
-    QString serie;
+
 
 signals:
 
