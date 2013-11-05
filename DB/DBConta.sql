@@ -1,32 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 31-08-2013 a las 16:37:40
--- Versión del servidor: 5.5.32-0ubuntu0.13.04.1
--- Versión de PHP: 5.4.9-4ubuntu2.2
+DROP SCHEMA IF EXISTS `@conta@` ;
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+CREATE SCHEMA IF NOT EXISTS `@conta@` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de datos: `empAGUPUNTSL2013conta`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `diario`
---
-
-CREATE TABLE IF NOT EXISTS `diario` (
+CREATE TABLE IF NOT EXISTS `@conta@`.`diario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_documento` int(11) DEFAULT NULL,
   `cuenta_d` varchar(45) DEFAULT NULL,
@@ -44,15 +20,9 @@ CREATE TABLE IF NOT EXISTS `diario` (
   `comentario_h` text,
   `cuenta_relacion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18814 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `plan_general`
---
-
-CREATE TABLE IF NOT EXISTS `plan_general` (
+CREATE TABLE IF NOT EXISTS `@conta@`.`plan_general` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo_cta` varchar(20) DEFAULT NULL,
   `descripcion` varchar(120) DEFAULT NULL,
@@ -67,8 +37,4 @@ CREATE TABLE IF NOT EXISTS `plan_general` (
   `provincia` varchar(45) DEFAULT NULL,
   `pais` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3715 ;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

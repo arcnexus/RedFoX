@@ -112,7 +112,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`acum_proveedores` (
   `acum_total` DOUBLE NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -534,7 +534,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_tpv` (
   `id_usuario` INT(11) NULL DEFAULT NULL ,
   `id_cliente` INT(11) NULL DEFAULT '0' ,
   `codigo_` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
-  `nombre_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT NULL ,
+  `nombre_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'x' ,
   `ticket_en_espera` TINYINT(1) NULL DEFAULT '0' ,
   `pendiente_cobro` TINYINT(1) NULL DEFAULT '0' ,
   `id_forma_pago` INT(11) NULL DEFAULT '0' ,
@@ -941,7 +941,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_ped_pro` (
   `cerrado` TINYINT(1) NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 20
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 

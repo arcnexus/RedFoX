@@ -41,7 +41,7 @@ void ModuleExtension::RegisterModule(MayaModule::module_zone zone, QString name,
     {
         //insertamos "Sin acceso" para todos los usuarios por defecto
         q2.prepare("INSERT INTO accesousuarios (id_user, id_modulo, id_nivel_acceso) "
-                   "VALUES (:id, :id_modulo, 1);");
+                   "VALUES (:id, :id_modulo, 7);");
         q2.bindValue(":id",q.record().value(0).toInt());
         q2.bindValue(":id_modulo",_id_modulo);
         q2.exec();
