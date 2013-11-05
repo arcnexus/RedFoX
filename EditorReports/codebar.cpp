@@ -6,7 +6,7 @@ CodeBar::CodeBar(QGraphicsItem *parent) :
     m_visibleCode = false;
     m_codeSize = 15;
     m_barSize = 25;
-    m_vertical = true;
+    m_vertical = false;
 }
 
 void CodeBar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
