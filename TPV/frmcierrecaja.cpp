@@ -32,7 +32,8 @@ FrmCierreCaja::~FrmCierreCaja()
     delete ui;
 }
 
-void FrmCierreCaja::on_btnAceptar_clicked()
+
+/*void FrmCierreCaja::on_btnAceptar_clicked()
 {
     close();
 }
@@ -52,4 +53,4 @@ void FrmCierreCaja::on_btnIniciar_cierre_clicked()
                                                                        result.record().value("efectivo").toDouble(),'f',
                                                                        Configuracion_global->decimales_campos_totales)));
 
-}
+}*/

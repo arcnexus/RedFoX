@@ -17,10 +17,6 @@ public:
     ~FrmCierreCaja();
 
 private slots:
-    void on_btnAceptar_clicked();
-
-
-    void on_btnIniciar_cierre_clicked();
 
 private:
     Ui::FrmCierreCaja *ui;

@@ -575,8 +575,8 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     lin["precio"] = art.value("precio").toDouble();
                     lin["cantidad"] = art.value("cantidad").toFloat();
                     double imp = art.value("cantidad").toFloat() * art.value("precio").toDouble();
-                    QString s_imp = Configuracion_global->toFormatoMoneda(QString::number(imp,'f',Configuracion_global->decimales_campos_totales));
-                    lin["importe"] = Configuracion_global->MonedatoDouble(s_imp);
+                    QString s_impu = Configuracion_global->toFormatoMoneda(QString::number(imp,'f',Configuracion_global->decimales_campos_totales));
+                    lin["importe"] = Configuracion_global->MonedatoDouble(s_impu);
                     lin["porc_iva"] = art.value("tipo_iva").toFloat();
                     lin["iva"] = lin.value("importe").toDouble() * (lin.value("porc_iva").toFloat()/100);
                     lin["total"] = lin.value("importe").toDouble() + lin.value("iva").toFloat();
