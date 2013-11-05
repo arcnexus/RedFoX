@@ -1424,6 +1424,7 @@ bool FrmTPV::eventFilter(QObject *obj, QEvent *event)
         }
         return false;
     }
+    return false;
 }
 
 void FrmTPV::estructura_lista()
