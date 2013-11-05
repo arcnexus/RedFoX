@@ -91,6 +91,20 @@ void CodeBar::parseXml(QDomElement element, QPointF origin)
     this->setsql(element.attribute("Sql"));
 }
 
+QString CodeBar::query()
+{
+    QStringList l = sql().split(".");
+    if(l.size()==3)
+    {
+        QString zona = l.at(0);
+        QString tabla = l.at(1);
+        QString s = QString("%1.%2").arg(zona).arg(tabla);
+        return s;
+    }
+    else
+        return "";
+}
+
 QString CodeBar::code() const {
     return m_code;
 }

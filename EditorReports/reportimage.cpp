@@ -114,3 +114,17 @@ void ReportImage::editMe()
     EditImageDlg dlg(this,qApp->activeWindow());
     dlg.exec();
 }
+
+QString ReportImage::query()
+{
+    QStringList l = ruta().split(".");
+    if(l.size()==3)
+    {
+        QString zona = l.at(0);
+        QString tabla = l.at(1);
+        QString s = QString("%1.%2").arg(zona).arg(tabla);
+        return s;
+    }
+    else
+        return "";
+}

@@ -62,8 +62,6 @@ private:
 
     enum _Orientacion { Vertical , Horizontal };
     enum _Aling { Left , Center , Rigth };
-
-    QMap<QString,QImage> _images;
 };
 
 #endif // REPORTRENDERER_H

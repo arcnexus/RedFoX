@@ -22,7 +22,7 @@ public:
         return Type;
     }
 
-
+    QString query();
     QString code() const;
     bool visibleCode() const;
     void editMe();

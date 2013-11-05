@@ -13,7 +13,7 @@ EditImageDlg::EditImageDlg(ReportImage* img ,QWidget *parent) :
     scene.addItem(pre);
 
     ui->comboZona->addItems(zonas());
-    ui->chkArchivo->setChecked(img->fromDB());
+    ui->chkArchivo->setChecked(!img->fromDB());
 
     if(img->fromDB())
     {

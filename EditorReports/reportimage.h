@@ -19,7 +19,7 @@ public:
         // Enable the use of qgraphicsitem_cast with this item.
         return Type;
     }
-
+    QString query();
     QString ruta() const;
     bool fromDB() const;
     bool dinamica() const;
