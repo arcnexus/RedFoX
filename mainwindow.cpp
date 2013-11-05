@@ -853,10 +853,14 @@ void MainWindow::showAvisos()
     animation0->setEasingCurve(QEasingCurve::OutElastic);
 
     animation0->setStartValue(QSize(20,m_avisos->height()));
-    animation0->setEndValue(QSize(400,m_avisos->height()));
+    animation0->setEndValue(QSize(650,m_avisos->height()));
 
     animation0->start();
     m_avisos->setShow(true);
+    m_avisos->llenarAvisos();
+
+    //test
+    m_avisos->setColor(QColor(100,0,0));
 }
 
 

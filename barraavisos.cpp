@@ -18,7 +18,7 @@ BarraAvisos::~BarraAvisos()
 
 void BarraAvisos::setPagina(int pagina)
 {
-    ui->stackedWidget->setCurrentIndex(pagina);
+   // ui->stackedWidget->setCurrentIndex(pagina);
 }
 
 
@@ -101,7 +101,7 @@ void BarraAvisos::llenarAvisos()
     QMap <int,QSqlRecord> map;
     QStringList clausulas,headers;
     QString error;
-    clausulas << QString("id_usuario = %1").arg(Configuracion_global->id_usuario_activo);
+    clausulas << QString("id_usuario_destino = %1").arg(Configuracion_global->id_usuario_activo);
     map = SqlCalls::SelectRecord("avisos",clausulas,Configuracion_global->groupDB,error);
     ui->tabla_avisos->setColumnCount(4);
     headers <<"id" <<tr("ORIGEN") << tr("AVISO") <<tr("FECHA/HORA");

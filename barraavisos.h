@@ -19,6 +19,7 @@ public:
     bool isShow() const;
     void setShow(bool isShow);
     void setColor(QColor c);
+    void llenarAvisos();
 signals:
     void showMe();
     void hideMe();
@@ -33,7 +34,7 @@ private:
     QPixmap* m_Cache;
     bool m_show;
     QColor m_color;
-    void llenarAvisos();
+
 };
 
 #endif // BARRAAVISOS_H

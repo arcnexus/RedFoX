@@ -129,6 +129,10 @@ BarraAvisos > QStackedWidget
 {
     background: none;
 }
+BarraAvisos > QStackedWidget > QWidget
+{
+    background: none;
+}
 BarraBusqueda{
     background-color: rgba(170, 170, 127,0);
 }
