@@ -26,10 +26,21 @@ frmConfigurar_terminal::~frmConfigurar_terminal()
 void frmConfigurar_terminal::on_btnAceptar_clicked()
 {
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+    QString error;
     settings.setValue("cUsuarioActivo",ui->cboUsuarioActivo->currentText());
     settings.setValue("contrasenaactiva",Configuracion_global->Crypt(ui->txtContrasena->text().trimmed()));
-    settings.setValue("cajaactiva",ui->cbocaja->currentText());
+    settings.setValue("importe_apertura",ui->txtImporte_abertura->text());
+    int id_caja = SqlCalls::SelectOneField("cajas","id",QString("desc_caja = %1").arg(ui->cbocaja->currentText()),
+                                           Configuracion_global->empresaDB,error).toInt();
+    settings.setValue("cajaactiva",id_caja);
     accept();
 
 
+}
+
+void frmConfigurar_terminal::on_txtImporte_abertura_editingFinished()
+{
+    ui->txtImporte_abertura->blockSignals(true);
+    ui->txtImporte_abertura->setText(Configuracion_global->toFormatoMoneda(ui->txtImporte_abertura->text()));
+    ui->txtImporte_abertura->blockSignals(false);
 }

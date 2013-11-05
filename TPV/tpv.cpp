@@ -73,48 +73,64 @@ tpv::tpv(QObject *parent) :
 
 int tpv::nuevoticket(QString serie, QString caja)
 {
-    QSqlQuery *t = new QSqlQuery(Configuracion_global->empresaDB);
-    QString cSQL;
+    //--------------------------------
+    // comprovamos si hay caja abierta
+    //--------------------------------
+    QMap <int,QSqlRecord> c;
     QString error;
     int new_id;
-    cSQL = QString("select ticket from cab_tpv where serie='%1' and ejercicio=%2 and caja = %3 order by ticket desc limit 1").arg(
-                serie,Configuracion_global->cEjercicio,caja);
+    QStringList condiciones;
+    condiciones << QString("fecha_abertura = '%1'").arg(QDate::currentDate().toString("yyyyMMdd"));
+    condiciones << QString("id_caja = %1").arg(Configuracion_global->caja);
+    condiciones << QString("ejercicio = '%1'").arg(Configuracion_global->cEjercicio);
+    c = SqlCalls::SelectRecord("cierre_caja",condiciones,Configuracion_global->empresaDB,error);
+    if(c.size()>0)
+    {
+        QSqlQuery *t = new QSqlQuery(Configuracion_global->empresaDB);
+        QString cSQL;
+        QString error;
+        cSQL = QString("select ticket from cab_tpv where serie='%1' and ejercicio=%2 and caja = %3 order by ticket desc limit 1").arg(
+                    serie,Configuracion_global->cEjercicio,caja);
 
-    if(t->exec(cSQL)) {
-        t->next();
-        int num_last_ticket = t->record().value("ticket").toInt();
-        num_last_ticket ++;
-        QHash <QString, QVariant> h;
+        if(t->exec(cSQL)) {
+            t->next();
+            int num_last_ticket = t->record().value("ticket").toInt();
+            num_last_ticket ++;
+            QHash <QString, QVariant> h;
 
-        this->ticket = num_last_ticket;
-        this->fecha =  QDate::currentDate();
-        this->hora = QDateTime::currentDateTime().toString("hh:mm");
-        this->porc_iva1 = Configuracion_global->ivaList.at(0).toFloat();
-        this->porc_iva2 = Configuracion_global->ivaList.at(1).toFloat();
-        this->porc_iva3 = Configuracion_global->ivaList.at(2).toFloat();
-        this->porc_iva4 = Configuracion_global->ivaList.at(3).toFloat();
+            this->ticket = num_last_ticket;
+            this->fecha =  QDate::currentDate();
+            this->hora = QDateTime::currentDateTime().toString("hh:mm");
+            this->porc_iva1 = Configuracion_global->ivaList.at(0).toFloat();
+            this->porc_iva2 = Configuracion_global->ivaList.at(1).toFloat();
+            this->porc_iva3 = Configuracion_global->ivaList.at(2).toFloat();
+            this->porc_iva4 = Configuracion_global->ivaList.at(3).toFloat();
 
-        h["ticket"] = ticket;
-        h["caja"] = Configuracion_global->caja;
-        h["serie"] = Configuracion_global->serie;
-        h["ejercicio"] = Configuracion_global->cEjercicio;
-        h["fecha"] = this->fecha;
-        h["hora"] = this->hora;
-        h["id_usuario"] = this->id_usuario;
-        h["porc_iva1"] = this->porc_iva1;
-        h["porc_iva2"] = this->porc_iva2;
-        h["porc_iva3"] = this->porc_iva3;
-        h["porc_iva4"] = this->porc_iva4;
+            h["ticket"] = ticket;
+            h["caja"] = Configuracion_global->caja;
+            h["serie"] = Configuracion_global->serie;
+            h["ejercicio"] = Configuracion_global->cEjercicio;
+            h["fecha"] = this->fecha;
+            h["hora"] = this->hora;
+            h["id_usuario"] = this->id_usuario;
+            h["porc_iva1"] = this->porc_iva1;
+            h["porc_iva2"] = this->porc_iva2;
+            h["porc_iva3"] = this->porc_iva3;
+            h["porc_iva4"] = this->porc_iva4;
 
 
-        new_id = SqlCalls::SqlInsert(h,"cab_tpv",Configuracion_global->empresaDB,error);
-    }
-    else{
-        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de tickets"),tr("Ocurrió un error al crear el nuevo ticket: %1").arg(
-                                 t->lastError().text()),tr("Aceptar"));
+            new_id = SqlCalls::SqlInsert(h,"cab_tpv",Configuracion_global->empresaDB,error);
+        }
+        else{
+            QMessageBox::warning(qApp->activeWindow(),tr("Gestión de tickets"),tr("Ocurrió un error al crear el nuevo ticket: %1").arg(
+                                     t->lastError().text()),tr("Aceptar"));
+            new_id = -1;
+        }
+        delete t;
+    } else {
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de tpv"),tr("Debe abrir caja antes de poder facturar"),tr("Aceptar"));
         new_id = -1;
     }
-    delete t;
     return new_id;
 
 }

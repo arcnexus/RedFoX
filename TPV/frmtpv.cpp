@@ -50,7 +50,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
     // Lineas tickets
     //-----------------
     model_lista_tpv = new QSqlQueryModel(this);
-    model_lista_tpv->setQuery(QString("select id,serie, ticket, caja, fecha,hora,nombre_cliente,importe "
+    model_lista_tpv->setQuery(QString("select id,serie, ticket, caja,importe, fecha,hora,nombre_cliente "
                                       "from cab_tpv where ejercicio = %1 order by ticket desc").arg(
                            Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
     ui->lista_tickets->setModel(model_lista_tpv);
@@ -112,6 +112,7 @@ void FrmTPV::cargar_ticket(int id)
     if(!tpv.value(id).value("nombre_cliente").toString().isEmpty())
         ui->lblCliente->setText(tpv.value(id).value("nombre_cliente").toString());
     ui->lblFecha->setText(tpv.value(id).value("fecha").toString());
+    oTpv->fecha = tpv.value(id).value("fecha").toDate();
     ui->lblHora->setText(tpv.value(id).value("hora").toString());
     this->id = id;
     QString usuario = SqlCalls::SelectOneField("usuarios","nombre",
@@ -480,6 +481,27 @@ void FrmTPV::cargar_lineas(int id_cab)
     ui->lbldesglose2->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva2,'f',2)));
     ui->lbldesglose3->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva3,'f',2)));
     ui->lbldesglose4->setText(tr("Desglose IVA %1").arg(QString::number(oTpv->porc_iva4,'f',2)));
+
+    //----------------
+    // LLENAR CAB_TPV
+    //----------------
+    QHash <QString,QVariant> cab;
+    cab["importe"] = total_ticket;
+    cab["base1"] = oTpv->base1;
+    cab["base2"] = oTpv->base2;
+    cab["base3"] = oTpv->base3;
+    cab["base4"] = oTpv->base4;
+    cab["iva1"] = oTpv->iva1;
+    cab["iva2"] = oTpv->iva2;
+    cab["iva3"] = oTpv->iva3;
+    cab["iva4"] = oTpv->iva4;
+    cab["total1"] = oTpv->total1;
+    cab["total2"] = oTpv->total2;
+    cab["total3"] = oTpv->total3;
+    cab["total4"] = oTpv->total4;
+    bool updated = SqlCalls::SqlUpdate(cab,"cab_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(oTpv->id),error);
+    if(!updated)
+        QMessageBox::warning(this,tr("Gestión de tickets"),tr("Atención: no se ha podido actualizar el ticket: %1").arg(error));
 }
 
 void FrmTPV::cargar_ofertas()
@@ -506,120 +528,141 @@ void FrmTPV::on_txtCodigo_editingFinished()
     ui->txtCodigo->blockSignals(true);
     if(!ui->txtCodigo->text().isEmpty())
     {
-        //--------------------------------
-        //--------------------------------
-        // NUEVA LINEA DE VENTA ARTÍCULO
-        //--------------------------------
-        //................................
-        if(ui->btnScanear->isChecked())
+        bool procesar;
+        if(oTpv->fecha == QDate::currentDate())
         {
-            float cantidad;
-            cantidad = 1;
-            QString error;
 
-            if(Configuracion_global->tpv_forzar_cantidad)
-            {
-                frmcantidad cantid(this);
-                cantid.exec();
-                cantidad = cantid.getCantidad();
-            }
-            QHash <QString, QVariant> art;
-            art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,0,0);
-            if(art.value("found").toBool()){
-                QHash <QString,QVariant> lin;
-                lin["id_cab"] = oTpv->id;
-                lin["id_articulo"] = art.value("id").toInt();
-                lin["codigo"] = ui->txtCodigo->text();
-                lin["descripcion"] = art.value("descripcion_reducida").toString();
-                lin["precio"] = art.value("precio").toDouble();
-                lin["cantidad"] = art.value("cantidad").toFloat();
-                double imp = art.value("cantidad").toFloat() * art.value("precio").toDouble();
-                QString s_imp = Configuracion_global->toFormatoMoneda(QString::number(imp,'f',Configuracion_global->decimales_campos_totales));
-                lin["importe"] = Configuracion_global->MonedatoDouble(s_imp);
-                lin["porc_iva"] = art.value("tipo_iva").toFloat();
-                lin["iva"] = lin.value("importe").toDouble() * (lin.value("porc_iva").toFloat()/100);
-                lin["total"] = lin.value("importe").toDouble() + lin.value("iva").toFloat();
-                lin["fecha_linea"] = QDate::currentDate();
-                lin["promocion"] = art.value("promocionado").toBool();
-                int new_id = SqlCalls::SqlInsert(lin,"lin_tpv",Configuracion_global->empresaDB,error);
-                if(new_id <0)
-                {
-                    QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al crear una nueva línea: %1").arg(error));
-                } else
-                   cargar_lineas(oTpv->id);
-            } else {
-                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se encuentra el artículo");
-            }
+            procesar = true;
 
+        } else
+        {
+            if(QMessageBox::question(this,tr("Gestión de TPV"),tr("¿Desea alterar un ticket de otra fecha /caja cerrada?"),
+                    tr("No"),tr("Sí")) == QMessageBox::Accepted)
+                procesar = true;
+            else
+                ui->txtCodigo->setText("");
+                procesar = false;
 
-            ui->txtCodigo->setText("");
-            ui->txtCodigo->setFocus();
         }
-        //-----------------------
-        // APLICAMOS DTO
-        //-----------------------
-        if(ui->btnDto->isChecked())
+        if(procesar)
         {
-           ui->btnDto->setChecked(false);
-           int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
-           QHash <QString,QVariant> h;
-           QString error;
-           h["id_cab"]= id;
-           h["descripcion"] = tr("Descuento manual:").arg(ui->txtCodigo->text());
-           h["tipo"] = "p";
-           h["valor"] = ui->txtCodigo->text().toDouble();
-           // -----------------------------------------------------------------------
-           // Si ya existe una línea de dto la borramos para substituir por la nueva
-           //------------------------------------------------------------------------
-           bool succes = SqlCalls::SqlDelete("lin_tpv_2",Configuracion_global->empresaDB,QString("id_cab=%1").arg(id),error);
-           if(succes){
-               // ------------------
-               // Insertamos línea
-               //-------------------
-               int new_id = SqlCalls::SqlInsert(h,"lin_tpv_2",Configuracion_global->empresaDB,error);
-               if(new_id == -1)
-                   QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar linea descuento"),tr("Aceptar"));
-           }
-           ui->txtCodigo->clear();
-           cargar_lineas(this->id);
-
-
-        } else if(ui->btnCantidad->isChecked())
-        {
-            //-----------------------------
-            // CAMBIAMOS CANTIDAD
-            //-----------------------------
-            int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
-            double importe = Configuracion_global->MonedatoDouble(
-                        ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),3)->text());
-            QHash <QString,QVariant> h;
-            h["cantidad"] = ui->txtCodigo->text().toDouble();
-            h["importe"] = ui->txtCodigo->text().toDouble() * importe;
-            QString error;
-            bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
-            if(!updated)
-                QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
-
-
-            cargar_lineas(this->id);
-        } else if(ui->btnPrecio->isChecked())
-        {
-            //---------------------
-            // CAMBIAMOS PRECIO
-            //---------------------
-            int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
-            double cantidad = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),2)->text().toDouble();
-            QHash <QString,QVariant> h;
-            h["precio"] = ui->txtCodigo->text().toDouble();
-            h["importe"] = ui->txtCodigo->text().toDouble() * cantidad;
-            QString error;
-            bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
-            if(!updated)
-                QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
-
-            if(ui->frame_ticket->currentIndex() == 0)
+            //--------------------------------
+            //--------------------------------
+            // NUEVA LINEA DE VENTA ARTÍCULO
+            //--------------------------------
+            //................................
+            if(ui->btnScanear->isChecked())
             {
+                float cantidad;
+                cantidad = 1;
+                QString error;
+
+                if(Configuracion_global->tpv_forzar_cantidad)
+                {
+                    frmcantidad cantid(this);
+                    cantid.exec();
+                    cantidad = cantid.getCantidad();
+                }
+                QHash <QString, QVariant> art;
+                art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,0,0);
+                if(art.value("found").toBool()){
+                    QHash <QString,QVariant> lin;
+
+                    lin["id_cab"] = oTpv->id;
+                    lin["id_articulo"] = art.value("id").toInt();
+                    lin["codigo"] = ui->txtCodigo->text();
+                    lin["descripcion"] = art.value("descripcion_reducida").toString();
+                    lin["precio"] = art.value("precio").toDouble();
+                    lin["cantidad"] = art.value("cantidad").toFloat();
+                    double imp = art.value("cantidad").toFloat() * art.value("precio").toDouble();
+                    QString s_imp = Configuracion_global->toFormatoMoneda(QString::number(imp,'f',Configuracion_global->decimales_campos_totales));
+                    lin["importe"] = Configuracion_global->MonedatoDouble(s_imp);
+                    lin["porc_iva"] = art.value("tipo_iva").toFloat();
+                    lin["iva"] = lin.value("importe").toDouble() * (lin.value("porc_iva").toFloat()/100);
+                    lin["total"] = lin.value("importe").toDouble() + lin.value("iva").toFloat();
+                    lin["fecha_linea"] = QDate::currentDate();
+                    lin["promocion"] = art.value("promocionado").toBool();
+                    int new_id = SqlCalls::SqlInsert(lin,"lin_tpv",Configuracion_global->empresaDB,error);
+                    if(new_id <0)
+                    {
+                        QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al crear una nueva línea: %1").arg(error));
+                    } else
+
+                       cargar_lineas(oTpv->id);
+                } else {
+                    TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se encuentra el artículo");
+                }
+
+
+                ui->txtCodigo->setText("");
+                ui->txtCodigo->setFocus();
+            }
+            //-----------------------
+            // APLICAMOS DTO
+            //-----------------------
+            if(ui->btnDto->isChecked())
+            {
+               ui->btnDto->setChecked(false);
+               int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+               QHash <QString,QVariant> h;
+               QString error;
+               h["id_cab"]= id;
+               h["descripcion"] = tr("Descuento manual:").arg(ui->txtCodigo->text());
+               h["tipo"] = "p";
+               h["valor"] = ui->txtCodigo->text().toDouble();
+               // -----------------------------------------------------------------------
+               // Si ya existe una línea de dto la borramos para substituir por la nueva
+               //------------------------------------------------------------------------
+               bool succes = SqlCalls::SqlDelete("lin_tpv_2",Configuracion_global->empresaDB,QString("id_cab=%1").arg(id),error);
+               if(succes){
+                   // ------------------
+                   // Insertamos línea
+                   //-------------------
+                   int new_id = SqlCalls::SqlInsert(h,"lin_tpv_2",Configuracion_global->empresaDB,error);
+                   if(new_id == -1)
+                       QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar linea descuento"),tr("Aceptar"));
+               }
+               ui->txtCodigo->clear();
+               cargar_lineas(this->id);
+
+
+            } else if(ui->btnCantidad->isChecked())
+            {
+                //-----------------------------
+                // CAMBIAMOS CANTIDAD
+                //-----------------------------
+                int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+                double importe = Configuracion_global->MonedatoDouble(
+                            ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),3)->text());
+                QHash <QString,QVariant> h;
+                h["cantidad"] = ui->txtCodigo->text().toDouble();
+                h["importe"] = ui->txtCodigo->text().toDouble() * importe;
+                QString error;
+                bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+                if(!updated)
+                    QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
+
+
                 cargar_lineas(this->id);
+            } else if(ui->btnPrecio->isChecked())
+            {
+                //---------------------
+                // CAMBIAMOS PRECIO
+                //---------------------
+                int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+                double cantidad = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),2)->text().toDouble();
+                QHash <QString,QVariant> h;
+                h["precio"] = ui->txtCodigo->text().toDouble();
+                h["importe"] = ui->txtCodigo->text().toDouble() * cantidad;
+                QString error;
+                bool updated = SqlCalls::SqlUpdate(h,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+                if(!updated)
+                    QMessageBox::warning(this,tr("Gestión TPV"),tr("Ocurrió un error al actualizar: %1").arg(error));
+
+                if(ui->frame_ticket->currentIndex() == 0)
+                {
+                    cargar_lineas(this->id);
+                }
             }
         }
     }
@@ -741,7 +784,7 @@ void FrmTPV::fin_fade_lista()
     animationOp2->setStartValue(0.0);
     animationOp2->setEndValue(1.0);
     animationOp2->start();
-    model_lista_tpv->setQuery(QString("select id,serie, ticket, caja, fecha,hora,nombre_cliente,importe "
+    model_lista_tpv->setQuery(QString("select id,serie, ticket, caja,importe, fecha,hora,nombre_cliente "
                                       "from cab_tpv where ejercicio = %1 order by ticket desc").arg(
                            Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
 }
@@ -1388,15 +1431,15 @@ void FrmTPV::estructura_lista()
     // id,serie, ticket, caja, fecha,hora,nombre_cliente,total
     QStringList headers;
     QVariantList Sizes;
-    headers << tr("id") <<tr("Serie") <<tr("Ticket") <<tr("Caja") << tr("Fecha") <<tr("hora") << tr("Cliente") << tr("Total");
-    Sizes << 0 << 45 << 50 << 45 <<80 <<50 << 180 << 120;
+    headers << tr("id") <<tr("Serie") <<tr("Ticket") <<tr("Caja") << tr("Total") << tr("Fecha") <<tr("hora") << tr("Cliente");
+    Sizes << 0 << 45 << 60 << 45 <<80 << 120 <<50 << 180;
     for(int i = 0; i<headers.size();i++)
     {
         ui->lista_tickets->setColumnWidth(i,Sizes.at(i).toInt());
         model_lista_tpv->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->lista_tickets->setItemDelegateForColumn(4,new DateDelegate);
-    ui->lista_tickets->setItemDelegateForColumn(7, new MonetaryDelegate_totals);
+    ui->lista_tickets->setItemDelegateForColumn(5,new DateDelegate);
+    ui->lista_tickets->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
 }
 
 void FrmTPV::llenar_campos()
@@ -1659,7 +1702,7 @@ void FrmTPV::on_btnAnadir_ticket_clicked()
 
     int id_ticket = oTpv->nuevoticket(Configuracion_global->serie,Configuracion_global->caja);
     cargar_ticket( id_ticket);
-
+    ui->frame_ticket->setCurrentIndex(0);
 
 }
 
@@ -1992,6 +2035,7 @@ void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
     caja["importe_abertura_dia"] = Configuracion_global->MonedatoDouble(ui->txtImporteAbertura->text());
     caja["id_caja"] = SqlCalls::SelectOneField("cajas","id",QString("desc_caja= '%1'").arg(ui->cboCajas->currentText()),
                                                Configuracion_global->empresaDB,error).toInt();
+    caja["ejercicio"] = Configuracion_global->cEjercicio;
     QStringList clausulas;
     clausulas << QString("fecha_abertura = %1").arg(ui->calendarioAbertura->selectedDate().toString("yyyyMMdd"))
               << QString("id_caja = %1").arg(caja.value("id_caja").toInt());

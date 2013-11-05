@@ -7,32 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>326</width>
-    <height>152</height>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Configuración Terminal</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="5" column="2">
+    <widget class="QPushButton" name="btnCancelar">
      <property name="text">
-      <string>Usuario por defecto:</string>
+      <string>Cancelar</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/close.png</normaloff>:/Icons/PNG/close.png</iconset>
      </property>
     </widget>
-   </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QComboBox" name="cboUsuarioActivo"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Contraseña:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="txtContrasena"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_3">
@@ -44,17 +35,30 @@
    <item row="2" column="1">
     <widget class="QComboBox" name="cboserie"/>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_4">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Caja:</string>
+      <string>Contraseña:</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QComboBox" name="cboUsuarioActivo"/>
    </item>
    <item row="3" column="1">
     <widget class="QComboBox" name="cbocaja"/>
    </item>
-   <item row="4" column="1">
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="txtContrasena"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Usuario por defecto:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
       <string>Aceptar</string>
@@ -65,14 +69,30 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QPushButton" name="btnCancelar">
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Cancelar</string>
+      <string>Caja:</string>
      </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/close.png</normaloff>:/Icons/PNG/close.png</iconset>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Importe Abertura:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="txtImporte_abertura">
+     <property name="inputMask">
+      <string/>
+     </property>
+     <property name="text">
+      <string>0,00</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>

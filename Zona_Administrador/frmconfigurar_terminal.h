@@ -19,6 +19,8 @@ private slots:
 
     void on_btnAceptar_clicked();
 
+    void on_txtImporte_abertura_editingFinished();
+
 private:
     Ui::frmConfigurar_terminal *ui;
 };
