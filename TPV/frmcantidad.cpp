@@ -33,4 +33,5 @@ bool frmcantidad::eventFilter(QObject *target, QEvent *event)
             accept();
         return false;
     }
+    return false;
 }

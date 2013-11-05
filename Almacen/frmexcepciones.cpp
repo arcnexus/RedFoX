@@ -278,6 +278,7 @@ bool FrmExcepciones::eventFilter(QObject *obj, QEvent *event)
         }
         return false;
     }
+    return false;
 }
 
 void FrmExcepciones::consultar_articulo()

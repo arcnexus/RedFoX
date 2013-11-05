@@ -704,13 +704,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->installEventFilter(this);
     this->setMouseTracking(true);
 
-  /*  m_avisos = new BarraAvisos(this);
+    m_avisos = new BarraAvisos(this);
     m_avisos->show();
     m_avisos->setGeometry(0,70,20,80);
 
 
     connect(m_avisos,SIGNAL(hideMe()),this,SLOT(hideAvisos()));
-    connect(m_avisos,SIGNAL(showMe()),this,SLOT(showAvisos()));*/
+    connect(m_avisos,SIGNAL(showMe()),this,SLOT(showAvisos()));
 
     on_edit = false;
 
@@ -950,7 +950,7 @@ bool MainWindow::eventFilter(QObject * t, QEvent * e)
 {
     if(e->type() == QEvent::Resize)
     {
-      //  m_avisos->resize(m_avisos->width(),this->height()-60);
+        m_avisos->resize(m_avisos->width(),this->height()-60);
     }
     return false;
 }

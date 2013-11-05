@@ -811,29 +811,30 @@ bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
-    QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
 
     if(event->type() == QEvent::KeyPress)
     {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if(keyEvent->key() == Qt::Key_Return)
         {
             on_tabla_doubleClicked(ui->tabla->currentIndex());
             return true;
         }
 
-         if(keyEvent->key() == Qt::Key_Escape)
+        if(keyEvent->key() == Qt::Key_Escape)
             return true;
 
-         if(keyEvent->key() == Qt::Key_F1)
-         {
-             if(ui->btnEditar->isEnabled())
-             {
-                 if(m_busqueda->isShow())
-                     ocultarBusqueda();
-                 else
-                     mostrarBusqueda();
-             }
-         }
+        if(keyEvent->key() == Qt::Key_F1)
+        {
+            if(ui->btnEditar->isEnabled())
+            {
+                if(m_busqueda->isShow())
+                    ocultarBusqueda();
+                else
+                    mostrarBusqueda();
+            }
+        }
         return true;
     }
     return MayaModule::eventFilter(obj,event);
