@@ -1671,7 +1671,7 @@ color: rgb(255, 255, 255);</string>
             </layout>
            </item>
            <item>
-            <widget class="OpenChart" name="graf_prov">
+            <widget class="OpenChart" name="graf_prov" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -1684,7 +1684,7 @@ color: rgb(255, 255, 255);</string>
                <height>232</height>
               </size>
              </property>
-             <property name="Title">
+             <property name="Title" stdset="0">
               <string>PVD Distribuidores</string>
              </property>
              <property name="Etiquetas" stdset="0">
@@ -1696,7 +1696,7 @@ color: rgb(255, 255, 255);</string>
              <property name="Leyenda" stdset="0">
               <bool>false</bool>
              </property>
-             <property name="animationDuration">
+             <property name="animationDuration" stdset="0">
               <number>700</number>
              </property>
             </widget>
@@ -2987,18 +2987,18 @@ Imagen.</string>
                   <height>27</height>
                  </size>
                 </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
                 <property name="date">
                  <date>
                   <year>1752</year>
                   <month>9</month>
                   <day>14</day>
                  </date>
+                </property>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -3461,16 +3461,7 @@ Imagen.</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -3488,11 +3479,11 @@ Imagen.</string>
                </widget>
               </item>
               <item>
-               <widget class="OpenChart" name="grafica">
+               <widget class="OpenChart" name="grafica" native="true">
                 <property name="useTitle" stdset="0">
                  <bool>true</bool>
                 </property>
-                <property name="Title">
+                <property name="Title" stdset="0">
                  <string>Compras/Ventas Ejercicio /unidades</string>
                 </property>
                 <property name="Etiquetas" stdset="0">
@@ -4787,16 +4778,7 @@ background-color: rgb(239, 239, 239);</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="layout_grafica_comparativas">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -4814,11 +4796,11 @@ background-color: rgb(239, 239, 239);</string>
                </widget>
               </item>
               <item>
-               <widget class="OpenChart" name="Grafica_comparativa">
+               <widget class="OpenChart" name="Grafica_comparativa" native="true">
                 <property name="useTitle" stdset="0">
                  <bool>true</bool>
                 </property>
-                <property name="Title">
+                <property name="Title" stdset="0">
                  <string>Comparativa venta articulo entre empresas/ejercicios</string>
                 </property>
                 <property name="Etiquetas" stdset="0">

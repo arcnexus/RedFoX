@@ -135,7 +135,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     connect(ui->btnBorrarProveedores,SIGNAL(clicked()),this,SLOT(borrar_proveedor_clicked()));
     connect(ui->btnEditartarifa,SIGNAL(clicked()),this,SLOT(btnEditarTarifa_clicked()));
     connect(ui->btnBorrarTarifa,SIGNAL(clicked()),this,SLOT(btnBorrarTarifa_clicked()));
-    connect(ui->Pestanas,SIGNAL(currentChanged(int)),this,SLOT(SeleccionarPestana(int)));
+   // connect(ui->Pestanas,SIGNAL(currentChanged(int)),this,SLOT(SeleccionarPestana(int)));
     connect(ui->botListados,SIGNAL(clicked()),this,SLOT(listados()));
     connect(ui->cboEmpresa2,SIGNAL(currentIndexChanged(int)),this,SLOT(LLenarGrafica_comparativa(int)));
     connect(ui->radGrafica_importes_2,SIGNAL(toggled(bool)),this,SLOT(MostrarGrafica_comparativa(bool)));
@@ -499,9 +499,6 @@ void FrmArticulos::LLenarCampos()
   // LLENO ACUMULADOS
   //-------------------
   LLenarGraficas();
-
-
-
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -790,7 +787,10 @@ void FrmArticulos::AnadirSeccion()
 bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 {
     if(event->type() == QEvent::Show)
-        actualizar();
+    {
+        if(target == ui->page)
+            actualizar();
+    }
     else if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
 
@@ -2132,8 +2132,6 @@ void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
     ui->botEditar->setEnabled(true);
 
     ocultarBusqueda();
-
-
 }
 
 
