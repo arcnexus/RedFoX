@@ -531,6 +531,14 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                     text = record.value(value.at(2)).toString();
                                 ele.setAttribute("Code",text);
                             }
+                            else if(ele.attribute("id")=="Image")
+                            {
+                                QByteArray b;
+                                QStringList value = ele.attribute("Sql").split(".");
+                                if(value.size()== 3)
+                                    b = record.value(value.at(2)).toByteArray();
+                                ele.setAttribute("img-data",QString(b.toBase64()));
+                            }
                             child = child.nextSibling();
                         }
                         exit.appendChild(sectionPart);
@@ -615,6 +623,14 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                     text = record.value(value.at(2)).toString();
                                                 ele.setAttribute("value",text);
                                             }
+                                            else if(ele.attribute("id")=="Image")
+                                            {
+                                                QByteArray b;
+                                                QStringList value = ele.attribute("Sql").split(".");
+                                                if(value.size()== 3)
+                                                    b = record.value(value.at(2)).toByteArray();
+                                                ele.setAttribute("img-data",QString(b.toBase64()));
+                                            }
                                             child = child.nextSibling();
                                         }
                                         exit.appendChild(iCopy);
@@ -669,6 +685,14 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                         text = record.value(value.at(2)).toString();
                                     ele.setAttribute("Code",text);
                                 }
+                                else if(ele.attribute("id")=="Image")
+                                {
+                                    QByteArray b;
+                                    QStringList value = ele.attribute("Sql").split(".");
+                                    if(value.size()== 3)
+                                        b = record.value(value.at(2)).toByteArray();
+                                    ele.setAttribute("img-data",QString(b.toBase64()));
+                                }
                                 child = child.nextSibling();
                             }
                             exit.appendChild(sectionPart);
@@ -705,6 +729,14 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 if(value.size()== 3)
                                     text = record.value(value.at(2)).toString();
                                 ele.setAttribute("Code",text);
+                            }
+                            else if(ele.attribute("id")=="Image")
+                            {
+                                QByteArray b;
+                                QStringList value = ele.attribute("Sql").split(".");
+                                if(value.size()== 3)
+                                    b = record.value(value.at(2)).toByteArray();
+                                ele.setAttribute("img-data",QString(b.toBase64()));
                             }
                             child = child.nextSibling();
                         }
@@ -1196,7 +1228,9 @@ void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, do
 
     if(m_fromDB)
     {
-        //TODO get image from db
+        QString base = e.attribute("img-data");
+       // QByteArray b(QByteArray::fromBase64( base ));
+        m_image = QImage(base);
     }
     else
     {
@@ -1382,6 +1416,17 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                 }
                 ele.setAttribute("Code",text);
             }
+            else if(ele.attribute("id")=="Image")
+            {
+                QByteArray b;
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
+                {
+                    QString key = value.at(0) + "." + value.at(1);
+                    b = selects.value(key).value(value.at(2)).toByteArray();
+                    ele.setAttribute("img-data",QString(b.toBase64()));
+                }
+            }
             else if(ele.attribute("id")=="Line")
             {
                 bool globlaLine = ele.attribute("endPointName") != "Self";
@@ -1462,6 +1507,17 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                 }
                 ele.setAttribute("Code",text);
             }
+            else if(ele.attribute("id")=="Image")
+            {
+                QByteArray b;
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
+                {
+                    QString key = value.at(0) + "." + value.at(1);
+                    b = selects.value(key).value(value.at(2)).toByteArray();
+                    ele.setAttribute("img-data",QString(b.toBase64()));
+                }
+            }
             else if(ele.attribute("id")=="Line")
             {
                 bool globlaLine = ele.attribute("endPointName") != "Self";
@@ -1539,6 +1595,17 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
                 }
                 ele.setAttribute("Code",text);
             }
+            else if(ele.attribute("id")=="Image")
+            {
+                QByteArray b;
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
+                {
+                    QString key = value.at(0) + "." + value.at(1);
+                    b = selects.value(key).value(value.at(2)).toByteArray();
+                    ele.setAttribute("img-data",QString(b.toBase64()));
+                }
+            }
             child = child.nextSibling();
         }
         //toRet.appendChild(rHeaderNode);
@@ -1585,6 +1652,17 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
                     text = selects.value(key).value(value.at(2)).toString();
                 }
                 ele.setAttribute("Code",text);
+            }
+            else if(ele.attribute("id")=="Image")
+            {
+                QByteArray b;
+                QStringList value = ele.attribute("Sql").split(".");
+                if(value.size()== 3)
+                {
+                    QString key = value.at(0) + "." + value.at(1);
+                    b = selects.value(key).value(value.at(2)).toByteArray();
+                    ele.setAttribute("img-data",QString(b.toBase64()));
+                }
             }
             child = child.nextSibling();
         }

@@ -1,5 +1,6 @@
 #include "reportimage.h"
 #include "editimagedlg.h"
+#include "../sqlcalls.h"
 ReportImage::ReportImage(QGraphicsItem *parent) :
     Container(parent)
 {
@@ -57,7 +58,18 @@ void ReportImage::setruta(QString arg) {
 
         if(m_fromDB)
         {
-            //TODO get image from db
+            QStringList l = arg.split(".");
+
+            QSqlDatabase db;
+            if(l.at(0).startsWith("Gen"))
+                db = QSqlDatabase::database("grupo");
+            else if(l.at(0).startsWith("Emp"))
+                db = QSqlDatabase::database("empresa");
+
+            QString err;
+            QVariant v = SqlCalls::SelectOneField(l.at(1),l.at(2),"",db,err);
+            m_image = QImage(v.toByteArray());
+            this->setRect(0,0,m_image.size().width(),m_image.size().height());
         }
         else
         {

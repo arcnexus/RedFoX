@@ -3,11 +3,13 @@
 
 #include <QDialog>
 #include "reportimage.h"
+#include "editdinamycitemdlg.h"
+
 namespace Ui {
 class EditImageDlg;
 }
 
-class EditImageDlg : public QDialog
+class EditImageDlg : public EditDinamycItemDlg
 {
     Q_OBJECT
     
@@ -19,6 +21,11 @@ private slots:
     void on_btnRuta_clicked();
 
     void on_btnAceptar_clicked();
+
+    void on_comboZona_currentIndexChanged(const QString &arg1);
+    void on_comboTable_currentIndexChanged(const QString &arg1);
+    void on_comboCampo_currentIndexChanged(const QString &arg1);
+    void on_chkArchivo_toggled(bool checked);
 
 private:
     Ui::EditImageDlg *ui;
