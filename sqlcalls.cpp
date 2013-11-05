@@ -94,9 +94,10 @@ QMap<int, QSqlRecord> SqlCalls::SelectRecord(QString table, QStringList clausula
 }
 
 QMap<int, QSqlRecord> SqlCalls::SelectRecord(QString table, QString clausulas, QSqlDatabase database, QString &error)
-{
+{    
     QStringList l;
-    l << clausulas;
+    if(!clausulas.isEmpty())
+        l << clausulas;
     return SelectRecord(table,l,database,error);
 }
 
@@ -137,7 +138,8 @@ QVariant SqlCalls::SelectOneField(QString table, QString field, QStringList clau
 QVariant SqlCalls::SelectOneField(QString table, QString field, QString clausulas, QSqlDatabase database, QString &error)
 {
     QStringList l;
-    l << clausulas;
+    if(!clausulas.isEmpty())
+         l << clausulas;
     return SelectOneField(table, field, l, database, error);
 }
 

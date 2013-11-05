@@ -7,6 +7,7 @@ ReportImage::ReportImage(QGraphicsItem *parent) :
     m_ruta = "";
     m_fromDB = false;
     m_dinamica = false;
+    this->setRect(0,0,150,150);
 }
 
 QDomElement ReportImage::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
@@ -28,9 +29,9 @@ void ReportImage::parseXml(QDomElement element, QPointF origin)
     this->setPos(element.attribute("x").toDouble() + origin.x(),element.attribute("y").toDouble()+origin.y());
     this->setSize(element.attribute("w").toDouble(),element.attribute("h").toDouble());
 
-    this->setruta(element.attribute("Path"));
     this->setfromDB(element.attribute("fromBD").toDouble());
     this->setdinamica(element.attribute("Dinamic").toDouble());
+    this->setruta(element.attribute("Path"));
 }
 
 
@@ -67,9 +68,14 @@ void ReportImage::setruta(QString arg) {
                 db = QSqlDatabase::database("empresa");
 
             QString err;
-            QVariant v = SqlCalls::SelectOneField(l.at(1),l.at(2),"",db,err);
-            m_image = QImage(v.toByteArray());
-            this->setRect(0,0,m_image.size().width(),m_image.size().height());
+            QVariant v = SqlCalls::SelectOneField(l.at(1),l.at(2),QString(),db,err);
+
+       //     QByteArray b1 = QByteArray::fromBase64(v.toByteArray());
+            QPixmap pm1;
+            pm1.loadFromData(QByteArray::fromBase64(v.toByteArray()));
+
+            m_image = pm1.toImage();
+       //     this->setRect(0,0,m_image.size().width(),m_image.size().height());
         }
         else
         {
@@ -77,7 +83,7 @@ void ReportImage::setruta(QString arg) {
             if(f.open(QFile::ReadOnly))
             {
                 m_image = QImage(arg);
-                this->setRect(0,0,m_image.size().width(),m_image.size().height());
+         //       this->setRect(0,0,m_image.size().width(),m_image.size().height());
             }
         }
         emit rutaChanged(arg);

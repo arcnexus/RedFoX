@@ -2083,7 +2083,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
         }
         QSqlQuery Articulo(Configuracion_global->groupDB);
         Articulo.prepare("update articulos set "+campo+" =:imagen where id = :nid");
-        Articulo.bindValue(":imagen",ba);
+        Articulo.bindValue(":imagen",ba.toBase64());
         Articulo.bindValue(":nid",oArticulo->id);
         if (!Articulo.exec())
         {

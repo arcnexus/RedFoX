@@ -24,6 +24,8 @@ EditImageDlg::EditImageDlg(ReportImage* img ,QWidget *parent) :
             ui->comboTable->setCurrentText(l.at(1));
             ui->comboCampo->setCurrentText(l.at(2));
         }
+        ui->txtRuta->setEnabled(false);
+        ui->btnRuta->setEnabled(false);
     }
     else
     {
@@ -74,8 +76,8 @@ void EditImageDlg::on_chkArchivo_toggled(bool checked)
     else
     {
         QString s = QString("%1.%2.%3").arg(ui->comboZona->currentText())
-                                       .arg(ui->comboTable->currentText()
-                                       .arg(ui->comboCampo->currentText()));
+                                       .arg(ui->comboTable->currentText())
+                                       .arg(ui->comboCampo->currentText());
         pre->setruta(s);
     }
     scene.update();
@@ -95,8 +97,8 @@ void EditImageDlg::on_comboTable_currentIndexChanged(const QString &arg1)
 void EditImageDlg::on_comboCampo_currentIndexChanged(const QString &arg1)
 {
     QString s = QString("%1.%2.%3").arg(ui->comboZona->currentText())
-                                   .arg(ui->comboTable->currentText()
-                                   .arg(arg1));
+                                   .arg(ui->comboTable->currentText())
+                                   .arg(arg1);
     pre->setruta(s);
     scene.update();
 }

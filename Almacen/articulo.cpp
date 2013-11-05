@@ -609,7 +609,7 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
             QSqlRecord registro =  qryArticulo.record();
             QByteArray ba1 = registro.field("imagen").value().toByteArray();
             QPixmap pm1;
-            pm1.loadFromData(ba1);
+            pm1.loadFromData(QByteArray::fromBase64(ba1));
             if(!registro.field("imagen").value().isNull());
                 label->setPixmap(pm1);
             //--------
