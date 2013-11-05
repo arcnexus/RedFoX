@@ -17,6 +17,7 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     view.setScene(&scene);
     this->setCentralWidget(&view);
 
+
     QFontDatabase::addApplicationFont(":/codeBar/codebar/FRE3OF9X.TTF");
     //Free 3 of 9 Extended
 

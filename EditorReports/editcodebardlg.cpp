@@ -24,6 +24,15 @@ EditCodeBarDlg::EditCodeBarDlg(CodeBar *code, QWidget *parent) :
 
     pre->setcode("*123456789*");
     pre->setvisibleCode(code->visibleCode());
+
+    pre->setcodeSize(code->codeSize());
+    pre->setbarSize(code->barSize());
+    pre->setvertical(code->vertical());
+
+    ui->checkVertical->setChecked(code->vertical());
+    ui->spinBarSize->setValue(code->barSize());
+    ui->spinFontSize->setValue(code->codeSize());
+
     scene.addItem(pre);
 }
 
@@ -55,11 +64,33 @@ void EditCodeBarDlg::on_pushButton_clicked()
 
     code->setsql(sql);
     code->setvisibleCode(pre->visibleCode());
+
+    code->setcodeSize(pre->codeSize());
+    code->setbarSize(pre->barSize());
+    code->setvertical(pre->vertical());
     this->accept();
 }
 
 void EditCodeBarDlg::on_checkBox_toggled(bool checked)
 {
     pre->setvisibleCode(checked);
+    scene.update();
+}
+
+void EditCodeBarDlg::on_spinBarSize_valueChanged(int arg1)
+{
+    pre->setbarSize(arg1);
+    scene.update();
+}
+
+void EditCodeBarDlg::on_spinFontSize_valueChanged(int arg1)
+{
+    pre->setcodeSize(arg1);
+    scene.update();
+}
+
+void EditCodeBarDlg::on_checkVertical_toggled(bool checked)
+{
+    pre->setvertical(checked);
     scene.update();
 }
