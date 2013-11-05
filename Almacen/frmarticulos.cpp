@@ -2081,13 +2081,15 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             ba = f.readAll();
             f.close();
         }
-        QSqlQuery *Articulo = new QSqlQuery(Configuracion_global->groupDB);
-        Articulo->prepare("update articulos set "+campo+" =:imagen where id = :nid");
-        Articulo->bindValue(":imagen",ba);
-        Articulo->bindValue(":nid",oArticulo->id);
-        if (!Articulo->exec())
+        QSqlQuery Articulo(Configuracion_global->groupDB);
+        Articulo.prepare("update articulos set "+campo+" =:imagen where id = :nid");
+        Articulo.bindValue(":imagen",ba);
+        Articulo.bindValue(":nid",oArticulo->id);
+        if (!Articulo.exec())
+        {
             QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
-        delete Articulo;
+            qDebug() << Articulo.lastError();
+        }
     }
 }
 

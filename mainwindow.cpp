@@ -714,9 +714,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     on_edit = false;
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
-    timer->start(300000);
+ //   QTimer *timer = new QTimer(this);
+ //   connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
+ //   timer->start(300000);
     llenaravisos();
 
 //    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);

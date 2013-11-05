@@ -12,7 +12,7 @@ void Articulo::Anadir()
     query.prepare("INSERT INTO articulos (codigo)"
                        " VALUES (:codigo)");
     if(Configuracion_global->auto_codigoart ==false)
-         query.bindValue(":codigo","");
+        query.bindValue(":codigo",QString("_%1_").arg(rand()));
     else
 
         query.bindValue(":codigo","auto_codigo");
