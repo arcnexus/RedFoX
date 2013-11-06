@@ -540,8 +540,11 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     tr("No"),tr("Sí")) == QMessageBox::Accepted)
                 procesar = true;
             else
+
+            {
                 ui->txtCodigo->setText("");
                 procesar = false;
+            }
 
         }
         if(procesar)

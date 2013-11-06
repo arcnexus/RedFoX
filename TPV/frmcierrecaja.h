@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
-
+#include "../TPV/frmcajasabiertas.h"
 namespace Ui {
 class FrmCierreCaja;
 }
@@ -22,6 +22,7 @@ private:
     Ui::FrmCierreCaja *ui;
     bool facturas_en_cierre;
     double importe_fijo_cierre;
+    void cargar_datos_caja(int id);
 };
 
 #endif // FRMCIERRECAJA_H

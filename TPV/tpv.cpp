@@ -83,7 +83,7 @@ int tpv::nuevoticket(QString serie, QString caja)
     condiciones << QString("fecha_abertura = '%1'").arg(QDate::currentDate().toString("yyyyMMdd"));
     condiciones << QString("id_caja = %1").arg(Configuracion_global->caja);
     condiciones << QString("ejercicio = '%1'").arg(Configuracion_global->cEjercicio);
-    c = SqlCalls::SelectRecord("cierre_caja",condiciones,Configuracion_global->empresaDB,error);
+    c = SqlCalls::SelectRecord("cierrecaja",condiciones,Configuracion_global->empresaDB,error);
     if(c.size()>0)
     {
         QSqlQuery *t = new QSqlQuery(Configuracion_global->empresaDB);

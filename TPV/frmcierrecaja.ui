@@ -77,7 +77,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="3" column="4">
-    <widget class="QLabel" name="label_40">
+    <widget class="QLabel" name="lblimporte_abertura">
      <property name="text">
       <string>0,00</string>
      </property>
@@ -541,7 +541,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QComboBox" name="cboUsuarioCierre"/>
    </item>
    <item row="2" column="4">
-    <widget class="QLabel" name="label_39">
+    <widget class="QLabel" name="lblUsuario_abertura">
      <property name="styleSheet">
       <string notr="true">color: rgb(0, 85, 0);</string>
      </property>
@@ -1163,5 +1163,22 @@ color: rgb(255, 255, 255);</string>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnAceptar</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmCierreCaja</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>580</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>659</x>
+     <y>569</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
