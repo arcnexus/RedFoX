@@ -160,7 +160,7 @@ private slots:
 
     void on_btnCobrar_imprimir_nuevo_clicked();
 
-    void on_btnComprar_imprimir_clicked();
+    void on_btnCobrar_imprimir_clicked();
 
     void on_btnCobrar_nuevo_clicked();
 
@@ -193,6 +193,8 @@ private slots:
     void on_btnTransferencia_clicked(bool checked);
     void on_lista_tickets_clicked(const QModelIndex &index);
 
+    void on_btnImprimir_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -216,6 +218,9 @@ private:
 
     void estructura_lista();
     void llenar_campos();
+    void insertar_datos_pago();
+    void imprimir();
+    bool comprovar_pago();
 
 signals:
     void mostrar_desglose(double subtotal1,double subtotal2, double subtotal3,double subtotal4,double dto1,double dto2,

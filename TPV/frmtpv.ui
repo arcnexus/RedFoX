@@ -18,7 +18,7 @@
     <widget class="QFrame" name="frmlines">
      <property name="maximumSize">
       <size>
-       <width>473</width>
+       <width>464</width>
        <height>16777215</height>
       </size>
      </property>
@@ -124,6 +124,12 @@ color: rgb(212, 214, 255);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>301</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -131,532 +137,530 @@ color: rgb(212, 214, 255);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="stackedWidgetticketPage1">
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="1">
-           <widget class="QLabel" name="lblCliente">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(150, 150, 150);</string>
-            </property>
-            <property name="text">
-             <string>Cliente</string>
-            </property>
-           </widget>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="lblCliente">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(150, 150, 150);</string>
+              </property>
+              <property name="text">
+               <string>Cliente</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblCobrado">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 85, 0);
+color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>COBRADO</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="1" column="1">
-           <widget class="QFrame" name="frame_3">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>102</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(232, 232, 232);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_9">
-             <item row="4" column="3" colspan="2">
-              <widget class="QLabel" name="lblDependiente">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
-font: 75 10pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>dependiente</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QLabel" name="lblHora">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
+          <item row="1" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QFrame" name="frame_3">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>102</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(232, 232, 232);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_13">
+               <item row="0" column="3">
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="0" column="4">
+                <widget class="QLabel" name="lblHora">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
 font: 75 22pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>12:00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_22">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 85, 0);</string>
-               </property>
-               <property name="text">
-                <string>Atendido por:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLabel" name="lblSerie">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
+                 </property>
+                 <property name="text">
+                  <string>12:00</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 85, 0);</string>
+                 </property>
+                 <property name="text">
+                  <string>Ticket:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="lblSerie">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
 font: 75 15pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>A</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 85, 0);</string>
-               </property>
-               <property name="text">
-                <string>Ticket:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="3">
-              <widget class="QLabel" name="lblTicket">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
+                 </property>
+                 <property name="text">
+                  <string>A</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLabel" name="label_55">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
 font: 75 15pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>000001</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="4">
-              <widget class="QLabel" name="lblFecha">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
+                 </property>
+                 <property name="text">
+                  <string>/</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="lblTicket">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
+font: 75 15pt &quot;Garuda&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>000001</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="4">
+                <widget class="QLabel" name="lblFecha">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
 font: 75 10pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>01/01/2012</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="label_55">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
-font: 75 15pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>/</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QFrame" name="frameclientes">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>0</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 240, 201);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="4" column="0" colspan="5">
-              <widget class="QLineEdit" name="lineEdit_4">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0" colspan="2">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Población:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Cliente:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1" colspan="4">
-              <widget class="QLineEdit" name="lineEdit_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Código:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="5">
-              <widget class="QLineEdit" name="lineEdit_3">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QLabel" name="label_3">
-               <property name="maximumSize">
-                <size>
-                 <width>67</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Dirección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="3" colspan="2">
-              <widget class="QLineEdit" name="lineEdit_5">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="3">
-              <widget class="QLineEdit" name="lineEdit">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>120</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="4">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QStackedWidget" name="stackedWidget">
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="page_2">
-             <layout class="QGridLayout" name="gridLayout_15">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item row="0" column="0">
-               <widget class="QTableWidget" name="tablaLineas_tiquet_actual">
-                <property name="minimumSize">
-                 <size>
-                  <width>300</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>300</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-                <property name="lineWidth">
-                 <number>8</number>
-                </property>
-                <property name="midLineWidth">
-                 <number>8</number>
-                </property>
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-                <property name="showGrid">
-                 <bool>false</bool>
-                </property>
-                <property name="rowCount">
-                 <number>5</number>
-                </property>
-                <attribute name="horizontalHeaderStretchLastSection">
-                 <bool>true</bool>
-                </attribute>
-                <attribute name="verticalHeaderVisible">
-                 <bool>false</bool>
-                </attribute>
-                <row/>
-                <row/>
-                <row/>
-                <row/>
-                <row/>
-                <column>
-                 <property name="text">
-                  <string>Descripción</string>
                  </property>
-                </column>
-                <column>
                  <property name="text">
-                  <string>Cant.</string>
+                  <string>01/01/2012</string>
                  </property>
-                </column>
-                <column>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_22">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 85, 0);</string>
+                 </property>
                  <property name="text">
-                  <string>PVP</string>
+                  <string>Atendido por:</string>
                  </property>
-                </column>
-                <column>
+                </widget>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLabel" name="lblDependiente">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
+font: 75 10pt &quot;Garuda&quot;;</string>
+                 </property>
                  <property name="text">
-                  <string>TOTAL</string>
+                  <string>dependiente</string>
                  </property>
-                </column>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_3"/>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QFrame" name="frame_7">
-            <property name="minimumSize">
-             <size>
-              <width>88</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(225, 225, 225);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_13">
-             <item row="2" column="2">
-              <widget class="QLabel" name="lbl_base_ticket">
-               <property name="minimumSize">
-                <size>
-                 <width>84</width>
-                 <height>0</height>
-                </size>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tablaLineas_tiquet_actual">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="lineWidth">
+               <number>8</number>
+              </property>
+              <property name="midLineWidth">
+               <number>8</number>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="showGrid">
+               <bool>false</bool>
+              </property>
+              <property name="rowCount">
+               <number>5</number>
+              </property>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Descripción</string>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 85, 0);
+              </column>
+              <column>
+               <property name="text">
+                <string>Cant.</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>PVP</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>TOTAL</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_7">
+              <property name="minimumSize">
+               <size>
+                <width>88</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(225, 225, 225);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="1">
+                <widget class="QLabel" name="label_20">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
+font: 75 10pt &quot;Garuda&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Base:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLabel" name="lbl_base_ticket">
+                 <property name="minimumSize">
+                  <size>
+                   <width>84</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(0, 85, 0);
 color: rgb(255, 255, 255);
 font: 75 10pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLabel" name="label_20">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
+                 </property>
+                 <property name="text">
+                  <string>0,00</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="label_8">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
 font: 75 10pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>Base:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLabel" name="label_8">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
-font: 75 10pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>IVA:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="lbl_iva_ticket">
-               <property name="minimumSize">
-                <size>
-                 <width>84</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255);
+                 </property>
+                 <property name="text">
+                  <string>IVA:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLabel" name="lbl_iva_ticket">
+                 <property name="minimumSize">
+                  <size>
+                   <width>84</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(111, 121, 255);
 font: 75 10pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLabel" name="label_32">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(134, 134, 134);
+                 </property>
+                 <property name="text">
+                  <string>0,00</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="label_32">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(134, 134, 134);
 font: 75 12pt &quot;Garuda&quot;;</string>
-               </property>
-               <property name="text">
-                <string>TOTAL:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="lbl_total_ticket">
-               <property name="minimumSize">
-                <size>
-                 <width>84</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255);
+                 </property>
+                 <property name="text">
+                  <string>TOTAL:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLabel" name="lbl_total_ticket">
+                 <property name="minimumSize">
+                  <size>
+                   <width>84</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(255, 85, 0);
 font: 75 14pt &quot;Nimbus Mono L&quot;;
 </string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="5" column="0" colspan="3">
-              <widget class="QPushButton" name="btnDesglose">
-               <property name="text">
-                <string>Ver Desglose</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../maya.qrc">
-                 <normaloff>:/Icons/PNG/desglose.png</normaloff>:/Icons/PNG/desglose.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>32</width>
-                 <height>32</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+                 </property>
+                 <property name="text">
+                  <string>0,00</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0" colspan="3">
+                <widget class="QPushButton" name="btnDesglose">
+                 <property name="text">
+                  <string>Ver Desglose</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../maya.qrc">
+                   <normaloff>:/Icons/PNG/desglose.png</normaloff>:/Icons/PNG/desglose.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
+         <widget class="QFrame" name="frameclientes">
+          <property name="geometry">
+           <rect>
+            <x>310</x>
+            <y>137</y>
+            <width>0</width>
+            <height>298</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>0</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 240, 201);</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="4" column="0" colspan="5">
+            <widget class="QLineEdit" name="lineEdit_4">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="2">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Población:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Cliente:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" colspan="4">
+            <widget class="QLineEdit" name="lineEdit_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Código:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="5">
+            <widget class="QLineEdit" name="lineEdit_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_3">
+             <property name="maximumSize">
+              <size>
+               <width>67</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Dirección:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3" colspan="2">
+            <widget class="QLineEdit" name="lineEdit_5">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="3">
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 255, 255);</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
         </widget>
         <widget class="QWidget" name="page_5">
          <layout class="QGridLayout" name="gridLayout_14">
@@ -1180,7 +1184,7 @@ color: rgb(0, 0, 0);</string>
            </widget>
           </item>
           <item row="13" column="0" colspan="4">
-           <widget class="QPushButton" name="btnComprar_imprimir">
+           <widget class="QPushButton" name="btnCobrar_imprimir">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -2051,6 +2055,23 @@ background-color: rgb(218, 218, 218);</string>
             </property>
            </widget>
           </item>
+          <item row="3" column="4">
+           <widget class="QPushButton" name="btnBorrar_linea">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1" colspan="2">
            <widget class="QPushButton" name="btnCantidad">
             <property name="sizePolicy">
@@ -2106,8 +2127,8 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
             </property>
            </widget>
           </item>
-          <item row="3" column="4">
-           <widget class="QPushButton" name="btnBorrar_linea">
+          <item row="3" column="5">
+           <widget class="QPushButton" name="btnImprimir">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -2119,20 +2140,13 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
             </property>
             <property name="icon">
              <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+              <normaloff>:/Icons/PNG/impresora2.png</normaloff>:/Icons/PNG/impresora2.png</iconset>
             </property>
-           </widget>
-          </item>
-          <item row="3" column="5">
-           <widget class="QPushButton" name="pushButton_10">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
+            <property name="iconSize">
+             <size>
+              <width>41</width>
+              <height>41</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -2160,6 +2174,23 @@ color: rgb(255, 255, 255);</string>
               <width>48</width>
               <height>48</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="7" rowspan="2">
+           <widget class="QPushButton" name="btnIntro">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
+color: rgb(0, 0, 0);</string>
+            </property>
+            <property name="text">
+             <string>Intro</string>
             </property>
            </widget>
           </item>
@@ -2196,23 +2227,6 @@ background-color: rgb(194, 194, 194);</string>
             </property>
             <property name="text">
              <string>+</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="7" rowspan="2">
-           <widget class="QPushButton" name="btnIntro">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
-color: rgb(0, 0, 0);</string>
-            </property>
-            <property name="text">
-             <string>Intro</string>
             </property>
            </widget>
           </item>
@@ -3137,7 +3151,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btnBuscarArt</tabstop>
   <tabstop>btnCalculadora</tabstop>
   <tabstop>btnBorrar_linea</tabstop>
-  <tabstop>pushButton_10</tabstop>
+  <tabstop>btnImprimir</tabstop>
   <tabstop>btnBack</tabstop>
   <tabstop>btnAnadir_ticket</tabstop>
   <tabstop>btnPoner_en_espera</tabstop>
@@ -3174,7 +3188,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btnContinuarEdicionTicket</tabstop>
   <tabstop>btnCobrar_</tabstop>
   <tabstop>btnCobrar_imprimir_nuevo</tabstop>
-  <tabstop>btnComprar_imprimir</tabstop>
+  <tabstop>btnCobrar_imprimir</tabstop>
   <tabstop>btnCobrar_nuevo</tabstop>
   <tabstop>btnInsertarDinero</tabstop>
   <tabstop>btnAbrirCaja</tabstop>
@@ -3192,7 +3206,6 @@ color: rgb(255, 255, 255);</string>
   <tabstop>tableView_2</tabstop>
   <tabstop>lineEdit_5</tabstop>
   <tabstop>btnEfectivo</tabstop>
-  <tabstop>tablaLineas_tiquet_actual</tabstop>
   <tabstop>lineEdit</tabstop>
   <tabstop>lista_tickets</tabstop>
   <tabstop>btnlista</tabstop>

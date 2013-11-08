@@ -25,36 +25,7 @@ FrmCierreCaja::FrmCierreCaja(QWidget *parent) :
         QMessageBox::warning(this,tr("Cierre de caja"),tr("Error al recuperar los datos de la empresa: %1 ").arg(error),
                              tr("Aceptar"));
     }
-    // ----------------
-    // Cajas abiertas
-    // ----------------
-    QMap <int,QSqlRecord> cajas;
-    QStringList condiciones;
-    condiciones << QString("fecha_abertura = '%1'").arg(QDate::currentDate().toString("yyyyMMdd"));
-    condiciones << QString("id_caja = %1").arg(Configuracion_global->caja);
-    condiciones << QString("ejercicio = '%1'").arg(Configuracion_global->cEjercicio);
-    cajas = SqlCalls::SelectRecord("cierrecaja",condiciones,Configuracion_global->empresaDB,error);
-    if(cajas.size() ==1)
-    {
-        QMapIterator <int, QSqlRecord> it(cajas);
-        while (it.hasNext())
-        {
-            it.next();
-            cargar_datos_caja(it.value().value("id").toInt());
-        }
-    }
-    else if(cajas.size() <1)
-        QMessageBox::warning(this,tr("Gestión de TPV"),tr("No hay cajas abiertas en este terminal"),tr("Aceptar"));
-    else if(cajas.size()>1)
-    {
-        frmCajasAbiertas cajas;
-        cajas.cargar_datos(Configuracion_global->caja,Configuracion_global->cEjercicio);
-        if(cajas.exec() == QDialog::Accepted)
-        {
-            int id = cajas.id;
-            cargar_datos_caja(id);
-        }
-    }
+    //cargar_datos_caja();
 
 
 }
@@ -91,24 +62,61 @@ void FrmCierreCaja::cargar_datos_caja(int id)
 }
 
 
-/*void FrmCierreCaja::on_btnAceptar_clicked()
-{
-    close();
-}
 
 void FrmCierreCaja::on_btnIniciar_cierre_clicked()
 {
+    ui->txtimporte_abertura->setText(ui->lblimporte_abertura->text());
+    ui->txthora_cierre->setTime(QTime::currentTime());
+    QDate fecha_cierre =ui->calendarWidget->selectedDate();
+
     //----------------------------
     // Calculo ingresos
     // ---------------------------
     QString cSQL;
-    cSQL = "select  sum(importe_efectivo) as efectivo, sum(importe_tarjeta) as tarjeta, sum(importe_cheque) as cheque,"
+    cSQL = QString("select  sum(importe_efectivo) as efectivo, sum(importe_tarjeta) as tarjeta, sum(importe_cheque) as cheque,"
             "sum(importe_domiciliacion) as domiciliacion, sum(importe_transferencia) as transferencia, sum(importe_vale) as vale "
-            "from cab_tpv";
+                   "from cab_tpv where fecha = '%1'").arg(fecha_cierre.toString("yyyyMMdd"));
+
     QSqlQuery result(Configuracion_global->empresaDB);
     result.exec(cSQL);
+    result.next();
     ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                        result.record().value("efectivo").toDouble(),'f',
                                                                        Configuracion_global->decimales_campos_totales)));
+    double efect = Configuracion_global->MonedatoDouble(ui->lblimporte_abertura->text()) +
+                                                         Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
+    ui->txtCaja_moneda->setText(Configuracion_global->toFormatoMoneda(QString::number(efect,'f',
+                                                                                      Configuracion_global->decimales_campos_totales)));
 
-}*/
+    ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                      result.record().value("tarjeta").toDouble(),'f',
+                                                                      Configuracion_global->decimales_campos_totales)));
+    ui->txtCheques->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                       result.record().value("cheque").toDouble(),'f',
+                                                                       Configuracion_global->decimales_campos_totales)));
+    ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                       result.record().value("domiciliacion").toDouble(),'f',
+                                                                       Configuracion_global->decimales_campos_totales)));
+    ui->txtTransferencia->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                       result.record().value("transferencia").toDouble(),'f',
+                                                                       Configuracion_global->decimales_campos_totales)));
+    ui->txtVales_recibidos->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                       result.record().value("vale").toDouble(),'f',
+                                                                       Configuracion_global->decimales_campos_totales)));
+
+    //-----------------
+    // Vales emitidos
+    //-----------------
+    cSQL = QString("select  sum(importe) as importe from vales where fecha = '%1'").arg(fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    QString importe = QString::number(result.record().value("importe").toDouble(),'f',
+                                      Configuracion_global->decimales_campos_totales);
+    ui->txtValesEmitidos->setText(Configuracion_global->toFormatoMoneda(importe));
+
+    TimedMessageBox * t = new TimedMessageBox(this,tr("Se han obtenido los datos de las cabeceras de tickets"));
+    ui->btnCierreCaja->setEnabled(true);
+    ui->btnCierreParcial->setEnabled(true);
+
+
+}
