@@ -195,11 +195,18 @@ private slots:
 
     void on_btnImprimir_clicked();
 
+
+
+    void on_tabla_buscar_art_doubleClicked(const QModelIndex &index);
+
+    void on_btnBuscarArt_ext_clicked();
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
     QPushButton* push;
     QTableView *tablabuscar;
+    QSqlQueryModel *model_articulos;
     qreal valor1;
     qreal valor2;
     QString symbol;

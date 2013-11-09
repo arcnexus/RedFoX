@@ -11,6 +11,7 @@
 #include "../TPV/frminsertardinerocaja.h"
 #include "../TPV/frmdevolucionticket.h"
 #include "../TPV/frmcantidad.h"
+#include "../Busquedas/db_consulta_view.h"
 
 
 FrmTPV::FrmTPV(QWidget *parent) :
@@ -36,6 +37,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
     ui->frameTeclado->setCurrentIndex(0);
     ui->frmcontrol->setCurrentIndex(0);
     ui->lblCobrado->setVisible(false);
+    ui->btnBuscarArt_ext->setVisible(false);
 
 
     QSqlQuery qtpv(Configuracion_global->empresaDB);
@@ -93,7 +95,25 @@ FrmTPV::FrmTPV(QWidget *parent) :
     ui->cboCajas_filtro->setModel(model_cajas);
     ui->txtFecha_fin_filtro->setDate(QDate::currentDate());
     ui->txtFecha_ini_filtro->setDate(QDate::currentDate());
-
+    QStringList tipobusqueda;
+    tipobusqueda << tr("Descripción") << tr("Código");
+    ui->cboBusqueda->addItems(tipobusqueda);
+    model_articulos = new QSqlQueryModel(this);
+    model_articulos->setQuery("select id, codigo,descripcion, pvp, pvp_con_iva from vistaart_tarifa where id = 0",
+                              Configuracion_global->groupDB);
+    ui->tabla_buscar_art->setModel(model_articulos);
+    QStringList headers;
+    headers <<tr("id") <<tr("Código") <<tr("Descripción") << tr("PVP") << tr("PVP + IVA");
+    QVariantList sizes;
+    sizes << 0 << 100 << 120 << 100 << 100;
+    for(int i = 0; i < sizes.size(); i++)
+    {
+        model_articulos->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        ui->tabla_buscar_art->setColumnWidth(i,sizes.at(i).toInt());
+    }
+    ui->tabla_buscar_art->setColumnHidden(0,true);
+    ui->tabla_buscar_art->setItemDelegateForColumn(3, new MonetaryDelegate_totals);
+    ui->tabla_buscar_art->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
 }
 
 FrmTPV::~FrmTPV()
@@ -111,7 +131,9 @@ void FrmTPV::cargar_ticket(int id)
     tpv = SqlCalls::SelectRecord("cab_tpv",QString("id =%1").arg(id),Configuracion_global->empresaDB,error);
     ui->lblTicket->setText(QString::number(tpv.value(id).value("ticket").toInt()));
     if(!tpv.value(id).value("nombre_cliente").toString().isEmpty())
-        ui->lblCliente->setText(tpv.value(id).value("nombre_cliente").toString());
+        ui->btnAsignarCliente->setText(tpv.value(id).value("nombre_cliente").toString());
+    else
+        ui->btnAsignarCliente->setText(tr("Asignar Cliente"));
     ui->lblFecha->setText(tpv.value(id).value("fecha").toString());
     oTpv->fecha = tpv.value(id).value("fecha").toDate();
     ui->lblHora->setText(tpv.value(id).value("hora").toString());
@@ -711,9 +733,11 @@ void FrmTPV::on_btnScanear_toggled(bool checked)
         ui->btnCantidad->setChecked(false);
         ui->btnPrecio->setChecked(false);
         ui->btnDto->setChecked(false);
+        ui->btnBuscarArt_ext->setVisible(true);
         ui->txtCodigo->setFocus();
         ui->txtCodigo->setStyleSheet("background-color: rgb(0,200,0); font: 12pt 'Sans Serif';");
     } else
+        ui->btnBuscarArt_ext->setVisible(false);
         ui->txtCodigo->setStyleSheet("background-color:rgb(255, 255, 191); font: 12pt 'Sans Serif';");
 
 }
@@ -1865,20 +1889,6 @@ void FrmTPV::on_rt_clicked()
     animation->start();
 }
 
-void FrmTPV::on_txtbuscar_art_textEdited(const QString &arg1)
-{
-    QMap <int, QSqlRecord> art;
-    QString error;
-    QString clausulas;
-    clausulas = "%"+arg1+"%";
-    art = SqlCalls::SelectRecord("vistaart_tarifa",clausulas,Configuracion_global->groupDB,error);
-    QMapIterator <int,QSqlRecord> iterator(art);
-    while(iterator.hasNext())
-    {
-        iterator.next();
-
-    }
-}
 
 void FrmTPV::on_btnAbrirCaja_clicked()
 {
@@ -2078,106 +2088,128 @@ void FrmTPV::on_btnCobrar__clicked()
         // Insertar pago
         //-----------------
         insertar_datos_pago();
+        //-----------
+        // ANIMACION
+        //-----------
+        this->ticket_height = ui->frame_ticket->height();
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+        animation->setDuration(600);
+        animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+        animation->setEndValue(QSize(ui->frame_ticket->width(),0));
+
+        connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
+        animation->start();
     } else
     {
         QMessageBox::warning(this,tr("Gestión de Tickets"),tr("No se puede marcar como cobrado un ticket com importe pendiente")+
                              tr("\nEspecifique las formas correctas de cobro"),tr("Aceptar"));
     }
 
-    //-----------
-    // ANIMACION
-    //-----------
-    this->ticket_height = ui->frame_ticket->height();
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
-    animation->setDuration(600);
-    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
-    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
 
-    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
-    animation->start();
 }
 
 void FrmTPV::on_btnCobrar_imprimir_nuevo_clicked()
 {
-    //-----------------
-    // Insertar pago
-    //-----------------
-    insertar_datos_pago();
+    if(comprovar_pago())
+    {
+        //-----------------
+        // Insertar pago
+        //-----------------
+        insertar_datos_pago();
 
-    //----------------------
-    //  Imprimir ticket
-    //----------------------
-    imprimir();
-    //----------------------
-    // Añadir nuevo ticket
-    //----------------------
-    on_btnAnadir_ticket_clicked();
-    //-----------
-    // ANIMACION
-    //-----------
-    this->ticket_height = ui->frame_ticket->height();
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
-    animation->setDuration(600);
-    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
-    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
+        //----------------------
+        //  Imprimir ticket
+        //----------------------
+        imprimir();
+        //----------------------
+        // Añadir nuevo ticket
+        //----------------------
+        on_btnAnadir_ticket_clicked();
+        //-----------
+        // ANIMACION
+        //-----------
+        this->ticket_height = ui->frame_ticket->height();
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+        animation->setDuration(600);
+        animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+        animation->setEndValue(QSize(ui->frame_ticket->width(),0));
 
-    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
-    animation->start();
+        connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
+        animation->start();
+    } else
+    {
+        QMessageBox::warning(this,tr("Gestión de Tickets"),tr("No se puede marcar como cobrado un ticket com importe pendiente")+
+                             tr("\nEspecifique las formas correctas de cobro"),tr("Aceptar"));
+    }
 
 }
 
 void FrmTPV::on_btnCobrar_imprimir_clicked()
 {
-    //-----------------
-    // Insertar pago
-    //-----------------
-    insertar_datos_pago();
+    if(comprovar_pago())
+    {
+        //-----------------
+        // Insertar pago
+        //-----------------
+        insertar_datos_pago();
 
-    //-------------------
-    //  Imprimir ticket
-    //-------------------
-    imprimir();
+        //-------------------
+        //  Imprimir ticket
+        //-------------------
+        imprimir();
 
-    //-----------
-    // ANIMACION
-    //-----------
-    this->ticket_height = ui->frame_ticket->height();
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
-    animation->setDuration(600);
-    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
-    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
+        //-----------
+        // ANIMACION
+        //-----------
+        this->ticket_height = ui->frame_ticket->height();
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+        animation->setDuration(600);
+        animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+        animation->setEndValue(QSize(ui->frame_ticket->width(),0));
 
-    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
-    animation->start();
+        connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
+        animation->start();
+    } else
+    {
+        QMessageBox::warning(this,tr("Gestión de Tickets"),tr("No se puede marcar como cobrado un ticket com importe pendiente")+
+                             tr("\nEspecifique las formas correctas de cobro"),tr("Aceptar"));
+    }
 
 
 }
 
 void FrmTPV::on_btnCobrar_nuevo_clicked()
 {
-    //-----------------
-    // Insertar pago
-    //-----------------
-    insertar_datos_pago();
+    if(comprovar_pago())
+    {
+        //-----------------
+        // Insertar pago
+        //-----------------
+        insertar_datos_pago();
 
 
-    //----------------------
-    // Añadir nuevo ticket
-    //----------------------
-    on_btnAnadir_ticket_clicked();
+        //----------------------
+        // Añadir nuevo ticket
+        //----------------------
+        on_btnAnadir_ticket_clicked();
 
 
-    //-----------
-    // ANIMACION
-    //-----------
-    this->ticket_height = ui->frame_ticket->height();
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
-    animation->setDuration(600);
-    animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
-    animation->setEndValue(QSize(ui->frame_ticket->width(),0));
+        //-----------
+        // ANIMACION
+        //-----------
+        this->ticket_height = ui->frame_ticket->height();
+        QPropertyAnimation *animation = new QPropertyAnimation(ui->frame_ticket, "size",this);
+        animation->setDuration(600);
+        animation->setStartValue(QSize(ui->frame_ticket->width(),ui->frame_ticket->height()));
+        animation->setEndValue(QSize(ui->frame_ticket->width(),0));
 
-    connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
-    animation->start();
+        connect(animation,SIGNAL(finished()),this,SLOT(final_anim_edicion_ticket()));
+        animation->start();
+    } else
+    {
+        QMessageBox::warning(this,tr("Gestión de Tickets"),tr("No se puede marcar como cobrado un ticket com importe pendiente")+
+                             tr("\nEspecifique las formas correctas de cobro"),tr("Aceptar"));
+    }
 
 }
 
@@ -2188,6 +2220,46 @@ void FrmTPV::on_btnTraspasar_clicked()
 
 void FrmTPV::on_btnAsignarCliente_clicked()
 {
+    db_consulta_view consulta;
+    QStringList campos;
+    campos  <<"nombre_fiscal" <<"codigo_cliente" << "cif_nif"<< "poblacion" << "telefono1";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("clientes");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo_cliente,nombre_fiscal,cif_nif,poblacion,telefono1 from clientes");
+    QStringList cabecera;
+    QVariantList tamanos;
+    cabecera  << tr("Código") << tr("Nombre") << tr("CIF/NIF") << tr("Población") << tr("Teléfono");
+    tamanos <<"0" << "100" << "300" << "100" << "180" <<"130";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Clientes");
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+        QString error;
+        QHash <QString, QVariant > cli;
+        cli["id_cliente"] = id;
+        QString nombre = SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(id),
+                                                  Configuracion_global->groupDB,error).toString();
+        if(error.isEmpty())
+        {
+            cli["nombre_cliente"] = nombre;
+            bool success = SqlCalls::SqlUpdate(cli,"cab_tpv",Configuracion_global->empresaDB,QString("id =%1").arg(oTpv->id),
+                                               error);
+            if(success){
+                ui->btnAsignarCliente->setText(nombre);
+            } else
+            {
+                QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al guardar el nombre de cliente: %1").arg(error),
+                                     tr("Aceptar"));
+            }
+        }
+        else
+            QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al recuperar el cliente: %1").arg(error),
+                                 tr("Aceptar"));
+
+    }
 
 }
 
@@ -2376,4 +2448,79 @@ void FrmTPV::on_lista_tickets_clicked(const QModelIndex &index)
 void FrmTPV::on_btnImprimir_clicked()
 {
     imprimir();
+}
+
+void FrmTPV::on_txtbuscar_art_textEdited(const QString &arg1)
+{
+    QHash <QString, QString> orden;
+    orden["Código "] = "codigo";
+    orden["Descripción"] = "descripcion";
+
+    QString ord = orden.value(ui->cboBusqueda->currentText());
+
+    QString cSQL = QString(
+                "select id,codigo, descripcion, pvp, pvp_con_iva from vistaart_tarifa where %1 like '%%2%' order by %1").arg(ord,arg1);
+
+    model_articulos->setQuery(cSQL,Configuracion_global->groupDB);
+}
+
+void FrmTPV::on_tabla_buscar_art_doubleClicked(const QModelIndex &index)
+{
+    QString codigo = ui->tabla_buscar_art->model()->data(index.model()->index(index.row(),1)).toString();
+    ui->txtCodigo->setText(codigo);
+    ui->btnScanear->setChecked(true);
+    on_txtCodigo_editingFinished();
+}
+
+void FrmTPV::on_btnBuscarArt_ext_clicked()
+{
+    db_consulta_view consulta;
+    QStringList campos;
+    campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante"  << "coste";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("articulos");
+    consulta.set_db("Maya");
+    consulta.setId_tarifa_cliente(1);
+    consulta.setTipo_dto_tarifa(this->tipo_dto_tarifa);
+    if(this->tipo_dto_tarifa ==1)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto1/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==2)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto2/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==3)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto3/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==4)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto4/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==5)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto5/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa ==6)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                     "porc_dto6/100))) as pvp from vistaart_tarifa");
+    else if(this->tipo_dto_tarifa == 0)
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,pvp from vistaart_tarifa");
+    QStringList cabecera;
+    QVariantList tamanos;
+    QVariantList moneda;
+    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
+    tamanos <<"0" << "100" << "100" << "100" << "320" <<"130" <<"130";
+    moneda <<"5" <<"6";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_delegate_monetary(moneda);
+    consulta.set_titulo("Busqueda de Artículos");
+    consulta.set_filtro("");
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+        QString error;
+        QString codigo = SqlCalls::SelectOneField("vistaart_tarifa","codigo",QString("id=%1").arg(id),
+                                                  Configuracion_global->groupDB,error).toString();
+        ui->txtCodigo->setText(codigo);
+        ui->btnScanear->setChecked(true);
+        on_txtCodigo_editingFinished();
+   }
 }

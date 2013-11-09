@@ -137,19 +137,19 @@ color: rgb(212, 214, 255);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="stackedWidgetticketPage1">
          <layout class="QGridLayout" name="gridLayout_9">
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <widget class="QLabel" name="lblCliente">
-              <property name="styleSheet">
-               <string notr="true">color: rgb(150, 150, 150);</string>
-              </property>
+             <widget class="QPushButton" name="btnAsignarCliente">
               <property name="text">
                <string>Cliente</string>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -1735,33 +1735,6 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
             </property>
            </widget>
           </item>
-          <item row="8" column="1" colspan="2">
-           <widget class="QPushButton" name="btnAsignarCliente">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../maya.qrc">
-              <normaloff>:/Icons/PNG/clientes_2.png</normaloff>:/Icons/PNG/clientes_2.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="7">
            <widget class="QPushButton" name="btnBuscarArt">
             <property name="sizePolicy">
@@ -1909,20 +1882,6 @@ background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3" colspan="5">
-           <widget class="QLineEdit" name="txtCodigo">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 12pt &quot;Sans Serif&quot;;
-background-color: rgb(255, 255, 191);</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -2261,11 +2220,36 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
             </property>
            </widget>
           </item>
+          <item row="0" column="7">
+           <widget class="QPushButton" name="btnBuscarArt_ext">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search2.png</normaloff>:/Icons/PNG/search2.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="5">
+           <widget class="QLineEdit" name="txtCodigo">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 12pt &quot;Sans Serif&quot;;
+background-color: rgb(255, 255, 191);</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="page_6">
          <layout class="QGridLayout" name="gridLayout_16">
-          <item row="0" column="1">
+          <item row="0" column="2">
            <widget class="QLineEdit" name="txtbuscar_art">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
@@ -2283,24 +2267,7 @@ color: rgb(0, 0, 0);</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QTableWidget" name="tabla_buscar_art">
-            <property name="autoFillBackground">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 241, 190);
-alternate-background-color: rgb(255, 248, 216);</string>
-            </property>
-            <property name="alternatingRowColors">
-             <bool>true</bool>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::SingleSelection</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
+          <item row="3" column="0" colspan="3">
            <widget class="QPushButton" name="rt">
             <property name="styleSheet">
              <string notr="true">color: rgb(255, 255, 255);</string>
@@ -2317,6 +2284,36 @@ alternate-background-color: rgb(255, 248, 216);</string>
               <width>41</width>
               <height>41</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_60">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>por:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QComboBox" name="cboBusqueda"/>
+          </item>
+          <item row="2" column="0" colspan="3">
+           <widget class="QTableView" name="tabla_buscar_art">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 241, 190);
+alternate-background-color: rgb(255, 248, 216);</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
             </property>
            </widget>
           </item>
@@ -3143,7 +3140,6 @@ color: rgb(255, 255, 255);</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>txtCodigo</tabstop>
   <tabstop>btnCantidad</tabstop>
   <tabstop>btnDto</tabstop>
   <tabstop>btnScanear</tabstop>
@@ -3157,7 +3153,6 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btnPoner_en_espera</tabstop>
   <tabstop>btnCobrar</tabstop>
   <tabstop>btnTraspasar</tabstop>
-  <tabstop>btnAsignarCliente</tabstop>
   <tabstop>btn0</tabstop>
   <tabstop>btn1</tabstop>
   <tabstop>btn2</tabstop>
