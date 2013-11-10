@@ -2326,6 +2326,12 @@ alternate-background-color: rgb(255, 248, 216);</string>
    </item>
    <item row="0" column="0">
     <widget class="QStackedWidget" name="frmcontrol">
+     <property name="maximumSize">
+      <size>
+       <width>306</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(217, 217, 163);</string>
      </property>
@@ -2336,7 +2342,7 @@ alternate-background-color: rgb(255, 248, 216);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="frmcontrolPage1">
       <layout class="QGridLayout" name="gridLayout_2">

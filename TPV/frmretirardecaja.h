@@ -2,7 +2,7 @@
 #define FRMRETIRARDECAJA_H
 
 #include <QDialog>
-
+#include <../Auxiliares/Globlal_Include.h>
 namespace Ui {
 class FrmRetirardeCaja;
 }
@@ -14,6 +14,11 @@ class FrmRetirardeCaja : public QDialog
 public:
     explicit FrmRetirardeCaja(QWidget *parent = 0);
     ~FrmRetirardeCaja();
+
+private slots:
+    void on_txtImporte_editingFinished();
+
+    void on_btnAceptar_clicked();
 
 private:
     Ui::FrmRetirardeCaja *ui;

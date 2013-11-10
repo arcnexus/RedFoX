@@ -700,6 +700,19 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `@empresa@`.`e_s_caja` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `concepto` TEXT NULL,
+  `id_usuario` INT NULL,
+  `importe` DOUBLE NULL DEFAULT '0',
+  `fecha` DATE NULL,
+  `hora` TIME NULL,
+  `entrada` TINYINT(1) NULL DEFAULT '0',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`fac_pro` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `factura` VARCHAR(30) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
