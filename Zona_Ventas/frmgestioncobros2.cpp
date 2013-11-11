@@ -27,6 +27,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     val->internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
     val->tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
     val->transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
+    val->vale = Configuracion_global->MonedatoDouble(ui->txtVale->text());
 
     QHash <QString,QVariant> e;
     e["importe_efectivo"] = val->efectivo;
@@ -34,6 +35,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     e["importe_internet"] = val->internet;
     e["importe_tarjeta"] = val->tarjeta;
     e["importe_transferencia"] = val->transferencia;
+    e["importe_vale"] = val->vale;
     e["pagado"] = Configuracion_global->MonedatoDouble(ui->txtEntrega->text());
     e["pendiente_cobro"] = Configuracion_global->MonedatoDouble(ui->txtPendiente->text());
 
@@ -41,7 +43,72 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
     if(!updated)
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
-    else if(e.value("pendiente_cobro").toDouble() == 0){
+    else {
+        if(val->efectivo >0 || val->tarjeta >0 || val->cheque >0 || val->vale)
+        {
+            if(QMessageBox::question(this,tr("Gestión de cobros y pagos"),
+                                     tr("¿Desea que los cobros efectivo, tarjeta, cheque o vale aparezcan reflejados en el cierre de caja?"
+                                        "\nEsto es importante si el dinero o resguardo de cobro se guarda en el cajón portamonedas"),
+                                     tr("No"),tr("Sí"))==QMessageBox::Accepted)
+            {
+                QHash <QString, QVariant> h;
+                QString error;
+                QString cliente,documento,fecha;
+                QMap <int,QSqlRecord> c;
+                c = SqlCalls::SelectRecord("clientes_deuda",QString("id=%1").arg(this->id),Configuracion_global->empresaDB,error);
+                cliente = SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(c.value(this->id).value(
+                                                                                                       "id_cliente").toInt()),
+                                                   Configuracion_global->groupDB,error).toString();
+                documento = c.value(this->id).value("documento").toString();
+                fecha = c.value(this->id).value("fecha").toDate().toString("dd/MM/yyyy");
+
+                // efectivo
+                h["concepto"] = tr("Cobro efectivo deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
+                h["id_usuario"] = Configuracion_global->id_usuario_activo;
+                h["importe"] = val->efectivo;
+                h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
+                h["hora"] = QTime::currentTime().toString("hh:mm");
+                h["entrada"]  = 3;
+                int new_id = SqlCalls::SqlInsert(h,"e_s_caja",Configuracion_global->empresaDB,error);
+                if(new_id <0)
+                    QMessageBox::warning(this,tr("Gestión de cobros"),tr("se produjo un error al insertar: %1").arg(error));
+                // tarjetas
+                h["concepto"] = tr("Cobro tarjeta deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
+                h["id_usuario"] = Configuracion_global->id_usuario_activo;
+                h["importe"] = val->efectivo;
+                h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
+                h["hora"] = QTime::currentTime().toString("hh:mm");
+                h["entrada"]  = 4;
+                new_id = SqlCalls::SqlInsert(h,"e_s_caja",Configuracion_global->empresaDB,error);
+                if(new_id <0)
+                    QMessageBox::warning(this,tr("Gestión de cobros"),tr("se produjo un error al insertar: %1").arg(error));
+                // Cheques
+                h["concepto"] = tr("Cobro cheque deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
+                h["id_usuario"] = Configuracion_global->id_usuario_activo;
+                h["importe"] = val->efectivo;
+                h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
+                h["hora"] = QTime::currentTime().toString("hh:mm");
+                h["entrada"]  = 5;
+                new_id = SqlCalls::SqlInsert(h,"e_s_caja",Configuracion_global->empresaDB,error);
+                if(new_id <0)
+                    QMessageBox::warning(this,tr("Gestión de cobros"),tr("se produjo un error al insertar: %1").arg(error));
+                // vales R
+                h["concepto"] = tr("Cobro con vale deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
+                h["id_usuario"] = Configuracion_global->id_usuario_activo;
+                h["importe"] = val->efectivo;
+                h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
+                h["hora"] = QTime::currentTime().toString("hh:mm");
+                h["entrada"]  = 6;
+                new_id = SqlCalls::SqlInsert(h,"e_s_caja",Configuracion_global->empresaDB,error);
+                if(new_id <0)
+                    QMessageBox::warning(this,tr("Gestión de cobros"),tr("se produjo un error al insertar: %1").arg(error));
+            }
+        }
+
+    }
+    if(e.value("pendiente_cobro").toDouble() == 0){
+
+
         QHash <QString,QVariant> c;
         c["cobrado"] = true;
         bool updated;
@@ -58,7 +125,9 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                                  tr("Aceptar"));
 
     }
+
     if(Configuracion_global->contabilidad)
+
     {
         // TODO - Asiento contable cobro
         //----------------------------

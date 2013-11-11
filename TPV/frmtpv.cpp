@@ -114,6 +114,34 @@ FrmTPV::FrmTPV(QWidget *parent) :
     ui->tabla_buscar_art->setColumnHidden(0,true);
     ui->tabla_buscar_art->setItemDelegateForColumn(3, new MonetaryDelegate_totals);
     ui->tabla_buscar_art->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
+
+    //---------------
+    // CAJA ABIERTA
+    //---------------
+    ui->lblregistrando->setText(tr("Debe abrir una caja para poder operar"));
+    QMap <int,QSqlRecord> c;
+    QString error;
+
+    QStringList condiciones;
+    condiciones << QString("fecha_abertura = '%1'").arg(QDate::currentDate().toString("yyyyMMdd"));
+    condiciones << QString("id_caja = %1").arg(Configuracion_global->caja);
+    condiciones << QString("ejercicio = '%1'").arg(Configuracion_global->cEjercicio);
+    c = SqlCalls::SelectRecord("cierrecaja",condiciones,Configuracion_global->empresaDB,error);
+    if(c.size()>0)
+    {
+        QMapIterator<int,QSqlRecord> it(c);
+        if(it.hasNext())
+        {
+            it.next();
+            QString frase;
+            QString caja = SqlCalls::SelectOneField("cajas","desc_caja",
+                                                    QString("id=%1").arg(it.value().value("id_caja").toString()),
+                                                    Configuracion_global->empresaDB,error).toString();
+            frase = tr("Caja: %1, fecha abertura caja: %2").arg(caja,
+                                                              it.value().value("fecha_abertura").toDate().toString("dd/MM/yyyy"));
+            ui->lblregistrando->setText(frase);
+        }
+    }
 }
 
 FrmTPV::~FrmTPV()
@@ -131,7 +159,7 @@ void FrmTPV::cargar_ticket(int id)
     tpv = SqlCalls::SelectRecord("cab_tpv",QString("id =%1").arg(id),Configuracion_global->empresaDB,error);
     ui->lblTicket->setText(QString::number(tpv.value(id).value("ticket").toInt()));
     if(!tpv.value(id).value("nombre_cliente").toString().isEmpty())
-        ui->btnAsignarCliente->setText(tpv.value(id).value("nombre_cliente").toString());
+        ui->btnAsignarCliente->setText(tr("Cliente: %1").arg(tpv.value(id).value("nombre_cliente").toString()));
     else
         ui->btnAsignarCliente->setText(tr("Asignar Cliente"));
     ui->lblFecha->setText(tpv.value(id).value("fecha").toString());
@@ -449,10 +477,10 @@ void FrmTPV::cargar_lineas(int id_cab)
     oTpv->dto3 = dto3;
     oTpv->dto4 = dto4;
 
-    oTpv->base1 = subtotal1 - dto1;
-    oTpv->base2 = subtotal2 - dto2;
-    oTpv->base3 = subtotal3 - dto3;
-    oTpv->base4 = subtotal4 - dto3;
+    oTpv->base1 = subtotal1 + dto1;
+    oTpv->base2 = subtotal2 + dto2;
+    oTpv->base3 = subtotal3 + dto3;
+    oTpv->base4 = subtotal4 + dto3;
 
     oTpv->iva1 = oTpv->base1 *(oTpv->porc_iva1 /100);
     oTpv->iva2 = oTpv->base2 * (oTpv->porc_iva2 /100);
@@ -2240,8 +2268,8 @@ void FrmTPV::on_btnAsignarCliente_clicked()
         QString error;
         QHash <QString, QVariant > cli;
         cli["id_cliente"] = id;
-        QString nombre = SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(id),
-                                                  Configuracion_global->groupDB,error).toString();
+        QString nombre = tr("Cliente: %1").arg(SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(id),
+                                                  Configuracion_global->groupDB,error).toString());
         if(error.isEmpty())
         {
             cli["nombre_cliente"] = nombre;

@@ -55,6 +55,7 @@ private:
         double cheque;
         double internet;
         double pendiente;
+        double vale;
     };
 
 

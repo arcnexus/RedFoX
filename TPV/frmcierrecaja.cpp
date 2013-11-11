@@ -72,27 +72,76 @@ void FrmCierreCaja::on_btnIniciar_cierre_clicked()
     //----------------------------
     // Calculo ingresos
     // ---------------------------
+
+    //-----------------------------------------------------------------------------------------------------------
+    // Antes que nada recuperamos pagos realizados desde gestión de deudas en efectivo, tarjeta, cheques y vales
+    // estos valores deben acumularse a los realizados con ticket ya que el dinero se guarda normalmente en caja
+    //-----------------------------------------------------------------------------------------------------------
     QString cSQL;
+    QSqlQuery result(Configuracion_global->empresaDB);
+    //-------------------------
+    // cobro deuda en efectivo
+    //-------------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 3").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    double importe_deudas_efectivo = result.record().value("importe").toDouble();
+
+    //-------------------------
+    // cobro deuda en tarjeta
+    //-------------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 4").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    double importe_deudas_tarjeta = result.record().value("importe").toDouble();
+
+    //-------------------------
+    // cobro deuda en cheque
+    //-------------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 5").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    double importe_deudas_cheque = result.record().value("importe").toDouble();
+
+    //-------------------------
+    // cobro deuda en vale
+    //-------------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 6").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    double importe_deudas_vale = result.record().value("importe").toDouble();
+
+    //-----------------------------
+    // Recuperamos tickets sumados
+    //-----------------------------
     cSQL = QString("select  sum(importe_efectivo) as efectivo, sum(importe_tarjeta) as tarjeta, sum(importe_cheque) as cheque,"
             "sum(importe_domiciliacion) as domiciliacion, sum(importe_transferencia) as transferencia, sum(importe_vale) as vale "
                    "from cab_tpv where fecha = '%1'").arg(fecha_cierre.toString("yyyyMMdd"));
 
-    QSqlQuery result(Configuracion_global->empresaDB);
+
     result.exec(cSQL);
     result.next();
+    double efectivo = result.record().value("efectivo").toDouble() + importe_deudas_efectivo;
     ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                       result.record().value("efectivo").toDouble(),'f',
+                                                                       efectivo,'f',
                                                                        Configuracion_global->decimales_campos_totales)));
     double efect = Configuracion_global->MonedatoDouble(ui->lblimporte_abertura->text()) +
-                                                         Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
+                                                         Configuracion_global->MonedatoDouble(ui->txtEfectivo->text()) +
+                                                         efectivo;
     ui->txtCaja_moneda->setText(Configuracion_global->toFormatoMoneda(QString::number(efect,'f',
                                                                                       Configuracion_global->decimales_campos_totales)));
 
+    double tarjeta =  result.record().value("tarjeta").toDouble() + importe_deudas_tarjeta;
     ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                      result.record().value("tarjeta").toDouble(),'f',
+                                                                      tarjeta,'f',
                                                                       Configuracion_global->decimales_campos_totales)));
+    double cheques = result.record().value("cheque").toDouble() +  importe_deudas_cheque;
     ui->txtCheques->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                       result.record().value("cheque").toDouble(),'f',
+                                                                       cheques,'f',
                                                                        Configuracion_global->decimales_campos_totales)));
     ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                        result.record().value("domiciliacion").toDouble(),'f',
@@ -100,10 +149,18 @@ void FrmCierreCaja::on_btnIniciar_cierre_clicked()
     ui->txtTransferencia->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                        result.record().value("transferencia").toDouble(),'f',
                                                                        Configuracion_global->decimales_campos_totales)));
+    double vale = result.record().value("vale").toDouble() + importe_deudas_vale;
     ui->txtVales_recibidos->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                       result.record().value("vale").toDouble(),'f',
+                                                                       vale,'f',
                                                                        Configuracion_global->decimales_campos_totales)));
-
+    double ventas = Configuracion_global->MonedatoDouble(ui->txtCaja_moneda->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtTarjeta->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtCheques->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtTransferencia->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtVales_recibidos->text());
+    ui->txtVentas->setText(Configuracion_global->toFormatoMoneda(QString::number(ventas,'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
     //-----------------
     // Vales emitidos
     //-----------------
@@ -114,9 +171,162 @@ void FrmCierreCaja::on_btnIniciar_cierre_clicked()
                                       Configuracion_global->decimales_campos_totales);
     ui->txtValesEmitidos->setText(Configuracion_global->toFormatoMoneda(importe));
 
+    //-------------------
+    // Dinero insertado
+    //-------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 1").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    importe = QString::number(result.record().value("importe").toDouble(),'f',
+                                      Configuracion_global->decimales_campos_totales);
+    ui->txtEntradas->setText(Configuracion_global->toFormatoMoneda(importe));
+    //-------------------
+    // Dinero retirado
+    //-------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 0").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    importe = QString::number(result.record().value("importe").toDouble(),'f',
+                                      Configuracion_global->decimales_campos_totales);
+    ui->txtSalidas->setText(Configuracion_global->toFormatoMoneda(importe));
+
+    //-------------------
+    // Extras
+    //-------------------
+    cSQL = QString("select sum(importe) as importe from e_s_caja where fecha = '%1' and entrada = 2").arg(
+                fecha_cierre.toString("yyyyMMdd"));
+    result.exec(cSQL);
+    result.next();
+    importe = QString::number(result.record().value("importe").toDouble(),'f',
+                                      Configuracion_global->decimales_campos_totales);
+    ui->txtExtras->setText(Configuracion_global->toFormatoMoneda(importe));
+
+    //---------------------
+    // Totales finales
+    //---------------------
+    double total_en_caja = Configuracion_global->MonedatoDouble(ui->txtVentas->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtEntradas->text()) -
+            Configuracion_global->MonedatoDouble(ui->txtSalidas->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtExtras->text());
+
+    ui->txtTotal_en_caja->setText(Configuracion_global->toFormatoMoneda(QString::number(total_en_caja,'f',
+                                                             Configuracion_global->decimales_campos_totales)));
+
+    //---------------------
+    // pre-cierre terminado
+    //---------------------
     TimedMessageBox * t = new TimedMessageBox(this,tr("Se han obtenido los datos de las cabeceras de tickets"));
     ui->btnCierreCaja->setEnabled(true);
     ui->btnCierreParcial->setEnabled(true);
+
+
+
+
+}
+
+void FrmCierreCaja::on_btnCierreParcial_clicked()
+{
+    ui->btnResumenEntradas->setEnabled(true);
+    ui->btnResumenExtras->setEnabled(true);
+    ui->btnResumenSalidas->setEnabled(true);
+    ui->btnResumentickets->setEnabled(true);
+
+}
+
+void FrmCierreCaja::cargarmoneda()
+{
+    // TODO - Arreglar moneda
+//    QMap <int, QSqlRecord> mon;
+//    QString error;
+//    QStringList orden;
+//    orden << "order by valor_moneda";
+//    mon = SqlCalls::SelectRecord("moneda_caja",QString("id_moneda_base= %1").arg(1),
+//                                 orden,Configuracion_global->empresaDB,error);
+//    QMapIterator <int,QSqlRecord> m(mon);
+//    while (m.hasNext())
+//    {
+//        m.next();
+//        if(m.value().value("orden").toInt() == 1)
+//        {
+//            ui->lblmoneda1->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda1->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 2)
+//        {
+//            ui->lblmoneda2->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda2->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 3)
+//        {
+//            ui->lblmoneda3->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda3->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 4)
+//        {
+//            ui->lblmoneda4->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda4->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 5)
+//        {
+//            ui->lblmoneda5->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda5->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 6)
+//        {
+//            ui->lblmoneda6->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda6->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 7)
+//        {
+//            ui->lblmoneda7->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda7->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 8)
+//        {
+//            ui->lblmoneda8->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda8->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 9)
+//        {
+//            ui->lblmoneda9->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda9->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 10)
+//        {
+//            ui->lblmoneda10->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda10->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 11)
+//        {
+//            ui->lblmoneda11->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda11->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 12)
+//        {
+//            ui->lblmoneda12->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda12->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 13)
+//        {
+//            ui->lblmoneda13->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda13->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 14)
+//        {
+//            ui->lblmoneda14->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda14->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+//        if(m.value().value("orden").toInt() == 15)
+//        {
+//            ui->lblmoneda15->setText(m.value().value("nombre_moneda").toString());
+//            ui->lblmoneda15->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+//        }
+
+
+
+//    }
 
 
 }

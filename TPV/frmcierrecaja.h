@@ -20,10 +20,13 @@ private slots:
 
     void on_btnIniciar_cierre_clicked();
 
+    void on_btnCierreParcial_clicked();
+
 private:
     Ui::FrmCierreCaja *ui;
     bool facturas_en_cierre;
     double importe_fijo_cierre;
+    void cargarmoneda();
 
 };
 

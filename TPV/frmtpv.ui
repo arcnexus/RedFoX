@@ -145,6 +145,9 @@ color: rgb(212, 214, 255);</string>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QPushButton" name="btnAsignarCliente">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(134, 134, 134);</string>
+              </property>
               <property name="text">
                <string>Cliente</string>
               </property>
@@ -175,7 +178,7 @@ color: rgb(255, 255, 255);</string>
             </item>
            </layout>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QFrame" name="frame_3">
@@ -402,7 +405,13 @@ font: 75 10pt &quot;Garuda&quot;;</string>
                  <property name="minimumSize">
                   <size>
                    <width>84</width>
-                   <height>0</height>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>22</height>
                   </size>
                  </property>
                  <property name="styleSheet">
@@ -447,7 +456,13 @@ font: 75 10pt &quot;Garuda&quot;;</string>
                  <property name="minimumSize">
                   <size>
                    <width>84</width>
-                   <height>0</height>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>22</height>
                   </size>
                  </property>
                  <property name="styleSheet">
@@ -479,7 +494,13 @@ font: 75 12pt &quot;Garuda&quot;;</string>
                  <property name="minimumSize">
                   <size>
                    <width>84</width>
-                   <height>0</height>
+                   <height>22</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>22</height>
                   </size>
                  </property>
                  <property name="styleSheet">
@@ -517,6 +538,19 @@ font: 75 14pt &quot;Nimbus Mono L&quot;;
              </widget>
             </item>
            </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lblregistrando">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(134, 134, 134);</string>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
           </item>
          </layout>
          <widget class="QFrame" name="frameclientes">
