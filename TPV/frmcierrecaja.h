@@ -22,11 +22,44 @@ private slots:
 
     void on_btnCierreParcial_clicked();
 
+    void on_spinmoneda1_valueChanged(int arg1);
+
+    void on_spinmoneda2_valueChanged(int arg1);
+
+    void on_spinmoneda3_valueChanged(int arg1);
+
+    void on_spinmoneda4_valueChanged(int arg1);
+
+    void on_spinmoneda5_valueChanged(int arg1);
+
+    void on_spinmoneda6_valueChanged(int arg1);
+
+    void on_spinmoneda7_valueChanged(int arg1);
+
+    void on_spinmoneda8_valueChanged(int arg1);
+
+    void on_spinmoneda9_valueChanged(int arg1);
+
+    void on_spinmoneda10_valueChanged(int arg1);
+
+    void on_spinmoneda11_valueChanged(int arg1);
+
+    void on_spinmoneda12_valueChanged(int arg1);
+
+    void on_spinmoneda13_valueChanged(int arg1);
+
+    void on_spinmoneda14_valueChanged(int arg1);
+
+    void on_spinmoneda15_valueChanged(int arg1);
+
+    void on_btnResumentickets_clicked();
+
 private:
     Ui::FrmCierreCaja *ui;
     bool facturas_en_cierre;
     double importe_fijo_cierre;
     void cargarmoneda();
+    void totalmonedas();
 
 };
 

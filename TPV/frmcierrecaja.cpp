@@ -26,6 +26,7 @@ FrmCierreCaja::FrmCierreCaja(QWidget *parent) :
                              tr("Aceptar"));
     }
     //cargar_datos_caja();
+    cargarmoneda();
 
 
 }
@@ -238,95 +239,274 @@ void FrmCierreCaja::on_btnCierreParcial_clicked()
 void FrmCierreCaja::cargarmoneda()
 {
     // TODO - Arreglar moneda
-//    QMap <int, QSqlRecord> mon;
-//    QString error;
-//    QStringList orden;
-//    orden << "order by valor_moneda";
-//    mon = SqlCalls::SelectRecord("moneda_caja",QString("id_moneda_base= %1").arg(1),
-//                                 orden,Configuracion_global->empresaDB,error);
-//    QMapIterator <int,QSqlRecord> m(mon);
-//    while (m.hasNext())
-//    {
-//        m.next();
-//        if(m.value().value("orden").toInt() == 1)
-//        {
-//            ui->lblmoneda1->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda1->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 2)
-//        {
-//            ui->lblmoneda2->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda2->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 3)
-//        {
-//            ui->lblmoneda3->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda3->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 4)
-//        {
-//            ui->lblmoneda4->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda4->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 5)
-//        {
-//            ui->lblmoneda5->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda5->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 6)
-//        {
-//            ui->lblmoneda6->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda6->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 7)
-//        {
-//            ui->lblmoneda7->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda7->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 8)
-//        {
-//            ui->lblmoneda8->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda8->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 9)
-//        {
-//            ui->lblmoneda9->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda9->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 10)
-//        {
-//            ui->lblmoneda10->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda10->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 11)
-//        {
-//            ui->lblmoneda11->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda11->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 12)
-//        {
-//            ui->lblmoneda12->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda12->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 13)
-//        {
-//            ui->lblmoneda13->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda13->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 14)
-//        {
-//            ui->lblmoneda14->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda14->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
-//        if(m.value().value("orden").toInt() == 15)
-//        {
-//            ui->lblmoneda15->setText(m.value().value("nombre_moneda").toString());
-//            ui->lblmoneda15->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
-//        }
+    QMap <int, QSqlRecord> mon;
+    QString error;
+    QStringList orden;
+    orden << "order by valor_moneda";
+    mon = SqlCalls::SelectRecord("moneda_caja",QString("id_moneda_base= %1").arg("1"),
+                                 Configuracion_global->empresaDB,error);
+    QMapIterator <int,QSqlRecord> m(mon);
+    while (m.hasNext())
+    {
+        m.next();
+        if(m.value().value("orden").toInt() == 1)
+        {
+            ui->lblmoneda1->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda1->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 2)
+        {
+            ui->lblmoneda2->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda2->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 3)
+        {
+            ui->lblmoneda3->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda3->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 4)
+        {
+            ui->lblmoneda4->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda4->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 5)
+        {
+            ui->lblmoneda5->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda5->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 6)
+        {
+            ui->lblmoneda6->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda6->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 7)
+        {
+            ui->lblmoneda7->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda7->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 8)
+        {
+            ui->lblmoneda8->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda8->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 9)
+        {
+            ui->lblmoneda9->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda9->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 10)
+        {
+            ui->lblmoneda10->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda10->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 11)
+        {
+            ui->lblmoneda11->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda11->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 12)
+        {
+            ui->lblmoneda12->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda12->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 13)
+        {
+            ui->lblmoneda13->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda13->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 14)
+        {
+            ui->lblmoneda14->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda14->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+        if(m.value().value("orden").toInt() == 15)
+        {
+            ui->lblmoneda15->setText(m.value().value("nombre_moneda").toString());
+            ui->lblmoneda15->setProperty("valorMoneda",m.value().value("valor_moneda").toDouble());
+        }
+
+   }
 
 
+}
 
-//    }
+void FrmCierreCaja::totalmonedas()
+{
+    double total;
+    total = Configuracion_global->MonedatoDouble(ui->txtmoneda1->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda2->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda3->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda4->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda5->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda6->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda7->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda8->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda9->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda10->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda11->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda12->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda13->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda14->text()) +
+            Configuracion_global->MonedatoDouble(ui->txtmoneda15->text());
+    ui->txtTotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
 
+}
 
+void FrmCierreCaja::on_spinmoneda1_valueChanged(int arg1)
+{
+    ui->txtmoneda1->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda1->property(
+                                            "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda2_valueChanged(int arg1)
+{
+    ui->txtmoneda2->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda2->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda3_valueChanged(int arg1)
+{
+    ui->txtmoneda3->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda3->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda4_valueChanged(int arg1)
+{
+    ui->txtmoneda4->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda4->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda5_valueChanged(int arg1)
+{
+    ui->txtmoneda5->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda5->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda6_valueChanged(int arg1)
+{
+    ui->txtmoneda6->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda6->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda7_valueChanged(int arg1)
+{
+    ui->txtmoneda7->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda7->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda8_valueChanged(int arg1)
+{
+    ui->txtmoneda8->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda8->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda9_valueChanged(int arg1)
+{
+    ui->txtmoneda9->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda9->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda10_valueChanged(int arg1)
+{
+    ui->txtmoneda10->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda10->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda11_valueChanged(int arg1)
+{
+    ui->txtmoneda11->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda11->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda12_valueChanged(int arg1)
+{
+    ui->txtmoneda12->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda12->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda13_valueChanged(int arg1)
+{
+    ui->txtmoneda13->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda13->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda14_valueChanged(int arg1)
+{
+    ui->txtmoneda14->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda14->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_spinmoneda15_valueChanged(int arg1)
+{
+    ui->txtmoneda15->setText(Configuracion_global->toFormatoMoneda(QString::number(ui->lblmoneda15->property(
+                                             "valorMoneda").toDouble()*arg1,'f',
+                                            Configuracion_global->decimales_campos_totales)));
+    totalmonedas();
+}
+
+void FrmCierreCaja::on_btnResumentickets_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    //dlg_print.set_email(oCliente3->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+      //ui->lblimpreso->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        parametros_sql["Empresa.cab_tpv"] = QString("fecha = %1").arg(ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
+        parametros_sql["Empresa.e_s_caja"] = QString("fecha = %1 and entrada >2").arg(
+                    ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
+        QString report;
+            report ="resumen_tickets";
+
+        QMap <QString,QString> parametros;
+        //TODO parametros
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
+        }
+
+    }
 }
