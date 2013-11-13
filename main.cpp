@@ -218,8 +218,8 @@ int main(int argc, char *argv[])
    QFile file(":Icons/maya.qss");
 
 
-   if(file.open(QFile::ReadOnly))
-        a.setStyleSheet(file.readAll());
+ //  if(file.open(QFile::ReadOnly))
+ //       a.setStyleSheet(file.readAll());
 
    Login l;
    if ( l.exec()==QDialog::Accepted)

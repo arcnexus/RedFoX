@@ -9,7 +9,9 @@ BarraAvisos::BarraAvisos(QWidget *parent) :
     m_Cache = 0;
     m_show = false;
     m_color = QColor(126,184,121,230);
+    this->installEventFilter(this);
 }
+
 
 BarraAvisos::~BarraAvisos()
 {
@@ -20,8 +22,6 @@ void BarraAvisos::setPagina(int pagina)
 {
    // ui->stackedWidget->setCurrentIndex(pagina);
 }
-
-
 
 void BarraAvisos::paintEvent(QPaintEvent *pe) {
     QStyleOption o;
@@ -81,6 +81,15 @@ void BarraAvisos::resizeEvent(QResizeEvent *)
     }
 }
 
+void BarraAvisos::showGlobo()
+{
+    if(m_globo)
+        delete m_globo;
+    m_globo = new GloboAviso(this);
+    m_globo->setGeometry(this->width(),this->pos().y()+50,225,35);
+    m_globo->show();
+}
+
 void BarraAvisos::mousePressEvent(QMouseEvent * e)
 {
     if(e->pos().x()> width()-20)
@@ -91,9 +100,19 @@ void BarraAvisos::mousePressEvent(QMouseEvent * e)
             else
             {
                 llenarAvisos();
-                emit showMe();
+                //emit showMe();
+                showGlobo();
             }
         }
+}
+
+bool BarraAvisos::eventFilter(QObject *, QEvent *e)
+{
+    qDebug()<< e->type();
+    if(e->type() == QEvent::Move)
+        if(m_globo)
+            m_globo->move(this->pos().x()+this->width(),this->pos().y()+50);
+    return false;
 }
 
 void BarraAvisos::llenarAvisos()

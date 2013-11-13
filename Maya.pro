@@ -206,7 +206,8 @@ SOURCES += main.cpp\
     TPV/frmcausadevolucion.cpp \
     TPV/frmcantidad.cpp \
     Zona_Administrador/frmconfigurar_terminal.cpp \
-    TPV/frmcajasabiertas.cpp
+    TPV/frmcajasabiertas.cpp \
+    Auxiliares/globoaviso.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -378,7 +379,8 @@ HEADERS  += mainwindow.h \
     TPV/frmcausadevolucion.h \
     TPV/frmcantidad.h \
     Zona_Administrador/frmconfigurar_terminal.h \
-    TPV/frmcajasabiertas.h
+    TPV/frmcajasabiertas.h \
+    Auxiliares/globoaviso.h
 
 
 

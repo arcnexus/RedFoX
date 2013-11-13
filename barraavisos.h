@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include"../Auxiliares/Globlal_Include.h"
+#include "Auxiliares/globoaviso.h"
 
 namespace Ui {
 class BarraAvisos;
@@ -20,6 +21,8 @@ public:
     void setShow(bool isShow);
     void setColor(QColor c);
     void llenarAvisos();
+public slots:
+    void showGlobo();
 signals:
     void showMe();
     void hideMe();
@@ -27,6 +30,7 @@ protected:
     void paintEvent(QPaintEvent *pe);
     void resizeEvent(QResizeEvent *);
     void mousePressEvent(QMouseEvent *);
+    bool eventFilter(QObject *, QEvent *);
 private slots:
 
 private:
@@ -34,7 +38,7 @@ private:
     QPixmap* m_Cache;
     bool m_show;
     QColor m_color;
-
+    QPointer<GloboAviso> m_globo;
 };
 
 #endif // BARRAAVISOS_H

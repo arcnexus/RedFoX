@@ -116,7 +116,6 @@ void ReportImage::setdinamica(bool arg) {
     }
 }
 
-
 void ReportImage::editMe()
 {
     EditImageDlg dlg(this,qApp->activeWindow());
