@@ -161,7 +161,7 @@ void FrmTPV::cargar_ticket(int id)
     if(!tpv.value(id).value("nombre_cliente").toString().isEmpty())
         ui->btnAsignarCliente->setText(tr("Cliente: %1").arg(tpv.value(id).value("nombre_cliente").toString()));
     else
-        ui->btnAsignarCliente->setText(tr("Asignar Cliente"));
+        ui->btnAsignarCliente->setText(tr("click para asignar Cliente"));
     ui->lblFecha->setText(tpv.value(id).value("fecha").toString());
     oTpv->fecha = tpv.value(id).value("fecha").toDate();
     ui->lblHora->setText(tpv.value(id).value("hora").toString());

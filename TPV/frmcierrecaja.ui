@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>646</height>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,19 +18,8 @@
     <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <item row="2" column="5" rowspan="9">
+   <item row="2" column="7" rowspan="9">
     <widget class="QCalendarWidget" name="calendarWidget"/>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="btnIniciar_cierre">
-     <property name="text">
-      <string>Iniciar Cierre</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/inicio.png</normaloff>:/Icons/PNG/inicio.png</iconset>
-     </property>
-    </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_2">
@@ -39,7 +28,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="6">
+   <item row="0" column="0" colspan="8">
     <widget class="QLabel" name="label">
      <property name="styleSheet">
       <string notr="true">background-color: #304163;
@@ -56,7 +45,7 @@ color: rgb(255, 255, 255);</string>
    <item row="3" column="1">
     <widget class="QTimeEdit" name="txthora_cierre"/>
    </item>
-   <item row="10" column="4">
+   <item row="10" column="6">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -76,7 +65,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="4">
+   <item row="3" column="6">
     <widget class="QLabel" name="lblimporte_abertura">
      <property name="text">
       <string>0,00</string>
@@ -86,7 +75,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="3" colspan="3">
+   <item row="11" column="5" colspan="3">
     <widget class="QFrame" name="_container">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -592,7 +581,10 @@ color: rgb(255, 255, 255);</string>
      </layout>
     </widget>
    </item>
-   <item row="4" column="3" colspan="2">
+   <item row="2" column="1" colspan="2">
+    <widget class="QComboBox" name="cboUsuarioCierre"/>
+   </item>
+   <item row="4" column="5" colspan="2">
     <widget class="QPushButton" name="btnResumentickets">
      <property name="enabled">
       <bool>false</bool>
@@ -613,7 +605,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="3" colspan="2">
+   <item row="7" column="5" colspan="2">
     <widget class="QPushButton" name="btnResumenExtras">
      <property name="enabled">
       <bool>false</bool>
@@ -633,10 +625,14 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QComboBox" name="cboUsuarioCierre"/>
+   <item row="3" column="5">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Importe abertura:</string>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="4">
+   <item row="2" column="6">
     <widget class="QLabel" name="lblUsuario_abertura">
      <property name="styleSheet">
       <string notr="true">color: rgb(0, 85, 0);</string>
@@ -646,21 +642,14 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="3">
+   <item row="2" column="5">
     <widget class="QLabel" name="label_38">
      <property name="text">
       <string>Usuario abertura:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Importe abertura:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="5">
+   <item row="12" column="7">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
       <string>Aceptar</string>
@@ -671,7 +660,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="4">
+   <item row="12" column="6">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -684,7 +673,71 @@ color: rgb(255, 255, 255);</string>
      </property>
     </spacer>
    </item>
-   <item row="4" column="0" rowspan="9" colspan="3">
+   <item row="5" column="5">
+    <widget class="QPushButton" name="btnResumenEntradas">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Resumen Entradas</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="6">
+    <widget class="QPushButton" name="btnResumenSalidas">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Resumen Salidas</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Caja:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QComboBox" name="cboCaja"/>
+   </item>
+   <item row="3" column="4">
+    <widget class="QPushButton" name="btnIniciar_cierre">
+     <property name="text">
+      <string>Iniciar Cierre</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/inicio.png</normaloff>:/Icons/PNG/inicio.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" rowspan="9" colspan="5">
     <widget class="QFrame" name="frame_2">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -1288,46 +1341,6 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QPushButton" name="btnResumenEntradas">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Resumen Entradas</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4">
-    <widget class="QPushButton" name="btnResumenSalidas">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Resumen Salidas</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
     </widget>
    </item>
   </layout>

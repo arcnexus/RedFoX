@@ -510,3 +510,144 @@ void FrmCierreCaja::on_btnResumentickets_clicked()
 
     }
 }
+
+void FrmCierreCaja::on_btnResumenEntradas_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    //dlg_print.set_email(oCliente3->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+      //ui->lblimpreso->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        parametros_sql["Empresa.e_s_caja"] = QString("fecha = '%1'").arg(ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
+        parametros_sql["Empresa.cierrecaja"] = QString("fecha_abertura = '%1' and id_caja = %2 and ejercicio = '%3'").arg(
+                    ui->calendarWidget->selectedDate().toString("yyyyMMdd"),Configuracion_global->caja,
+                    Configuracion_global->cEjercicio);
+        QString report;
+        report ="resumen_tickets_entradas";
+        QSqlQuery entradas(Configuracion_global->empresaDB);
+        QString cSQL;
+        cSQL = QString("select sum(importe) as total from e_s_caja where fecha_abertura = '%1' and id_caja = %2 and ejercicio = '%3'").arg(
+                ui->calendarWidget->selectedDate().toString("yyyyMMdd"),Configuracion_global->caja,
+                Configuracion_global->cEjercicio);
+        entradas.exec(cSQL);
+
+        QMap <QString,QString> parametros;
+        entradas.next();
+        parametros["total"] = Configuracion_global->toFormatoMoneda(QString::number(entradas.record().value("total").toDouble(),
+                                                       'f', Configuracion_global->decimales_campos_totales));
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
+        }
+
+    }
+}
+
+void FrmCierreCaja::on_btnResumenSalidas_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    //dlg_print.set_email(oCliente3->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+      //ui->lblimpreso->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        parametros_sql["Empresa.e_s_caja"] = QString("fecha = '%1'").arg(ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
+        parametros_sql["Empresa.cierrecaja"] = QString("fecha_abertura = '%1' and id_caja = %2 and ejercicio = '%3'").arg(
+                    ui->calendarWidget->selectedDate().toString("yyyyMMdd"),Configuracion_global->caja,
+                    Configuracion_global->cEjercicio);
+        QString report;
+        report ="resumen_tickets_salidas";
+        QSqlQuery entradas(Configuracion_global->empresaDB);
+        QString cSQL;
+        cSQL = QString("select sum(importe) as total from e_s_caja where fecha_abertura = '%1' and id_caja = %2 and ejercicio = '%3'").arg(
+                ui->calendarWidget->selectedDate().toString("yyyyMMdd"),Configuracion_global->caja,
+                Configuracion_global->cEjercicio);
+        entradas.exec(cSQL);
+
+        QMap <QString,QString> parametros;
+        entradas.next();
+        parametros["total"] = Configuracion_global->toFormatoMoneda(QString::number(entradas.record().value("total").toDouble(),
+                                                       'f', Configuracion_global->decimales_campos_totales));
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
+        }
+
+    }
+}
+
+void FrmCierreCaja::on_btnResumenExtras_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    //dlg_print.set_email(oCliente3->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+      //ui->lblimpreso->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        parametros_sql["Empresa.e_s_caja"] = QString("fecha = '%1'").arg(ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
+        parametros_sql["Empresa.cierrecaja"] = QString("fecha_abertura = '%1' and id_caja = %2 and ejercicio = '%3'").arg(
+                    ui->calendarWidget->selectedDate().toString("yyyyMMdd"),Configuracion_global->caja,
+                    Configuracion_global->cEjercicio);
+        QString report;
+        report ="resumen_tickets_extras";
+        QSqlQuery entradas(Configuracion_global->empresaDB);
+        QString cSQL;
+        cSQL = QString("select sum(importe) as total from e_s_caja where fecha_abertura = '%1' and id_caja = %2 and ejercicio = '%3'").arg(
+                ui->calendarWidget->selectedDate().toString("yyyyMMdd"),Configuracion_global->caja,
+                Configuracion_global->cEjercicio);
+        entradas.exec(cSQL);
+
+        QMap <QString,QString> parametros;
+        entradas.next();
+        parametros["total"] = Configuracion_global->toFormatoMoneda(QString::number(entradas.record().value("total").toDouble(),
+                                                       'f', Configuracion_global->decimales_campos_totales));
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
+        }
+
+    }
+}
