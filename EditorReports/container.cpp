@@ -30,14 +30,9 @@ void Container::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         painter->drawRect(r.width()/2 -8,1           ,a,b);
         painter->drawRect(1,r.bottom()/2-8           ,b,a);
         painter->drawRect(r.right()-6,r.bottom()/2-8 ,b,a);
-        painter->drawRect(r.width()/2 -8,r.bottom()-6,a,b);
-        painter->setPen(QPen(Qt::DotLine));
-        QGraphicsRectItem::paint(painter,option,widget);
+        painter->drawRect(r.width()/2 -8,r.bottom()-6,a,b);        
     }
-    else
-    {
-        this->ungrabKeyboard();
-    }
+    QGraphicsRectItem::paint(painter,option,widget);
     painter->restore();
 }
 
@@ -53,8 +48,7 @@ void Container::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 }
 
 void Container::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    this->grabKeyboard();
+{    
     QGraphicsItem::mousePressEvent(event);
     if(this->isSelected())
     {
@@ -189,6 +183,14 @@ QVariant Container::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
             }
             emit moved(this);
         }
+    else if(change == ItemSelectedChange)
+    {
+        bool b = value.toBool();
+        if(b)
+            this->grabKeyboard();
+        else
+            this->ungrabKeyboard();
+    }
     return QGraphicsItem::itemChange(change, value);
 }
 

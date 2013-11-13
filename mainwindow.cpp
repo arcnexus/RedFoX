@@ -952,6 +952,22 @@ void MainWindow::hideAvisos()
 
 bool MainWindow::eventFilter(QObject * t, QEvent * e)
 {
+    if(e->type() == QEvent::Move)
+    {
+        if(m_avisos)
+            m_avisos->moveGloblo(reinterpret_cast<QMoveEvent *>(e)->pos());
+    }
+    if(e->type() == QEvent::WindowStateChange)
+    {
+        QWindowStateChangeEvent * ev = reinterpret_cast<QWindowStateChangeEvent*>(e);
+        if(ev->oldState() != Qt::WindowMinimized){
+            if(m_avisos)
+                m_avisos->hideGlobo();
+        }
+        else
+            if(m_avisos)
+                m_avisos->restoreGlobo();
+    }
     if(e->type() == QEvent::Resize)
     {
         m_avisos->resize(m_avisos->width(),this->height()-60);

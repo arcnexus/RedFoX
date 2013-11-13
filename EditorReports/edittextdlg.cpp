@@ -15,6 +15,7 @@ EditTextDlg::EditTextDlg(CustomLabel *lbl, QWidget *parent) :
     ui->btnUnder->setChecked(label->underlined());
     ui->fontComboBox->setCurrentText(label->fontFamily());
     ui->sizeSpin->setValue(label->fontSize());
+    ui->plainTextEdit->insertPlainText(label->Text());
 
     previewLabel->setText(label->Text());
     previewLabel->setfontWeigth(label->fontWeigth());

@@ -80,7 +80,7 @@ void RelationalField::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setPen(m_fontColor);
     painter->setFont(f);
     painter->drawText(this->rect(),Qt::AlignLeft|Qt::AlignTop,m_sql);
-    if(this->isSelected())
+//    if(this->isSelected())
         Container::paint(painter,option,widget);
     painter->restore();
 }

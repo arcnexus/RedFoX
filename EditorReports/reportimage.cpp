@@ -39,18 +39,9 @@ void ReportImage::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 {
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing);
-    painter->drawImage(this->rect(),m_image);   
-    if(this->isSelected())
-    {
-        painter->restore();
-        Container::paint(painter, option, widget);
-    }
-    else
-    {
-        painter->setPen(QPen(Qt::DotLine));
-        QGraphicsRectItem::paint(painter,option,widget);
-        painter->restore();
-    }
+    painter->drawImage(this->rect(),m_image);
+    painter->restore();
+    Container::paint(painter, option, widget);
 }
 
 QString ReportImage::ruta() const {

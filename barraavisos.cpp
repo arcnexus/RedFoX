@@ -10,6 +10,9 @@ BarraAvisos::BarraAvisos(QWidget *parent) :
     m_show = false;
     m_color = QColor(126,184,121,230);
     this->installEventFilter(this);
+    t.setInterval(30000);
+    connect(&t,SIGNAL(timeout()),this,SLOT(llenarAvisos()));
+    t.start();
 }
 
 
@@ -86,8 +89,20 @@ void BarraAvisos::showGlobo()
     if(m_globo)
         delete m_globo;
     m_globo = new GloboAviso(this);
-    m_globo->setGeometry(this->width(),this->pos().y()+50,225,35);
+    m_globo->setGeometry(mapToGlobal(this->pos()).x()+this->width(),mapToGlobal(this->pos()).y(),225,35);
     m_globo->show();
+}
+
+void BarraAvisos::hideGlobo()
+{
+    if(m_globo)
+        m_globo->setVisible(false);
+}
+
+void BarraAvisos::restoreGlobo()
+{
+    if(m_globo)
+        m_globo->setVisible(true);
 }
 
 void BarraAvisos::mousePressEvent(QMouseEvent * e)
@@ -100,15 +115,14 @@ void BarraAvisos::mousePressEvent(QMouseEvent * e)
             else
             {
                 llenarAvisos();
-                //emit showMe();
-                showGlobo();
+                emit showMe();
+                hideGlobo();
             }
         }
 }
 
 bool BarraAvisos::eventFilter(QObject *, QEvent *e)
 {
-    qDebug()<< e->type();
     if(e->type() == QEvent::Move)
         if(m_globo)
             m_globo->move(this->pos().x()+this->width(),this->pos().y()+50);
@@ -166,6 +180,17 @@ void BarraAvisos::llenarAvisos()
         ui->tabla_avisos->setItem(pos,3,item_col3);
         pos ++;
     }
+    if(map.size()>0)
+    {
+        this->showGlobo();
+        this->setColor(QColor(Qt::darkRed));
+    }
+}
+
+void BarraAvisos::moveGloblo(QPoint topLeft)
+{
+    if(m_globo)
+        m_globo->move(topLeft.x()+20,mapToGlobal(this->pos()).y());
 }
 
 bool BarraAvisos::isShow() const

@@ -44,13 +44,13 @@ QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QSt
     }
     }
     m_doc.firstChild().toElement().setAttribute("pages", m_doc.firstChild().childNodes().size());
- /*   QFile f("C:/file/m_doc.xml");
+    QFile f("C:/file/m_doc.xml");
     if(f.open(QFile::WriteOnly))
     {
         QTextStream out(&f);
         const int Indent = 4;
         m_doc.save(out,Indent);
-    }*/
+    }
     return m_doc;
 }
 
@@ -594,7 +594,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                 int formato = ele.attribute("formato").toDouble();
                                                 QStringList value = ele.attribute("Sql").split(".");
                                                 if(value.size()== 3)
-                                                        text = applyFormato(iRecord.value(value.at(2)).toString(),formato);
+                                                        text = applyFormato(iRecord.value(value.at(2)).toString(),formato);                                                
                                                 ele.setAttribute("Text",text);
                                                 if(ele.attribute("Expandable") == "1")
                                                 {

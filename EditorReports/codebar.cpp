@@ -55,7 +55,7 @@ void CodeBar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         }
     }
     painter->restore();
-    if(this->isSelected())
+//    if(this->isSelected())
         Container::paint(painter,option,widget);
 }
 

@@ -19,10 +19,13 @@ public:
     void setPagina(int pagina);
     bool isShow() const;
     void setShow(bool isShow);
-    void setColor(QColor c);
-    void llenarAvisos();
+    void setColor(QColor c);    
+    void moveGloblo(QPoint topLeft);
 public slots:
     void showGlobo();
+    void hideGlobo();
+    void restoreGlobo();
+    void llenarAvisos();
 signals:
     void showMe();
     void hideMe();
@@ -39,6 +42,7 @@ private:
     bool m_show;
     QColor m_color;
     QPointer<GloboAviso> m_globo;
+    QTimer t;
 };
 
 #endif // BARRAAVISOS_H
