@@ -644,6 +644,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`clientes_deuda` (
   `importe_cheque` DOUBLE NULL DEFAULT NULL ,
   `importe_transferencia` DOUBLE NULL DEFAULT NULL ,
   `importe_internet` DOUBLE NULL DEFAULT NULL ,
+  `importe_vale` DOUBLE NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -697,6 +698,19 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`devoluciones` (
   `ejercicio` INT(5) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `@empresa@`.`e_s_caja` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `concepto` TEXT NULL,
+  `id_usuario` INT NULL,
+  `importe` DOUBLE NULL DEFAULT '0',
+  `fecha` DATE NULL,
+  `hora` TIME NULL,
+  `entrada` TINYINT(1) NULL DEFAULT '0',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -1023,10 +1037,11 @@ CREATE TABLE IF NOT EXISTS `@empresa@`.`lin_tpv_2` (
   COLLATE = utf8_unicode_ci;
 
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`moneda_caja` (
-  `id` INT(11) NOT NULL ,
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `nombre_moneda` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `valor_moneda` DOUBLE NULL DEFAULT NULL ,
   `id_moneda_base` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `orden` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8

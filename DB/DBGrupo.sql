@@ -277,6 +277,7 @@ CREATE  TABLE IF NOT EXISTS `@grupo@`.`clientes_deuda` (
   `importe_cheque` DOUBLE NULL DEFAULT NULL ,
   `importe_transferencia` DOUBLE NULL DEFAULT NULL ,
   `importe_internet` DOUBLE NULL DEFAULT NULL ,
+  `importe_vale` DOUBLE NULL DEFAULT NULL ,
   `id_cliente` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB

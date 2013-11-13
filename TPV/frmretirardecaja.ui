@@ -42,7 +42,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="1" column="1" colspan="4">
-    <widget class="QTextEdit" name="textEdit"/>
+    <widget class="QTextEdit" name="txtMotivo"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_2">
@@ -52,7 +52,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="2" column="1" colspan="4">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="cbousuario"/>
    </item>
    <item row="3" column="2">
     <widget class="QLabel" name="label_3">
@@ -62,7 +62,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="3" column="3" colspan="2">
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="txtImporte">
      <property name="text">
       <string>0,00</string>
      </property>
@@ -85,7 +85,7 @@ color: rgb(255, 255, 255);</string>
     </spacer>
    </item>
    <item row="4" column="2" colspan="2">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="btnAceptar">
      <property name="text">
       <string>Aceptar</string>
      </property>
@@ -96,7 +96,7 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="4" column="4">
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="btnCancelar">
      <property name="text">
       <string>Cancelar</string>
      </property>
@@ -111,5 +111,22 @@ color: rgb(255, 255, 255);</string>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnCancelar</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmRetirardeCaja</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>293</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>151</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

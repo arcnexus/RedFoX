@@ -6,16 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>640</height>
+    <width>416</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Desglose de cobro</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1" colspan="2">
+   <item row="0" column="1">
     <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 127);
 font: 14pt &quot;Sans Serif&quot;;
@@ -29,92 +35,315 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1" colspan="2">
-    <widget class="QLabel" name="label_3">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 104, 0);
+   <item row="1" column="1" rowspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLineEdit" name="txtImporte_pendiente">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(215, 255, 197);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 104, 0);
 color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Transferencia</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
+       </property>
+       <property name="text">
+        <string>Efectivo</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtEfectivo">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 104, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Transferencia</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtTransferencia">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 104, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Tarjeta crédito</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtTarjeta">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 104, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Cheque</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtCheque">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 104, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Internet (PyPal - Otros)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtInternet">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 104, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Vales</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtVale">
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="15" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtPendiente">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+   <item row="2" column="2" colspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(170, 85, 127);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Entrega</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtEntrega">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(0, 85, 0);
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(170, 0, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtPendiente">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
 color: rgb(255, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1" colspan="2">
-    <widget class="QLabel" name="label_5">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 104, 0);
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 170, 0);
 color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Cheque</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtCheque">
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+       </property>
+       <property name="text">
+        <string>Cambio</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtCambio">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;Sans Serif&quot;;
 color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
+       </property>
+       <property name="text">
+        <string>0,00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="17" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtCambio">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="18" column="1">
+   <item row="3" column="2">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
       <string>Aceptar</string>
@@ -125,138 +354,7 @@ background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtImporte_pendiente">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtEfectivo">
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 104, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Tarjeta crédito</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" rowspan="2">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../maya.qrc">:/Icons/PNG/pagos.png</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="1" colspan="2">
-    <widget class="QLabel" name="label_6">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 104, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Internet (PyPal - Otros)</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtTransferencia">
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="1" colspan="2">
-    <widget class="QLabel" name="label_10">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 85, 127);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Entrega</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="1" colspan="2">
-    <widget class="QLabel" name="label_8">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 170, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Cambio</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 104, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Efectivo</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="18" column="2">
+   <item row="3" column="3">
     <widget class="QPushButton" name="btnCancelar">
      <property name="text">
       <string>cancelar</string>
@@ -267,68 +365,13 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtTarjeta">
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
+   <item row="0" column="2" rowspan="2" colspan="2">
+    <widget class="QLabel" name="label_9">
      <property name="text">
-      <string>0,00</string>
+      <string/>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtInternet">
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="1" colspan="2">
-    <widget class="QLabel" name="label_7">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 0, 0);
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Pendiente</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="13" column="1" colspan="2">
-    <widget class="QLineEdit" name="txtEntrega">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;Sans Serif&quot;;
-color: rgb(0, 85, 0);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+     <property name="pixmap">
+      <pixmap resource="../maya.qrc">:/Icons/PNG/pagos.png</pixmap>
      </property>
     </widget>
    </item>
@@ -340,6 +383,7 @@ background-color: rgb(255, 255, 255);</string>
   <tabstop>txtTarjeta</tabstop>
   <tabstop>txtCheque</tabstop>
   <tabstop>txtInternet</tabstop>
+  <tabstop>txtVale</tabstop>
   <tabstop>btnAceptar</tabstop>
   <tabstop>btnCancelar</tabstop>
  </tabstops>

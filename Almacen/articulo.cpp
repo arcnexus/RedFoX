@@ -592,6 +592,11 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tipo_
         }
 
     }
+    // ----------------
+    // ACTUALIZO STOCK
+    //-----------------
+    QString cSQL;
+    cSQL = QString("update articulos set ");
     return h;
 }
 

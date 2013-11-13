@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>606</height>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,19 +18,8 @@
     <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <item row="2" column="5" rowspan="9">
+   <item row="2" column="7" rowspan="9">
     <widget class="QCalendarWidget" name="calendarWidget"/>
-   </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="btnIniciar_cierre">
-     <property name="text">
-      <string>Iniciar Cierre</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/inicio.png</normaloff>:/Icons/PNG/inicio.png</iconset>
-     </property>
-    </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_2">
@@ -39,7 +28,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="6">
+   <item row="0" column="0" colspan="8">
     <widget class="QLabel" name="label">
      <property name="styleSheet">
       <string notr="true">background-color: #304163;
@@ -54,9 +43,9 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QTimeEdit" name="txtFecha_cierre"/>
+    <widget class="QTimeEdit" name="txthora_cierre"/>
    </item>
-   <item row="10" column="4">
+   <item row="10" column="6">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -76,7 +65,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="4">
+   <item row="3" column="6">
     <widget class="QLabel" name="lblimporte_abertura">
      <property name="text">
       <string>0,00</string>
@@ -86,8 +75,8 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="3" colspan="3">
-    <widget class="QFrame" name="frame">
+   <item row="11" column="5" colspan="3">
+    <widget class="QFrame" name="_container">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -118,35 +107,47 @@ color: rgb(255, 255, 255);</string>
       <item row="1" column="0">
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="1">
-         <widget class="QSpinBox" name="spinBox_3">
+         <widget class="QSpinBox" name="spinmoneda3">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QLabel" name="label_9">
+         <widget class="QLabel" name="lblmoneda4">
           <property name="text">
            <string>0,10</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QSpinBox" name="spinBox_2">
+         <widget class="QSpinBox" name="spinmoneda2">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QSpinBox" name="spinBox">
+         <widget class="QSpinBox" name="spinmoneda1">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="txtmoneda1">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -156,14 +157,17 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="0" column="4">
-         <widget class="QSpinBox" name="spinBox_12">
+         <widget class="QSpinBox" name="spinmoneda9">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QLineEdit" name="lineEdit_4">
+         <widget class="QLineEdit" name="txtmoneda3">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -173,7 +177,7 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="txtmoneda2">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -183,7 +187,7 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="3" column="2">
-         <widget class="QLineEdit" name="lineEdit_5">
+         <widget class="QLineEdit" name="txtmoneda4">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -193,14 +197,17 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QLabel" name="label_14">
+         <widget class="QLabel" name="lblmoneda9">
           <property name="text">
            <string>5</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="6" column="2">
-         <widget class="QLineEdit" name="lineEdit_8">
+         <widget class="QLineEdit" name="txtmoneda7">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -210,35 +217,47 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_7">
+         <widget class="QLabel" name="lblmoneda2">
           <property name="text">
            <string>0,02:</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="label_8">
+         <widget class="QLabel" name="lblmoneda3">
           <property name="text">
            <string>0,05</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QSpinBox" name="spinBox_4">
+         <widget class="QSpinBox" name="spinmoneda4">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QSpinBox" name="spinBox_7">
+         <widget class="QSpinBox" name="spinmoneda7">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="5" column="2">
-         <widget class="QLineEdit" name="lineEdit_7">
+         <widget class="QLineEdit" name="txtmoneda6">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -248,21 +267,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QSpinBox" name="spinBox_6">
+         <widget class="QSpinBox" name="spinmoneda6">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QLabel" name="label_11">
+         <widget class="QLabel" name="lblmoneda6">
           <property name="text">
            <string>0,50</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="4" column="2">
-         <widget class="QLineEdit" name="lineEdit_6">
+         <widget class="QLineEdit" name="txtmoneda5">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -272,49 +297,67 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="6" column="0">
-         <widget class="QLabel" name="label_12">
+         <widget class="QLabel" name="lblmoneda7">
           <property name="text">
            <string>1</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QLabel" name="label_10">
+         <widget class="QLabel" name="lblmoneda5">
           <property name="text">
            <string>0,20</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QSpinBox" name="spinBox_5">
+         <widget class="QSpinBox" name="spinmoneda5">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="lblmoneda1">
           <property name="text">
            <string>0,01:</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="7" column="1">
-         <widget class="QSpinBox" name="spinBox_8">
+         <widget class="QSpinBox" name="spinmoneda8">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="7" column="0">
-         <widget class="QLabel" name="label_13">
+         <widget class="QLabel" name="lblmoneda8">
           <property name="text">
            <string>2</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="7" column="2">
-         <widget class="QLineEdit" name="lineEdit_9">
+         <widget class="QLineEdit" name="txtmoneda8">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -324,7 +367,7 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="0" column="5">
-         <widget class="QLineEdit" name="lineEdit_16">
+         <widget class="QLineEdit" name="txtmoneda9">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -334,21 +377,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="1" column="3">
-         <widget class="QLabel" name="label_15">
+         <widget class="QLabel" name="lblmoneda10">
           <property name="text">
            <string>10</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="1" column="4">
-         <widget class="QSpinBox" name="spinBox_14">
+         <widget class="QSpinBox" name="spinmoneda10">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="1" column="5">
-         <widget class="QLineEdit" name="lineEdit_14">
+         <widget class="QLineEdit" name="txtmoneda10">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -358,21 +407,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="2" column="3">
-         <widget class="QLabel" name="label_16">
+         <widget class="QLabel" name="lblmoneda11">
           <property name="text">
            <string>20</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="4">
-         <widget class="QSpinBox" name="spinBox_11">
+         <widget class="QSpinBox" name="spinmoneda11">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="5">
-         <widget class="QLineEdit" name="lineEdit_11">
+         <widget class="QLineEdit" name="txtmoneda11">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -382,21 +437,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="3" column="3">
-         <widget class="QLabel" name="label_17">
+         <widget class="QLabel" name="lblmoneda12">
           <property name="text">
            <string>50</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="3" column="4">
-         <widget class="QSpinBox" name="spinBox_9">
+         <widget class="QSpinBox" name="spinmoneda12">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="3" column="5">
-         <widget class="QLineEdit" name="lineEdit_10">
+         <widget class="QLineEdit" name="txtmoneda12">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -406,21 +467,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="4" column="3">
-         <widget class="QLabel" name="label_18">
+         <widget class="QLabel" name="lblmoneda13">
           <property name="text">
            <string>100</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="4" column="4">
-         <widget class="QSpinBox" name="spinBox_10">
+         <widget class="QSpinBox" name="spinmoneda13">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="4" column="5">
-         <widget class="QLineEdit" name="lineEdit_15">
+         <widget class="QLineEdit" name="txtmoneda13">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -430,21 +497,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="5" column="3">
-         <widget class="QLabel" name="label_19">
+         <widget class="QLabel" name="lblmoneda14">
           <property name="text">
            <string>200</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="5" column="4">
-         <widget class="QSpinBox" name="spinBox_13">
+         <widget class="QSpinBox" name="spinmoneda14">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="5" column="5">
-         <widget class="QLineEdit" name="lineEdit_13">
+         <widget class="QLineEdit" name="txtmoneda14">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -454,21 +527,27 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item row="6" column="3">
-         <widget class="QLabel" name="label_20">
+         <widget class="QLabel" name="lblmoneda15">
           <property name="text">
            <string>500</string>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="6" column="4">
-         <widget class="QSpinBox" name="spinBox_15">
+         <widget class="QSpinBox" name="spinmoneda15">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="valorMoneda" stdset="0">
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="6" column="5">
-         <widget class="QLineEdit" name="lineEdit_12">
+         <widget class="QLineEdit" name="txtmoneda15">
           <property name="text">
            <string>0,00</string>
           </property>
@@ -502,8 +581,14 @@ color: rgb(255, 255, 255);</string>
      </layout>
     </widget>
    </item>
-   <item row="4" column="3" colspan="2">
-    <widget class="QPushButton" name="pushButton">
+   <item row="2" column="1" colspan="2">
+    <widget class="QComboBox" name="cboUsuarioCierre"/>
+   </item>
+   <item row="4" column="5" colspan="2">
+    <widget class="QPushButton" name="btnResumentickets">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Resumen tickets /Facturas simplificadas
  /Facturas</string>
@@ -520,8 +605,11 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="3" colspan="2">
-    <widget class="QPushButton" name="pushButton_5">
+   <item row="7" column="5" colspan="2">
+    <widget class="QPushButton" name="btnResumenExtras">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Resumen Extras</string>
      </property>
@@ -537,10 +625,14 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QComboBox" name="cboUsuarioCierre"/>
+   <item row="3" column="5">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Importe abertura:</string>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="4">
+   <item row="2" column="6">
     <widget class="QLabel" name="lblUsuario_abertura">
      <property name="styleSheet">
       <string notr="true">color: rgb(0, 85, 0);</string>
@@ -550,21 +642,14 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="3">
+   <item row="2" column="5">
     <widget class="QLabel" name="label_38">
      <property name="text">
       <string>Usuario abertura:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Importe abertura:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="5">
+   <item row="12" column="7">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
       <string>Aceptar</string>
@@ -575,7 +660,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="4">
+   <item row="12" column="6">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -588,7 +673,71 @@ color: rgb(255, 255, 255);</string>
      </property>
     </spacer>
    </item>
-   <item row="4" column="0" rowspan="9" colspan="3">
+   <item row="5" column="5">
+    <widget class="QPushButton" name="btnResumenEntradas">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Resumen Entradas</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="6">
+    <widget class="QPushButton" name="btnResumenSalidas">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Resumen Salidas</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Caja:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QComboBox" name="cboCaja"/>
+   </item>
+   <item row="3" column="4">
+    <widget class="QPushButton" name="btnIniciar_cierre">
+     <property name="text">
+      <string>Iniciar Cierre</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/inicio.png</normaloff>:/Icons/PNG/inicio.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" rowspan="9" colspan="5">
     <widget class="QFrame" name="frame_2">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -596,61 +745,25 @@ color: rgb(255, 255, 255);</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
+     <property name="midLineWidth">
+      <number>5</number>
+     </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="10" column="3">
-       <widget class="QLineEdit" name="txt_r_vales_emitidos">
+      <item row="18" column="1">
+       <widget class="QLabel" name="label_43">
         <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <string>Ventas:</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="txtTarjeta">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(254, 255, 179);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="0">
-       <widget class="QLabel" name="label_37">
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string>Devoluciones:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QLineEdit" name="txtCheques">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(254, 255, 179);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="label_34">
         <property name="text">
          <string>Transferéncia:</string>
         </property>
        </widget>
       </item>
-      <item row="12" column="1">
+      <item row="13" column="1">
        <spacer name="verticalSpacer_3">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -663,17 +776,24 @@ color: rgb(255, 255, 255);</string>
         </property>
        </spacer>
       </item>
-      <item row="10" column="0">
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_25">
+        <property name="text">
+         <string>Internet:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0">
        <widget class="QLabel" name="label_26">
         <property name="text">
          <string>Vales E:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QLineEdit" name="txtEfectivo">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(207, 207, 185);</string>
+         <string notr="true">background-color: rgb(254, 255, 179);</string>
         </property>
         <property name="text">
          <string>0,00</string>
@@ -683,14 +803,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="0">
-       <widget class="QLabel" name="label_25">
-        <property name="text">
-         <string>Internet:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
+      <item row="4" column="3">
        <widget class="QLineEdit" name="txt_r_efectivo">
         <property name="text">
          <string>0,00</string>
@@ -700,7 +813,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="17" column="3">
+      <item row="19" column="3">
        <widget class="QLineEdit" name="txt_r_entradas">
         <property name="text">
          <string>0,00</string>
@@ -710,7 +823,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="18" column="3">
+      <item row="20" column="3">
        <widget class="QLineEdit" name="txt_r_salidas">
         <property name="text">
          <string>0,00</string>
@@ -720,7 +833,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="3">
+      <item row="10" column="3">
        <widget class="QLineEdit" name="txt_r_Cheques">
         <property name="text">
          <string>0,00</string>
@@ -730,7 +843,14 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="19" column="3">
+      <item row="21" column="1">
+       <widget class="QLabel" name="label_32">
+        <property name="text">
+         <string>Extras:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="21" column="3">
        <widget class="QLineEdit" name="txt_r_Extras">
         <property name="text">
          <string>0,00</string>
@@ -740,21 +860,21 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="19" column="1">
-       <widget class="QLabel" name="label_32">
-        <property name="text">
-         <string>Extras:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="18" column="1">
+      <item row="20" column="1">
        <widget class="QLabel" name="label_29">
         <property name="text">
          <string>Salidas:</string>
         </property>
        </widget>
       </item>
-      <item row="11" column="1">
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_22">
+        <property name="text">
+         <string>Efectivo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
        <widget class="QLineEdit" name="txtVales_recibidos">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(254, 255, 179);</string>
@@ -767,14 +887,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_22">
-        <property name="text">
-         <string>Efectivo:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
+      <item row="6" column="3">
        <widget class="QLineEdit" name="txt_r_tarjeta">
         <property name="text">
          <string>0,00</string>
@@ -798,7 +911,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="2">
+      <item row="7" column="2">
        <widget class="QLineEdit" name="txtDomiciliacion">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(215, 255, 207);</string>
@@ -811,7 +924,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="2">
+      <item row="9" column="2">
        <widget class="QLineEdit" name="txtInternet">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(215, 255, 207);</string>
@@ -844,7 +957,14 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="14" column="1">
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_31">
+        <property name="text">
+         <string>Vales R:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="1">
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -857,7 +977,14 @@ color: rgb(255, 255, 255);</string>
         </property>
        </spacer>
       </item>
-      <item row="6" column="3">
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_27">
+        <property name="text">
+         <string>Cheques:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
        <widget class="QLineEdit" name="txt_r_Domiciliacion">
         <property name="text">
          <string>0,00</string>
@@ -867,28 +994,24 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="11" column="0">
-       <widget class="QLabel" name="label_31">
-        <property name="text">
-         <string>Vales R:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="label_27">
-        <property name="text">
-         <string>Cheques:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="20" column="1">
+      <item row="22" column="1">
        <widget class="QLabel" name="label_30">
         <property name="text">
          <string>Total en Caja:</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="2">
+      <item row="16" column="0" rowspan="7">
+       <widget class="QLabel" name="label_36">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../maya.qrc">:/Icons/PNG/fpagos.png</pixmap>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
        <widget class="QLineEdit" name="txtTransferencia">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(215, 255, 207);</string>
@@ -901,7 +1024,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="3">
+      <item row="9" column="3">
        <widget class="QLineEdit" name="txt_r_internet">
         <property name="text">
          <string>0,00</string>
@@ -911,25 +1034,15 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="15" column="0" rowspan="6">
-       <widget class="QLabel" name="label_36">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../maya.qrc">:/Icons/PNG/fpagos.png</pixmap>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="label_41">
         <property name="text">
          <string>Abertura</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="2">
-       <widget class="QLineEdit" name="txtValesRecibidos">
+      <item row="11" column="2">
+       <widget class="QLineEdit" name="txtValesEmitidos">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(215, 255, 207);</string>
         </property>
@@ -941,7 +1054,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="13" column="2">
+      <item row="14" column="2">
        <widget class="QLineEdit" name="txtdevoluciones">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 175, 161);</string>
@@ -954,7 +1067,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="20" column="2">
+      <item row="22" column="2">
        <widget class="QLineEdit" name="txtTotal_en_caja">
         <property name="text">
          <string>0,00</string>
@@ -964,7 +1077,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="18" column="2">
+      <item row="20" column="2">
        <widget class="QLineEdit" name="txtSalidas">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 175, 161);</string>
@@ -977,10 +1090,10 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="lineEdit_17">
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="txtCaja_moneda">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(254, 255, 179);</string>
+         <string notr="true">background-color: rgb(254, 255, 179);background-color: rgb(207, 207, 185);</string>
         </property>
         <property name="text">
          <string>0,00</string>
@@ -990,7 +1103,14 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="11" column="3">
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_24">
+        <property name="text">
+         <string>Domiciliación</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="3">
        <widget class="QLineEdit" name="txt_r_vales_recibidos">
         <property name="text">
          <string>0,00</string>
@@ -1000,7 +1120,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="3">
+      <item row="8" column="3">
        <widget class="QLineEdit" name="txt_r_Transferencia">
         <property name="text">
          <string>0,00</string>
@@ -1010,14 +1130,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_24">
-        <property name="text">
-         <string>Domiciliación</string>
-        </property>
-       </widget>
-      </item>
-      <item row="17" column="2">
+      <item row="19" column="2">
        <widget class="QLineEdit" name="txtEntradas">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(189, 255, 147);</string>
@@ -1030,7 +1143,14 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="19" column="2">
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_23">
+        <property name="text">
+         <string>Tarjeta:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="21" column="2">
        <widget class="QLineEdit" name="txtExtras">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(253, 255, 126);</string>
@@ -1044,14 +1164,14 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="label_23">
+       <widget class="QLabel" name="label_42">
         <property name="text">
-         <string>Tarjeta:</string>
+         <string>Caja Moneda:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit">
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="txtimporte_abertura">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(207, 207, 185);</string>
         </property>
@@ -1063,7 +1183,34 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="20" column="3">
+      <item row="19" column="1">
+       <widget class="QLabel" name="label_28">
+        <property name="text">
+         <string>Entradas:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="23" column="2">
+       <widget class="QPushButton" name="btnCierreParcial">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>cierre parcial</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/iva3.png</normaloff>:/Icons/PNG/iva3.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="22" column="3">
        <widget class="QLineEdit" name="txt_r_total_en_caja">
         <property name="text">
          <string>0,00</string>
@@ -1073,89 +1220,127 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_42">
+      <item row="23" column="3">
+       <widget class="QPushButton" name="btnCierreCaja">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
-         <string>Caja Moneda:</string>
+         <string>Cerrar Caja</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/cierecaja.png</normaloff>:/Icons/PNG/cierecaja.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
-      <item row="17" column="1">
-       <widget class="QLabel" name="label_28">
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_39">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+        </property>
         <property name="text">
-         <string>Entradas:</string>
+         <string>ingresos</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_40">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>crédito</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="1" colspan="3">
+       <widget class="Line" name="line">
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="midLineWidth">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="3">
+       <widget class="QLineEdit" name="txt_r_vales_emitidos">
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="txtTarjeta">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(254, 255, 179);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="0">
+       <widget class="QLabel" name="label_37">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>Devoluciones:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QLineEdit" name="txtCheques">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(254, 255, 179);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="18" column="2">
+       <widget class="QLineEdit" name="txtVentas">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(189, 255, 147);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="text">
-      <string>Resumen Entradas</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4">
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="text">
-      <string>Resumen Salidas</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="3">
-    <widget class="QPushButton" name="pushButton_7">
-     <property name="text">
-      <string>Cierre parcial</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/open.png</normaloff>:/Icons/PNG/open.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="4">
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="text">
-      <string>Cerrar Caja</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/cierecaja.png</normaloff>:/Icons/PNG/cierecaja.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
     </widget>
    </item>
   </layout>
