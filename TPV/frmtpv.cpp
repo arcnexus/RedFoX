@@ -158,10 +158,16 @@ void FrmTPV::cargar_ticket(int id)
 
     tpv = SqlCalls::SelectRecord("cab_tpv",QString("id =%1").arg(id),Configuracion_global->empresaDB,error);
     ui->lblTicket->setText(QString::number(tpv.value(id).value("ticket").toInt()));
-    if(!tpv.value(id).value("nombre_cliente").toString().isEmpty())
+    if(!tpv.value(id).value("nombre_cliente").toString().isEmpty()){
         ui->btnAsignarCliente->setText(tr("Cliente: %1").arg(tpv.value(id).value("nombre_cliente").toString()));
-    else
+        oTpv->id_cliente = tpv.value(id).value("id_cliente").toInt();
+        this->tipo_dto_tarifa = SqlCalls::SelectOneField("clientes","tipo_dto_tarifa",QString("id=%1").arg(oTpv->id_cliente),
+                                                         Configuracion_global->groupDB,error).toInt();
+    } else {
         ui->btnAsignarCliente->setText(tr("click para asignar Cliente"));
+        oTpv->id_cliente = 0;
+        this->tipo_dto_tarifa = 0;
+    }
     ui->lblFecha->setText(tpv.value(id).value("fecha").toString());
     oTpv->fecha = tpv.value(id).value("fecha").toDate();
     ui->lblHora->setText(tpv.value(id).value("hora").toString());
@@ -646,7 +652,15 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     cantidad = cantid.getCantidad();
                 }
                 QHash <QString, QVariant> art;
-                art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,0,0);
+                if(oTpv->id_cliente == 0)
+                    art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,Configuracion_global->id_tarifa_predeterminada,0,0);
+                else{
+                    int tarifa = SqlCalls::SelectOneField("clientes","tarifa_cliente",QString("id= %1").arg(oTpv->id_cliente),
+                                                          Configuracion_global->groupDB,error).toInt();
+                    int grupo_dto = SqlCalls::SelectOneField("clientes","tipo_dto_tarifa",QString("id= %1").arg(oTpv->id_cliente),
+                                                             Configuracion_global->groupDB,error).toInt();
+                    art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,tarifa,grupo_dto,0);
+                }
                 if(art.value("found").toBool()){
                     QHash <QString,QVariant> lin;
 
@@ -2268,15 +2282,19 @@ void FrmTPV::on_btnAsignarCliente_clicked()
         QString error;
         QHash <QString, QVariant > cli;
         cli["id_cliente"] = id;
-        QString nombre = tr("Cliente: %1").arg(SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(id),
-                                                  Configuracion_global->groupDB,error).toString());
+        QString nombre_fiscal = SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(id),
+                                                         Configuracion_global->groupDB,error).toString();
+        QString nombre = tr("Cliente: %1").arg(nombre_fiscal);
         if(error.isEmpty())
         {
-            cli["nombre_cliente"] = nombre;
+            cli["nombre_cliente"] = nombre_fiscal;
             bool success = SqlCalls::SqlUpdate(cli,"cab_tpv",Configuracion_global->empresaDB,QString("id =%1").arg(oTpv->id),
                                                error);
             if(success){
                 ui->btnAsignarCliente->setText(nombre);
+                this->tipo_dto_tarifa = SqlCalls::SelectOneField("clientes","tipo_dto_tarifa",QString("id=%1").arg(oTpv->id_cliente),
+                                                                 Configuracion_global->groupDB,error).toInt();
+                oTpv->id_cliente = id;
             } else
             {
                 QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al guardar el nombre de cliente: %1").arg(error),
@@ -2342,6 +2360,12 @@ void FrmTPV::on_btnConfirmarAbertura_caja_clicked()
         {
             TimedMessageBox * t;
             t = new TimedMessageBox(this,"Se ha abierto la caja.");
+            QString error;
+            QString frase = tr("Caja: %1, fecha abertura caja: %2").arg(SqlCalls::SelectOneField("cajas","desc_caja",
+                                               QString("id = %1").arg(caja.value("id_caja").toInt()),Configuracion_global->empresaDB,
+                                                                                                 error).toString(),
+                                                              ui->calendarioAbertura->selectedDate().toString("dd/MM/yyyy"));
+            ui->lblregistrando->setText(frase);
            on_btnCancelar_caja_clicked();
         }
     }
@@ -2504,12 +2528,24 @@ void FrmTPV::on_btnBuscarArt_ext_clicked()
 {
     db_consulta_view consulta;
     QStringList campos;
+    QString error;
     campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante"  << "coste";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("articulos");
     consulta.set_db("Maya");
-    consulta.setId_tarifa_cliente(1);
-    consulta.setTipo_dto_tarifa(this->tipo_dto_tarifa);
+    if(oTpv->id_cliente >0){
+        consulta.setId_tarifa_cliente(SqlCalls::SelectOneField("clientes","tarifa_cliente",
+                                                               QString("id=%1").arg(oTpv->id_cliente),
+                                                               Configuracion_global->groupDB,error).toInt());
+        consulta.setTipo_dto_tarifa(SqlCalls::SelectOneField("clientes","tipo_dto_tarifa",
+                                                             QString("id=%1").arg(oTpv->id_cliente),
+                                                             Configuracion_global->groupDB,error).toInt());
+    } else {
+        consulta.setId_tarifa_cliente(Configuracion_global->id_tarifa_predeterminada);
+        consulta.setTipo_dto_tarifa(SqlCalls::SelectOneField("clientes","tipo_dto_tarifa",
+                                                             QString("id=%1").arg(oTpv->id_cliente),
+                                                             Configuracion_global->groupDB,error).toInt());
+    }
     if(this->tipo_dto_tarifa ==1)
         consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
                      "porc_dto1/100))) as pvp from vistaart_tarifa");
@@ -2533,7 +2569,7 @@ void FrmTPV::on_btnBuscarArt_ext_clicked()
     QStringList cabecera;
     QVariantList tamanos;
     QVariantList moneda;
-    cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
+    cabecera  << tr("id") << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
     tamanos <<"0" << "100" << "100" << "100" << "320" <<"130" <<"130";
     moneda <<"5" <<"6";
     consulta.set_headers(cabecera);

@@ -399,7 +399,7 @@ void Articulo::Borrar(int nid)
     }
 }
 
-QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tipo_dto_tarifa,int id_familia_cliente)
+QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarifa, int tipo_dto_tarifa,int id_familia_cliente)
 {
     //---------------------
     // BUSCAR CÓDIGO
@@ -407,7 +407,11 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tipo_
     QMap <int,QSqlRecord> m;
     QString error;
     float dto;
-    m = SqlCalls::SelectRecord("vistaart_tarifa",QString("codigo = '%1'").arg(codigo).toUpper(),Configuracion_global->groupDB,
+    QStringList condiciones;
+    condiciones << QString("codigo = '%1'").arg(codigo).toUpper();
+    condiciones << QString("tarifa = %1").arg(tarifa);
+
+    m = SqlCalls::SelectRecord("vistaart_tarifa",condiciones,Configuracion_global->groupDB,
                                error);
     QMapIterator <int,QSqlRecord> i(m);
     QHash <QString, QVariant> h;
@@ -449,6 +453,8 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tipo_
         default:
             dto =0;
             break;
+
+            // devolver precio con dto ???????
         }
         // PROMOCIONES ARTÍCULO
         if(this->articulo_promocionado)
