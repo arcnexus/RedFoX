@@ -44,7 +44,7 @@ QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QSt
     }
     }
     m_doc.firstChild().toElement().setAttribute("pages", m_doc.firstChild().childNodes().size());
-    QFile f("C:/file/m_doc.xml");
+    QFile f("/home/arcnexus/m_doc.xml");
     if(f.open(QFile::WriteOnly))
     {
         QTextStream out(&f);
@@ -1404,7 +1404,7 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                 if(value.size()>1)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
+                    text = applyFormato(getRelationField(ele.attribute("Sql"),selects.value(key)),formato);
                 }
                 ele.setAttribute("Text",text);
             }
@@ -1495,7 +1495,7 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                 if(value.size()>1)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
+                    text = applyFormato(getRelationField(ele.attribute("Sql"),selects.value(key)),formato);
                 }
                 ele.setAttribute("Text",text);
             }
@@ -1583,7 +1583,7 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
                 if(value.size()>1)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
+                    text = applyFormato(getRelationField(ele.attribute("Sql"),selects.value(key)),formato);
                 }
                 ele.setAttribute("Text",text);
             }
@@ -1641,7 +1641,7 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
                 if(value.size()>1)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    text = applyFormato(getRelationField(ele.attribute("value"),selects.value(key)),formato);
+                    text = applyFormato(getRelationField(ele.attribute("Sql"),selects.value(key)),formato);
                 }
                 ele.setAttribute("Text",text);
             }
