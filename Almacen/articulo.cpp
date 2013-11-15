@@ -454,8 +454,9 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
             dto =0;
             break;
 
-            // devolver precio con dto ???????
+
         }
+        h["dto"] = dto;
         // PROMOCIONES ARTÍCULO
         if(this->articulo_promocionado)
         {
@@ -527,8 +528,10 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
                 ex.next();
                 if(ex.value().value("importe_fijo").toDouble()>0)
                     h["precio"] = ex.value().value("importe_fijo").toDouble();
-                if(ex.value().value("dto_fijo").toFloat()>0)
-                    h["dto"] = ex.value().value("dto_fijo");
+                if(ex.value().value("dto_fijo").toFloat()>0){
+                    if(ex.value().value("dto_fijo").toFloat()> h.value("dto").toFloat())
+                           h["dto"] = ex.value().value("dto_fijo");
+                }
                 if(ex.value().value("importe_moneda_aumento").toDouble()>0)
                     h["precio"] = h.value("precio").toDouble() + ex.value().value("importe_moneda_aumento").toDouble();
                 if(ex.value().value("dto_aumento_fijo").toFloat()>0)
@@ -552,8 +555,10 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
                     ae.next();
                     if(ae.value().value("importe_fijo").toDouble()>0)
                         h["precio"] = ae.value().value("importe_fijo").toDouble();
-                    if(ae.value().value("dto_fijo").toFloat()>0)
-                        h["dto"] = ae.value().value("dto_fijo");
+                    if(ae.value().value("dto_fijo").toFloat()>0){
+                        if(ae.value().value("dto_fijo").toFloat() > h.value("dto").toFloat())
+                            h["dto"] = ae.value().value("dto_fijo");
+                    }
                     if(ae.value().value("importe_moneda_aumento").toDouble()>0)
                         h["precio"] = h.value("precio").toDouble() + ae.value().value("importe_moneda_aumento").toDouble();
                     if(ae.value().value("dto_aumento_fijo").toFloat()>0)
@@ -569,7 +574,10 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
             } else
             {
                 // familia_cliente
-                e=SqlCalls::SelectRecord("articulos_excepciones",QString("id_familia_cliente=%1").arg(id_familia_cliente),
+                QStringList filtro;
+                filtro << QString("id_familia_cliente=%1").arg(id_familia_cliente);
+                filtro << QString("id_artiulo=%1").arg(h.value("id").toInt());
+                e=SqlCalls::SelectRecord("articulos_excepciones",filtro,
                                          Configuracion_global->empresaDB,error);
                 if(e.size() >0)
                 {
@@ -579,8 +587,10 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
                         ae.next();
                         if(ae.value().value("importe_fijo").toDouble()>0)
                             h["precio"] = ae.value().value("importe_fijo").toDouble();
-                        if(ae.value().value("dto_fijo").toFloat()>0)
-                            h["dto"] = ae.value().value("dto_fijo");
+                        if(ae.value().value("dto_fijo").toFloat()>0){
+                            if(ae.value().value("dto_fijo").toFloat()> h.value("dto").toFloat())
+                                h["dto"] = ae.value().value("dto_fijo");
+                        }
                         if(ae.value().value("importe_moneda_aumento").toDouble()>0)
                             h["precio"] = h.value("precio").toDouble() + ae.value().value("importe_moneda_aumento").toDouble();
                         if(ae.value().value("dto_aumento_fijo").toFloat()>0)

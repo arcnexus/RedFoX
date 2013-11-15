@@ -682,9 +682,31 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     if(new_id <0)
                     {
                         QMessageBox::warning(this,tr("Gestión de tickets"),tr("Ocurrió un error al crear una nueva línea: %1").arg(error));
-                    } else
+                    } else{
+                        // Si el cliente o el artículo tiene, asignado un descuento creamos la línea.
+                        int id = new_id;
+                        QHash <QString,QVariant> h;
+                        QString error;
+                        h["id_cab"]= id;
+                        h["descripcion"] = tr("Descuento especial:").arg(ui->txtCodigo->text());
+                        h["tipo"] = "p";
+                        h["valor"] = art.value("dto").toDouble();
+                        // -----------------------------------------------------------------------
+                        // Si ya existe una línea de dto la borramos para substituir por la nueva
+                        //------------------------------------------------------------------------
+                        bool succes = SqlCalls::SqlDelete("lin_tpv_2",Configuracion_global->empresaDB,QString("id_cab=%1").arg(id),error);
+                        if(succes){
+                            // ------------------
+                            // Insertamos línea
+                            //-------------------
+                            int new_id = SqlCalls::SqlInsert(h,"lin_tpv_2",Configuracion_global->empresaDB,error);
+                            if(new_id == -1)
+                                QMessageBox::warning(this,tr("Gestión de TPV"),tr("Ocurrió un error al insertar linea descuento"),tr("Aceptar"));
+                        }
+                        ui->txtCodigo->clear();
+                        cargar_lineas(this->id);
 
-                       cargar_lineas(oTpv->id);
+                    }
                 } else {
                     TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se encuentra el artículo");
                 }
