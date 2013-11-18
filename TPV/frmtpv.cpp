@@ -653,13 +653,14 @@ void FrmTPV::on_txtCodigo_editingFinished()
                 }
                 QHash <QString, QVariant> art;
                 if(oTpv->id_cliente == 0)
-                    art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,Configuracion_global->id_tarifa_predeterminada,0,0);
+                    art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,Configuracion_global->id_tarifa_predeterminada,
+                                            0,0,oTpv->id_cliente);
                 else{
                     int tarifa = SqlCalls::SelectOneField("clientes","tarifa_cliente",QString("id= %1").arg(oTpv->id_cliente),
                                                           Configuracion_global->groupDB,error).toInt();
                     int grupo_dto = SqlCalls::SelectOneField("clientes","tipo_dto_tarifa",QString("id= %1").arg(oTpv->id_cliente),
                                                              Configuracion_global->groupDB,error).toInt();
-                    art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,tarifa,grupo_dto,0);
+                    art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,tarifa,grupo_dto,0,oTpv->id_cliente);
                 }
                 if(art.value("found").toBool()){
                     QHash <QString,QVariant> lin;

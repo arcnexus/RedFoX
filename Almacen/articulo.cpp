@@ -399,7 +399,8 @@ void Articulo::Borrar(int nid)
     }
 }
 
-QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarifa, int tipo_dto_tarifa,int id_familia_cliente)
+QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarifa, int tipo_dto_tarifa,int id_familia_cliente,
+                                          int id_cliente)
 {
     //---------------------
     // BUSCAR CÓDIGO
@@ -520,8 +521,12 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
         //--------------------------
 
         QMap <int,QSqlRecord> e;
-        // Articulo directo.
-        e = SqlCalls::SelectRecord("articulos_exepciones",QString("id_cab= %1").arg(this->id),Configuracion_global->empresaDB,error);
+        // Coincice id_articulo e id_cliente
+        QStringList filter;
+        filter << QString("id_articulo= %1").arg(h.value("id").toInt());
+        filter << QString("id_cliente = %1").arg(id_cliente);
+
+        e = SqlCalls::SelectRecord("articulos_exepciones",filter,Configuracion_global->empresaDB,error);
         QMapIterator<int,QSqlRecord> ex(e);
         if(ex.hasNext()) {
             while (ex.hasNext()) {
@@ -545,41 +550,14 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
             }
         } else
         {
-            //familia
-            e = SqlCalls::SelectRecord("articulos_excepciones",QString("id_familia=%1").arg(this->id_familia),Configuracion_global->empresaDB,error);
-            if(e.size()>0)
+            // coincide id_familia e id_cliente y id_cliente > 0
+            if(id_cliente >0)
             {
-                QMapIterator<int,QSqlRecord> ae(e);
-                while (ae.hasNext())
-                {
-                    ae.next();
-                    if(ae.value().value("importe_fijo").toDouble()>0)
-                        h["precio"] = ae.value().value("importe_fijo").toDouble();
-                    if(ae.value().value("dto_fijo").toFloat()>0){
-                        if(ae.value().value("dto_fijo").toFloat() > h.value("dto").toFloat())
-                            h["dto"] = ae.value().value("dto_fijo");
-                    }
-                    if(ae.value().value("importe_moneda_aumento").toDouble()>0)
-                        h["precio"] = h.value("precio").toDouble() + ae.value().value("importe_moneda_aumento").toDouble();
-                    if(ae.value().value("dto_aumento_fijo").toFloat()>0)
-                        h["dto"] = h.value("dto").toFloat() + ae.value().value("dto_aumento_fijo").toFloat();
-                    if(ae.value().value("importe_porc_aumento").toDouble()>0)
-                        h["precio"] = h.value("precio").toDouble() +(h.value("precio").toDouble() *
-                                                                     (ae.value().value("importe_porc_aumento").toDouble()/100));
-                    if(ae.value().value("dto_aumento_porc").toFloat()>0)
-                        h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
-                                                                   ae.value().value("dto_aumento_porc").toFloat()/100));
-
-                }
-            } else
-            {
-                // familia_cliente
-                QStringList filtro;
-                filtro << QString("id_familia_cliente=%1").arg(id_familia_cliente);
-                filtro << QString("id_artiulo=%1").arg(h.value("id").toInt());
-                e=SqlCalls::SelectRecord("articulos_excepciones",filtro,
-                                         Configuracion_global->empresaDB,error);
-                if(e.size() >0)
+                QStringList filter;
+                filter << QString("id_familia=%1").arg(this->id_familia);
+                filter << QString("id_cliente=%1").arg(id_cliente);
+                e = SqlCalls::SelectRecord("articulos_excepciones",filter,Configuracion_global->empresaDB,error);
+                if(e.size()>0)
                 {
                     QMapIterator<int,QSqlRecord> ae(e);
                     while (ae.hasNext())
@@ -588,7 +566,7 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
                         if(ae.value().value("importe_fijo").toDouble()>0)
                             h["precio"] = ae.value().value("importe_fijo").toDouble();
                         if(ae.value().value("dto_fijo").toFloat()>0){
-                            if(ae.value().value("dto_fijo").toFloat()> h.value("dto").toFloat())
+                            if(ae.value().value("dto_fijo").toFloat() > h.value("dto").toFloat())
                                 h["dto"] = ae.value().value("dto_fijo");
                         }
                         if(ae.value().value("importe_moneda_aumento").toDouble()>0)
@@ -601,10 +579,10 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
                         if(ae.value().value("dto_aumento_porc").toFloat()>0)
                             h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
                                                                        ae.value().value("dto_aumento_porc").toFloat()/100));
-                    }
-                }
-            } // TODO - EXCEPCIONES AGENTES Y OTRAS EXCEPCIONES
 
+                    }
+                } // TODO - EXCEPCIONES AGENTES Y OTRAS EXCEPCIONES
+            }
         }
 
     }

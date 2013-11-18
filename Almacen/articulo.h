@@ -79,7 +79,8 @@ public:
     void Guardar();
     void Vaciar();
     void Borrar(int nid);
-    QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente);
+    QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente,
+                                   int id_cliente);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
