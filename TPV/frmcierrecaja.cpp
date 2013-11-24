@@ -7,9 +7,15 @@ FrmCierreCaja::FrmCierreCaja(QWidget *parent) :
     ui(new Ui::FrmCierreCaja)
 {
     ui->setupUi(this);
+    // combos
     QSqlQueryModel *users = new QSqlQueryModel(this);
     users->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
     ui->cboUsuarioCierre->setModel(users);
+
+    QSqlQueryModel * cajas = new QSqlQueryModel(this);
+    cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
+    ui->cboCaja->setModel(cajas);
+
 
     //------------------------------------------
     // Recupero parametros empresa para cierre

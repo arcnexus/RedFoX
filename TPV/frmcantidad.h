@@ -19,6 +19,8 @@ public:
 private slots:
     void on_doubleSpinBox_editingFinished();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::frmcantidad *ui;
     bool eventFilter(QObject *target, QEvent *event);

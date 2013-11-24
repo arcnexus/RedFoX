@@ -35,3 +35,8 @@ bool frmcantidad::eventFilter(QObject *target, QEvent *event)
     }
     return false;
 }
+
+void frmcantidad::on_pushButton_clicked()
+{
+    accept();
+}

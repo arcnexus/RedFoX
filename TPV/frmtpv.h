@@ -36,9 +36,9 @@ public slots:
     void cargar_ofertas();
 
 private slots:
-    void on_btnClientes_clicked();
+//    void on_btnClientes_clicked();
 
-    void on_btnBuscar_clicked();
+//    void on_btnBuscar_clicked();
 
     void on_txtCodigo_editingFinished();
 
