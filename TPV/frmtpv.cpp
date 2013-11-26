@@ -1037,20 +1037,57 @@ void FrmTPV::on_btn3_clicked()
     if(ui->frame_ticket->currentIndex()==3)
     {
         if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("3"));
-        if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("3"));
-        if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("3"));
-        if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("3"));
-        if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("3"));
+            if(ui->txtEfectivo->text() == "0,00")
+            {
+                ui->txtEfectivo->setText("3");
+            } else
+            {
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("3"));
+            }
 
+        if(ui->btnTarjeta->isChecked())
+        {
+            if(ui->txtTarjeta->text() == "0,00")
+                ui->txtTarjeta->setText("3");
+             else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("3"));
+        }
+        if(ui->btnCheque->isChecked())
+        {
+            if(ui->txtCheque->text() == "0,00")
+            {
+                ui->txtCheque->setText("3");
+            } else
+                ui->txtCheque->setText(ui->txtCheque->text().append("3"));
+        }
+        if(ui->btnDomiciliacion->isChecked())
+        {
+            if(ui->txtDomiciliacion->text() == "0,00")
+                ui->txtDomiciliacion->setText("3");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("3"));
+        }
+        if(ui->btnTransferencia->isChecked())
+        {
+            if(ui->txtTransferencia->text() == "0,00")
+                ui->txtTransferencia->setText("3");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("3"));
+        }
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("3"));
+        {
+            if(ui->txtVales->text()== "0,00")
+                ui->txtVales->setText("3");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("3"));
+        }
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("3"));
+        {
+            if(ui->txtInternet->text()== "0,00")
+                ui->txtInternet->setText("3");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("3"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("3"));
 }
@@ -1059,21 +1096,55 @@ void FrmTPV::on_btn4_clicked()
 {
     if(ui->frame_ticket->currentIndex()==3)
     {
-        if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("4"));
+        if(ui->btnEfectivo->isChecked()){
+            if(ui->txtEfectivo->text() == "0,00")
+                ui->txtEfectivo->setText("4");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("4"));
+        }
         if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("4"));
+        {
+            if(ui->txtTarjeta->text() == "0,00")
+                ui->txtTarjeta->setText("4");
+            else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("4"));
+        }
         if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("4"));
+        {
+            if(ui->txtCheque->text() == "0,00")
+                ui->txtCheque->setText("4");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("4"));
+        }
         if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append(""));
+        {
+            if(ui->txtDomiciliacion->text() == "0,00")
+                ui->txtDomiciliacion->setText("4");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append(""));
+        }
         if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append(""));
+        {
+            if(ui->txtTransferencia->text() == "0,00")
+                ui->txtTransferencia->setText("4");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("4"));
+        }
 
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("4"));
+        {
+            if(ui->txtVales->text() =="0,00")
+                ui->txtVales->setText("4");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("4"));
+        }
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("4"));
+        {
+            if(ui->txtInternet->text() == "0,00")
+                ui->txtInternet->setText("4");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("4"));
+         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("4"));
 }
@@ -1083,20 +1154,56 @@ void FrmTPV::on_btn5_clicked()
     if(ui->frame_ticket->currentIndex()==3)
     {
         if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("5"));
+        {
+            if(ui->txtEfectivo->text() == "0,00")
+                ui->txtEfectivo->setText("5");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("5"));
+        }
         if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("5"));
+        {
+            if(ui->txtTarjeta->text() == "0,00")
+                ui->txtTarjeta->setText("5");
+            else
+                 ui->txtTarjeta->setText(ui->txtTarjeta->text().append("5"));
+        }
         if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("5"));
+        {
+            if(ui->txtCheque->text() == "0,00")
+                ui->txtCheque->setText("5");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("5"));
+        }
         if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("5"));
+        {
+            if(ui->txtDomiciliacion->text() == "0,00")
+                ui->txtDomiciliacion->setText("5");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("5"));
+        }
         if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("5"));
+        {
+            if(ui->txtTransferencia->text() == "0,00")
+                ui->txtTransferencia->setText("5");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("5"));
+        }
 
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("5"));
+        {
+            if(ui->txtVales->text() == "0,00")
+                ui->txtVales->setText("5");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("5"));
+        }
+
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("5"));
+        {
+            if(ui->txtInternet->text() == "0,00")
+                ui->txtInternet->setText("5");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("5"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("5"));
 }
@@ -1106,20 +1213,57 @@ void FrmTPV::on_btn6_clicked()
     if(ui->frame_ticket->currentIndex()==3)
     {
         if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("6"));
+        {
+            if(ui->txtEfectivo->text() == "0,00")
+                ui->txtEfectivo->setText("6");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("6"));
+        }
+
         if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("6"));
-        if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("6"));
-        if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("6"));
+        {
+            if(ui->txtTarjeta->text() == "0,00")
+                ui->txtTarjeta->setText("6");
+            else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("6"));
+        }
+
+        if(ui->btnCheque->isChecked()){
+            if(ui->txtCheque->text()=="0,00")
+                ui->txtCheque->setText("6");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("6"));
+        }
+
+        if(ui->btnDomiciliacion->isChecked()){
+            if(ui->txtDomiciliacion->text() =="0,00")
+                ui->txtDomiciliacion->setText("6");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("6"));
+        }
         if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("6"));
+        {
+            if(ui->txtTransferencia->text() =="0,00")
+                ui->txtTransferencia->setText("6");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("6"));
+        }
 
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("6"));
+        {
+            if(ui->txtVales->text() =="0,00")
+                ui->txtVales->setText("6");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("6"));
+        }
+
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("6"));
+        {
+            if(ui->txtInternet->text() =="0,00")
+                ui->txtInternet->setText("6");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("6"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("6"));
 }
@@ -1128,21 +1272,58 @@ void FrmTPV::on_btn7_clicked()
 {
     if(ui->frame_ticket->currentIndex()==3)
     {
-        if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("7"));
+        if(ui->btnEfectivo->isChecked()){
+            if(ui->txtEfectivo->text() =="0,00")
+                ui->txtEfectivo->setText("7");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("7"));
+        }
         if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("7"));
+        {
+            if(ui->txtTarjeta->text() =="0,00")
+                ui->txtTarjeta->setText("7");
+            else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("7"));
+        }
+
         if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("7"));
+        {
+            if(ui->txtCheque->text() =="0,00")
+                ui->txtCheque->setText("7");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("7"));
+        }
+
         if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("7"));
+        {
+            if(ui->txtDomiciliacion->text() =="0,00")
+                ui->txtDomiciliacion->setText("7");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("7"));
+        }
+
         if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("7"));
-;
+        {
+            if(ui->txtTransferencia->text() =="0,00")
+                ui->txtTransferencia->setText("7");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("7"));
+        }
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("7"));
+        {
+            if(ui->txtVales->text() =="0,00")
+                ui->txtVales->setText("7");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("7"));
+        }
+
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("7"));
+        {
+            if(ui->txtInternet->text() =="0,00")
+                ui->txtInternet->setText("7");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("7"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("7"));
 }
@@ -1152,20 +1333,59 @@ void FrmTPV::on_btn8_clicked()
     if(ui->frame_ticket->currentIndex()==3)
     {
         if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("8"));
-        if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("8"));
-        if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("8"));
-        if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("8"));
-        if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("8"));
+        {
+            if(ui->txtEfectivo->text() =="0,00")
+                ui->txtEfectivo->setText("8");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("8"));
+        }
 
+        if(ui->btnTarjeta->isChecked())
+        {
+            if(ui->txtTarjeta->text() =="0,00")
+                ui->txtTarjeta->setText("8");
+            else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("8"));
+        }
+
+        if(ui->btnCheque->isChecked())
+        {
+            if(ui->txtCheque->text() =="0,00")
+                ui->txtCheque->setText("8");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("8"));
+        }
+
+        if(ui->btnDomiciliacion->isChecked())
+        {
+            if(ui->txtDomiciliacion->text() =="0,00")
+                ui->txtDomiciliacion->setText("8");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("8"));
+        }
+
+        if(ui->btnTransferencia->isChecked())
+        {
+            if(ui->txtTransferencia->text() =="0,00")
+                ui->txtTransferencia->setText("8");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("8"));
+        }
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("8"));
+        {
+            if(ui->txtVales->text() =="0,00")
+                ui->txtVales->setText("8");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("8"));
+        }
+
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("8"));
+        {
+            if(ui->txtInternet->text() =="0,00")
+                ui->txtInternet->setText("8");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("8"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("8"));
 }
@@ -1175,20 +1395,54 @@ void FrmTPV::on_btn9_clicked()
     if(ui->frame_ticket->currentIndex()==3)
     {
         if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("9"));
+        {
+            if(ui->txtEfectivo->text() =="0,00")
+                ui->txtEfectivo->setText("9");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("9"));
+        }
         if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("9"));
-        if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("9"));
-        if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("9"));
-        if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("9"));
+        {
+            if(ui->txtTarjeta->text() =="0,00")
+                ui->txtTarjeta->setText("9");
+            else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("9"));
 
+        if(ui->btnCheque->isChecked())
+        {
+            if(ui->txtCheque->text() =="0,00")
+                ui->txtCheque->setText("9");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("9"));
+        }
+        if(ui->btnDomiciliacion->isChecked())
+        {
+            if(ui->txtDomiciliacion->text() =="0,00")
+                ui->txtDomiciliacion->setText("9");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("9"));
+        }
+        if(ui->btnTransferencia->isChecked())
+        {
+            if(ui->txtTransferencia->text() == "0,00")
+                ui->txtTransferencia->setText("9");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("9"));
+        }
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("9"));
+        {
+            if(ui->txtVales->text() =="0,00")
+                ui->txtVales->setText("9");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("9"));
+        }
+
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("9"));
+            if(ui->txtInternet->text() =="0,00")
+                ui->txtInternet->setText("9");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("9"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("9"));
 }
@@ -1719,19 +1973,57 @@ void FrmTPV::on_btn0_clicked()
     if(ui->frame_ticket->currentIndex()==3)
     {
         if(ui->btnEfectivo->isChecked())
-            ui->txtEfectivo->setText(ui->txtEfectivo->text().append("0"));
+        {
+            if(ui->txtEfectivo->text() == "0,00")
+                ui->txtEfectivo->setText("0,");
+            else
+                ui->txtEfectivo->setText(ui->txtEfectivo->text().append("0"));
+        }
+
         if(ui->btnTarjeta->isChecked())
-            ui->txtTarjeta->setText(ui->txtTarjeta->text().append("0"));
+        {
+            if(ui->txtTarjeta->text() =="0,00")
+                ui->txtTarjeta->setText("0,");
+            else
+                ui->txtTarjeta->setText(ui->txtTarjeta->text().append("0"));
+        }
+
         if(ui->btnCheque->isChecked())
-            ui->txtCheque->setText(ui->txtCheque->text().append("0"));
+        {
+            if(ui->txtCheque->text() =="0,00")
+                ui->txtCheque->setText("0,");
+            else
+                ui->txtCheque->setText(ui->txtCheque->text().append("0"));
+        }
         if(ui->btnDomiciliacion->isChecked())
-            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("0"));
+        {
+            if(ui->txtDomiciliacion->text() =="0,00")
+                ui->txtDomiciliacion->setText("0,");
+            else
+                ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().append("0"));
+        }
         if(ui->btnTransferencia->isChecked())
-            ui->txtTransferencia->setText(ui->txtTransferencia->text().append("0"));
+        {
+            if(ui->txtTransferencia->text() =="0,00")
+                ui->txtTransferencia->setText("0,");
+            else
+                ui->txtTransferencia->setText(ui->txtTransferencia->text().append("0"));
+        }
+
         if(ui->btnVales->isChecked())
-            ui->txtVales->setText(ui->txtVales->text().append("0"));
+        {
+            if(ui->txtVales->text() =="0,00")
+                ui->txtVales->setText("0,");
+            else
+                ui->txtVales->setText(ui->txtVales->text().append("0"));
+        }
         if(ui->btnInternet->isChecked())
-            ui->txtInternet->setText(ui->txtInternet->text().append("0"));
+        {
+            if(ui->txtInternet->text() =="0,00")
+                ui->txtInternet->setText("0,");
+            else
+                ui->txtInternet->setText(ui->txtInternet->text().append("0"));
+        }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("0"));
 }
