@@ -967,6 +967,7 @@ void FrmTPV::on_btn1_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("1"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btnBack_clicked()
@@ -1030,6 +1031,7 @@ void FrmTPV::on_btn2_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("2"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn3_clicked()
@@ -1090,6 +1092,7 @@ void FrmTPV::on_btn3_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("3"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn4_clicked()
@@ -1147,6 +1150,7 @@ void FrmTPV::on_btn4_clicked()
          }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("4"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn5_clicked()
@@ -1206,6 +1210,7 @@ void FrmTPV::on_btn5_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("5"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn6_clicked()
@@ -1266,6 +1271,7 @@ void FrmTPV::on_btn6_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("6"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn7_clicked()
@@ -1326,6 +1332,7 @@ void FrmTPV::on_btn7_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("7"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn8_clicked()
@@ -1388,6 +1395,7 @@ void FrmTPV::on_btn8_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("8"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btn9_clicked()
@@ -1445,6 +1453,7 @@ void FrmTPV::on_btn9_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("9"));
+    calcularcambio();
 }
 
 void FrmTPV::on_btnIntro_clicked()
@@ -2026,13 +2035,9 @@ void FrmTPV::on_btn0_clicked()
         }
     } else
         ui->txtCodigo->setText(ui->txtCodigo->text().append("0"));
+    calcularcambio();
 }
 
-
-void FrmTPV::on_lblDependiente_linkActivated(const QString &link)
-{
-
-}
 
 void FrmTPV::on_btnDto_clicked(bool checked)
 {
