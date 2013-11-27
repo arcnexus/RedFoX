@@ -29,7 +29,7 @@ Login::Login(QWidget *parent) :
         QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
         QString nombreusuario = settings.value("cUsuarioActivo").toString();
         QString contrasena = Configuracion_global->DeCrypt(settings.value("contrasenaactiva").toString());
-        Configuracion_global->caja = settings.value("cajaactiva").toString();
+        Configuracion_global->caja = QString::number(settings.value("cajaactiva").toInt());
         Configuracion_global->Importe_apertura = Configuracion_global->MonedatoDouble(settings.value("importe_apertura").toString());
         ui->lineUsuario->setText(nombreusuario);
         ui->linePassword->setText(contrasena);
