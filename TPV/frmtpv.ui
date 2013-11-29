@@ -2555,8 +2555,24 @@ font: 12pt &quot;Sans Serif&quot;;</string>
               <height>16777215</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="gridVisible">
+             <bool>true</bool>
+            </property>
+            <property name="horizontalHeaderFormat">
+             <enum>QCalendarWidget::ShortDayNames</enum>
+            </property>
+            <property name="verticalHeaderFormat">
+             <enum>QCalendarWidget::NoVerticalHeader</enum>
             </property>
            </widget>
           </item>

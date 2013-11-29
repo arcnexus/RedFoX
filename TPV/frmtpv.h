@@ -90,8 +90,6 @@ private slots:
 
     void on_btn0_clicked();
 
-    void on_lblDependiente_linkActivated(const QString &link);
-
     void on_btnDto_clicked(bool checked);
 
     void on_btnCantidad_clicked(bool checked);
