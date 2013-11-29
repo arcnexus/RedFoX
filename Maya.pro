@@ -541,14 +541,14 @@ INCLUDEPATH += $$PWD/LibsGraficas
 DEPENDPATH += $$PWD/LibsGraficas
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CryptoLIBS/release/ -lcryptlib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CryptoLIBS/debug/ -lcryptlib
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CryptoLIBS/release/ -lcryptopp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CryptoLIBS/debug/ -lcryptopp
 
 INCLUDEPATH += $$PWD/CryptoLIBS
 DEPENDPATH += $$PWD/CryptoLIBS
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptlib.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptlib.lib
+#win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptlib.lib
+#else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptlib.lib
 
 
 unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lcryptopp
