@@ -115,6 +115,8 @@ FrmTPV::FrmTPV(QWidget *parent) :
     ui->tabla_buscar_art->setItemDelegateForColumn(3, new MonetaryDelegate_totals);
     ui->tabla_buscar_art->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
 
+   edicion_teclado = false;
+
     //---------------
     // CAJA ABIERTA
     //---------------
@@ -972,7 +974,23 @@ void FrmTPV::on_btn1_clicked()
 
 void FrmTPV::on_btnBack_clicked()
 {
-    ui->txtCodigo->setText(ui->txtCodigo->text().left(ui->txtCodigo->text().length()-1));
+    if(ui->frame_ticket->currentIndex()==3)
+    {
+        if(ui->btnEfectivo->isChecked())
+            ui->txtEfectivo->setText(ui->txtEfectivo->text().left(ui->txtEfectivo->text().length()-1));
+        if(ui->btnTarjeta->isChecked())
+            ui->txtTarjeta->setText(ui->txtTarjeta->text().left(ui->txtTarjeta->text().length()-1));
+        if(ui->btnCheque->isChecked())
+            ui->txtCheque->setText(ui->txtCheque->text().left(ui->txtCheque->text().length()-1));
+        if(ui->btnTransferencia->isChecked())
+            ui->txtTransferencia->setText(ui->txtTransferencia->text().left(ui->txtTransferencia->text().length()-1));
+        if(ui->btnDomiciliacion->isChecked())
+            ui->txtDomiciliacion->setText(ui->txtDomiciliacion->text().left(ui->txtDomiciliacion->text().length()-1));
+        if(ui->btnVales->isChecked())
+            ui->txtVales->setText(ui->txtVales->text().left(ui->txtVales->text().length()-1));
+    }
+    else
+        ui->txtCodigo->setText(ui->txtCodigo->text().left(ui->txtCodigo->text().length()-1));
 }
 
 void FrmTPV::on_btn2_clicked()
@@ -1415,7 +1433,7 @@ void FrmTPV::on_btn9_clicked()
                 ui->txtTarjeta->setText("9");
             else
                 ui->txtTarjeta->setText(ui->txtTarjeta->text().append("9"));
-
+        }
         if(ui->btnCheque->isChecked())
         {
             if(ui->txtCheque->text() =="0,00")
@@ -1446,6 +1464,7 @@ void FrmTPV::on_btn9_clicked()
         }
 
         if(ui->btnInternet->isChecked())
+        {
             if(ui->txtInternet->text() =="0,00")
                 ui->txtInternet->setText("9");
             else
@@ -1483,6 +1502,7 @@ void FrmTPV::on_btnIntro_clicked()
         ui->txtCodigo->clear();
     } else if(ui->frame_ticket->currentIndex() == 3) // modo cobro ticket
     {
+        edicion_teclado = false;
         calcularcambio();
     }
 
@@ -2187,14 +2207,16 @@ void FrmTPV::on_txtTarjeta_editingFinished()
 
 void FrmTPV::calcularcambio()
 {
-    ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtEfectivo->text()));
-    ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtTarjeta->text()));
-    ui->txtCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtCheque->text()));
-    ui->txtTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtTransferencia->text()));
-    ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(ui->txtDomiciliacion->text()));
-    ui->txtVales->setText(Configuracion_global->toFormatoMoneda(ui->txtVales->text()));
-    ui->txtInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtInternet->text()));
-
+    if(!edicion_teclado)
+    {
+        ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(ui->txtEfectivo->text()));
+        ui->txtTarjeta->setText(Configuracion_global->toFormatoMoneda(ui->txtTarjeta->text()));
+        ui->txtCheque->setText(Configuracion_global->toFormatoMoneda(ui->txtCheque->text()));
+        ui->txtTransferencia->setText(Configuracion_global->toFormatoMoneda(ui->txtTransferencia->text()));
+        ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(ui->txtDomiciliacion->text()));
+        ui->txtVales->setText(Configuracion_global->toFormatoMoneda(ui->txtVales->text()));
+        ui->txtInternet->setText(Configuracion_global->toFormatoMoneda(ui->txtInternet->text()));
+    }
 
 
     double efectivo,tarjeta,cheque,domiciliacion,transferencia,internet,vales,pagado, pendiente,cambio;
@@ -2384,6 +2406,7 @@ void FrmTPV::on_btnEfectivo_clicked(bool checked)
         ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
         ui->txtEfectivo->setFocus();
     }
@@ -2400,6 +2423,7 @@ void FrmTPV::on_btnTarjeta_clicked(bool checked)
         ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
         ui->txtTarjeta->setText(ui->txtPendiente->text());
         ui->txtTarjeta->setFocus();
@@ -2417,6 +2441,7 @@ void FrmTPV::on_btnCheque_clicked(bool checked)
         ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
         ui->txtCheque->setFocus();
     }
@@ -2425,16 +2450,17 @@ void FrmTPV::on_btnCheque_clicked(bool checked)
 void FrmTPV::on_btnDomiciliacion_clicked(bool checked)
 {
     if(checked)
-    {
-        ui->txtDomiciliacion->clear();
-
-        ui->btnTarjeta->setChecked(false);
-        ui->btnCheque->setChecked(false);
-        ui->btnDomiciliacion->setChecked(false);
-        ui->btnVales->setChecked(false);
-        ui->btnInternet->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
-        ui->txtTransferencia->setFocus();
+        ui->txtDomiciliacion->setFocus();
+        {
+            ui->txtDomiciliacion->clear();
+
+            ui->btnTarjeta->setChecked(false);
+            ui->btnCheque->setChecked(false);
+            ui->btnEfectivo->setChecked(false);
+            ui->btnVales->setChecked(false);
+            ui->btnInternet->setChecked(false);
     }
 
 }
@@ -2446,9 +2472,10 @@ void FrmTPV::on_btnTransferencia_clicked(bool checked)
 
         ui->btnTarjeta->setChecked(false);
         ui->btnCheque->setChecked(false);
-        ui->btnTransferencia->setChecked(false);
+        ui->btnEfectivo->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
         ui->txtTransferencia->setFocus();
     }
@@ -2466,6 +2493,7 @@ void FrmTPV::on_btnVales_clicked(bool checked)
 
         ui->btnEfectivo->setChecked(false);
         ui->btnInternet->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
         ui->txtVales->setFocus();
     }
@@ -2482,6 +2510,7 @@ void FrmTPV::on_btnInternet_clicked(bool checked)
         ui->btnTransferencia->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnEfectivo->setChecked(false);
+        edicion_teclado = true;
         calcularcambio();
         ui->txtInternet->setFocus();
     }
@@ -2980,3 +3009,5 @@ void FrmTPV::on_btnBuscarArt_ext_clicked()
         on_txtCodigo_editingFinished();
    }
 }
+
+

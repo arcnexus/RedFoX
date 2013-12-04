@@ -199,6 +199,7 @@ private slots:
 
     void on_btnBuscarArt_ext_clicked();
 
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
@@ -226,6 +227,7 @@ private:
     void insertar_datos_pago();
     void imprimir();
     bool comprovar_pago();
+    bool edicion_teclado;
 
 signals:
     void mostrar_desglose(double subtotal1,double subtotal2, double subtotal3,double subtotal4,double dto1,double dto2,
