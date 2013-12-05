@@ -261,5 +261,15 @@ void FrmDevolucionTicket::on_btnDevolucion_clicked()
 
 void FrmDevolucionTicket::on_btnParcial_clicked()
 {
-
+    QItemSelection selection( ui->tablaLineas_tiquet_actual->selectionModel()->selection() );
+     QList<int> rows;
+     foreach( const QModelIndex & index, selection.indexes() ) {
+         if(!rows.contains(index.row()))
+            rows.append( index.row() );
+     }
+    if(rows.count())
+     for( int i = rows.count() - 1; i >= 0; i --) {
+        qDebug() << rows.at(i);
+     }
+     ui->btnParcial->setEnabled(false);
 }

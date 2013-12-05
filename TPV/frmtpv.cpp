@@ -620,6 +620,13 @@ void FrmTPV::on_txtCodigo_editingFinished()
         {
 
             procesar = true;
+            if(ui->lblCobrado->isVisible())
+            {
+                QMessageBox::information(this,tr("Gestión de TPV"),tr("Este ticket ya ha sido cobrado, si desea modificar debe "
+                                                                      "rebertir el proceso de cobro"),
+                                         tr("Aceptar"));
+                procesar = false;
+            }
 
         } else
         {
@@ -1034,7 +1041,7 @@ void FrmTPV::on_btn2_clicked()
         }
         if(ui->btnVales->isChecked())
         {
-            if(ui->txtVales->text() == " 0,00")
+            if(ui->txtVales->text() == "0,00")
                 ui->txtVales->setText("2");
             else
                 ui->txtVales->setText(ui->txtVales->text().append("2"));
@@ -2455,7 +2462,7 @@ void FrmTPV::on_btnDomiciliacion_clicked(bool checked)
         ui->txtDomiciliacion->setFocus();
         {
             ui->txtDomiciliacion->clear();
-
+            ui->btnTransferencia->setChecked(false);
             ui->btnTarjeta->setChecked(false);
             ui->btnCheque->setChecked(false);
             ui->btnEfectivo->setChecked(false);
@@ -2475,6 +2482,7 @@ void FrmTPV::on_btnTransferencia_clicked(bool checked)
         ui->btnEfectivo->setChecked(false);
         ui->btnVales->setChecked(false);
         ui->btnInternet->setChecked(false);
+        ui->btnDomiciliacion->setChecked(false);
         edicion_teclado = true;
         calcularcambio();
         ui->txtTransferencia->setFocus();
