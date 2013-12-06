@@ -137,7 +137,7 @@ color: rgb(212, 214, 255);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="stackedWidgetticketPage1">
          <layout class="QGridLayout" name="gridLayout_9">

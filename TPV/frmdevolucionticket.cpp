@@ -3,7 +3,8 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../TPV/frmcausadevolucion.h"
-
+#include "../TPV/tpv.h"
+#include "../Almacen/articulo.h"
 FrmDevolucionTicket::FrmDevolucionTicket(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmDevolucionTicket)
@@ -261,15 +262,74 @@ void FrmDevolucionTicket::on_btnDevolucion_clicked()
 
 void FrmDevolucionTicket::on_btnParcial_clicked()
 {
-    QItemSelection selection( ui->tablaLineas_tiquet_actual->selectionModel()->selection() );
-     QList<int> rows;
-     foreach( const QModelIndex & index, selection.indexes() ) {
-         if(!rows.contains(index.row()))
-            rows.append( index.row() );
+    // TODO - Seleccionar modo de devolución
+    bool devolver = false;
+    if(ui->radEfectivo->isChecked())
+    {
+        if(QMessageBox::question(this,tr("Devolución de tickets"),
+                             tr("Ha seleccionado devolución en efectivo, ¿está conforme?"),
+                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
+            devolver = true;
+    }
+    if(ui->radTarjeta->isChecked())
+    {
+        if(QMessageBox::question(this,tr("Devolución de tickets"),
+                             tr("Ha seleccionado devolución en tarjeta, ¿está conforme?"),
+                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
+            devolver = true;
+    }
+    if(ui->radTransferencia->isChecked())
+    {
+        if(QMessageBox::question(this,tr("Devolución de tickets"),
+                             tr("Ha seleccionado devolución por transferencia, ¿está conforme?"),
+                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
+            devolver = true;
+    }
+    if(ui->radVales->isChecked())
+    {
+        if(QMessageBox::question(this,tr("Devolución de tickets"),
+                             tr("Ha seleccionado devolución por vale, ¿está conforme?"),
+                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
+            devolver = true;
+    }
+     if(devolver)
+     {
+         QString error;
+        QItemSelection selection( ui->tablaLineas_tiquet_actual->selectionModel()->selection() );
+         QList<int> rows;
+         foreach( const QModelIndex & index, selection.indexes() ) {
+             if(!rows.contains(index.row()))
+                rows.append( index.row() );
+         }
+
+        if(rows.count())
+         for( int i = rows.count() - 1; i >= 0; i --) {
+            qDebug() << rows.at(i);
+            int id = ui->tablaLineas_tiquet_actual->item(rows.at(i),0)->text().toInt();
+            // Crear ticket de devolución.
+            tpv oTpv;
+           // TODO Cargar caja y serie
+            int new_id = oTpv.nuevoticket("A","1");
+            if(new_id > -1)
+            {
+                // Capturamos info de artículo a devolver
+                QMap <int,QSqlRecord> lin;
+                lin = SqlCalls::SelectRecord("lin_tpv",QString("id = %1").arg(id),
+                                                      Configuracion_global->empresaDB,error);
+                // TODO - Restaurar Stock y acumulados.
+                Articulo oArticulo;
+                oArticulo.Vender(lin.value(id).value("codigo").toString(),-lin.value(id).value("cantidad").toDouble(),
+                                 lin.value(id).value("id_tarifa").toInt(),lin.value(id).value("tipo_dto").toDouble(),
+                                 0,0);
+
+
+                ui->btnParcial->setEnabled(false);
+            }
+
+            qDebug() << id;
+         }
+
      }
-    if(rows.count())
-     for( int i = rows.count() - 1; i >= 0; i --) {
-        qDebug() << rows.at(i);
-     }
-     ui->btnParcial->setEnabled(false);
 }
+
+

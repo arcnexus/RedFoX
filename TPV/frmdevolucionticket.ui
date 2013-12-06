@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>FrmDevolucionTicket</class>
  <widget class="QDialog" name="FrmDevolucionTicket">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,47 +21,14 @@
     <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="lbldesglose2">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>27</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;
-color: rgb(255, 255, 255);</string>
-     </property>
+   <item row="3" column="6">
+    <widget class="QRadioButton" name="radVales">
      <property name="text">
-      <string>Tickets</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>Vale</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QTableView" name="tabla_cabeceras">
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-    </widget>
-   </item>
-   <item row="1" column="1" rowspan="2" colspan="4">
-    <widget class="QTableWidget" name="tablaLineas_tiquet_actual">
-     <property name="selectionMode">
-      <enum>QAbstractItemView::MultiSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-    </widget>
-   </item>
-   <item row="2" column="0" rowspan="2">
+   <item row="2" column="0" rowspan="3">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -155,7 +125,37 @@ color: rgb(255, 255, 255);</string>
      </layout>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="3" column="3">
+    <widget class="QRadioButton" name="radEfectivo">
+     <property name="text">
+      <string>Efectivo</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QTableView" name="tabla_cabeceras">
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+   <item row="1" column="1" rowspan="2" colspan="6">
+    <widget class="QTableWidget" name="tablaLineas_tiquet_actual">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+   <item row="4" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -168,29 +168,27 @@ color: rgb(255, 255, 255);</string>
      </property>
     </spacer>
    </item>
-   <item row="3" column="2">
-    <widget class="QPushButton" name="btnDevolucion">
-     <property name="text">
-      <string>Devolución</string>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbldesglose2">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
      </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/undo2.png</normaloff>:/Icons/PNG/undo2.png</iconset>
+     <property name="styleSheet">
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Tickets</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QPushButton" name="btnParcial">
-     <property name="text">
-      <string>Devolución Parcial</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/partial.png</normaloff>:/Icons/PNG/partial.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
+   <item row="4" column="6">
     <widget class="QPushButton" name="pushButton_4">
      <property name="text">
       <string>Cancelar</string>
@@ -201,7 +199,7 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="4">
+   <item row="0" column="1" colspan="6">
     <widget class="QLabel" name="lbldesglose2_2">
      <property name="maximumSize">
       <size>
@@ -221,6 +219,42 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
+   <item row="3" column="4">
+    <widget class="QRadioButton" name="radTarjeta">
+     <property name="text">
+      <string>Tarjeta</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="5">
+    <widget class="QRadioButton" name="radTransferencia">
+     <property name="text">
+      <string>Transferencia</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="5">
+    <widget class="QPushButton" name="btnParcial">
+     <property name="text">
+      <string>Devolución Parcial</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/partial.png</normaloff>:/Icons/PNG/partial.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QPushButton" name="btnDevolucion">
+     <property name="text">
+      <string>Devolución</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/undo2.png</normaloff>:/Icons/PNG/undo2.png</iconset>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -234,8 +268,8 @@ color: rgb(255, 255, 255);</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>701</x>
-     <y>446</y>
+     <x>1000</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
      <x>450</x>

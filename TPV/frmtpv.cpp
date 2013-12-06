@@ -2853,7 +2853,7 @@ void FrmTPV::on_txtImporteAbertura_editingFinished()
 
 void FrmTPV::on_btnCerrarCaja_clicked()
 {
-        FrmCierreCaja cierre;
+        FrmCierreCaja cierre(this);
     // ----------------
     // Cajas abiertas
     // ----------------
@@ -2881,7 +2881,7 @@ void FrmTPV::on_btnCerrarCaja_clicked()
     }
     else if(cajas.size()>1)
     {
-        frmCajasAbiertas cajas;
+        frmCajasAbiertas cajas(this);
         cajas.cargar_datos(Configuracion_global->caja,Configuracion_global->cEjercicio);
         if(cajas.exec() == QDialog::Accepted)
         {
@@ -2896,25 +2896,25 @@ void FrmTPV::on_btnCerrarCaja_clicked()
 
 void FrmTPV::on_btnExtrasCaja_clicked()
 {
-    frmExtrasCaja extras;
+    frmExtrasCaja extras(this);
     extras.exec();
 }
 
 void FrmTPV::on_btnRetirardinero_clicked()
 {
-    FrmRetirardeCaja retirar;
+    FrmRetirardeCaja retirar(this);
     retirar.exec();
 }
 
 void FrmTPV::on_btnInsertarDinero_clicked()
 {
-    FrmInsertarDineroCaja insertar;
+    FrmInsertarDineroCaja insertar(this);
     insertar.exec();
 }
 
 void FrmTPV::on_btnDevolucionTicket_clicked()
 {
-    FrmDevolucionTicket devolucion;
+    FrmDevolucionTicket devolucion(this);
     devolucion.exec();
 }
 
