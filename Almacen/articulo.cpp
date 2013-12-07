@@ -590,8 +590,116 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
     // ACTUALIZO STOCK
     //-----------------
     QString cSQL;
-    cSQL = QString("update articulos set ");
+    QString fecha = QDate::currentDate().toString("yyyyMMdd");
+    double importe = h.value("precio").toDouble() * cantidad;
+
+    cSQL = QString("update articulos set fecha_ultima_venta = '%1', unidades_vendidas = unidades_vendidas +%2, "
+                   "importe_acumulado_ventas = importe_acumulado_ventas + %3,stock_real = stock_real - %2,"
+                   "stock_fisico_almacen = stock_fisico_almacen - %2 where id = %4").arg(fecha,QString::number(cantidad),
+                                                                                         QString::number(importe,'f',2),
+                                                                                         QString::number(h.value("id").toInt()));
+    QSqlQuery art(Configuracion_global->groupDB);
+    if(!art.exec(cSQL))
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Ventas"),tr("Ocurrió un error al actualizar acumulados:%1").arg(
+                                 art.lastError().text()),tr("Aceptar"));
+        h["isOk"] = false;
+    } else
+        h["isOk"] = true;
+
+    //-----------------------------
+    // ACUMULADOS ARTICULO-EMPRESA
+    //-----------------------------
+
+    if(h.value("isOk").toBool())
+    {
+        int id= h.value("id").toInt();
+        int id_acum;
+        QMap <int,QSqlRecord> aae;
+        aae = SqlCalls::SelectRecord("acum_articulos",QString("id_articulo=%1").arg(id),
+                                     Configuracion_global->empresaDB,error);
+        // si no existe registro acumulados lo creamos
+        if(aae.count()<=0){
+            QHash <QString,QVariant> art;
+            art["id_articulo"] = id;
+            id_acum = SqlCalls::SqlInsert(art,"acum_articulos",Configuracion_global->empresaDB,error);
+        } else
+            id_acum = id;
+
+        // actualizamos datos
+
+        QString mes,imp;
+        if(QDate::currentDate().month() ==1)
+            mes =QString("unid_vent_enero = unid_vent_enero + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==2)
+            mes =QString("unid_vent_febrero = unid_vent_febrero + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==3)
+            mes =QString("unid_vent_marzo = unid_vent_marzo + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==4)
+            mes =QString("unid_vent_abril = unid_vent_abril + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==5)
+            mes =QString("unid_vent_mayo = unid_vent_mayo + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==6)
+            mes =QString("unid_vent_junio = unid_vent_junio + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==7)
+            mes =QString("unid_vent_julio = unid_vent_julio + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==8)
+            mes =QString("unid_vent_agosto = unid_vent_agosto + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==9)
+            mes =QString("unid_vent_septiembre = unid_vent_septiembre + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==10)
+            mes =QString("unid_vent_octubre = unid_vent_octubre + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==11)
+            mes =QString("unid_vent_noviembre = unid_vent_noviembre + %1").arg(cantidad);
+        if(QDate::currentDate().month() ==12)
+            mes =QString("unid_vent_diciembre = unid_vent_diciembre + %1").arg(cantidad);
+
+
+        if(QDate::currentDate().month() ==1)
+            imp =QString("acum_vent_enero = acum_vent_enero + %1").arg(importe);
+        if(QDate::currentDate().month() ==2)
+            imp =QString("acum_vent_febrero = acum_vent_febrero + %1").arg(importe);
+        if(QDate::currentDate().month() ==3)
+            imp =QString("acum_vent_marzo = acum_vent_marzo + %1").arg(importe);
+        if(QDate::currentDate().month() ==4)
+            imp =QString("acum_vent_abril = acum_vent_abril + %1").arg(importe);
+        if(QDate::currentDate().month() ==5)
+            imp =QString("acum_vent_mayo = acum_vent_mayo + %1").arg(importe);
+        if(QDate::currentDate().month() ==6)
+            imp =QString("acum_vent_junio = acum_vent_junio + %1").arg(importe);
+        if(QDate::currentDate().month() ==7)
+            imp =QString("acum_vent_julio = acum_vent_julio + %1").arg(importe);
+        if(QDate::currentDate().month() ==8)
+            imp =QString("acum_vent_agosto = acum_vent_agosto + %1").arg(importe);
+        if(QDate::currentDate().month() ==9)
+            imp =QString("acum_vent_septiembre = acum_vent_septiembre + %1").arg(importe);
+        if(QDate::currentDate().month() ==10)
+            imp =QString("acum_vent_octubre = acum_vent_octubre + %1").arg(importe);
+        if(QDate::currentDate().month() ==11)
+            imp =QString("acum_vent_noviembre = acum_vent_noviembre + %1").arg(importe);
+        if(QDate::currentDate().month() ==12)
+            imp =QString("acum_vent_diciembre = acum_vent_diciembre + %1").arg(importe);
+        QSqlQuery acum(Configuracion_global->empresaDB);
+        QString cSQL;
+        cSQL = QString("update acum_articulos set %1,%2 where id_articulo = %3").arg(mes,imp,QString::number(id_acum));
+        if(acum.exec(cSQL))
+            h["isOk"] = true;
+        else
+            h["isOk"] = false;
+
+
+
+    }
     return h;
+}
+
+bool Articulo::Devolucion(int id, double cantidad, double pvp, int id_cliente)
+{
+    Configuracion_global->empresaDB.transaction();
+    QHash <QString, QVariant> h;
+    h["fecha_ultima_venta"] = QDate::currentDate().toString("yyyyMMdd");
+
+
 }
 
 

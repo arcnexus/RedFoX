@@ -170,6 +170,8 @@ private slots:
 
     void on_btnBorrarimagen_4_clicked();
 
+    void on_Pestanas_currentChanged(int index);
+
 public slots:
     void AnadirSeccion();
 

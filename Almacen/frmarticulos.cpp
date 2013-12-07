@@ -1254,59 +1254,71 @@ void FrmArticulos::GraficaImportes()
         ui->grafica->addMulibarColor("Compras",Qt::darkRed);
         ui->grafica->addMulibarColor("Ventas",Qt::darkGreen);
         QVector <float> enero;
-        enero << ui->txtImporte_compras_enero->text().toFloat() <<ui->txtImporte_ventas_enero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+        enero << Configuracion_global->MonedatoDouble(ui->txtImporte_compras_enero->text())
+              <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_enero->text());//Añadir tantos colores como elementos tenga el vector!
 
         ui->grafica->addItem("Ene",enero);
 
 
         QVector <float> febrero;
-        febrero <<ui->txtImporte_compras_febrero->text().toFloat() <<ui->txtImporte_ventas_febrero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+        febrero <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_febrero->text())
+               <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_febrero->text());//Añadir tantos colores como elementos tenga el vector!
 
         ui->grafica->addItem("Feb",febrero);
 
         QVector <float> marzo;
-        marzo <<ui->txtImporte_compras_marzo->text().toFloat() << ui->txtImporte_ventas_marzo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+        marzo <<Configuracion_global->MonedatoDouble( ui->txtImporte_compras_marzo->text())
+             <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_marzo->text());//Añadir tantos colores como elementos tenga el vector!
 
         ui->grafica->addItem("Mar",marzo);
 
         QVector <float> abril;
-        abril <<ui->txtImporte_compras_abril->text().toFloat() << ui->txtImporte_ventas_abril->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+        abril <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_abril->text())
+             <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_abril->text());//Añadir tantos colores como elementos tenga el vector!
 
         ui->grafica->addItem("Abr",abril);
 
         QVector <float> mayo;
-        mayo <<ui->txtImporte_compras_mayo->text().toFloat() <<ui->txtImporte_ventas_mayo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+        mayo <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_mayo->text())
+             <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_mayo->text());//Añadir tantos colores como elementos tenga el vector!
 
         ui->grafica->addItem("May",mayo);
 
         QVector <float> junio;
-        junio <<ui->txtImporte_compras_junio->text().toFloat() <<ui->txtImporte_ventas_junio->text().toFloat();
+        junio <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_junio->text())
+              <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_junio->text());
 
         ui->grafica->addItem("jun",junio);
 
         QVector <float> julio;
-        julio <<ui->txtImporte_compras_julio->text().toFloat() << ui->txtImporte_ventas_julio->text().toFloat();
+        julio <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_julio->text())
+             <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_julio->text());
 
         ui->grafica->addItem("Jul",julio);
 
         QVector <float> agosto;
-        agosto <<ui->txtImporte_compras_agosto->text().toFloat() <<ui->txtImporte_ventas_agosto->text().toFloat();
+        agosto <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_agosto->text())
+               <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_agosto->text());
         ui->grafica->addItem("Ago",agosto);
 
         QVector <float> septiembre;
-        septiembre <<ui->txtImporte_compras_septiembre->text().toFloat() <<ui->txtImporte_ventas_septiembre->text().toFloat();
+        septiembre <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_septiembre->text())
+                   <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_septiembre->text());
         ui->grafica->addItem("Sep",septiembre);
 
         QVector <float> octubre;
-        octubre <<ui->txtImporte_compras_octubre->text().toFloat() << ui->txtImporte_ventas_octubre->text().toFloat();
+        octubre <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_octubre->text())
+                <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_octubre->text());
         ui->grafica->addItem("Oct",octubre);
 
         QVector <float> noviembre;
-        noviembre <<ui->txtImporte_compras_noviembre->text().toFloat() <<ui->txtImporte_ventas_noviembre->text().toFloat();
+        noviembre <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_noviembre->text())
+                  <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_noviembre->text());
         ui->grafica->addItem("Nov",noviembre);
 
         QVector <float> diciembre;
-        diciembre <<ui->txtImporte_compras_diciembre->text().toFloat() <<ui->txtImporte_ventas_diciembre->text().toFloat();
+        diciembre <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_diciembre->text())
+                 <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_diciembre->text());
         ui->grafica->addItem("Dic",diciembre);
 
         ui->grafica->repaint();
@@ -1318,21 +1330,33 @@ void FrmArticulos::GraficaImportes()
               <<tr("Sep") <<tr("Oct") <<tr("Nov") << tr("Dic");
         ui->grafica->addLineaStops(lista);
         QVector<float> valoresLineaCompras;
-        valoresLineaCompras << ui->txtImporte_compras_enero->text().toFloat() << ui->txtImporte_compras_febrero->text().toFloat()
-                     <<ui->txtImporte_compras_marzo->text().toFloat() << ui->txtImporte_compras_abril->text().toFloat()
-                     <<ui->txtImporte_compras_mayo->text().toFloat() << ui->txtImporte_compras_junio->text().toFloat()
-                     <<ui->txtImporte_compras_julio->text().toFloat() << ui->txtImporte_compras_agosto->text().toFloat()
-                     <<ui->txtImporte_compras_septiembre->text().toFloat() << ui->txtImporte_compras_octubre->text().toFloat()
-                     <<ui->txtImporte_compras_noviembre->text().toFloat() << ui->txtImporte_compras_diciembre->text().toFloat();
+        valoresLineaCompras <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_enero->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_febrero->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_marzo->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_abril->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_mayo->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_junio->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_julio->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_agosto->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_septiembre->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_octubre->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_noviembre->text())
+                            <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_diciembre->text());
         ui->grafica->addItem("Compras",valoresLineaCompras,Qt::red);
 
         QVector<float> valoresLineaVentas;
-        valoresLineaVentas << ui->txtImporte_ventas_enero->text().toFloat() << ui->txtImporte_ventas_febrero->text().toFloat()
-                     <<ui->txtImporte_ventas_marzo->text().toFloat() << ui->txtImporte_ventas_abril->text().toFloat()
-                     <<ui->txtImporte_ventas_mayo->text().toFloat() << ui->txtImporte_ventas_junio->text().toFloat()
-                     <<ui->txtImporte_ventas_julio->text().toFloat() << ui->txtImporte_ventas_agosto->text().toFloat()
-                     <<ui->txtImporte_ventas_septiembre->text().toFloat() << ui->txtImporte_ventas_octubre->text().toFloat()
-                     <<ui->txtImporte_ventas_noviembre->text().toFloat() << ui->txtImporte_compras_diciembre->text().toFloat();
+        valoresLineaVentas <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_enero->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_febrero->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_marzo->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_abril->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_mayo->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_junio->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_julio->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_agosto->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_septiembre->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_octubre->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_noviembre->text())
+                           <<Configuracion_global->MonedatoDouble(ui->txtImporte_compras_diciembre->text());
         ui->grafica->addItem("Ventas",valoresLineaVentas,Qt::green);
            ui->grafica->repaint();
     }
@@ -1347,7 +1371,7 @@ void FrmArticulos::GraficaUnidades_comparativa()
         ui->Grafica_comparativa->addMulibarColor("Empresa Activa",Qt::darkGreen);
         ui->Grafica_comparativa->addMulibarColor(ui->cboEmpresa2->currentText(),Qt::darkBlue);
         QVector <float> enero;
-        enero << ui->txtUnid_ventas_enero_EA->text().toInt()<<ui->txtUnid_ventas_enero_3->text().toInt();
+        enero <<ui->txtUnid_ventas_enero_EA->text().toInt()<<ui->txtUnid_ventas_enero_3->text().toInt();
 
         ui->Grafica_comparativa->addItem("Ene",enero);
 
@@ -1402,6 +1426,7 @@ void FrmArticulos::GraficaUnidades_comparativa()
         ui->Grafica_comparativa->addItem("Dic",diciembre);
         ui->Grafica_comparativa->repaint();
     } else{
+        // TODO -GRAFICA
         ui->Grafica_comparativa->Clear();
         ui->Grafica_comparativa->setTipo(OpenChart::Lineas);
         QStringList lista;
@@ -1421,59 +1446,71 @@ void FrmArticulos::GraficaImportes_comparativa()
     ui->Grafica_comparativa->addMulibarColor("EmpresaActiva",Qt::darkBlue);
     ui->Grafica_comparativa->addMulibarColor(ui->cboEmpresa2->currentText(),Qt::darkGreen);
     QVector <float> enero;
-    enero << ui->txtImporte_ventas_enero_EA->text().toFloat() <<ui->txtImporte_ventas_enero_3->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    enero << Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_enero_EA->text())
+          <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_enero_3->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->Grafica_comparativa->addItem("Ene",enero);
 
 
     QVector <float> febrero;
-    febrero <<ui->txtImporte_ventas_febrero_EA->text().toFloat() <<ui->txtImporte_ventas_febrero_3->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    febrero <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_febrero_EA->text())
+            <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_febrero_3->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->Grafica_comparativa->addItem("Feb",febrero);
 
     QVector <float> marzo;
-    marzo <<ui->txtImporte_ventas_marzo_EA->text().toFloat() << ui->txtImporte_ventas_marzo_3->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    marzo <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_marzo_EA->text())
+          <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_marzo_3->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->Grafica_comparativa->addItem("Mar",marzo);
 
     QVector <float> abril;
-    abril <<ui->txtImporte_ventas_abril_EA->text().toFloat() << ui->txtImporte_ventas_abril_3->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    abril <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_abril_EA->text())
+          <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_abril_3->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->Grafica_comparativa->addItem("Abr",abril);
 
     QVector <float> mayo;
-    mayo <<ui->txtImporte_ventas_mayo_EA->text().toFloat() <<ui->txtImporte_ventas_mayo_3->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    mayo <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_mayo_EA->text())
+         <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_mayo_3->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->Grafica_comparativa->addItem("May",mayo);
 
     QVector <float> junio;
-    junio <<ui->txtImporte_ventas_junio_EA->text().toFloat() <<ui->txtImporte_ventas_junio_3->text().toFloat();
+    junio <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_junio_EA->text())
+         <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_junio_3->text());
 
     ui->Grafica_comparativa->addItem("jun",junio);
 
     QVector <float> julio;
-    julio <<ui->txtImporte_ventas_julio_EA->text().toFloat() << ui->txtImporte_ventas_julio_3->text().toFloat();
+    julio <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_julio_EA->text())
+          <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_julio_3->text());
 
     ui->Grafica_comparativa->addItem("Jul",julio);
 
     QVector <float> agosto;
-    agosto <<ui->txtImporte_ventas_agosto_EA->text().toFloat() <<ui->txtImporte_ventas_agosto_3->text().toFloat();
+    agosto <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_agosto_EA->text())
+           <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_agosto_3->text());
     ui->Grafica_comparativa->addItem("Ago",agosto);
 
     QVector <float> septiembre;
-    septiembre <<ui->txtImporte_ventas_septiembre_EA->text().toFloat() <<ui->txtImporte_ventas_septiembre_3->text().toFloat();
+    septiembre <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_septiembre_EA->text())
+               <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_septiembre_3->text());
     ui->Grafica_comparativa->addItem("Sep",septiembre);
 
     QVector <float> octubre;
-    octubre <<ui->txtImporte_ventas_octubre_EA->text().toFloat() << ui->txtImporte_ventas_octubre_3->text().toFloat();
+    octubre <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_octubre_EA->text())
+            <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_octubre_3->text());
     ui->Grafica_comparativa->addItem("Oct",octubre);
 
     QVector <float> noviembre;
-    noviembre <<ui->txtImporte_ventas_noviembre_EA->text().toFloat() <<ui->txtImporte_ventas_noviembre_3->text().toFloat();
+    noviembre <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_noviembre_EA->text())
+              <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_noviembre_3->text());
     ui->Grafica_comparativa->addItem("Nov",noviembre);
 
     QVector <float> diciembre;
-    diciembre <<ui->txtImporte_ventas_diciembre_EA->text().toFloat() <<ui->txtImporte_ventas_diciembre_3->text().toFloat();
+    diciembre <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_diciembre_EA->text())
+              <<Configuracion_global->MonedatoDouble(ui->txtImporte_ventas_diciembre_3->text());
     ui->Grafica_comparativa->addItem("Dic",diciembre);
 }
 
@@ -1529,34 +1566,82 @@ void FrmArticulos::LLenarGraficas()
         //--------------------
         // Importe compras
         //--------------------
-        ui->txtImporte_compras_enero->setText(QString::number(queryAcumulados.record().value("acum_comp_enero").toDouble()));
-        ui->txtImporte_compras_febrero->setText(QString::number(queryAcumulados.record().value("acum_comp_febrero").toDouble()));
-        ui->txtImporte_compras_marzo->setText(QString::number(queryAcumulados.record().value("acum_comp_marzo").toDouble()));
-        ui->txtImporte_compras_abril->setText(QString::number(queryAcumulados.record().value("acum_comp_abril").toDouble()));
-        ui->txtImporte_compras_mayo->setText(QString::number(queryAcumulados.record().value("acum_comp_mayo").toDouble()));
-        ui->txtImporte_compras_junio->setText(QString::number(queryAcumulados.record().value("acum_comp_junio").toDouble()));
-        ui->txtImporte_compras_julio->setText(QString::number(queryAcumulados.record().value("acum_comp_julio").toDouble()));
-        ui->txtImporte_compras_agosto->setText(QString::number(queryAcumulados.record().value("acum_comp_agosto").toDouble()));
-        ui->txtImporte_compras_septiembre->setText(QString::number(queryAcumulados.record().value("acum_comp_septiembre").toDouble()));
-        ui->txtImporte_compras_octubre->setText(QString::number(queryAcumulados.record().value("acum_comp_octubre").toDouble()));
-        ui->txtImporte_compras_noviembre->setText(QString::number(queryAcumulados.record().value("acum_comp_noviembre").toDouble()));
-        ui->txtImporte_compras_diciembre->setText(QString::number(queryAcumulados.record().value("acum_comp_diciembre").toDouble()));
+        ui->txtImporte_compras_enero->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_comp_enero").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_febrero->setText(Configuracion_global->toFormatoMoneda(
+                                                    QString::number(queryAcumulados.record().value("acum_comp_febrero").toDouble(),
+                                                                    'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_marzo->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_comp_marzo").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_abril->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_comp_abril").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_mayo->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_comp_mayo").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_junio->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_comp_junio").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_julio->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_comp_julio").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_agosto->setText(Configuracion_global->toFormatoMoneda(
+                                                   QString::number(queryAcumulados.record().value("acum_comp_agosto").toDouble(),
+                                                                   'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_septiembre->setText(Configuracion_global->toFormatoMoneda(
+                                                   QString::number(queryAcumulados.record().value("acum_comp_septiembre").toDouble(),
+                                                                   'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_octubre->setText(Configuracion_global->toFormatoMoneda(
+                                                    QString::number(queryAcumulados.record().value("acum_comp_octubre").toDouble(),
+                                                                    'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_noviembre->setText(Configuracion_global->toFormatoMoneda(
+                                                   QString::number(queryAcumulados.record().value("acum_comp_noviembre").toDouble(),
+                                                                   'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_compras_diciembre->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_comp_diciembre").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
 
         //--------------------
         // Importe Ventas
         //--------------------
-        ui->txtImporte_ventas_enero->setText(QString::number(queryAcumulados.record().value("acum_vent_enero").toDouble()));
-        ui->txtImporte_ventas_febrero->setText(QString::number(queryAcumulados.record().value("acum_vent_febrero").toDouble()));
-        ui->txtImporte_ventas_marzo->setText(QString::number(queryAcumulados.record().value("acum_vent_marzo").toDouble()));
-        ui->txtImporte_ventas_abril->setText(QString::number(queryAcumulados.record().value("acum_vent_abril").toDouble()));
-        ui->txtImporte_ventas_mayo->setText(QString::number(queryAcumulados.record().value("acum_vent_mayo").toDouble()));
-        ui->txtImporte_ventas_junio->setText(QString::number(queryAcumulados.record().value("acum_vent_junio").toDouble()));
-        ui->txtImporte_ventas_julio->setText(QString::number(queryAcumulados.record().value("acum_vent_julio").toDouble()));
-        ui->txtImporte_ventas_agosto->setText(QString::number(queryAcumulados.record().value("acum_vent_agosto").toDouble()));
-        ui->txtImporte_ventas_septiembre->setText(QString::number(queryAcumulados.record().value("acum_vent_septiembre").toDouble()));
-        ui->txtImporte_ventas_octubre->setText(QString::number(queryAcumulados.record().value("acum_vent_octubre").toDouble()));
-        ui->txtImporte_ventas_noviembre->setText(QString::number(queryAcumulados.record().value("acum_vent_noviembre").toDouble()));
-        ui->txtImporte_ventas_diciembre->setText(QString::number(queryAcumulados.record().value("acum_vent_diciembre").toDouble()));
+        ui->txtImporte_ventas_enero->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_vent_enero").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_febrero->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_vent_febrero").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_marzo->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_vent_marzo").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_abril->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_vent_abril").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_mayo->setText(Configuracion_global->toFormatoMoneda(
+                                                QString::number(queryAcumulados.record().value("acum_vent_mayo").toDouble(),
+                                                                'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_junio->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_vent_junio").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_julio->setText(Configuracion_global->toFormatoMoneda(
+                                                 QString::number(queryAcumulados.record().value("acum_vent_julio").toDouble(),
+                                                                 'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_agosto->setText(Configuracion_global->toFormatoMoneda(
+                                                  QString::number(queryAcumulados.record().value("acum_vent_agosto").toDouble(),
+                                                                  'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_septiembre->setText(Configuracion_global->toFormatoMoneda(
+                                                      QString::number(queryAcumulados.record().value("acum_vent_septiembre").toDouble(),
+                                                                      'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_octubre->setText(Configuracion_global->toFormatoMoneda(
+                                                   QString::number(queryAcumulados.record().value("acum_vent_octubre").toDouble(),
+                                                                   'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_noviembre->setText(Configuracion_global->toFormatoMoneda(
+                                                     QString::number(queryAcumulados.record().value("acum_vent_noviembre").toDouble(),
+                                                                     'f',Configuracion_global->decimales_campos_totales)));
+        ui->txtImporte_ventas_diciembre->setText(Configuracion_global->toFormatoMoneda(
+                                              QString::number(queryAcumulados.record().value("acum_vent_diciembre").toDouble(),'f',
+                                                              Configuracion_global->decimales_campos_totales)));
 
         //-----------------------------------------
         // Undidades vendidas (Grafica comparativa)
@@ -2642,3 +2727,9 @@ void FrmArticulos::on_btnBorrarimagen_4_clicked()
 }
 
 
+
+void FrmArticulos::on_Pestanas_currentChanged(int index)
+{
+    Q_UNUSED(index);
+    ui->radGrafica_importes->click();
+}

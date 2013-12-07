@@ -613,6 +613,8 @@ void FrmTPV::cargar_ofertas()
 void FrmTPV::on_txtCodigo_editingFinished()
 {
     ui->txtCodigo->blockSignals(true);
+    bool isOk;
+    isOk = false;
     if(!ui->txtCodigo->text().isEmpty())
     {
         bool procesar;
@@ -672,6 +674,9 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,tarifa,grupo_dto,0,oTpv->id_cliente);
                 }
                 if(art.value("found").toBool()){
+                    isOk == art.value("isOk").toBool();
+                    Configuracion_global->empresaDB.transaction();
+                    Configuracion_global->groupDB.transaction();
                     QHash <QString,QVariant> lin;
 
                     lin["id_cab"] = oTpv->id;
@@ -795,6 +800,15 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     cargar_lineas(this->id);
                 }
             }
+        }
+        if(isOk){
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
+
+        } else
+        {
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
     ui->txtCodigo->blockSignals(false);
