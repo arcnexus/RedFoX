@@ -136,7 +136,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     connect(ui->btnEditartarifa,SIGNAL(clicked()),this,SLOT(btnEditarTarifa_clicked()));
     connect(ui->btnBorrarTarifa,SIGNAL(clicked()),this,SLOT(btnBorrarTarifa_clicked()));
    // connect(ui->Pestanas,SIGNAL(currentChanged(int)),this,SLOT(SeleccionarPestana(int)));
-    connect(ui->botListados,SIGNAL(clicked()),this,SLOT(listados()));
+    //connect(ui->botListados,SIGNAL(clicked()),this,SLOT(listados()));
     connect(ui->cboEmpresa2,SIGNAL(currentIndexChanged(int)),this,SLOT(LLenarGrafica_comparativa(int)));
     connect(ui->radGrafica_importes_2,SIGNAL(toggled(bool)),this,SLOT(MostrarGrafica_comparativa(bool)));
     connect(ui->cboTipoGrafica,SIGNAL(currentIndexChanged(QString)),this,SLOT(graficar(QString)));

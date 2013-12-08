@@ -58,6 +58,23 @@ FrmDevolucionTicket::~FrmDevolucionTicket()
     delete ui;
 }
 
+int FrmDevolucionTicket::get_id_ticket()
+{
+    return this->id_ticket;
+}
+
+QString FrmDevolucionTicket::get_forma_devolucion()
+{
+    if(ui->radEfectivo->isChecked())
+        return "E";
+    if(ui->radTarjeta->isChecked())
+        return "T";
+    if(ui->radTransferencia->isChecked())
+        return "B";
+    if(ui->radVales->isChecked())
+        return "V";
+}
+
 void FrmDevolucionTicket::cargarlineas(int id_cab)
 {
     ui->tablaLineas_tiquet_actual->clear();
@@ -264,6 +281,8 @@ void FrmDevolucionTicket::on_btnParcial_clicked()
 {
     // TODO - Seleccionar modo de devolución
     bool devolver = false;
+    bool isOk = false;
+
     if(ui->radEfectivo->isChecked())
     {
         if(QMessageBox::question(this,tr("Devolución de tickets"),
@@ -294,7 +313,11 @@ void FrmDevolucionTicket::on_btnParcial_clicked()
     }
      if(devolver)
      {
+         Configuracion_global->empresaDB.transaction();
+         Configuracion_global->groupDB.transaction();
+
          QString error;
+         QHash <QString,QVariant> h;
         QItemSelection selection( ui->tablaLineas_tiquet_actual->selectionModel()->selection() );
          QList<int> rows;
          foreach( const QModelIndex & index, selection.indexes() ) {
@@ -302,34 +325,79 @@ void FrmDevolucionTicket::on_btnParcial_clicked()
                 rows.append( index.row() );
          }
 
-        if(rows.count())
-         for( int i = rows.count() - 1; i >= 0; i --) {
-            qDebug() << rows.at(i);
-            int id = ui->tablaLineas_tiquet_actual->item(rows.at(i),0)->text().toInt();
+        if(rows.count()>0){
             // Crear ticket de devolución.
             tpv oTpv;
-           // TODO Cargar caja y serie
+            // TODO Cargar caja y serie
             int new_id = oTpv.nuevoticket("A","1");
-            if(new_id > -1)
-            {
-                // Capturamos info de artículo a devolver
-                QMap <int,QSqlRecord> lin;
-                lin = SqlCalls::SelectRecord("lin_tpv",QString("id = %1").arg(id),
-                                                      Configuracion_global->empresaDB,error);
-                // TODO - Restaurar Stock y acumulados.
-                Articulo oArticulo;
-                oArticulo.Vender(lin.value(id).value("codigo").toString(),-lin.value(id).value("cantidad").toDouble(),
-                                 lin.value(id).value("id_tarifa").toInt(),lin.value(id).value("tipo_dto").toDouble(),
-                                 0,0);
+            double imp =0 ;
+            this->id_ticket = new_id;
+            for( int i = rows.count() - 1; i >= 0; i --) {
+                int id = ui->tablaLineas_tiquet_actual->item(rows.at(i),0)->text().toInt();
+
+                if(new_id > -1)
+                {
+                    // Capturamos info de artículo a devolver
+                    QMap <int,QSqlRecord> lin;
+                    lin = SqlCalls::SelectRecord("lin_tpv",QString("id = %1").arg(id),
+                                                          Configuracion_global->empresaDB,error);
+                    // Restaurar Stock y acumulados.
+                    Articulo oArticulo;
+                    isOk = oArticulo.Devolucion(lin.value(id).value("id_articulo").toInt(),lin.value(id).value("cantidad").toFloat(),
+                                         lin.value(id).value("importe").toDouble(),0);
+
+                    if(isOk){
+                        // añadir linea ticket devolución.
+                        h["id_cab"] = new_id;
+                        h["id_articulo"] = lin.value(id).value("id_articulo").toInt();
+                        h["codigo"] = lin.value(id).value("codigo").toString();
+                        h["descripcion"] = lin.value(id).value("descripcion").toString();
+                        h["precio"] = lin.value(id).value("precio").toDouble();
+                        h["cantidad"] = -lin.value(id).value("cantidad").toFloat();
+                        h["importe"] = -lin.value(id).value("importe").toDouble();
+                        h["porc_iva"]= lin.value(id).value("porc_iva").toFloat();
+                        h["iva"] = lin.value(id).value("iva").toDouble();
+                        h["porc_rec"] = lin.value(id).value("porc_rec").toDouble();
+                        h["rec"] = lin.value(id).value("rec").toDouble();
+                        h["porc_dto"] = lin.value(id).value("porc_dto").toFloat();
+                        h["total"] = -lin.value(i).value("total").toDouble();
+                        h["subtotal"] =- lin.value(id).value("total").toDouble();
+                        h["fecha_linea"] = QDate::currentDate().toString("yyyyMMdd");
+                        h["promocion"] = lin.value(id).value("promocion").toInt();
+                        h["id_tarifa"] = lin.value(id).value("id_tarifa").toInt();
+                        h["tipo_dto"] = lin.value(id).value("tipo_dto").toInt();
+                        SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
+                        if(!error.isEmpty()){
+                            QMessageBox::warning(qApp->activeWindow(),tr("Devolución tickets"),
+                                                 tr("Ocurrió un error al guardar la línea en la base de datos %1").arg(error),
+                                                 tr("Aceptar"));
+                            isOk = false;
+                            break;
+                        }else {
+                            imp += h.value("importe").toDouble();
+                        }
+                    }
 
 
-                ui->btnParcial->setEnabled(false);
+
+                    ui->btnParcial->setEnabled(false);
+                }
+
+
             }
 
-            qDebug() << id;
-         }
-
+        }
      }
+     if(isOk)
+     {
+         Configuracion_global->empresaDB.commit();
+         Configuracion_global->groupDB.commit();
+     } else
+     {
+         Configuracion_global->empresaDB.rollback();
+         Configuracion_global->empresaDB.rollback();
+     }
+     accept();
 }
 
 

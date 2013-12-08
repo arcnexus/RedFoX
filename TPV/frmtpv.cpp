@@ -674,7 +674,8 @@ void FrmTPV::on_txtCodigo_editingFinished()
                     art = oArticulo->Vender(ui->txtCodigo->text(),cantidad,tarifa,grupo_dto,0,oTpv->id_cliente);
                 }
                 if(art.value("found").toBool()){
-                    isOk == art.value("isOk").toBool();
+
+                    isOk = art.value("isOk").toBool();
                     Configuracion_global->empresaDB.transaction();
                     Configuracion_global->groupDB.transaction();
                     QHash <QString,QVariant> lin;
@@ -2929,7 +2930,36 @@ void FrmTPV::on_btnInsertarDinero_clicked()
 void FrmTPV::on_btnDevolucionTicket_clicked()
 {
     FrmDevolucionTicket devolucion(this);
-    devolucion.exec();
+    if(devolucion.exec() == QDialog::Accepted)
+    {
+        this->id = devolucion.get_id_ticket();
+        QString forma_devolucion,error;
+        forma_devolucion = devolucion.get_forma_devolucion();
+        cargar_ticket(this->id);
+        QHash <QString,QVariant> cabecera;
+        cabecera["cobrado"] = 1;
+        double imp =Configuracion_global->MonedatoDouble(ui->lbl_total_ticket->text());
+        if(forma_devolucion == "E")
+            cabecera["importe_efectivo"] = imp;
+        if(forma_devolucion == "T")
+            cabecera["importe_tarjeta"] = imp;
+        if(forma_devolucion =="B")
+            cabecera["importe_transferencia"] = imp;
+        if(forma_devolucion == "V"){
+            cabecera["importe_vales"] = imp;
+            //  TODO - crear vale
+
+        }
+        bool update = SqlCalls::SqlUpdate(cabecera,"cab_tpv",
+                                          Configuracion_global->empresaDB,QString("id=%1").arg(this->id), error);
+        if(!update){
+            QMessageBox::warning(this,tr("Devoluciones"),
+                                 tr("Se ha producido un error al guardar: %1 ").arg(error),
+                                 tr("Aceptar"));
+        }
+        cargar_ticket(this->id);
+        on_btnticket_clicked();
+    }
 }
 
 void FrmTPV::on_lista_tickets_clicked(const QModelIndex &index)

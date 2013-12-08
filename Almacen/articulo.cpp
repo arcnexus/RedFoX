@@ -682,12 +682,16 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
         QSqlQuery acum(Configuracion_global->empresaDB);
         QString cSQL;
         cSQL = QString("update acum_articulos set %1,%2 where id_articulo = %3").arg(mes,imp,QString::number(id_acum));
-        if(acum.exec(cSQL))
+        if(acum.exec(cSQL)){
             h["isOk"] = true;
+        }
         else
+        {
             h["isOk"] = false;
-
-
+            QMessageBox::warning(qApp->activeWindow(),tr("Ventas"),
+                                 tr("Ocurrió un error al guardar acumulados empresa").arg(acum.lastError().text()),
+                                 tr("Aceptar"));
+        }
 
     }
     return h;
@@ -695,10 +699,98 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
 
 bool Articulo::Devolucion(int id, double cantidad, double pvp, int id_cliente)
 {
-    Configuracion_global->empresaDB.transaction();
+    bool isOk = false;
     QHash <QString, QVariant> h;
-    h["fecha_ultima_venta"] = QDate::currentDate().toString("yyyyMMdd");
+    QString fecha = QDate::currentDate().toString("yyyyMMdd");
+    // datos ficha artículo
+    QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL;
+    cSQL = QString("update articulos set fecha_ultima_venta = '%1', unidades_vendidas = unidades_vendidas -%2, "
+                   "importe_acumulado_ventas = importe_acumulado_ventas - %3,stock_real = stock_real - %2,"
+                   "stock_fisico_almacen = stock_fisico_almacen + %2 where id = %4").arg(fecha,QString::number(cantidad),
+                                                                                         QString::number(pvp,'f',2),
+                                                                                         QString::number(id));
+    if(art.exec(cSQL))
+    {
+        isOk = true;
+    } else
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Devolución producto"),
+                             tr("Ocurrióun error al devolver: %1").arg(art.lastError().text()),
+                             tr("Aceptar"));
+        isOk = false;
+    }
+    if(isOk){
+        // datos ficha acumulados empresa.
+        QString mes,imp;
 
+        // unidades
+        if(QDate::currentDate().month() ==1)
+            mes =QString("unid_vent_enero = unid_vent_enero - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==2)
+            mes =QString("unid_vent_febrero = unid_vent_febrero - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==3)
+            mes =QString("unid_vent_marzo = unid_vent_marzo - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==4)
+            mes =QString("unid_vent_abril = unid_vent_abril - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==5)
+            mes =QString("unid_vent_mayo = unid_vent_mayo - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==6)
+            mes =QString("unid_vent_junio = unid_vent_junio - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==7)
+            mes =QString("unid_vent_julio = unid_vent_julio - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==8)
+            mes =QString("unid_vent_agosto = unid_vent_agosto - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==9)
+            mes =QString("unid_vent_septiembre = unid_vent_septiembre - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==10)
+            mes =QString("unid_vent_octubre = unid_vent_octubre - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==11)
+            mes =QString("unid_vent_noviembre = unid_vent_noviembre - %1").arg(cantidad);
+        if(QDate::currentDate().month() ==12)
+            mes =QString("unid_vent_diciembre = unid_vent_diciembre - %1").arg(cantidad);
+
+        // ventas pvp
+        if(QDate::currentDate().month() ==1)
+            imp =QString("acum_vent_enero = acum_vent_enero - %1").arg(pvp);
+        if(QDate::currentDate().month() ==2)
+            imp =QString("acum_vent_febrero = acum_vent_febrero - %1").arg(pvp);
+        if(QDate::currentDate().month() ==3)
+            imp =QString("acum_vent_marzo = acum_vent_marzo - %1").arg(pvp);
+        if(QDate::currentDate().month() ==4)
+            imp =QString("acum_vent_abril = acum_vent_abril - %1").arg(pvp);
+        if(QDate::currentDate().month() ==5)
+            imp =QString("acum_vent_mayo = acum_vent_mayo - %1").arg(pvp);
+        if(QDate::currentDate().month() ==6)
+            imp =QString("acum_vent_junio = acum_vent_junio - %1").arg(pvp);
+        if(QDate::currentDate().month() ==7)
+            imp =QString("acum_vent_julio = acum_vent_julio - %1").arg(pvp);
+        if(QDate::currentDate().month() ==8)
+            imp =QString("acum_vent_agosto = acum_vent_agosto - %1").arg(pvp);
+        if(QDate::currentDate().month() ==9)
+            imp =QString("acum_vent_septiembre = acum_vent_septiembre - %1").arg(pvp);
+        if(QDate::currentDate().month() ==10)
+            imp =QString("acum_vent_octubre = acum_vent_octubre - %1").arg(pvp);
+        if(QDate::currentDate().month() ==11)
+            imp =QString("acum_vent_noviembre = acum_vent_noviembre - %1").arg(pvp);
+        if(QDate::currentDate().month() ==12)
+            imp =QString("acum_vent_diciembre = acum_vent_diciembre - %1").arg(pvp);
+        QSqlQuery acum(Configuracion_global->empresaDB);
+        QString cSQL;
+        cSQL = QString("update acum_articulos set %1,%2 where id_articulo = %3").arg(mes,imp,QString::number(id));
+        if(acum.exec(cSQL)){
+           isOk = true;
+        }
+        else
+        {
+            isOk = false;
+            QMessageBox::warning(qApp->activeWindow(),tr("Ventas"),
+                                 tr("Ocurrió un error al guardar acumulados empresa").arg(acum.lastError().text()),
+                                 tr("Aceptar"));
+        }
+
+    }
+    return isOk;
 
 }
 

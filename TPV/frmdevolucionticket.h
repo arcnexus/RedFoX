@@ -14,10 +14,13 @@ class FrmDevolucionTicket : public QDialog
 public:
     explicit FrmDevolucionTicket(QWidget *parent = 0);
     ~FrmDevolucionTicket();
+    int get_id_ticket();
+    QString get_forma_devolucion();
 
 private:
     Ui::FrmDevolucionTicket *ui;
     void cargarlineas(int id_cab);
+    int id_ticket;
 
     QSqlQueryModel *tickets;
 private slots:

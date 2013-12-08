@@ -1020,6 +1020,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`lin_tpv` (
   `promocion` TINYINT(1) NULL DEFAULT '0' ,
   `id_tarifa` INT NULL DEFAULT '0' ,
   `tipo_dto` INT NULL DEFAULT '0' ,
+  `devolucion` FLOAT NOT NULL DEFAULT '0' ,
   PRIMARY KEY (`id`) ,
   INDEX `id_Articulo` (`id_articulo` ASC) )
 ENGINE = InnoDB
