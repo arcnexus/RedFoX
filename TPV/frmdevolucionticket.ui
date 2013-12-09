@@ -191,7 +191,7 @@ color: rgb(255, 255, 255);</string>
    <item row="4" column="6">
     <widget class="QPushButton" name="pushButton_4">
      <property name="text">
-      <string>Cancelar</string>
+      <string>Cerrar</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">

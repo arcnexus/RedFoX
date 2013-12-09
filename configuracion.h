@@ -119,6 +119,7 @@ public:
     bool activar_seguimiento;
     QString caja;
     double Importe_apertura;
+    int caducidad_vales;
 
     QHash <QString,QSqlRecord> ivas;
     QSqlTableModel* iva_model;

@@ -12,6 +12,7 @@
 #include "../TPV/frmdevolucionticket.h"
 #include "../TPV/frmcantidad.h"
 #include "../Busquedas/db_consulta_view.h"
+#include "../TPV/frmcrearvale.h"
 
 
 FrmTPV::FrmTPV(QWidget *parent) :
@@ -2947,7 +2948,8 @@ void FrmTPV::on_btnDevolucionTicket_clicked()
             cabecera["importe_transferencia"] = imp;
         if(forma_devolucion == "V"){
             cabecera["importe_vales"] = imp;
-            //  TODO - crear vale
+            this->importe = imp;
+           on_btnEmitirVale_clicked();
 
         }
         bool update = SqlCalls::SqlUpdate(cabecera,"cab_tpv",
@@ -3062,4 +3064,9 @@ void FrmTPV::on_btnBuscarArt_ext_clicked()
    }
 }
 
-
+void FrmTPV::on_btnEmitirVale_clicked()
+{
+    frmCrearVale vale(this);
+    vale.setImporte(this->importe);
+    vale.exec();
+}

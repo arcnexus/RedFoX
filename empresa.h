@@ -157,6 +157,7 @@ public:
     double margen_min;
     QString clave1;
     QString clave2;
+    int caducidad_vales;
 
     // ConexiónBD
     QString ruta_bd_sqlite;

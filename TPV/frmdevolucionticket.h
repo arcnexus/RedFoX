@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::FrmDevolucionTicket *ui;
-    void cargarlineas(int id_cab);
+    void cargarlineas(int id_cab, int id_cab_old);
     int id_ticket;
 
     QSqlQueryModel *tickets;
@@ -28,6 +28,7 @@ private slots:
 
     void on_btnDevolucion_clicked();
     void on_btnParcial_clicked();
+    void on_tablaLineas_tiquet_actual_doubleClicked(const QModelIndex &index);
 };
 
 #endif // FRMDEVOLUCIONTICKET_H

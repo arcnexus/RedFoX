@@ -159,6 +159,7 @@ void Empresa::cargar(QSqlRecord registro)
     this->clave1 = registro.field("clave1").value().toString();
     this->clave2 = registro.field("clave2").value().toString();
     this->irpf = registro.field("usar_irpf").value().toBool();
+    this->caducidad_vales = registro.field("caducidad_vales").value().toInt();
 
 }
 
@@ -234,6 +235,7 @@ void Empresa::Guardar()
                      "seguimiento =:seguimiento,"
                      "margen = :margen,"
                      "margen_minimo =:margen_minimo,"
+                     "caducidad_vales = :caducidad_vales,"
                      "clave1 = :clave1,"
                      "clave2 =:clave2"
                      " where id=:nid");
@@ -308,6 +310,7 @@ void Empresa::Guardar()
     qEmpresa.bindValue(":margen_minimo",this->margen_min);
     qEmpresa.bindValue(":clave1",this->clave1);
     qEmpresa.bindValue(":clave2",this->clave2);
+    qEmpresa.bindValue(":caducidad_vales",this->caducidad_vales);
     qEmpresa.bindValue(":nid",this->id);
 
 
@@ -405,6 +408,7 @@ void Empresa::Vaciar()
     this->margen_min = 0;
     this->clave1 = "";
     this->clave2 = "";
+    this->caducidad_vales = 0;
 }
 
 bool Empresa::Borrar(int nid)

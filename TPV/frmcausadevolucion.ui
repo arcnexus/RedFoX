@@ -47,7 +47,7 @@
    <item row="3" column="0" colspan="3">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
-      <string>Aceptar y abonar</string>
+      <string>Aceptar devolución de producto/s</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">

@@ -7,6 +7,10 @@ frmCausaDevolucion::frmCausaDevolucion(QWidget *parent) :
     ui(new Ui::frmCausaDevolucion)
 {
     ui->setupUi(this);
+    QSqlQueryModel *users = new QSqlQueryModel(this);
+    users->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
+    ui->cmbUsuario->setModel(users);
+    ui->dateDevolucion->setDateTime(QDateTime::currentDateTime());
 }
 
 frmCausaDevolucion::~frmCausaDevolucion()
@@ -55,9 +59,6 @@ void frmCausaDevolucion::on_btnAceptar_clicked()
             trans = false;
             QMessageBox::warning(this,tr("Gestiones TPV"),tr("No se pudo realizar la devolución"),tr("Aceptar"));
         }
-        Articulo oArt;
-        trans = oArt.agregarStock('v',this->id_art,i.value().value("cantidad").toFloat(),i.value().value("total").toDouble(),
-                                  ui->dateDevolucion->date());
 
     }
 
@@ -65,6 +66,7 @@ void frmCausaDevolucion::on_btnAceptar_clicked()
     {
         Configuracion_global->groupDB.commit();
         Configuracion_global->empresaDB.commit();
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Se ha creado una nota de devolución de producto"));
     }
     else
     {
@@ -72,6 +74,6 @@ void frmCausaDevolucion::on_btnAceptar_clicked()
         Configuracion_global->empresaDB.rollback();
 
     }
-
+    accept();
 
 }

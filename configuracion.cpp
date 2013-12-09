@@ -871,6 +871,7 @@ void Configuracion::CargarDatos(int id)
         this->margen_minimo = qEmpresa.record().value("margen_minimo").toDouble();
         this->activar_seguimiento = qEmpresa.record().value("seguimiento").toBool();
         this->irpf = qEmpresa.record().value("usar_irpf").toBool();
+        this->caducidad_vales = qEmpresa.record().value("caducidad_vales").toInt();
 
 
     } else {

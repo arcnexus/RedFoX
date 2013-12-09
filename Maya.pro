@@ -206,7 +206,9 @@ SOURCES += main.cpp\
     TPV/frmcantidad.cpp \
     Zona_Administrador/frmconfigurar_terminal.cpp \
     TPV/frmcajasabiertas.cpp \
-    Auxiliares/globoaviso.cpp
+    Auxiliares/globoaviso.cpp \
+    TPV/frmdevolucion2.cpp \
+    TPV/frmcrearvale.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -378,7 +380,9 @@ HEADERS  += mainwindow.h \
     TPV/frmcantidad.h \
     Zona_Administrador/frmconfigurar_terminal.h \
     TPV/frmcajasabiertas.h \
-    Auxiliares/globoaviso.h
+    Auxiliares/globoaviso.h \
+    TPV/frmdevolucion2.h \
+    TPV/frmcrearvale.h
 
 
 
@@ -467,7 +471,9 @@ FORMS    += mainwindow.ui \
     TPV/frmcausadevolucion.ui \
     TPV/frmcantidad.ui \
     Zona_Administrador/frmconfigurar_terminal.ui \
-    TPV/frmcajasabiertas.ui
+    TPV/frmcajasabiertas.ui \
+    TPV/frmdevolucion2.ui \
+    TPV/frmcrearvale.ui
 
 RESOURCES += \
     maya.qrc \

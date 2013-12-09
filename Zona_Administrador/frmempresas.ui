@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1201</width>
-    <height>657</height>
+    <width>1179</width>
+    <height>633</height>
    </rect>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1201</width>
-    <height>657</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Gestión de empresas</string>
@@ -273,41 +267,61 @@ color: rgb(255, 255, 255);</string>
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_12">
-           <item row="2" column="2" colspan="2">
-            <widget class="QSpinBox" name="txttamano_codigoart">
-             <property name="maximumSize">
-              <size>
-               <width>60</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="value">
-              <number>15</number>
-             </property>
-            </widget>
+           <item row="0" column="0" colspan="7">
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="1" column="2" colspan="3">
+              <widget class="QLineEdit" name="txtpoblacion"/>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtdireccion1"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="txtcp">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>Dirección:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLineEdit" name="txtpais"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Provincia:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QLineEdit" name="txtprovincia"/>
+             </item>
+            </layout>
            </item>
-           <item row="3" column="3">
-            <widget class="QCheckBox" name="chkSeguimiento">
-             <property name="text">
-              <string>Activar Seguimiento movimientos</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QCheckBox" name="chk_upate_divisas">
-             <property name="text">
-              <string>Actualizar divisas al entrar</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4">
-            <widget class="QLabel" name="label_42">
-             <property name="text">
-              <string>Divisa: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2" colspan="10">
+           <item row="3" column="2" colspan="5">
             <widget class="QTabWidget" name="tabWidget_2">
              <property name="minimumSize">
               <size>
@@ -322,7 +336,7 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>8</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -529,33 +543,6 @@ color: rgb(255, 255, 255);</string>
                <string>Contabilidad (IVAS)</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_16">
-               <item row="1" column="1">
-                <widget class="QLabel" name="label_9">
-                 <property name="text">
-                  <string>Cuenta cobros:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <spacer name="verticalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="3">
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>Cuenta Pagos:</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="2">
                 <widget class="QLineEdit" name="txtcuenta_cobros">
                  <property name="placeholderText">
@@ -567,6 +554,20 @@ color: rgb(255, 255, 255);</string>
                 <widget class="QLineEdit" name="txtcuenta_pagos">
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Cuenta Pagos:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Cuenta cobros:</string>
                  </property>
                 </widget>
                </item>
@@ -616,6 +617,12 @@ color: rgb(255, 255, 255);</string>
                  </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="label_38">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(0, 0, 127);
 border-color: rgb(0, 0, 42);
@@ -645,6 +652,12 @@ color: rgb(255, 255, 255);</string>
                  </item>
                  <item row="0" column="4">
                   <widget class="QLabel" name="label_39">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(0, 0, 127);
 border-color: rgb(0, 0, 42);
@@ -744,6 +757,12 @@ color: rgb(255, 255, 255);</string>
                  </item>
                  <item row="0" column="2">
                   <widget class="QLabel" name="label_66">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);</string>
@@ -755,6 +774,12 @@ color: rgb(255, 255, 255);</string>
                  </item>
                  <item row="0" column="5">
                   <widget class="QLabel" name="label_67">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);</string>
@@ -1157,63 +1182,165 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
+             <widget class="QWidget" name="tab_10">
+              <attribute name="title">
+               <string>Otros</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_21">
+               <item row="0" column="0">
+                <widget class="QFrame" name="frame">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_20">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_72">
+                    <property name="text">
+                     <string>Caducidad Vales(días):</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QSpinBox" name="txtCaducidadvales">
+                    <property name="maximum">
+                     <number>99999999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2" colspan="2">
+                   <widget class="QLabel" name="label_41">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Tamaño del código en caracteres:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="4">
+                   <widget class="QSpinBox" name="txttamano_codigoart">
+                    <property name="maximumSize">
+                     <size>
+                      <width>60</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="value">
+                     <number>15</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="5">
+                   <widget class="QCheckBox" name="chkEnlace_web">
+                    <property name="text">
+                     <string>enlace Web.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0" colspan="3">
+                   <widget class="QFrame" name="frame_2">
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout">
+                     <item>
+                      <widget class="QCheckBox" name="chk_upate_divisas">
+                       <property name="text">
+                        <string>Actualizar divisas al entrar</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_4">
+                       <item>
+                        <widget class="QLabel" name="label_42">
+                         <property name="text">
+                          <string>Divisa: </string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QComboBox" name="cboDivisas"/>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="chkSeguimiento">
+                       <property name="text">
+                        <string>Activar Seguimiento movimientos</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="chkIRPF">
+                       <property name="maximumSize">
+                        <size>
+                         <width>135</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Autonomo / IRPF</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_5">
+                       <item>
+                        <widget class="QLabel" name="label_71">
+                         <property name="text">
+                          <string>%IRPF:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="spinPorc_irpf">
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                         <property name="minimum">
+                          <double>-999999.000000000000000</double>
+                         </property>
+                         <property name="maximum">
+                          <double>9999999.000000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="3">
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>194</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
-           <item row="0" column="0" colspan="12">
-            <layout class="QGridLayout" name="gridLayout_8">
-             <item row="1" column="2" colspan="3">
-              <widget class="QLineEdit" name="txtpoblacion"/>
-             </item>
-             <item row="2" column="3">
-              <widget class="QLabel" name="label_16">
-               <property name="text">
-                <string>Pais:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="txtcp">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>Dirección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QLineEdit" name="txtpais"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_15">
-               <property name="text">
-                <string>Provincia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>Población:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QLineEdit" name="txtprovincia"/>
-             </item>
-            </layout>
-           </item>
-           <item row="5" column="0" colspan="2">
+           <item row="3" column="0" colspan="2">
             <layout class="QGridLayout" name="gridLayout_7">
              <item row="5" column="0">
               <widget class="QLabel" name="label_20">
@@ -1361,27 +1488,7 @@ color: rgb(255, 255, 255);</string>
              </item>
             </layout>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_41">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Tamaño del código en caracteres:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="7">
-            <widget class="QCheckBox" name="chkEnlace_web">
-             <property name="text">
-              <string>enlace Web.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="12">
+           <item row="1" column="0" colspan="7">
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
               <widget class="QLabel" name="label_22">
@@ -1444,42 +1551,6 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLineEdit" name="txtserieFactura"/>
              </item>
             </layout>
-           </item>
-           <item row="3" column="7">
-            <widget class="QComboBox" name="cboDivisas"/>
-           </item>
-           <item row="2" column="5">
-            <widget class="QLabel" name="label_71">
-             <property name="text">
-              <string>%IRPF:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
-            <widget class="QCheckBox" name="chkIRPF">
-             <property name="maximumSize">
-              <size>
-               <width>135</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Autonomo / IRPF</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="6">
-            <widget class="QDoubleSpinBox" name="spinPorc_irpf">
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="minimum">
-              <double>-999999.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>9999999.000000000000000</double>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>

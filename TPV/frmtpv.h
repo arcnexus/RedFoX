@@ -30,6 +30,7 @@ public:
     tpv *oTpv;
     int caja;
     QString serie_defecto;
+    double importe;
 
 
 public slots:
@@ -199,6 +200,8 @@ private slots:
 
     void on_btnBuscarArt_ext_clicked();
 
+
+    void on_btnEmitirVale_clicked();
 
 private:
     Ui::FrmTPV *ui;

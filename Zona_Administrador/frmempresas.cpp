@@ -526,7 +526,7 @@ void FrmEmpresas::_addEmpresa()
                         "`cuenta_iva_repercutido2`, `cuenta_iva_repercutido3`, `cuenta_iva_repercutido4`,"
                         "`cuenta_iva_repercutido1_re`, `cuenta_iva_repercutido2_re`, `cuenta_iva_repercutido3_re`,"
                         "`cuenta_iva_repercutido4_re`, `cuenta_iva_soportado1_re`, `cuenta_iva_soportado2_re`,"
-                        "`cuenta_iva_soportado3_re`, `cuenta_iva_soportado4_re`)"
+                        "`cuenta_iva_soportado3_re`, `cuenta_iva_soportado4_re`, `caducidad_vales`)"
                         "VALUES "
                         "(:codigo, :nombre, :digitos_factura, :serie, :nombre_bd, :nombre_db_conta,"
                         ":nombre_bd_medica, :direccion, :cp, :poblacion, :provincia, :pais,"
@@ -545,7 +545,7 @@ void FrmEmpresas::_addEmpresa()
                         ":cuenta_iva_repercutido2, :cuenta_iva_repercutido3, :cuenta_iva_repercutido4,"
                         ":cuenta_iva_repercutido1_re, :cuenta_iva_repercutido2_re, :cuenta_iva_repercutido3_re,"
                         ":cuenta_iva_repercutido4_re, :cuenta_iva_soportado1_re, :cuenta_iva_soportado2_re,"
-                        ":cuenta_iva_soportado3_re, :cuenta_iva_soportado4_re);"
+                        ":cuenta_iva_soportado3_re, :cuenta_iva_soportado4_re,:caducidad_vales);"
                         );
             query.replace("@grupo@",r.value("bd_name").toString());
             q.prepare(query);
@@ -618,6 +618,7 @@ void FrmEmpresas::_addEmpresa()
             q.bindValue(":cuenta_iva_soportado2_re",ui->ivasoportadore2->text());
             q.bindValue(":cuenta_iva_soportado3_re",ui->ivasoportadore3->text());
             q.bindValue(":cuenta_iva_soportado4_re",ui->ivasoportadore4->text());
+            q.bindValue(":caducidad_vales",ui->txtCaducidadvales->value());
 
             if(!q.exec())
                 qDebug() << q.lastError().text();
@@ -709,6 +710,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->txtEmail_pop->setText(r.value("cuenta_pop").toString());
     ui->txtEmail_smtp->setText(r.value("cuenta_smtp").toString());
     ui->txtEmail_usuario->setText(r.value("cuenta_mail").toString());
+    ui->txtCaducidadvales->setValue(r.value("caducidad_vales").toInt());
 
 }
 
