@@ -208,7 +208,8 @@ SOURCES += main.cpp\
     TPV/frmcajasabiertas.cpp \
     Auxiliares/globoaviso.cpp \
     TPV/frmdevolucion2.cpp \
-    TPV/frmcrearvale.cpp
+    TPV/frmcrearvale.cpp \
+    Zona_Pacientes/vale.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -382,7 +383,8 @@ HEADERS  += mainwindow.h \
     TPV/frmcajasabiertas.h \
     Auxiliares/globoaviso.h \
     TPV/frmdevolucion2.h \
-    TPV/frmcrearvale.h
+    TPV/frmcrearvale.h \
+    Zona_Pacientes/vale.h
 
 
 

@@ -426,8 +426,8 @@ void frmClientes::LLenarCampos()
 
     QSqlQueryModel *Vales = new QSqlQueryModel(this);
 
-    cSQL= "Select id,nNumero,fecha,dVto,importe from vales where id_cliente =" + QString::number(oCliente->id);
-    Vales->setQuery(cSQL,Configuracion_global->groupDB);
+    cSQL= "Select id,Numero,fecha,fecha_vencimiento_vale,importe from vales where id_cliente =" + QString::number(oCliente->id);
+    Vales->setQuery(cSQL,Configuracion_global->empresaDB);
     ui->tablaVales->setModel(Vales);
     ui->tablaVales->setItemDelegateForColumn(2,new DateDelegate);
     ui->tablaVales->setItemDelegateForColumn(3,new DateDelegate);

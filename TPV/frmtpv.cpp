@@ -2947,9 +2947,9 @@ void FrmTPV::on_btnDevolucionTicket_clicked()
         if(forma_devolucion =="B")
             cabecera["importe_transferencia"] = imp;
         if(forma_devolucion == "V"){
-            cabecera["importe_vales"] = imp;
+            cabecera["importe_vale"] = imp;
             this->importe = imp;
-           on_btnEmitirVale_clicked();
+
 
         }
         bool update = SqlCalls::SqlUpdate(cabecera,"cab_tpv",
@@ -2961,6 +2961,11 @@ void FrmTPV::on_btnDevolucionTicket_clicked()
         }
         cargar_ticket(this->id);
         on_btnticket_clicked();
+        if(forma_devolucion == "V")
+        {
+            on_btnEmitirVale_clicked();
+            this->importe = 0;
+        }
     }
 }
 
@@ -3067,6 +3072,7 @@ void FrmTPV::on_btnBuscarArt_ext_clicked()
 void FrmTPV::on_btnEmitirVale_clicked()
 {
     frmCrearVale vale(this);
-    vale.setImporte(this->importe);
+    vale.setId_ticket(this->id);
+    vale.setImporte(Configuracion_global->MonedatoDouble(ui->lbl_total_ticket->text()));
     vale.exec();
 }

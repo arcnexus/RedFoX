@@ -483,94 +483,97 @@ void FrmDevolucionTicket::on_btnParcial_clicked()
          Configuracion_global->empresaDB.transaction();
          Configuracion_global->groupDB.transaction();
          frmCausaDevolucion causa;
-         causa.exec();
+        if(causa.exec() == QDialog::Accepted)
+        {
 
-         QString error;
-         QHash <QString,QVariant> h;
-         QHash <QString,QVariant> l;
-        QItemSelection selection( ui->tablaLineas_tiquet_actual->selectionModel()->selection() );
-         QList<int> rows;
-         foreach( const QModelIndex & index, selection.indexes() ) {
-             if(!rows.contains(index.row()))
-                rows.append( index.row() );
-         }
+             QString error;
+             QHash <QString,QVariant> h;
+             QHash <QString,QVariant> l;
+            QItemSelection selection( ui->tablaLineas_tiquet_actual->selectionModel()->selection() );
+             QList<int> rows;
+             foreach( const QModelIndex & index, selection.indexes() ) {
+                 if(!rows.contains(index.row()))
+                    rows.append( index.row() );
+             }
 
-        if(rows.count()>0){
-            // Crear ticket de devolución.
-            tpv oTpv;
-            // TODO Cargar caja y serie
-            int new_id = oTpv.nuevoticket("A","1");
-            double imp =0 ;
-            this->id_ticket = new_id;
-            for( int i = rows.count() - 1; i >= 0; i --) {
-                int id = ui->tablaLineas_tiquet_actual->item(rows.at(i),0)->text().toInt();
+            if(rows.count()>0)
+            {
+                // Crear ticket de devolución.
+                tpv oTpv;
+                // TODO Cargar caja y serie
+                int new_id = oTpv.nuevoticket("A","1");
+                double imp =0 ;
+                this->id_ticket = new_id;
+                for( int i = rows.count() - 1; i >= 0; i --) {
+                    int id = ui->tablaLineas_tiquet_actual->item(rows.at(i),0)->text().toInt();
 
-                if(new_id > -1)
-                {
-                    // Capturamos info de artículo a devolver
-                    QMap <int,QSqlRecord> lin;
-                    lin = SqlCalls::SelectRecord("lin_tpv",QString("id = %1").arg(id),
-                                                          Configuracion_global->empresaDB,error);
-                    // Restaurar Stock y acumulados.
-                    Articulo oArticulo;
-                    isOk = oArticulo.Devolucion(lin.value(id).value("id_articulo").toInt(),lin.value(id).value("dev_act").toFloat(),
-                                         lin.value(id).value("importe").toDouble(),0);
+                    if(new_id > -1)
+                    {
+                        // Capturamos info de artículo a devolver
+                        QMap <int,QSqlRecord> lin;
+                        lin = SqlCalls::SelectRecord("lin_tpv",QString("id = %1").arg(id),
+                                                              Configuracion_global->empresaDB,error);
+                        // Restaurar Stock y acumulados.
+                        Articulo oArticulo;
+                        isOk = oArticulo.Devolucion(lin.value(id).value("id_articulo").toInt(),lin.value(id).value("dev_act").toFloat(),
+                                             lin.value(id).value("importe").toDouble(),0);
 
-                    if(isOk){
-                        // añadir linea ticket devolución.
-                        double tot_lin;
-                        float cant;
-                        double pvp;
-                        cant = lin.value(id).value("dev_act").toFloat();
-                        if(cant ==0) // Si está seleccionada y no hay valor especifico se toma el de la cantidad total.
-                            cant = lin.value(id).value("cantidad").toFloat();
-                        pvp = lin.value(id).value("precio").toDouble();
-                        tot_lin = cant * pvp;
+                        if(isOk){
+                            // añadir linea ticket devolución.
+                            double tot_lin;
+                            float cant;
+                            double pvp;
+                            cant = lin.value(id).value("dev_act").toFloat();
+                            if(cant ==0) // Si está seleccionada y no hay valor especifico se toma el de la cantidad total.
+                                cant = lin.value(id).value("cantidad").toFloat();
+                            pvp = lin.value(id).value("precio").toDouble();
+                            tot_lin = cant * pvp;
 
-                        h["id_cab"] = new_id;
-                        h["id_articulo"] = lin.value(id).value("id_articulo").toInt();
-                        h["codigo"] = lin.value(id).value("codigo").toString();
-                        h["descripcion"] = lin.value(id).value("descripcion").toString();
-                        h["precio"] = lin.value(id).value("precio").toDouble();
-                        h["cantidad"] = -cant;
-                        h["importe"] =  -tot_lin;
-                        h["porc_iva"]= lin.value(id).value("porc_iva").toFloat();
-                        h["iva"] = lin.value(id).value("iva").toDouble();
-                        h["porc_rec"] = lin.value(id).value("porc_rec").toDouble();
-                        h["rec"] = lin.value(id).value("rec").toDouble();
-                        h["porc_dto"] = lin.value(id).value("porc_dto").toFloat();
-                        h["total"] =  -tot_lin;
-                        h["subtotal"] = -tot_lin;
-                        h["fecha_linea"] = QDate::currentDate().toString("yyyyMMdd");
-                        h["promocion"] = lin.value(id).value("promocion").toInt();
-                        h["id_tarifa"] = lin.value(id).value("id_tarifa").toInt();
-                        h["tipo_dto"] = lin.value(id).value("tipo_dto").toInt();
-                        SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
-                        if(!error.isEmpty()){
-                            QMessageBox::warning(qApp->activeWindow(),tr("Devolución tickets"),
-                                                 tr("Ocurrió un error al guardar la línea en la base de datos %1").arg(error),
-                                                 tr("Aceptar"));
-                            isOk = false;
-                            break;
-                        }else {
-                            imp += h.value("importe").toDouble();
-                            l["dev_act"] = 0;
-                            l["devolucion"] = lin.value(id).value("devolucion").toFloat() + cant;
-                            bool success = SqlCalls::SqlUpdate(l,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
-                            if(!success)
-                                QMessageBox::warning(this,tr("Devoluciones"),tr("Ocurrió un error al resetear lineas: %1").arg(error));
+                            h["id_cab"] = new_id;
+                            h["id_articulo"] = lin.value(id).value("id_articulo").toInt();
+                            h["codigo"] = lin.value(id).value("codigo").toString();
+                            h["descripcion"] = lin.value(id).value("descripcion").toString();
+                            h["precio"] = lin.value(id).value("precio").toDouble();
+                            h["cantidad"] = -cant;
+                            h["importe"] =  -tot_lin;
+                            h["porc_iva"]= lin.value(id).value("porc_iva").toFloat();
+                            h["iva"] = lin.value(id).value("iva").toDouble();
+                            h["porc_rec"] = lin.value(id).value("porc_rec").toDouble();
+                            h["rec"] = lin.value(id).value("rec").toDouble();
+                            h["porc_dto"] = lin.value(id).value("porc_dto").toFloat();
+                            h["total"] =  -tot_lin;
+                            h["subtotal"] = -tot_lin;
+                            h["fecha_linea"] = QDate::currentDate().toString("yyyyMMdd");
+                            h["promocion"] = lin.value(id).value("promocion").toInt();
+                            h["id_tarifa"] = lin.value(id).value("id_tarifa").toInt();
+                            h["tipo_dto"] = lin.value(id).value("tipo_dto").toInt();
+                            SqlCalls::SqlInsert(h,"lin_tpv",Configuracion_global->empresaDB,error);
+                            if(!error.isEmpty()){
+                                QMessageBox::warning(qApp->activeWindow(),tr("Devolución tickets"),
+                                                     tr("Ocurrió un error al guardar la línea en la base de datos %1").arg(error),
+                                                     tr("Aceptar"));
+                                isOk = false;
+                                break;
+                            }else {
+                                imp += h.value("importe").toDouble();
+                                l["dev_act"] = 0;
+                                l["devolucion"] = lin.value(id).value("devolucion").toFloat() + cant;
+                                bool success = SqlCalls::SqlUpdate(l,"lin_tpv",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+                                if(!success)
+                                    QMessageBox::warning(this,tr("Devoluciones"),tr("Ocurrió un error al resetear lineas: %1").arg(error));
+                            }
+
                         }
 
+
+
+                        ui->btnParcial->setEnabled(false);
                     }
 
 
-
-                    ui->btnParcial->setEnabled(false);
                 }
 
-
             }
-
         }
      }
      if(isOk)
