@@ -1,8 +1,10 @@
-QLabel , QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView, QSpinBox,
-QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton
+QStatusBar, QLineEdit, QDateEdit, QTextEdit,QTableWidget,QTableView, QSpinBox,
+QDoubleSpinBox, QComboBox, QHeaderView, QGroupBox, QListView, QRadioButton,QDateTimeEdit
 {
     font: normal;
     font: 10pt "Cantarell";
+    background-color: #e8e6cd;
+
 
 
 }
@@ -13,7 +15,13 @@ QTextEdit:enabled, QSpinBox,QDoubleSpinBox, QComboBox, QLineEdit, QDateEdit, QDa
 }
 QLineEdit
 {
-       border-radius: 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    border-color: #726b6b;
+}
+QLabel{
+    font: normal;
+    font: 10pt "Cantarell";
 }
 
 QScrollBar:vertical

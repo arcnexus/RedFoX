@@ -1359,7 +1359,7 @@ color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="4">
+             <item row="11" column="4">
               <widget class="QLineEdit" name="txtcNumFra">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">

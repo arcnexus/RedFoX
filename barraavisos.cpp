@@ -1,6 +1,8 @@
 #include "barraavisos.h"
 #include "ui_barraavisos.h"
 #include <QPainter>
+#include "Auxiliares/frmeditaravisos.h"
+
 BarraAvisos::BarraAvisos(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BarraAvisos)
@@ -76,7 +78,8 @@ void BarraAvisos::resizeEvent(QResizeEvent *)
 
         painter.save();
             painter.setPen(Qt::SolidLine);
-            painter.setBrush(Qt::black);
+            painter.setPen(Qt::white);
+            //painter.setBrush(Qt::black);
             painter.translate(this->width()-20,100);
             painter.rotate(270);
             painter.drawText(QRectF(0,0,80,20),Qt::AlignCenter,tr("Avisos"));
@@ -135,12 +138,13 @@ void BarraAvisos::llenarAvisos()
     QStringList clausulas,headers;
     QString error;
     clausulas << QString("id_usuario_destino = %1").arg(Configuracion_global->id_usuario_activo);
+    clausulas << QString("completado = 0");
     map = SqlCalls::SelectRecord("avisos",clausulas,Configuracion_global->groupDB,error);
     ui->tabla_avisos->setColumnCount(4);
     headers <<"id" <<tr("ORIGEN") << tr("AVISO") <<tr("FECHA/HORA");
     ui->tabla_avisos->setHorizontalHeaderLabels(headers);
     QVariantList  sizes;
-    sizes <<0 << 150 <<250 << 110;
+    sizes <<0 << 150 <<260 << 115;
     for(int i = 0; i< sizes.size();i++ )
         ui->tabla_avisos->setColumnWidth(i,sizes.at(i).toInt());
     QMapIterator <int,QSqlRecord> it(map);
@@ -209,3 +213,12 @@ void BarraAvisos::setColor(QColor c)
     this->resize(this->width(),this->height());
 }
 
+
+void BarraAvisos::on_tabla_avisos_doubleClicked(const QModelIndex &index)
+{
+    int id = ui->tabla_avisos->model()->index(ui->tabla_avisos->currentRow(),0).data().toInt();
+    FrmEditarAvisos formavisos(this);
+    formavisos.setValores(id);
+    formavisos.exec();
+    llenarAvisos();
+}

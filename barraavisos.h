@@ -36,6 +36,8 @@ protected:
     bool eventFilter(QObject *, QEvent *);
 private slots:
 
+    void on_tabla_avisos_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::BarraAvisos *ui;
     QPixmap* m_Cache;

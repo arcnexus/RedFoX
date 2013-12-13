@@ -209,7 +209,8 @@ SOURCES += main.cpp\
     Auxiliares/globoaviso.cpp \
     TPV/frmdevolucion2.cpp \
     TPV/frmcrearvale.cpp \
-    Zona_Pacientes/vale.cpp
+    Zona_Pacientes/vale.cpp \
+    Auxiliares/frmeditaravisos.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -384,7 +385,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/globoaviso.h \
     TPV/frmdevolucion2.h \
     TPV/frmcrearvale.h \
-    Zona_Pacientes/vale.h
+    Zona_Pacientes/vale.h \
+    Auxiliares/frmeditaravisos.h
 
 
 
@@ -475,7 +477,8 @@ FORMS    += mainwindow.ui \
     Zona_Administrador/frmconfigurar_terminal.ui \
     TPV/frmcajasabiertas.ui \
     TPV/frmdevolucion2.ui \
-    TPV/frmcrearvale.ui
+    TPV/frmcrearvale.ui \
+    Auxiliares/frmeditaravisos.ui
 
 RESOURCES += \
     maya.qrc \
@@ -564,7 +567,7 @@ unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lcryptopp
 INCLUDEPATH += $$PWD/../../../../usr/include
 DEPENDPATH += $$PWD/../../../../usr/include
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcrypto++.so
+unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcrypto.so
 
 unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
 

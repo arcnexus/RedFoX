@@ -327,7 +327,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>6</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -2607,14 +2607,14 @@ color: rgb(255,255,255);</string>
             </layout>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="OpenChart" name="graficaEstadistica">
+            <widget class="OpenChart" name="graficaEstadistica" native="true">
              <property name="minimumSize">
               <size>
                <width>0</width>
                <height>192</height>
               </size>
              </property>
-             <property name="Title">
+             <property name="Title" stdset="0">
               <string>Consumo por meses.</string>
              </property>
             </widget>
