@@ -83,6 +83,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             QSqlRecord registro = qCab_pre.record();
             this->id = registro.field("id").value().toInt();
             this->presupuesto = registro.field("presupuesto").value().toInt();
+            this->id_divisa = registro.field("id_divisa").value().toInt();
             this->fecha = registro.field("fecha").value().toDate();
             this->ejercicio = registro.field("ejercicio").value().toInt();
             this->valido_hasta = registro.field("valido_hasta").value().toDate();
@@ -207,6 +208,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
 
     cab_pre["fecha"] = fecha;
     cab_pre["valido_hasta"] = valido_hasta;
+    cab_pre["id_divisa"] = id_divisa;
     cab_pre["id_cliente"] = id_cliente;
     cab_pre["codigo_cliente"] = codigo_cliente;
     cab_pre["cliente"] = cliente;

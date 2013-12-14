@@ -104,6 +104,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     QString error;
 
     h_cab_alb["albaran"] = albaran;
+    h_cab_alb["id_divisa"] = id_divisa;
     h_cab_alb["fecha"] = fecha;
     h_cab_alb["ejercicio"] = ejercicio;
     h_cab_alb["pedido_cliente"] = pedido_cliente;
@@ -225,6 +226,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 id = r.value("id").toInt();
                 serie = r.value("serie").toString();
                 albaran= r.value("albaran").toInt();
+                id_divisa = r.value("id_divisa").toInt();
                 ejercicio = r.value("ejercicio").toInt();
                 fecha= r.value("fecha").toDate();
                 pedido_cliente= r.value("pedido_cliente").toString();

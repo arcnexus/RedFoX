@@ -10,6 +10,7 @@ public:
     ~Presupuesto();
     int id;
     int presupuesto;
+    int id_divisa;
     QDate fecha;
     int ejercicio;
     QDate valido_hasta;

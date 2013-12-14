@@ -142,6 +142,14 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     formas_pago->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
     ui->cboFormapago->setModel(formas_pago);
 
+    //-----------------------
+    // Tarifas
+    //-----------------------
+    QSqlQueryModel * modeloDivisa = new QSqlQueryModel(this);
+    modeloDivisa->setQuery("select moneda from monedas order by moneda",Configuracion_global->groupDB);
+    ui->cboDivisa->setModel(modeloDivisa);
+
+
 
     //----------------------
     // Control de eventos
@@ -275,6 +283,12 @@ void FrmPedidos::LLenarCampos()
     oTrans.recuperar(condiciones,extras);
     ui->txtcodigo_transportista->setText(oTrans.h_transportista.value("codigo").toString());
     ui->txtTransportista->setText(oTrans.h_transportista.value("transportista").toString());
+    //-------------------
+    // divisas
+    //-------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oPedido->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
 
 }
 
@@ -356,6 +370,12 @@ void FrmPedidos::LLenarCamposCliente()
     }
     index = ui->cboFormapago->findText(Configuracion_global->Devolver_forma_pago(oCliente3->id_forma_pago));
     ui->cboFormapago->setCurrentIndex(index);
+    //-------------------
+    // divisas
+    //-------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oCliente3->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
 }
 
 void FrmPedidos::VaciarCampos()
@@ -435,6 +455,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->albaran= ui->txtalbaran->text().toInt();
     oPedido->pedido=ui->txtpedido->text().toInt();
     oPedido->fecha=ui->txtfecha->date();
+    oPedido->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
     //oPedido->pedido;
     //oPedido->id_cliente;
     oPedido->codigo_cliente=ui->txtcodigo_cliente->text();
@@ -1148,6 +1169,7 @@ void FrmPedidos::convertir_ealbaran()
         h["pedido_cliente"] = oPedido->pedido;
         h["id_cliente"] = oPedido->id_cliente;
         h["codigo_cliente"] = oPedido->codigo_cliente;
+        h["id_divisa"] =oPedido->id_divisa;
         h["cliente"] = oPedido->cliente;
         h["direccion1"] = oPedido->direccion1;
         h["direccion2"] = oPedido->direccion2;
@@ -1372,6 +1394,7 @@ void FrmPedidos::convertir_enFactura()
             oFactura.serie = serie;
             oFactura.cif = oPedido->cif;
             oFactura.cliente = oPedido->cliente;
+            oFactura.id_divisa = oPedido->id_divisa;
             oFactura.codigo_cliente = oPedido->codigo_cliente;
             oFactura.id_cliente = oCliente3->id;
             oFactura.codigo_entidad = oCliente3->entidad_bancaria;

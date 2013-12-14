@@ -12,6 +12,7 @@ public:
 
     int id;
     int albaran;
+    int id_divisa;
     QDate fecha;
     QString pedido_cliente;
     int id_cliente;

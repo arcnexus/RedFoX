@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>932</width>
+    <width>962</width>
     <height>632</height>
    </rect>
   </property>
@@ -572,6 +572,19 @@ color: rgb(255,255,255);</string>
              </item>
              <item row="0" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <item>
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Divisa:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cboDivisa"/>
+               </item>
                <item>
                 <widget class="QLabel" name="label_21">
                  <property name="text">

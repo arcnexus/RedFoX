@@ -114,6 +114,13 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->cboporc_iva_gasto2->setModel(iva);
     ui->cboporc_iva_gasto3->setModel(iva);
 
+    //---------------------
+    // LLenar combo divisas
+    //---------------------
+    QSqlQueryModel *modelDivisa = new QSqlQueryModel(this);
+    modelDivisa->setQuery("select moneda from monedas order by moneda",Configuracion_global->groupDB);
+    ui->cboDivisa->setModel(modelDivisa);
+
     //-------------
     // Series
     //-------------
@@ -288,6 +295,12 @@ void FrmAlbaran::LLenarCampos() {
         int index = ui->cbo_forma_pago->findText(fp);
         ui->cbo_forma_pago->setCurrentIndex(index);
     }
+    //---------------------------
+    // DIVISA
+    //---------------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oAlbaran->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
     //----------------------------
     // Barra Busquedas
     //----------------------------
@@ -387,6 +400,12 @@ void FrmAlbaran::LLenarCamposCliente()
     oAlbaran->id_cliente = oCliente2->id;
     helper.setId_cliente(oCliente2->id);
     helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
+    //---------------------------
+    // DIVISA ALBARAN
+    //---------------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oAlbaran->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
 
 }
 
@@ -396,6 +415,7 @@ void FrmAlbaran::VaciarCampos() {
     QDate fecha;
     ui->txtcodigo_cliente->setText("");
     ui->txtalbaran->setText("");
+    ui->cboDivisa->setCurrentIndex(-1);
     ui->txtfecha->setDate(fecha.currentDate());
     ui->txtfecha_factura->setDate(fecha.currentDate());
     ui->txtcliente->setText("");
@@ -517,6 +537,7 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->codigo_cliente= (ui->txtcodigo_cliente->text());
     oAlbaran->serie = (ui->cboSerie->currentText());
     oAlbaran->albaran= (ui->txtalbaran->text().toInt());
+    oAlbaran->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
     oAlbaran->fecha= (ui->txtfecha->date());
     oAlbaran->fecha_factura= (ui->txtfecha_factura->date());
     oAlbaran->cliente= (ui->txtcliente->text());

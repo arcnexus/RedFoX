@@ -94,6 +94,7 @@ public:
     double iva_gasto3;
     int id_transportista;
     bool editable;
+    int id_divisa;
     bool set_impresa(bool state);
     void clear();
     bool borrar(int id);

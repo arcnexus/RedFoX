@@ -265,6 +265,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac["iva_gasto2"] = this->iva_gasto2;
     cab_fac["iva_gasto3"] = this->iva_gasto3;
     cab_fac["editable"] = this->editable;
+    cab_fac["id_divisa"] = this->id_divisa;
 
     bool updated = SqlCalls::SqlUpdate(cab_fac,"cab_fac",Configuracion_global->empresaDB,clausula,error);
 
@@ -485,6 +486,8 @@ void Factura::cargar(QSqlRecord *registro)
     this->iva_gasto2 = registro->field("iva_gasto2").value().toDouble();
     this->iva_gasto3 = registro->field("iva_gasto3").value().toDouble();
     this->editable = registro->field("editable").value().toBool();
+    this->id_divisa = registro->field("id_divisa").value().toInt();
+
 
 }
 

@@ -196,5 +196,6 @@
         <file>PNG/open.png</file>
         <file>PNG/partial.png</file>
         <file>PNG/image.png</file>
+        <file>jpg/agroevolution.jpg</file>
     </qresource>
 </RCC>

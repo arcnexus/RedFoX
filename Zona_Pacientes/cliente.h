@@ -97,6 +97,7 @@ public:
     int id_agente;
     int id_transportista;
     int grupo_iva;
+    int id_divisa;
     QSqlQuery queryClienteWeb;
     QSqlDatabase db;
     QSqlQuery *qryCliente;

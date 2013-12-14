@@ -1598,23 +1598,6 @@ color: rgb(255,255,255);</string>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLabel" name="label_33">
-               <property name="text">
-                <string>Tarifa Cliente:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="cbotarifa_cliente">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
            <item row="3" column="0">
@@ -1752,12 +1735,6 @@ color: rgb(255,255,255);</string>
                 </item>
                 <item row="4" column="1">
                  <widget class="QLineEdit" name="txtoficina_bancaria">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>50</width>
@@ -1788,12 +1765,6 @@ color: rgb(255,255,255);</string>
                 </item>
                 <item row="5" column="1">
                  <widget class="QLineEdit" name="txtdc">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>30</width>
@@ -1812,28 +1783,6 @@ color: rgb(255,255,255);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="2">
-                 <widget class="QLineEdit" name="txtvales">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::NoFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
                 <item row="6" column="0">
                  <widget class="QLabel" name="label_81">
                   <property name="text">
@@ -1842,14 +1791,7 @@ color: rgb(255,255,255);</string>
                  </widget>
                 </item>
                 <item row="6" column="1" colspan="2">
-                 <widget class="QLineEdit" name="txtcuenta_corriente">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtcuenta_corriente"/>
                 </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_76">
@@ -1860,12 +1802,6 @@ color: rgb(255,255,255);</string>
                 </item>
                 <item row="3" column="1">
                  <widget class="QLineEdit" name="txtentidad_bancaria">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>50</width>
@@ -1891,28 +1827,6 @@ color: rgb(255,255,255);</string>
                  <widget class="QCheckBox" name="chkClienteEmpresa">
                   <property name="text">
                    <string>Cliente Empresa (Aplicar IRPF)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QLineEdit" name="txtimporte_a_cuenta">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::NoFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -1995,6 +1909,58 @@ color: rgb(255,255,255);</string>
                  <widget class="QLabel" name="lblCuentavalida">
                   <property name="text">
                    <string>Cuenta Valida</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QLabel" name="label_65">
+                  <property name="text">
+                   <string>Divisa:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QComboBox" name="cboDivisa"/>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QLabel" name="label_33">
+                  <property name="text">
+                   <string>Tarifa Cliente:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="4">
+                 <widget class="QComboBox" name="cbotarifa_cliente"/>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="txtimporte_a_cuenta">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="text">
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="txtvales">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
+                  <property name="text">
+                   <string>0,00</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -3262,7 +3228,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>tablaPresupuestos</tabstop>
   <tabstop>tablaAsientos</tabstop>
   <tabstop>txtcuenta_cobros</tabstop>
-  <tabstop>cbotarifa_cliente</tabstop>
   <tabstop>txtNoviembre</tabstop>
   <tabstop>txtFebrero</tabstop>
   <tabstop>txtEnero</tabstop>

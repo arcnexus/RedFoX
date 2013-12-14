@@ -154,6 +154,16 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item>
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string>Divisa:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cboDivisa"/>
+             </item>
+             <item>
               <spacer name="horizontalSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>

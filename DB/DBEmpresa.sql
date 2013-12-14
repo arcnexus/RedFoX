@@ -243,6 +243,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_alb` (
   `id` INT(11) NOT NULL AUTO_INCREMENT , 
   `serie` CHAR(1) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `albaran` INT(11) NULL DEFAULT '0' ,
+  `id_divisa` INT(11) NOT NULL DEFAULT '1' ,
   `fecha` DATE NULL DEFAULT NULL ,
   `pedido_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `id_cliente` INT(11) NULL DEFAULT '0' ,
@@ -333,6 +334,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_fac` (
   `codigo_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
   `serie` CHAR(1) NULL DEFAULT NULL ,  
   `factura` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `id_divisa` INT(11) NOT NULL DEFAULT '1' ,
   `fecha` DATE NULL DEFAULT NULL ,
   `fecha_cobro` DATE NULL DEFAULT NULL ,
   `id_cliente` INT(11) NOT NULL DEFAULT '0' ,
@@ -436,6 +438,7 @@ COLLATE = utf8_unicode_ci;
 CREATE  TABLE IF NOT EXISTS `@empresa@`.`cab_pre` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `presupuesto` INT(11) NULL DEFAULT '0' ,
+  `id_divisa` INT(11) NOT NULL DEFAULT '1' ,
   `fecha` DATE NULL DEFAULT NULL ,
   `valido_hasta` DATE NULL DEFAULT NULL ,
   `codigo_cliente` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,

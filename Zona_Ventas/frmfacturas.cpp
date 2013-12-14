@@ -56,6 +56,13 @@ frmFacturas::frmFacturas( QWidget *parent) :
     //ui->txtcodigoArticulo->setFocus();
     ui->stackedWidget->setCurrentIndex(1);
 
+    //----------------------------
+    // Rellenar divisas
+    //----------------------------
+    QSqlQueryModel * modelDivisas = new QSqlQueryModel(this);
+    modelDivisas->setQuery("select moneda from monedas",Configuracion_global->groupDB);
+    ui->cboDivisa->setModel(modelDivisas);
+
 
     // --------------------------
     // Ver Facturas o Borradores
@@ -334,6 +341,14 @@ void frmFacturas::LLenarCampos() {
     helper.fillTable("empresa","lin_fac",filter);
     helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
     helper.setId_cliente(oCliente1->id);
+
+    //---------------------------
+    // DIVISA FACTURA
+    //---------------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oFactura->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
+
 }
 
 void frmFacturas::LLenarCamposCliente()
@@ -391,6 +406,10 @@ void frmFacturas::LLenarCamposCliente()
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto_pp,'f',Configuracion_global->decimales_campos_totales)));
     helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
+
+    QString divisa = Configuracion_global->Devolver_moneda(oCliente1->idTarifa);
+    int index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
 }
 
 void frmFacturas::VaciarCampos()
@@ -465,6 +484,7 @@ void frmFacturas::VaciarCampos()
     ui->SpinGastoDist1->setValue(0);
     ui->SpinGastoDist2->setValue(0);
     ui->SpinGastoDist3->setValue(0);
+    ui->cboDivisa->setCurrentIndex( -1);
 
     helper.fillTable("empresa","lin_fac","id_Cab = -1");
 }
@@ -608,6 +628,7 @@ void frmFacturas::LLenarFactura() {
     oFactura->iva_gasto1 = ui->spin_iva_gasto1->value();
     oFactura->iva_gasto2 = ui->spin_iva_gasto2->value();
     oFactura->iva_gasto3 = ui->spin_iva_gasto3->value();
+    oFactura->id_divisa  = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
 
 
 }

@@ -75,7 +75,12 @@ frmClientes::frmClientes(QWidget *parent) :
     QSqlQueryModel *queryAgentes = new QSqlQueryModel(this);
     queryAgentes->setQuery("Select nombre from agentes",Configuracion_global->groupDB);
     ui->cboagente->setModel(queryAgentes);
-
+    //-----------------------
+    // Rellenar divisas
+    //-----------------------
+    QSqlQueryModel * modelDivisas = new QSqlQueryModel(this);
+    modelDivisas->setQuery("select moneda from monedas order by moneda",Configuracion_global->groupDB);
+    ui->cboDivisa->setModel(modelDivisas);
 
     // Ocultar campos según configuración
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
@@ -291,6 +296,9 @@ void frmClientes::LLenarCampos()
     }
     indice = ui->cbotipo_dto->findText(QString::number(oCliente->tipo_dto_tarifa));
     ui->cbotipo_dto->setCurrentIndex(indice);
+    QString divisa = Configuracion_global->Devolver_moneda(oCliente->id_divisa);
+    indice = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(indice);
 
 
     // --------------------------
@@ -700,6 +708,7 @@ void frmClientes::LLenarCliente()
         oCliente->grupo_iva = 3;
     if(ui->radExportacion->isChecked())
         oCliente->grupo_iva = 4;
+    oCliente->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
 
 }
 

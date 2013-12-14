@@ -56,6 +56,7 @@ void Cliente::Guardar() {
     h_cliente["dia_pago1"] = this->dia_pago1;
     h_cliente["dia_pago2"] = this->dia_pago2;
     h_cliente["tarifa_cliente"] = this->tarifa_cliente;
+    h_cliente["id_divisa"] = this->id_divisa;
     QString importe_a_cuenta;
     importe_a_cuenta = QString::number(this->importe_a_cuenta);
     importe_a_cuenta = Configuracion_global->MonedatoDouble(importe_a_cuenta);
@@ -355,6 +356,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->forma_pago = registro.field("forma_pago").value().toString();
         this->dia_pago1 = registro.field("dia_pago1").value().toInt();
         this->dia_pago2 = registro.field("dia_pago2").value().toInt();
+        this->id_divisa = registro.field("id_divisa").value().toInt();
         this->tarifa_cliente = registro.field("tarifa_cliente").value().toInt();
         this->importe_a_cuenta = registro.field("importe_a_cuenta").value().toDouble();
         this->vales = registro.field("vales").value().toDouble();
@@ -465,6 +467,7 @@ void Cliente::clear()
     this->password_web = "";
     this->lIRPF= false;
     this->idTarifa = 0;
+    this->id_divisa = -1;
     this->ididioma =0;
     this->idioma = "";
     this->observaciones = "";

@@ -13,6 +13,7 @@ public:
     int pedido;
     QDate fecha;
     int id_cliente;
+    int id_divisa;
     int id_transportista;
     QString codigo_cliente;
     QString cliente;

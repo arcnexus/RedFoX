@@ -106,6 +106,14 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->btnSiguiente->setEnabled(true);
     ui->btnBuscar->setEnabled(true);
     ui->btnImprimir->setEnabled(false);
+
+    //-----------------------
+    // cargo divisas
+    //-----------------------
+    QSqlQueryModel *modelDivisas = new QSqlQueryModel(this);
+    modelDivisas->setQuery("select moneda from monedas order by moneda", Configuracion_global->groupDB);
+    ui->cboDivisa->setModel(modelDivisas);
+
     //-----------------------
     // tabla
     //-----------------------
@@ -252,6 +260,12 @@ void FrmPresupuestosCli::LLenarCampos()
     helper.fillTable("empresa","lin_pre",filter);
     helper.setId_cliente(oClientePres->id);
     helper.set_tipo_dto_tarifa(oClientePres->tipo_dto_tarifa);
+    //----------------------
+    // asigno divisa
+    //----------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oPres->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
 }
 
 void FrmPresupuestosCli::LLenarCamposCliente()
@@ -341,6 +355,12 @@ void FrmPresupuestosCli::LLenarCamposCliente()
     }
     helper.setId_cliente(oClientePres->id);
     helper.set_tipo_dto_tarifa(oClientePres->tipo_dto_tarifa);
+    //----------------------
+    // asigno divisa
+    //----------------------
+    QString divisa = Configuracion_global->Devolver_moneda(oClientePres->id_divisa);
+    index = ui->cboDivisa->findText(divisa);
+    ui->cboDivisa->setCurrentIndex(index);
 
 
 }
@@ -348,6 +368,7 @@ void FrmPresupuestosCli::LLenarCamposCliente()
 void FrmPresupuestosCli::LLenarPresupuesto()
 {
     oPres->presupuesto = (ui->txtpresupuesto->text().toInt());
+    oPres->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
     oPres->fecha = (ui->txtfecha->date());
     oPres->valido_hasta = (ui->txtvalido_hasta->date());
     oPres->codigo_cliente = (ui->txtcodigo_cliente->text());
