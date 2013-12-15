@@ -327,7 +327,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -1133,7 +1133,7 @@ color: rgb(0, 0, 241);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"> background-color: rgba(255, 96, 43, 0.882667);</string>
+              <string notr="true"> background-color: rgba(255, 96, 43, 0.114667);</string>
              </property>
              <property name="color" stdset="0">
               <color>
@@ -2139,12 +2139,18 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Marzo</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_48">
                <property name="text">
                 <string>Febrero:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2171,6 +2177,9 @@ color: rgb(255,255,255);</string>
               <widget class="QLabel" name="label_57">
                <property name="text">
                 <string>Octubre:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2236,12 +2245,18 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Diciembre:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="4" column="0">
               <widget class="QLabel" name="label_51">
                <property name="text">
                 <string>Mayo:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2307,12 +2322,18 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Septiembre:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_50">
                <property name="text">
                 <string>Abril:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2340,12 +2361,18 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Enero:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="1" column="2">
               <widget class="QLabel" name="label_55">
                <property name="text">
                 <string>Agosto:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2373,12 +2400,18 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Junio:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="label_54">
                <property name="text">
                 <string>Julio:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2425,6 +2458,9 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Noviembre:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="4" column="1">
@@ -2454,6 +2490,9 @@ color: rgb(255,255,255);</string>
               <widget class="QLabel" name="label_36">
                <property name="text">
                 <string>Importe Acumulado:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2519,12 +2558,18 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Deuda Actual:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_37">
                <property name="text">
                 <string>Fecha ultima compra:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -2555,6 +2600,9 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>Ventas Ejercicio:</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
               </widget>
              </item>
              <item row="4" column="0">
@@ -2573,15 +2621,24 @@ color: rgb(255,255,255);</string>
             </layout>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="OpenChart" name="graficaEstadistica" native="true">
+            <widget class="OpenChart" name="graficaEstadistica">
              <property name="minimumSize">
               <size>
                <width>0</width>
                <height>192</height>
               </size>
              </property>
-             <property name="Title" stdset="0">
+             <property name="Title">
               <string>Consumo por meses.</string>
+             </property>
+             <property name="Etiquetas" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="Valores" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="Leyenda" stdset="0">
+              <bool>false</bool>
              </property>
             </widget>
            </item>

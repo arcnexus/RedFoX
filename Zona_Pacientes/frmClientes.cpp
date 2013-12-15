@@ -539,6 +539,58 @@ void frmClientes::LLenarCampos()
     qModeldireccion->setQuery("select descripcion,id from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
                               Configuracion_global->groupDB);
     ui->lista_direccionesAlternativas->setModel(qModeldireccion);
+    //--------------------
+    // Acumulados
+    //--------------------
+    QMap <int,QSqlRecord> acum;
+    QString error;
+    acum = SqlCalls::SelectRecord("acum_clientes",QString("id_cliente =%1").arg(oCliente->id),
+                                  Configuracion_global->empresaDB,error);
+    QMapIterator <int,QSqlRecord> i(acum);
+    while(i.hasNext())
+    {
+        i.next();
+        ui->txtEnero->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_enero").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtFebrero->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_febrero").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtMarzo->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_marzo").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtAbril->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_abril").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtMayo->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_mayo").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtJunio->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_junio").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtjulio->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_julio").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtAgosto->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_agosto").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtSeptiembre->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_septiembre").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtOctubre->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_octubre").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtNoviembre->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_noviembre").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtDiciembre->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_diciembre").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+        ui->txtventas_ejercicio->setText(Configuracion_global->toFormatoMoneda(
+                                  QString::number(i.value().value("acum_ejercicio").toDouble(),'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+
+    }
     // -------------------
     // Grafica estadística
     //--------------------
@@ -1429,62 +1481,61 @@ void frmClientes::refrescar_grafica()
 {
     ui->graficaEstadistica->Clear();
     ui->graficaEstadistica->setTipo(OpenChart::BarraMultiple);
-    ui->graficaEstadistica->addMulibarColor("Compras",Qt::darkRed);
-    ui->graficaEstadistica->addMulibarColor("Ventas",Qt::darkGreen);
+    ui->graficaEstadistica->addMulibarColor("Compras",Qt::darkBlue);
     QVector <float> enero;
-    enero << ui->txtEnero->text().toFloat(); //Añadir tantos colores como elementos tenga el vector!
+    enero << Configuracion_global->MonedatoDouble(ui->txtEnero->text()); //Añadir tantos colores como elementos tenga el vector!
 
     ui->graficaEstadistica->addItem("Ene",enero);
 
 
     QVector <float> febrero;
-    febrero <<ui->txtFebrero->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    febrero <<Configuracion_global->MonedatoDouble(ui->txtFebrero->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->graficaEstadistica->addItem("Feb",febrero);
 
     QVector <float> marzo;
-    marzo <<ui->txtMarzo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    marzo <<Configuracion_global->MonedatoDouble(ui->txtMarzo->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->graficaEstadistica->addItem("Mar",marzo);
 
     QVector <float> abril;
-    abril <<ui->txtAbril->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    abril <<Configuracion_global->MonedatoDouble(ui->txtAbril->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->graficaEstadistica->addItem("Abr",abril);
 
     QVector <float> mayo;
-    mayo <<ui->txtMayo->text().toFloat();//Añadir tantos colores como elementos tenga el vector!
+    mayo <<Configuracion_global->MonedatoDouble(ui->txtMayo->text());//Añadir tantos colores como elementos tenga el vector!
 
     ui->graficaEstadistica->addItem("May",mayo);
 
     QVector <float> junio;
-    junio <<ui->txtJunio->text().toFloat();
+    junio <<Configuracion_global->MonedatoDouble(ui->txtJunio->text());
 
     ui->graficaEstadistica->addItem("jun",junio);
 
     QVector <float> julio;
-    julio <<ui->txtjulio->text().toFloat();
+    julio <<Configuracion_global->MonedatoDouble(ui->txtjulio->text());
 
     ui->graficaEstadistica->addItem("Jul",julio);
 
     QVector <float> agosto;
-    agosto <<ui->txtAgosto->text().toFloat();
+    agosto <<Configuracion_global->MonedatoDouble(ui->txtAgosto->text());
     ui->graficaEstadistica->addItem("Ago",agosto);
 
     QVector <float> septiembre;
-    septiembre <<ui->txtSeptiembre->text().toFloat();
+    septiembre <<Configuracion_global->MonedatoDouble(ui->txtSeptiembre->text());
     ui->graficaEstadistica->addItem("Sep",septiembre);
 
     QVector <float> octubre;
-    octubre <<ui->txtOctubre->text().toFloat();
+    octubre <<Configuracion_global->MonedatoDouble(ui->txtOctubre->text());
     ui->graficaEstadistica->addItem("Oct",octubre);
 
     QVector <float> noviembre;
-    noviembre <<ui->txtNoviembre->text().toFloat();
+    noviembre <<Configuracion_global->MonedatoDouble(ui->txtNoviembre->text());
     ui->graficaEstadistica->addItem("Nov",noviembre);
 
     QVector <float> diciembre;
-    diciembre <<ui->txtDiciembre->text().toFloat();
+    diciembre <<Configuracion_global->MonedatoDouble(ui->txtDiciembre->text());
     ui->graficaEstadistica->addItem("Dic",diciembre);
 
     ui->graficaEstadistica->repaint();

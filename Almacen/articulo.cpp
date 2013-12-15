@@ -692,6 +692,69 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
                                  tr("Ocurrió un error al guardar acumulados empresa").arg(acum.lastError().text()),
                                  tr("Aceptar"));
         }
+        if(id_cliente >0)
+        {
+            //-------------------------
+            // Acumulados de clientes
+            //-------------------------
+            if(QDate::currentDate().month() == 1)
+                imp = QString("acum_enero = acum_enero +%1").arg(importe);
+            if(QDate::currentDate().month() == 2)
+                imp = QString("acum_febrero = acum_febrero +%1").arg(importe);
+            if(QDate::currentDate().month() == 3)
+                imp = QString("acum_marzo = acum_marzo +%1").arg(importe);
+            if(QDate::currentDate().month() == 4)
+                imp = QString("acum_abril = acum_abril +%1").arg(importe);
+            if(QDate::currentDate().month() == 5)
+                imp = QString("acum_mayo = acum_mayo +%1").arg(importe);
+            if(QDate::currentDate().month() == 6)
+                imp = QString("acum_junio = acum_junio +%1").arg(importe);
+            if(QDate::currentDate().month() == 7)
+                imp = QString("acum_julio = acum_julio +%1").arg(importe);
+            if(QDate::currentDate().month() == 8)
+                imp = QString("acum_agosto = acum_agosto +%1").arg(importe);
+            if(QDate::currentDate().month() == 9)
+                imp = QString("acum_septiembre = acum_septiembre +%1").arg(importe);
+            if(QDate::currentDate().month() == 10)
+                imp = QString("acum_octubre = acum_octubre +%1").arg(importe);
+            if(QDate::currentDate().month() == 11)
+                imp = QString("acum_noviembre = acum_noviembre +%1").arg(importe);
+            if(QDate::currentDate().month() == 12)
+                imp = QString("acum_diciembre = acum_diciembre +%1").arg(importe);
+
+            QString ac = QString("acum_ejercicio = acum_ejercicio +%1").arg(importe);
+            // -----------------
+            // Acumulado ventas
+            //------------------
+            QMap <int,QSqlRecord> ac_cl;
+            ac_cl = SqlCalls::SelectRecord("acum_clientes",QString("id_cliente =%1").arg(id_cliente),
+                                           Configuracion_global->empresaDB,error);
+            if(ac_cl.count()==0)
+            {
+                QHash < QString, QVariant> h;
+                h["id_cliente"] = id_cliente;
+                SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->empresaDB,error);
+            }
+            cSQL = QString("update acum_clientes set %1,%2 where id_cliente = %3").arg(imp,ac,QString::number(id_cliente));
+            if(!acum.exec(cSQL)){
+                h["isOk"] = false;
+            }
+            //----------------------
+            // campos ficha cliente
+            //----------------------
+            QString fecha = QDate::currentDate().toString("yyyyMMdd");
+            cSQL = QString("update clientes set acumulado_ventas =  acumulado_ventas + %1,"
+                           "ventas_ejercicio = ventas_ejercicio + %1,"
+                           "fecha_ultima_compra = %2 where id = %3").arg(QString::number(importe),
+                                                                         fecha,
+                                                                         QString::number(id_cliente));
+            QSqlQuery cliente(Configuracion_global->groupDB);
+            if(!cliente.exec(cSQL))
+                    h["isOk"] =false;
+
+
+
+        }
 
     }
     return h;
