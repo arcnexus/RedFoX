@@ -327,7 +327,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -1007,7 +1007,7 @@ color: rgb(0, 0, 241);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"> background-color: rgba(255, 96, 43, 0.637333);</string>
+              <string notr="true"> background-color: rgba(255, 96, 43, 0.274667);</string>
              </property>
              <property name="color" stdset="0">
               <color>
