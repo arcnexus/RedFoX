@@ -338,7 +338,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->email = registro.field("email").value().toString();
         this->web = registro.field("web").value().toString();
         this->fecha_alta = registro.field("fecha_alta").value().toDate();
-        this->fechaCompra = registro.field("fechaCompra").value().toDate();
+        this->fechaCompra = registro.field("fecha_ultima_compra").value().toDate();
         this->acumulado_ventas = registro.field("acumulado_ventas").value().toDouble();
         this->ventas_ejercicio = registro.field("ventas_ejercicio").value().toDouble();
         this->riesgo_maximo = registro.field("riesgo_maximo").value().toDouble();

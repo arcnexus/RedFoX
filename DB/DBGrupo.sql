@@ -556,6 +556,29 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
 
+CREATE  TABLE IF NOT EXISTS `@grupo@`.`histo_clientes_deuda` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `id_cab` INT(11) NOT NULL DEFAULT '0' ,
+  `fecha_movimiento` DATE NULL DEFAULT NULL ,
+  `importe_anterior` DOUBLE NULL DEFAULT '0' ,
+  `pagado` DOUBLE NULL DEFAULT '0' ,
+  `pendiente_cobro` DOUBLE NULL DEFAULT '0' ,
+  `entidad` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `oficina` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `dc` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `cuenta` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL ,
+  `importe_efectivo` DOUBLE NULL DEFAULT NULL ,
+  `importe_tarjeta` DOUBLE NULL DEFAULT NULL ,
+  `importe_cheque` DOUBLE NULL DEFAULT NULL ,
+  `importe_transferencia` DOUBLE NULL DEFAULT NULL ,
+  `importe_internet` DOUBLE NULL DEFAULT NULL ,
+  `importe_vale` DOUBLE NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+
 CREATE TABLE IF NOT EXISTS `@grupo@`.`kits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo_kit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,

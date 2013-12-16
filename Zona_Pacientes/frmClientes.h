@@ -115,12 +115,15 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
     void on_tabla_busquedas_row_changed(QModelIndex current,QModelIndex previous);
+    void on_btnCobroTotal_clicked();
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
     QSqlQueryModel *modelFacturas;
     QSqlQueryModel *modelPoblaciones;
     QSqlQueryModel *qModeldireccion;
+    QSqlQueryModel *deudas ;
     QSqlQueryModel * m_clientes;
     QSqlDatabase dbCliente;
     QSqlQuery tbpaciente;

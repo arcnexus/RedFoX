@@ -197,5 +197,6 @@
         <file>PNG/partial.png</file>
         <file>PNG/image.png</file>
         <file>jpg/agroevolution.jpg</file>
+        <file>jpg/euros.jpg</file>
     </qresource>
 </RCC>

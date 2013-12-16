@@ -327,7 +327,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="tab">
           <property name="styleSheet">
@@ -359,12 +359,6 @@
            </item>
            <item row="4" column="1" colspan="5">
             <widget class="QLineEdit" name="txtnombre_comercial">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="maximumSize">
               <size>
                <width>774</width>
@@ -378,12 +372,6 @@
            </item>
            <item row="5" column="1" colspan="5">
             <widget class="QLineEdit" name="txtdireccion1">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -391,12 +379,6 @@
            </item>
            <item row="6" column="1" colspan="5">
             <widget class="QLineEdit" name="txtdireccion2">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -404,12 +386,6 @@
            </item>
            <item row="10" column="1" colspan="2">
             <widget class="QLineEdit" name="txtweb">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -456,12 +432,6 @@
            </item>
            <item row="3" column="1" colspan="5">
             <widget class="QLineEdit" name="txtnombre_fiscal">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -511,12 +481,6 @@
            </item>
            <item row="7" column="1">
             <widget class="QLineEdit" name="txtcp">
-             <property name="minimumSize">
-              <size>
-               <width>88</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="maximumSize">
               <size>
                <width>100</width>
@@ -550,12 +514,6 @@
            </item>
            <item row="8" column="1" colspan="2">
             <widget class="QLineEdit" name="txtprovincia">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="maximumSize">
               <size>
                <width>600</width>
@@ -589,12 +547,6 @@
            </item>
            <item row="9" column="4">
             <widget class="QLineEdit" name="txtfax">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -628,12 +580,6 @@
            </item>
            <item row="10" column="4">
             <widget class="QLineEdit" name="txtemail">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -651,12 +597,6 @@
            </item>
            <item row="8" column="4">
             <widget class="QLineEdit" name="txttelefono1">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -664,12 +604,6 @@
            </item>
            <item row="7" column="3" colspan="3">
             <widget class="QLineEdit" name="txtpoblacion">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -677,12 +611,6 @@
            </item>
            <item row="9" column="1" colspan="2">
             <widget class="QComboBox" name="cboPais">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string/>
              </property>
@@ -712,12 +640,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="txtnombre">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -738,12 +660,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="txtPrimerApellido">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -773,12 +689,6 @@
              </item>
              <item>
               <widget class="QLineEdit" name="txtSegundoApellido">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -833,12 +743,6 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="txtcodigo_cliente">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
@@ -878,12 +782,6 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="txtcif_nif">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
@@ -901,12 +799,6 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="txtCifIntracomunitario">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
@@ -1060,12 +952,6 @@
            </item>
            <item row="8" column="6" colspan="2">
             <widget class="QLineEdit" name="txttelefono2">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -1073,12 +959,6 @@
            </item>
            <item row="9" column="6" colspan="2">
             <widget class="QLineEdit" name="txtmovil">
-             <property name="minimumSize">
-              <size>
-               <width>129</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -1086,12 +966,6 @@
            </item>
            <item row="11" column="1" colspan="7">
             <widget class="QLineEdit" name="txtObservaciones">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -1133,7 +1007,7 @@ color: rgb(0, 0, 241);</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"> background-color: rgba(255, 96, 43, 0.114667);</string>
+              <string notr="true"> background-color: rgba(255, 96, 43, 0.637333);</string>
              </property>
              <property name="color" stdset="0">
               <color>
@@ -1250,24 +1124,10 @@ color: rgb(0, 0, 241);</string>
               <widget class="QLineEdit" name="txtemail_alternativa"/>
              </item>
              <item row="2" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1Alternativa2">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QLineEdit" name="txtdireccion1Alternativa2"/>
              </item>
              <item row="1" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1Alternativa1">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QLineEdit" name="txtdireccion1Alternativa1"/>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_27">
@@ -1286,23 +1146,10 @@ color: rgb(0, 0, 241);</string>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>27</height>
-                  </size>
-                 </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="txtpoblacionAlternativa">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>27</height>
-                  </size>
-                 </property>
-                </widget>
+                <widget class="QLineEdit" name="txtpoblacionAlternativa"/>
                </item>
               </layout>
              </item>
@@ -1335,14 +1182,7 @@ color: rgb(0, 0, 241);</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QLineEdit" name="txtprovinciaAlternativa">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QLineEdit" name="txtprovinciaAlternativa"/>
              </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label_6">
@@ -1421,14 +1261,7 @@ color: rgb(0, 0, 241);</string>
               <widget class="QTextEdit" name="txtcomentarios_alternativa"/>
              </item>
              <item row="0" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdescripcion_direccion">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QLineEdit" name="txtdescripcion_direccion"/>
              </item>
             </layout>
            </item>
@@ -1485,14 +1318,7 @@ color: rgb(255,255,255);</string>
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="txtdia_pago1">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QSpinBox" name="txtdia_pago1"/>
              </item>
              <item>
               <widget class="QLabel" name="label_69">
@@ -1502,14 +1328,7 @@ color: rgb(255,255,255);</string>
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="txtdia_pago2">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QSpinBox" name="txtdia_pago2"/>
              </item>
             </layout>
            </item>
@@ -1522,16 +1341,13 @@ color: rgb(255,255,255);</string>
                  <property name="text">
                   <string>Porcentaje DTO Fijo:</string>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
                 </widget>
                </item>
                <item>
                 <widget class="QLineEdit" name="txtporc_dto_cliente">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>27</height>
-                  </size>
-                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>50</width>
@@ -2013,14 +1829,7 @@ color: rgb(255,255,255);</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_contable">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtcuenta_contable"/>
                 </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_72">
@@ -2030,14 +1839,7 @@ color: rgb(255,255,255);</string>
                  </widget>
                 </item>
                 <item row="1" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_iva_repercutido">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtcuenta_iva_repercutido"/>
                 </item>
                 <item row="2" column="0">
                  <widget class="QLabel" name="label_73">
@@ -2047,14 +1849,7 @@ color: rgb(255,255,255);</string>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_deudas">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtcuenta_deudas"/>
                 </item>
                 <item row="3" column="0">
                  <widget class="QLabel" name="label_74">
@@ -2064,14 +1859,7 @@ color: rgb(255,255,255);</string>
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_cobros">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>27</height>
-                   </size>
-                  </property>
-                 </widget>
+                 <widget class="QLineEdit" name="txtcuenta_cobros"/>
                 </item>
                </layout>
               </item>
@@ -2111,14 +1899,7 @@ color: rgb(255,255,255);</string>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="cboforma_pago">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QComboBox" name="cboforma_pago"/>
              </item>
             </layout>
            </item>
@@ -2652,7 +2433,67 @@ color: rgb(255,255,255);</string>
            <string>Gestión deuda cliente</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_20">
+           <item row="3" column="1">
+            <widget class="QPushButton" name="btnCobroTotal">
+             <property name="text">
+              <string>Cobro </string>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/Fp.png</normaloff>:/Icons/PNG/Fp.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>34</width>
+               <height>34</height>
+              </size>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
+            <widget class="QLabel" name="label_83">
+             <property name="styleSheet">
+              <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+             </property>
+             <property name="text">
+              <string>Deudas</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QRadioButton" name="radPendientes">
+                <property name="text">
+                 <string>Pendientes</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radPagadas">
+                <property name="text">
+                 <string>Pagadas</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" rowspan="4">
             <widget class="QTableView" name="TablaDeudas">
              <property name="alternatingRowColors">
               <bool>true</bool>
@@ -2667,6 +2508,36 @@ color: rgb(255,255,255);</string>
               <bool>true</bool>
              </attribute>
             </widget>
+           </item>
+           <item row="2" column="1">
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="0" colspan="2">
+            <widget class="QLabel" name="label_84">
+             <property name="styleSheet">
+              <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+             </property>
+             <property name="text">
+              <string>Historial de deuda</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="QTableView" name="tableView"/>
            </item>
           </layout>
          </widget>

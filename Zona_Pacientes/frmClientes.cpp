@@ -10,6 +10,7 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Almacen/frmexcepciones.h"
+#include "../Zona_Ventas/frmgestioncobros2.h"
 
 frmClientes::frmClientes(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -215,10 +216,14 @@ void frmClientes::LLenarCampos()
     ui->txtweb->setText(oCliente->web);
     ui->txtfecha_alta->setDate(oCliente->fecha_alta);
     ui->txtfecha_ultima_compra->setDate(oCliente->fechaCompra);
-    ui->txtimporteAcumulado->setText(Configuracion_global->toFormatoMoneda(QString::number( oCliente->acumulado_ventas)));
-    ui->txtventas_ejercicio->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->ventas_ejercicio)));
-    ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->riesgo_maximo)));
-    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->deuda_actual)));
+    ui->txtimporteAcumulado->setText(Configuracion_global->toFormatoMoneda(QString::number( oCliente->acumulado_ventas,'f',
+                                                                                            Configuracion_global->decimales_campos_totales)));
+    ui->txtventas_ejercicio->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->ventas_ejercicio,'f',
+                                                                                           Configuracion_global->decimales_campos_totales)));
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->riesgo_maximo,'f',
+                                                                                           Configuracion_global->decimales_campos_totales)));
+    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->deuda_actual,'f',
+                                                                                       Configuracion_global->decimales_campos_totales)));
     ui->txtcomentarios->setText(oCliente->comentarios);
 
 
@@ -311,7 +316,7 @@ void frmClientes::LLenarCampos()
     // DEUDAS
     //----------------
 
-    QSqlQueryModel *deudas = new QSqlQueryModel(this);
+    deudas = new QSqlQueryModel(this);
     QString cSQL;
     cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
             + QString::number(oCliente->id);
@@ -1858,3 +1863,33 @@ void frmClientes::ocultarBusqueda()
 }
 
 
+
+void frmClientes::on_btnCobroTotal_clicked()
+{
+    QModelIndex index;
+    index = ui->TablaDeudas->currentIndex();
+    int id= ui->TablaDeudas->model()->index(index.row(),0).data().toInt();
+    int id_factura,id_ticket;
+    double pendiente_cobro;
+
+    QMap <int,QSqlRecord> d;
+    QString error;
+    d = SqlCalls::SelectRecord("clientes_deuda",QString("id= %1").arg(id),Configuracion_global->groupDB,error);
+    if(d.count()>0)
+    {
+        id_ticket = d.value(id).value("id_ticket").toInt();
+        id_factura = d.value(id).value("id_factura").toInt();
+        pendiente_cobro = d.value(id).value("pendiente_cobro").toDouble();
+
+    }
+    FrmGestionCobros2 gc2(this);
+    gc2.setId_factura(id_factura);
+    gc2.setId_ticket(id_ticket);
+    gc2.setImporte(pendiente_cobro,id);
+    gc2.exec();
+    QString cSQL;
+    cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+            + QString::number(oCliente->id);
+    deudas->setQuery(cSQL,Configuracion_global->groupDB);
+
+}
