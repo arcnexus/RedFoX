@@ -62,13 +62,14 @@ frmClientes::frmClientes(QWidget *parent) :
     modelFP = new QSqlQueryModel(this);
     modelFP->setQuery("Select forma_pago from formpago",Configuracion_global->groupDB);
     ui->cboforma_pago->setModel(modelFP);
+
     //--------------------------
     // Rellenar transportistas
     //--------------------------
-
     QSqlQueryModel *queryTransportistas = new QSqlQueryModel(this);
     queryTransportistas->setQuery("Select transportista from transportista",Configuracion_global->groupDB);
     ui->cbotransportista->setModel(queryTransportistas);
+
     //--------------------
     // Rellenar agentes
     //--------------------
@@ -76,6 +77,7 @@ frmClientes::frmClientes(QWidget *parent) :
     QSqlQueryModel *queryAgentes = new QSqlQueryModel(this);
     queryAgentes->setQuery("Select nombre from agentes",Configuracion_global->groupDB);
     ui->cboagente->setModel(queryAgentes);
+
     //-----------------------
     // Rellenar divisas
     //-----------------------
@@ -318,8 +320,13 @@ void frmClientes::LLenarCampos()
 
     deudas = new QSqlQueryModel(this);
     QString cSQL;
-    cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-            + QString::number(oCliente->id);
+
+    if(ui->radPendientes->isChecked())
+        cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+                + QString::number(oCliente->id)+ " and pendiente_cobro >0";
+    else
+        cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+                + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
     ui->TablaDeudas->setModel(deudas);
     ui->TablaDeudas->setColumnHidden(0,true);
@@ -1888,8 +1895,28 @@ void frmClientes::on_btnCobroTotal_clicked()
     gc2.setImporte(pendiente_cobro,id);
     gc2.exec();
     QString cSQL;
-    cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-            + QString::number(oCliente->id);
+    if(ui->radPendientes->isChecked())
+        cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+                + QString::number(oCliente->id)+ " and pendiente_cobro >0";
+    else
+        cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+                + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
 
+}
+
+void frmClientes::on_radPendientes_toggled(bool checked)
+{
+    QString cSQL;
+    if(checked)
+    {
+        cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+                + QString::number(oCliente->id)+ " and pendiente_cobro >0";
+    }else
+    {
+        cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
+                + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
+
+    }
+    deudas->setQuery(cSQL,Configuracion_global->groupDB);
 }

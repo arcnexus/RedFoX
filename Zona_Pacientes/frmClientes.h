@@ -117,6 +117,8 @@ private slots:
     void on_tabla_busquedas_row_changed(QModelIndex current,QModelIndex previous);
     void on_btnCobroTotal_clicked();
 
+    void on_radPendientes_toggled(bool checked);
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
