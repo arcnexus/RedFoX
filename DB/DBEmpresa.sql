@@ -646,6 +646,7 @@ CREATE  TABLE IF NOT EXISTS `@empresa@`.`clientes_deuda` (
   `importe_tarjeta` DOUBLE NULL DEFAULT NULL ,
   `importe_cheque` DOUBLE NULL DEFAULT NULL ,
   `importe_transferencia` DOUBLE NULL DEFAULT NULL ,
+  `importe_domiciliacion` DOUBLE NULL DEFAULT NULL ,
   `importe_internet` DOUBLE NULL DEFAULT NULL ,
   `importe_vale` DOUBLE NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) )

@@ -51,6 +51,7 @@ private:
     {
         double efectivo;
         double transferencia;
+        double domiciliacion;
         double tarjeta;
         double cheque;
         double internet;

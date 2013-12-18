@@ -12,6 +12,13 @@ FrmGestionCobros2::FrmGestionCobros2(QWidget *parent) :
     //-------------------
     // Conexiones
     //-------------------
+
+    //-------------------
+    // Entidades
+    //-------------------
+    QSqlQueryModel *model_bancos = new QSqlQueryModel(this);
+    model_bancos->setQuery("select descripcion from bancos", Configuracion_global->groupDB);
+    ui->cboEntidad->setModel(model_bancos);
 }
 
 FrmGestionCobros2::~FrmGestionCobros2()
@@ -28,13 +35,19 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     val->tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
     val->transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
     val->vale = Configuracion_global->MonedatoDouble(ui->txtVale->text());
+    val->domiciliacion = Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text());
 
+    // ---------------------------------------
+    // Actualizamos tabla clientes_deuda
+    //----------------------------------------
     QHash <QString,QVariant> e;
     e["importe_efectivo"] = val->efectivo;
     e["importe_cheque"] = val->cheque;
+    e["importe_domiciliacion"] = val->domiciliacion;
     e["importe_internet"] = val->internet;
     e["importe_tarjeta"] = val->tarjeta;
     e["importe_transferencia"] = val->transferencia;
+
     e["importe_vale"] = val->vale;
     e["pagado"] = Configuracion_global->MonedatoDouble(ui->txtEntrega->text());
     e["pendiente_cobro"] = Configuracion_global->MonedatoDouble(ui->txtPendiente->text());
@@ -44,8 +57,11 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     if(!updated)
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
     else {
-        if(val->efectivo >0 || val->tarjeta >0 || val->cheque >0 || val->vale)
+        if(val->efectivo >0 || val->tarjeta >0 || val->cheque >0 || val->vale >0)
         {
+            //-----------------------------------
+            // Guardar/mostrar en cierre de caja
+            //-----------------------------------
             if(QMessageBox::question(this,tr("Gestión de cobros y pagos"),
                                      tr("¿Desea que los cobros efectivo, tarjeta, cheque o vale aparezcan reflejados en el cierre de caja?"
                                         "\nEsto es importante si el dinero o resguardo de cobro se guarda en el cajón portamonedas"),
@@ -102,6 +118,38 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 new_id = SqlCalls::SqlInsert(h,"e_s_caja",Configuracion_global->empresaDB,error);
                 if(new_id <0)
                     QMessageBox::warning(this,tr("Gestión de cobros"),tr("se produjo un error al insertar: %1").arg(error));
+            }
+        } else{
+            if(val->internet >0 || val->transferencia >0 || val->domiciliacion >0)
+            {
+                //-----------------------
+                // recupero datos cuenta
+                //-----------------------
+                QHash <QString, QVariant > deuda;
+                QMap<int,QSqlRecord> bancos;
+                bancos = SqlCalls::SelectRecord("bancos",QString("descripcion = '%1'").arg(ui->cboEntidad->currentText()),
+                                                Configuracion_global->groupDB,error);
+                if(error.isEmpty())
+                {
+                    QMapIterator <int, QSqlRecord> i(bancos);
+                    while (i.hasNext())
+                    {
+                        i.next();
+                        deuda["entidad"] = i.value().value("entidad").toString();
+                        deuda["oficina"] = i.value().value("oficina").toString();
+                        deuda["dc"] = i.value().value("dc").toString();
+                        deuda["cuenta"] = i.value().value("cuenta").toString();
+
+                    }
+
+                } else
+                {
+                    QMessageBox::warning(this,tr("Ocurrió un error al localizar la cuenta :%1").arg(error),tr("Aceptar"));
+                }
+                bool updated = SqlCalls::SqlUpdate(deuda,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
+                if(!updated)
+                    QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos de la deuda:%1").arg(error),
+                                         tr("Aceptar"));
             }
         }
 
