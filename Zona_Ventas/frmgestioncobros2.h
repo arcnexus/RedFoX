@@ -41,6 +41,8 @@ private slots:
 
     void calcular();
 
+    void on_txtDomiciliacion_editingFinished();
+
 private:
     Ui::FrmGestionCobros2 *ui;
     double importe;

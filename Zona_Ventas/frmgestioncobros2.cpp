@@ -269,15 +269,18 @@ void FrmGestionCobros2::on_txtInternet_editingFinished()
 
 void FrmGestionCobros2::calcular()
 {
-    double pendiente,efectivo,transferencia,tarjeta,cheque,internet,nuevo_pendiente,cambio,pagado;
+    double pendiente,efectivo,transferencia,tarjeta,cheque,internet;
+    double domiciliacion,nuevo_pendiente,cambio,pagado;
+
     pendiente = Configuracion_global->MonedatoDouble(ui->txtImporte_pendiente->text());
     efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
     transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
+    domiciliacion = Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text());
     tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
     cheque = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
     internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
 
-    pagado = efectivo + transferencia + tarjeta + cheque + internet;
+    pagado = efectivo + transferencia + tarjeta + cheque + internet + domiciliacion;
     ui->txtEntrega->setText(Configuracion_global->toFormatoMoneda(QString::number(pagado,'f',2)));
     nuevo_pendiente = pendiente - pagado;
     if(nuevo_pendiente >0)
@@ -315,3 +318,12 @@ void FrmGestionCobros2::setId_factura(int value)
 
 
 
+
+void FrmGestionCobros2::on_txtDomiciliacion_editingFinished()
+{
+    ui->txtDomiciliacion->blockSignals(true);
+    ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(ui->txtDomiciliacion->text()));
+    calcular();
+    ui->txtDomiciliacion->blockSignals(false);
+
+}
