@@ -210,7 +210,9 @@ SOURCES += main.cpp\
     TPV/frmdevolucion2.cpp \
     TPV/frmcrearvale.cpp \
     Zona_Pacientes/vale.cpp \
-    Auxiliares/frmeditaravisos.cpp
+    Auxiliares/frmeditaravisos.cpp \
+    EditorReports/reportacumulator.cpp \
+    EditorReports/editacum.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -386,7 +388,9 @@ HEADERS  += mainwindow.h \
     TPV/frmdevolucion2.h \
     TPV/frmcrearvale.h \
     Zona_Pacientes/vale.h \
-    Auxiliares/frmeditaravisos.h
+    Auxiliares/frmeditaravisos.h \
+    EditorReports/reportacumulator.h \
+    EditorReports/editacum.h
 
 
 
@@ -478,7 +482,8 @@ FORMS    += mainwindow.ui \
     TPV/frmcajasabiertas.ui \
     TPV/frmdevolucion2.ui \
     TPV/frmcrearvale.ui \
-    Auxiliares/frmeditaravisos.ui
+    Auxiliares/frmeditaravisos.ui \
+    EditorReports/editacum.ui
 
 RESOURCES += \
     maya.qrc \
@@ -562,13 +567,6 @@ DEPENDPATH += $$PWD/CryptoLIBS
 #else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptlib.lib
 
 
-unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lcryptopp
-
-INCLUDEPATH += $$PWD/../../../../usr/include
-DEPENDPATH += $$PWD/../../../../usr/include
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libcrypto.so
-
 unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
 
 INCLUDEPATH += $$PWD/BlinkLabel
@@ -581,3 +579,5 @@ INCLUDEPATH += $$PWD/BlinkLabel
 DEPENDPATH += $$PWD/BlinkLabel
 
 
+
+unix:!macx: LIBS += -lcryptopp
