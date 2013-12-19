@@ -479,11 +479,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
             bindKey = QString(":%1").arg(lCla.at(1));
         }
         //init acums
-        QStringList i_acums_list = ele.attribute("acum").split(",");
-        QMap<QString,float> _i_acums;
-        foreach (QString _a, i_acums_list) {
-            _i_acums[_a]=0.0;
-        }
+
 
         QPair<QString,QString> gSql = getSql(ele.attribute("SqlGlobal"),queryClausules);
         QString first = gSql.first;
@@ -499,6 +495,12 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         {
             while(gQuery.next())
             {
+                QStringList i_acums_list = ele.attribute("acum").split(",");
+                QMap<QString,float> _i_acums;
+                foreach (QString _a, i_acums_list) {
+                    _i_acums[_a]=0.0;
+                }
+
                 QSqlRecord record = gQuery.record();
                 QDomNode exit = doc.createElement("section");
                 bool appenExit = true;
