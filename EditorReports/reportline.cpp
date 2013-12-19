@@ -1,8 +1,8 @@
 #include "reportline.h"
 #include "editlinedlg.h"
 #include "section.h"
-ReportLine::ReportLine(QGraphicsItem *parent):
-    Container(parent)
+ReportLine::ReportLine(QString name,QGraphicsItem *parent):
+    Container(name,parent)
 {
     m_penWidth = 1;
     m_penColor = Qt::black;
@@ -72,6 +72,7 @@ void ReportLine::parseXml(QDomElement element , QPointF origin)
 
     element.attribute("Orientacion") == "V" ? setOrientacion(Vertical)
                                  : setOrientacion(Horizontal);
+    this->setName(element.attribute("name"));
 
 }
 

@@ -1,15 +1,11 @@
-#ifndef REPORTPARAMA_H
-#define REPORTPARAMA_H
+#ifndef REPORTACUMULATOR_H
+#define REPORTACUMULATOR_H
 
-#include "container.h"
-
-
-class reportParama : public Container
+#include "customlabel.h"
+class ReportAcumulator : public Container
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString Text READ Text WRITE setText NOTIFY TextChanged)
-    Q_PROPERTY(_Orientacion Orientacion READ Orientacion WRITE setOrientacion NOTIFY OrientacionChanged)
     Q_PROPERTY(_Aling Alineacion READ Alineacion WRITE setAlineacion NOTIFY AlineacionChanged)
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setfontFamily NOTIFY fontFamilyChanged)
     Q_PROPERTY(int fontSize READ fontSize WRITE setfontSize NOTIFY fontSizeChanged)
@@ -18,12 +14,13 @@ class reportParama : public Container
     Q_PROPERTY(bool underlined READ underlined WRITE setunderlined NOTIFY underlinedChanged)
     Q_PROPERTY(QFont Font READ Font WRITE setFont NOTIFY FontChanged)
     Q_PROPERTY(QColor fontColor READ fontColor WRITE setfontColor NOTIFY fontColorChanged)
-    Q_PROPERTY(QString arg READ arg WRITE setarg NOTIFY argChanged)
+    Q_PROPERTY(int formato READ formato WRITE setformato NOTIFY formatoChanged)
 
 public:
-    explicit reportParama(QString name, QGraphicsItem  *parent = 0);
+    explicit ReportAcumulator(QString name, QGraphicsItem *parent = 0);
+
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
-    void parseXml(QDomElement element, QPointF origin);
+    void parseXml(QDomElement, QPointF origin);
     void editMe();
 
     int type() const
@@ -31,8 +28,7 @@ public:
         // Enable the use of qgraphicsitem_cast with this item.
         return Type;
     }
-    QString Text() const;
-    _Orientacion Orientacion() const;
+
     _Aling Alineacion() const;
     QString fontFamily() const;
     int fontSize() const;
@@ -41,26 +37,33 @@ public:
     bool underlined() const;
     QFont Font() const;
     QColor fontColor() const;
-    QString arg() const;
+    int formato() const;
+
+    QString target() const;
+    void setTarget(const QString &target);
 
 signals:
-    
-    void TextChanged(QString arg);
-    void OrientacionChanged(_Orientacion arg);
+
     void AlineacionChanged(_Aling arg);
+
     void fontFamilyChanged(QString arg);
+
     void fontSizeChanged(int arg);
+
     void fontWeigthChanged(int arg);
+
     void italicFontChanged(bool arg);
+
     void underlinedChanged(bool arg);
+
     void FontChanged(QFont arg);
+
     void fontColorChanged(QColor arg);
-    void argChanged(QString arg);
+
+    void formatoChanged(int arg);
 
 public slots:
 
-    void setText(QString arg);
-    void setOrientacion(_Orientacion arg);
     void setAlineacion(_Aling arg);
     void setfontFamily(QString arg);
     void setfontSize(int arg);
@@ -69,14 +72,11 @@ public slots:
     void setunderlined(bool arg);
     void setFont(QFont arg);
     void setfontColor(QColor arg);
-    void setarg(QString arg);
-
-protected:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void setformato(int arg);
 
 private:
-    QString m_Text;
-    _Orientacion m_Orientacion;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
     _Aling m_Alineacion;
     QString m_fontFamily;
     int m_fontSize;
@@ -85,7 +85,8 @@ private:
     bool m_underlined;
     QFont m_Font;
     QColor m_fontColor;
-    QString m_arg;
+    int m_formato;
+    QString m_target;
 };
 
-#endif // REPORTPARAMA_H
+#endif // REPORTACUMULATOR_H

@@ -13,6 +13,7 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     view(this)
 {
     render = 0;
+    insertor = 0;
     ui->setupUi(this);
     view.setScene(&scene);
     this->setCentralWidget(&view);
@@ -52,6 +53,7 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     connect(ui->actionCampo,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionCampo_Relacional,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionParametro,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
+    connect(ui->actionAcumulador,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
 }
 
 ReportDesigWin::~ReportDesigWin()
@@ -65,6 +67,15 @@ void ReportDesigWin::element_toggled(bool arg1)
 {
     if(arg1)
     {
+        if(insertor)
+        {
+            if(insertor->isChecked())
+            {
+                insertor->blockSignals(true);
+                insertor->setChecked(false);
+                insertor->blockSignals(false);
+            }
+        }
         QObject * send = sender();
         insertor = qobject_cast<QAction*>(send);
         if(send == ui->actionRectangulo_redondeado)
@@ -83,9 +94,14 @@ void ReportDesigWin::element_toggled(bool arg1)
             paper.prepareItemInsert(Paper::CampoRelacional);
         else if(send == ui->actionParametro)
             paper.prepareItemInsert(Paper::Parametro);
+        else if(send == ui->actionAcumulador)
+            paper.prepareItemInsert(Paper::Acumulador);
     }
     else
+    {
+        insertor = 0;
         paper.stopInsertingItems();
+    }
 }
 
 void ReportDesigWin::on_actionGuardar_triggered()

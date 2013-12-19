@@ -32,6 +32,7 @@ EditTextDlg::EditTextDlg(CustomLabel *lbl, QWidget *parent) :
     previewLabel->setFlag(QGraphicsItem::ItemIsSelectable,false);
 
     scene.addItem(previewLabel);
+    ui->txtNombre->setText(label->name());
     connect(ui->pushButton,SIGNAL(clicked()),this,SLOT(reject()));
 }
 
@@ -121,6 +122,7 @@ void EditTextDlg::on_btnRigth_clicked()
 
 void EditTextDlg::on_btnAceptar_clicked()
 {
+    label->setName(ui->txtNombre->text());
     label->setText(previewLabel->Text());
     label->setfontWeigth(previewLabel->fontWeigth());
     label->setFont(previewLabel->Font());

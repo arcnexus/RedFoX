@@ -365,6 +365,13 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         root.setAttribute("lblPaperMarginIzq",_aux.attribute("lblPaperMarginIzq"));
         root.setAttribute("lblPaperMarginDer",_aux.attribute("lblPaperMarginDer"));
     }
+
+    QMap<QString,float> _paper_acums;
+    QStringList acums = _aux.attribute("acum").split(",");
+    foreach (QString s, acums) {
+        _paper_acums[s] = 0.0;
+    }
+
     while (!child.isNull())
     {
         QDomNode sections = child.firstChild();
@@ -471,6 +478,13 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
             clausulaInterna = QString("%1=:%2").arg(lCla.at(0)).arg(lCla.at(1));
             bindKey = QString(":%1").arg(lCla.at(1));
         }
+        //init acums
+        QStringList i_acums_list = ele.attribute("acum").split(",");
+        QMap<QString,float> _i_acums;
+        foreach (QString _a, i_acums_list) {
+            _i_acums[_a]=0.0;
+        }
+
         QPair<QString,QString> gSql = getSql(ele.attribute("SqlGlobal"),queryClausules);
         QString first = gSql.first;
 
@@ -606,6 +620,8 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                     iCopy.toElement().setAttribute("size",siz+diff+10);
                                                     ele.setAttribute("h",r2.height()+10);
                                                 }
+                                                if(_i_acums.contains(ele.attribute("name")))
+                                                    _i_acums[ele.attribute("name")]+= getNumber(text,formato);
                                             }
                                             else if(ele.attribute("id")=="RelationalField")
                                             {
@@ -632,7 +648,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                ele.setAttribute("img-data",QString(b));
                                             }
                                             child = child.nextSibling();
-                                        }
+                                        }                                        
                                         exit.appendChild(iCopy);
                                     }while(iQuery.next());
                                 }
@@ -737,6 +753,14 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 if(value.size()== 3)
                                     b = record.value(value.at(2)).toByteArray();
                                 ele.setAttribute("img-data",QString(b));
+                            }
+                            if(ele.attribute("id")=="Acumulador")
+                            {
+                                ele.setAttribute("id","Label");
+                                QString text = "";
+                                int formato = ele.attribute("formato").toDouble();
+                                text = applyFormato(QString::number(_i_acums.value(ele.attribute("target")),'f',2),formato);
+                                ele.setAttribute("Text",text);
                             }
                             child = child.nextSibling();
                         }
@@ -877,6 +901,21 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                     {
                         pageUsable -= bEle.attribute("size").toDouble();
                         sec.appendChild(body);
+
+                        QDomNode child = body.firstChild();
+                        while(!child.isNull())
+                        {
+                            QDomElement ele = child.toElement();
+
+                            if(_paper_acums.contains(ele.attribute("name")))
+                            {
+                                QString sValue = ele.attribute("Text");
+                                _paper_acums[ele.attribute("name")] += getNumber(sValue,ele.attribute("formato").toInt());
+                            }
+
+                            child = child.nextSibling();
+                        }
+
                         if(!bodyIt.hasNext())//last body of section
                         {
                             if(haveFoot)
@@ -889,7 +928,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                     else
                     {
                         if(havePFooter)
-                            pageNode.appendChild(PFootElement.cloneNode(true));
+                            endPage(pageNode,PFootElement.cloneNode(true),_paper_acums);
                         pageNode = startPage(usable,PFooterSiz, RHeaderSiz,RFooterSiz,doc,havePHeader,PHeaderElement,selects);
                         ipageCount++;
                         root.appendChild(pageNode);
@@ -908,6 +947,21 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                         }
                         pageUsable -= bEle.attribute("size").toDouble();
                         sec.appendChild(body);
+
+                        QDomNode child = body.firstChild();
+                        while(!child.isNull())
+                        {
+                            QDomElement ele = child.toElement();
+
+                            if(_paper_acums.contains(ele.attribute("name")))
+                            {
+                                QString sValue = ele.attribute("Text");
+                                _paper_acums[ele.attribute("name")] += getNumber(sValue,ele.attribute("formato").toInt());
+                            }
+
+                            child = child.nextSibling();
+                        }
+
                         if(!bodyIt.hasNext())//last body
                         {
                             if(haveFoot)
@@ -926,11 +980,25 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                         {
                             pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
+
+                            QDomNode child = body.firstChild();
+                            while(!child.isNull())
+                            {
+                                QDomElement ele = child.toElement();
+
+                                if(_paper_acums.contains(ele.attribute("name")))
+                                {
+                                    QString sValue = ele.attribute("Text");
+                                    _paper_acums[ele.attribute("name")] += getNumber(sValue,ele.attribute("formato").toInt());
+                                }
+
+                                child = child.nextSibling();
+                            }
                         }
                         else
                         {
-                            if(havePFooter)
-                                pageNode.appendChild(PFootElement.cloneNode(true));
+                            if(havePFooter)                               
+                                endPage(pageNode,PFootElement.cloneNode(true),_paper_acums);
                             pageNode = startPage(usable,PFooterSiz, RHeaderSiz,RFooterSiz,doc,havePHeader,PHeaderElement,selects);
                             ipageCount++;
                             root.appendChild(pageNode);
@@ -949,6 +1017,20 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             }
                             pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
+
+                            QDomNode child = body.firstChild();
+                            while(!child.isNull())
+                            {
+                                QDomElement ele = child.toElement();
+
+                                if(_paper_acums.contains(ele.attribute("name")))
+                                {
+                                    QString sValue = ele.attribute("Text");
+                                    _paper_acums[ele.attribute("name")] += getNumber(sValue,ele.attribute("formato").toInt());
+                                }
+
+                                child = child.nextSibling();
+                            }
                         }
                     }
                     else
@@ -960,6 +1042,21 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                         {
                             pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
+
+                            QDomNode child = body.firstChild();
+                            while(!child.isNull())
+                            {
+                                QDomElement ele = child.toElement();
+
+                                if(_paper_acums.contains(ele.attribute("name")))
+                                {
+                                    QString sValue = ele.attribute("Text");
+                                    _paper_acums[ele.attribute("name")] += getNumber(sValue,ele.attribute("formato").toInt());
+                                }
+
+                                child = child.nextSibling();
+                            }
+
                             if(!bodyIt.hasNext())//last body of section & report
                             {
                                 if(haveFoot)
@@ -972,7 +1069,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                         else
                         {
                             if(havePFooter)
-                                pageNode.appendChild(PFootElement.cloneNode(true));
+                                endPage(pageNode,PFootElement.cloneNode(true),_paper_acums);
                             pageNode = startPage(usable,PFooterSiz, RHeaderSiz,RFooterSiz,doc,havePHeader,PHeaderElement,selects);
                             ipageCount++;
                             root.appendChild(pageNode);
@@ -991,6 +1088,21 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             }
                             pageUsable -= bEle.attribute("size").toDouble();
                             sec.appendChild(body);
+
+                            QDomNode child = body.firstChild();
+                            while(!child.isNull())
+                            {
+                                QDomElement ele = child.toElement();
+
+                                if(_paper_acums.contains(ele.attribute("name")))
+                                {
+                                    QString sValue = ele.attribute("Text");
+                                    _paper_acums[ele.attribute("name")] += getNumber(sValue,ele.attribute("formato").toInt());
+                                }
+
+                                child = child.nextSibling();
+                            }
+
                             if(!bodyIt.hasNext())//last body
                             {
                                 if(haveFoot)
@@ -1007,7 +1119,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     }
 
     if(havePFooter && PFooterOnAll)
-        pageNode.appendChild(PFootElement.cloneNode(true));
+        endPage(pageNode,PFootElement.cloneNode(true),_paper_acums);
     if(haveRFooter)
     {
         pageNode.appendChild(RFootElement);
@@ -1031,6 +1143,21 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                 }
             }
             sec = sec.nextSibling();
+        }
+
+        QDomNode child = RFootElement.firstChild();
+        while(!child.isNull())
+        {
+            QDomElement ele = child.toElement();
+            if(ele.attribute("id")=="Acumulador")
+            {
+                ele.setAttribute("id","Label");
+                QString text = "";
+                int formato = ele.attribute("formato").toDouble();
+                text = applyFormato(QString::number(_paper_acums.value(ele.attribute("target")),'f',2),formato);
+                ele.setAttribute("Text",text);
+            }
+            child = child.nextSibling();
         }
     }
 
@@ -1553,6 +1680,27 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
     return toRet;
 }
 
+QDomNode ReportRenderer::endPage(QDomNode pageNode, QDomNode footerNode , QMap<QString, float> _Acums)
+{
+    QDomNode n = footerNode.cloneNode(true);
+    pageNode.appendChild(n);
+    QDomNode child = n.firstChild();
+    while(!child.isNull())
+    {
+        QDomElement ele = child.toElement();
+        if(ele.attribute("id")=="Acumulador")
+        {
+            ele.setAttribute("id","Label");
+            QString text = "";
+            int formato = ele.attribute("formato").toDouble();
+            text = applyFormato(QString::number(_Acums.value(ele.attribute("target")),'f',2),formato);
+            ele.setAttribute("Text",text);
+        }
+        child = child.nextSibling();
+    }
+    return n;
+}
+
 void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode PFooter, bool havePFooter, QMap<QString, QSqlRecord> selects)
 {
     if(haveRfooter)
@@ -1682,6 +1830,41 @@ QColor ReportRenderer::ColorFromString(QString s)
     c.setBlue (l.at(2).toDouble());
     c.setAlpha(l.at(3).toDouble());
     return c;
+}
+float ReportRenderer::getNumber(QString in, int formato)
+{
+    /*0 = sin formato
+    *1 = 999.999.999,99
+    *2 = 999,999,999.99
+    *3 = 99999999999,99
+    *4 = 99999999999.99*
+    *5 = 999.999.999,999
+    *6 = 999.999.999,9999
+    *7 = dd/mm/aa
+    *8 = dd/mm/aaaa
+    */
+    float f = 0;
+    switch (formato) {
+    case 0:
+    case 3:
+    case 4:
+        f= in.toFloat();
+        break;
+    case 1:
+    case 5:
+    case 6:
+        in.replace(".","");
+        in.replace(",",".");
+        f= in.toFloat();
+        break;
+    case 2:
+        in.replace(",","");
+        f = in.toFloat();
+        break;
+    default:
+        f= 0;
+    }
+    return f;
 }
 
 QString ReportRenderer::applyFormato(QString in, int formato)

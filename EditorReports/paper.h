@@ -62,7 +62,7 @@ public:
                   Custom};
 
     Q_ENUMS (itemType)
-    enum itemType { RoundRectIt , Label, Linea , CodeBarIt , Imagen, Campo , CampoRelacional , Parametro};
+    enum itemType { RoundRectIt , Label, Linea , CodeBarIt , Imagen, Campo , CampoRelacional , Parametro , Acumulador};
 
     Q_ENUMS (docType)
     enum docType { _Report , _etiqueta , _sobre, _mail };
@@ -196,6 +196,7 @@ private:
     void insertCampo(Section *sec);
     void insertCampoRelacional(Section *sec);
     void insertParametro(Section *sec);
+    void insertAcumulador(Section *sec);
 
     double m_margenInferiro;
     double m_margenIzquierdo;

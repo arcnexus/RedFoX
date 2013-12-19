@@ -1,7 +1,7 @@
 #include "customlabel.h"
 #include "edittextdlg.h"
-CustomLabel::CustomLabel(QGraphicsItem *parent) :
-    Container(parent)
+CustomLabel::CustomLabel(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_fontFamily = "Arial";
     m_fontSize = 10;
@@ -140,6 +140,7 @@ void CustomLabel::parseXml(QDomElement element,QPointF origin)
     this->setitalicFont(element.attribute("italicFont").toDouble());
     this->setunderlined(element.attribute("underlined").toDouble());
     this->setfontColor(ColorFromString(element.attribute("color")));
+    this->setName(element.attribute("name"));
 }
 
 void CustomLabel::setfontFamily(QString arg) {

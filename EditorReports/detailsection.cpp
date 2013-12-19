@@ -197,6 +197,12 @@ bool DetailSection::Blocked() const
     return m_Blocked;
 }
 
+void DetailSection::addAcumulator(QString s)
+{
+    if(!_acumulators.contains(s))
+        _acumulators.append(s);
+}
+
 void DetailSection::_parseElementsBlock(QDomNode eleNode , QPointF point, QList<Container *> &itemPool)
 {
     while(!eleNode.isNull())
@@ -227,6 +233,8 @@ void DetailSection::setFoot(bool foot)
 
 QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, QMap<QString, bool> &querys, QList<Section*> sectionPool)
 {
+    _acumulators.clear();
+
     QDomElement node = doc.createElement("Section");
     node.setAttribute("id",sectionType());
     node.setAttribute("size",(int)rect().height());
@@ -307,6 +315,8 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
         }
         node.appendChild(footNode);
     }
+
+    node.setAttribute("acum",_acumulators.join(","));
     return node;
 }
 

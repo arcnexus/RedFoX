@@ -1,7 +1,7 @@
 #include "reportparama.h"
 #include "editparamdlg.h"
-reportParama::reportParama(QGraphicsItem *parent) :
-    Container(parent)
+reportParama::reportParama(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_fontFamily = "Arial";
     m_fontSize = 10;
@@ -54,6 +54,7 @@ void reportParama::parseXml(QDomElement element, QPointF origin)
     this->setunderlined(element.attribute("underlined").toDouble());
     this->setfontColor(ColorFromString(element.attribute("color")));
     this->setarg(element.attribute("Arg"));
+    this->setName(element.attribute("name"));
 }
 
 void reportParama::editMe()

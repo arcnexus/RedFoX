@@ -1,7 +1,7 @@
 #include "relationalfield.h"
 #include "editrelationalfield.h"
-RelationalField::RelationalField(QGraphicsItem *parent) :
-    Container(parent)
+RelationalField::RelationalField(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_sql = ":Campo->Relacional";
     m_expandable = false;
@@ -56,6 +56,7 @@ void RelationalField::parseXml(QDomElement element, QPointF origin)
     this->setunderlined(element.attribute("underlined").toDouble());
     this->setfontColor(ColorFromString(element.attribute("color")));
     this->setformato(element.attribute("formato").toDouble());
+    this->setName(element.attribute("name"));
 }
 
 void RelationalField::editMe()

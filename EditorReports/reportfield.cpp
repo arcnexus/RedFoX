@@ -1,7 +1,7 @@
 #include "reportfield.h"
 #include "editfielddlg.h"
-ReportField::ReportField(QGraphicsItem *parent) :
-    Container(parent)
+ReportField::ReportField(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_sql = ":Campo";
     m_expandable = false;
@@ -13,6 +13,7 @@ ReportField::ReportField(QGraphicsItem *parent) :
     m_Alineacion = Left;
     m_fontColor = Qt::black;
     m_formato = 0;
+    registerAsAcum();
 }
 
 QDomElement ReportField::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
@@ -56,6 +57,7 @@ void ReportField::parseXml(QDomElement element, QPointF origin)
     this->setunderlined(element.attribute("underlined").toDouble());
     this->setfontColor(ColorFromString(element.attribute("color")));
     this->setformato(element.attribute("formato").toDouble());
+    this->setName(element.attribute("name"));
 }
 
 void ReportField::editMe()

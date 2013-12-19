@@ -1,8 +1,10 @@
 #include "reportimage.h"
 #include "editimagedlg.h"
 #include "../sqlcalls.h"
-ReportImage::ReportImage(QGraphicsItem *parent) :
-    Container(parent)
+
+
+ReportImage::ReportImage(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_ruta = "";
     m_fromDB = false;
@@ -32,6 +34,7 @@ void ReportImage::parseXml(QDomElement element, QPointF origin)
     this->setfromDB(element.attribute("fromBD").toDouble());
     this->setdinamica(element.attribute("Dinamic").toDouble());
     this->setruta(element.attribute("Path"));
+    this->setName(element.attribute("name"));
 }
 
 

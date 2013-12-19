@@ -1,9 +1,13 @@
 #include "container.h"
 #include <QKeyEvent>
 
-Container::Container(QGraphicsItem *parent) :
+QMap<Container*,QString> Container::_items;
+QMap<Container *, QString> Container::_acums;
+
+Container::Container(QString name, QGraphicsItem *parent) :
     QGraphicsRectItem(parent)
 {
+    _items.insert(this,name);
     this->_onResize = false;
     this->m_active = true;
     this->setAcceptHoverEvents(true);
@@ -147,6 +151,8 @@ void Container::apendXML(QDomElement &element, QDomDocument doc , QPointF relPos
 
     element.setAttribute("w",QString::number(this->rect().width() , 'f', 4));
     element.setAttribute("h",QString::number(this->rect().height(), 'f', 4));
+
+    element.setAttribute("name",_items.value(this));
 }
 
 QString Container::ColorString(QColor c)
@@ -198,6 +204,16 @@ QRectF Container::boundingRect() const
 {
     return this->rect();
 }
+
+void Container::registerAsAcum()
+{
+    _acums.insert(this,this->name());
+}
+QStringList Container::acums()
+{
+    return  _acums.values();
+}
+
 bool Container::isActive() const
 {
     return m_active;
@@ -211,6 +227,18 @@ void Container::setActive(bool active)
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges,m_active);
     this->setFlag(QGraphicsItem::ItemIsSelectable,m_active);
     this->setFlag(QGraphicsItem::ItemIsMovable,m_active);
+}
+
+void Container::setName(QString n)
+{
+    _items[this] = n;
+    if(_acums.contains(this))
+        _acums[this] = n;
+}
+
+QString Container::name()
+{
+    return _items.value(this);
 }
 
 

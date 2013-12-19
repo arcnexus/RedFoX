@@ -8,6 +8,7 @@ EditLineDlg::EditLineDlg(ReportLine* li ,QWidget *parent) :
     ui->setupUi(this);
     line = li;
     ui->graphicsView->setScene(&scene);
+    ui->txtNombre->setText(li->name());
     preLine = new ReportLine(0);
     preLine->setSize(300,300);
 
@@ -106,6 +107,7 @@ void EditLineDlg::on_pushButton_3_clicked()
 
 void EditLineDlg::on_btnAceptar_clicked()
 {
+    line->setName(ui->txtNombre->text());
     line->setpenWidth(preLine->penWidth());
     line->setpenColor(preLine->penColor());
     line->setpenStyle(preLine->penStyle());
