@@ -12,7 +12,7 @@ class ReportLine : public Container
     Q_PROPERTY(_Orientacion Orientacion READ Orientacion WRITE setOrientacion NOTIFY OrientacionChanged)
 
 public:
-    ReportLine(QGraphicsItem *parent = 0);
+    ReportLine(QString name,QGraphicsItem *parent = 0);
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);
     void editMe();

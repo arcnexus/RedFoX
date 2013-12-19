@@ -51,6 +51,7 @@ editRelationalField::editRelationalField(RelationalField *fld, QWidget *parent) 
 
     ui->graphicsView->setScene(&scene);
     scene.addItem(pre);
+    ui->txtNombre->setText(fld->name());
     pre->setText("1 2 3 4 5 6 7 8 9\na b c d e f g h i j k l m n ñ o p q r s t u v w x y z");
     pre->setSize(300,50);
     connect(ui->btnCancel,SIGNAL(clicked()),this,SLOT(reject()));
@@ -89,7 +90,7 @@ void editRelationalField::on_comboTabla_2_currentIndexChanged(const QString &arg
 }
 
 void editRelationalField::on_btnAceptar_clicked()
-{
+{    
     QString zone = ui->comboZona->currentText();
     QString table= ui->comboTabla->currentText();
     QString campo = ui->comboCampo->currentText();
@@ -119,6 +120,7 @@ void editRelationalField::on_btnAceptar_clicked()
     }
     else
         field->setformato(0);
+    field->setName(ui->txtNombre->text());
     this->accept();
 }
 

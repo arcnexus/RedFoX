@@ -19,7 +19,7 @@ class ReportField : public Container
     Q_PROPERTY(int formato READ formato WRITE setformato NOTIFY formatoChanged)
 
 public:
-    explicit ReportField(QGraphicsItem  *parent = 0);
+    explicit ReportField(QString name, QGraphicsItem  *parent = 0);
 
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement, QPointF origin);

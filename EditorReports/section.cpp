@@ -145,12 +145,14 @@ void Section::_parseElementTag(QDomElement ele, QPointF point, QList<Container *
             _insertRelField(ele,point, itemPool);
         else if(ele.attribute("id")== "Param")
             _insertRepParam(ele,point, itemPool);
+        else if(ele.attribute("id")== "Acumulador")
+            _insertRepAcum(ele,point, itemPool);
     }
 }
 
 void Section::_insertRect(QDomElement ele, QPointF point, QList<Container *> &itemPool)
-{
-    RoundedRect * rect = new RoundedRect(_parent);
+{  
+    RoundedRect * rect = new RoundedRect(ele.attribute("name"),_parent);
     rect->setMargins(this->margin);
     rect->parseXml(ele,point);
     itemPool.append(rect);
@@ -159,7 +161,7 @@ void Section::_insertRect(QDomElement ele, QPointF point, QList<Container *> &it
 
 void Section::_insertLabel(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    CustomLabel * rect = new CustomLabel(_parent);
+    CustomLabel * rect = new CustomLabel(ele.attribute("name"),_parent);
     rect->setMargins(this->margin);
     rect->parseXml(ele,point);
     itemPool.append(rect);
@@ -168,7 +170,7 @@ void Section::_insertLabel(QDomElement ele, QPointF point, QList<Container *> &i
 
 void Section::_insertLine(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    ReportLine * line = new ReportLine(_parent);
+    ReportLine * line = new ReportLine(ele.attribute("name"),_parent);
     line->setMargins(this->margin);
     line->parseXml(ele,point);
     itemPool.append(line);
@@ -177,7 +179,7 @@ void Section::_insertLine(QDomElement ele, QPointF point, QList<Container *> &it
 
 void Section::_insertCodeBar(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    CodeBar* code = new CodeBar(_parent);
+    CodeBar* code = new CodeBar(ele.attribute("name"),_parent);
     code->setMargins(this->margin);
     code->parseXml(ele,point);
     itemPool.append(code);
@@ -186,7 +188,7 @@ void Section::_insertCodeBar(QDomElement ele, QPointF point, QList<Container *> 
 
 void Section::_insertImage(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    ReportImage* img = new ReportImage(_parent);
+    ReportImage* img = new ReportImage(ele.attribute("name"),_parent);
     img->setMargins(this->margin);
     img->parseXml(ele,point);
     itemPool.append(img);
@@ -195,7 +197,7 @@ void Section::_insertImage(QDomElement ele, QPointF point, QList<Container *> &i
 
 void Section::_insertField(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    ReportField * fld = new ReportField(_parent)   ;
+    ReportField * fld = new ReportField(ele.attribute("name"),_parent)   ;
     fld->setMargins(this->margin);
     fld->parseXml(ele,point);
     itemPool.append(fld );
@@ -204,7 +206,7 @@ void Section::_insertField(QDomElement ele, QPointF point, QList<Container *> &i
 
 void Section::_insertRelField(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    RelationalField * fld = new RelationalField(_parent)   ;
+    RelationalField * fld = new RelationalField(ele.attribute("name"),_parent)   ;
     fld->setMargins(this->margin);
     fld->parseXml(ele,point);
     itemPool.append(fld );
@@ -213,7 +215,16 @@ void Section::_insertRelField(QDomElement ele, QPointF point, QList<Container *>
 
 void Section::_insertRepParam(QDomElement ele, QPointF point, QList<Container *> &itemPool)
 {
-    reportParama * fld = new reportParama(_parent)   ;
+    reportParama * fld = new reportParama(ele.attribute("name"),_parent)   ;
+    fld->setMargins(this->margin);
+    fld->parseXml(ele,point);
+    itemPool.append(fld );
+    this->_items.append(fld);
+}
+
+void Section::_insertRepAcum(QDomElement ele, QPointF point, QList<Container *> &itemPool)
+{
+    ReportAcumulator * fld = new ReportAcumulator(ele.attribute("name"),_parent)   ;
     fld->setMargins(this->margin);
     fld->parseXml(ele,point);
     itemPool.append(fld );

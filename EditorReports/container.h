@@ -19,7 +19,7 @@ class Container : public QObject , public QGraphicsRectItem
     Q_OBJECT
 
 public:
-    explicit Container(QGraphicsItem *parent = 0);
+    explicit Container(QString name, QGraphicsItem *parent = 0);
 
     void setSize(int w, int h);
 
@@ -42,6 +42,10 @@ public:
 
     bool isActive() const;
     void setActive(bool isActive);
+    void setName(QString);
+    QString name();
+
+    static QStringList acums();
 
 signals:
     void moved(Container *);
@@ -71,6 +75,13 @@ protected:
     QRectF boundingRect() const;
     QRectF margins;
     bool m_active;
+
+    void registerAsAcum();
+
+private:
+    static  QMap<Container *, QString> _items;
+    static  QMap<Container *, QString> _acums;
 };
 
 #endif // CONTAINER_H
+

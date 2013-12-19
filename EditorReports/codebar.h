@@ -12,7 +12,7 @@ class CodeBar : public Container
     Q_PROPERTY(int barSize READ barSize WRITE setbarSize NOTIFY barSizeChanged)
     Q_PROPERTY(bool vertical READ vertical WRITE setvertical NOTIFY verticalChanged)
 public:
-    explicit CodeBar(QGraphicsItem *parent = 0);
+    explicit CodeBar(QString name, QGraphicsItem *parent = 0);
 
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);

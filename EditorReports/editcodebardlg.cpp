@@ -19,6 +19,7 @@ EditCodeBarDlg::EditCodeBarDlg(CodeBar *code, QWidget *parent) :
     connect(ui->btnCancel,SIGNAL(clicked()),this,SLOT(reject()));
 
     this->code = code;
+    ui->txt_nombre->setText(code->name());
     ui->graphicsView->setScene(&scene);
 
 
@@ -68,6 +69,8 @@ void EditCodeBarDlg::on_pushButton_clicked()
     code->setcodeSize(pre->codeSize());
     code->setbarSize(pre->barSize());
     code->setvertical(pre->vertical());
+
+    code->setName(ui->txt_nombre->text());
     this->accept();
 }
 

@@ -9,7 +9,7 @@ class ReportImage : public Container
     Q_PROPERTY(bool fromDB READ fromDB WRITE setfromDB NOTIFY fromDBChanged)
     Q_PROPERTY(bool dinamica READ dinamica WRITE setdinamica NOTIFY dinamicaChanged)
 public:
-    explicit ReportImage(QGraphicsItem *parent = 0);
+    explicit ReportImage(QString name, QGraphicsItem *parent = 0);
     
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);

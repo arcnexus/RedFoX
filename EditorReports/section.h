@@ -17,6 +17,7 @@
 #include "reportfield.h"
 #include "relationalfield.h"
 #include "reportparama.h"
+#include "reportacumulator.h"
 //#include "container.h"
 
 
@@ -101,6 +102,7 @@ protected:
     void _insertField(QDomElement ele, QPointF point , QList<Container *> &itemPool);
     void _insertRelField(QDomElement ele, QPointF point , QList<Container *> &itemPool);
     void _insertRepParam(QDomElement ele, QPointF point , QList<Container *> &itemPool);
+    void _insertRepAcum(QDomElement ele, QPointF point , QList<Container *> &itemPool);
 
 };
 

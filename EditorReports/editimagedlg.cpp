@@ -34,6 +34,7 @@ EditImageDlg::EditImageDlg(ReportImage* img ,QWidget *parent) :
 
     pre->setSize(img->rect().width(),img->rect().width());
     pre->setruta(img->ruta());
+    ui->txtNombre->setText(img->name());
 
     connect(ui->btnCancel,SIGNAL(clicked()),this,SLOT(reject()));
 }
@@ -57,6 +58,7 @@ void EditImageDlg::on_btnRuta_clicked()
 
 void EditImageDlg::on_btnAceptar_clicked()
 {
+    image->setName(ui->txtNombre->text());
     image->setfromDB(pre->fromDB());
     image->setruta(pre->ruta());    
     this->accept();

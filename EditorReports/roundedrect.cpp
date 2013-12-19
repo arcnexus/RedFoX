@@ -1,8 +1,8 @@
 #include "roundedrect.h"
 #include "editrectdlg.h"
 #include "section.h"
-RoundedRect::RoundedRect(QGraphicsItem *parent) :
-    Container(parent)
+RoundedRect::RoundedRect(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_penWidth = 1;
     m_RadiousX = m_RadiousY = 20;
@@ -75,6 +75,7 @@ void RoundedRect::parseXml(QDomElement element , QPointF origin)
     this->setGradientDirection(element.attribute("GradientDirection")== "V" ? Vertical : Horizontal);
     this->setRadiousX(element.attribute("RadiousX").toDouble());
     this->setRadiousY(element.attribute("RadiousY").toDouble());
+    this->setName(element.attribute("name"));
 }
 
 void RoundedRect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

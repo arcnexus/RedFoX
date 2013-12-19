@@ -1,7 +1,7 @@
 #include "codebar.h"
 #include "editcodebardlg.h"
-CodeBar::CodeBar(QGraphicsItem *parent) :
-    Container(parent)
+CodeBar::CodeBar(QString name,QGraphicsItem *parent) :
+    Container(name,parent)
 {
     m_visibleCode = false;
     m_codeSize = 15;
@@ -89,6 +89,7 @@ void CodeBar::parseXml(QDomElement element, QPointF origin)
     this->setvertical(element.attribute("vertical").toInt());
 
     this->setsql(element.attribute("Sql"));
+    this->setName(element.attribute("name"));
 }
 
 QString CodeBar::query()
