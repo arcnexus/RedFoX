@@ -230,6 +230,7 @@ void Login::init()
             QString bd_name = rEmpresa.value("bd_name").toString();
             QString bd_host = rEmpresa.value("bd_host").toString();
             QString bd_user = rEmpresa.value("bd_user").toString();
+            //QString bd_pass = rEmpresa.value("bd_pass").toString();
             QString bd_pass = rEmpresa.value("bd_pass").toString();
             int bd_port = rEmpresa.value("bd_port").toInt();
 

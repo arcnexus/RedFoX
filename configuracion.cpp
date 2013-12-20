@@ -771,7 +771,8 @@ bool Configuracion::CargarDatosBD()
     {
         this->globalDB.setDatabaseName("mayaglobal");
         this->globalDB.setHostName(Configuracion_global->global_host);
-        this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+        //this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+        this->globalDB.open("root","meganizado");
     }
 
     if (this->globalDB.lastError().isValid())
