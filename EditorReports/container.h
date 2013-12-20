@@ -20,7 +20,7 @@ class Container : public QObject , public QGraphicsRectItem
 
 public:
     explicit Container(QString name, QGraphicsItem *parent = 0);
-
+    ~Container();
     void setSize(int w, int h);
 
     enum _Orientacion { Vertical , Horizontal };
@@ -47,8 +47,14 @@ public:
 
     static QStringList acums();
 
+    static QMap<Container *, QString> items();
+    static QMap<Container *, QString> acumlators();
+
+    static void removeItem(Container *);
+
 signals:
     void moved(Container *);
+    void nameChanged(Container *);
 public slots:
 
 protected:

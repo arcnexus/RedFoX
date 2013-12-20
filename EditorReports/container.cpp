@@ -16,6 +16,14 @@ Container::Container(QString name, QGraphicsItem *parent) :
     this->setFlag(QGraphicsItem::ItemIsMovable);
 }
 
+Container::~Container()
+{
+    if(_items.contains(this))
+        _items.remove(this);
+    if(_acums.contains(this))
+        _acums.remove(this);
+}
+
 void Container::setSize(int w, int h)
 {
     this->setRect(0,0,w,h);
@@ -209,6 +217,24 @@ void Container::registerAsAcum()
 {
     _acums.insert(this,this->name());
 }
+QMap<Container *, QString> Container::items()
+{
+    return _items;
+}
+
+QMap<Container *, QString> Container::acumlators()
+{
+    return _acums;
+}
+
+void Container::removeItem(Container * cont )
+{
+    if(_items.contains(cont))
+        _items.remove(cont);
+    if(_acums.contains(cont))
+        _acums.remove(cont);
+}
+
 QStringList Container::acums()
 {
     return  _acums.values();
@@ -231,9 +257,13 @@ void Container::setActive(bool active)
 
 void Container::setName(QString n)
 {
-    _items[this] = n;
-    if(_acums.contains(this))
-        _acums[this] = n;
+    if(n != name())
+    {
+        _items[this] = n;
+        if(_acums.contains(this))
+            _acums[this] = n;
+        emit nameChanged(this);
+    }
 }
 
 QString Container::name()

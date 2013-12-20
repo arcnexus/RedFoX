@@ -13,8 +13,7 @@ ReportAcumulator::ReportAcumulator(QString name, QGraphicsItem *parent) :
     m_Alineacion = Left;
     m_fontColor = Qt::black;
     m_formato = 0;
-    m_target = "Empty";
-    this->setName(name);
+    m_target = "Empty";    
 }
 
 QDomElement ReportAcumulator::xml(QDomDocument doc, QPointF relPos, QList<Section *> sectionPool)
