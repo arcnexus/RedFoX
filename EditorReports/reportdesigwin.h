@@ -12,6 +12,7 @@
 #include <QProgressDialog>
 #include <QApplication>
 #include <QThread>
+#include <QListWidgetItem>
 #include "paper.h"
 #include "reportview.h"
 #include "reportrenderer.h"
@@ -46,6 +47,21 @@ private slots:
 
     void on_actionGuardar_en_BD_triggered();
 
+    void on_actionAlinear_Izquierda_triggered();
+
+    void on_actionAlinear_Derecha_triggered();
+
+    void on_actionAlinear_Centro_triggered();
+
+    void on_actionAlinear_Arriba_triggered();
+
+    void on_actionAlinear_centro_triggered();
+
+    void on_actionAlinear_abajo_triggered();
+
+    void refreshItems();
+    void itemChanged ( QListWidgetItem * item );
+    void nameChanged (Container * c);
 private:
     Ui::ReportDesigWin *ui;
     QGraphicsScene scene;
@@ -53,6 +69,8 @@ private:
     ReportView view;
     QAction* insertor;
     ReportRenderer* render;
+
+    QMap<QListWidgetItem* , Container*> _itemList;
 };
 
 #endif // REPORTDESIGWIN_H
