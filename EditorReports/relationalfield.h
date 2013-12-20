@@ -18,7 +18,7 @@ class RelationalField : public Container
     Q_PROPERTY(QColor fontColor READ fontColor WRITE setfontColor NOTIFY fontColorChanged)
     Q_PROPERTY(int formato READ formato WRITE setformato NOTIFY formatoChanged)
 public:
-    explicit RelationalField(QGraphicsItem *parent = 0);
+    explicit RelationalField(QString name, QGraphicsItem *parent = 0);
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);
     void editMe();

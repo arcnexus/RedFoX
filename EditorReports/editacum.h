@@ -1,22 +1,24 @@
-#ifndef EDITPARAMDLG_H
-#define EDITPARAMDLG_H
+#ifndef EDITACUM_H
+#define EDITACUM_H
 
 #include <QDialog>
-#include "customlabel.h"
-#include "reportparama.h"
+#include "reportacumulator.h"
+
 namespace Ui {
-class editParamDlg;
+class EditAcum;
 }
 
-class editParamDlg : public QDialog
+class EditAcum : public QDialog
 {
     Q_OBJECT
     
 public:
-    editParamDlg(reportParama * p ,QWidget *parent = 0);
-    ~editParamDlg();
+    explicit EditAcum(ReportAcumulator* rep, QWidget *parent = 0);
+    ~EditAcum();
     
 private slots:
+    void on_btnAceptar_clicked();
+
     void on_fontComboBox_currentIndexChanged(const QString &arg1);
 
     void on_sizeSpin_valueChanged(int arg1);
@@ -29,25 +31,19 @@ private slots:
 
     void on_btnColor_clicked();
 
-    void on_btnHorizontal_clicked();
-
-    void on_btnVertical_clicked();
-
     void on_btnLeft_clicked();
 
     void on_btnCenter_clicked();
 
     void on_btnRigth_clicked();
 
-    void on_btnAceptar_clicked();
-
-    void on_lineEdit_textChanged(const QString &arg1);
+    void on_checkBox_2_toggled(bool checked);
 
 private:
-    Ui::editParamDlg *ui;
+    Ui::EditAcum *ui;
+    ReportAcumulator* out;
+    ReportAcumulator* pre;
     QGraphicsScene scene;
-    CustomLabel* previewLabel;
-    reportParama * param;
 };
 
-#endif // EDITPARAMDLG_H
+#endif // EDITACUM_H

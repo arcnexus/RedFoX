@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1061</width>
+    <width>921</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,8 +19,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1061</width>
-     <height>21</height>
+     <width>921</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">
@@ -52,6 +52,7 @@
    </attribute>
    <addaction name="actionTexto"/>
    <addaction name="actionParametro"/>
+   <addaction name="actionAcumulador"/>
    <addaction name="actionCampo"/>
    <addaction name="actionCampo_Relacional"/>
    <addaction name="actionCodeBars"/>
@@ -69,6 +70,35 @@
    <addaction name="actionGuardar_en_BD"/>
    <addaction name="separator"/>
    <addaction name="actionVista_Previa"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAlinear_Izquierda"/>
+   <addaction name="actionAlinear_Centro"/>
+   <addaction name="actionAlinear_Derecha"/>
+   <addaction name="actionAlinear_Arriba"/>
+   <addaction name="actionAlinear_centro"/>
+   <addaction name="actionAlinear_abajo"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QListWidget" name="itemList"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="actionRectangulo_redondeado">
    <property name="checkable">
@@ -227,6 +257,72 @@
    </property>
    <property name="text">
     <string>Parametro</string>
+   </property>
+  </action>
+  <action name="actionAcumulador">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/text-shadow.png</normaloff>:/icons/text-shadow.png</iconset>
+   </property>
+   <property name="text">
+    <string>Acumulador</string>
+   </property>
+  </action>
+  <action name="actionAlinear_Izquierda">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_align_left.png</normaloff>:/icons/shape_align_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alinear Izquierda</string>
+   </property>
+  </action>
+  <action name="actionAlinear_Derecha">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_align_right.png</normaloff>:/icons/shape_align_right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alinear Derecha</string>
+   </property>
+  </action>
+  <action name="actionAlinear_Centro">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_align_center.png</normaloff>:/icons/shape_align_center.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alinear Centro</string>
+   </property>
+  </action>
+  <action name="actionAlinear_Arriba">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_align_top.png</normaloff>:/icons/shape_align_top.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alinear Arriba</string>
+   </property>
+  </action>
+  <action name="actionAlinear_centro">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_align_middle.png</normaloff>:/icons/shape_align_middle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alinear centro</string>
+   </property>
+  </action>
+  <action name="actionAlinear_abajo">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/shape_align_bottom.png</normaloff>:/icons/shape_align_bottom.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alinear abajo</string>
    </property>
   </action>
  </widget>

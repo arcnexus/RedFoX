@@ -114,6 +114,9 @@ void Paper::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
             switch (_insertingType)
             {
+            case Paper::Acumulador:
+                insertAcumulador(target);
+                break;
             case Paper::Parametro:
                 insertParametro(target);
                 break;
@@ -241,7 +244,8 @@ double Paper::lblPaperMarginDer() const
 
 void Paper::insertRoundRect(Section * sec)
 {
-    RoundedRect * rect = new RoundedRect(this);
+    QString name = QString("rect_%1").arg(qrand());
+    RoundedRect * rect = new RoundedRect(name,this);
     rect->setMargins(this->margin());
     rect->setSize(100,100);
     rect->setPos(_insertingPoint.x()-50,_insertingPoint.y()-50);
@@ -252,7 +256,8 @@ void Paper::insertRoundRect(Section * sec)
 
 void Paper::insertLabel(Section * sec)
 {
-    CustomLabel * rect = new CustomLabel(this);
+    QString name = QString("txt_%1").arg(qrand());
+    CustomLabel * rect = new CustomLabel(name,this);
     rect->setMargins(this->margin());
     rect->setSize(100,15);
     rect->setPos(_insertingPoint.x()-20,_insertingPoint.y()-7);
@@ -266,7 +271,8 @@ void Paper::insertLabel(Section * sec)
 
 void Paper::insertLinea(Section * sec)
 {
-    ReportLine * line = new ReportLine (this);
+    QString name = QString("lin_%1").arg(qrand());
+    ReportLine * line = new ReportLine (name,this);
     line->setMargins(this->margin());
     line->setSize(200,15);
     line->setPos(_insertingPoint.x()-100,_insertingPoint.y()-7);
@@ -277,7 +283,8 @@ void Paper::insertLinea(Section * sec)
 
 void Paper::insertCodeBar(Section * sec)
 {
-    CodeBar* code = new CodeBar(this);
+    QString name = QString("cod_%1").arg(qrand());
+    CodeBar* code = new CodeBar(name,this);
     code->setMargins(this->margin());
     code->setcode("*123456789*");
     code->setvisibleCode(true);
@@ -289,7 +296,8 @@ void Paper::insertCodeBar(Section * sec)
 
 void Paper::insertImagen(Section * sec )
 {
-    ReportImage * img = new ReportImage(this);
+    QString name = QString("img_%1").arg(qrand());
+    ReportImage * img = new ReportImage(name,this);
     img->setruta(":/Icons/PNG/Box.png");
     img->setMargins(this->margin());
     img->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
@@ -300,7 +308,8 @@ void Paper::insertImagen(Section * sec )
 
 void Paper::insertCampo(Section * sec)
 {
-    ReportField * fld = new ReportField(this)   ;
+    QString name = QString("cam_%1").arg(qrand());
+    ReportField * fld = new ReportField(name,this)   ;
     fld->setMargins(this->margin());
     fld->setSize(100,20);
     fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
@@ -311,7 +320,8 @@ void Paper::insertCampo(Section * sec)
 
 void Paper::insertCampoRelacional(Section * sec)
 {
-    RelationalField * fld = new RelationalField(this)   ;
+    QString name = QString("rel_%1").arg(qrand());
+    RelationalField * fld = new RelationalField(name,this)   ;
     fld->setMargins(this->margin());
     fld->setSize(150,20);
     fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
@@ -322,10 +332,23 @@ void Paper::insertCampoRelacional(Section * sec)
 
 void Paper::insertParametro(Section *sec)
 {
-    reportParama * fld = new reportParama(this)   ;
+    QString name = QString("para_%1").arg(qrand());
+    reportParama * fld = new reportParama(name,this)   ;
     fld->setMargins(this->margin());
     fld->setSize(150,20);
     fld->setText("Parametro");
+    fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
+    connect(fld,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
+    sec->_items.append(fld);
+    itemPool.append(fld );
+}
+
+void Paper::insertAcumulador(Section *sec)
+{
+    QString name = QString("acum_%1").arg(qrand());
+    ReportAcumulator * fld = new ReportAcumulator(name,this)   ;
+    fld->setMargins(this->margin());
+    fld->setSize(150,20);
     fld->setPos(_insertingPoint.x()-50,_insertingPoint.y()-7);
     connect(fld,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
     sec->_items.append(fld);
@@ -868,6 +891,7 @@ int Paper::save(QString file)
         paperNode.setAttribute("marginBottom",QString::number(this->margenInferior(), 'f', 4));
         paperNode.setAttribute("marginLeft",QString::number(this->margenIzquierdo(), 'f', 4));
         paperNode.setAttribute("marginRigth",QString::number(this->margenDerecho(), 'f', 4));
+        paperNode.setAttribute("acum","");
 
         if(tipoDoc() == _etiqueta)
         {
@@ -907,8 +931,9 @@ int Paper::save(QString file)
             }
         }
         QDomNode xmlNode = doc.createProcessingInstruction("xml",
-                                                           "version=\"1.0\" encoding=\"ISO-8859-1\"");
+                                                           "version=\"1.0\" encoding=\"UTF-8\"");
         doc.insertBefore(xmlNode, doc.firstChild());
+        out.setCodec("UTF-8");
         doc.save(out, Indent);
         f.close();
 
@@ -1055,8 +1080,9 @@ void Paper::removeItems(QList<QGraphicsItem *> items)
         if(items.contains(cont))
         {
             itemPool.removeOne(cont);
-            cont->deleteLater();
-        }
+            Container::removeItem(cont);
+            cont->deleteLater();            
+        }                
     }
 }
 

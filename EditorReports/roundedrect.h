@@ -17,7 +17,7 @@ class RoundedRect : public Container
 
     //Q_ENUMS (_Orientacion)
 public:
-    explicit RoundedRect(QGraphicsItem *parent = 0);
+    explicit RoundedRect(QString name, QGraphicsItem *parent = 0);
     QDomElement xml(QDomDocument doc,QPointF,QList<Section*> sectionPool);
     void parseXml(QDomElement, QPointF);
     void editMe();

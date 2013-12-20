@@ -41,6 +41,8 @@ private slots:
 
     void calcular();
 
+    void on_txtDomiciliacion_editingFinished();
+
 private:
     Ui::FrmGestionCobros2 *ui;
     double importe;
@@ -58,6 +60,9 @@ private:
         double pendiente;
         double vale;
     };
+    QString entidad,oficina,dc,cuenta;
+
+
 
 
 };

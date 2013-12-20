@@ -1,43 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>editParamDlg</class>
- <widget class="QDialog" name="editParamDlg">
+ <class>EditAcum</class>
+ <widget class="QDialog" name="EditAcum">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>317</height>
+    <width>463</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="5">
-    <widget class="QPushButton" name="btnRigth">
-     <property name="maximumSize">
-      <size>
-       <width>44</width>
-       <height>24</height>
-      </size>
-     </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="resource.qrc">
-       <normaloff>:/icons/text_align_right.png</normaloff>:/icons/text_align_right.png</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>false</bool>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
+      <string>Nombre</string>
      </property>
     </widget>
    </item>
+   <item row="0" column="1" colspan="6">
+    <widget class="QLineEdit" name="txtNombre"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Acumulador de</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="6">
+    <widget class="QComboBox" name="comboBox"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Fuente:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QFontComboBox" name="fontComboBox"/>
+   </item>
    <item row="2" column="3">
+    <widget class="QSpinBox" name="sizeSpin"/>
+   </item>
+   <item row="2" column="4">
     <widget class="QPushButton" name="btnBold">
      <property name="maximumSize">
       <size>
@@ -60,7 +70,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="4">
+   <item row="2" column="5">
     <widget class="QPushButton" name="btnItalic">
      <property name="maximumSize">
       <size>
@@ -83,7 +93,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="5">
+   <item row="2" column="6">
     <widget class="QPushButton" name="btnUnder">
      <property name="maximumSize">
       <size>
@@ -106,127 +116,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="6">
-    <widget class="QGraphicsView" name="graphicsView"/>
-   </item>
-   <item row="2" column="1">
-    <widget class="QFontComboBox" name="fontComboBox"/>
-   </item>
-   <item row="3" column="4">
-    <widget class="QPushButton" name="btnCenter">
-     <property name="maximumSize">
-      <size>
-       <width>43</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="resource.qrc">
-       <normaloff>:/icons/text_align_center.png</normaloff>:/icons/text_align_center.png</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Fuente:</string>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="3">
-    <widget class="QPushButton" name="btnLeft">
-     <property name="maximumSize">
-      <size>
-       <width>43</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="resource.qrc">
-       <normaloff>:/icons/text_align_left.png</normaloff>:/icons/text_align_left.png</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="6">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Cancelar</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnAceptar">
-       <property name="text">
-        <string>Aceptar</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Parametro asociado</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QPushButton" name="btnHorizontal">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="resource.qrc">
-         <normaloff>:/icons/text_align_left.png</normaloff>:/icons/text_align_left.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnVertical">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="resource.qrc">
-         <normaloff>:/icons/text_align_up.png</normaloff>:/icons/text_align_up.png</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="1" colspan="5">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="3" column="2">
     <widget class="QPushButton" name="btnColor">
      <property name="maximumSize">
       <size>
@@ -246,18 +136,156 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QSpinBox" name="sizeSpin"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="3" column="4">
+    <widget class="QPushButton" name="btnLeft">
+     <property name="maximumSize">
+      <size>
+       <width>43</width>
+       <height>24</height>
+      </size>
+     </property>
      <property name="text">
-      <string>Nombre</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resource.qrc">
+       <normaloff>:/icons/text_align_left.png</normaloff>:/icons/text_align_left.png</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="5">
-    <widget class="QLineEdit" name="txtNombre"/>
+   <item row="3" column="5">
+    <widget class="QPushButton" name="btnCenter">
+     <property name="maximumSize">
+      <size>
+       <width>43</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resource.qrc">
+       <normaloff>:/icons/text_align_center.png</normaloff>:/icons/text_align_center.png</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="6">
+    <widget class="QPushButton" name="btnRigth">
+     <property name="maximumSize">
+      <size>
+       <width>44</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resource.qrc">
+       <normaloff>:/icons/text_align_right.png</normaloff>:/icons/text_align_right.png</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="7">
+    <widget class="QGraphicsView" name="graphicsView"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="text">
+      <string>Formato</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="QComboBox" name="comobFormato">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <item>
+      <property name="text">
+       <string>999.999.999,99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999,999,999.99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999999999,99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999999999.99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999.999.999,999</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>999.999.999,9999</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dd/mm/aa</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dd/mm/aaaa</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="7">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCancel">
+       <property name="text">
+        <string>Cancelar</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnAceptar">
+       <property name="text">
+        <string>Aceptar</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

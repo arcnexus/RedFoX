@@ -31,6 +31,7 @@ editParamDlg::editParamDlg(reportParama * p, QWidget *parent) :
     previewLabel->setAlineacion(p->Alineacion());
     previewLabel->setSize(p->rect().width(),p->rect().height());
 
+    ui->txtNombre->setText(p->name());
     previewLabel->setFlag(QGraphicsItem::ItemIsSelectable,false);
 
     scene.addItem(previewLabel);
@@ -117,6 +118,7 @@ void editParamDlg::on_btnRigth_clicked()
 
 void editParamDlg::on_btnAceptar_clicked()
 {
+    param->setText(ui->txtNombre->text());
     param->setText(previewLabel->Text());
     param->setarg(previewLabel->Text());
     param->setfontWeigth(previewLabel->fontWeigth());

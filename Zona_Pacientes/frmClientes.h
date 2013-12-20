@@ -72,8 +72,6 @@ private slots:
 
     void txtcp_editingFinished();
 
-    void TablaDeudas_clicked(const QModelIndex &index);
-
     void txtrRiesgoPermitido_editingFinished();
 
     void on_btnFichaPaciente_clicked();
@@ -119,6 +117,8 @@ private slots:
 
     void on_radPendientes_toggled(bool checked);
 
+    void on_TablaDeudas_clicked(const QModelIndex &index);
+
 private:
     Ui::frmClientes *ui;
     QSqlQueryModel *modelFP;
@@ -126,6 +126,7 @@ private:
     QSqlQueryModel *modelPoblaciones;
     QSqlQueryModel *qModeldireccion;
     QSqlQueryModel *deudas ;
+    QSqlQueryModel *modelHistorial;
     QSqlQueryModel * m_clientes;
     QSqlDatabase dbCliente;
     QSqlQuery tbpaciente;
@@ -141,6 +142,7 @@ private:
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+
 
     bool eventFilter(QObject *obj, QEvent *event);
 };

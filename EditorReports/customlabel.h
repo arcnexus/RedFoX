@@ -20,7 +20,7 @@ class CustomLabel : public  Container
   //  Q_ENUMS (_Orientacion)
   //  Q_ENUMS (_Aling)
 public:
-    explicit CustomLabel(QGraphicsItem  *parent = 0);
+    explicit CustomLabel(QString name, QGraphicsItem  *parent = 0);
     QDomElement xml(QDomDocument doc, QPointF relPos,QList<Section*> sectionPool);
     void parseXml(QDomElement element, QPointF origin);
     void editMe();

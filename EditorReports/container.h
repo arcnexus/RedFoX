@@ -19,8 +19,8 @@ class Container : public QObject , public QGraphicsRectItem
     Q_OBJECT
 
 public:
-    explicit Container(QGraphicsItem *parent = 0);
-
+    explicit Container(QString name, QGraphicsItem *parent = 0);
+    ~Container();
     void setSize(int w, int h);
 
     enum _Orientacion { Vertical , Horizontal };
@@ -42,9 +42,19 @@ public:
 
     bool isActive() const;
     void setActive(bool isActive);
+    void setName(QString);
+    QString name();
+
+    static QStringList acums();
+
+    static QMap<Container *, QString> items();
+    static QMap<Container *, QString> acumlators();
+
+    static void removeItem(Container *);
 
 signals:
     void moved(Container *);
+    void nameChanged(Container *);
 public slots:
 
 protected:
@@ -71,6 +81,13 @@ protected:
     QRectF boundingRect() const;
     QRectF margins;
     bool m_active;
+
+    void registerAsAcum();
+
+private:
+    static  QMap<Container *, QString> _items;
+    static  QMap<Container *, QString> _acums;
 };
 
 #endif // CONTAINER_H
+

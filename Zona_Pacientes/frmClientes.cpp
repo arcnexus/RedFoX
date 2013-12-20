@@ -129,6 +129,43 @@ frmClientes::frmClientes(QWidget *parent) :
     this->Altas = false;
     ui->blinkink->setVisible(false);
 
+    //------------------
+    // modelo historial
+    //------------------
+    modelHistorial = new QSqlQueryModel(this);
+    modelHistorial->setQuery("select * from histo_clientes_deuda where id_cab=-1",Configuracion_global->groupDB);
+    ui->tablahistorial_deudas->setModel(modelHistorial);
+    QStringList headers;
+    headers << "id" <<"id_cab" <<tr("Fecha Movim.") << tr("Imp.Ant.") <<tr("pagado") <<tr("cambio") <<tr("Pendiente");
+    headers <<tr("Entidad") << tr("oficina") <<tr("dc") <<tr("cuenta") << tr("efectivo") << tr("tarjeta") ;
+    headers << tr("cheque") <<tr("Transf.") << tr("Domic.") <<("PyPal") <<tr("Vales");
+
+    QVariantList sizes;
+    sizes << 0 << 0 <<100<<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 << 90 <<90 <<90 <<90 <<90;
+    for(int i = 0; i< sizes.size(); i++)
+    {
+        modelHistorial->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        ui->tablahistorial_deudas->setColumnWidth(i,sizes.at(i).toInt());
+    }
+    ui->tablahistorial_deudas->setColumnHidden(0,true);
+    ui->tablahistorial_deudas->setColumnHidden(1,true);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(2, new DateDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(3, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(4, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(5, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(11, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(12, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(13, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(14, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(15, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(16, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(17, new MonetaryDelegate);
+
+
+
+
+
     //-----------------------
     //Connect signals /slots.
     //-----------------------
@@ -162,7 +199,9 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
     connect(ui->tabla_busquedas->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this,SLOT(on_tabla_busquedas_row_changed(QModelIndex,QModelIndex)));
-
+    //-------------------
+    // Busquedas
+    //-------------------
     setUpBusqueda();
     formato_tabla_busquedas();
     bloquearCampos(true);
@@ -1246,11 +1285,6 @@ void frmClientes::txtcp_editingFinished()
 
 
 
-void frmClientes::TablaDeudas_clicked(const QModelIndex &index)
-{
-
-}
-
 void frmClientes::txtrRiesgoPermitido_editingFinished()
 {
     ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(ui->txtrRiesgoPermitido->text()));
@@ -1902,6 +1936,7 @@ void frmClientes::on_btnCobroTotal_clicked()
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
                 + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
+    on_TablaDeudas_clicked(index);
 
 }
 
@@ -1919,4 +1954,18 @@ void frmClientes::on_radPendientes_toggled(bool checked)
 
     }
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
+}
+
+void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
+{
+    // ------------------------------
+    // Recupero Id desde tabla madre
+    //-------------------------------
+    int id = ui->TablaDeudas->model()->index(index.row(),0).data().toInt();
+    //-------------------------
+    // Refresco modelo hijo
+    //-------------------------
+    modelHistorial->setQuery(QString("select * from histo_clientes_deuda where id_cab = %1").arg(id),
+                             Configuracion_global->groupDB);
+
 }

@@ -35,6 +35,7 @@ public:
     QColor  ColorFromString(QString s);
     bool Blocked() const;
 
+    void addAcumulator(QString s);
 signals:
     
     void SqlGlobalChanged(QString arg);
@@ -94,6 +95,8 @@ private:
     bool m_use2Colors;
     QColor m_color2;
     bool m_Blocked;
+
+    QStringList _acumulators;
 };
 
 #endif // DETAILSECTION_H

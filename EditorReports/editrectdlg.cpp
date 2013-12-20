@@ -37,6 +37,7 @@ EditRectDlg::EditRectDlg(RoundedRect *r, QWidget *parent) :
 
     pre->setRadiousX(r->RadiousX());
     pre->setRadiousY(r->RadiousY());
+    ui->txtNombre->setText(r->name());
 }
 
 EditRectDlg::~EditRectDlg()
@@ -128,6 +129,7 @@ void EditRectDlg::on_pushButton_3_clicked()
 
 void EditRectDlg::on_btnAceptar_clicked()
 {
+    rect->setName(ui->txtNombre->text());
     rect->setpenWidth(pre->penWidth());
     rect->setpenColor(pre->penColor());
     rect->setRadiousX(pre->RadiousX());

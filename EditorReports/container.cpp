@@ -1,15 +1,27 @@
 #include "container.h"
 #include <QKeyEvent>
 
-Container::Container(QGraphicsItem *parent) :
+QMap<Container*,QString> Container::_items;
+QMap<Container *, QString> Container::_acums;
+
+Container::Container(QString name, QGraphicsItem *parent) :
     QGraphicsRectItem(parent)
 {
+    _items.insert(this,name);
     this->_onResize = false;
     this->m_active = true;
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     this->setFlag(QGraphicsItem::ItemIsSelectable);
     this->setFlag(QGraphicsItem::ItemIsMovable);
+}
+
+Container::~Container()
+{
+    if(_items.contains(this))
+        _items.remove(this);
+    if(_acums.contains(this))
+        _acums.remove(this);
 }
 
 void Container::setSize(int w, int h)
@@ -147,6 +159,8 @@ void Container::apendXML(QDomElement &element, QDomDocument doc , QPointF relPos
 
     element.setAttribute("w",QString::number(this->rect().width() , 'f', 4));
     element.setAttribute("h",QString::number(this->rect().height(), 'f', 4));
+
+    element.setAttribute("name",_items.value(this));
 }
 
 QString Container::ColorString(QColor c)
@@ -198,6 +212,34 @@ QRectF Container::boundingRect() const
 {
     return this->rect();
 }
+
+void Container::registerAsAcum()
+{
+    _acums.insert(this,this->name());
+}
+QMap<Container *, QString> Container::items()
+{
+    return _items;
+}
+
+QMap<Container *, QString> Container::acumlators()
+{
+    return _acums;
+}
+
+void Container::removeItem(Container * cont )
+{
+    if(_items.contains(cont))
+        _items.remove(cont);
+    if(_acums.contains(cont))
+        _acums.remove(cont);
+}
+
+QStringList Container::acums()
+{
+    return  _acums.values();
+}
+
 bool Container::isActive() const
 {
     return m_active;
@@ -211,6 +253,22 @@ void Container::setActive(bool active)
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges,m_active);
     this->setFlag(QGraphicsItem::ItemIsSelectable,m_active);
     this->setFlag(QGraphicsItem::ItemIsMovable,m_active);
+}
+
+void Container::setName(QString n)
+{
+    if(n != name())
+    {
+        _items[this] = n;
+        if(_acums.contains(this))
+            _acums[this] = n;
+        emit nameChanged(this);
+    }
+}
+
+QString Container::name()
+{
+    return _items.value(this);
 }
 
 

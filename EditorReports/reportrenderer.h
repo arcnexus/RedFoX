@@ -62,6 +62,8 @@ private:
 
     enum _Orientacion { Vertical , Horizontal };
     enum _Aling { Left , Center , Rigth };
+    QDomNode endPage(QDomNode pageNode, QDomNode footerNode, QMap<QString, float> _Acums);
+    float getNumber(QString in, int formato);
 };
 
 #endif // REPORTRENDERER_H

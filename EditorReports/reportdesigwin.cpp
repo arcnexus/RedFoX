@@ -6,34 +6,24 @@
 #include "../db_table_view.h"
 #include "../sqlcalls.h"
 #include "savetobdfrm.h"
+
 ReportDesigWin::ReportDesigWin(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ReportDesigWin),
     scene(this),
     view(this)
 {
+
+
     render = 0;
+    insertor = 0;
     ui->setupUi(this);
     view.setScene(&scene);
     this->setCentralWidget(&view);
 
 
     QFontDatabase::addApplicationFont(":/codeBar/codebar/FRE3OF9X.TTF");
-    //Free 3 of 9 Extended
-
-    //TODO cambiar dentro de Maya
-    /*QSqlDatabase gr = QSqlDatabase::addDatabase("QMYSQL","grupo");
-    gr.setHostName("localhost");
-    gr.setUserName("root");
-    gr.setPassword("marco");
-    gr.setDatabaseName("grupotesting");
-    gr.open();
-    QSqlDatabase em = QSqlDatabase::addDatabase("QMYSQL","empresa");
-    em.setHostName("localhost");
-    em.setUserName("root");
-    em.setPassword("marco");
-    em.setDatabaseName("empsarapin");
-    em.open();*/
+    //Free 3 of 9 Extended        
 
     scene.setBackgroundBrush(QBrush(Qt::gray));
 
@@ -43,6 +33,8 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     paper.setMargen(1.5);
 
     connect(&paper,SIGNAL(itemInserted()),this,SLOT(stopInsert()));
+    connect(&paper,SIGNAL(itemInserted()),this,SLOT(refreshItems()));
+    connect(ui->itemList,SIGNAL(itemChanged(QListWidgetItem*)),this,SLOT(itemChanged(QListWidgetItem*)));
 
     connect(ui->actionRectangulo_redondeado,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionTexto,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
@@ -52,6 +44,7 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     connect(ui->actionCampo,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionCampo_Relacional,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionParametro,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
+    connect(ui->actionAcumulador,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
 }
 
 ReportDesigWin::~ReportDesigWin()
@@ -65,6 +58,15 @@ void ReportDesigWin::element_toggled(bool arg1)
 {
     if(arg1)
     {
+        if(insertor)
+        {
+            if(insertor->isChecked())
+            {
+                insertor->blockSignals(true);
+                insertor->setChecked(false);
+                insertor->blockSignals(false);
+            }
+        }
         QObject * send = sender();
         insertor = qobject_cast<QAction*>(send);
         if(send == ui->actionRectangulo_redondeado)
@@ -83,9 +85,14 @@ void ReportDesigWin::element_toggled(bool arg1)
             paper.prepareItemInsert(Paper::CampoRelacional);
         else if(send == ui->actionParametro)
             paper.prepareItemInsert(Paper::Parametro);
+        else if(send == ui->actionAcumulador)
+            paper.prepareItemInsert(Paper::Acumulador);
     }
     else
+    {
+        insertor = 0;
         paper.stopInsertingItems();
+    }
 }
 
 void ReportDesigWin::on_actionGuardar_triggered()
@@ -225,6 +232,138 @@ void ReportDesigWin::on_actionGuardar_en_BD_triggered()
                 TimedMessageBox *t = new TimedMessageBox(qApp->activeWindow(),tr("Error:\n%1").arg(error),TimedMessageBox::Critical);
             else
                 TimedMessageBox *t = new TimedMessageBox(qApp->activeWindow(),tr("Guardado con éxito"));
+        }
+    }
+}
+
+void ReportDesigWin::on_actionAlinear_Izquierda_triggered()
+{
+  QList<QGraphicsItem*> items = scene.selectedItems();
+  if(items.isEmpty())
+      return;
+
+  qreal _left = items.at(0)->x();
+  foreach (QGraphicsItem* i, items) {
+      if(i->x() < _left)
+          _left = i->x();
+  }
+
+  foreach (QGraphicsItem* i, items) {
+      i->setPos(_left,i->y());
+  }
+}
+
+void ReportDesigWin::on_actionAlinear_Derecha_triggered()
+{
+    QList<QGraphicsItem*> items = scene.selectedItems();
+    if(items.isEmpty())
+        return;
+
+    qreal _rigth = items.at(0)->x() + items.at(0)->boundingRect().width();
+    foreach (QGraphicsItem* i, items) {
+        if(i->x() + i->boundingRect().width() > _rigth)
+            _rigth = i->x() + i->boundingRect().width();
+    }
+
+    foreach (QGraphicsItem* i, items) {
+        i->setPos(_rigth - i->boundingRect().width(), i->y());
+    }
+}
+
+void ReportDesigWin::on_actionAlinear_Centro_triggered()
+{
+    QList<QGraphicsItem*> items = scene.selectedItems();
+    if(items.isEmpty())
+        return;
+
+    qreal _center = items.at(0)->x() + items.at(0)->boundingRect().width() / 2;
+    foreach (QGraphicsItem* i, items) {
+        i->setPos(_center - i->boundingRect().width()/2, i->y());
+    }
+}
+
+void ReportDesigWin::on_actionAlinear_Arriba_triggered()
+{
+    QList<QGraphicsItem*> items = scene.selectedItems();
+    if(items.isEmpty())
+        return;
+
+    qreal _up = items.at(0)->y();
+    foreach (QGraphicsItem* i, items) {
+        if(i->y() <  _up)
+            _up = i->y();
+    }
+
+    foreach (QGraphicsItem* i, items) {
+        i->setPos(i->x(),_up);
+    }
+}
+
+void ReportDesigWin::on_actionAlinear_centro_triggered()
+{
+    QList<QGraphicsItem*> items = scene.selectedItems();
+    if(items.isEmpty())
+        return;
+
+    qreal _center = items.at(0)->y() + items.at(0)->boundingRect().height()/2;
+
+    foreach (QGraphicsItem* i, items) {
+        i->setPos(i->x(),_center - i->boundingRect().height()/2);
+    }
+}
+
+void ReportDesigWin::on_actionAlinear_abajo_triggered()
+{
+    QList<QGraphicsItem*> items = scene.selectedItems();
+    if(items.isEmpty())
+        return;
+
+    qreal _center = items.at(0)->y() + items.at(0)->boundingRect().height();
+    foreach (QGraphicsItem* i, items) {
+        if(i->y() + i->boundingRect().height() >  _center)
+            _center = i->y()  + i->boundingRect().height();
+    }
+
+    foreach (QGraphicsItem* i, items) {
+        i->setPos(i->x(),_center - i->boundingRect().height());
+    }
+}
+
+void ReportDesigWin::refreshItems()
+{
+    _itemList.clear();
+    ui->itemList->clear();    
+
+    ui->itemList->blockSignals(true);
+    QMapIterator<Container*,QString> it(Container::items());
+    while(it.hasNext())
+    {
+        it.next();
+        QListWidgetItem *listItem = new QListWidgetItem(it.value(),ui->itemList);
+        _itemList.insert(listItem,it.key());
+        listItem->setCheckState(it.key()->isActive() ? Qt::Checked : Qt::Unchecked);
+        connect(it.key(),SIGNAL(nameChanged(Container*)),this,SLOT(nameChanged(Container*)));
+    }
+    ui->itemList->blockSignals(false);
+}
+
+void ReportDesigWin::itemChanged(QListWidgetItem *item)
+{
+    if(_itemList.contains(item))
+        if(_itemList.value(item))
+            _itemList.value(item)->setActive(item->checkState() == Qt::Checked);
+}
+
+void ReportDesigWin::nameChanged(Container *c)
+{
+    QMapIterator<QListWidgetItem*, Container*> it(_itemList);
+    while(it.hasNext())
+    {
+        it.next();
+        if(it.value() == c)
+        {
+            it.key()->setText(c->name());
+            break;
         }
     }
 }

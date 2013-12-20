@@ -19,6 +19,8 @@ FrmGestionCobros2::FrmGestionCobros2(QWidget *parent) :
     QSqlQueryModel *model_bancos = new QSqlQueryModel(this);
     model_bancos->setQuery("select descripcion from bancos", Configuracion_global->groupDB);
     ui->cboEntidad->setModel(model_bancos);
+
+
 }
 
 FrmGestionCobros2::~FrmGestionCobros2()
@@ -57,6 +59,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     if(!updated)
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
     else {
+
         if(val->efectivo >0 || val->tarjeta >0 || val->cheque >0 || val->vale >0)
         {
             //-----------------------------------
@@ -136,9 +139,13 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                     {
                         i.next();
                         deuda["entidad"] = i.value().value("entidad").toString();
+                        this->entidad =  i.value().value("entidad").toString();
                         deuda["oficina"] = i.value().value("oficina").toString();
+                        this->oficina  = i.value().value("oficina").toString();
                         deuda["dc"] = i.value().value("dc").toString();
+                        this->dc = i.value().value("dc").toString();
                         deuda["cuenta"] = i.value().value("cuenta").toString();
+                        this->cuenta  = i.value().value("cuenta").toString();
 
                     }
 
@@ -152,6 +159,41 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                                          tr("Aceptar"));
             }
         }
+        //-----------------------
+        // historial de deudas
+        //-----------------------
+        QHash <QString, QVariant> historial;
+        historial["id_cab"] = this->id;
+        historial["fecha_movimiento"] = QDate::currentDate().toString("yyyyMMdd");
+        historial["importe_anterior"] = importe;
+        historial["pagado"] = Configuracion_global->MonedatoDouble(ui->txtEntrega->text());
+        historial["pendiente_cobro"] = Configuracion_global->MonedatoDouble(ui->txtPendiente->text());
+        historial["entidad"] = this->entidad;
+        this->entidad.clear();
+        historial["oficina"] = this->oficina;
+        this->oficina.clear();
+        historial["dc"] = this->dc;
+        this->dc.clear();
+        historial["cuenta"] = this->cuenta;
+        this->cuenta.clear();
+        if(Configuracion_global->MonedatoDouble(ui->txtCambio->text())>0)
+            historial["importe_efectivo"] = importe ; // total pendiente
+        else
+            historial["importe_efectivo"] = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
+        historial["importe_tarjeta"] = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
+        historial["importe_cheque"] = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
+        historial["importe_transferencia"] =Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
+        historial["importe_internet"] = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
+        historial["importe_vale"] = Configuracion_global->MonedatoDouble(ui->txtVale->text());
+        historial["importe_cambio"] =Configuracion_global->MonedatoDouble(ui->txtCambio->text());
+
+        int new_id = SqlCalls::SqlInsert(historial,"histo_clientes_deuda",Configuracion_global->groupDB,error);
+        if(new_id == -1)
+            QMessageBox::warning(this,tr("Gestión de deudas"),
+                                 tr("Ocurrió un error al insertar en historial: %1").arg(error));
+
+
+        //fin historial
 
     }
     if(e.value("pendiente_cobro").toDouble() == 0){
@@ -269,15 +311,18 @@ void FrmGestionCobros2::on_txtInternet_editingFinished()
 
 void FrmGestionCobros2::calcular()
 {
-    double pendiente,efectivo,transferencia,tarjeta,cheque,internet,nuevo_pendiente,cambio,pagado;
+    double pendiente,efectivo,transferencia,tarjeta,cheque,internet;
+    double domiciliacion,nuevo_pendiente,cambio,pagado;
+
     pendiente = Configuracion_global->MonedatoDouble(ui->txtImporte_pendiente->text());
     efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
     transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
+    domiciliacion = Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text());
     tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
     cheque = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
     internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
 
-    pagado = efectivo + transferencia + tarjeta + cheque + internet;
+    pagado = efectivo + transferencia + tarjeta + cheque + internet + domiciliacion;
     ui->txtEntrega->setText(Configuracion_global->toFormatoMoneda(QString::number(pagado,'f',2)));
     nuevo_pendiente = pendiente - pagado;
     if(nuevo_pendiente >0)
@@ -287,6 +332,7 @@ void FrmGestionCobros2::calcular()
         ui->txtCambio->setText("0,00");
     }
     else{
+        nuevo_pendiente = -nuevo_pendiente;
         ui->txtCambio->setText(Configuracion_global->toFormatoMoneda(QString::number(nuevo_pendiente,'f',
                                                                                      Configuracion_global->decimales_campos_totales)));
         ui->txtPendiente->setText("0,00");
@@ -315,3 +361,12 @@ void FrmGestionCobros2::setId_factura(int value)
 
 
 
+
+void FrmGestionCobros2::on_txtDomiciliacion_editingFinished()
+{
+    ui->txtDomiciliacion->blockSignals(true);
+    ui->txtDomiciliacion->setText(Configuracion_global->toFormatoMoneda(ui->txtDomiciliacion->text()));
+    calcular();
+    ui->txtDomiciliacion->blockSignals(false);
+
+}
