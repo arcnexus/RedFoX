@@ -2402,14 +2402,14 @@ color: rgb(255,255,255);</string>
             </layout>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="OpenChart" name="graficaEstadistica">
+            <widget class="OpenChart" name="graficaEstadistica" native="true">
              <property name="minimumSize">
               <size>
                <width>0</width>
                <height>192</height>
               </size>
              </property>
-             <property name="Title">
+             <property name="Title" stdset="0">
               <string>Consumo por meses.</string>
              </property>
              <property name="Etiquetas" stdset="0">
@@ -2537,7 +2537,7 @@ color: rgb(255,255,255);</string>
             </widget>
            </item>
            <item row="6" column="0" colspan="2">
-            <widget class="QTableView" name="tableView"/>
+            <widget class="QTableView" name="tablahistorial_deudas"/>
            </item>
           </layout>
          </widget>

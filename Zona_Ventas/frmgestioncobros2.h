@@ -60,6 +60,9 @@ private:
         double pendiente;
         double vale;
     };
+    QString entidad,oficina,dc,cuenta;
+
+
 
 
 };
