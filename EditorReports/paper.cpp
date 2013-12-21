@@ -1080,8 +1080,9 @@ void Paper::removeItems(QList<QGraphicsItem *> items)
         if(items.contains(cont))
         {
             itemPool.removeOne(cont);
-            cont->deleteLater();
-        }
+            Container::removeItem(cont);
+            cont->deleteLater();            
+        }                
     }
 }
 
