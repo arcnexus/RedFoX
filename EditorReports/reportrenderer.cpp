@@ -614,13 +614,27 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                 ele.setAttribute("Text",text);
                                                 if(ele.attribute("Expandable") == "1")
                                                 {
+                                                    double y = ele.attribute("y").toDouble();
                                                     double h = ele.attribute("h").toDouble();
-                                                    double siz = iCopy.toElement().attribute("size").toDouble();
-                                                    QRectF r(0,0,ele.attribute("w").toDouble(),h);
-                                                    QRectF r2(painter->fontMetrics().boundingRect(r.toRect(),Qt::TextWordWrap,text));
-                                                    double diff = r2.height() - h;
-                                                    iCopy.toElement().setAttribute("size",siz+diff+10);
-                                                    ele.setAttribute("h",r2.height()+10);
+                                                    double w = ele.attribute("w").toDouble();
+                                                    double siz = sectionPart.toElement().attribute("size").toDouble();
+                                                    double diff = siz - h - y;
+
+                                                    int len = painter->fontMetrics().width(text);
+                                                    double dlines = len / w;
+                                                    int lines = 0;
+
+                                                    if(dlines > 0.95 && dlines < 1)
+                                                        lines = 1;
+                                                    else if(dlines >= 1)
+                                                        lines = qRound(dlines - 0.15);
+
+                                                    double newH = h*lines + h;
+
+
+                                                    siz = qMax(newH + diff, siz);
+                                                    sectionPart.toElement().setAttribute("size",siz);
+                                                    ele.setAttribute("h",newH);
                                                 }
                                                 if(_i_acums.contains(ele.attribute("name")))
                                                     _i_acums[ele.attribute("name")]+= getNumber(text,formato);
@@ -668,6 +682,9 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 QDomElement ele = child.toElement();
                                 if(ele.attribute("id")=="Field")
                                 {
+                                    QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
+                                    painter->setFont(f);
+
                                     ele.setAttribute("id","Label");
                                     QString text = "";
                                     int formato = ele.attribute("formato").toDouble();
@@ -677,14 +694,27 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                     ele.setAttribute("Text",text);
                                     if(ele.attribute("Expandable") == "1")
                                     {
+                                        double y = ele.attribute("y").toDouble();
                                         double h = ele.attribute("h").toDouble();
+                                        double w = ele.attribute("w").toDouble();
                                         double siz = sectionPart.toElement().attribute("size").toDouble();
-                                        QRectF r(0,0,ele.attribute("w").toDouble()-10,h);
-                                        QRectF r2(painter->fontMetrics().boundingRect(r.toRect(),Qt::TextWordWrap,text));
-                                        double diff = r2.height() - h;
-                                        sectionPart.toElement().setAttribute("size",siz+diff+painter->fontMetrics().height());
-                                        ele.setAttribute("h",r2.height()+painter->fontMetrics().height());
-                                       // ele.setAttribute("w",r2.width()+10);
+                                        double diff = siz - h - y;
+
+                                        int len = painter->fontMetrics().width(text);
+                                        double dlines = len / w;
+                                        int lines = 0;
+
+                                        if(dlines > 0.95 && dlines < 1)
+                                            lines = 1;
+                                        else if(dlines >= 1)
+                                            lines = qRound(dlines - 0.15);
+
+                                        double newH = h*lines + h;
+
+
+                                        siz = qMax(newH + diff, siz);
+                                        sectionPart.toElement().setAttribute("size",siz);
+                                        ele.setAttribute("h",newH);
                                     }
                                 }
                                 else if(ele.attribute("id")=="RelationalField")
