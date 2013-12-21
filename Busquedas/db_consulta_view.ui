@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>db_consulta_view</class>
  <widget class="QDialog" name="db_consulta_view">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,12 +16,8 @@
   <property name="windowTitle">
    <string>Buscar...</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="../maya.qrc">
-    <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
-  </property>
-  <property name="windowOpacity">
-   <double>1.000000000000000</double>
+  <property name="modal">
+   <bool>false</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -193,6 +192,9 @@ font: 8pt &quot;Sans&quot;;</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>lineaTextoBuscar</tabstop>
+  <tabstop>cboCampoBusqueda</tabstop>
+  <tabstop>cboSentido</tabstop>
   <tabstop>resultado_list</tabstop>
   <tabstop>btn_aceptar</tabstop>
   <tabstop>btn_cancelar</tabstop>
