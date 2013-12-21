@@ -44,7 +44,7 @@ QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QSt
     }
     }
     m_doc.firstChild().toElement().setAttribute("pages", m_doc.firstChild().childNodes().size());
-    QFile f("/home/arcnexus/m_doc.xml");
+    QFile f("/home/marco/m_doc.xml");
     if(f.open(QFile::WriteOnly))
     {
         QTextStream out(&f);
@@ -1216,7 +1216,9 @@ void ReportRenderer::drawRect(QDomElement e, QPainter *painter, double dpiX, dou
 
     QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX);
-    siz.setHeight(e.attribute("h").toDouble()* dpiY);
+    QString sH = e.attribute("h");
+    sH.replace(",",".");
+    siz.setHeight(sH.toDouble()* dpiY);
 
     QColor penColor = ColorFromString(e.attribute("PenColor"));
     int penW = e.attribute("PenWidth").toDouble();
@@ -1351,7 +1353,9 @@ void ReportRenderer::drawLine(QDomElement e, QPainter *painter, double dpiX, dou
 
     QSizeF siz;
     siz.setWidth(e.attribute("w").toDouble()* dpiX);
-    siz.setHeight(e.attribute("h").toDouble()* dpiY);
+    QString sH = e.attribute("h");
+    sH.replace(",",".");
+    siz.setHeight(sH.toDouble()* dpiY);
 
     painter->save();
 
@@ -1602,7 +1606,8 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
 
                     double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
                     double LineStart = ele.attribute("y").toDouble();
-                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
+                    QString sH = QString::number(LineEnd - LineStart,'f',2).replace(",",".");
+                    ele.setAttribute("h",sH);
                 }
             }
             else if(ele.attribute("id")=="RoundRect")
@@ -1618,12 +1623,14 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
 
                     double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
                     double LineStart = ele.attribute("y").toDouble();
-                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
+                    QString sH = QString::number(LineEnd - LineStart,'f',2).replace(",",".");
+                    ele.setAttribute("h",sH);
                 }
             }
             child = child.nextSibling();
         }
         toRet.appendChild(rHeaderNode);
+        pageUsable -= rHeaderNode.toElement().attribute("size").toDouble();
     }
     if(pageHeader)
     {
@@ -1690,7 +1697,8 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                     double LineStart = ele.attribute("y").toDouble();
                     if(reporHeader)
                         LineStart+= RHSiz;
-                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
+                    QString sH = QString::number(LineEnd - LineStart,'f',2).replace(",",".");
+                    ele.setAttribute("h",sH);
                 }
             }
             else if(ele.attribute("id")=="RoundRect")
@@ -1701,7 +1709,8 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                     double footStart = pageUsable - PFooterSiz;
                     double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
                     double LineStart = ele.attribute("y").toDouble();
-                    ele.setAttribute("h",QString::number(LineEnd - LineStart,'f',2));
+                    QString sH = QString::number((qreal)(LineEnd - LineStart),'f',2);
+                    ele.setAttribute("h",sH);
                 }
             }
             child = child.nextSibling();
