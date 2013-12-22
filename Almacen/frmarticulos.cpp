@@ -198,7 +198,7 @@ void FrmArticulos::setUpBusqueda()
 
 
     QPushButton* kit = new QPushButton(QIcon(":/Icons/PNG/kits.png"),tr("Crear/Editar Kit"),this);
-    connect(kit,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked()));
+    connect(kit,SIGNAL(clicked()),this,SLOT(on_btnKit_clicked()));
     m_busqueda->addWidget(kit);
 
     QPushButton* borra_kit = new QPushButton(QIcon(":/Icons/PNG/Delete.png"),tr("Borrar Kit"),this);
@@ -813,6 +813,16 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
                 else
                     mostrarBusqueda();
 
+            }else
+            {
+                if(target->objectName()=="txtcodigo_proveedor")
+                {
+                    on_btnBuscarProveedor_clicked();
+                } else
+                {
+                    QMessageBox::warning(this,tr("Gestión artículos"),tr("No puede buscar mientras está editando"),
+                                     tr("Aceptar"));
+                }
             }
             return true;
         }
@@ -910,14 +920,40 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
 
 void FrmArticulos::on_btnBuscarProveedor_clicked()
 {
-  // TODO BUSCAR PROVEEDORES
-//        if(qProv.exec()){
-//            qProv.next();
-//            ui->txtcodigo_proveedor->setText(qProv.record().field("codigo").value().toString());
-//            ui->txtproveedor->setText(qProv.record().field("proveedor").value().toString());
-//            oArticulo->id_proveedor = buscar.nidProv;
-//        }
-  //  }
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos << "proveedor" << "codigo" <<"cif" <<"telefono1"  << "movil";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Proveedores");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id, proveedor, codigo,cif,telefono1,movil from proveedores");
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Proveedor") <<tr("código") << tr("cif/nif/nie") << tr("Teléfono ") << tr("móvil");
+    tamanos <<"0" << "300"  <<"100" << "100" << "120" <<"120";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Proveedores");
+    consulta.setFocus();
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+
+        QString nombre,codigo;
+        QMap<int, QSqlRecord> prov;
+        prov = SqlCalls::SelectRecord("proveedores",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        nombre = prov.value(id).value("proveedor").toString();
+        codigo = prov.value(id).value("codigo").toString();
+        oArticulo->id_proveedor = id;
+        oArticulo->proveedor = nombre;
+        oArticulo->cCodProveedor = codigo;
+        ui->txtcodigo_proveedor->setText(codigo);
+
+        ui->txtproveedor->setText(nombre);
+    }
+
 
 }
 
