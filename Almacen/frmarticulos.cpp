@@ -744,35 +744,37 @@ void FrmArticulos::on_botDeshacer_clicked()
 
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("secciones");
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"seccion";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Secciones");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo, seccion from secciones");
+    QStringList cabecera;
+    QVariantList tamanos;
 
-    form.setWindowTitle(tr("Secciones"));
-
-    QStringList headers;
-    headers << tr("Seccion");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.set_columnHide(2);
-
-    form.set_selection("seccion");
-    if(form.exec() == QDialog::Accepted)
+    cabecera  << tr("Id") <<tr("código") << tr("sección");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Secciones");
+    consulta.setFocus();
+    if(consulta.exec())
     {
-        ui->txtseccion->setText(form.selected_value);
-        QSqlQuery qSeccion(Configuracion_global->groupDB);
-        qSeccion.prepare("select id from secciones where seccion = :seccion");
-        qSeccion.bindValue(":seccion",form.selected_value);
-        if(qSeccion.exec())
-        {
-            qSeccion.next();
-            oArticulo->id_seccion= qSeccion.value(0).toInt();
-        }
-        else
-        {
-            QMessageBox::warning(this,tr("Secciones"),tr("No se ha podido vincular la seccion: %1").arg(qSeccion.lastError().text()));
-        }
+        int id = consulta.get_id();
+
+        QString seccion,codigo;
+        QMap<int, QSqlRecord> secc;
+        secc = SqlCalls::SelectRecord("secciones",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        seccion = secc.value(id).value("seccion").toString();
+        codigo = secc.value(id).value("codigo").toString();
+        oArticulo->id_seccion = id;
+        oArticulo->seccion = seccion;
+
+        ui->txtseccion->setText(seccion);
+
     }
 }
 
@@ -1052,7 +1054,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     // Proveedores frecuentes
     //-----------------------
     modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvd_real,moneda,descoferta from proveedores_frecuentes where id_art = "+
+    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),
                         Configuracion_global->groupDB);
 
@@ -1855,7 +1857,7 @@ void FrmArticulos::LlenarTablas()
 //    // Proveedores frecuentes
 //    //-----------------------
 
-    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,desc_oferta,id_prov from proveedores_frecuentes "
+    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
     "where id_art = "+QString::number(oArticulo->id),
                         Configuracion_global->groupDB);
 
@@ -1898,9 +1900,9 @@ void FrmArticulos::LlenarTablas()
 
    rellenar_grafica_proveedores();
 
-    // ------------------
-    // TABLA TRAZABILidAD
-    // ------------------
+    // -------------------
+    // TABLA TRAZABILIDAD
+    // -------------------
     modelTrazabilidad1 = new QSqlQueryModel(this);
     modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
                                   Configuracion_global->groupDB);
