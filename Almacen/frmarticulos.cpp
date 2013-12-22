@@ -835,30 +835,37 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("familias");
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"familia";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Familias");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo, familias from familias");
+    QStringList cabecera;
+    QVariantList tamanos;
 
-    form.setWindowTitle(tr("Familias"));
-
-    QStringList headers;
-    headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
-    form.set_table_headers(headers);
-
-    form.set_relation(3,QSqlRelation("secciones","id","seccion"));
-
-    form.set_columnHide(0);
-
-    form.set_selection("familia");
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare(QString("SELECT id FROM secciones WHERE familia = '%1' ").arg(ui->txtfamilia->text()));
-    if (query.exec())
-        if(query.next())
-            form.set_filter("id_seccion = "+query.record().value(0).toString());
-
-    if(form.exec() == QDialog::Accepted)
+    cabecera  << tr("Id") <<tr("código") << tr("Familia");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Familias");
+    consulta.setFocus();
+    if(consulta.exec())
     {
-        ui->txtfamilia->setText(form.selected_value);
+        int id = consulta.get_id();
+
+        QString familia,codigo;
+        QMap<int, QSqlRecord> fam;
+        fam = SqlCalls::SelectRecord("familias",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        familia = fam.value(id).value("familia").toString();
+        codigo = fam.value(id).value("codigo").toString();
+        oArticulo->id_familia = id;
+        oArticulo->familia = familia;
+
+        ui->txtfamilia->setText(familia);
+
     }
 }
 

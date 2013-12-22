@@ -627,7 +627,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                     if(dlines > 0.95 && dlines < 1)
                                                         lines = 1;
                                                     else if(dlines >= 1)
-                                                        lines = qRound(dlines - 0.15);
+                                                        lines = qRound(dlines - 0.30);
 
                                                     double newH = h*lines + h;
 
@@ -707,7 +707,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                         if(dlines > 0.95 && dlines < 1)
                                             lines = 1;
                                         else if(dlines >= 1)
-                                            lines = qRound(dlines - 0.15);
+                                            lines = qRound(dlines - 0.30);
 
                                         double newH = h*lines + h;
 
@@ -1922,7 +1922,7 @@ QString ReportRenderer::applyFormato(QString in, int formato)
     */
         // TODO - TERMINAR FORMATO FECHA
         if(formato == 0 || formato > 6 /*8 es el maximo ahora, si metes mas, aumenta esto*/)
-            return in;
+            return in.trimmed();
 
         bool ok;
         double d = in.toDouble(&ok);
