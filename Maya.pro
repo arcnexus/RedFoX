@@ -3,7 +3,7 @@
 # Project created by QtCreator 2012-06-04T22:00:11
 # y por ArcNexus
 #-------------------------------------------------
-
+CONFIG += c++11
 QT       += core \
  gui
 QT       += sql
@@ -148,7 +148,6 @@ SOURCES += main.cpp\
     Zona_Contabilidad/frmcuadro_cuentas.cpp \
     Zona_Contabilidad/cuentas_contables.cpp \
     Almacen/tipostarifa.cpp \
-    Zona_Administrador/addgroupfrom.cpp \
     Almacen/frminventario.cpp \
     EditorReports/sectioneditordlg.cpp \
     EditorReports/section.cpp \
@@ -326,7 +325,6 @@ HEADERS  += mainwindow.h \
     Zona_Contabilidad/frmcuadro_cuentas.h \
     Zona_Contabilidad/cuentas_contables.h \
     Almacen/tipostarifa.h \
-    Zona_Administrador/addgroupfrom.h \
     Almacen/frminventario.h \
     EditorReports/sectioneditordlg.h \
     EditorReports/section.h \
@@ -446,7 +444,6 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmgestioncobros.ui \
     Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
-    Zona_Administrador/addgroupfrom.ui \
     Almacen/frminventario.ui \
     EditorReports/sectioneditordlg.ui \
     EditorReports/edittextdlg.ui \

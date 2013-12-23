@@ -620,17 +620,11 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                     double siz = sectionPart.toElement().attribute("size").toDouble();
                                                     double diff = siz - h - y;
 
-                                                    int len = painter->fontMetrics().width(text);
-                                                    double dlines = len / w;
-                                                    int lines = 0;
+                                                    QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
+                                                    QFontMetricsF metrics(f);
+                                                    QRectF r(metrics.boundingRect(QRect(0,0,w,h),Qt::TextWordWrap,text));
 
-                                                    if(dlines > 0.95 && dlines < 1)
-                                                        lines = 1;
-                                                    else if(dlines >= 1)
-                                                        lines = qRound(dlines - 0.15);
-
-                                                    double newH = h*lines + h;
-
+                                                    double newH = r.height();
 
                                                     siz = qMax(newH + diff, siz);
                                                     sectionPart.toElement().setAttribute("size",siz);
@@ -682,9 +676,6 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 QDomElement ele = child.toElement();
                                 if(ele.attribute("id")=="Field")
                                 {
-                                    QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
-                                    painter->setFont(f);
-
                                     ele.setAttribute("id","Label");
                                     QString text = "";
                                     int formato = ele.attribute("formato").toDouble();
@@ -700,17 +691,11 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                         double siz = sectionPart.toElement().attribute("size").toDouble();
                                         double diff = siz - h - y;
 
-                                        int len = painter->fontMetrics().width(text);
-                                        double dlines = len / w;
-                                        int lines = 0;
+                                        QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
+                                        QFontMetricsF metrics(f);
+                                        QRectF r(metrics.boundingRect(QRect(0,0,w,h),Qt::TextWordWrap,text));
 
-                                        if(dlines > 0.95 && dlines < 1)
-                                            lines = 1;
-                                        else if(dlines >= 1)
-                                            lines = qRound(dlines - 0.15);
-
-                                        double newH = h*lines + h;
-
+                                        double newH = r.height();
 
                                         siz = qMax(newH + diff, siz);
                                         sectionPart.toElement().setAttribute("size",siz);
@@ -1293,8 +1278,8 @@ void ReportRenderer::drawLabel(QDomElement e, QPainter *painter, double dpiX, do
     pos.setY(e.attribute("y").toDouble() * dpiY);
 
     QSizeF siz;
-    siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
-    siz.setHeight(e.attribute("h").toDouble()* dpiY+10);
+    siz.setWidth(e.attribute("w").toDouble()* dpiX);
+    siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
     painter->save();
 
@@ -1922,7 +1907,7 @@ QString ReportRenderer::applyFormato(QString in, int formato)
     */
         // TODO - TERMINAR FORMATO FECHA
         if(formato == 0 || formato > 6 /*8 es el maximo ahora, si metes mas, aumenta esto*/)
-            return in;
+            return in.trimmed();
 
         bool ok;
         double d = in.toDouble(&ok);

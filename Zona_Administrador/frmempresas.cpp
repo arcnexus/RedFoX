@@ -1,7 +1,8 @@
 #include "frmempresas.h"
 #include "ui_frmempresas.h"
-#include "addgroupfrom.h"
+
 #include "../Zona_Administrador/frmconfigurar_terminal.h"
+#include "../sqlcalls.h"
 
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -13,9 +14,6 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     ui->blinkink->seticon(tmpIcon.pixmap(32,32));
 
-
-    connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(txtpoblacion_editingFinished()));
-    connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(txtcp_editingFinished()));
     //------------------
     // LLeno divisas
     //------------------
@@ -31,103 +29,13 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     ui->cboTarifa->setModel(modelTarifas);
 
     getEmpresas();
-    showEmpresas();
-    blockGUI(true,false);
+    //showEmpresas();
+    //blockGUI(true,false);
 }
 
 FrmEmpresas::~FrmEmpresas()
 {
     delete ui;
-}
-
-void FrmEmpresas::LLenarCampos()
-{
-    // cambiado a _llenarCampos()
-
-//    ui->txtcodigo->setText(oEmpresa.getcodigo());
-//    ui->txtEmpresa->setText(oEmpresa.getnombre());
-//    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
-//    ui->txtnombre_bd->setText(oEmpresa.getnombre_bd());
-
-//    int indice=ui->txtcDriver->findText(oEmpresa.getcDriverBD());
-//    if(indice!=-1)
-//       ui->txtcDriver->setCurrentIndex(indice);
-
-//    ui->txtRutaBd->setText(oEmpresa.getruta_bd_sqlite());
-//    ui->txtnombre_bdMedic->setText(oEmpresa.getnombre_bdMed());
-
-
-//    //indice=ui->txtcDriverMedica->findText(oEmpresa.getcDriverBDMed());
-//    //if(indice!=-1)
-//    //ui->txtcDriverMedica->setCurrentIndex(indice);
-
-
-//    ui->txtdireccion1->setText(oEmpresa.getdireccion1());
-//    ui->txtcp->setText(oEmpresa.getcp());
-//    ui->txtpoblacion->setText(oEmpresa.getpoblacion());
-//    ui->txtprovincia->setText(oEmpresa.getprovincia());
-//    ui->txtpais->setText(oEmpresa.getpais());
-//    ui->txttelefono1->setText(oEmpresa.gettelefono1());
-//    ui->txttelefono2->setText(oEmpresa.gettelefono2());
-//    ui->txtfax->setText(oEmpresa.getfax());
-//    ui->txtcMail->setText(oEmpresa.getcMail());
-//    ui->txtweb->setText(oEmpresa.getweb());
-//    ui->txtcif->setText(oEmpresa.getcif());
-//    ui->txtcInscripcion->setText(oEmpresa.getcInscripcion());
-//    ui->txtcCometarioAlbaran->setText(oEmpresa.getccomentario_albaran());
-//    ui->txtccomentario_factura->setText(oEmpresa.getccomentario_factura());
-//    ui->txtccomentario_ticket->setText(oEmpresa.getccomentario_ticket());
-//    ui->txtejercicio->setValue(oEmpresa.getejercicio());
-//    ui->txtndigitos_factura->setText(QString::number(oEmpresa.getndigitos_factura()));
-//    ui->txtserieFactura->setText(oEmpresa.getserie());
-//    ui->txtdigitos_cuentas->setValue(oEmpresa.getdigitos_cuentas());
-//    ui->txtcuentaCliente->setText(oEmpresa.getcuenta_clientes());
-//    ui->txtcuenta_proveedores->setText(oEmpresa.getcuenta_proveedores());
-//    ui->txtcuenta_acreedores->setText(oEmpresa.getcuenta_acreedores());
-//    QString cDivisa = Configuracion_global->Devolver_moneda(oEmpresa.id_divisa);
-//    int nIndex = ui->cboDivisas->findText(cDivisa);
-//    ui->cboDivisas->setCurrentIndex(nIndex);
-//    ui->chkContabilidad->setChecked(oEmpresa.contabilidad);
-//    ui->txtConsultas->setValue( oEmpresa.consultas);
-//    int index =ui->cboPrimer_dia_laborable->findText(oEmpresa.primer_dia_laborable);
-//    ui->cboPrimer_dia_laborable->setCurrentIndex(index);
-//    index = ui->cbo_ultimo_dia_semana->findText(oEmpresa.ultimo_dia_laborable);
-//    ui->cbo_ultimo_dia_semana->setCurrentIndex(index);
-//    ui->txt_horario_primer_dia->setText(oEmpresa.horario_primer_dia);
-//    ui->txt_horario_dia_normal->setText(oEmpresa.horario_dia_normal);
-//    ui->txt_horario_ultimo_dia->setText(oEmpresa.horario_ultimo_dia);
-
-
-//    ui->txtNombre_BDConta->setText(oEmpresa.nombre_bd_contabilidad);
-
-
-//    ui->txtruta_bd_conta->setText(oEmpresa.RutaBD_Contabilidad_sqlite);
-//    ui->chk_ticket_factura->setChecked(oEmpresa.ticket_factura);
-//    index = ui->cboTarifa->findText(Configuracion_global->Devolver_tarifa(oEmpresa.id_tarifa_predeterminada));
-//    ui->cboTarifa->setCurrentIndex(index);
-//    ui->chk_upate_divisas->setChecked(oEmpresa.actualizar_divisas);
-//    ui->chkMedica->setChecked(oEmpresa.empresa_medica);
-//    ui->chkIRPF->setChecked(oEmpresa.irpf);
-//    ui->spinPorc_irpf->setValue(oEmpresa.porc_irpf);
-//    ui->txtCuenta_venta_mercaderias->setText(oEmpresa.cuenta_venta_mercaderias);
-//    ui->txtCuenta_venta_servicios->setText(oEmpresa.cuenta_venta_servicios);
-//    ui->ivarepercutido1->setText(oEmpresa.cuenta_iva_repercutido1);
-//    ui->ivarepercutido2->setText(oEmpresa.cuenta_iva_repercutido2);
-//    ui->ivarepercutido3->setText(oEmpresa.cuenta_iva_repercutido3);
-//    ui->ivarepercutido4->setText(oEmpresa.cuenta_iva_repercutido4);
-//    ui->ivarepercutidore1->setText(oEmpresa.cuenta_iva_repercutido_re1);
-//    ui->ivarepercutidore2->setText(oEmpresa.cuenta_iva_repercutido_re2);
-//    ui->ivarepercutidore3->setText(oEmpresa.cuenta_iva_repercutido_re3);
-//    ui->ivarepercutidore4->setText(oEmpresa.cuenta_iva_repercutido_re4);
-//    ui->ivasoportado1->setText(oEmpresa.cuenta_iva_soportado1);
-//    ui->ivasoportado2->setText(oEmpresa.cuenta_iva_soportado2);
-//    ui->ivasoportado3->setText(oEmpresa.cuenta_iva_soportado3);
-//    ui->ivasoportado4->setText(oEmpresa.cuenta_iva_soportado4);
-//    ui->ivasoportadore1->setText(oEmpresa.cuenta_iva_soportado_re1);
-//    ui->ivasoportadore2->setText(oEmpresa.cuenta_iva_soportado_re2);
-//    ui->ivasoportadore3->setText(oEmpresa.cuenta_iva_soportado_re3);
-//    ui->ivasoportadore4->setText(oEmpresa.cuenta_iva_soportado_re4);
-
 }
 
 void FrmEmpresas::CargarCamposEnEmpresa()
@@ -212,80 +120,10 @@ void FrmEmpresas::CargarCamposEnEmpresa()
     oEmpresa.porc_irpf = ui->spinPorc_irpf->value();
 }
 
-void FrmEmpresas::txtpoblacion_editingFinished()
+void FrmEmpresas::groupError(QString s)
 {
-    //TODO - BUSCAR POBLACION
-//    ui->txtpoblacion->setText(ui->txtpoblacion->text().toUpper());
-//    if (ui->txtcp->text().isEmpty() && !ui->txtpoblacion->text().isEmpty())
-//    {
-//       FrmBuscarPoblacion BuscarPoblacion;
-//       BuscarPoblacion.setpoblacion(ui->txtpoblacion->text(),1);
-//       if(BuscarPoblacion.exec())
-//       {
-//        //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-//         int nid = BuscarPoblacion.Devolverid();
-//         if(nid > 0)
-//         {
-//             QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//             QString cid;
-//             cid = QString::number(nid);
-//             qPoblacion.prepare("select poblacion, CP, provincia from poblaciones where id = :cid");
-//             qPoblacion.bindValue(":cid",cid);
-//             if(!qPoblacion.exec())
-//             {
-//                 QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//             }
-//             else
-//             {
-//                 if (qPoblacion.next())
-//                 {
-//                     ui->txtpoblacion->setText(qPoblacion.value(0).toString());
-//                     ui->txtcp->setText(qPoblacion.value(1).toString());
-//                     ui->txtprovincia->setText(qPoblacion.value(2).toString());
-//                     ui->txtpais->setText("ESPAÑA");
-//                 }
-//             }
-//         }
-//       }
-//    }
+    QMessageBox::critical(this,tr("Error al crear grupo nuevo"), s);
 }
-void FrmEmpresas::txtcp_editingFinished()
-{
-    //TODO - BUSCAR POBLACION
-//    if (!ui->txtcp->text().isEmpty() && ui->txtpoblacion->text().isEmpty())
-//    {
-//        FrmBuscarPoblacion BuscarPoblacion;
-//        BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-//        if(BuscarPoblacion.exec())
-//        {
-
-//            int nid = BuscarPoblacion.Devolverid();
-//            if(nid > 0)
-//            {
-//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//                QString cid;
-//                cid = QString::number(nid);
-//                qPoblacion.prepare("select poblacion, CP,provincia from poblaciones where id = :cid");
-//                qPoblacion.bindValue(":cid",cid);
-//                if(!qPoblacion.exec())
-//                {
-//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//                }
-//                else
-//                {
-//                    if (qPoblacion.next())
-//                    {
-//                        ui->txtcp->setText(qPoblacion.value(1).toString());
-//                        ui->txtpoblacion->setText(qPoblacion.value(0).toString());
-//                        ui->txtprovincia->setText(qPoblacion.value(2).toString());
-//                        ui->txtpais->setText("ESPAÑA");
-//                    }
-//                }
-//            }
-//        }
-//    }
-}
-
 
 void FrmEmpresas::limpiar_campos()
 {
@@ -325,61 +163,20 @@ void FrmEmpresas::on_btn_migrar_clicked()
     ui->btn_migrar->setText("Migrando...");
 }
 
-void FrmEmpresas::on_addGrupo_clicked()
-{
-    addGroupFrom f(this);
-    if(f.exec() == QDialog::Accepted)
-    {
-        getEmpresas();
-        showEmpresas();
-    }
-}
-
-
-void FrmEmpresas::showEmpresas()
-{
-    ui->treeEmpresas->clear();
-
-    QHashIterator<QString, QPair<QList<empresa> , QSqlRecord> > it(_empresas);
-
-    while(it.hasNext())
-    {
-        it.next();
-        QString grupo_name = it.key();
-
-        QTreeWidgetItem * root = new QTreeWidgetItem(ui->treeEmpresas);
-        root->setText(0,grupo_name);
-        QFont f("Arial");
-        f.setBold(true);
-        f.setItalic(true);
-        f.setWeight(10);
-
-        root->setFont(0,f);
-        root->setTextColor(0,Qt::darkGreen);
-
-        for(int i=0; i<it.value().first.size(); i++)
-        {
-            QTreeWidgetItem * item = new QTreeWidgetItem(root);
-            item->setText(0,it.value().first.at(i).name);
-        }
-        ui->treeEmpresas->addTopLevelItem(root);
-    }
-    ui->treeEmpresas->expandAll();
-}
-
 void FrmEmpresas::getEmpresas()
 {
     _empresas.clear();
-    QScopedPointer<QSqlQuery>QryEmpresas(new QSqlQuery(QSqlDatabase::database("Global")));
-    //QSqlQuery *QryEmpresas = new QSqlQuery(Configuracion_global->groupDB);
+    QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
-    QryEmpresas->prepare("Select * from grupos");
+    QryEmpresas.prepare("Select * from grupos");
 
-    if(QryEmpresas->exec())
+    if(QryEmpresas.exec())
     {
-        while (QryEmpresas->next())
+        while (QryEmpresas.next())
         {
-            QSqlRecord rEmpresa = QryEmpresas->record();
+            ui->btn_add_nuevo->setEnabled(true);
+
+            QSqlRecord rEmpresa = QryEmpresas.record();
 
             QString nombre = rEmpresa.value("nombre").toString();
             QString bd_driver = rEmpresa.value("bd_driver").toString();
@@ -422,20 +219,7 @@ void FrmEmpresas::getEmpresas()
 
 void FrmEmpresas::_addEmpresa()
 {
-    if(ui->treeEmpresas->selectedItems().isEmpty())
-        return;
-    QTreeWidgetItem * item;
-
-    if(ui->treeEmpresas->selectedItems().at(0)->childCount()==0)
-    {
-        item = ui->treeEmpresas->selectedItems().at(0)->parent();
-        if(!item)
-            item = ui->treeEmpresas->selectedItems().at(0);
-    }
-    else
-        item = ui->treeEmpresas->selectedItems().at(0);
-
-    QSqlRecord r = _empresas.value(item->text(0)).second;
+    QSqlRecord r = _empresas.value(_targetGroup).second;
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(r.value("bd_host").toString());
@@ -475,13 +259,18 @@ void FrmEmpresas::_addEmpresa()
             nMedic = ui->txtnombre_bdMedic->text();
 
 
-        QFile f(":/Icons/DB/DBEmpresa.sql");
+        nEmpresa.replace(" ","");
+        nConta.replace(" ","");
+        nMedic.replace(" ","");
+
+        QFile f(":/DB/DB/Empresa.sql");
         error = !f.open(QFile::ReadOnly);
         if(!error)
         {
             QString s = f.readAll();
             s.replace("@empresa@",nEmpresa);
             s.replace("\r\n"," ");
+
             QStringList querys = s.split(";",QString::SkipEmptyParts);
 
             d.setMaximum(querys.size());
@@ -490,7 +279,7 @@ void FrmEmpresas::_addEmpresa()
 
             for(int i = 0; i< querys.size();i++)
             {
-                if(!querys.at(i).isEmpty())
+                if(!(querys.at(i)== "\n") && !querys.at(i).isEmpty())
                 {
                     if(!q.exec(querys.at(i)))
                     {
@@ -504,6 +293,71 @@ void FrmEmpresas::_addEmpresa()
                 }
             }
         }
+        f.close();
+
+        QFile f2(":/DB/DB/Conta.sql");
+        error = !f2.open(QFile::ReadOnly);
+        if(!error)
+        {
+            QString s = f2.readAll();
+            s.replace("@conta@",nConta);
+            s.replace("\r\n"," ");
+
+            QStringList querys = s.split(";",QString::SkipEmptyParts);
+
+            d.setValue(0);
+            d.setMaximum(querys.size());
+            d.setLabelText(tr("Creando tablas"));
+
+            for(int i = 0; i< querys.size();i++)
+            {
+                if(!(querys.at(i)== "\n") && !querys.at(i).isEmpty())
+                {
+                    if(!q.exec(querys.at(i)))
+                    {
+                        qDebug() << q.lastError().text();
+                        qDebug() << querys.at(i);
+                        error = true;
+                        break;
+                    }
+                    d.setValue(i);
+                    QApplication::processEvents();
+                }
+            }
+        }
+        f2.close();
+
+        QFile f3(":/DB/DB/Medica.sql");
+        error = !f3.open(QFile::ReadOnly);
+        if(!error && ui->chkMedica->isChecked())
+        {
+            QString s = f3.readAll();
+            s.replace("@medica@",nConta);
+            s.replace("\r\n"," ");
+
+            QStringList querys = s.split(";",QString::SkipEmptyParts);
+
+            d.setValue(0);
+            d.setMaximum(querys.size());
+            d.setLabelText(tr("Creando tablas"));
+
+            for(int i = 0; i< querys.size();i++)
+            {
+                if(!(querys.at(i)== "\n") && !querys.at(i).isEmpty())
+                {
+                    if(!q.exec(querys.at(i)))
+                    {
+                        qDebug() << q.lastError().text();
+                        qDebug() << querys.at(i);
+                        error = true;
+                        break;
+                    }
+                    d.setValue(i);
+                    QApplication::processEvents();
+                }
+            }
+        }
+        f3.close();
 
         if(!error)
         {
@@ -516,11 +370,11 @@ void FrmEmpresas::_addEmpresa()
                         "`ejercicio`, `usar_irpf`, `codigo_cuenta_clientes`,"
                         "`codigo_cuenta_proveedores`, `codigo_cuenta_acreedores`,"
                         "`digitos_cuenta`, `clave1`, `clave2`, `medica`, `internacional`,"
-                        "`auto_codigo`, `tamanocodigo`, `cuenta_cobros`, `cuenta_pagos`,"
-                        "`id_divisa`, `enlaceweb`, `contabilidad`, `consultas`, `primer_dia_laborable`,"
+                        "`auto_codigo`, `tamano_codigo`, `cuenta_cobros`, `cuenta_pagos`,"
+                        "`id_divisa`, `enlace_web`, `contabilidad`, `consultas`, `primer_dia_laborable`,"
                         "`ultimo_dia_laborable`, `horario_primer_dia`, `horario_dia_normal`,"
                         "`horario_ultimo_dia`, `ticket_factura`, `margen`, `margen_minimo`, `seguimiento`,"
-                        "`id_tarifa_predeterminada`, `actualizardivisas`, `cuenta_ventas_mercaderias`,"
+                        "`id_tarifa_predeterminada`, `actualizar_divisas`, `cuenta_ventas_mercaderias`,"
                         "`cuenta_ventas_servicios`, `cuenta_iva_soportado1`, `cuenta_iva_soportado2`,"
                         "`cuenta_iva_soportado3`, `cuenta_iva_soportado4`, `cuenta_iva_repercutido1`,"
                         "`cuenta_iva_repercutido2`, `cuenta_iva_repercutido3`, `cuenta_iva_repercutido4`,"
@@ -630,9 +484,6 @@ void FrmEmpresas::_addEmpresa()
 
 void FrmEmpresas::_llenarCampos(QSqlRecord r)
 {
-   // oEmpresa.id = r.value("id").toInt();
-//    oEmpresa.Recuperar("select * from empresas where id = "+QString::number(oEmpresa.id));
-//    LLenarCampos();
     ui->txtcodigo->setText(r.value("codigo").toString());
     ui->txtEmpresa->setText(r.value("nombre").toString());//
     ui->txtndigitos_factura->setText(r.value("digitos_factura").toString());//->text().toInt());
@@ -711,100 +562,277 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->txtEmail_smtp->setText(r.value("cuenta_smtp").toString());
     ui->txtEmail_usuario->setText(r.value("cuenta_mail").toString());
     ui->txtCaducidadvales->setValue(r.value("caducidad_vales").toInt());
-
-}
-
-void FrmEmpresas::blockGUI(bool block, bool limpia)
-{
-    QList<QLineEdit*> l = this->findChildren<QLineEdit*>();
-    QList<QLineEdit*>::Iterator it;
-    for(it=l.begin();it!=l.end();++it)
-    {
-        if(limpia)
-            (*it)->clear();
-        (*it)->setReadOnly(block);
-    }
-    QList<QTextEdit*> l2 = this->findChildren<QTextEdit*>();
-    QList<QTextEdit*>::Iterator it2;
-    for(it2=l2.begin();it2!=l2.end();++it2)
-    {
-        if(limpia)
-            (*it2)->clear();
-        (*it2)->setReadOnly(block);
-    }
-}
-
-void FrmEmpresas::on_btnAddEmpresa_clicked()
-{
-    if(ui->treeEmpresas->selectedItems().isEmpty())
-    {
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Seleccione un grupo donde crear la empresa"));
-        return;
-    }
-    if(ui->btnAddEmpresa->text()== tr("Añadir Empresa"))
-    {
-        ui->btnAddEmpresa->setText(tr("Guardar"));
-        blockGUI(false, true);
-        ui->addGrupo->setEnabled(false);
-        ui->btnBorrar->setEnabled(false);
-        ui->btnEditar->setEnabled(false);
-    }
-    else
-    {
-        ui->btnAddEmpresa->setText(tr("Añadir Empresa"));
-        _addEmpresa();
-        getEmpresas();
-        showEmpresas();
-        blockGUI(true, false);
-        ui->addGrupo->setEnabled(true);
-        ui->btnBorrar->setEnabled(true);
-        ui->btnEditar->setEnabled(true);
-    }
-}
-
-void FrmEmpresas::on_treeEmpresas_itemSelectionChanged()
-{
-    if(ui->treeEmpresas->selectedItems().isEmpty())
-        return;
-    if(!ui->treeEmpresas->selectedItems().at(0)->childCount()==0)
-        return;
-
-    QTreeWidgetItem * p = ui->treeEmpresas->selectedItems().at(0)->parent();
-    if(!p)
-        return;
-
-    QTreeWidgetItem * item = ui->treeEmpresas->selectedItems().at(0);
-
-    QPair<QList<empresa> , QSqlRecord> x = _empresas.value(p->text(0));
-    QList<empresa>::Iterator it;
-    for(it=x.first.begin();it!=x.first.end();++it)
-    {
-        if( (*it).name == item->text(0) )
-        {
-            _llenarCampos((*it).record);
-        }
-    }
-}
-
-void FrmEmpresas::on_btnEditar_clicked()
-{
-
-    if(ui->btnEditar->text() == tr("Editar"))
-    {
-        ui->btnEditar->setText(tr("Guardar"));
-        blockGUI(false,false);
-        ui->txtdireccion1->setFocus();
-    } else
-    {
-        CargarCamposEnEmpresa();
-        blockGUI(true,false);
-        ui->btnEditar->setText(tr("Editar"));
-        oEmpresa.Guardar();
-    }
 }
 
 void FrmEmpresas::on_btnConfigTerminal_clicked()
 {
     frmConfigurar_terminal terminal;
     terminal.exec();
+}
+
+void FrmEmpresas::on_btn_add_empresa_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->create_page_1);
+}
+
+void FrmEmpresas::on_btn_crear_nuevo_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->create_page_newgroup);
+}
+
+void FrmEmpresas::on_btn_add_nuevo_clicked()
+{
+    ui->group_list->clear();
+    QHashIterator<QString, QPair<QList<empresa> , QSqlRecord> > it(_empresas);
+
+    while(it.hasNext())
+    {
+        it.next();
+        QString grupo_name = it.key();
+        QListWidgetItem * item = new QListWidgetItem(grupo_name,ui->group_list);
+    }
+
+    ui->stackedWidget->setCurrentWidget(ui->create_page_add);
+}
+
+void FrmEmpresas::on_btn_inicio_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->main_page);
+}
+
+void FrmEmpresas::on_btn_guardar_nuevo_clicked()
+{
+    //Crear empresa @targetGroup
+    _addEmpresa();
+    ui->stackedWidget->setCurrentWidget(ui->main_page);
+}
+
+void FrmEmpresas::on_btn_crearGrupo_clicked()
+{
+    QProgressDialog* d = new QProgressDialog(this);
+
+    d->setValue(0);
+    d->setMinimum(0);
+    d->setMaximum(0);
+    d->show();
+    connect(this,&FrmEmpresas::endGroup,[this,d](bool b){
+        if(b){
+            ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+        }
+        d->deleteLater();
+    });
+    QtConcurrent::run(this,&FrmEmpresas::createGroup);
+}
+
+void FrmEmpresas::createGroup()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(ui->txtHost->text());
+    db.setUserName(ui->txtUser->text());
+    db.setPassword(ui->txtPass->text());
+    db.setPort(ui->spinPort->value());
+    bool error = !db.open();
+
+    db.transaction();
+
+    if(!error)
+        error = _createTables(db);
+
+    QString grupo = "Grupo";
+    QString sError;
+    if(!error)
+    {
+        grupo.append(ui->txtNombreGrupo->text());
+
+        db.close();
+        db.setHostName(ui->txtHost->text());
+        db.setUserName(ui->txtUser->text());
+        db.setPassword(ui->txtPass->text());
+        db.setPort(ui->spinPort->value());
+        db.setDatabaseName(grupo);
+        error = !db.open();
+
+        if(!error)
+            error = _insertMonedas(db, sError);
+
+        if(!error)
+            error = _insertIVA(db, sError);
+
+        if(!error)
+            error = _insertNivelAcesso(db, sError);
+
+        if(!error)
+            error = _insertPaises(db, sError);
+
+        //TODO Poblaciones y Reports por defecto al crear grupo
+    }
+
+    if(!error)
+    {
+        db.commit();
+        _insertNewGroup(grupo);
+        _targetGroup = ui->txtNombreGrupo->text();
+    }
+    else
+    {
+        db.rollback();
+    }
+    emit endGroup(!error);
+}
+
+//Funciones Creacion de Grupo
+
+bool FrmEmpresas::_createTables(QSqlDatabase db)
+{
+    bool error = false;
+    QFile f(":/DB/DB/Grupo.sql");
+    f.open(QFile::ReadOnly);
+    QString s = f.readAll();
+    f.close();
+    QString grupo = "Grupo";
+    grupo.append(ui->txtNombreGrupo->text());
+    s.replace("@grupo@",grupo);
+    s.replace("\r\n"," ");
+    QStringList querys = s.split(";",QString::SkipEmptyParts);
+    ui->frame->show();
+    int i;
+    QSqlQuery q(db);
+    for(i = 0; i< querys.size();i++)
+    {
+        if(querys.at(i) == "\n")
+            continue;
+        if(!q.exec(querys.at(i)))
+        {
+            qDebug() << q.lastError().text();
+            qDebug() << querys.at(i);
+            error = true;
+            break;
+        }
+    }
+    return error;
+}
+
+bool FrmEmpresas::_insertMonedas(QSqlDatabase db, QString& error)
+{
+    QFile f(":/Icons/divisas.txt");
+    if(f.open((QIODevice::ReadOnly | QIODevice::Text)))
+    {
+        QTextStream in(&f);
+        in.setCodec("UTF-8");
+        QString all = in.readAll();
+        all.remove("\r");
+        all.remove("\n");
+        QStringList blocks = all.split("},",QString::SkipEmptyParts);
+        foreach(const QString &moneda , blocks)
+        {
+            QStringList subBlocks = moneda.split("\",",QString::SkipEmptyParts);
+            QString nombre_corto = subBlocks.at(0).mid(subBlocks.at(0).lastIndexOf("\"")+1);
+            QString nombre = subBlocks.at(1).mid(subBlocks.at(1).lastIndexOf("\"")+1);
+            QString simbol = subBlocks.at(4).mid(subBlocks.at(4).lastIndexOf("\"")+1);
+            simbol.remove("}");
+            simbol = simbol.trimmed();
+            QHash<QString,QVariant> _data;
+            _data["moneda"] = nombre;
+            _data["nombre_corto"] = nombre_corto;
+            _data["simbolo"] = simbol;
+            int id = SqlCalls::SqlInsert(_data,"monedas",db,error);
+            if(id < 0)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool FrmEmpresas::_insertIVA(QSqlDatabase db, QString& error)
+{
+    QSqlQuery q(db);
+    bool e;
+    e = q.exec("INSERT INTO tiposiva (nombre_interno, tipo, descripcion_tipo_iva, iva, recargo_equivalencia) VALUES ('base1', 'NORMAL'       ,    '21%', 21.00, 5.20);");
+    e &= q.exec("INSERT INTO tiposiva (nombre_interno, tipo, descripcion_tipo_iva, iva, recargo_equivalencia) VALUES ('base2', 'Reducido'     ,    '10%', 10.00, 1.40);");
+    e &= q.exec("INSERT INTO tiposiva (nombre_interno, tipo, descripcion_tipo_iva, iva, recargo_equivalencia) VALUES ('base3', 'Superreducido',     '4%',  4.00, 0.50);");
+    e &= q.exec("INSERT INTO tiposiva (nombre_interno, tipo, descripcion_tipo_iva, iva, recargo_equivalencia) VALUES ('base4', 'Exento'       , 'Exento',  0.00, 0.00);");
+    if(!e)
+        error = q.lastError().text();
+    return !e;
+}
+bool FrmEmpresas::_insertNivelAcesso(QSqlDatabase db, QString& error)
+{
+    QSqlQuery q(db);
+    bool e;
+    e = q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');");
+    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');");
+    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');");
+    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');");
+    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');");
+    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');");
+    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');");
+
+    e &= q.exec("INSERT INTO `usuarios` (`nombre`, `contrasena`, `nivel_acceso`, `categoria`) VALUES ('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', '99', 'ADMINISTRADOR');");
+    if(!e)
+        error = q.lastError().text();
+    return !e;
+}
+bool FrmEmpresas::_insertPaises(QSqlDatabase db, QString& error)
+{
+    bool e = false;
+    QFile f(":/DB/DB/Paises.sql");
+    f.open(QFile::ReadOnly);
+    QString s = f.readAll();
+    f.close();
+    QString grupo = "Grupo";
+    grupo.append(ui->txtNombreGrupo->text());
+    s.replace("@grupo@",grupo);
+    s.replace("\r\n"," ");
+    QStringList querys = s.split(";",QString::SkipEmptyParts);
+    ui->frame->show();
+    int i;
+    QSqlQuery q(db);
+    for(i = 0; i< querys.size();i++)
+    {
+        if(querys.at(i) == "\n")
+            continue;
+        if(!q.exec(querys.at(i)))
+        {
+            qDebug() << q.lastError().text();
+            qDebug() << querys.at(i);
+            error = q.lastError().text();
+            e = true;
+            break;
+        }
+    }
+    return e;
+}
+
+void FrmEmpresas::_insertNewGroup(QString grupo)
+{
+    QSqlQuery q2(Configuracion_global->groupDB);
+
+    q2.prepare("INSERT INTO `mayaglobal`.`grupos` "
+               "(`nombre`, `bd_name`, `bd_driver`, "
+               "`bd_host`, `bd_user`, `bd_pass`, `bd_port`) "
+               "VALUES "
+               "(:nombre, :bd_name, :bd_driver, "
+               ":bd_host, :bd_user, :bd_pass, :bd_port) ");
+
+    q2.bindValue(":nombre",ui->txtNombreGrupo->text());
+    q2.bindValue(":bd_name",grupo);
+    q2.bindValue(":bd_driver","QMYSQL");//NOTE cambiar para multi driver
+    q2.bindValue(":bd_host",ui->txtHost->text());
+    q2.bindValue(":bd_user",ui->txtUser->text());
+    q2.bindValue(":bd_pass",ui->txtPass->text());
+    q2.bindValue(":bd_port",ui->spinPort->value());
+
+    if(!q2.exec())
+        emit groupError(q2.lastError().text());
+    else
+        getEmpresas();
+}
+//Fin funciones de grupo
+
+void FrmEmpresas::on_btn_add_empresaGrupo_clicked()
+{
+    if(ui->group_list->selectedItems().size() == 0)
+        return;
+    _targetGroup = ui->group_list->selectedItems().at(0)->text();
+    ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
 }

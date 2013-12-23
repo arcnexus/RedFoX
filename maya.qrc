@@ -158,9 +158,6 @@
         <file>PNG/find2.png</file>
         <file>PNG/refrescar.png</file>
         <file>PNG/build.png</file>
-        <file>DB/DBGrupo.sql</file>
-        <file>DB/DBEmpresa.sql</file>
-        <file>DB/poblaciones.sql</file>
         <file>PNG/inventario.png</file>
         <file>PNG/clean.png</file>
         <file>PNG/Neux.png</file>
@@ -198,5 +195,12 @@
         <file>PNG/image.png</file>
         <file>jpg/agroevolution.jpg</file>
         <file>jpg/euros.jpg</file>
+    </qresource>
+    <qresource prefix="/DB">
+        <file>DB/Conta.sql</file>
+        <file>DB/Empresa.sql</file>
+        <file>DB/Grupo.sql</file>
+        <file>DB/Medica.sql</file>
+        <file>DB/Paises.sql</file>
     </qresource>
 </RCC>
