@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>663</width>
-    <height>301</height>
+    <width>795</width>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,7 +48,11 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
-       <widget class="QTableView" name="tablaproveedores"/>
+       <widget class="QTableView" name="tablaproveedores">
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+       </widget>
       </item>
      </layout>
      <zorder>tablaproveedores</zorder>
@@ -167,9 +171,6 @@
    </item>
    <item row="1" column="1">
     <widget class="QPushButton" name="btnAnadir">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
      <property name="text">
       <string>Añadir</string>
      </property>
@@ -187,9 +188,6 @@
    </item>
    <item row="1" column="2">
     <widget class="QPushButton" name="BtnCancelar">
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
-     </property>
      <property name="text">
       <string>Cancelar</string>
      </property>

@@ -172,6 +172,8 @@ private slots:
 
     void on_Pestanas_currentChanged(int index);
 
+    void on_botBuscarGrupo_clicked();
+
 public slots:
     void AnadirSeccion();
 

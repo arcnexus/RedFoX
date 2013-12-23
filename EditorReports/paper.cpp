@@ -868,6 +868,7 @@ bool Paper::parseXML(QString xml, QString & error)
         connect(itemPool.at(i),SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));
 
     this->scene()->update();
+
     return true;
 }
 
