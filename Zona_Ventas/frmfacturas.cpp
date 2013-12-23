@@ -1257,6 +1257,12 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
                 buscar_poblacion(2);
         }
+//        if(obj == ui->Lineas){
+//            if(keyEvent->key() == Qt::Key_F1 &&  ui->btnGuardar->isEnabled())
+//            {
+//                helper.searchArticulo();
+//            }
+//        }
         if(keyEvent->key() == Qt::Key_F1)
         {
             if(ui->btnEditar->isEnabled()){
