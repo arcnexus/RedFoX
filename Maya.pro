@@ -38,7 +38,6 @@ TEMPLATE = app
 # CONFIG  += qxt
 # QXT     += core gui
 
- CONFIG += debug
 SOURCES += main.cpp\
         mainwindow.cpp \
     Zona_Pacientes/frmClientes.cpp \
