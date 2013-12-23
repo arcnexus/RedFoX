@@ -86,7 +86,7 @@ void FrmAsociarProveedor::setcodigo()
 void FrmAsociarProveedor::setpvd()
 {
     ui->txtPVD->setText(configuracion.toFormatoMoneda(ui->txtPVD->text()));
-    this->pvd = ui->txtPVD->text().toDouble();
+    this->pvd = Configuracion_global->MonedatoDouble(ui->txtPVD->text());
 }
 
 void FrmAsociarProveedor::setDescOferta()
@@ -114,7 +114,7 @@ void FrmAsociarProveedor::seleccionarPro(QModelIndex indice)
 
 void FrmAsociarProveedor::setpvd_real()
 {
-    this->pvd_real = ui->txtpvd_real->text().toDouble();
+    this->pvd_real = Configuracion_global->MonedatoDouble(ui->txtpvd_real->text());
 }
 
 void FrmAsociarProveedor::setidDivisa()
@@ -147,4 +147,6 @@ void FrmAsociarProveedor::Aceptar()
     }
 
 }
+
+
 

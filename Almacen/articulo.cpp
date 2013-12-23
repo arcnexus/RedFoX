@@ -169,8 +169,8 @@ void Articulo::Cargar(QSqlRecord registro)
     this->paquetes = registro.field("paquetes").value().toInt();
     this->localizacion_en_almacen = registro.field("localizacion_en_almacen").value().toString();
     this->id_tipos_iva = registro.field("id_tipos_iva").value().toInt();
-    this->id_subsub_familia = registro.field("id_subsub_familia").value().toInt();
-    this->id_grupo_art = registro.field("id_grupo_art").value().toInt();
+    this->id_subSubFamilia = registro.field("id_subsub_familia").value().toInt();
+    this->id_grupoart = registro.field("id_grupo_art").value().toInt();
     this->id_web = registro.field("id_web").value().toInt();
     this->articulo_promocionado = registro.field("articulo_promocionado").value().toBool();
     this->margen = registro.field("margen").value().toDouble();
@@ -295,8 +295,8 @@ void Articulo::Guardar()
     articulo["localizacion_en_almacen"] = this->localizacion_en_almacen;
     articulo["id"] = this->id;
     articulo["id_tipos_iva"] = this->id_tipos_iva;
-    articulo["id_subsub_familia"] = this->id_subsub_familia;
-    articulo["id_grupo_art"] = this->id_grupo_art;
+    articulo["id_subsub_familia"] = this->id_subSubFamilia;
+    articulo["id_grupo_art"] = this->id_grupoart;
     articulo["id_web"] = this->id_web;
     articulo["stock_fisico_almacen"] = this->nstock_fisico_almacen;
     articulo["coste"] = this->coste;
