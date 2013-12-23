@@ -1,8 +1,5 @@
-DROP SCHEMA IF EXISTS `@conta@` ;
-
 CREATE SCHEMA IF NOT EXISTS `@conta@` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-
-CREATE TABLE IF NOT EXISTS `@conta@`.`diario` (
+CREATE TABLE `@conta@`.`diario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_documento` int(11) DEFAULT NULL,
   `cuenta_d` varchar(45) DEFAULT NULL,
@@ -20,9 +17,8 @@ CREATE TABLE IF NOT EXISTS `@conta@`.`diario` (
   `comentario_h` text,
   `cuenta_relacion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-CREATE TABLE IF NOT EXISTS `@conta@`.`plan_general` (
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `@conta@`.`plan_general` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo_cta` varchar(20) DEFAULT NULL,
   `descripcion` varchar(120) DEFAULT NULL,
@@ -37,4 +33,4 @@ CREATE TABLE IF NOT EXISTS `@conta@`.`plan_general` (
   `provincia` varchar(45) DEFAULT NULL,
   `pais` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
