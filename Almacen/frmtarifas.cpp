@@ -165,7 +165,7 @@ void FrmTarifas::calcular_precio(double margen)
         //TODO - CALCULO DIVISA LOCAL FALLA.
         blockSignals(true);
         //NOTE 70% /0.30 - 40 /0.60
-        double pvp = (ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble())/(margen/100);
+        double pvp =((ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble())/(1-(margen/100)));
         QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',Configuracion_global->decimales));
         this->pvpDivisa = cPvp.toDouble();
         ui->txtPVPLocal->setText(cPvp);

@@ -439,8 +439,8 @@ void FrmArticulos::LLenarCampos()
    ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
    ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
    ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
-   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subsub_familia)));
-   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupo_art));
+   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subSubFamilia)));
+   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupoart));
   // ui->txtMargen->setValue(oArticulo->margen);
   // ui->txtMargen_min->setValue((oArticulo->margen_min));
 
@@ -542,8 +542,8 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->id_seccion = oArticulo->getidSeccion(ui->txtseccion->text());
     oArticulo->id_familia  = oArticulo->getidFamilia(ui->txtfamilia->text());
     oArticulo->id_subfamilia = oArticulo->getidSubFamilia(ui->txtsubfamilia->text());
-    oArticulo->id_subsub_familia = oArticulo->getidSubSufFamilia(ui->txtcSubSubFamilia->text());
-    oArticulo->id_grupo_art = oArticulo->getidGrupo(ui->txtcGupoArt->text());
+    oArticulo->id_subSubFamilia = oArticulo->getidSubSufFamilia(ui->txtcSubSubFamilia->text());
+    oArticulo->id_grupoart = oArticulo->getidGrupo(ui->txtcGupoArt->text());
     oArticulo->cCodProveedor = ui->txtcodigo_proveedor->text();
     oArticulo->proveedor = ui->txtproveedor->text();
 
@@ -744,35 +744,37 @@ void FrmArticulos::on_botDeshacer_clicked()
 
 void FrmArticulos::on_botBuscarSeccion_clicked()
 {
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("secciones");
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"seccion";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Secciones");
+    consulta.set_db("Maya");
+    consulta.set_SQL("select id,codigo, seccion from secciones");
+    QStringList cabecera;
+    QVariantList tamanos;
 
-    form.setWindowTitle(tr("Secciones"));
-
-    QStringList headers;
-    headers << tr("Seccion");
-    form.set_table_headers(headers);
-
-    form.set_columnHide(0);
-    form.set_columnHide(2);
-
-    form.set_selection("seccion");
-    if(form.exec() == QDialog::Accepted)
+    cabecera  << tr("Id") <<tr("código") << tr("sección");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Secciones");
+    consulta.setFocus();
+    if(consulta.exec())
     {
-        ui->txtseccion->setText(form.selected_value);
-        QSqlQuery qSeccion(Configuracion_global->groupDB);
-        qSeccion.prepare("select id from secciones where seccion = :seccion");
-        qSeccion.bindValue(":seccion",form.selected_value);
-        if(qSeccion.exec())
-        {
-            qSeccion.next();
-            oArticulo->id_seccion= qSeccion.value(0).toInt();
-        }
-        else
-        {
-            QMessageBox::warning(this,tr("Secciones"),tr("No se ha podido vincular la seccion: %1").arg(qSeccion.lastError().text()));
-        }
+        int id = consulta.get_id();
+
+        QString seccion,codigo;
+        QMap<int, QSqlRecord> secc;
+        secc = SqlCalls::SelectRecord("secciones",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        seccion = secc.value(id).value("seccion").toString();
+        codigo = secc.value(id).value("codigo").toString();
+        oArticulo->id_seccion = id;
+        oArticulo->seccion = seccion;
+
+        ui->txtseccion->setText(seccion);
+
     }
 }
 
@@ -833,88 +835,109 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 
 void FrmArticulos::on_botBuscarFamilia_clicked()
 {
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("familias");
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"familia";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Familias");
+    consulta.set_db("Maya");
+    consulta.set_SQL(QString("select id,codigo, familia from familias where id_seccion = %1").arg(oArticulo->id_seccion));
+    QStringList cabecera;
+    QVariantList tamanos;
 
-    form.setWindowTitle(tr("Familias"));
-
-    QStringList headers;
-    headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
-    form.set_table_headers(headers);
-
-    form.set_relation(3,QSqlRelation("secciones","id","seccion"));
-
-    form.set_columnHide(0);
-
-    form.set_selection("familia");
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare(QString("SELECT id FROM secciones WHERE familia = '%1' ").arg(ui->txtfamilia->text()));
-    if (query.exec())
-        if(query.next())
-            form.set_filter("id_seccion = "+query.record().value(0).toString());
-
-    if(form.exec() == QDialog::Accepted)
+    cabecera  << tr("Id") <<tr("código") << tr("Familia");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Familias");
+    consulta.setFocus();
+    if(consulta.exec())
     {
-        ui->txtfamilia->setText(form.selected_value);
+        int id = consulta.get_id();
+
+        QString familia,codigo;
+        QMap<int, QSqlRecord> fam;
+        fam = SqlCalls::SelectRecord("familias",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        familia = fam.value(id).value("familia").toString();
+        codigo = fam.value(id).value("codigo").toString();
+        oArticulo->id_familia = id;
+        oArticulo->familia = familia;
+
+        ui->txtfamilia->setText(familia);
+
     }
 }
 
 void FrmArticulos::on_botBuscarSubfamilia_clicked()
 {
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("subfamilias");
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"sub_familia";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Sub-Familias");
+    consulta.set_db("Maya");
+    consulta.set_SQL(QString("select id,codigo, sub_familia from familias where id_familia = %1").arg(oArticulo->id_familia));
+    QStringList cabecera;
+    QVariantList tamanos;
 
-    form.setWindowTitle(tr("Subfamilias"));
-
-    QStringList headers;
-    headers << tr("SubFamilia") << tr("Pertenece a");
-    form.set_table_headers(headers);
-
-    form.set_relation(2,QSqlRelation("familias","id","familia"));
-
-    form.set_columnHide(0);
-
-    form.set_selection("subfamilia");
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare(QString("SELECT id FROM familias WHERE familia = '%1'").arg(ui->txtfamilia->text()));
-    if (query.exec())
-        if(query.next())
-            form.set_filter("id_seccion = "+query.record().value(0).toString());
-
-    if(form.exec() == QDialog::Accepted)
+    cabecera  << tr("Id") <<tr("código") << tr("Sub-Familia");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Sub-Familias");
+    consulta.setFocus();
+    if(consulta.exec())
     {
-        ui->txtsubfamilia->setText(form.selected_value);
+        int id = consulta.get_id();
+
+        QString familia,codigo;
+        QMap<int, QSqlRecord> fam;
+        fam = SqlCalls::SelectRecord("subfamilias",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        familia = fam.value(id).value("sub_familia").toString();
+        codigo = fam.value(id).value("codigo").toString();
+        oArticulo->id_subfamilia = id;
+        oArticulo->subfamilia = familia;
+
+          ui->txtsubfamilia->setText(familia);
+
     }
 }
 
 void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
 {
-    Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("subsubfamilias");
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"subsub_familia";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Sub-Sub-Familias");
+    consulta.set_db("Maya");
+    consulta.set_SQL(QString("select id,codigo, subsub_familia from subsubfamilias where id_subfamilia = %1").arg(oArticulo->id_subfamilia));
+    QStringList cabecera;
+    QVariantList tamanos;
 
-    form.setWindowTitle(tr("Subsubfamilias"));
-
-    QStringList headers;
-    headers << tr("SubsubFamilia") << tr("Pertenece a");
-    form.set_table_headers(headers);
-
-    form.set_relation(2,QSqlRelation("subfamilias","id","subfamilia"));
-
-    form.set_columnHide(0);
-
-    form.set_selection("cSubsubfamilia");
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare(QString("SELECT id FROM subfamilias WHERE familia = '%1'").arg(ui->txtfamilia->text()));
-    if (query.exec())
-        if(query.next())
-            form.set_filter("idsubfamilia = "+query.record().value(0).toString());
-
-    if(form.exec() == QDialog::Accepted)
+    cabecera  << tr("Id") <<tr("código") << tr("Sub-Sub-Familia");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Sub-Sub-Familias");
+    consulta.setFocus();
+    if(consulta.exec())
     {
-        ui->txtsubfamilia->setText(form.selected_value);
+        int id = consulta.get_id();
+
+        QString familia,codigo;
+        QMap<int, QSqlRecord> fam;
+        fam = SqlCalls::SelectRecord("subsubfamilias",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        familia = fam.value(id).value("subsub_familia").toString();
+        codigo = fam.value(id).value("codigo").toString();
+        oArticulo->id_subSubFamilia= id;
+        oArticulo->cSubSubFamilia= familia;
+
+        ui->txtcSubSubFamilia->setText(familia);
+
     }
 }
 
@@ -1052,7 +1075,7 @@ void FrmArticulos::anadir_proveedor_clicked()
     // Proveedores frecuentes
     //-----------------------
     modelProv = new QSqlQueryModel(this);
-    modelProv->setQuery("Select id,codpro,proveedor,codigo,pvd,pvd_real,moneda,descoferta from proveedores_frecuentes where id_art = "+
+    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta from proveedores_frecuentes where id_art = "+
                         QString::number(oArticulo->id),
                         Configuracion_global->groupDB);
 
@@ -1855,7 +1878,7 @@ void FrmArticulos::LlenarTablas()
 //    // Proveedores frecuentes
 //    //-----------------------
 
-    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,desc_oferta,id_prov from proveedores_frecuentes "
+    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
     "where id_art = "+QString::number(oArticulo->id),
                         Configuracion_global->groupDB);
 
@@ -1898,9 +1921,9 @@ void FrmArticulos::LlenarTablas()
 
    rellenar_grafica_proveedores();
 
-    // ------------------
-    // TABLA TRAZABILidAD
-    // ------------------
+    // -------------------
+    // TABLA TRAZABILIDAD
+    // -------------------
     modelTrazabilidad1 = new QSqlQueryModel(this);
     modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
                                   Configuracion_global->groupDB);
@@ -2768,4 +2791,40 @@ void FrmArticulos::on_Pestanas_currentChanged(int index)
 {
     Q_UNUSED(index);
     ui->radGrafica_importes->click();
+}
+
+void FrmArticulos::on_botBuscarGrupo_clicked()
+{
+    db_consulta_view consulta(this);
+    QStringList campos;
+    QString error;
+    campos <<"id" << "codigo" <<"grupo_art";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("Grupos");
+    consulta.set_db("Maya");
+    consulta.set_SQL(QString("select id,codigo, grupo_art from gruposart where id_subsubfamilia = %1").arg(oArticulo->id_subSubFamilia));
+    QStringList cabecera;
+    QVariantList tamanos;
+
+    cabecera  << tr("Id") <<tr("código") << tr("Grupo");
+    tamanos <<"0" << "100"  <<"500";
+    consulta.set_headers(cabecera);
+    consulta.set_tamano_columnas(tamanos);
+    consulta.set_titulo("Busqueda de Grupos");
+    consulta.setFocus();
+    if(consulta.exec())
+    {
+        int id = consulta.get_id();
+
+        QString familia,codigo;
+        QMap<int, QSqlRecord> fam;
+        fam = SqlCalls::SelectRecord("gruposart",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
+        familia = fam.value(id).value("grupo_art").toString();
+        codigo = fam.value(id).value("codigo").toString();
+        oArticulo->id_grupoart = id;
+        oArticulo->cGrupoArt = familia;
+
+        ui->txtcGupoArt->setText(familia);
+
+    }
 }

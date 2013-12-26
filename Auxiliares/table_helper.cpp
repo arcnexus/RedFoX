@@ -815,7 +815,7 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             else
                 addRow();
         }
-        if(keyEvent->key() == Qt::Key_F1)
+        if(keyEvent->key() == Qt::Key_F2)
         {
             searchArticulo();
         }
@@ -826,7 +826,7 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
 
 void Table_Helper::searchArticulo()
 {
-    db_consulta_view consulta;
+    db_consulta_view consulta(qApp->activeWindow());
     QStringList campos;
     campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante"  << "coste";
     consulta.set_campoBusqueda(campos);

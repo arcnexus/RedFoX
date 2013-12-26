@@ -25,7 +25,7 @@ frmClientes::frmClientes(QWidget *parent) :
     //-----------------
     ui->stackedWidget->setCurrentIndex(1);
     m_clientes = new  QSqlQueryModel(this);
-    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",
+    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes limit 0,100",
                          Configuracion_global->groupDB);
     ui->tabla_busquedas->setModel(m_clientes);
 

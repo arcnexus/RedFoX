@@ -182,7 +182,7 @@ int SqlCalls::SqlInsert(QHash<QString, QVariant> values, QString table, QSqlData
     if(!database.isOpen())
     {
         error = QObject::tr("Base de datos cerrada");
-        return false;
+        return -1;
     }
 /*    if(database.driverName() == "QMYSQL")
     {

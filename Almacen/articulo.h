@@ -56,8 +56,8 @@ public:
     QString localizacion_en_almacen;
     double pvp;
     int id_tipos_iva;
-    int id_subsub_familia;
-    int id_grupo_art;
+
+
     int id_web;
     int unidades_compradas;
     int unidades_vendidas;

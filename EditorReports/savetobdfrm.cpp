@@ -37,6 +37,7 @@ void SaveToBDFrm::currentRowChanged(const QModelIndex &current, const QModelInde
     int r = current.row();
     ui->txtNombre->setText(ui->tableView->model()->index(r,1).data().toString());
     ui->txtDesc->setText(ui->tableView->model()->index(r,2).data().toString());
+    ui->spinGrd->setValue(ui->tableView->model()->index(r,4).data().toInt());
 }
 
 

@@ -7,8 +7,7 @@
 #include "../mayamodule.h"
 #include "copy_db_progressfrm.h"
 
-
-
+#include <QtConcurrent/QtConcurrent>
 namespace Ui {
 class FrmEmpresas;
 }
@@ -20,7 +19,7 @@ class FrmEmpresas : public MayaModule
 public:
     explicit FrmEmpresas(QWidget *parent = 0);
     ~FrmEmpresas();
-    void LLenarCampos();
+
     void CargarCamposEnEmpresa();
 
     module_zone module_zone(){return AdminZone;}
@@ -29,14 +28,11 @@ public:
     QString ModuleMenuPath(){return tr("");}
     QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 
-
+signals:
+    void endGroup(bool);
+    void _groupError(QString);
 private slots:
-    //TODO - boton buscar
-    //TODO - boton borrar
-
-    void txtpoblacion_editingFinished();
-
-    void txtcp_editingFinished();
+    void groupError(QString s);
 
     void on_btn_ruta_db_clicked();
 
@@ -44,16 +40,21 @@ private slots:
 
     void on_btn_migrar_clicked();
 
-    void on_addGrupo_clicked();
-
-    void on_btnAddEmpresa_clicked();
-
-    void on_treeEmpresas_itemSelectionChanged();
-
-    void on_btnEditar_clicked();
-
     void on_btnConfigTerminal_clicked();
 
+    void on_btn_crear_nuevo_clicked();
+
+    void on_btn_add_nuevo_clicked();
+
+    void on_btn_inicio_clicked();
+
+    void on_btn_guardar_nuevo_clicked();
+
+    void on_btn_crearGrupo_clicked();
+
+    void on_btn_add_empresaGrupo_clicked();
+
+    void on_btn_add_empresa_clicked();
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
@@ -73,12 +74,18 @@ private:
     };
 
     QHash<QString, QPair<QList<empresa> , QSqlRecord> > _empresas;
-    void showEmpresas();
     void getEmpresas();
     void _addEmpresa();
     void _llenarCampos(QSqlRecord r);
 
-    void blockGUI(bool block, bool limpia);
+    bool _createTables(QSqlDatabase db);
+    bool _insertMonedas(QSqlDatabase db, QString &error);
+    bool _insertIVA(QSqlDatabase db, QString &error);
+    bool _insertNivelAcesso(QSqlDatabase db, QString &error);
+    bool _insertPaises(QSqlDatabase db, QString &error);
+    void _insertNewGroup(QString grupo);
+    void createGroup();
+    QString _targetGroup;
 };
 
 #endif // FRMEMPRESAS_H

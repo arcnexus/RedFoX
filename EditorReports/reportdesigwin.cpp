@@ -125,6 +125,7 @@ void ReportDesigWin::on_actionAbrir_triggered()
         QString x = ff.readAll();
         if(!paper.parseXML(x,error))
             QMessageBox::critical(this,"Error",error);
+        refreshItems();
     }
     ff.close();
 }
@@ -196,7 +197,7 @@ void ReportDesigWin::on_actionAbrir_desde_BD_triggered()
     {
         QString error;
         paper.parseXML(form.selected_value,error);
-        //qDebug() << form.selected_value << error;
+        refreshItems();
     }
 }
 
