@@ -185,6 +185,18 @@ void frmProveedores::LLenarCampos()
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
+
+    //----------------------
+    // Tipo de iva proveedor
+    //----------------------
+    if(oProveedor->tipo_iva == 1)
+        ui->radGeneral->setChecked(true);
+    if(oProveedor->tipo_iva == 2)
+        ui->radUE->setChecked(true);
+    if(oProveedor->tipo_iva == 3)
+        ui->radExportacion->setChecked(true);
+    if(oProveedor->tipo_iva == 4)
+        ui->radExcento->setChecked(true);
     //----------------------
     //  Rellenar Historiales
     //----------------------
@@ -258,6 +270,14 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->deuda_actual = ui->txtdeuda_actual->text().replace(".","").replace(",",".").toDouble();
     oProveedor->recargo_equivalencia = ui->chkrecargo_equivalencia->isChecked();
     oProveedor->texto_para_pedidos = ui->txttexto_para_pedidos->toPlainText();
+    if(ui->radGeneral->isChecked())
+        oProveedor->tipo_iva = 1;
+    if(ui->radUE->isChecked())
+        oProveedor->tipo_iva = 2;
+    if(ui->radExportacion->isChecked())
+        oProveedor->tipo_iva = 3;
+    if(ui->radExcento->isChecked())
+        oProveedor->tipo_iva = 4;
     cargar_forma_pago(ui->txtcodigoFormaPago->currentText());
 
 }

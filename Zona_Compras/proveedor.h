@@ -27,6 +27,7 @@ public:
     QString movil;
     QString email;
     QString web;
+    int tipo_iva;
     QString persona_contacto;
     int dia_cobro;
     QString direccion_almacen;
