@@ -703,6 +703,7 @@ void frmFacturas::on_btnAnterior_clicked()
 
 void frmFacturas::on_btnAnadir_clicked()
 {
+    m_busqueda->hideMe();
     //ui->btnGuardar->setMenu(menu_guardar);
     BloquearCampos(false);
     in_edit = false;
@@ -868,6 +869,7 @@ void frmFacturas::on_btnEditar_clicked()
     if (oFactura->editable)
     {
         BloquearCampos(false);
+        m_busqueda->hideMe();
         in_edit = true;
         emit block();
         ui->txtcodigo_cliente->setFocus();

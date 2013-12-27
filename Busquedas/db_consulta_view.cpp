@@ -42,6 +42,9 @@ void db_consulta_view::set_SQL(QString cSQL)
     else if(db=="medic")
         modelo->setQuery(cSQL,Configuracion_global->medicaDB);
     ui->resultado_list->setModel(modelo);
+    if(!modelo->lastError().text().trimmed().isEmpty())
+        QMessageBox::warning(qApp->activeWindow(),tr("Selección"),
+                             tr("Ocurrió un error al buscar: %1").arg(modelo->lastError().text()));
 
 }
 
