@@ -34,7 +34,7 @@
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="frmcontrolPage1">
         <layout class="QGridLayout" name="gridLayout_2">
@@ -948,7 +948,7 @@ color: rgb(212, 214, 255);</string>
            <enum>QFrame::Raised</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="stackedWidgetticketPage1">
            <layout class="QGridLayout" name="gridLayout_9">
@@ -1551,7 +1551,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <layout class="QGridLayout" name="gridLayout_19">
+              <layout class="QFormLayout" name="formLayout">
                <item row="0" column="0">
                 <widget class="QLabel" name="label_57">
                  <property name="text">
@@ -1560,7 +1560,14 @@ font: 12pt &quot;Sans Serif&quot;;</string>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QComboBox" name="cboCajas_filtro"/>
+                <widget class="QComboBox" name="cboCajas_filtro">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_58">
@@ -2328,7 +2335,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <enum>QFrame::Raised</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_4">
            <layout class="QGridLayout" name="gridLayout_7">
@@ -2339,6 +2346,12 @@ font: 12pt &quot;Sans Serif&quot;;</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -2357,6 +2370,12 @@ background-color: rgb(218, 218, 218);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -2398,6 +2417,12 @@ color: rgb(255, 255, 255);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);</string>
@@ -2414,6 +2439,12 @@ color: rgb(0, 0, 0);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
@@ -2433,6 +2464,12 @@ background-color: rgb(194, 194, 194);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2451,6 +2488,12 @@ background-color: rgb(218, 218, 218);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2468,6 +2511,12 @@ background-color: rgb(218, 218, 218);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="autoFillBackground">
                <bool>false</bool>
@@ -2506,6 +2555,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2524,6 +2579,12 @@ background-color: rgb(218, 218, 218);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2541,6 +2602,12 @@ background-color: rgb(218, 218, 218);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton:default{font: 75 12pt &quot;Times New Roman&quot;;
@@ -2586,6 +2653,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2603,6 +2676,12 @@ background-color: rgb(194, 194, 194);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
@@ -2649,6 +2728,12 @@ background-color: rgb(255, 255, 191);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2691,6 +2776,12 @@ background-color: rgb(218, 218, 218);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">QPushButton:default{font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(255, 255, 255);}
@@ -2732,6 +2823,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(255, 255, 255);}
@@ -2756,6 +2853,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(255, 255, 255);}
@@ -2776,6 +2879,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
@@ -2820,6 +2929,12 @@ background-color: rgb(194, 194, 194);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -2874,6 +2989,12 @@ color: rgb(255, 255, 255);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(255, 255, 255);</string>
@@ -2900,6 +3021,12 @@ color: rgb(255, 255, 255);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton:default{font: 75 12pt &quot;Times New Roman&quot;;
@@ -2932,6 +3059,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -2954,6 +3087,12 @@ QPushButton:checked { color:rgb(0,0,0);background-color: rgb(255, 255, 0); }</st
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -2982,6 +3121,12 @@ color: rgb(255, 255, 255);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -2999,6 +3144,12 @@ background-color: rgb(218, 218, 218);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -3027,6 +3178,12 @@ color: rgb(255, 255, 255);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -3044,6 +3201,12 @@ background-color: rgb(218, 218, 218);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -3063,6 +3226,12 @@ background-color: rgb(218, 218, 218);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 0);
@@ -3081,6 +3250,12 @@ background-color: rgb(218, 218, 218);</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -3097,6 +3272,12 @@ background-color: rgb(218, 218, 218);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 14pt &quot;Times New Roman&quot;;
@@ -3115,6 +3296,12 @@ background-color: rgb(194, 194, 194);</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">font: 75 12pt &quot;Times New Roman&quot;;
@@ -3138,6 +3325,19 @@ background-color: rgb(218, 218, 218);</string>
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
+            </item>
+            <item row="9" column="3">
+             <spacer name="verticalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>

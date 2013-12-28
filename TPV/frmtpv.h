@@ -203,6 +203,7 @@ private slots:
 
     void on_btnEmitirVale_clicked();
 
+
 private:
     Ui::FrmTPV *ui;
     QAction menuButton;
