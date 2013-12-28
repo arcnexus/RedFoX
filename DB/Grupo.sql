@@ -619,6 +619,7 @@ CREATE TABLE `@grupo@`.`proveedores` (
   `movil` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `web` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tipo_iva` tinyint not null default '1' ,
   `persona_contacto` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dia_cobro` int(11) DEFAULT '0',
   `direccion_almacen` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,

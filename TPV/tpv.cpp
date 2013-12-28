@@ -120,6 +120,9 @@ int tpv::nuevoticket(QString serie, QString caja)
 
 
             new_id = SqlCalls::SqlInsert(h,"cab_tpv",Configuracion_global->empresaDB,error);
+            if(new_id <0)
+                QMessageBox::warning(qApp->activeWindow(),tr("Gestión de tickets, facturas resumidas"),
+                                     tr("Ocurrió un error al crear nuevo ticket: %1").arg(error));
         }
         else{
             QMessageBox::warning(qApp->activeWindow(),tr("Gestión de tickets"),tr("Ocurrió un error al crear el nuevo ticket: %1").arg(

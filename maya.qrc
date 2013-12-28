@@ -201,6 +201,5 @@
         <file>DB/Empresa.sql</file>
         <file>DB/Grupo.sql</file>
         <file>DB/Medica.sql</file>
-        <file>DB/Paises.sql</file>
     </qresource>
 </RCC>

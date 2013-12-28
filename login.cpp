@@ -240,9 +240,13 @@ void Login::init()
             db.setPort(bd_port);
             db.setDatabaseName(bd_name);
 
-            if(!db.open())
+            if(!db.open()){
+                QMessageBox::warning(qApp->activeWindow(),tr("Estableciendo conexión"),
+                                     tr("No se pudo conectar con la base de datos:%1").arg(db.lastError().text()),
+                                     tr("Aceptar"));
+                qDebug() << db.lastError().text();
                 continue;
-
+            }
             QString query = QString("SELECT * FROM `%1`.empresas;").arg(bd_name);
             QStringList empresas;
 

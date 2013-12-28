@@ -240,6 +240,7 @@ void Proveedor::Cargar(QSqlRecord &rProveedor)
     this->movil = rProveedor.field("movil").value().toString();
     this->email = rProveedor.field("email").value().toString();
     this->web = rProveedor.field("web").value().toString();
+    this->tipo_iva = rProveedor.field("tipo_iva").value().toInt();
     this->persona_contacto = rProveedor.field("persona_contacto").value().toString();
     this->dia_cobro = rProveedor.field("dia_cobro").value().toInt();
     this->direccion_almacen = rProveedor.field("direccion_almacen").value().toString();
@@ -297,6 +298,7 @@ void Proveedor::Guardar()
                         "movil =:movil,"
                         "email =:email,"
                         "web =:web,"
+                        "tipo_iva =:tipo_iva,"
                         "persona_contacto =:persona_contacto,"
                         "dia_cobro =:dia_cobro,"
                         "direccion_almacen =:direccion_almacen,"
@@ -345,6 +347,7 @@ void Proveedor::Guardar()
     queryProveedor.bindValue(":movil",this->movil);
     queryProveedor.bindValue(":email",this->email);
     queryProveedor.bindValue(":web",this->web);
+    queryProveedor.bindValue(":tipo_iva",this->tipo_iva);
     queryProveedor.bindValue(":persona_contacto",this->persona_contacto);
     queryProveedor.bindValue(":dia_cobro",this->dia_cobro);
     queryProveedor.bindValue(":direccion_almacen",this->direccion_almacen);
@@ -406,6 +409,7 @@ void Proveedor::Vaciar()
     this->movil = "";
     this->email ="";
     this->web = "";
+    this->tipo_iva = 1;
     this->persona_contacto = "";
     this->dia_cobro = 0;
     this->direccion_almacen = "";
