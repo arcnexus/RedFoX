@@ -8,6 +8,7 @@
 #include "copy_db_progressfrm.h"
 
 #include <QtConcurrent/QtConcurrent>
+class QListWidgetItem;
 namespace Ui {
 class FrmEmpresas;
 }
@@ -31,6 +32,7 @@ public:
 signals:
     void endGroup(bool);
     void _groupError(QString);
+
 private slots:
     void groupError(QString s);
 
@@ -55,15 +57,17 @@ private slots:
     void on_btn_add_empresaGrupo_clicked();
 
     void on_btn_add_empresa_clicked();
+    void on_btn_edit_empresa_clicked();
+
+    void on_listWidgetGrupos_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void on_btnEditaEmpresa_clicked();
+
+    void on_btn_guardar_edit_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
-
-    void limpiar_campos();
-    bool crear_empresa_sqlite(copy_db_progressFrm * form);
-    bool crear_medica_sqlite(copy_db_progressFrm * form);
-    bool crear_empresa_mysql(copy_db_progressFrm * form);
-    bool crear_medica_mysql(copy_db_progressFrm * form);
 
     QAction menuButton;
 
@@ -86,6 +90,9 @@ private:
     void _insertNewGroup(QString grupo);
     void createGroup();
     QString _targetGroup;
+    QSqlRecord _targetGroupDbRecord;
+    int _idEmpresa;
+    void limpiar_campos();
 };
 
 #endif // FRMEMPRESAS_H
