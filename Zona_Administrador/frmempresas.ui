@@ -23,7 +23,7 @@
      <item>
       <widget class="QPushButton" name="btn_inicio">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -105,7 +105,7 @@ color: rgb(255, 255, 255);</string>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="main_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -134,6 +134,9 @@ color: rgb(255, 255, 255);</string>
        </item>
        <item>
         <widget class="QPushButton" name="btn_edit_empresa">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -1471,6 +1474,19 @@ color: rgb(255, 255, 255);</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
+                  <item row="0" column="2" colspan="2">
+                   <widget class="QLabel" name="label_41">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Tamaño del código en caracteres:</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_72">
                     <property name="text">
@@ -1482,19 +1498,6 @@ color: rgb(255, 255, 255);</string>
                    <widget class="QSpinBox" name="txtCaducidadvales">
                     <property name="maximum">
                      <number>99999999</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="2" colspan="2">
-                   <widget class="QLabel" name="label_41">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>Tamaño del código en caracteres:</string>
                     </property>
                    </widget>
                   </item>
@@ -1518,7 +1521,7 @@ color: rgb(255, 255, 255);</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="0" colspan="3">
+                  <item row="2" column="0" colspan="3">
                    <widget class="QFrame" name="frame_2">
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
@@ -1595,7 +1598,7 @@ color: rgb(255, 255, 255);</string>
                     </layout>
                    </widget>
                   </item>
-                  <item row="1" column="3">
+                  <item row="2" column="3">
                    <spacer name="horizontalSpacer">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -1607,6 +1610,26 @@ color: rgb(255, 255, 255);</string>
                      </size>
                     </property>
                    </spacer>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_222">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Decimales en totales</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="spinDecimales">
+                    <property name="value">
+                     <number>2</number>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -2137,202 +2160,145 @@ color: rgb(255, 255, 255);</string>
           <attribute name="title">
            <string>Datos conexión email</string>
           </attribute>
-          <widget class="QLabel" name="label_35">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>40</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Nombre a mostrar:</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtEmail_mostrar">
-           <property name="geometry">
-            <rect>
-             <x>160</x>
-             <y>40</y>
-             <width>601</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>Nombre Empresa o su nombre</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtEmail_usuario">
-           <property name="geometry">
-            <rect>
-             <x>160</x>
-             <y>70</y>
-             <width>601</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>usuario@sudominio.com</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_36">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>70</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Usuario:</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtEmail_contrasena">
-           <property name="geometry">
-            <rect>
-             <x>160</x>
-             <y>100</y>
-             <width>601</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>su contraseña </string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_50">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>100</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Contraseña:</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_51">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>10</y>
-             <width>781</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(0, 0, 127);
+          <layout class="QGridLayout" name="gridLayout_19">
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="txtEmail_imap">
+             <property name="placeholderText">
+              <string>imap.sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_54">
+             <property name="text">
+              <string>Cuenta SMTP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_35">
+             <property name="text">
+              <string>Nombre a mostrar:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="txtEmail_contrasena">
+             <property name="placeholderText">
+              <string>su contraseña </string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLabel" name="label_70">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>Datos cuenta</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtEmail_pop">
-           <property name="geometry">
-            <rect>
-             <x>160</x>
-             <y>170</y>
-             <width>601</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>pop3.sudominio.com</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_53">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>170</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Cuenta POP</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_54">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>230</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Cuenta SMTP</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtEmail_imap">
-           <property name="geometry">
-            <rect>
-             <x>160</x>
-             <y>200</y>
-             <width>601</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>imap.sudominio.com</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_69">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>200</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Cuenta IMAP</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_70">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>140</y>
-             <width>781</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(0, 0, 127);
+             </property>
+             <property name="text">
+              <string>Datos Servidor</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="txtEmail_usuario">
+             <property name="placeholderText">
+              <string>usuario@sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLineEdit" name="txtEmail_smtp">
+             <property name="placeholderText">
+              <string>smtp.sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_50">
+             <property name="text">
+              <string>Contraseña:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_53">
+             <property name="text">
+              <string>Cuenta POP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="txtEmail_pop">
+             <property name="placeholderText">
+              <string>pop3.sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_69">
+             <property name="text">
+              <string>Cuenta IMAP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_36">
+             <property name="text">
+              <string>Usuario:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_51">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>Datos Servidor</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtEmail_smtp">
-           <property name="geometry">
-            <rect>
-             <x>160</x>
-             <y>230</y>
-             <width>601</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="placeholderText">
-            <string>smtp.sudominio.com</string>
-           </property>
-          </widget>
+             </property>
+             <property name="text">
+              <string>Datos cuenta</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="txtEmail_mostrar">
+             <property name="placeholderText">
+              <string>Nombre Empresa o su nombre</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <spacer name="verticalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -2397,6 +2363,2014 @@ color: rgb(255, 255, 255);</string>
           <widget class="QPushButton" name="btn_add_empresaGrupo">
            <property name="text">
             <string>Continuar</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="edit_page_select">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_81">
+         <property name="text">
+          <string>Sleccione la empresa que desea editar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnEditaEmpresa">
+           <property name="text">
+            <string>Editar</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QListWidget" name="listWidgetGrupos"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QListWidget" name="listWidgetEmpresas"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="edit_page_empresa">
+      <layout class="QGridLayout" name="gridLayout_57">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_220">
+         <property name="text">
+          <string>Datos de la empresa</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_218">
+         <property name="text">
+          <string>Ejercicio:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="txtejercicio_2">
+         <property name="minimum">
+          <number>2014</number>
+         </property>
+         <property name="maximum">
+          <number>2999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="txtcodigo_2">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_219">
+         <property name="text">
+          <string>Nombre</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="txtEmpresa_2">
+         <property name="minimumSize">
+          <size>
+           <width>380</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="5">
+        <widget class="QTabWidget" name="tabWidget_3">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <widget class="QWidget" name="tabWidgetPage1_3">
+          <attribute name="title">
+           <string>Datos Fiscales y de Gestión</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_40">
+           <item row="0" column="0" colspan="7">
+            <layout class="QGridLayout" name="gridLayout_41">
+             <item row="1" column="2" colspan="3">
+              <widget class="QLineEdit" name="txtpoblacion_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLabel" name="label_150">
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtdireccion1_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="txtcp_3">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_151">
+               <property name="text">
+                <string>Dirección:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLineEdit" name="txtpais_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_152">
+               <property name="text">
+                <string>Provincia:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_153">
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QLineEdit" name="txtprovincia_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="2" colspan="5">
+            <widget class="QTabWidget" name="tabWidget_5">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>350</height>
+              </size>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tab_21">
+              <attribute name="title">
+               <string>Com. Factura</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_42">
+               <item row="0" column="0">
+                <widget class="QTextEdit" name="txtccomentario_factura_3"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_22">
+              <attribute name="title">
+               <string>Com. Albarán</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_43">
+               <item row="0" column="0">
+                <widget class="QTextEdit" name="txtcCometarioAlbaran_3"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_23">
+              <attribute name="title">
+               <string>Ticket</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_44">
+               <item row="2" column="0">
+                <widget class="QTextEdit" name="txtccomentario_ticket_3"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="chk_ticket_factura_3">
+                 <property name="text">
+                  <string>El ticket es una factura; numeración correlativa con las facturas.</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_154">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string>Comentarios a imprimir al pie del ticket.</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_24">
+              <attribute name="title">
+               <string>Contabilidad</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_45">
+               <item row="2" column="3">
+                <widget class="QLineEdit" name="txtcuentaCliente_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QSpinBox" name="txtdigitos_cuentas_3">
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="maximum">
+                  <number>20</number>
+                 </property>
+                 <property name="value">
+                  <number>8</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1" colspan="3">
+                <spacer name="verticalSpacer_16">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="label_155">
+                 <property name="text">
+                  <string>Cientes:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <spacer name="horizontalSpacer_28">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="5" column="3">
+                <widget class="QLineEdit" name="txtCuenta_venta_mercaderias_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="3">
+                <widget class="QLineEdit" name="txtCuenta_venta_servicios_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="4">
+                <spacer name="horizontalSpacer_29">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLabel" name="label_156">
+                 <property name="text">
+                  <string>Acreedores:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="chkContabilidad_3">
+                 <property name="text">
+                  <string>Activar contabilidad</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QLabel" name="label_157">
+                 <property name="text">
+                  <string>Cuenta de venta (prestación de servicios):</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLabel" name="label_158">
+                 <property name="text">
+                  <string>Proveedores:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLabel" name="label_159">
+                 <property name="text">
+                  <string>Cuenta de venta de mercaderías:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="3">
+                <widget class="QLineEdit" name="txtcuenta_proveedores_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLineEdit" name="txtcuenta_acreedores_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QLabel" name="label_160">
+                 <property name="text">
+                  <string>Digitos cuentas contables:</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_25">
+              <attribute name="title">
+               <string>Contabilidad (IVAS)</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_46">
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="txtcuenta_cobros_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="4">
+                <widget class="QLineEdit" name="txtcuenta_pagos_3">
+                 <property name="placeholderText">
+                  <string>(F1 - lista)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="label_161">
+                 <property name="text">
+                  <string>Cuenta Pagos:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="label_162">
+                 <property name="text">
+                  <string>Cuenta cobros:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="4">
+                <layout class="QGridLayout" name="gridLayout_47">
+                 <item row="3" column="4">
+                  <widget class="QLineEdit" name="ivarepercutido3_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="3">
+                  <widget class="QLabel" name="label_163">
+                   <property name="text">
+                    <string>E</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="ivasoportado4_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_164">
+                   <property name="text">
+                    <string>R</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="ivasoportado2_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3">
+                  <widget class="QLabel" name="label_165">
+                   <property name="text">
+                    <string>R</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="label_166">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 127);
+border-color: rgb(0, 0, 42);
+color: rgb(255, 255, 255);</string>
+                   </property>
+                   <property name="text">
+                    <string>Cuenta IVA soportado</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="2">
+                  <widget class="QLineEdit" name="ivasoportadore4_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2">
+                  <widget class="QLineEdit" name="ivasoportadore3_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="4">
+                  <widget class="QLabel" name="label_167">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 127);
+border-color: rgb(0, 0, 42);
+color: rgb(255, 255, 255);</string>
+                   </property>
+                   <property name="text">
+                    <string>Cuenta IVA repercutido</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_168">
+                   <property name="text">
+                    <string>N</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="ivasoportado1_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QLabel" name="label_169">
+                   <property name="text">
+                    <string>N</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="4">
+                  <widget class="QLineEdit" name="ivarepercutido1_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="4">
+                  <widget class="QLineEdit" name="ivarepercutido4_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="4">
+                  <widget class="QLineEdit" name="ivarepercutido2_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_170">
+                   <property name="text">
+                    <string>SR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="ivasoportado3_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="3">
+                  <widget class="QLabel" name="label_171">
+                   <property name="text">
+                    <string>SR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="label_172">
+                   <property name="text">
+                    <string>E</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLineEdit" name="ivasoportadore1_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLineEdit" name="ivasoportadore2_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="label_173">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+                   </property>
+                   <property name="text">
+                    <string>IVA soportado RE</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="5">
+                  <widget class="QLabel" name="label_174">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+                   </property>
+                   <property name="text">
+                    <string>IVA repercutido RE</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="5">
+                  <widget class="QLineEdit" name="ivarepercutidore1_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="5">
+                  <widget class="QLineEdit" name="ivarepercutidore2_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="5">
+                  <widget class="QLineEdit" name="ivarepercutidore3_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="5">
+                  <widget class="QLineEdit" name="ivarepercutidore4_3">
+                   <property name="placeholderText">
+                    <string>(F1 - lista)</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_26">
+              <attribute name="title">
+               <string>Tarifas</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_48">
+               <item row="1" column="1" colspan="2">
+                <widget class="QLabel" name="label_175">
+                 <property name="text">
+                  <string>Tarifa predeterminada:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="5" rowspan="2">
+                <spacer name="horizontalSpacer_30">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>121</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="3" colspan="2">
+                <widget class="QComboBox" name="cboTarifa_3"/>
+               </item>
+               <item row="2" column="2">
+                <widget class="QDoubleSpinBox" name="spinMargen_3"/>
+               </item>
+               <item row="2" column="4">
+                <widget class="QDoubleSpinBox" name="spinMargen_minimo_3"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="label_176">
+                 <property name="text">
+                  <string>Margen:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <spacer name="verticalSpacer_17">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>86</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLabel" name="label_177">
+                 <property name="text">
+                  <string>Margen Mínimo:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" rowspan="2">
+                <spacer name="horizontalSpacer_31">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>122</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="3">
+                <spacer name="verticalSpacer_18">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>86</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_27">
+              <attribute name="title">
+               <string>Agenda</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_49">
+               <item row="4" column="4">
+                <widget class="QPushButton" name="btnConstruir2_3">
+                 <property name="text">
+                  <string>Construir</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QSpinBox" name="txtConsultas_3"/>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLabel" name="label_178">
+                 <property name="text">
+                  <string>Horario ultimo día:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLabel" name="label_179">
+                 <property name="text">
+                  <string>Horario día:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="2">
+                <widget class="QLabel" name="label_180">
+                 <property name="text">
+                  <string>Consultas/box disponibles:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="4">
+                <widget class="QPushButton" name="btnConstruir3_3">
+                 <property name="text">
+                  <string>Construir</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLabel" name="label_181">
+                 <property name="text">
+                  <string>Horario primer día:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2" colspan="2">
+                <widget class="QLineEdit" name="txt_horario_primer_dia_3">
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1" colspan="2">
+                <widget class="QLabel" name="label_182">
+                 <property name="text">
+                  <string>Ultimo día semana laborable:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="2" colspan="2">
+                <widget class="QLineEdit" name="txt_horario_ultimo_dia_3">
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <spacer name="horizontalSpacer_32">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="3">
+                <widget class="QComboBox" name="cbo_ultimo_dia_semana_3">
+                 <item>
+                  <property name="text">
+                   <string>Lunes</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Martes</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Miercoles</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Jueves</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Viernes</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Sabado</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Domingo</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="4" column="2" colspan="2">
+                <widget class="QLineEdit" name="txt_horario_dia_normal_3">
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="5">
+                <spacer name="horizontalSpacer_33">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="3">
+                <widget class="QComboBox" name="cboPrimer_dia_laborable_3">
+                 <item>
+                  <property name="text">
+                   <string>Lunes</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Martes</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Miercoles</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Jueves</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Viernes</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Sabado</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Domingo</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QLabel" name="label_183">
+                 <property name="text">
+                  <string>Primer día semana laborable:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="4">
+                <widget class="QPushButton" name="btnConstruir1_3">
+                 <property name="text">
+                  <string>Construir</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="2">
+                <spacer name="verticalSpacer_19">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_28">
+              <attribute name="title">
+               <string>Medic</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_50">
+               <item row="1" column="3">
+                <spacer name="horizontalSpacer_34">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>166</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="txtclave1_3">
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="label_184">
+                 <property name="text">
+                  <string>Clave 1:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="2">
+                <widget class="QCheckBox" name="chkMedica_3">
+                 <property name="text">
+                  <string>Empresa Médica</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="label_185">
+                 <property name="text">
+                  <string>Clave 2:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="txtclave2_3">
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_35">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>166</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="3" column="2">
+                <spacer name="verticalSpacer_20">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>154</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_29">
+              <attribute name="title">
+               <string>Otros</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_51">
+               <item row="0" column="0">
+                <widget class="QFrame" name="frame_5">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_52">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_186">
+                    <property name="text">
+                     <string>Caducidad Vales(días):</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2" colspan="2">
+                   <widget class="QLabel" name="label_187">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Tamaño del código en caracteres:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QSpinBox" name="txtCaducidadvales_3">
+                    <property name="maximum">
+                     <number>99999999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="4">
+                   <widget class="QSpinBox" name="txttamano_codigoart_3">
+                    <property name="maximumSize">
+                     <size>
+                      <width>60</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="value">
+                     <number>15</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="5">
+                   <widget class="QCheckBox" name="chkEnlace_web_3">
+                    <property name="text">
+                     <string>enlace Web.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="3">
+                   <spacer name="horizontalSpacer_36">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>194</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="2" column="0" colspan="3">
+                   <widget class="QFrame" name="frame_6">
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_6">
+                     <item>
+                      <widget class="QCheckBox" name="chk_upate_divisas_3">
+                       <property name="text">
+                        <string>Actualizar divisas al entrar</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_12">
+                       <item>
+                        <widget class="QLabel" name="label_188">
+                         <property name="text">
+                          <string>Divisa: </string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QComboBox" name="cboDivisas_3"/>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="chkSeguimiento_3">
+                       <property name="text">
+                        <string>Activar Seguimiento movimientos</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="chkIRPF_3">
+                       <property name="maximumSize">
+                        <size>
+                         <width>135</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Autonomo / IRPF</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_13">
+                       <item>
+                        <widget class="QLabel" name="label_189">
+                         <property name="text">
+                          <string>%IRPF:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="spinPorc_irpf_3">
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                         <property name="minimum">
+                          <double>-999999.000000000000000</double>
+                         </property>
+                         <property name="maximum">
+                          <double>9999999.000000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_221">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Decimales en totales</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="spinDecimales_2">
+                    <property name="value">
+                     <number>2</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="2">
+            <layout class="QGridLayout" name="gridLayout_53">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_190">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Mail:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="4">
+              <widget class="QCheckBox" name="chkAutocodificiar_3">
+               <property name="text">
+                <string>Auto codificar los nuevos artículos</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_191">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Teléfono 1:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_192">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Fax:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_193">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Telefono 2:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_194">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Web:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="4">
+              <widget class="QCheckBox" name="chkInternacional_3">
+               <property name="text">
+                <string>Gestión Internacional</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono1_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono2_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtfax_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtcMail_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtweb_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0" colspan="7">
+            <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <item>
+              <widget class="QLabel" name="label_195">
+               <property name="minimumSize">
+                <size>
+                 <width>66</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cif:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcif_3">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_196">
+               <property name="text">
+                <string>Inscripción:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcInscripcion_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_197">
+               <property name="text">
+                <string>Digitos Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtndigitos_factura_3">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_198">
+               <property name="text">
+                <string>Serie Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtserieFactura_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tabWidgetPage2_3">
+          <attribute name="title">
+           <string>Datos conexión Base de datos</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_54">
+           <item row="4" column="0">
+            <spacer name="verticalSpacer_21">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="txtcDriver_3">
+             <item>
+              <property name="text">
+               <string>QMYSQL</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <spacer name="horizontalSpacer_37">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_199">
+             <property name="text">
+              <string>Driver activo BD:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="3">
+            <widget class="QFrame" name="mysql_frame_3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_55">
+              <item row="2" column="3">
+               <widget class="QLabel" name="label_200">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuración Base de datos &lt;span style=&quot; color:#ff0000;&quot;&gt;Contabilidad &lt;/span&gt;(MySQL) - Multipuesto,Multidelegaciones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLabel" name="label_201">
+                <property name="text">
+                 <string>Configuración Bases de datos RedFox (MySQL) - Multipuesto  y Multidelegaciones.</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_202">
+                <property name="text">
+                 <string>Nombre BD:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLineEdit" name="txtnombre_bd_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>Dejar en blanco para autogenerar...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QLabel" name="label_203">
+                <property name="text">
+                 <string>Nombre BD:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="3">
+               <widget class="QLineEdit" name="txtNombre_BDConta_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>Dejar en blanco para autogenerar...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="2">
+               <widget class="QLabel" name="label_204">
+                <property name="text">
+                 <string>Nombre BD:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="3">
+               <widget class="QLineEdit" name="txtnombre_bdMedic_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>Dejar en blanco para autogenerar...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="3">
+               <widget class="QLabel" name="label_205">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuración Base de datos &lt;span style=&quot; font-weight:600; color:#000080;&quot;&gt;médica&lt;/span&gt; (MySQL) - Multipuesto y Multidelegaciones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QFrame" name="sqlite_frame_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_56">
+              <item row="0" column="0" colspan="3">
+               <widget class="QLabel" name="label_206">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuración SQLite (Monopuesto)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_207">
+                <property name="text">
+                 <string>Ruta BD:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="txtRutaBd_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QPushButton" name="btn_migrar_3">
+                <property name="text">
+                 <string>Migrar a BD Multipuesto</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2" colspan="2">
+               <spacer name="horizontalSpacer_38">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>770</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="btn_ruta_db_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLineEdit" name="txtruta_bd_conta_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_208">
+                <property name="text">
+                 <string>Ruta BD: Contabilidad:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_209">
+                <property name="text">
+                 <string>Ruta BD Médica:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLineEdit" name="txtRutaBDMedica_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_30">
+          <attribute name="title">
+           <string>Datos conexión email</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_58">
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_213">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Datos cuenta</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_210">
+             <property name="text">
+              <string>Nombre a mostrar:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="txtEmail_mostrar_3">
+             <property name="placeholderText">
+              <string>Nombre Empresa o su nombre</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_211">
+             <property name="text">
+              <string>Usuario:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="txtEmail_usuario_3">
+             <property name="placeholderText">
+              <string>usuario@sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_212">
+             <property name="text">
+              <string>Contraseña:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="txtEmail_contrasena_3">
+             <property name="placeholderText">
+              <string>su contraseña </string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLabel" name="label_217">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Datos Servidor</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_214">
+             <property name="text">
+              <string>Cuenta POP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="txtEmail_pop_3">
+             <property name="placeholderText">
+              <string>pop3.sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_216">
+             <property name="text">
+              <string>Cuenta IMAP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="txtEmail_imap_3">
+             <property name="placeholderText">
+              <string>imap.sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_215">
+             <property name="text">
+              <string>Cuenta SMTP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLineEdit" name="txtEmail_smtp_3">
+             <property name="placeholderText">
+              <string>smtp.sudominio.com</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <spacer name="verticalSpacer_22">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>229</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="5">
+        <layout class="QHBoxLayout" name="horizontalLayout_15">
+         <item>
+          <spacer name="horizontalSpacer_39">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_guardar_edit">
+           <property name="text">
+            <string>Guardar</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
           </widget>
          </item>

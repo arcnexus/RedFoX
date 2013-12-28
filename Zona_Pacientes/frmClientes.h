@@ -112,7 +112,7 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
-    void on_tabla_busquedas_row_changed(QModelIndex current,QModelIndex previous);
+
     void on_btnCobroTotal_clicked();
 
     void on_radPendientes_toggled(bool checked);
