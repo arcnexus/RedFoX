@@ -1692,9 +1692,9 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
         modo = "";
     else
         modo = "DESC";
-
-    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
-                         " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo,Configuracion_global->groupDB);
+    QString cSQL = "select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
+            " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo;
+    m_clientes->setQuery(cSQL,Configuracion_global->groupDB);
     //formato_tabla_busquedas();
     ui->tabla_busquedas->selectRow(0);
 
