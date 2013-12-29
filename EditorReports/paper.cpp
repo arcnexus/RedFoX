@@ -261,7 +261,7 @@ void Paper::insertLabel(Section * sec)
     rect->setMargins(this->margin());
     rect->setSize(100,15);
     rect->setPos(_insertingPoint.x()-20,_insertingPoint.y()-7);
-    rect->setText("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos.");
+    rect->setText("Lorem ipsum.");
     //rect->setfontSize(40);
     rect->setfontSize(10);
     connect(rect,SIGNAL(moved(Container*)),this,SLOT(itemMoved(Container*)));

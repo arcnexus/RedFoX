@@ -13,6 +13,7 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     QStyle *style = this ? this->style() : QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     ui->blinkink->seticon(tmpIcon.pixmap(32,32));
+    on_btn_inicio_clicked();
 
     //------------------
     // LLeno divisas
@@ -532,7 +533,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->txt_horario_primer_dia_3->setText(r.value("horario_primer_dia").toString());
     ui->txt_horario_dia_normal_3->setText(r.value("horario_dia_normal").toString());
     ui->txt_horario_ultimo_dia_3->setText(r.value("horario_ultimo_dia").toString());
-    ui->chk_ticket_factura_3->setText(r.value("ticket_factura").toString());
+    ui->chk_ticket_factura_3->setChecked(r.value("ticket_factura").toBool());
     ui->spinMargen_3->setValue(r.value("margen").toDouble());
     ui->spinMargen_minimo_3->setValue(r.value("margen_minimo").toDouble());
     ui->chkSeguimiento_3->setChecked(r.value("seguimiento").toDouble());
@@ -896,8 +897,8 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["digitos_factura"]= ui->txtndigitos_factura_3->text();
     data["serie"]= ui->txtserieFactura_3->text();
     data["decimales_campos_totales"] = ui->spinDecimales_2->value();
-    //data["decimales"]=  ; decimales precios
-    //data["mostrarsiempre"]=  ;???
+    data["decimales"]=   ui->spinDecimales_precios_2->value();
+    //data["mostrarsiempre"]=  ui->ch
     //data["ruta_bd_sqlite"]=  ;
     //data["ruta_db_conta"]=  ;
     //data["ruta_bd_medica_sqlite"]=  ;
@@ -967,24 +968,33 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["cuenta_iva_soportado2_re"]=  ui->ivasoportadore2_3->text();
     data["cuenta_iva_soportado3_re"]=  ui->ivasoportadore3_3->text();
     data["cuenta_iva_soportado4_re"]=  ui->ivasoportadore4_3->text();
-/*
- *
- * TODO
-data["nombre_email"]=  ;descripcion
-data["cuenta_mail"]=  ;x@
-data["cuenta_pop"]=  ; pop.
-data["cuenta_imap"]=  ;imap.
-data["cuenta_smpt"]=  ;
-data["password_cuenta"]= ;
-data["importada_sp"]=  ; ###
 
-data["importe_cierre"]= ;    ####
-data["facturas_en_cierre"]= ;bool
+    data["nombre_email"]=  ui->txtEmail_mostrar_3->text();
+    data["cuenta_mail"]=  ui->txtEmail_imap_3->text();
+    data["cuenta_pop"]=  ui->txtEmail_pop_3->text();
+    data["cuenta_imap"]= ui->txtEmail_imap_3->text();
+    data["cuenta_smpt"]= ui->txtEmail_smtp_3->text();
+    data["password_cuenta"]= ui->txtEmail_contrasena_3->text();
+    //data["importada_sp"]=  ; esto debe ser true si ha sido importada (se debería hacer desde el programa de importación.
 
-data["tpv_forzar_cantidad"]= ;###
-data["caducidad_vales"]= ;*/
+    data["importe_cierre"]= ui->spinImporte_abertura->value();
+    data["facturas_en_cierre"]= ui->checkMostrarfacturascierrecaja->isChecked();
+
+    data["tpv_forzar_cantidad"]= ui->checktpv_forzar_cantidad->isChecked();
+    data["caducidad_vales"]= ui->txtCaducidadvales_3->value();
 
     QString error;
-   // SqlCalls::SqlUpdate(data,"",_empresas.value(,QString("id = %1").arg(_targetEmpresa),error);
+    qDebug() << _targetGroupDbRecord;
+    int _targetEmpresa =_targetGroupDbRecord.value("id").toInt();
+    QString _target_database =_targetGroupDbRecord.value("db_name").toString();
+
+//    bool success = SqlCalls::SqlUpdate(data,"empresas",_empresas.value(ui->listWidgetGrupos->currentItem()->text()),
+//                                       QString("id = %1").arg(_targetEmpresa),error);
+//    bool success = SqlCalls::SqlUpdate(data,"empresas",QSqlDatabase::database(_target_database),QString("id = %1").arg(_targetEmpresa),error);
+//    if(success)
+//        TimedMessageBox *m = new TimedMessageBox(this,tr("Las modificaciones han sido guardadas"));
+//    else
+//        QMessageBox::warning(this,tr("Gestión de empresas"),tr("No se han podido guardar los datos de la empresa: %1").arg(error),
+//                             tr("Aceptar"));
     ui->stackedWidget->setCurrentWidget(ui->main_page);
 }

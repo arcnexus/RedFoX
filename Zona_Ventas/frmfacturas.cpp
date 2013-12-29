@@ -768,25 +768,26 @@ void frmFacturas::on_btnImprimir_clicked()
         {
             ui->lblFacturaImpresa->setVisible(true);
             int valor = dlg_print.get_option();
-             QMap <QString,QVariant> parametros;
+            QMap <QString,QString> parametros_sql;
+            parametros_sql["Empresa.cab_fac"] = QString("id = %1").arg(oFactura->id);
+            parametros_sql["Empresa.lin_fac"] = QString("id_cab = %1").arg(oFactura->id);
+            QString report = "factura_"+QString::number(oCliente1->ididioma);
 
-             parametros["id_cliente"]= oFactura->id_cliente;
-             parametros["id_cab"] = oFactura->id;
-             parametros["id_empresa"] = 1;
-             parametros["id_transportista"] =1;
 
+            QMap <QString,QString> parametros;
+            //TODO parametros
             switch (valor) {
             case 1: // Impresora
-                //Configuracion_global->imprimir("factura_"+QString::number(oCliente1->ididioma),false,false,parametros,this);
+                Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                 break;
             case 2: // email
                 // TODO - enviar pdf por mail
                 break;
             case 3: // PDF
-                //Configuracion_global->imprimir("factura_"+QString::number(oCliente1->ididioma),true,false,parametros,this);
+                Configuracion::ImprimirPDF(report,parametros_sql,parametros);
                 break;
             case 4: //preview
-                //Configuracion_global->imprimir("factura_"+QString::number(oCliente1->ididioma),false,true,parametros,this);
+                Configuracion::ImprimirPreview(report,parametros_sql,parametros);
                 break;
             default:
                 break;

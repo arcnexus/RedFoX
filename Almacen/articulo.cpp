@@ -108,7 +108,7 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 void Articulo::Recuperar(int id)
 {
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
-    qryArticulo.prepare("select * from articulos where id ="+QString::number(id));
+    qryArticulo.prepare("select * from articulos where id ="+QString::number(id) +" limit 0,1");
     if (qryArticulo.exec()) {
         if(qryArticulo.next()){
             QSqlRecord r = qryArticulo.record();
