@@ -2121,8 +2121,8 @@ void FrmTPV::on_btnBorrar_linea_clicked()
     //No hace nada si no hay una fila seleccionada
     if (ui->tablaLineas_tiquet_actual->currentRow() == -1) return;
 
-        int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
-        QString tipo = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),5)->text();
+    int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+    QString tipo = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),5)->text();
 
 
     if(id > 0)
