@@ -1,839 +1,138 @@
-<!DOCTYPE openRPTDef>
-<report>
- <title></title>
- <name></name>
- <description></description>
- <parameter listtype="static" default="" type="integer" name="id" active="true">
-  <description></description>
- </parameter>
- <parameter listtype="static" default="" type="integer" name="id_cab" active="true">
-  <description></description>
- </parameter>
- <parameter listtype="static" default="" type="integer" name="id_cliente" active="true">
-  <description></description>
-  <item value="c">0</item>
- </parameter>
- <grid>
-  <snap/>
-  <x>0.05</x>
-  <y>0.05</y>
- </grid>
- <size>A4</size>
- <portrait/>
- <topmargin>50</topmargin>
- <bottommargin>50</bottommargin>
- <rightmargin>50</rightmargin>
- <leftmargin>50</leftmargin>
- <querysource>
-  <name>cliente</name>
-  <sql>SELECT * FROM `@grupo@`.clientes WHERE id = &lt;?value("id_cliente") ?></sql>
- </querysource>
- <querysource>
-  <name>cab_fac</name>
-  <sql>SELECT * FROM `@empresa@`.cab_fac WHERE id = &lt;?value("id") ?></sql>
- </querysource>
- <querysource>
-  <name>lin_fac</name>
-  <sql>SELECT * FROM `@empresa@`.lin_fac WHERE id_cab = &lt;?value("id_cab") ?></sql>
- </querysource>
- <section>
-  <name>info propia</name>
-  <detail>
-   <key>
-    <query>cliente</query>
-   </key>
-   <height>100</height>
-   <rect>
-    <x>365</x>
-    <y>0</y>
-    <width>360</width>
-    <height>100</height>
-    <weight>1</weight>
-   </rect>
-   <image>
-    <rect>
-     <x>10</x>
-     <y>5</y>
-     <width>200</width>
-     <height>85</height>
-     <weight>1</weight>
-    </rect>
-    <mode>clip</mode>
-    <map format="png">begin 420 internal
-MB5!.1PT*&amp;@H````-24A$4@```,````!&lt;"`8````X>+H_````!'-"250("`@(
-M?`ADB`````EP2%ES```.Q```#L0!E2L.&amp;P``&amp;CY)1$%4>)SMG7MT5=6][S]K
-MO_+&lt;@;QX*`$EHB@;E?AH)!P.%)!>J?9`HSV7>!05*\->M9>"H'`JWK:*%FU:
-MU!;KQ8,/-.J%.Z15AD!-O40$&amp;5'>$0R/!$A"LG>2_=[K->\?VVRS\\[>@42S
-M/F/,`7/NM7[KMV;F=\WW6I(0`@.#P8JIOQTP,.A/#`$8#&amp;H,`1@,:@P!&amp;`QJ
-M+/WMP&amp;!""\C"77&amp;$P.EJ@E75*&amp;X?Z"J2+0E;=@9)HT:3,G8TJ6,OE?K;U\&amp;"
-M9(P"G7^&lt;N_>*,V^]C7SF),F7CB5A6!(`)FL"`+H2`D`-:4BGG;@;ZLF8-H,Q
-M]]Z'.&lt;EFB.$\8@C@/-)\\*CX:O$O`$B[=BQ9!3=@OVX2%ELR`)+IVPI8Z"JJ
-M[$&lt;^YZ)A9QE-GWU!H+*&amp;C/\VE_&amp;K'C-$&lt;)XP!'">./SHHZ+FU?]BQ&amp;T%7/0?
-M_T["J,L0/C&lt;`EJ'#,*>/`$#29#1%1@2\:%XGBKL)4T(2YH0$7/_\F),OOXZN
-M)'%-R?]AB.-R0PA]C"&amp;`\\"GDZ&lt;)_[Z=7+GZ,5*OOP'-XT5*3,&amp;2FDS297E8
-MTC+;%60AA!!R`+6YGD#E/I2:&amp;DRI=@!._>4OG-W\_YCXYKN,GE]HB*`/,3K!
-M?8@.8N>$B&lt;@GC^#XRVI(3B9PZC2VC*$`F,P6)$O'62Y)DB0E)&amp;,;-@;+D&amp;SA
-M_FPK_J.'$98$&lt;NZ^"UMZ)@>*;@?_>C%ZX3V&amp;"/H(0P!]R&amp;>3IQ$Z?)`)+_\&amp;
-MU>/#%`QBLF&lt;@%`5K5C)22AI"5;NU8TI(EH;^ZSR$9!;NSW82/%/-T"F3N23H
-MY\#]]V(9GBTNNO7'A@CZ`&amp;,>H(\X_.BCHG'7/\E]XG^@-#:C>;WHB@:*'Y-]
-M*":S!>%SHS76HOF;!9HB0!&lt;`0I6%YF\62LW70CYW2LCGS@J`]*D_D;+G_3L`
-MH0/[2/[!38R\_C*^N.U6`O5.H^W:!QA]@#Z@Z&lt;`!47;UU>3&lt;FD_*C3=@\ON1
-MDNU8AZ22&lt;/&amp;H2%O>,C0=2TH*EM0AF-.&amp;04)X-(B0']7M0FTZA^KW@*JCNIM)
-M=5Q/PI@)DGSNK#A3_&amp;O\=4Z2&lt;D91^>0+I-QX`Y-W[S%J@3@Q:H`^X."\?R,U
-M4&lt;(V_FJ4V@:$JJ&amp;K*L)L05,TM"8G0E'0`P&amp;T4`@MX$=SGT-OKD=OKD=UN]`#
-M;G0MW#Q2W&lt;THY\Y2_^9?\.PM$[9A%TD7__)_@1(B4'V:B^;-H''/Y]1LVFP\
-MO>+$$$"&lt;U)5^(IJ_/D[&amp;E,F8F^LQ*T%D?PA)#@`@9#^:SXON&lt;Z-Y/6@>#XJ[
-M":7)A>(ZB^(Z^\V3WXON\Z%YO(A0$`T+4D(BYU[]0T0$HQ]>@7SL:QAJ)S51
-MXM22A_OY[K_[&amp;`*(DQ-/K,`&amp;F-/3\7HTY$`0F\V$E!QN]FCGZM"\WXI`;7*A
-M-C6B-#6BN%PH+E?XB=]0C^IN1FMRHC:[$`$_`%)"(G5_?@;%52_LUQ=(0WXX
-M#?G8UZ3=,`'GB=,X=^\U:H$X,`00![XS-&lt;+SR4[LEXY":`%L[D:P)D!:.@#R
-MN09D9R/(032O'Z6Y&amp;=7=%"[DSGH45T,XU->A-3E17/5H/F]8,%XOFMN-E)B(
-MO[Z>LZ\\"\"H!QY#!()8$H9@`TZL6=V/.?#=QQ@&amp;C0/_WEW(@"UK!(1D])".
-MV:,B-SBQV4QH/C_F(4.0G8U84Y-`3D0+AE#-%BQ)MBA;NJJA*QI2(-P$DD(R
-M:D!&amp;!(,DI6?0O',GRL)Z81MYD90Z\3KA^_QS;(D2P2^_Z)^;_YY@U`!Q4%_V
-M6;CY8[$@-86;+$(+8&amp;IL)-#@0E)51#"("`91O`$TMQOA:0H_W5VNJ"#&lt;S=#4
-M@.9VHW@#D&lt;*OA\(+Y;03YW"^^RX`&amp;3-_C'S.2V):-LJY.F-(-`X,`&lt;2!]YNG
-MKZ:J!#WA3J]U2!9*LP]&lt;7O2@@M[L1O/YT;T^5(\/N&lt;F+Y'.CN=L'Q1M`]?C0
-MO3Z$SX/P^1#>`+(WA$@TX=[]"0#)UUV'2+%A2DQ'=?L([ONRW_+@NX[1!(H1
-M'81\[@0)DH16Y\%^>2ZI/_XA[K)2I"8_EFP[^(-@M2!4':&amp;JZ!8+)HL))6A%
-MLIBC[`E5`TU!5_5PS:%J$)!!44'1D((ZJM&lt;'@"5M"#93,DI0`\!SLHKT"YX#
-MWP\,`&lt;2(KH.N)&amp;&amp;V)*&amp;XO)C2,TBY;!R-?]N,VMR(EI2(U20PF55(L"`4%6&amp;U
-MH%M,2!:9CMHL0M40J@Z*BE!4%$7#K&amp;A(LDK()Y/0ZEC%KP,@`VHH>"%N^7N)
-M(8`8,770>%15%=VG(0(63$U>]`0+NM6,2=._%0*`M>-L%TIX(DR$5'1-1Y)5
-M=$5#T:U(/AD+X45UH1/'H\Z3K$9+-E8,`&lt;2("21;UE`A'PE@20@W0!*SAV'Q
-M^)`5"=6:A-7OAV30%0W=:H:`C-EJ0I=,F,S1A5;7="2AHRGA)SM*N'DC0BH6
-M5#C7@#W_>@!\!_:CN5PD7#0:&amp;Y"8->R"W??W#4,`&lt;9"8.P[/)SM)2TI$KSN'
-M-.)BI(0TS`W'L&amp;9G(12!Y%&lt;`$&amp;85*2&amp;\-`)`![":PP6]Y=]O$*%P32!I`A2!
-M[M:PVD>0^=]O!\#]Y0&amp;LH2!JT(N4;";Y\@D7]+Z_3QAU9QP,R?\!`%JJ'=?N
-MO=#4R+#%BP`(?'D8$31_TR32(*B#7XD$$5(1WE#4OY'?@SIXOVE.!&lt;WXJRI(
-M_L&amp;UV$9>)"FN>J'^LQRS?2B:RT7J\)&amp;D7G59?V;#=QI#`'&amp;0?M-D`'0M@"HW
-MXMFV@[29/R3K@078QER,?/8LNE=%ER5TOT!XPF(0`0V\:J2@MP01T-!]&amp;KI?
-MH`&lt;%0A:HS1X`1C__-`#>7;L('#V&amp;R!J&amp;+^2"G$LPFTS&amp;JM`8,000!RGCQY-T
-MV5CDFFK2LL;B>N-UY-.UV&amp;^YF6&amp;_>A@14C`E)Z&amp;[PWN!=5F$"_&lt;W!5SW:N%_
-M@]^FBZ``50^WD4PF0O4G&amp;+7B"9(G7BWI(;]POO(6NA8BX9M1U.%%=_9?!GP/
-M,`00!U:K5;KHETOP*WYL69DX#QW$LVT')J%@&amp;S.&lt;$&lt;M_B908;MLK]2ZPF+[-
-M&lt;;U5:(L)))L-__'#I.5/Y>+?_EH":/YP.XW_]WT21U^"__0)+&amp;DIC%YX_P6Y
-MU^\KQH:8.-$"LMB>F89=3R$U,QO5XV',7]&lt;@/'[,EUR"22CXRP]P=L73Z%J(
-MQ+%CPY,(G6$R@:KCKZH@Y?(KN6+7QU@SLB4]Y!&lt;5DZ83.'J,I,O'&lt;>;('BY>
-MNI2KGGW6:/[$@5$#Q(DYR29=7OQ'&amp;D,N3,E)"'^`NB>+2;AV//+1XYA24AFY
-M;*ETY1>EV*=.P7_\,,&amp;3)]&amp;]WNA:0`&lt;A:P2/'\=?54'FO]W!5?OW8,W(E@"^
-M_N6O\!S92]+EX_`=.8AN3^:*U&lt;9*T'@Q:H`^8E?!34+9M9NL\3?@.W(0^\QI
-MC'KF-X2.?870-++FWRD!.-]Y1SC?VT+@XT^0&amp;QJB;)C,"21=>Q7#%B^*'`]P
-M;NU+XL3##Y$\>CQ:(,29^DHFO;\%8V-\_!@"Z","]4[QR9B+R0B82;G2@>_(
-M05*N=)#SVO.8[1FX2S_&amp;8DX@:^%]$H0WPGOW[$$]YT*7@YALB5A'CR(U+T\"
-M4-U.84G+E!I>^=^B\OZ?DY!]*;;45$Z&lt;V,>E1M.GSS`$T(&lt;T?K%/?)IW+&lt;-(
-M)N5*!X&amp;CQY`2K(S\S>,,F7,S2M4I=%E&amp;:W:3//%JDB=>W6DAUOS-XLS*IZCY
-MPYI(X3]S8A_IA3_E^G??,PI_'V$(H(]Q[MXK]L[Z5Y*\`;+&amp;WX#&lt;X"14?X*T
-M_*ED_,=\+%E#$*I,PB67D'CI"*24=(2O$=.0;`!"E:?PEN[$N?%=W)]]@GW,
-MU2@^%Z&lt;;JKCXGGNX=OUZH_#W(88`S@.^,S7BP/P[\'RRD\SD822.N83@Z=,H
-MGEHLYB&amp;D%-R`_5\*HL[1_#[D$U7X=GY*L.$TUN0L$H>/I.'D?CQ",.[Y-5S^
-M/W]E%/X^QA#`>>3H'YX3U4\]@]Y0SU"221Q]"6;)AM+4C-Q&lt;U^YXDSD!Z_!A
-MZ(J*N^$X(2$8,FLFXYY90_JD:XS"?QXP!'">"=0[1?4;_T7#NUOP[?HG``F2
-M1(*0,)$(@$Z0D!3^.X2$P)253>:M/V;8W'G&amp;2,]YQA#`!4('45_Z";Y#APB>
-M.H'_Q''4&lt;W4(5&lt;6&lt;DHIM5`ZI5XS%&lt;O%HLB;_B_&amp;5F`N$(0"#08TQ$VPPJ#$$
-M8#"H,01@,*@Q!&amp;`PJ#$$8#"HZ9--\34U-:*QL9&amp;KKKKJO`S=!0(!L77K5O;O
-MW\^V;=NHJ*C`X_%@M]L9/WX\TZ9-XZ&lt;__2F3)DTRA@X->D6?#(-.G#A1'#UZ
-ME%`HU*&lt;%T.5RB9=??IDU:];@=#HCZ7EY>:2GIQ,,!JFMK:6RLA*`&amp;3-F\.:;
-M;S)\^/!N_:BKJQ///OML))Z;F\N##SX8L_\OO_RRJ*JJ8MFR9=CM]G9V`H&amp;`
-M>/WUUU%5%4514!0%G\^'T^G$X_%@L5@8-6H4V=G9C!PYDIDS9W9HIS5;MFP1
-MI:6ED?B"!0N8.'%B3/=05U&lt;GUJY=2VYN+O?&lt;T_%'^*JKJT5Q&lt;3%)24G\]K>_
-MC>MOO7W[=O'AAQ^R:-$BQHT;%[&amp;U9LT:45-3@Z(H6*U6%$5I=Z[5:L5JM4;B
-M?K^_V^M-GSZ=N7/GMO=9"!%7&lt;+O=`A"`J*RL%/'::PD;-VX4F9F9$=N%A85B
-MV[9M'=J795F\^.*+D>,[.ZYU^/+++R.V`9&amp;9F1F7[RW7/GWZ=(=VJJJJHJ[7
-M7&lt;C,S!2+%R_N,D\7+%@0=&lt;[Z]>MCOH&lt;]>_9TFP^EI:61:\V9,R>N_%JT:)$`
-MQ*9-FZ+L]":/>A.*BHHZ]#?N)M"++[X8^?^2)4O8M&amp;E3O"99N7*E^-WO?@>`
-MS6;C[;??[EB]WV"U6J4''WR0!Q]\D/OOOU_,FC6+CS[Z2,R:-:O3&lt;Q(2$J+B
-MX\:-B\OG,6/&amp;X'0ZL73R&amp;52+Q8+-9D.690`R,S-YZ:67F#1I$B-&amp;C.#,F3/\
-MXQ__8-.F3>S8L0.GT\GSSS_/"R^\P-MOORTZNO_APX='Q8&lt;.'1JS_XF)X649
-MX\>/[_28I*2DR/___O>_LW+E2A%K33!B1/A#X7:[/2I]SYX]N%PN$A,3HY[R
-M%HL%L]F,R61BZ=*E[-BQ(_);24D)5UYY)6HG7^!4%(6&lt;G)R.'8GW26VSV:*4
-MYO?[XWHR+%Z\.,K>WKU[>VUOU:I5W=9(1XX&lt;B;I.?GY^7'[GY>4)0-36UG9H
-MY^S9LZ)U7G5UO67+EK5[@I66EK8[ONUQ;9^FO0G[]^\7@"@H*.C4QN[=N]OY
-M55)2$M,U6_Y&amp;/:FMVX:V-5]G>=Z3$-&lt;HT.;-FT7+$ZV%E2M7QFSOU5=?%&lt;\_
-M_WPDOG[]>JZ[[KI>/V&amp;>>.():>'"A>3FYB*$&amp;)!K/;Q>;Z>_K5Z]6IHQ8T94
-MVLTWWWR^78J)G_WL9QPX&lt;.""YG';O#M[]FS,MN(2P-*E2]NEO?#""S'9&lt;KE&lt;
-MXMY[[XW$N^J,]82__O6O4EY>'H\]]EBL)OJ5/__YSU%Q6999LV;-@!3S].G3
-M"00"`]*W[HA9`(&lt;/'Q:5E94X'`X&lt;#D&lt;D799E7GKII5YGQL*%"Z/B3SWU5*RN
-M1=CS^>?&lt;?OOM&lt;=OI#\;FYI*9F1F5]M9;;_63-]'DY>5%^>9T.IDR94H_>A0[
-M,0O@X8?#G^C\X(,/6+=N7=1OO_[UKWMEJ[JZ6FS>O#D2S\S,Y(X[[HA[2-5L
-M,DFQ-*'BH;..6&amp;\QFTQ2VPYI&lt;W-SG]B.E[ONNHL//O@@*JV\O)S[[[__.U&lt;+
-MQ"0`E\LE=NS8@&lt;UF(R&lt;G1YH\>7)4(7,ZG7SXX8&lt;]SHSUZ]='Q;L:B1BHG#IU
-M"IO-%C52$B\M(S,#C8J*"FZ\\49I\>+%4>FOO/)*3+5_?Q*3`%HFD!Y__/%(
-MVH(%"Z*.>?311WML;^W:M5'QO+R\6-SJ-U15%&lt;N7+Z>AH8&amp;,C(P.:QQ556D]
-M8&amp;"SV3HZ+(J3)T]&amp;Q8&lt;,&amp;1*?HWV$QQ-^8>]SSSW7KK/^BU_\@D\__?0[(X)>
-M"T#3=?',,\\`L/(__S.2WEH,``&lt;/'N3PX&lt;/=9L3QX\=%ZUE>@$F3)O76K7[%
-M;#:S9,D2R6ZW2W5U=1W>\X@1(R@N+J:EP)27EW=IT^/QB)89[A:F39O6-P['
-M2>OQ^>W;MTNYN;E1OT^?/IW.\F&amp;@T6L!O%-2`L#&lt;N7.C7LL];MPXJ75G&amp;+[M
-M)W1%;6UMN[1.)RT&amp;*)(D27OV[!%965FBH_N!\&amp;3=(X\\(FW?OEW:NG4K*U:L
-M0%753@M)RT.F-;VI52\D'W_\&lt;51&lt;EF4*"@HZ.7I@T>N9X(&lt;>>@B`/_[QC^U^
-M>^JII[CMMMLB\1T[=N!RN41GS0*`NKKV;T=H._K1'34U->+++SO_5.B4*5.Z
-M75&lt;3+_?==Q].I[-3\=;4U(@-&amp;S8P>_9L9L^>+&lt;V>/;M36Q45%9&amp;9\!:>?OKI
-M'JUQZ@]R&lt;G*DK5NWBA_]Z$>1M,K*2N;-FR&lt;V;=HT('UNH5&lt;UP!=??"&amp;&lt;3B&lt;.
-MAX.&lt;G)QV-W;+G#GMVK;+EBWKTF934U.[M+;+%+ICRY8MW'+++9V&amp;ZNKJ7MF+
-MAXX6;T&amp;X#_#88X^1EY?'G7?>*5Y[[35145'1K@;8MFV;:#NDN&amp;S9,I8O7SZ@
-M"]+LV;.EIY]^.BIM\^;-//GDDP.Z*=0K`;0\_5O/UK;&amp;;#));?L"K[WV6I&lt;V
-MS69SE[_WA-9MTOZBNTZMS6:+'//FFV]R]]UW,V7*%*9,F2+NO/-.,6_>/)&amp;5
-ME25NOOGFR,K7.7/F\/[[[[-Z]>H!7?A;6+Y\N5145!25MFK5*K9LV3)@1=!C
-M`=35U8FRLC(R,S/I:I%9ZXXQA-N#JU>O[C0#TM/;?^*YHUJA*W[RDY^P;=LV
-MBHN+R&lt;_/[]6Y%PJ]S3&lt;!\O+RV+5K%_/GS\=JM2++,E.G3F7QXL6L7[^>RLI*
-M_O:WOTFWWGKK=Z+PM_#&amp;&amp;V](;4?Q;KOM-HX=.S8@1=#C/D!+FW3Y\N4`*(K2
-MX0U9K5:IL+!0O/?>>Y&amp;T-6O61,YK2\NJP-:&lt;/GVZIVX!D)&amp;1(&lt;V&lt;.9.9,V?R
-MR"./D)65U6YD::`ARS+CQHV3XEV%.A`I+2WETDLOC=K#&lt;=---U%;6RLL%LN`
-M$G2/:@!%443+6/W2I4N1)$FT5.EM@R1)484?PA-C[[SS3H>"&amp;3UZ=+NT[H8(
-MNV/,F#'='M,73:_^IK.EU['04D/UQ>2;W6Z7MFW;%I7F=#JCAG$[ZRM=:'J4
-M@Z^^^BH`#H>#:ZZYAE`HU.7QJ:FI;-RX,6KBY_'''^>..^YH=^SPX&lt;.EO+P\
-MT;K0[]RYLT?.=T;;%:H=T=&lt;":%FFD)R&lt;W*=VNR(U-34J'@P&amp;8[;5EP(`F#1I
-MDK1APP9Q]]UW1]+*RLIX^.&amp;'Q9_^]">IK>_]18\$T-*Q_>BCCQ@Y&lt;F2/JK`)
-M$R:(UJM%*RLKV;-GC[CQQAO;G;]DR1+FSY\?B7_^^>&lt;((80D2>>MNFR[9*&amp;K
-MY&lt;D]H66D*3DE)2X[O2$M+2TJWMC8&amp;+.M0"``0'9V=EP^M>:NN^Z2]NW;%[7$
-M?>W:M=QSSSUBPH2!\7'O;IM`GW[Z:63HLZ>%'^"!!QYHE]9V[4@+A86%47%9
-MEGGNN>=Z>JF8&amp;#IT:-1\0TU-3&lt;RV7"Z7D&amp;69S,S,"_K-WK9S#A45%3';.G7J
-M%`!77'%%7#ZUI:/E$K-FS8JT*OJ;;@70W=!G9]CM=JEMP2XK*Z.ZNKI=7\!J
-MM4IM5Y2N6+&amp;B5]?K+4E)25+KOH+'XZ&amp;FIB:FD8J64:N>]#WZDE&amp;C1D7%#Q\^
-M'+.MEJVL4Z=.C&lt;NGCFB[7,+I=-)Z]6]_TJ4`JJNK17EY.3:;K&lt;NAS\[H:%ET
-M9QM4?O[SGTMM]Q7&lt;?OOM,17(MF/RG?596L]:R[(&lt;\Q_E]==?!\++A"\D;077
-MU6QX=[0,7+1=V=M7?/311^?#;/QTM5^R9>?^JE6K8MYSF9N;&amp;[5_TV:S"573
-M.K176UL;]28(0"Q>O+C7UVY]39O-)HX>/=JAC;9O:LC-S>WUM6IK:R/G=W9?
-M0K3?$^QP.&amp;+.T]:A[1[J#1LV]-INR_[&lt;A0L7=GENRY[@!0L6Q.3[IDV;VNTI
-MCF5/&lt;&amp;%A892-\O+RF/.RTQ_\?G_D`HJBQ'R!DI*2=C?=E:".'#G23@0S9LP0
-M^_?O[]:'TM)245!0$#FOL+!05%55=7E>VP+4&amp;[%75E9&amp;?%VW;EV7YYTO`?C]
-M_BB[-INM5YO$7WSQ1&lt;$WKT/I2L!"Q"\`(;X5VX`7P+IUZP0@YLZ=&amp;]&lt;?JK60
-M6D)W[^"IK:T5,V;,:'?>G#ES1$E)B=B_?[^HJJH2M;6UXM"A0V+=NG6B]5,_
-M/S]?E)65]=COMM=:MFR9&lt;#J=G9Y_]NQ945Q&lt;'#E^T:)%W5[K?`E`"$%965F[
-M_.VN8.W=NU?,F3.G5X6H+P0@A&amp;#NW+D#6P!.IS-BO"]>=E545-2K6J`EE)24
-MB);7C?0D%!04Q/QJD(4+%[:S5U14)-:M6R&lt;^^.`#L6G3)O'[W_^^G3![6F.T
-M;6[%^R*NMJ&amp;\O%PX'(YV3;H5*U:(DI(2L77K5K%APP;QT$,/1=6P#H=#'#IT
-MJ$>^M+P8*]Z78@GQ;3,U%@&amp;TKN6!7CWLVH8.$_?NW2L&lt;#D>G;]/J;3ARY(C(
-MS\\7^?GYHJ"@0.3GYXO"PL(>VZZLK!3%Q&lt;6BJ*A(Y.?G"X?#(1P.A\C+RQ,+
-M%BP0&amp;S=N%&amp;ZW.VY?R\O+15%1D6C;;^FH!BLJ*NJT;]%1&lt;#J=D7O/S\_OL[QM
-M&amp;]:M6R?R\_/;-2/;!H?#(8J+BWOEPZ%#AT1^?GY&lt;?&lt;*6T%(CQM)G6;%B120?
-M\_/S>_5W:!LZ?#>H$.=W$NJ[P/'CQ\577WU%=74U@4``J]5*3DX.$R9,8.S8
-ML0,^;P*!@#A\^#"5E94T-#2@*`KIZ>E&lt;=MEE3)PX\;SOC^@)9\Z&lt;$2:3J5?S
-M2WV-\8TP@T&amp;-\7T`@T&amp;-(0"#08TA`(-!C2$`@T&amp;-(0"#08TA`(-!C2$`@T&amp;-
-M(0"#08TA`(-!C2$`@T&amp;-(0"#08TA`(-!C2$`@T&amp;-(0"#08TA`(-!S?\'E$^]
-1B.6A+Z(`````245.1*Y"8(*#
-`
-end
-</map>
-   </image>
-   <text>
-    <rect>
-     <x>380</x>
-     <y>10</y>
-     <width>335</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <bottompad>0</bottompad>
-    <font>
-     <face>MS Shell Dlg 2</face>
-     <size>10</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>nombre_fiscal</column>
-    </data>
-   </text>
-   <text>
-    <rect>
-     <x>380</x>
-     <y>30</y>
-     <width>325</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <bottompad>0</bottompad>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>direccion1</column>
-    </data>
-   </text>
-   <text>
-    <rect>
-     <x>380</x>
-     <y>45</y>
-     <width>335</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <bottompad>0</bottompad>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>poblacion</column>
-    </data>
-   </text>
-   <text>
-    <rect>
-     <x>380</x>
-     <y>60</y>
-     <width>305</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <bottompad>0</bottompad>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>cp</column>
-    </data>
-   </text>
-   <text>
-    <rect>
-     <x>380</x>
-     <y>75</y>
-     <width>290</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <bottompad>0</bottompad>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>provincia</column>
-    </data>
-   </text>
-   <label>
-    <rect>
-     <x>585</x>
-     <y>85</y>
-     <width>70</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <string>D.N.I. / C.I.F.:</string>
-   </label>
-   <text>
-    <rect>
-     <x>655</x>
-     <y>85</y>
-     <width>70</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <bottompad>0</bottompad>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>cif_nif</column>
-    </data>
-   </text>
-  </detail>
- </section>
- <section>
-  <name>t_documento</name>
-  <detail>
-   <key>
-    <query>cab_fac</query>
-   </key>
-   <height>75</height>
-   <rect>
-    <x>0</x>
-    <y>5</y>
-    <width>725</width>
-    <height>40</height>
-    <weight>2</weight>
-   </rect>
-   <rect>
-    <x>0</x>
-    <y>50</y>
-    <width>725</width>
-    <height>25</height>
-    <weight>1</weight>
-   </rect>
-   <line>
-    <xstart>105</xstart>
-    <ystart>5</ystart>
-    <xend>105</xend>
-    <yend>45</yend>
-    <weight>1</weight>
-   </line>
-   <line>
-    <xstart>300</xstart>
-    <ystart>5</ystart>
-    <xend>300</xend>
-    <yend>45</yend>
-    <weight>1</weight>
-   </line>
-   <line>
-    <xstart>480</xstart>
-    <ystart>5</ystart>
-    <xend>480</xend>
-    <yend>45</yend>
-    <weight>1</weight>
-   </line>
-   <line>
-    <xstart>665</xstart>
-    <ystart>5</ystart>
-    <xend>665</xend>
-    <yend>45</yend>
-    <weight>1</weight>
-   </line>
-   <label>
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>85</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <string>Codigo de Cliente</string>
-   </label>
-   <field>
-    <rect>
-     <x>5</x>
-     <y>25</y>
-     <width>100</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <data>
-     <query>cliente</query>
-     <column>codigo_cliente</column>
-    </data>
-   </field>
-   <label>
-    <rect>
-     <x>165</x>
-     <y>15</y>
-     <width>100</width>
-     <height>25</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face>MS Shell Dlg 2</face>
-     <size>10</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <string>Factura</string>
-   </label>
-   <label>
-    <rect>
-     <x>380</x>
-     <y>10</y>
-     <width>35</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face>MS Shell Dlg 2</face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <string>Fecha</string>
-   </label>
-   <field>
-    <rect>
-     <x>345</x>
-     <y>25</y>
-     <width>100</width>
-     <height>25</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <data>
-     <query>cab_fac</query>
-     <column>fecha</column>
-    </data>
-   </field>
-   <label>
-    <rect>
-     <x>5</x>
-     <y>55</y>
-     <width>80</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <string>E.A.N.</string>
-   </label>
-   <line>
-    <xstart>95</xstart>
-    <ystart>50</ystart>
-    <xend>95</xend>
-    <yend>75</yend>
-    <weight>1</weight>
-   </line>
-   <label>
-    <rect>
-     <x>100</x>
-     <y>55</y>
-     <width>50</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <string>Uds.</string>
-   </label>
-   <line>
-    <xstart>155</xstart>
-    <ystart>50</ystart>
-    <xend>155</xend>
-    <yend>75</yend>
-    <weight>1</weight>
-   </line>
-   <label>
-    <rect>
-     <x>160</x>
-     <y>55</y>
-     <width>315</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <string>Descripción</string>
-   </label>
-   <line>
-    <xstart>525</xstart>
-    <ystart>50</ystart>
-    <xend>525</xend>
-    <yend>75</yend>
-    <weight>1</weight>
-   </line>
-   <label>
-    <rect>
-     <x>530</x>
-     <y>55</y>
-     <width>65</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <string>Precio</string>
-   </label>
-   <line>
-    <xstart>600</xstart>
-    <ystart>50</ystart>
-    <xend>600</xend>
-    <yend>75</yend>
-    <weight>1</weight>
-   </line>
-   <label>
-    <rect>
-     <x>605</x>
-     <y>55</y>
-     <width>35</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <string>IVA</string>
-   </label>
-   <line>
-    <xstart>645</xstart>
-    <ystart>50</ystart>
-    <xend>645</xend>
-    <yend>75</yend>
-    <weight>1</weight>
-   </line>
-   <label>
-    <rect>
-     <x>650</x>
-     <y>55</y>
-     <width>70</width>
-     <height>15</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <string>Importe</string>
-   </label>
-  </detail>
- </section>
- <section>
-  <name>linea_detalle</name>
-  <detail>
-   <key>
-    <query>lin_fac</query>
-   </key>
-   <height>25</height>
-   <field>
-    <rect>
-     <x>0</x>
-     <y>5</y>
-     <width>90</width>
-     <height>20</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <data>
-     <query>lin_fac</query>
-     <column>codigo</column>
-    </data>
-   </field>
-   <field>
-    <rect>
-     <x>100</x>
-     <y>5</y>
-     <width>50</width>
-     <height>20</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <right/>
-    <top/>
-    <data>
-     <query>lin_fac</query>
-     <column>cantidad</column>
-    </data>
-   </field>
-   <field>
-    <rect>
-     <x>160</x>
-     <y>5</y>
-     <width>360</width>
-     <height>20</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <left/>
-    <top/>
-    <data>
-     <query>lin_fac</query>
-     <column>descripcion</column>
-    </data>
-   </field>
-   <field>
-    <rect>
-     <x>530</x>
-     <y>5</y>
-     <width>65</width>
-     <height>20</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <right/>
-    <top/>
-    <data>
-     <query>lin_fac</query>
-     <column>precio</column>
-    </data>
-    <format>%0.2f</format>
-   </field>
-   <field>
-    <rect>
-     <x>605</x>
-     <y>5</y>
-     <width>35</width>
-     <height>20</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <hcenter/>
-    <top/>
-    <data>
-     <query>Context Query</query>
-     <column>porc_iva</column>
-    </data>
-   </field>
-   <field>
-    <rect>
-     <x>650</x>
-     <y>5</y>
-     <width>70</width>
-     <height>20</height>
-     <weight>1</weight>
-    </rect>
-    <font>
-     <face></face>
-     <size>8</size>
-     <weight>normal</weight>
-    </font>
-    <right/>
-    <top/>
-    <data>
-     <query>Context Query</query>
-     <column>total</column>
-    </data>
-    <format>%0.2f</format>
-   </field>
-  </detail>
- </section>
- <rptfoot>
-  <height>85</height>
-  <rect>
-   <x>530</x>
-   <y>0</y>
-   <width>195</width>
-   <height>85</height>
-   <weight>2</weight>
-  </rect>
-  <label>
-   <rect>
-    <x>535</x>
-    <y>5</y>
-    <width>55</width>
-    <height>25</height>
-    <weight>1</weight>
-   </rect>
-   <font>
-    <face>MS Shell Dlg 2</face>
-    <size>12</size>
-    <weight>normal</weight>
-   </font>
-   <left/>
-   <top/>
-   <string>Total</string>
-  </label>
-  <field>
-   <rect>
-    <x>545</x>
-    <y>40</y>
-    <width>100</width>
-    <height>25</height>
-    <weight>1</weight>
-   </rect>
-   <font>
-    <face>Sans</face>
-    <size>20</size>
-    <weight>normal</weight>
-   </font>
-   <right/>
-   <top/>
-   <data>
-    <query>Context Query</query>
-    <column>total</column>
-   </data>
-   <format>%0.2f</format>
-  </field>
-  <label>
-   <rect>
-    <x>675</x>
-    <y>35</y>
-    <width>25</width>
-    <height>25</height>
-    <weight>1</weight>
-   </rect>
-   <font>
-    <face>Sans</face>
-    <size>20</size>
-    <weight>normal</weight>
-   </font>
-   <left/>
-   <top/>
-   <string>€</string>
-  </label>
- </rptfoot>
-</report>
+<?xml version="1.0" encoding="UTF-8"?>
+<FoxReports>
+    <Paper w="21.0000" marginRigth="1.5000" marginTop="1.5000" h="29.7000" marginLeft="1.1500" StandartSize="4" acum="" DocType="0" Orientation="V" marginBottom="1.5000">
+        <Section id="0" size="290" name="Cabecera de report">
+            <Element id="Label" fontSize="6" color="0,0,0,255" Text="Inscrita en el registro mercantil de BCN con numero de registro XXXX" w="9.0000" x="3.0000" fontWeigth="50" y="22.8421" h="246.0000" fontFamily="Arial" Orientacion="V" underlined="0" Alineacion="L" name="txt_361091605" italicFont="0"/>
+            <Element id="Line" w="16.0000" x="678.4513" y="288.1252" h="44.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1634917331"/>
+            <Element id="Line" w="15.0000" x="482.2284" y="286.9974" h="47.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_132798876"/>
+            <Element id="Line" w="18.0000" x="586.3789" y="287.9662" h="45.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_222655752"/>
+            <Element id="Line" w="15.0000" x="538.0164" y="287.2481" h="47.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1890857576"/>
+            <Element id="Line" w="680.0000" x="14.2632" y="287.8507" h="15.0000" endPointName="Self" penStyle="1" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_1424747125"/>
+            <Element id="Line" w="322.0000" x="372.8732" y="15.1512" h="15.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_1635663016"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.telefono" name="cam_614666011" w="100.0000" x="590.7311" y="63.7146" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Telf cli:" w="50.0000" x="589.7292" fontWeigth="50" y="25.4197" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1601348454" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.movil" name="cam_1383654183" w="100.0000" x="590.7311" y="40.0302" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Line" w="15.0000" x="573.2513" y="1.8421" h="88.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1088998460"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.cif" name="cam_785024479" w="100.0000" x="61.4305" y="250.7996" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="NIF:" w="34.0000" x="24.1338" fontWeigth="50" y="252.3119" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_2011322047" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.email_entrega" name="cam_1988245698" w="336.0000" x="353.3020" y="213.7486" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="37.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.comentarios_entrega" name="cam_803044708" w="335.0000" x="355.5704" y="238.8960" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.id=General.paises.id->pais" name="rel_712204923" w="207.0000" x="481.8464" y="191.8204" Alineacion="L" italicFont="0" id="RelationalField" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.provincia_entrega" name="cam_1619049086" w="126.0000" x="354.8143" y="191.8204" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.poblacion_entrega" name="poblacion_envio" w="267.0000" x="419.5988" y="169.6484" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.cp_entrega" name="entrega_cp_poblacion" w="63.0000" x="354.1016" y="169.1361" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.direccion2_entrega" name="cam_1836327934" w="329.0000" x="354.1016" y="147.2079" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.direccion1_entrega" name="cam_249079897" w="331.0000" x="354.1016" y="126.7921" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.id_pais=General.paises.id->pais" name="rel_pais" w="217.0000" x="121.9220" y="225.8469" Alineacion="L" italicFont="0" id="RelationalField" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.provincia" name="provincia" w="100.0000" x="18.3304" y="225.0907" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.poblacion" name="cam_167570566" w="269.0000" x="71.3549" y="203.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.cp" name="cam_433179309" w="49.0000" x="19.4211" y="203.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.direccion2" name="cam_376397674" w="317.0000" x="19.4211" y="180.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.direccion1" name="cam_1446603415" w="316.0000" x="20.4211" y="158.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="8" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.fecha" name="cam_1188172665" w="100.0000" x="437.4211" y="47.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Fecha:" w="50.0000" x="381.4211" fontWeigth="50" y="47.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_385523732" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.pedido_cliente" name="cam_2110146257" w="100.0000" x="440.4211" y="67.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Pedido:" w="54.0000" x="382.4211" fontWeigth="50" y="67.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_2100638117" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="/" w="14.0000" x="458.4211" fontWeigth="50" y="25.5000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1170483632" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.serie" name="serie" w="19.0881" x="437.0341" y="25.7149" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.factura" name="cam_1308144925" w="100.0000" x="469.4211" y="25.5000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Num:" w="41.0000" x="382.8510" fontWeigth="50" y="25.9299" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1466677784" italicFont="0"/>
+            <Element id="Label" fontSize="16" color="0,0,0,255" Text="FACTURA CLIENTE" w="202.0000" x="381.4211" fontWeigth="75" y="1.0000" h="23.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_759152448" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="DATOS DE ENTREGA:" w="145.0000" x="354.1016" fontWeigth="50" y="111.0246" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1937786891" italicFont="0"/>
+            <Element id="RoundRect" PenColor="0,0,0,255" Color1="255,224,224,255" RadiousX="5.0000" w="345.0000" Color2="0,0,0,0" RadiousY="5.0000" x="350.1772" PenWidth="1" GradientDirection="V" y="101.2439" h="180.0000" endPointName="Self" endPointPoint="" name="rect_1370384538" GradientUsed="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.cliente" name="nombre_fiscal_cliente" w="315.0000" x="22.2632" y="134.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="RoundRect" PenColor="0,0,0,255" Color1="0,0,0,0" RadiousX="5.0000" w="329.0000" Color2="0,0,0,0" RadiousY="5.0000" x="18.0439" PenWidth="1" GradientDirection="V" y="101.7316" h="180.0000" endPointName="Self" endPointPoint="" name="rect_244062482" GradientUsed="0"/>
+            <Element id="Line" w="678.0000" x="14.2632" y="90.0000" h="16.0000" endPointName="Self" penStyle="1" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_1183290882"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.codigo_cliente" name="codigo_cliente" w="100.0000" x="177.4211" y="110.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Image" w="202.0000" x="14.2632" y="2.8421" h="91.0000" Path="/home/arcnexus/RedFoXProject/RedFoX/PNG/logoagupunt.png" name="img_1592345853" fromBD="0" Dinamic="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="C/Caspe, 158 Local 2&#xa;BARCELONA 08013&#xa;Telf: +34 934 571 667&#xa;NIF: B-64093396&#xa;" w="135.0000" x="224.4211" fontWeigth="50" y="10.0000" h="75.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_808810264" italicFont="0"/>
+            <Element id="Line" w="16.0000" x="363.4211" y="2.0000" h="89.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="121,121,121,255" penWidth="1" Orientacion="V" name="lin_443593146"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="DATOS DEL CLIENTE:" w="143.0000" x="20.4211" fontWeigth="50" y="113.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_966161452" italicFont="0"/>
+        </Section>
+        <Section id="1" size="40" name="Cabecera de pagina" OnFistPage="1">
+            <Element id="Line" w="15.0000" x="679.7239" y="34.5242" h="33.1013" endPointName="Pie de report" penStyle="3" endPointPoint="4.62548" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_620384389"/>
+            <Element id="Line" w="19.0000" x="331.6054" y="33.7189" h="33.9397" endPointName="Pie de report" penStyle="3" endPointPoint="4.65856" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1206390939"/>
+            <Element id="Line" w="15.0000" x="482.3684" y="35.2557" h="31.2751" endPointName="Pie de report" penStyle="3" endPointPoint="3.53074" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_852440462"/>
+            <Element id="Line" w="16.0000" x="587.2062" y="34.6870" h="32.9385" endPointName="Pie de report" penStyle="3" endPointPoint="4.62548" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1018326349"/>
+            <Element id="Line" w="33.0000" x="527.4361" y="37.0075" h="31.0270" endPointName="Pie de report" penStyle="3" endPointPoint="5.03449" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_940635232"/>
+            <Element id="Line" w="15.0000" x="402.7086" y="34.5761" h="33.8343" endPointName="Pie de report" penStyle="3" endPointPoint="5.41043" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_861030419"/>
+            <Element id="Line" w="15.0000" x="403.4094" y="2.0124" h="45.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_576627011"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="IMPORTE" w="68.0000" x="622.1053" fontWeigth="50" y="12.8661" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_2101180344" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="IVA" w="30.0000" x="557.9712" fontWeigth="50" y="13.2420" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_156955523" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="DTO" w="36.0000" x="506.5534" fontWeigth="50" y="13.2420" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_935581031" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="PRECIO" w="59.0000" x="434.7916" fontWeigth="50" y="12.8661" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_574857261" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="CANT." w="47.0000" x="359.4929" fontWeigth="50" y="13.2420" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_842295205" italicFont="0"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="DESCRIPCIÓN" w="98.0000" x="95.9920" fontWeigth="50" y="13.2420" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1719756624" italicFont="0"/>
+            <Element id="Line" w="680.0000" x="13.5113" y="27.8483" h="15.0000" endPointName="Self" penStyle="1" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_168632754"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="REF." w="39.0000" x="27.0600" fontWeigth="50" y="13.2420" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_416231829" italicFont="0"/>
+            <Element id="Line" w="15.0000" x="333.8162" y="1.4936" h="41.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_859072746"/>
+            <Element id="Line" w="27.0000" x="77.7316" y="2.6214" h="43.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1239772708"/>
+        </Section>
+        <Section id="2" alternative="0" ClausulaInterna="id=id" haveSqlInterno="0" SqlInterno="General.accesousuarios" acum="" SqlGlobal="Empresa.lin_fac" colored="0" color1="0,0,0,255" size="21" name="lineasdetalle" color2="0,0,0,255">
+            <Body size="21">
+                <Element id="Line" w="21.0000" x="366.8558" y="18.8875" h="128.9869" endPointName="Pie de report" penStyle="3" endPointPoint="125.874" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_418029083"/>
+                <Element id="Line" w="29.0000" x="76.6687" y="-0.6420" h="26.0000" endPointName="Pie de report" penStyle="3" endPointPoint="3.358" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_867717426"/>
+                <Element underlined="0" h="20.0000" Expandable="1" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.descripcion" name="cam_93046861" w="247.0000" x="91.4211" y="1.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+                <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.cantidad" name="cam_1045848177" w="65.0000" x="342.8843" y="1.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+                <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.precio" name="cam_315149582" w="76.1850" x="412.4327" y="1.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+                <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.porc_dto" name="cam_380955160" w="56.0000" x="490.4211" y="1.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+                <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.porc_iva" name="cam_959433396" w="47.0000" x="545.4211" y="1.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+                <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.total" name="cam_497158942" w="87.0000" x="597.0178" y="0.6241" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+                <Element underlined="0" h="20.0000" Expandable="1" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.lin_fac.codigo" name="cam_812293001" w="73.0000" x="17.2632" y="1.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            </Body>
+        </Section>
+        <Section id="4" size="337" name="Pie de report">
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Transportista:" w="89.0000" x="19.0297" fontWeigth="50" y="161.2609" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_399087980" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.iva" name="cam_1269072589" w="100.0000" x="588.6384" y="89.9565" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="12" color="0,0,0,255" Text="Total IVA:" w="74.0000" x="392.0732" fontWeigth="50" y="89.9565" h="17.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1734207192" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.base" name="cam_369613518" w="100.0000" x="588.6384" y="32.5652" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="12" color="0,0,0,255" Text="Neto:" w="47.0000" x="395.5515" fontWeigth="50" y="36.9130" h="17.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_131772489" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.imp_gasto1" name="cam_1967811639" w="100.0000" x="588.6384" y="9.9565" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.desc_gasto1" name="cam_1578302537" w="197.0000" x="395.9863" y="10.8261" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Line" w="26.0000" x="255.9814" y="0.5416" h="124.5190" endPointName="Self" penStyle="3" endPointPoint="125.061" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_890665181"/>
+            <Element id="Line" w="28.0000" x="195.4211" y="0.3913" h="121.8081" endPointName="Self" penStyle="3" endPointPoint="122.199" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_569996570"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.base4" name="cam_2108465278" w="100.0000" x="269.0297" y="87.3478" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.iva3" name="cam_1645461549" w="102.0000" x="266.8558" y="63.8696" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.iva2" name="cam_1719438155" w="100.0000" x="269.0297" y="43.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.iva1" name="cam_907523542" w="100.0000" x="269.0297" y="23.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Cuota de IVA" w="86.0000" x="268.5950" fontWeigth="50" y="3.8696" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1851124862" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.porc_iva4" name="cam_455658643" w="55.0000" x="211.2037" y="87.3478" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.porc_iva3" name="cam_1604709708" w="55.0000" x="211.2037" y="63.8696" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.porc_iva2" name="cam_1405566663" w="54.0000" x="212.0732" y="43.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.porc_iva1" name="cam_998073147" w="54.0000" x="212.0732" y="23.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="%IVA" w="42.0000" x="217.2906" fontWeigth="50" y="3.8696" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_422851199" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.base4" name="cam_1451486845" w="100.0000" x="106.4211" y="87.3478" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="19.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.base3" name="cam_1960928293" w="100.0000" x="106.4211" y="63.8696" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.base2" name="cam_477384087" w="100.0000" x="107.2906" y="43.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.base1" name="cam_1528049172" w="100.0000" x="107.2906" y="23.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Base Imponible" w="99.0000" x="106.8558" fontWeigth="50" y="3.8696" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1620495562" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.porc_dto_pp" name="cam_796905297" w="66.0000" x="16.3776" y="92.0435" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Dto. P.P." w="60.0000" x="19.2906" fontWeigth="50" y="70.6522" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1376972812" italicFont="0"/>
+            <Element id="Line" w="91.9957" x="0.0545" y="55.9155" h="15.0000" endPointName="Self" penStyle="3" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_1176479330"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.porc_dto" name="cam_456720389" w="67.0000" x="17.8558" y="29.1304" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Line" w="15.0000" x="83.3776" y="5.6522" h="118.0000" endPointName="Self" penStyle="3" endPointPoint="123.652" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_2010232655"/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Dto Esp." w="61.0000" x="20.7689" fontWeigth="50" y="8.2174" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1137937500" italicFont="0"/>
+            <Element id="Line" w="695.3139" x="0.0545" y="117.7728" h="15.0000" endPointName="Self" penStyle="1" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_874283319"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.id_transportista=General.transportista.id->transportista" name="rel_1786794790" w="290.0000" x="112.4211" y="157.0000" Alineacion="L" italicFont="0" id="RelationalField" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Entrega:" w="59.0000" x="19.4211" fontWeigth="50" y="135.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1164873962" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="8" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.fecha" name="cam_1735279089" w="100.0000" x="112.4211" y="134.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Total Factura :" w="93.0000" x="432.4211" fontWeigth="50" y="143.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_1890650596" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.id_divisa=General.monedas.id->nombre_corto" name="rel_899811798" w="58.0000" x="533.4211" y="140.0000" Alineacion="L" italicFont="0" id="RelationalField" Orientacion="H" Text=""/>
+            <Element underlined="0" h="28.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="1" color="0,0,0,255" fontSize="16" Sql="Empresa.cab_fac.total" name="cam_806425666" w="148.0000" x="529.4211" y="194.0000" Alineacion="R" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="Forma de Pago:" w="103.0000" x="16.4211" fontWeigth="50" y="180.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_128145726" italicFont="0"/>
+            <Element underlined="0" h="20.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="Empresa.cab_fac.forma_pago" name="cam_1478260396" w="280.0000" x="124.4211" y="179.0000" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Label" fontSize="10" color="0,0,0,255" Text="cuenta:" w="53.0000" x="17.4211" fontWeigth="50" y="205.0000" h="15.0000" fontFamily="Arial" Orientacion="H" underlined="0" Alineacion="L" name="txt_421943564" italicFont="0"/>
+            <Element id="Param" fontSize="10" color="0,0,0,255" Text="num_cuenta" w="284.0000" x="120.4211" fontWeigth="50" y="203.0000" h="20.0000" fontFamily="Arial" Arg="num_cuenta" Orientacion="H" underlined="0" Alineacion="L" name="para_161921103" italicFont="0"/>
+            <Element underlined="0" h="91.0000" Expandable="0" fontWeigth="50" fontFamily="Arial" formato="0" color="0,0,0,255" fontSize="10" Sql="General.empresas.comentario_factura" name="cam_200620679" w="667.0000" x="19.4211" y="235.7851" Alineacion="L" italicFont="0" id="Field" Orientacion="H" Text=""/>
+            <Element id="Line" w="283.0000" x="93.4211" y="14.0000" h="15.0000" endPointName="Self" penStyle="1" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_2011340730"/>
+            <Element id="Line" w="23.0000" x="407.2062" y="123.9345" h="114.0000" endPointName="Self" penStyle="1" endPointPoint="237.934" penColor="0,0,0,255" penWidth="1" Orientacion="V" name="lin_1309793557"/>
+            <Element id="Line" w="680.0000" x="14.4211" y="227.0000" h="15.0000" endPointName="Self" penStyle="1" endPointPoint="" penColor="0,0,0,255" penWidth="1" Orientacion="H" name="lin_992955465"/>
+        </Section>
+        <SQL target="Empresa.cab_fac"/>
+        <SQL target="Empresa.cab_fac.id=General.paises.id->pais"/>
+        <SQL target="Empresa.cab_fac.id_divisa=General.monedas.id->nombre_corto"/>
+        <SQL target="Empresa.cab_fac.id_pais=General.paises.id->pais"/>
+        <SQL target="Empresa.cab_fac.id_transportista=General.transportista.id->transportista"/>
+        <SQL target="General.empresas"/>
+    </Paper>
+</FoxReports>

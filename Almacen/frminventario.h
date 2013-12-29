@@ -25,6 +25,10 @@ public:
 private slots:
     void on_txtBuscar_textEdited(const QString &arg1);
 
+    void on_btnSincronizar_clicked();
+
+    void on_btnBuscar_clicked();
+
 private:
     Ui::frmInventario *ui;
     QAction menuButton;

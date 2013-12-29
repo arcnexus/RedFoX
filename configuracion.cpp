@@ -771,7 +771,8 @@ bool Configuracion::CargarDatosBD()
     {
         this->globalDB.setDatabaseName("mayaglobal");
         this->globalDB.setHostName(Configuracion_global->global_host);
-        this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+        //this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+        this->globalDB.open("root","meganizado");
     }
 
     if (this->globalDB.lastError().isValid())
@@ -1314,6 +1315,7 @@ void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> query
         bool error;
         r.render(&printer,doc ,queryClausules,params,error);
         QPrintPreviewDialog predlg(&printer);
+        predlg.setWindowState(Qt::WindowMaximized);
         connect(&predlg,SIGNAL(paintRequested(QPrinter*)),&r,SLOT(Print(QPrinter*)));
         predlg.exec();
     }

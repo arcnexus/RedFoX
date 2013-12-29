@@ -1647,8 +1647,6 @@ void frmClientes::set_blink()
     }
 }
 
-
-
 void frmClientes::on_radBuscar_toggled(bool checked)
 {
     if(checked)
@@ -1692,20 +1690,22 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
         modo = "";
     else
         modo = "DESC";
-QString x = "select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
-        " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo;
-    m_clientes->setQuery(x,Configuracion_global->groupDB);
+    QString cSQL = "select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
+            " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo;
+    m_clientes->setQuery(cSQL,Configuracion_global->groupDB);
+
     //formato_tabla_busquedas();
 
     ui->tabla_busquedas->selectRow(0);
 
 }
 
-void frmClientes::on_tabla_busquedas_row_changed(QModelIndex current, QModelIndex previous)
-{
-    Q_UNUSED(previous);
-    on_tabla_busquedas_clicked(current);
-}
+//void frmClientes::on_tabla_busquedas_row_changed(QModelIndex current, QModelIndex previous)
+//{
+//    Q_UNUSED(previous);
+//    //on_tabla_busquedas_clicked(current);
+
+//}
 
 void frmClientes::setUpBusqueda()
 {

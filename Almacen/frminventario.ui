@@ -126,6 +126,26 @@ background-color: rgb(248, 245, 194);</string>
    <item row="0" column="3">
     <widget class="QComboBox" name="cboOrder"/>
    </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="btnSincronizar">
+     <property name="text">
+      <string>Sincronizar stock almacen con stock real.</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
