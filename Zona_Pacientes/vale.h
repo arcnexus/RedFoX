@@ -2,7 +2,7 @@
 #define VALE_H
 
 #include <QObject>
-#include <Auxiliares/Globlal_Include.h>
+#include "../Auxiliares/Globlal_Include.h"
 
 class vale : public QObject
 {

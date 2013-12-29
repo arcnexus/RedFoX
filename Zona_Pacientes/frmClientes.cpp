@@ -212,8 +212,8 @@ frmClientes::frmClientes(QWidget *parent) :
     QList<QWidget*> l = this->findChildren<QWidget*>();
     QList<QWidget*> ::Iterator it;
 
-    for( it = l.begin() ;it!= l.end();++it )
-        (*it)->installEventFilter(this);
+ //   for( it = l.begin() ;it!= l.end();++it )
+ //       (*it)->installEventFilter(this);
 }
 
 frmClientes::~frmClientes()
@@ -1692,17 +1692,18 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
         modo = "";
     else
         modo = "DESC";
-
-    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
-                         " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo,Configuracion_global->groupDB);
+QString x = "select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email from clientes"
+        " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo;
+    m_clientes->setQuery(x,Configuracion_global->groupDB);
     //formato_tabla_busquedas();
+
     ui->tabla_busquedas->selectRow(0);
 
 }
 
 void frmClientes::on_tabla_busquedas_row_changed(QModelIndex current, QModelIndex previous)
 {
-    Q_UNUSED("previous");
+    Q_UNUSED(previous);
     on_tabla_busquedas_clicked(current);
 }
 
@@ -1711,7 +1712,7 @@ void frmClientes::setUpBusqueda()
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
     this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
+    //this->installEventFilter(this);
 
     QStringList orden;
     orden  <<  tr("Nombre Fiscal") << tr("Cif / Nif") << tr("Código cliente") << tr("Población");

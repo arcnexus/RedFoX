@@ -552,17 +552,6 @@ unix:!macx: LIBS += -L$$PWD/LibsGraficas/ -lopenchartplugin
 INCLUDEPATH += $$PWD/LibsGraficas
 DEPENDPATH += $$PWD/LibsGraficas
 
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CryptoLIBS/release/ -lcryptopp
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CryptoLIBS/debug/ -lcryptopp
-
-INCLUDEPATH += $$PWD/CryptoLIBS
-DEPENDPATH += $$PWD/CryptoLIBS
-
-#win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptlib.lib
-#else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptlib.lib
-
-
 unix:!macx: LIBS += -L$$PWD/BlinkLabel/Linux/ -lblinkinkplugin
 
 INCLUDEPATH += $$PWD/BlinkLabel
@@ -574,6 +563,13 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/BlinkLabel/win32/debug/
 INCLUDEPATH += $$PWD/BlinkLabel
 DEPENDPATH += $$PWD/BlinkLabel
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/CryptoLIBS/release/ -lcryptopp562
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/CryptoLIBS/debug/ -lcryptopp562
 
+INCLUDEPATH += $$PWD/../../../../../cryptopp562
+DEPENDPATH += $$PWD/../../../../../cryptopp562
 
-unix:!macx: LIBS += -lcryptopp
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/libcryptopp562.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/libcryptopp562.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptopp562.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptopp562.lib

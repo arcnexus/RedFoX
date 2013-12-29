@@ -1,6 +1,6 @@
 #include "frmcrearvale.h"
 #include "ui_frmcrearvale.h"
-#include <Auxiliares/Globlal_Include.h>
+#include "../Auxiliares/Globlal_Include.h"
 #include "../Zona_Pacientes/vale.h"
 #include "../Busquedas/db_consulta_view.h"
 
