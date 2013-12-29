@@ -2118,9 +2118,14 @@ void FrmTPV::on_btnCantidad_clicked(bool checked)
 
 void FrmTPV::on_btnBorrar_linea_clicked()
 {
-    int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
-    QString tipo = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),5)->text();
-    if(id >0)
+    //No hace nada si no hay una fila seleccionada
+    if (ui->tablaLineas_tiquet_actual->currentRow() == -1) return;
+
+        int id = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),0)->text().toInt();
+        QString tipo = ui->tablaLineas_tiquet_actual->item(ui->tablaLineas_tiquet_actual->currentRow(),5)->text();
+
+
+    if(id > 0)
     {
         if(QMessageBox::question(this,tr("Gestión de Tickets"),tr("¿Desea borrar esta línea del ticket?"),tr("no"),
                                  tr("Sí"))==QMessageBox::Accepted)
@@ -2139,6 +2144,7 @@ void FrmTPV::on_btnBorrar_linea_clicked()
         }
         cargar_lineas(this->id);
     }
+
 }
 
 

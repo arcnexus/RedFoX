@@ -2335,7 +2335,7 @@ font: 12pt &quot;Sans Serif&quot;;</string>
            <enum>QFrame::Raised</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_4">
            <layout class="QGridLayout" name="gridLayout_7">
