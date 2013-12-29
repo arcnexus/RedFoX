@@ -37,8 +37,8 @@ void frmInventario::formato_tabla(QSqlTableModel *modelo)
     QStringList headers;
     QVariantList sizes;
 
-    headers << "id" << tr("código") <<tr("C.Barras") <<tr("R. Fabricante") << tr("Descripción") << tr("Stock Real") << tr("Stock Almacen");
-    sizes << 0 << 120 << 120 <<120 <<500 << 120 << 120;
+    headers << "id" << tr("código") <<tr("C.Barras") <<tr("R. Fabricante") << tr("Descripción") << tr("Stock Real");
+    sizes << 0 << 120 << 120 <<120 <<500 << 120;
     for(int i = 0; i < headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
@@ -58,4 +58,17 @@ void frmInventario::on_txtBuscar_textEdited(const QString &arg1)
     m->setFilter(indice +" like '%"+arg1.trimmed()+"%'");
     m->select();
     formato_tabla(m);
+}
+
+void frmInventario::on_btnSincronizar_clicked()
+{
+    QSqlQuery stock(Configuracion_global->groupDB);
+    QString cSql = "update articulos set stock_fisico_almacen = stock_real where id >0;";
+    if(stock.exec(cSql))
+        TimedMessageBox *t = new TimedMessageBox(this,tr("Se han sincronizado los stocks"));
+}
+
+void frmInventario::on_btnBuscar_clicked()
+{
+    ui->txtBuscar->setFocus();
 }

@@ -492,7 +492,7 @@ color: rgb(255, 255, 255);</string>
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab_3">
+         <widget class="QWidget" name="tab_articulo">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -1479,7 +1479,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_4">
+         <widget class="QWidget" name="tab_proveedores">
           <attribute name="title">
            <string>Proveedores </string>
           </attribute>
@@ -1677,7 +1677,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_8">
+         <widget class="QWidget" name="tab_promociones">
           <attribute name="title">
            <string>Promociones artículo</string>
           </attribute>
@@ -2424,7 +2424,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tab_precios_volumen">
           <attribute name="title">
            <string>Precios por volumen</string>
           </attribute>
@@ -2628,7 +2628,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_7">
+         <widget class="QWidget" name="tab_imagenes">
           <attribute name="title">
            <string>Imagenes Artículo</string>
           </attribute>
@@ -2911,7 +2911,7 @@ Imagen.</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_2">
+         <widget class="QWidget" name="tab_estadistica">
           <attribute name="title">
            <string>Estadistica</string>
           </attribute>
@@ -4737,7 +4737,7 @@ background-color: rgb(239, 239, 239);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_11">
+         <widget class="QWidget" name="tab_comparativa">
           <attribute name="title">
            <string>Comparativa</string>
           </attribute>
@@ -6059,7 +6059,7 @@ background-color: rgb(239, 239, 239);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="Trazabilidad">
+         <widget class="QWidget" name="tab_Trazabilidad">
           <attribute name="title">
            <string>Trazabilidad</string>
           </attribute>

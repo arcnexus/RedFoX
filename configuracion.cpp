@@ -1314,6 +1314,7 @@ void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> query
         bool error;
         r.render(&printer,doc ,queryClausules,params,error);
         QPrintPreviewDialog predlg(&printer);
+        predlg.setWindowState(Qt::WindowMaximized);
         connect(&predlg,SIGNAL(paintRequested(QPrinter*)),&r,SLOT(Print(QPrinter*)));
         predlg.exec();
     }

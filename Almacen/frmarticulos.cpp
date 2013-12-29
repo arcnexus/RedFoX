@@ -395,52 +395,65 @@ void FrmArticulos::bloquearCampos(bool state) {
 
 void FrmArticulos::LLenarCampos()
 {
-
-   ui->txtcodigo->setText(oArticulo->codigo);
-   ui->lblCodigo->setText(oArticulo->codigo);
-   ui->txtcodigo_barras->setText(oArticulo->codigo_barras);
-   ui->txtcodigo_fabricante->setText(oArticulo->codigo_fabricante);
-   ui->txtdescripcion->setText(oArticulo->descripcion);
-   ui->lblDescripcion->setText(oArticulo->descripcion);
-   ui->lblCodigo->setVisible(true);
-   ui->lblDescripcion->setVisible(true);
-   ui->txtdescripcionResumida->setText(oArticulo->descripcion_reducida);
-   ui->txtproveedor->setText(oArticulo->proveedor);
-   ui->txtcodigo_proveedor->setText(oArticulo->cCodProveedor);
-   ui->txtfamilia->setText(oArticulo->familia);
-   ui->txtseccion->setText(oArticulo->seccion);
-   ui->txtsubfamilia->setText(oArticulo->subfamilia);
-   int nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
-   if (nIndex !=-1)
+    if(ui->Pestanas->currentWidget() == ui->tab_articulo)
+    {
+        //-----------------------
+        // llenamos combo iva
+        //-----------------------
+       int nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tipos_iva));
+       if(nIndex >-1)
            ui->cboTipoIVA->setCurrentIndex(nIndex);
-   ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',Configuracion_global->decimales));
-   ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',Configuracion_global->decimales)));
-   ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
-   ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
-   ui->txtunidades_compradas->setText(QString::number(oArticulo->unidades_compradas));
-   ui->txtunidades_vendidas->setText(QString::number(oArticulo->unidades_vendidas));
-   ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_compras,'f',Configuracion_global->decimales)));
-   ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',Configuracion_global->decimales)));
-   ui->txtcomentario->setText(oArticulo->comentario);
-   ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
-   ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
-   //ui->txtstock_real->setText(QString::number(oArticulo->stock_real));
-   ui->txtstock_real_2->setText(QString::number(oArticulo->stock_real));
-   ui->txtstock_fisico_almacen->setText(QString::number(oArticulo->nstock_fisico_almacen));
+       //----------------
+       // lleno campos
+       //----------------
+       ui->txtcodigo->setText(oArticulo->codigo);
+       ui->lblCodigo->setText(oArticulo->codigo);
+       ui->txtcodigo_barras->setText(oArticulo->codigo_barras);
+       ui->txtcodigo_fabricante->setText(oArticulo->codigo_fabricante);
+       ui->txtdescripcion->setText(oArticulo->descripcion);
+       ui->lblDescripcion->setText(oArticulo->descripcion);
+       ui->lblCodigo->setVisible(true);
+       ui->lblDescripcion->setVisible(true);
+       ui->txtdescripcionResumida->setText(oArticulo->descripcion_reducida);
+       ui->txtproveedor->setText(oArticulo->proveedor);
+       ui->txtcodigo_proveedor->setText(oArticulo->cCodProveedor);
+       ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
+       ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
+       ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
+       ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subSubFamilia)));
+       ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupoart));
 
-   if (oArticulo->controlar_stock==1)
-        ui->chkcontrolar_stock->setChecked(true);
-   else
-       ui->chkcontrolar_stock->setChecked(false);
+//       nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
+//       if (nIndex !=-1)
+//               ui->cboTipoIVA->setCurrentIndex(nIndex);
+       ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',Configuracion_global->decimales));
+       ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',Configuracion_global->decimales)));
+   }
+   if (ui->Pestanas->currentWidget() == ui->tab_estadistica)
+   {
+       ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
+       ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
+       ui->txtunidades_compradas->setText(QString::number(oArticulo->unidades_compradas));
+       ui->txtunidades_vendidas->setText(QString::number(oArticulo->unidades_vendidas));
+       ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_compras,'f',Configuracion_global->decimales)));
+       ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',Configuracion_global->decimales)));
+       ui->txtcomentario->setText(oArticulo->comentario);
+       ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
+       ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
+       //ui->txtstock_real->setText(QString::number(oArticulo->stock_real));
+       ui->txtstock_real_2->setText(QString::number(oArticulo->stock_real));
+       ui->txtstock_fisico_almacen->setText(QString::number(oArticulo->nstock_fisico_almacen));
 
-   ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
-   ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
-   ui->txtunidades_reservadas->setText(QString::number(oArticulo->unidades_reservadas));
-   ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
-   ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
-   ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
-   ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subSubFamilia)));
-   ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupoart));
+       if (oArticulo->controlar_stock==1)
+            ui->chkcontrolar_stock->setChecked(true);
+       else
+           ui->chkcontrolar_stock->setChecked(false);
+
+       ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
+       ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
+       ui->txtunidades_reservadas->setText(QString::number(oArticulo->unidades_reservadas));
+   }
+
   // ui->txtMargen->setValue(oArticulo->margen);
   // ui->txtMargen_min->setValue((oArticulo->margen_min));
 
@@ -450,39 +463,38 @@ void FrmArticulos::LLenarCampos()
        ui->chkmostrar_web->setChecked(false);
 
    ui->lblkit->setVisible(oArticulo->kit);
-   //-----------------------------
-   // Recuperamos imagen desde BD
-   //-----------------------------
-   ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-   ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-   ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-   ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-   oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
-                           ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
+   if(ui->Pestanas->currentWidget() == ui->tab_imagenes)
+   {
+       //-----------------------------
+       // Recuperamos imagen desde BD
+       //-----------------------------
+       ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+       ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+       ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+       ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+       oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
+                               ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
+    }
 
-   //-----------------------
-   // llenamos combo iva
-   //-----------------------
-  nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tipos_iva));
-  if(nIndex >-1)
-      ui->cboTipoIVA->setCurrentIndex(nIndex);
+  if(ui->stackedWidget->currentWidget() == ui->tab_promociones)
+  {
+      ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
+      ui->framePromocion->setEnabled(false);
 
-  ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
-  ui->framePromocion->setEnabled(false);
+      if (oArticulo->articulo_promocionado)
+          ui->lbl_en_promocion->setVisible(true);
+      else
+          ui->lbl_en_promocion->setVisible(false);
+      ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
+      ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
 
-  if (oArticulo->articulo_promocionado)
-      ui->lbl_en_promocion->setVisible(true);
-  else
-      ui->lbl_en_promocion->setVisible(false);
-  ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
-  ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
-
-  //-----------------------------
-  // LLENO  OFERTAS/promociones
-  //-----------------------------
-  promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
-                        Configuracion_global->empresaDB);
-  ui->tabla_ofertas->selectRow(0);
+      //-----------------------------
+      // LLENO  OFERTAS/promociones
+      //-----------------------------
+      promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
+                            Configuracion_global->empresaDB);
+      ui->tabla_ofertas->selectRow(0);
+  }
 
   //----------------------------------
   // LLENO VENTAS POR VOLUMEN COMPRA
@@ -499,6 +511,7 @@ void FrmArticulos::LLenarCampos()
   // LLENO ACUMULADOS
   //-------------------
   LLenarGraficas();
+
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -1829,121 +1842,128 @@ void FrmArticulos::LLenarGrafica_comparativa(int index)
 
 void FrmArticulos::LlenarTablas()
 {
-    //---------------------
-    // Tarifas
-    //---------------------
-    QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
-    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,pvp_con_iva,simbolo "
-                         "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
-                         Configuracion_global->groupDB);
-    if (modelTarifa->lastError().isValid())
-        return;
-    ui->TablaTarifas->setModel(modelTarifa);
-    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("id"));
-    modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
-    modelTarifa->setHeaderData(2,Qt::Horizontal,tr("DESCRIPCIÓN"));
-    modelTarifa->setHeaderData(3,Qt::Horizontal,tr("PAIS"));
-    modelTarifa->setHeaderData(4,Qt::Horizontal,tr("DIVISA"));
-    modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%MARG."));
-    modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
-    modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
-    modelTarifa->setHeaderData(8,Qt::Horizontal,tr("PVP+IVA"));
-    modelTarifa->setHeaderData(9,Qt::Horizontal,tr("S"));
-    ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->TablaTarifas->setItemDelegateForColumn(6, new MonetaryDelegate);
-    ui->TablaTarifas->setItemDelegateForColumn(7, new MonetaryDelegate);
-    ui->TablaTarifas->setItemDelegateForColumn(8, new MonetaryDelegate);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
+    if(ui->Pestanas->currentWidget()==ui->tab_articulo)
+    {
+        //---------------------
+        // Tarifas
+        //---------------------
+        QSqlQueryModel *modelTarifa = new QSqlQueryModel(this);
+        modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,pvp_con_iva,simbolo "
+                             "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
+                             Configuracion_global->groupDB);
+        if (modelTarifa->lastError().isValid())
+            return;
+        ui->TablaTarifas->setModel(modelTarifa);
+        modelTarifa->setHeaderData(0,Qt::Horizontal,tr("id"));
+        modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
+        modelTarifa->setHeaderData(2,Qt::Horizontal,tr("DESCRIPCIÓN"));
+        modelTarifa->setHeaderData(3,Qt::Horizontal,tr("PAIS"));
+        modelTarifa->setHeaderData(4,Qt::Horizontal,tr("DIVISA"));
+        modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%MARG."));
+        modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
+        modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
+        modelTarifa->setHeaderData(8,Qt::Horizontal,tr("PVP+IVA"));
+        modelTarifa->setHeaderData(9,Qt::Horizontal,tr("S"));
+        ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate);
+        ui->TablaTarifas->setItemDelegateForColumn(6, new MonetaryDelegate);
+        ui->TablaTarifas->setItemDelegateForColumn(7, new MonetaryDelegate);
+        ui->TablaTarifas->setItemDelegateForColumn(8, new MonetaryDelegate);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
 
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(1,105);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(2,165);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(3,65);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(6,70);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(8,85);
-    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(9,QHeaderView::Fixed);
-    ui->TablaTarifas->horizontalHeader()->resizeSection(9,20);
-//    //-----------------------
-//    // Proveedores frecuentes
-//    //-----------------------
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(1,105);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(2,165);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(3,65);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(6,70);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(8,85);
+        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(9,QHeaderView::Fixed);
+        ui->TablaTarifas->horizontalHeader()->resizeSection(9,20);
+    }
+    if(ui->Pestanas->currentWidget()==ui->tab_proveedores)
+    {
+        //-----------------------
+        // Proveedores frecuentes
+        //-----------------------
 
-    modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
-    "where id_art = "+QString::number(oArticulo->id),
-                        Configuracion_global->groupDB);
+        modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
+        "where id_art = "+QString::number(oArticulo->id),
+                            Configuracion_global->groupDB);
 
-    if (modelProv->lastError().isValid())
-        return;
-    ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
-    ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
-    ui->tablaProveedores->setModel(modelProv);
+        if (modelProv->lastError().isValid())
+            return;
+        ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
+        ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
+        ui->tablaProveedores->setModel(modelProv);
 
-    modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
-    modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
-    modelProv->setHeaderData(3,Qt::Horizontal,tr("COD.ART.PRO."));
-    modelProv->setHeaderData(4,Qt::Horizontal,tr("COSTE"));
-    modelProv->setHeaderData(5,Qt::Horizontal,tr("C.REAL"));
-    modelProv->setHeaderData(6,Qt::Horizontal,tr("DIVISA"));
-    modelProv->setHeaderData(7,Qt::Horizontal,tr("D.OFERTA"));
-    ui->tablaProveedores->setColumnHidden(0,true);
-    ui->tablaProveedores->setColumnHidden(8,true);
+        modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
+        modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
+        modelProv->setHeaderData(3,Qt::Horizontal,tr("COD.ART.PRO."));
+        modelProv->setHeaderData(4,Qt::Horizontal,tr("COSTE"));
+        modelProv->setHeaderData(5,Qt::Horizontal,tr("C.REAL"));
+        modelProv->setHeaderData(6,Qt::Horizontal,tr("DIVISA"));
+        modelProv->setHeaderData(7,Qt::Horizontal,tr("D.OFERTA"));
+        ui->tablaProveedores->setColumnHidden(0,true);
+        ui->tablaProveedores->setColumnHidden(8,true);
 
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
-    ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
-    ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
 
-    //--------------------
-    // Grafica proveedores
-    //--------------------
+        //--------------------
+        // Grafica proveedores
+        //--------------------
 
-   ui->graf_prov->Clear();
+       ui->graf_prov->Clear();
 
-   rellenar_grafica_proveedores();
-
-    // -------------------
-    // TABLA TRAZABILIDAD
-    // -------------------
-    modelTrazabilidad1 = new QSqlQueryModel(this);
-    modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
-                                  Configuracion_global->groupDB);
-    if (modelTrazabilidad1->lastError().isValid())
-        return;
-    ui->tablaLotes->setModel(modelTrazabilidad1);
-    ui->tablaLotes->setColumnHidden(0,true);
-    ui->tablaLotes->setColumnHidden(6,true);
-     modelTrazabilidad1->setHeaderData(1,Qt::Horizontal,tr("LOTE"));
-     modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTidAD"));
-     modelTrazabilidad1->setHeaderData(3,Qt::Horizontal,tr("STOCK LOTE"));
-     modelTrazabilidad1->setHeaderData(4,Qt::Horizontal,tr("STOCK REAL"));
-     modelTrazabilidad1->setHeaderData(5,Qt::Horizontal,tr("FAC.COMPRA"));
-     modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("id"));
-     modelTrazabilidad1->setHeaderData(7,Qt::Horizontal,tr("FEC.COMPRA"));
-     modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCidAD"));
-     modelTrazabilidad1->setHeaderData(9,Qt::Horizontal,tr("PROVEEDOR"));
-     modelTrazabilidad1->setHeaderData(10,Qt::Horizontal,tr("DESCRIPCIÓN"));
-     modelTrazabilidad1->setHeaderData(11,Qt::Horizontal,tr("CÓDIGO"));
-
+       rellenar_grafica_proveedores();
+    }
+    if(ui->Pestanas->currentWidget() == ui->tab_Trazabilidad)
+    {
+        // -------------------
+        // TABLA TRAZABILIDAD
+        // -------------------
+        modelTrazabilidad1 = new QSqlQueryModel(this);
+        modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
+                                      Configuracion_global->groupDB);
+        if (modelTrazabilidad1->lastError().isValid())
+            return;
+        ui->tablaLotes->setModel(modelTrazabilidad1);
+        ui->tablaLotes->setColumnHidden(0,true);
+        ui->tablaLotes->setColumnHidden(6,true);
+         modelTrazabilidad1->setHeaderData(1,Qt::Horizontal,tr("LOTE"));
+         modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTidAD"));
+         modelTrazabilidad1->setHeaderData(3,Qt::Horizontal,tr("STOCK LOTE"));
+         modelTrazabilidad1->setHeaderData(4,Qt::Horizontal,tr("STOCK REAL"));
+         modelTrazabilidad1->setHeaderData(5,Qt::Horizontal,tr("FAC.COMPRA"));
+         modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("id"));
+         modelTrazabilidad1->setHeaderData(7,Qt::Horizontal,tr("FEC.COMPRA"));
+         modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCidAD"));
+         modelTrazabilidad1->setHeaderData(9,Qt::Horizontal,tr("PROVEEDOR"));
+         modelTrazabilidad1->setHeaderData(10,Qt::Horizontal,tr("DESCRIPCIÓN"));
+         modelTrazabilidad1->setHeaderData(11,Qt::Horizontal,tr("CÓDIGO"));
+    }
 
 }
 
@@ -2261,9 +2281,9 @@ void FrmArticulos::on_btnBuscar_clicked()
 
 void FrmArticulos::on_tabla_clicked(const QModelIndex &index)
 {
-    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oArticulo->Recuperar(id);
-    LLenarCampos();
+//    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
+//    oArticulo->Recuperar(id);
+//    LLenarCampos();
 }
 
 void FrmArticulos::on_tabla_doubleClicked(const QModelIndex &index)
@@ -2790,7 +2810,9 @@ void FrmArticulos::on_btnBorrarimagen_4_clicked()
 void FrmArticulos::on_Pestanas_currentChanged(int index)
 {
     Q_UNUSED(index);
-    ui->radGrafica_importes->click();
+    LLenarCampos();
+    if(ui->Pestanas->currentWidget()==ui->tab_estadistica)
+        ui->radGrafica_importes->click();
 }
 
 void FrmArticulos::on_botBuscarGrupo_clicked()

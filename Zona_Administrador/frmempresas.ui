@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1087</width>
-    <height>633</height>
+    <width>1291</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -185,39 +185,6 @@ color: rgb(255, 255, 255);</string>
      </widget>
      <widget class="QWidget" name="create_page_1">
       <layout class="QGridLayout" name="gridLayout_22">
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_73">
-         <property name="text">
-          <string>RedFox utiliza el sitema de grupo de empresas por el cual podrá agrupar diferentes empresas las cuales compartirán varios datos generales como clientes árticulos... sin necesidad de duplicar datos.</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="btn_crear_nuevo">
-         <property name="minimumSize">
-          <size>
-           <width>231</width>
-           <height>111</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Crear nuevo grupo y empresa</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <spacer name="horizontalSpacer_14">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>811</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="btn_add_nuevo">
          <property name="enabled">
@@ -246,6 +213,39 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="btn_crear_nuevo">
+         <property name="minimumSize">
+          <size>
+           <width>231</width>
+           <height>111</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Crear nuevo grupo y empresa</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <spacer name="horizontalSpacer_14">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>811</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_73">
+         <property name="text">
+          <string>RedFox utiliza el sitema de grupo de empresas por el cual podrá agrupar diferentes empresas las cuales compartirán varios datos generales como clientes árticulos... sin necesidad de duplicar datos.</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -360,90 +360,20 @@ color: rgb(255, 255, 255);</string>
      </widget>
      <widget class="QWidget" name="create_page_empresa">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_24">
-         <property name="text">
-          <string>Ejercicio:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Datos de la empresa</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLineEdit" name="txtcodigo">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="label_74">
-         <property name="text">
-          <string>Codigo</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="6">
-        <widget class="QLineEdit" name="txtEmpresa">
-         <property name="minimumSize">
-          <size>
-           <width>380</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QLabel" name="label_75">
-         <property name="text">
-          <string>Nombre</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QSpinBox" name="txtejercicio">
-         <property name="minimum">
-          <number>2014</number>
-         </property>
-         <property name="maximum">
-          <number>2999</number>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0" colspan="7">
         <widget class="QTabWidget" name="tabWidget">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1">
           <attribute name="title">
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0" colspan="7">
+           <item row="0" column="0" colspan="3">
             <layout class="QGridLayout" name="gridLayout_8">
              <item row="1" column="2" colspan="3">
               <widget class="QLineEdit" name="txtpoblacion">
@@ -516,7 +446,255 @@ color: rgb(255, 255, 255);</string>
              </item>
             </layout>
            </item>
-           <item row="3" column="2" colspan="5">
+           <item row="3" column="0" colspan="2">
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Mail:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="4">
+              <widget class="QCheckBox" name="chkAutocodificiar">
+               <property name="text">
+                <string>Auto codificar los nuevos artículos</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_17">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Teléfono 1:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Fax:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_18">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Telefono 2:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Web:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="4">
+              <widget class="QCheckBox" name="chkInternacional">
+               <property name="text">
+                <string>Gestión Internacional</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono1">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono2">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtfax">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtcMail">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtweb">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label_22">
+               <property name="minimumSize">
+                <size>
+                 <width>66</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cif:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcif">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>Inscripción:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcInscripcion">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>Digitos Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtndigitos_factura">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Serie Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtserieFactura">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Otros datos</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_24">
+           <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget_2">
              <property name="minimumSize">
               <size>
@@ -524,16 +702,10 @@ color: rgb(255, 255, 255);</string>
                <height>0</height>
               </size>
              </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>350</height>
-              </size>
-             </property>
              <property name="currentIndex">
               <number>0</number>
              </property>
-             <widget class="QWidget" name="tab">
+             <widget class="QWidget" name="tab_2">
               <attribute name="title">
                <string>Com. Factura</string>
               </attribute>
@@ -543,7 +715,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_2">
+             <widget class="QWidget" name="tab_3">
               <attribute name="title">
                <string>Com. Albarán</string>
               </attribute>
@@ -553,7 +725,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_3">
+             <widget class="QWidget" name="tab_4">
               <attribute name="title">
                <string>Ticket</string>
               </attribute>
@@ -587,7 +759,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_4">
+             <widget class="QWidget" name="tab_5">
               <attribute name="title">
                <string>Contabilidad</string>
               </attribute>
@@ -748,7 +920,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_5">
+             <widget class="QWidget" name="tab_6">
               <attribute name="title">
                <string>Contabilidad (IVAS)</string>
               </attribute>
@@ -1168,7 +1340,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_6">
+             <widget class="QWidget" name="tab_8">
               <attribute name="title">
                <string>Agenda</string>
               </attribute>
@@ -1379,7 +1551,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_8">
+             <widget class="QWidget" name="tab_10">
               <attribute name="title">
                <string>Medic</string>
               </attribute>
@@ -1460,7 +1632,7 @@ color: rgb(255, 255, 255);</string>
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="tab_10">
+             <widget class="QWidget" name="tab_12">
               <attribute name="title">
                <string>Otros</string>
               </attribute>
@@ -1637,247 +1809,6 @@ color: rgb(255, 255, 255);</string>
               </layout>
              </widget>
             </widget>
-           </item>
-           <item row="3" column="0" colspan="2">
-            <layout class="QGridLayout" name="gridLayout_7">
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_20">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Mail:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="4">
-              <widget class="QCheckBox" name="chkAutocodificiar">
-               <property name="text">
-                <string>Auto codificar los nuevos artículos</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_17">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Teléfono 1:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_19">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Fax:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_18">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Telefono 2:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_21">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Web:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="4">
-              <widget class="QCheckBox" name="chkInternacional">
-               <property name="text">
-                <string>Gestión Internacional</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="3">
-              <widget class="QLineEdit" name="txttelefono1">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1" colspan="3">
-              <widget class="QLineEdit" name="txttelefono2">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1" colspan="3">
-              <widget class="QLineEdit" name="txtfax">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1" colspan="3">
-              <widget class="QLineEdit" name="txtcMail">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1" colspan="3">
-              <widget class="QLineEdit" name="txtweb">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0" colspan="7">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLabel" name="label_22">
-               <property name="minimumSize">
-                <size>
-                 <width>66</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Cif:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcif">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_23">
-               <property name="text">
-                <string>Inscripción:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcInscripcion">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_25">
-               <property name="text">
-                <string>Digitos Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtndigitos_factura">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Serie Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtserieFactura">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </item>
           </layout>
          </widget>
@@ -2302,6 +2233,69 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_24">
+         <property name="text">
+          <string>Ejercicio:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="txtcodigo">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_74">
+         <property name="text">
+          <string>Codigo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QLineEdit" name="txtEmpresa">
+         <property name="minimumSize">
+          <size>
+           <width>380</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QLabel" name="label_75">
+         <property name="text">
+          <string>Nombre</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QSpinBox" name="txtejercicio">
+         <property name="minimum">
+          <number>2014</number>
+         </property>
+         <property name="maximum">
+          <number>2999</number>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="0" colspan="7">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
@@ -2329,6 +2323,13 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Datos de la empresa</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -2372,6 +2373,12 @@ color: rgb(255, 255, 255);</string>
      </widget>
      <widget class="QWidget" name="edit_page_select">
       <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="QListWidget" name="listWidgetGrupos"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QListWidget" name="listWidgetEmpresas"/>
+       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_81">
          <property name="text">
@@ -2403,63 +2410,10 @@ color: rgb(255, 255, 255);</string>
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
-        <widget class="QListWidget" name="listWidgetGrupos"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QListWidget" name="listWidgetEmpresas"/>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="edit_page_empresa">
       <layout class="QGridLayout" name="gridLayout_57">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_220">
-         <property name="text">
-          <string>Datos de la empresa</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_218">
-         <property name="text">
-          <string>Ejercicio:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="txtejercicio_2">
-         <property name="minimum">
-          <number>2014</number>
-         </property>
-         <property name="maximum">
-          <number>2999</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="txtcodigo_2">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="label_219">
-         <property name="text">
-          <string>Nombre</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="4">
         <widget class="QLineEdit" name="txtEmpresa_2">
          <property name="minimumSize">
@@ -2476,20 +2430,27 @@ color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_218">
+         <property name="text">
+          <string>Ejercicio:</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="0" colspan="5">
         <widget class="QTabWidget" name="tabWidget_3">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1_3">
           <attribute name="title">
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_40">
-           <item row="0" column="0" colspan="7">
+           <item row="0" column="0" colspan="3">
             <layout class="QGridLayout" name="gridLayout_41">
              <item row="1" column="2" colspan="3">
               <widget class="QLineEdit" name="txtpoblacion_3">
@@ -2562,22 +2523,258 @@ color: rgb(255, 255, 255);</string>
              </item>
             </layout>
            </item>
-           <item row="3" column="2" colspan="5">
+           <item row="1" column="0" colspan="3">
+            <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <item>
+              <widget class="QLabel" name="label_195">
+               <property name="minimumSize">
+                <size>
+                 <width>66</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cif:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcif_3">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_196">
+               <property name="text">
+                <string>Inscripción:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcInscripcion_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_197">
+               <property name="text">
+                <string>Digitos Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtndigitos_factura_3">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_198">
+               <property name="text">
+                <string>Serie Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtserieFactura_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="0" colspan="3">
+            <layout class="QGridLayout" name="gridLayout_53">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_190">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Mail:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="4">
+              <widget class="QCheckBox" name="chkAutocodificiar_3">
+               <property name="text">
+                <string>Auto codificar los nuevos artículos</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_191">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Teléfono 1:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_192">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Fax:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_193">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Telefono 2:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_194">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Web:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="4">
+              <widget class="QCheckBox" name="chkInternacional_3">
+               <property name="text">
+                <string>Gestión Internacional</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono1_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono2_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtfax_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtcMail_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtweb_3">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_11">
+          <attribute name="title">
+           <string>Otros datos</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_23">
+           <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget_5">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>350</height>
-              </size>
-             </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab_21">
               <attribute name="title">
@@ -2604,8 +2801,15 @@ color: rgb(255, 255, 255);</string>
                <string>Ticket</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_44">
-               <item row="2" column="0">
-                <widget class="QTextEdit" name="txtccomentario_ticket_3"/>
+               <item row="0" column="1">
+                <widget class="QLabel" name="label_83">
+                 <property name="text">
+                  <string>Importe fijo en cierre caja:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="0">
                 <widget class="QCheckBox" name="chk_ticket_factura_3">
@@ -2618,6 +2822,32 @@ color: rgb(255, 255, 255);</string>
                 </widget>
                </item>
                <item row="1" column="0">
+                <widget class="QCheckBox" name="checktpv_forzar_cantidad">
+                 <property name="text">
+                  <string>Forzar entrada cantidad en cada línea de venta</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QDoubleSpinBox" name="spinImporte_abertura">
+                 <property name="maximumSize">
+                  <size>
+                   <width>110</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="minimum">
+                  <double>-9999999.000000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>999999999.990000009536743</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" colspan="3">
                 <widget class="QLabel" name="label_154">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(0, 0, 127);
@@ -2628,6 +2858,17 @@ color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0" colspan="3">
+                <widget class="QTextEdit" name="txtccomentario_ticket_3"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="checkMostrarfacturascierrecaja">
+                 <property name="text">
+                  <string>Mostrar las facturas en el cierre de caja. 
+(Activar si el cobro efectivo de las facturas se guarda en el cajón portamonedas).</string>
                  </property>
                 </widget>
                </item>
@@ -3520,54 +3761,7 @@ color: rgb(255, 255, 255);</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_52">
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="label_186">
-                    <property name="text">
-                     <string>Caducidad Vales(días):</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="2" colspan="2">
-                   <widget class="QLabel" name="label_187">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>Tamaño del código en caracteres:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QSpinBox" name="txtCaducidadvales_3">
-                    <property name="maximum">
-                     <number>99999999</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="4">
-                   <widget class="QSpinBox" name="txttamano_codigoart_3">
-                    <property name="maximumSize">
-                     <size>
-                      <width>60</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="value">
-                     <number>15</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="5">
-                   <widget class="QCheckBox" name="chkEnlace_web_3">
-                    <property name="text">
-                     <string>enlace Web.</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="3">
+                  <item row="2" column="4">
                    <spacer name="horizontalSpacer_36">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -3579,6 +3773,77 @@ color: rgb(255, 255, 255);</string>
                      </size>
                     </property>
                    </spacer>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_221">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Decimales en totales</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="6">
+                   <widget class="QCheckBox" name="chkEnlace_web_3">
+                    <property name="text">
+                     <string>enlace Web.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QLabel" name="label_82">
+                    <property name="text">
+                     <string>Decimales precios:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_186">
+                    <property name="text">
+                     <string>Caducidad Vales(días):</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2" colspan="3">
+                   <widget class="QLabel" name="label_187">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>Tamaño del código en caracteres:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="3">
+                   <widget class="QSpinBox" name="spinDecimales_precios_2">
+                    <property name="value">
+                     <number>2</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QSpinBox" name="txtCaducidadvales_3">
+                    <property name="maximum">
+                     <number>99999999</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="spinDecimales_2">
+                    <property name="value">
+                     <number>2</number>
+                    </property>
+                   </widget>
                   </item>
                   <item row="2" column="0" colspan="3">
                    <widget class="QFrame" name="frame_6">
@@ -3657,23 +3922,16 @@ color: rgb(255, 255, 255);</string>
                     </layout>
                    </widget>
                   </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="label_221">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
+                  <item row="0" column="5">
+                   <widget class="QSpinBox" name="txttamano_codigoart_3">
+                    <property name="maximumSize">
+                     <size>
+                      <width>60</width>
+                      <height>16777215</height>
+                     </size>
                     </property>
-                    <property name="text">
-                     <string>Decimales en totales</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QSpinBox" name="spinDecimales_2">
                     <property name="value">
-                     <number>2</number>
+                     <number>15</number>
                     </property>
                    </widget>
                   </item>
@@ -3683,247 +3941,6 @@ color: rgb(255, 255, 255);</string>
               </layout>
              </widget>
             </widget>
-           </item>
-           <item row="3" column="0" colspan="2">
-            <layout class="QGridLayout" name="gridLayout_53">
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_190">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Mail:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="4">
-              <widget class="QCheckBox" name="chkAutocodificiar_3">
-               <property name="text">
-                <string>Auto codificar los nuevos artículos</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_191">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Teléfono 1:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_192">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Fax:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_193">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Telefono 2:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_194">
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Web:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="4">
-              <widget class="QCheckBox" name="chkInternacional_3">
-               <property name="text">
-                <string>Gestión Internacional</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="3">
-              <widget class="QLineEdit" name="txttelefono1_3">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1" colspan="3">
-              <widget class="QLineEdit" name="txttelefono2_3">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1" colspan="3">
-              <widget class="QLineEdit" name="txtfax_3">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1" colspan="3">
-              <widget class="QLineEdit" name="txtcMail_3">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1" colspan="3">
-              <widget class="QLineEdit" name="txtweb_3">
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0" colspan="7">
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
-             <item>
-              <widget class="QLabel" name="label_195">
-               <property name="minimumSize">
-                <size>
-                 <width>66</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Cif:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcif_3">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_196">
-               <property name="text">
-                <string>Inscripción:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtcInscripcion_3">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_197">
-               <property name="text">
-                <string>Digitos Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtndigitos_factura_3">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_198">
-               <property name="text">
-                <string>Serie Factura:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtserieFactura_3">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </item>
           </layout>
          </widget>
@@ -4375,6 +4392,46 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="txtejercicio_2">
+         <property name="minimum">
+          <number>2014</number>
+         </property>
+         <property name="maximum">
+          <number>2999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_220">
+         <property name="text">
+          <string>Datos de la empresa</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="txtcodigo_2">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_219">
+         <property name="text">
+          <string>Nombre</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
