@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>921</width>
+    <width>1196</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>921</width>
+     <width>1196</width>
      <height>19</height>
     </rect>
    </property>
@@ -34,9 +34,15 @@
     <addaction name="separator"/>
     <addaction name="actionConfigurar_pagina"/>
    </widget>
+   <widget class="QMenu" name="menuOpciones">
+    <property name="title">
+     <string>Opciones</string>
+    </property>
+    <addaction name="actionVer_contorno_objetos"/>
+   </widget>
    <addaction name="menuMenu"/>
+   <addaction name="menuOpciones"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -48,7 +54,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <addaction name="actionTexto"/>
    <addaction name="actionParametro"/>
@@ -62,14 +68,6 @@
    <addaction name="actionImagen"/>
    <addaction name="separator"/>
    <addaction name="actionBorrar"/>
-   <addaction name="separator"/>
-   <addaction name="actionAbrir"/>
-   <addaction name="actionGuardar"/>
-   <addaction name="separator"/>
-   <addaction name="actionAbrir_desde_BD"/>
-   <addaction name="actionGuardar_en_BD"/>
-   <addaction name="separator"/>
-   <addaction name="actionVista_Previa"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
    <property name="windowTitle">
@@ -95,11 +93,32 @@
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QListWidget" name="itemList"/>
+      <widget class="QListWidget" name="itemList">
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
   </widget>
+  <widget class="QToolBar" name="toolBar_3">
+   <property name="windowTitle">
+    <string>toolBar_3</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionAbrir"/>
+   <addaction name="actionGuardar"/>
+   <addaction name="actionAbrir_desde_BD"/>
+   <addaction name="actionGuardar_en_BD"/>
+   <addaction name="actionVista_Previa"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionRectangulo_redondeado">
    <property name="checkable">
     <bool>true</bool>
@@ -323,6 +342,17 @@
    </property>
    <property name="text">
     <string>Alinear abajo</string>
+   </property>
+  </action>
+  <action name="actionVer_contorno_objetos">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Ver contorno objetos</string>
    </property>
   </action>
  </widget>

@@ -45,6 +45,8 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
     connect(ui->actionCampo_Relacional,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionParametro,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
     connect(ui->actionAcumulador,SIGNAL(toggled(bool)),this,SLOT(element_toggled(bool)));
+
+    connect(&scene,SIGNAL(selectionChanged()),this,SLOT(sceneSelectionChanged()));
 }
 
 ReportDesigWin::~ReportDesigWin()
@@ -367,4 +369,46 @@ void ReportDesigWin::nameChanged(Container *c)
             break;
         }
     }
+}
+
+void ReportDesigWin::on_actionVer_contorno_objetos_triggered(bool checked)
+{
+    Container::setShowBorder(checked);
+}
+
+void ReportDesigWin::sceneSelectionChanged()
+{
+    QList<QGraphicsItem*> _selecteds = scene.selectedItems();
+    QMapIterator<QListWidgetItem*,Container*> it(_itemList);
+    ui->itemList->blockSignals(true);
+    while(it.hasNext())
+    {
+        it.next();
+        it.key()->setSelected(_selecteds.contains(it.value()));
+    }
+    ui->itemList->blockSignals(false);
+}
+
+
+void ReportDesigWin::on_itemList_itemDoubleClicked(QListWidgetItem *item)
+{
+    if(item)
+        if(_itemList.contains(item))
+            _itemList.value(item)->editMe();
+}
+
+void ReportDesigWin::on_itemList_itemSelectionChanged()
+{
+    QListIterator<QListWidgetItem*> it (ui->itemList->selectedItems());
+    scene.blockSignals(true);
+    scene.clearSelection();
+    while(it.hasNext())
+    {
+        QListWidgetItem* current = it.next();
+        if(_itemList.contains(current))
+        {
+            _itemList.value(current)->setSelected(true);
+        }
+    }
+    scene.blockSignals(false);
 }
