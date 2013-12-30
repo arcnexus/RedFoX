@@ -1168,9 +1168,9 @@ void frmFacturas::on_cboVer_currentTextChanged(const QString &arg1)
 
 void frmFacturas::formato_tabla_facturas(QSqlQueryModel &modelo)
 {
-    ui->tabla_facturas->setItemDelegateForColumn(6, new MonetaryDelegate);
-    ui->tabla_facturas->setItemDelegateForColumn(3,new DateDelegate);
-    ui->tabla_facturas->setItemDelegateForColumn(4, new DateDelegate);
+    ui->tabla_facturas->setItemDelegateForColumn(6, new MonetaryDelegate(this));
+    ui->tabla_facturas->setItemDelegateForColumn(3,new DateDelegate(this));
+    ui->tabla_facturas->setItemDelegateForColumn(4, new DateDelegate(this));
     ui->tabla_facturas->setColumnHidden(0,true);
     QVariantList lista;
     QStringList  titulos;

@@ -18,7 +18,9 @@ Table_Helper::Table_Helper(QObject *parent) :
 
 Table_Helper::~Table_Helper()
 {
-
+    foreach (lineaDetalle* d, m_rows) {
+        delete d;
+    }
 }
 
 void Table_Helper::help_table(QTableWidget *table)
@@ -126,6 +128,10 @@ void Table_Helper::fillTable(QString db, QString table, QString filter)
     helped_table->blockSignals(true);
     helped_table->clearContents();
     helped_table->setRowCount(0);
+
+    foreach (lineaDetalle* d, m_rows) {
+        delete d;
+    }
     m_rows.clear();
 
     QSqlQuery query(QSqlDatabase::database(db));

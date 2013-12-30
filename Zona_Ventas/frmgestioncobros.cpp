@@ -39,8 +39,8 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
          deudas->setHeaderData(x,Qt::Horizontal,headers.at(x));
     }
     ui->tabla_deuda->setColumnHidden(0,true);
-    ui->tabla_deuda->setItemDelegateForColumn(1,new DateDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla_deuda->setItemDelegateForColumn(1,new DateDelegate(this));
+    ui->tabla_deuda->setItemDelegateForColumn(2,new DateDelegate(this));
     ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals(this,true));
     ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals(this,true));
     ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals(this,true));
@@ -67,9 +67,9 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
     //-----------------------
     // Conexiones
     //-----------------------
-    connect(ui->radPagados,SIGNAL(clicked()),this,SLOT(seleccionar()));
-    connect(ui->radPendientes,SIGNAL(clicked()),this,SLOT(seleccionar()));
-    connect(ui->radTodos,SIGNAL(clicked()),this,SLOT(seleccionar()));
+    //connect(ui->radPagados,SIGNAL(clicked()),this,SLOT(seleccionar()));
+    //connect(ui->radPendientes,SIGNAL(clicked()),this,SLOT(seleccionar()));
+    //connect(ui->radTodos,SIGNAL(clicked()),this,SLOT(seleccionar()));
 }
 
 frmGestionCobros::~frmGestionCobros()
@@ -269,11 +269,11 @@ void frmGestionCobros::seleccionar_varios()
          deudas->setHeaderData(x,Qt::Horizontal,headers.at(x));
     }
     ui->tabla_deuda->setColumnHidden(0,true);
-    ui->tabla_deuda->setItemDelegateForColumn(1,new DateDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
-    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals);
-    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals);
+    ui->tabla_deuda->setItemDelegateForColumn(1,new DateDelegate(this));
+    ui->tabla_deuda->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tabla_deuda->setItemDelegateForColumn(4, new MonetaryDelegate_totals(this));
+    ui->tabla_deuda->setItemDelegateForColumn(5, new MonetaryDelegate_totals(this));
+    ui->tabla_deuda->setItemDelegateForColumn(6, new MonetaryDelegate_totals(this));
     this->varios = true;
 
 }

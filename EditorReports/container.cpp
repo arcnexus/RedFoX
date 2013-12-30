@@ -3,6 +3,7 @@
 
 QMap<Container*,QString> Container::_items;
 QMap<Container *, QString> Container::_acums;
+bool Container::_showBorder = true;
 
 Container::Container(QString name, QGraphicsItem *parent) :
     QGraphicsRectItem(parent)
@@ -44,7 +45,8 @@ void Container::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         painter->drawRect(r.right()-6,r.bottom()/2-8 ,b,a);
         painter->drawRect(r.width()/2 -8,r.bottom()-6,a,b);        
     }
-    QGraphicsRectItem::paint(painter,option,widget);
+    if(Container::getShowBorder() || this->isSelected())
+        QGraphicsRectItem::paint(painter,option,widget);
     painter->restore();
 }
 
@@ -217,6 +219,16 @@ void Container::registerAsAcum()
 {
     _acums.insert(this,this->name());
 }
+bool Container::getShowBorder()
+{
+    return _showBorder;
+}
+
+void Container::setShowBorder(bool value)
+{
+    _showBorder = value;
+}
+
 QMap<Container *, QString> Container::items()
 {
     return _items;

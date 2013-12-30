@@ -25,6 +25,11 @@ frmInventario::frmInventario(QWidget *parent) :
     orders << tr("código") <<tr("código Barras") <<tr("referencia proveedor") <<tr("descripción");
     ui->cboOrder->addItems(orders);
     shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
+
+    connect(m,&QSqlTableModel::dataChanged,[this](const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles ){
+       ui->txtBuscar->setText("");
+       ui->txtBuscar->setFocus();
+    });
 }
 
 frmInventario::~frmInventario()
@@ -44,6 +49,7 @@ void frmInventario::formato_tabla(QSqlTableModel *modelo)
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         modelo->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
+    ui->tabla->setColumnHidden(6,true);
 }
 
 void frmInventario::on_txtBuscar_textEdited(const QString &arg1)

@@ -62,6 +62,15 @@ private slots:
     void refreshItems();
     void itemChanged ( QListWidgetItem * item );
     void nameChanged (Container * c);
+    void on_actionVer_contorno_objetos_triggered(bool checked);
+
+    void sceneSelectionChanged();
+
+
+    void on_itemList_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_itemList_itemSelectionChanged();
+
 private:
     Ui::ReportDesigWin *ui;
     QGraphicsScene scene;
@@ -71,6 +80,7 @@ private:
     ReportRenderer* render;
 
     QMap<QListWidgetItem* , Container*> _itemList;
+
 };
 
 #endif // REPORTDESIGWIN_H

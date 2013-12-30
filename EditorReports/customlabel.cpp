@@ -47,7 +47,7 @@ void CustomLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         QRectF r(this->rect());
         QRectF aux1(0,0,r.height(),r.width());
         QRectF r2(painter->fontMetrics().boundingRect(aux1.toRect(),Qt::TextWordWrap,m_Text));
-        QRectF finalRect(0,0,r2.height(),r2.width()+10);
+        QRectF finalRect(0,0,r2.height(),r2.width()+20);
         this->setRect(finalRect);
         painter->translate(rect().bottomLeft());
         painter->rotate(270);

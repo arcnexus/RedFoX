@@ -275,7 +275,7 @@ void FrmAlbaranProveedor::formato_tabla()
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
 
 }
 

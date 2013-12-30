@@ -137,6 +137,7 @@ private:
     QHash<QPushButton*,QWidget*> _shortCuts;
 
     BarraAvisos * m_avisos;
+    QTimer keepAlive;
 };
 
 #endif // MAINWINDOW_H

@@ -108,7 +108,7 @@ void frmCuadro_cuentas::llenar_tabla()
     ui->tabla_cuentas->setColumnWidth(1,100);
     ui->tabla_cuentas->setColumnWidth(2,160);
     ui->tabla_cuentas->setColumnWidth(3,100);
-    ui->tabla_cuentas->setItemDelegateForColumn(3,new MonetaryDelegate);
+    ui->tabla_cuentas->setItemDelegateForColumn(3,new MonetaryDelegate(this));
     QStringList cabecera;
     cabecera << tr("id") <<tr("Código Cta.") <<tr("Descripción") <<tr("Saldo");
     for (int pos=1;pos <cabecera.size();pos++)
