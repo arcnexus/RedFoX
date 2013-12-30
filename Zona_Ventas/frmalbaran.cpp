@@ -1187,8 +1187,8 @@ void FrmAlbaran::formato_tabla()
         ui->table2->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->table2->setItemDelegateForColumn(3,new DateDelegate);
-    ui->table2->setItemDelegateForColumn(5,new MonetaryDelegate);
+    ui->table2->setItemDelegateForColumn(3,new DateDelegate(this));
+    ui->table2->setItemDelegateForColumn(5,new MonetaryDelegate(this));
 }
 
 void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)

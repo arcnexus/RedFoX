@@ -545,8 +545,8 @@ void FrmPedidos::formato_tabla()
         ui->tabla->setColumnWidth(i,size.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate);
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate(this));
 }
 
 void FrmPedidos::filter_table(QString texto, QString orden, QString modo)

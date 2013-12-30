@@ -651,8 +651,8 @@ void FrmFacturasProveedor::formato_tabla()
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setColumnHidden(0,true);
-    ui->tabla->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate);
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate(this));
 }
 
 void FrmFacturasProveedor::filter_table(QString texto, QString orden, QString modo)

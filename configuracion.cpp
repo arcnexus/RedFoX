@@ -1134,7 +1134,8 @@ QString Configuracion::DeCrypt(QString input)
     if(input.isEmpty())
         return input;
     int c = 0;
-        char* dd = new char[input.size()/2];
+        //char* dd = new char[input.size()/2];
+        char dd[input.size()/2];
 
         for(int a = 0; a< input.size() ; a+=2)
         {
@@ -1163,7 +1164,7 @@ QString Configuracion::DeCrypt(QString input)
 
         QString ss = QString::fromStdString(decryptedtext);
         ss.remove(QRegExp("\\000"));
-        delete [] dd;
+       // delete [] dd;
         return ss;
 }
 
