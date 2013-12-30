@@ -149,18 +149,18 @@ frmClientes::frmClientes(QWidget *parent) :
     }
     ui->tablahistorial_deudas->setColumnHidden(0,true);
     ui->tablahistorial_deudas->setColumnHidden(1,true);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(2, new DateDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(3, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(4, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(6, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(11, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(12, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(13, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(14, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(15, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(16, new MonetaryDelegate);
-    ui->tablahistorial_deudas->setItemDelegateForColumn(17, new MonetaryDelegate);
+    ui->tablahistorial_deudas->setItemDelegateForColumn(2, new DateDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(3, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(4, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(5, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(6, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(11, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(12, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(13, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(14, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(15, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(16, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(17, new MonetaryDelegate(this));
 
 
 

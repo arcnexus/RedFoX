@@ -27,6 +27,8 @@ BarraBusqueda::BarraBusqueda(QWidget *parent) :
 BarraBusqueda::~BarraBusqueda()
 {
     delete ui;
+    if(m_Cache)
+      delete m_Cache;
 }
 
 void BarraBusqueda::setOrderCombo(QStringList l)

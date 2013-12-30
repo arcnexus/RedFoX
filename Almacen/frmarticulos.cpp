@@ -73,7 +73,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
         promociones->setHeaderData(i,Qt::Horizontal,headers_o.at(i));
     }
     ui->tabla_ofertas->setColumnHidden(0,true);
-    ui->tabla_ofertas->setItemDelegateForColumn(1, new DelegateKit);
+    ui->tabla_ofertas->setItemDelegateForColumn(1, new DelegateKit(this));
 
     //--------------------------
     // PVP SEGÚN VOLUMEN COMPRA
@@ -92,7 +92,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
         volumen->setHeaderData(x,Qt::Horizontal,cabeceras.at(x));
     }
     ui->tabla_volumenes->setColumnHidden(0,true);
-    ui->tabla_volumenes->setItemDelegateForColumn(3, new MonetaryDelegate);
+    ui->tabla_volumenes->setItemDelegateForColumn(3, new MonetaryDelegate(this));
 
 
     // --------------------
@@ -640,10 +640,10 @@ void FrmArticulos::formato_tabla()
         ui->tabla->setColumnWidth(i,col_size.at(i).toInt());
     }
     ui->tabla->setColumnHidden(0,true);
-    ui->tabla->setItemDelegateForColumn(4, new MonetaryDelegate);
-    ui->tabla->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate);
-    ui->tabla->setItemDelegateForColumn(7,new DelegateKit);
+    ui->tabla->setItemDelegateForColumn(4, new MonetaryDelegate(this));
+    ui->tabla->setItemDelegateForColumn(5, new MonetaryDelegate(this));
+    ui->tabla->setItemDelegateForColumn(6, new MonetaryDelegate(this));
+    ui->tabla->setItemDelegateForColumn(7,new DelegateKit(this));
 
 }
 

@@ -52,6 +52,9 @@ public:
 
     static void removeItem(Container *);
 
+    static bool getShowBorder();
+    static void setShowBorder(bool value);
+
 signals:
     void moved(Container *);
     void nameChanged(Container *);
@@ -87,6 +90,7 @@ protected:
 private:
     static  QMap<Container *, QString> _items;
     static  QMap<Container *, QString> _acums;
+    static bool _showBorder;
 };
 
 #endif // CONTAINER_H

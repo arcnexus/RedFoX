@@ -113,8 +113,8 @@ FrmTPV::FrmTPV(QWidget *parent) :
         ui->tabla_buscar_art->setColumnWidth(i,sizes.at(i).toInt());
     }
     ui->tabla_buscar_art->setColumnHidden(0,true);
-    ui->tabla_buscar_art->setItemDelegateForColumn(3, new MonetaryDelegate_totals);
-    ui->tabla_buscar_art->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
+    ui->tabla_buscar_art->setItemDelegateForColumn(3, new MonetaryDelegate_totals(this));
+    ui->tabla_buscar_art->setItemDelegateForColumn(4, new MonetaryDelegate_totals(this));
 
    edicion_teclado = false;
 
@@ -1938,8 +1938,8 @@ void FrmTPV::estructura_lista()
         ui->lista_tickets->setColumnWidth(i,Sizes.at(i).toInt());
         model_lista_tpv->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->lista_tickets->setItemDelegateForColumn(5,new DateDelegate);
-    ui->lista_tickets->setItemDelegateForColumn(4, new MonetaryDelegate_totals);
+    ui->lista_tickets->setItemDelegateForColumn(5,new DateDelegate(this));
+    ui->lista_tickets->setItemDelegateForColumn(4, new MonetaryDelegate_totals(this));
 }
 
 void FrmTPV::llenar_campos()

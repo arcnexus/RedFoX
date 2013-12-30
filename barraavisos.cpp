@@ -21,6 +21,8 @@ BarraAvisos::BarraAvisos(QWidget *parent) :
 BarraAvisos::~BarraAvisos()
 {
     delete ui;
+    if(m_Cache)
+      delete m_Cache;
 }
 
 void BarraAvisos::setPagina(int pagina)
