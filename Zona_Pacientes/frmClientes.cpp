@@ -208,12 +208,11 @@ frmClientes::frmClientes(QWidget *parent) :
     //--------------------
     // Procesar eventos
     //--------------------
-    //ui->tabla_busquedas->installEventFilter(this);
+    ui->tabla_busquedas->installEventFilter(this);
     QList<QWidget*> l = this->findChildren<QWidget*>();
     QList<QWidget*> ::Iterator it;
-
- //   for( it = l.begin() ;it!= l.end();++it )
- //       (*it)->installEventFilter(this);
+   for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 }
 
 frmClientes::~frmClientes()
@@ -1712,7 +1711,7 @@ void frmClientes::setUpBusqueda()
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
     this->setAttribute(Qt::WA_Hover);
-    //this->installEventFilter(this);
+    this->installEventFilter(this);
 
     QStringList orden;
     orden  <<  tr("Nombre Fiscal") << tr("Cif / Nif") << tr("Código cliente") << tr("Población");
