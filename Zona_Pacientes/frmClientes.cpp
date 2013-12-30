@@ -179,8 +179,8 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(txtrRiesgoPermitido_editingFinished()));
     connect(ui->lista_direccionesAlternativas,SIGNAL(clicked(QModelIndex)),this,SLOT(CargardireccionAlternativa(QModelIndex)));
     connect(ui->btnVer_OtrosContactos,SIGNAL(clicked()),this,SLOT(Contactos()));
-    connect(ui->txtcpPoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtcpAlternativa_editingFinished()));
-    connect(ui->txtpoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtpoblacionAlternativa_editingFinished()));
+    //connect(ui->txtcpPoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtcpAlternativa_editingFinished()));
+    //connect(ui->txtpoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtpoblacionAlternativa_editingFinished()));
     connect(ui->btnEditardireccionAlternativa,SIGNAL(clicked()),this,SLOT(EditardireccionAlternativa()));
     connect(ui->txtentidad_bancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->txtoficina_bancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
@@ -197,8 +197,7 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
-    connect(ui->tabla_busquedas->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-            this,SLOT(on_tabla_busquedas_row_changed(QModelIndex,QModelIndex)));
+
     //-------------------
     // Busquedas
     //-------------------
@@ -208,7 +207,7 @@ frmClientes::frmClientes(QWidget *parent) :
     //--------------------
     // Procesar eventos
     //--------------------
-    ui->tabla_busquedas->installEventFilter(this);
+    //ui->tabla_busquedas->installEventFilter(this);
     QList<QWidget*> l = this->findChildren<QWidget*>();
     QList<QWidget*> ::Iterator it;
    for( it = l.begin() ;it!= l.end();++it )
@@ -1739,7 +1738,7 @@ void frmClientes::setUpBusqueda()
     m_busqueda->addWidget(print);
 
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
-    connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
+    //connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));//TODO
     m_busqueda->addWidget(del);
 
     m_busqueda->addSpacer();

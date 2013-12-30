@@ -1294,19 +1294,23 @@ void ReportRenderer::drawLabel(QDomElement e, QPainter *painter, double dpiX, do
     painter->setFont(f);
     if(m_Orientacion == Vertical)
     {
+        QRectF r2(0,0,r.height(),r.width());
+       // QRectF r2(painter->fontMetrics().boundingRect(aux1.toRect(),Qt::TextWordWrap,m_Text));
+
         painter->translate(r.bottomLeft());
         painter->rotate(270);
         switch (m_Alineacion) {
         case Center:
-            painter->drawText(r,Qt::TextWordWrap|Qt::AlignCenter,m_Text);
+            painter->drawText(r2,Qt::TextWordWrap|Qt::AlignCenter,m_Text);
             break;
         case Rigth:
-            painter->drawText(r,Qt::TextWordWrap|Qt::AlignRight,m_Text);
+            painter->drawText(r2,Qt::TextWordWrap|Qt::AlignRight,m_Text);
             break;
         default:
-            painter->drawText(r,Qt::TextWordWrap|Qt::AlignLeft,m_Text);
+            painter->drawText(r2,Qt::TextWordWrap|Qt::AlignLeft,m_Text);
             break;
         }
+       // painter->drawRect(aux1);
     }
     else
     {
@@ -1680,8 +1684,8 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                     double footStart = pageUsable - PFooterSiz;
                     double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
                     double LineStart = ele.attribute("y").toDouble();
-                    if(reporHeader)
-                        LineStart+= RHSiz;
+                   // if(reporHeader)
+                   //     LineStart+= RHSiz;
                     QString sH = QString::number(LineEnd - LineStart,'f',2).replace(",",".");
                     ele.setAttribute("h",sH);
                 }

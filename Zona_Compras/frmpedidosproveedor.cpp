@@ -37,7 +37,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     helper.blockTable(true);
 
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
-    connect(&helper,SIGNAL(lineaDeleted(int)),this,SLOT(lieaDeleted(int)));
+    connect(&helper,SIGNAL(lineaDeleted(int)),this,SLOT(lieaDeleted(int)));//TODO
 
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));

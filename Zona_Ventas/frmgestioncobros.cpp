@@ -67,9 +67,9 @@ frmGestionCobros::frmGestionCobros(QWidget *parent) :
     //-----------------------
     // Conexiones
     //-----------------------
-    connect(ui->radPagados,SIGNAL(clicked()),this,SLOT(seleccionar()));
-    connect(ui->radPendientes,SIGNAL(clicked()),this,SLOT(seleccionar()));
-    connect(ui->radTodos,SIGNAL(clicked()),this,SLOT(seleccionar()));
+    //connect(ui->radPagados,SIGNAL(clicked()),this,SLOT(seleccionar()));
+    //connect(ui->radPendientes,SIGNAL(clicked()),this,SLOT(seleccionar()));
+    //connect(ui->radTodos,SIGNAL(clicked()),this,SLOT(seleccionar()));
 }
 
 frmGestionCobros::~frmGestionCobros()
