@@ -573,3 +573,5 @@ win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/rel
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/libcryptopp562.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/release/cryptopp562.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptopp562.lib
+
+unix:!macx: LIBS += -lcryptopp
