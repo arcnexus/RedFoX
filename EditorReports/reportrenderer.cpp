@@ -4,6 +4,7 @@
 
 #include <QTime>
 #include "section.h"
+#include "../Auxiliares/Globlal_Include.h"
 ReportRenderer::ReportRenderer(QObject *parent) :
     QObject(parent)
 {
@@ -433,9 +434,9 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         QSqlDatabase db;
 
         if(pair.first.startsWith("Gen"))
-            db = QSqlDatabase::database("grupo");
+            db = Configuracion_global->groupDB;
         else if(pair.first.startsWith("Emp"))
-            db = QSqlDatabase::database("empresa");
+            db = Configuracion_global->empresaDB;
         QSqlQuery q(db);
 
         if(q.exec(pair.second))
@@ -486,9 +487,9 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
 
         QSqlDatabase db;
         if(first.startsWith("Gen"))
-            db = QSqlDatabase::database("grupo");
+            db = Configuracion_global->groupDB;
         else if(first.startsWith("Emp"))
-            db = QSqlDatabase::database("empresa");
+            db = Configuracion_global->empresaDB;
 
         QSqlQuery gQuery(db);
         if(gQuery.exec(gSql.second))
@@ -571,9 +572,9 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             QString iSql = ele.attribute("SqlInterno");
                             QSqlDatabase db;
                             if(iSql.startsWith("Gen"))
-                                db = QSqlDatabase::database("grupo");
+                                db = Configuracion_global->groupDB;
                             else if(iSql.startsWith("Emp"))
-                                db = QSqlDatabase::database("empresa");
+                                db = Configuracion_global->empresaDB;
                             QString query = QString("SELECT * FROM %1 WHERE %2").arg(iSql.split(".").at(1)).arg(clausulaInterna);
                             QSqlQuery iQuery(db);
                             iQuery.prepare(query);
@@ -1513,9 +1514,9 @@ QString ReportRenderer::getRelationField(QString s , QSqlRecord r)
         //TODO others db
         QSqlDatabase db;
         if(key.startsWith("Gen"))
-            db = QSqlDatabase::database("grupo");
+            db = Configuracion_global->groupDB;
         else if(key.startsWith("Emp"))
-            db = QSqlDatabase::database("empresa");
+            db = Configuracion_global->empresaDB;
 
         QSqlQuery q(db);
         if(q.exec(final))
