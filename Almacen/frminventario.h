@@ -29,6 +29,8 @@ private slots:
 
     void on_btnBuscar_clicked();
 
+    void on_btnImprimir_clicked();
+
 private:
     Ui::frmInventario *ui;
     QAction menuButton;

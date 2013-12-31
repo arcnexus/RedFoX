@@ -1684,6 +1684,7 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
                     double footStart = pageUsable - PFooterSiz;
                     double LineEnd = footStart + ele.attribute("endPointPoint").toDouble();
                     double LineStart = ele.attribute("y").toDouble();
+
                    // if(reporHeader)
                    //     LineStart+= RHSiz;
                     QString sH = QString::number(LineEnd - LineStart,'f',2).replace(",",".");
