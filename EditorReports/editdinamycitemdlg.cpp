@@ -3,6 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDebug>
+#include "../Auxiliares/Globlal_Include.h"
 
 bool EditDinamycItemDlg::isSet = false;
 QStringList EditDinamycItemDlg::_zonas;
@@ -19,7 +20,7 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
         //TODO cambiar dentro de Maya
 
         QStringList groupTables;
-        QSqlQuery q(QSqlDatabase::database("grupo"));
+        QSqlQuery q(Configuracion_global->groupDB);
         q.exec("show tables");
         while(q.next())
             groupTables << q.record().value(0).toString();
@@ -39,7 +40,7 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
         }
 
         QStringList empTables;
-        QSqlQuery q2(QSqlDatabase::database("empresa"));
+        QSqlQuery q2(Configuracion_global->empresaDB);
         q2.exec("show tables");
         while(q2.next())
             empTables << q2.record().value(0).toString();

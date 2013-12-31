@@ -35,6 +35,7 @@ Login::Login(QWidget *parent) :
         ui->linePassword->setText(contrasena);
     }
 
+
     if(Configuracion_global->CargarDatosBD())
         init();
 //    QString a = "RedFoX";
@@ -62,9 +63,14 @@ const QString Login::getPass() const
     return ui->linePassword->text();
 }
 
-const QString Login::getEmpresa() const
+const QString Login::getEmpresaName()
 {
-    return ui->cboEmpresa->currentText();
+    return getEmpresa().value("nombre").toString();
+}
+
+const QSqlRecord Login::getEmpresa() const
+{
+    return _empresas.value(ui->comboGroup->currentText()).rec_empresas.value(ui->cboEmpresa->currentText());
 }
 
 int Login::getid_user()
@@ -75,14 +81,13 @@ int Login::getid_user()
 
 void Login::on_btnAcceder_clicked()
 {
-    QSqlRecord rEmpresa = _empresas.value(ui->comboGroup->currentIndex()).second;
-    Configuracion_global->idEmpresa = rEmpresa.value("id").toInt();
-    QString bd_driver = rEmpresa.value("bd_driver").toString();    
-    QString bd_name = rEmpresa.value("bd_name").toString();    
-    QString bd_host = rEmpresa.value("bd_host").toString();
-    QString bd_user = rEmpresa.value("bd_user").toString();
-    QString bd_pass = rEmpresa.value("bd_pass").toString();
-    int bd_port = rEmpresa.value("bd_port").toInt();
+    QSqlRecord rGrupo = _empresas.value(ui->comboGroup->currentText()).rec_grupo;
+    QString bd_driver = rGrupo.value("bd_driver").toString();
+    QString bd_name = rGrupo.value("bd_name").toString();
+    QString bd_host = rGrupo.value("bd_host").toString();
+    QString bd_user = rGrupo.value("bd_user").toString();
+    QString bd_pass = rGrupo.value("bd_pass").toString();
+    int bd_port = rGrupo.value("bd_port").toInt();
 
 
     Configuracion_global->group_host = bd_host;
@@ -90,10 +95,8 @@ void Login::on_btnAcceder_clicked()
     Configuracion_global->group_pass = bd_pass;
     Configuracion_global->group_port = bd_port;
     Configuracion_global->group_Driver = bd_driver;
-
     Configuracion_global->group_DBName = bd_name;
     Configuracion_global->groupDB = QSqlDatabase::addDatabase(bd_driver , "Maya");
-    Configuracion_global->reportsDB = QSqlDatabase::addDatabase(bd_driver,"Reports");
 
     Configuracion_global->groupDB.setHostName(bd_host);
     Configuracion_global->groupDB.setUserName(bd_user);
@@ -106,39 +109,15 @@ void Login::on_btnAcceder_clicked()
         return;
     }
 
-    Configuracion_global->reportsDB.setHostName(bd_host);
-    Configuracion_global->reportsDB.setUserName(bd_user);
-    Configuracion_global->reportsDB.setPassword(bd_pass);
-    Configuracion_global->reportsDB.setPort(bd_port);
-    Configuracion_global->reportsDB.open();
-    if(!Configuracion_global->reportsDB.open())
-    {
-        QMessageBox::critical(this,tr("Error"),Configuracion_global->reportsDB.lastError().text());
-        return;
-    }
+    QSqlRecord rEmpresa = _empresas.value(ui->comboGroup->currentText()).rec_empresas.value(ui->cboEmpresa->currentText());
 
-
-    QSqlQuery qEmpresa(Configuracion_global->groupDB);
-    qEmpresa.prepare("select * from empresas where nombre = :nombreemp");
-    qEmpresa.bindValue(":nombreemp",ui->cboEmpresa->currentText());
-
-    if(qEmpresa.exec())
-    {
-        if(qEmpresa.next())
-        {
-            Configuracion_global->nombre_bd_empresa = qEmpresa.record().value("nombre_bd").toString();
-            Configuracion_global->nombre_bd_conta = qEmpresa.record().value("nombre_db_conta").toString();
-            //qDebug() << Configuracion_global->nombre_bd_conta;
-            Configuracion_global->nombre_bd_medica = qEmpresa.record().value("nombre_bd_medica").toString();
-            Configuracion_global->decimales = qEmpresa.record().value("decimales").toInt();
-            Configuracion_global->decimales_campos_totales = qEmpresa.record().value("decimales_campos_totales").toInt();
-            Configuracion_global->importado_sp = qEmpresa.record().value("importada_sp").toBool();
-            Configuracion_global->porc_irpf = qEmpresa.record().value("porc_irpf").toFloat();
-
-        }
-        else
-            QMessageBox::warning(this,tr("ABRIR EMPRESA"),tr("No se encuentra la empresa"),tr("Aceptar"));
-    }
+    Configuracion_global->nombre_bd_empresa = rEmpresa.value("nombre_bd").toString();
+    Configuracion_global->nombre_bd_conta = rEmpresa.value("nombre_db_conta").toString();
+    Configuracion_global->nombre_bd_medica = rEmpresa.value("nombre_bd_medica").toString();
+    Configuracion_global->decimales = rEmpresa.value("decimales").toInt();
+    Configuracion_global->decimales_campos_totales = rEmpresa.value("decimales_campos_totales").toInt();
+    Configuracion_global->importado_sp = rEmpresa.value("importada_sp").toBool();
+    Configuracion_global->porc_irpf = rEmpresa.value("porc_irpf").toFloat();
 
     QSqlQuery qryUsers(Configuracion_global->groupDB);
 
@@ -218,19 +197,20 @@ void Login::init()
 
     QryEmpresas.prepare("Select * from grupos");
 
-    int row = 0;
     if(QryEmpresas.exec())
 	{
         while (QryEmpresas.next())
 		{
+            strc_empresa current;
             QSqlRecord rEmpresa = QryEmpresas.record();
-            ui->comboGroup->addItem(rEmpresa.field("nombre").value().toString());
+            current.rec_grupo = rEmpresa;
+            QString nombreGrupo = rEmpresa.field("nombre").value().toString();
+            ui->comboGroup->addItem(nombreGrupo);
 
             QString bd_driver = rEmpresa.value("bd_driver").toString();
             QString bd_name = rEmpresa.value("bd_name").toString();
             QString bd_host = rEmpresa.value("bd_host").toString();
             QString bd_user = rEmpresa.value("bd_user").toString();
-            //QString bd_pass = rEmpresa.value("bd_pass").toString();
             QString bd_pass = rEmpresa.value("bd_pass").toString();
             int bd_port = rEmpresa.value("bd_port").toInt();
 
@@ -248,26 +228,25 @@ void Login::init()
                 qDebug() << db.lastError().text();
                 continue;
             }
+
             QString query = QString("SELECT * FROM `%1`.empresas;").arg(bd_name);
-            QStringList empresas;
 
             QSqlQuery q(db);
             q.exec(query);
 
             while(q.next())
             {
-                empresas.append(q.record().value("nombre").toString());
+                QString emp = q.record().value("nombre").toString();
+                current.empresas.append(emp);
+                current.rec_empresas.insert(emp,q.record());
             }
-            QPair<QStringList , QSqlRecord> par;
-            par.first = empresas;
-            par.second = rEmpresa;
-            _empresas.insert(row,par);
-            row++;
+            _empresas.insert(nombreGrupo,current);
 		}
 	}
-    ui->cboEmpresa->clear();
-    ui->cboEmpresa->addItems(_empresas.value(0).first);
+
 	this->ui->lineUsuario->setFocus();
+    ui->cboEmpresa->clear();
+    ui->cboEmpresa->addItems(_empresas.value(ui->cboEmpresa->itemText(0)).empresas);
 
    // this->ui->lineUsuario->setText("marc");
     //this->ui->linePassword->setText("patata");
@@ -284,9 +263,8 @@ void Login::on_pushButton_2_clicked()
         formUsers.exec();
     }
 }
-
-void Login::on_comboGroup_currentIndexChanged(int index)
+void Login::on_comboGroup_currentTextChanged(const QString &arg1)
 {
     ui->cboEmpresa->clear();
-    ui->cboEmpresa->addItems(_empresas.value(index).first);
+    ui->cboEmpresa->addItems(_empresas.value(arg1).empresas);
 }
