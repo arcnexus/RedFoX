@@ -36,6 +36,7 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
             while(q.next())
                 campos << q.record().value(0).toString();
             _campos.insert(tabla,campos);
+
         }
 
         QStringList empTables;
@@ -55,6 +56,8 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
             q2.exec(s);
             while(q2.next())
                 campos << q2.record().value(0).toString();
+
+
             _campos.insert(tabla,campos);
         }
 
