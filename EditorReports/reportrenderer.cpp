@@ -632,7 +632,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                     ele.setAttribute("h",newH);
                                                 }
                                                 if(_i_acums.contains(ele.attribute("name")))
-                                                    _i_acums[ele.attribute("name")]+= getNumber(text,formato);
+                                                    _i_acums[ele.attribute("name")]+= iRecord.value(value.at(2)).toDouble();
                                             }
                                             else if(ele.attribute("id")=="RelationalField")
                                             {
