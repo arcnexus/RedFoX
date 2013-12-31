@@ -192,6 +192,7 @@ void Login::init()
 {
     ui->comboGroup->clear();
     _empresas.clear();
+    QString grupo = "";
 
     QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
@@ -206,6 +207,9 @@ void Login::init()
             current.rec_grupo = rEmpresa;
             QString nombreGrupo = rEmpresa.field("nombre").value().toString();
             ui->comboGroup->addItem(nombreGrupo);
+
+            if(grupo == "")
+                grupo = nombreGrupo;
 
             QString bd_driver = rEmpresa.value("bd_driver").toString();
             QString bd_name = rEmpresa.value("bd_name").toString();
@@ -237,6 +241,7 @@ void Login::init()
             while(q.next())
             {
                 QString emp = q.record().value("nombre").toString();
+
                 current.empresas.append(emp);
                 current.rec_empresas.insert(emp,q.record());
             }
@@ -245,8 +250,7 @@ void Login::init()
 	}
 
 	this->ui->lineUsuario->setFocus();
-    ui->cboEmpresa->clear();
-    ui->cboEmpresa->addItems(_empresas.value(ui->cboEmpresa->itemText(0)).empresas);
+    ui->cboEmpresa->addItems(_empresas.value(grupo).empresas);
 
    // this->ui->lineUsuario->setText("marc");
     //this->ui->linePassword->setText("patata");
