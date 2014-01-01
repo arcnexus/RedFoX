@@ -93,6 +93,8 @@ private slots:
     void showAvisos();
     void on_lineUsuarioActivo_clicked();
 
+    void on_txtEjercicio_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *e);

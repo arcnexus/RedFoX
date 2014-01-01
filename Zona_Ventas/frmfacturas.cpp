@@ -45,6 +45,7 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->lbcontabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblFacturaImpresa->setVisible(false);
+
     //-------------------------
     // Rellenar formas de pago
     //-------------------------
@@ -548,6 +549,7 @@ void frmFacturas::BloquearCampos(bool state)
     ui->cboVer->setEnabled(state);
 
     m_busqueda->block(!state);
+
   }
 
 void frmFacturas::LLenarFactura() {
@@ -1567,9 +1569,11 @@ void frmFacturas::on_btnGuardar_clicked()
     }
     if(tipo == 1 && oFactura->factura.isEmpty())
         oFactura->factura = tr("BORRADOR");
-    if(tipo == 2 && oFactura->factura.isEmpty())
-        oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
+    if(tipo == 2 && oFactura->factura.isEmpty()){
 
+        oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
+        oFactura->editable = false;
+}
     succes = oFactura->GuardarFactura(oFactura->id,false);
     if(succes)
     {
@@ -1615,6 +1619,7 @@ void frmFacturas::on_btnGuardar_clicked()
 void frmFacturas::mostrarBusqueda()
 {
      _showBarraBusqueda(m_busqueda);
+     ui->stackedWidget->setCurrentIndex(1);
      m_busqueda->doFocustoText();
 }
 
@@ -1649,5 +1654,3 @@ void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(const QString &ar
 
     }
 }
-
-

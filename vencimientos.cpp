@@ -169,28 +169,32 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
                         dia_pago2 = SqlCalls::SelectOneField("clientes","dia_pago2",QString("id=%1").arg(id_cliente),
                                                              Configuracion_global->groupDB,error).toInt();
                     }
-                    if(dia < dia_pago1)
-                        dia = dia_pago1;
-                    else if(dia < dia_pago2)
-                        dia = dia_pago2;
-                    else if(dia < dia_pago3)
-                        dia = dia_pago3;
-                    else if(dia < dia_pago4)
-                        dia = dia_pago4;
-                    else if(dia > dia_pago1 && dia > dia_pago2 &&dia > dia_pago3 && dia > dia_pago4)
+                    if(dias_entre_plazos >0)
                     {
-                        dia = dia_pago1;
-                        if(dia == 0)
-                            dia = QDate().currentDate().day();
-                        if (mes <=11)
-                            mes++;
-                        else
+                        if(dia < dia_pago1)
+                            dia = dia_pago1;
+                        else if(dia < dia_pago2)
+                            dia = dia_pago2;
+                        else if(dia < dia_pago3)
+                            dia = dia_pago3;
+                        else if(dia < dia_pago4)
+                            dia = dia_pago4;
+                        else if(dia > dia_pago1 && dia > dia_pago2 &&dia > dia_pago3 && dia > dia_pago4)
                         {
-                            mes = 1;
-                            ano++;
+                            dia = dia_pago1;
+                            if(dia == 0)
+                                dia = QDate().currentDate().day();
+                            if (mes <=11)
+                                mes++;
+                            else
+                            {
+                                mes = 1;
+                                ano++;
+                            }
+
+
+
                         }
-
-
                     }
                     vencimiento = QDate(ano,mes,dia);
                    //---------------------

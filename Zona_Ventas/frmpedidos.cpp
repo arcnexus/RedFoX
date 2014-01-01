@@ -1775,6 +1775,7 @@ void FrmPedidos::SpinGastoDist3_valueChanged(double arg1)
 
 void FrmPedidos::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }

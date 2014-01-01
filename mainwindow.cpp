@@ -997,3 +997,8 @@ void MainWindow::on_lineUsuarioActivo_clicked()
     frmCambiarUsuario fUsuarios;
     fUsuarios.exec();
 }
+
+void MainWindow::on_txtEjercicio_editingFinished()
+{
+    Configuracion_global->cEjercicio = ui->txtEjercicio->text();
+}

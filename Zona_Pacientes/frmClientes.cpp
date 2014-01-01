@@ -1893,8 +1893,10 @@ void frmClientes::on_btnExcepciones_clicked()
 
 void frmClientes::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
+
 }
 
 void frmClientes::ocultarBusqueda()
