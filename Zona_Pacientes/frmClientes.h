@@ -76,6 +76,7 @@ private slots:
 
     void on_btnFichaPaciente_clicked();
     void AddCustomerType();
+    void DelCustomerType();
     void DeshacerdireccionAlternativa();
     void BorrardireccionAlternativa();
     void EditardireccionAlternativa();
