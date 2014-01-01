@@ -32,6 +32,7 @@ void frmBuscarApunteContable::on_btnAceptar_clicked()
 {
     QModelIndex index = ui->tablaapuntes->currentIndex();
     this->id = ui->tablaapuntes->model()->index(index.row(),0).data().toInt();
+    accept();
 
 }
 
