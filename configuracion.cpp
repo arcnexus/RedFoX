@@ -743,9 +743,9 @@ bool Configuracion::CargarDatosBD()
     this->global_routeLite = settings.value("cRutaDBMaya").toString();
     this->global_host = settings.value("cHostBDMaya").toString();
     this->global_user  =   DeCrypt(settings.value("cUserBDMaya").toString());
-  //  qDebug() << global_user;
+//    qDebug() << global_user;
     this->global_pass = DeCrypt(settings.value("cPasswordBDMaya").toString());
-   // qDebug() << global_pass;
+//    qDebug() << global_pass;
     this->global_port = settings.value("global_port").toInt();
 
     this->nombre_bdTiendaWeb = settings.value("nombre_bdTiendaWeb").toString();
@@ -774,7 +774,7 @@ bool Configuracion::CargarDatosBD()
         this->globalDB.setDatabaseName("mayaglobal");
         this->globalDB.setHostName(Configuracion_global->global_host);
         this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
-        //this->globalDB.open("root","meganizado"); ?? q collons!?
+        //this->globalDB.open("root","meganizado");// ?? q collons!?
     }
 
     if (this->globalDB.lastError().isValid())
