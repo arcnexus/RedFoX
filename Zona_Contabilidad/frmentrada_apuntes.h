@@ -43,6 +43,7 @@ private slots:
     void on_txtnum_asiento_valueChanged(int arg1);
     void on_txtcuenta_debe_editingFinished();
 
+    void on_btnbuscar_asiento_clicked();
 };
 
 #endif // FRMENTRADA_APUNTES_H

@@ -260,10 +260,10 @@ void frmFacturas::LLenarCampos() {
     ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec2,'f',Configuracion_global->decimales)));
     ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec3,'f',Configuracion_global->decimales)));
     ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec4,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec1,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec2,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec3,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->porc_rec4,'f',Configuracion_global->decimales)));
+    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->rec1,'f',Configuracion_global->decimales)));
+    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->rec2,'f',Configuracion_global->decimales)));
+    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->rec3,'f',Configuracion_global->decimales)));
+    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->rec4,'f',Configuracion_global->decimales)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->total_recargo,'f',Configuracion_global->decimales)));
     ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->entregado_a_cuenta,'f',Configuracion_global->decimales)));
     ui->txtimporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_pendiente,'f',Configuracion_global->decimales)));
@@ -1413,6 +1413,8 @@ void frmFacturas::on_tabla_facturas_doubleClicked(const QModelIndex &index)
      int id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(index.row(),0),Qt::EditRole).toInt();
      oFactura->RecuperarFactura(id);
      LLenarCampos();
+     QString filter = QString("id_Cab = '%1'").arg(oFactura->id);
+     helper.fillTable("empresa","lin_fac",filter);
      ui->stackedWidget->setCurrentIndex(0);
      ui->btnEditar->setEnabled(true);
      ui->btnImprimir->setEnabled(true);
@@ -1421,9 +1423,9 @@ void frmFacturas::on_tabla_facturas_doubleClicked(const QModelIndex &index)
 
 void frmFacturas::on_tabla_facturas_clicked(const QModelIndex &index)
 {
-    int id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oFactura->RecuperarFactura(id);
-    //LLenarCampos();
+//    int id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(index.row(),0),Qt::EditRole).toInt();
+//    oFactura->RecuperarFactura(id);
+//    //LLenarCampos();
 
 }
 

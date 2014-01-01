@@ -272,7 +272,8 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
 
     if(!updated)
     {
-        QMessageBox::critical(qApp->activeWindow(),tr("error al guardar datos Factura:"), error);
+        QMessageBox::critical(qApp->activeWindow(),tr("Gestión de facturas"),tr("error al guardar datos Factura: %1").arg(error),
+                              tr("Aceptar"));
         succes =  false;
     }
     else
