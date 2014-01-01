@@ -582,10 +582,16 @@ QString Configuracion::devolver_codigo_barras(int id)
 QString Configuracion::devolver_referencia_articulo(int id)
 {
     QSqlQuery query_art(Configuracion_global->groupDB);
-    if(query_art.exec("select codigo_fabricante from articulos where id = "+QString::number(id)))
+    if(query_art.exec("select codigo,codigo_fabricante from articulos where id = "+QString::number(id)))
     {
         query_art.next();
-        return query_art.record().value("codigo_fabricante").toString();
+        QString ref = query_art.record().value("codigo_fabricante").toString();
+        QString cod = query_art.record().value("codigo").toString();
+        if(!ref.trimmed().isEmpty())
+            return ref;
+        else
+            return cod;
+
 
     } else
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
@@ -1134,8 +1140,8 @@ QString Configuracion::DeCrypt(QString input)
     if(input.isEmpty())
         return input;
     int c = 0;
-        //char* dd = new char[input.size()/2];
-        char dd[input.size()/2];
+        char* dd = new char[input.size()/2];
+        //char dd[input.size()/2];
 
         for(int a = 0; a< input.size() ; a+=2)
         {
@@ -1164,7 +1170,7 @@ QString Configuracion::DeCrypt(QString input)
 
         QString ss = QString::fromStdString(decryptedtext);
         ss.remove(QRegExp("\\000"));
-       // delete [] dd;
+        delete [] dd;
         return ss;
 }
 

@@ -210,6 +210,7 @@ void FrmArticulos::setUpBusqueda()
 }
 void FrmArticulos::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }

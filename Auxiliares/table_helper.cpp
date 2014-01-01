@@ -704,6 +704,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
     if(query.exec())
     {
         if(query.next() && codigo !=codigo_art)
+
         {
             QSqlRecord r = query.record();
 
@@ -777,7 +778,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
                                  tr("Codigo desconocido"),
                                  tr("Codigo de articulo desconocido "
                                     "¿Desea introducir el árticulo? (si no lo hace no se registraran acumulados)")
-                                    ,tr("Usar de todos modos"),tr("Sí"))== QMessageBox::Accepted)
+                                    ,tr("Usar de todos modos"),tr("Crear uno nuevo"))== QMessageBox::Accepted)
             {
                 FrmArticulos f((QWidget*)helped_table->parent(),true);
                 f.exec();

@@ -24,7 +24,7 @@
    <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
@@ -80,7 +80,7 @@
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">

@@ -114,6 +114,9 @@ color: rgb(0, 0, 0);</string>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="maximum">
+            <double>99999999.989999994635582</double>
+           </property>
           </widget>
          </item>
          <item row="1" column="1">
@@ -274,6 +277,12 @@ color: rgb(0, 0, 0);</string>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
+           </property>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>999999999.990000009536743</double>
            </property>
           </widget>
          </item>

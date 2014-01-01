@@ -1668,6 +1668,7 @@ void FrmAlbaran::on_spinPorc_dto_pp_editingFinished()
 
 void FrmAlbaran::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }

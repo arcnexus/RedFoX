@@ -3,6 +3,7 @@
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate_contabilidad.h"
 #include "../Zona_Contabilidad/cuentas_contables.h"
+#include "../Zona_Contabilidad/frmbuscarapuntecontable.h"
 
 FrmEntrada_apuntes::FrmEntrada_apuntes(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -179,4 +180,17 @@ void FrmEntrada_apuntes::on_txtcuenta_debe_editingFinished()
     blockSignals(true);
     ui->txtcuenta_debe->setText(cuenta.completar_cuenta(ui->txtcuenta_debe->text()));
     blockSignals(false);
+}
+
+void FrmEntrada_apuntes::on_btnbuscar_asiento_clicked()
+{
+    frmBuscarApunteContable frmbuscar(this);
+    if(frmbuscar.exec() ==QDialog::Accepted)
+    {
+        int id = frmbuscar.get_id();
+        // TODO CARGAR APUNTE
+    } else
+    {
+        TimedMessageBox *t = new TimedMessageBox(this,tr("Busqueda cancelada por el usuario"));
+    }
 }

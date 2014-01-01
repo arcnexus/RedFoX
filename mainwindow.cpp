@@ -749,6 +749,23 @@ MainWindow::MainWindow(QWidget *parent) :
 // qDebug() << i.value();
 // }
 // qDebug() << map.value(7).value("nombre").toString();   
+    keepAlive.setInterval(360000);
+
+    connect(&keepAlive, &QTimer::timeout,[this]{
+        QSqlQuery q(Configuracion_global->groupDB);
+        q.exec("Select * from monedas limit 1");
+        QSqlQuery q2(Configuracion_global->empresaDB);
+        q2.exec("Select * from lin_fac limit 1");
+        QSqlQuery q3(Configuracion_global->contaDB);
+        q3.exec("Select * from diario limit 1");
+        if(Configuracion_global->medic)
+        {
+            //TODO reactivar bd medic
+           // QSqlQuery q4(Configuracion_global->medicaDB);
+           // q4.exec("Select * from pacientes limit 1");
+        }
+    });
+    keepAlive.start(360000);
 }
 
 void MainWindow::block_main()
@@ -979,4 +996,9 @@ void MainWindow::on_lineUsuarioActivo_clicked()
 {
     frmCambiarUsuario fUsuarios;
     fUsuarios.exec();
+}
+
+void MainWindow::on_txtEjercicio_editingFinished()
+{
+    Configuracion_global->cEjercicio = ui->txtEjercicio->text();
 }

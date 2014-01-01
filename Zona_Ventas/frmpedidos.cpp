@@ -1664,6 +1664,8 @@ void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
     int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
     oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
     LLenarCampos();
+    QString filter = QString("id_Cab = '%1'").arg(oPedido->id);
+    helper.fillTable("empresa","lin_ped",filter);
     ui->stackedWidget->setCurrentIndex(0);
     ocultarBusqueda();
     BloquearCampos(true);
@@ -1773,6 +1775,7 @@ void FrmPedidos::SpinGastoDist3_valueChanged(double arg1)
 
 void FrmPedidos::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }

@@ -49,6 +49,7 @@ void frmInventario::formato_tabla(QSqlTableModel *modelo)
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         modelo->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
+    ui->tabla->setColumnHidden(6,true);
 }
 
 void frmInventario::on_txtBuscar_textEdited(const QString &arg1)
@@ -76,4 +77,48 @@ void frmInventario::on_btnSincronizar_clicked()
 void frmInventario::on_btnBuscar_clicked()
 {
     ui->txtBuscar->setFocus();
+}
+
+void frmInventario::on_btnImprimir_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        QString report = "inventario_valorado";
+
+
+        QMap <QString,QString> parametros;
+        parametros["fecha"] = QDate::currentDate().toString("dd/MM/yyyy");
+        QSqlQuery queryValor(Configuracion_global->groupDB);
+        if(queryValor.exec("select sum(valor_stock) as valor from articulos where id >0"))
+            queryValor.next();
+        else
+            QMessageBox::warning(this,tr("Inventario"),
+                                 tr("No se pudo calcular el valor del stock: %1").arg(queryValor.lastError().text()));
+        double nValor = queryValor.value(0).toDouble();
+        QString cValor = QString::number(nValor,'f',Configuracion_global->decimales_campos_totales);
+        parametros["valor"] = Configuracion_global->toFormatoMoneda(cValor);
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
+        }
+
+
+    }
 }

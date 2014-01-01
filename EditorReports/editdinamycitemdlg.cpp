@@ -3,23 +3,31 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDebug>
+#include "../Auxiliares/Globlal_Include.h"
 
 bool EditDinamycItemDlg::isSet = false;
 QStringList EditDinamycItemDlg::_zonas;
 QMap<QString,QStringList> EditDinamycItemDlg::_tablas;
 QMap<QString,QStringList> EditDinamycItemDlg::_campos;
-
+#include <QSqlError>
 EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
     QDialog(parent)
 {
     if(!isSet)
     {
+        QSqlQuery x(QSqlDatabase::database("grupo"));
+        if(x.exec("Select valor_stock FROM articulos"))
+            while (x.next()) {
+                qDebug() << "valor_stock" << x.record().value("valor_stock");
+            }
+        else
+            qDebug() << x.lastError();
         _zonas << "General" << "Empresa";
 
         //TODO cambiar dentro de Maya
 
         QStringList groupTables;
-        QSqlQuery q(QSqlDatabase::database("grupo"));
+        QSqlQuery q(Configuracion_global->groupDB);
         q.exec("show tables");
         while(q.next())
             groupTables << q.record().value(0).toString();
@@ -35,11 +43,11 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
             q.exec(s);
             while(q.next())
                 campos << q.record().value(0).toString();
-            _campos.insert(tabla,campos);
+            _campos.insert(tabla,campos);            
         }
 
         QStringList empTables;
-        QSqlQuery q2(QSqlDatabase::database("empresa"));
+        QSqlQuery q2(Configuracion_global->empresaDB);
         q2.exec("show tables");
         while(q2.next())
             empTables << q2.record().value(0).toString();
@@ -55,6 +63,8 @@ EditDinamycItemDlg::EditDinamycItemDlg(QWidget *parent) :
             q2.exec(s);
             while(q2.next())
                 campos << q2.record().value(0).toString();
+
+
             _campos.insert(tabla,campos);
         }
 
