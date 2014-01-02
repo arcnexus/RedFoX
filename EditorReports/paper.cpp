@@ -596,6 +596,7 @@ void Paper::setSize(_Sizes siz, double w, double h, _Orientacion o)
     {
         this->setSize(w,h);
     }
+    m_orientacion = o;
 }
 
 bool Paper::addSection(QString nombre, Section::SectionType type)
