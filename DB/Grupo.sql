@@ -90,7 +90,7 @@ CREATE TABLE `@grupo@`.`articulos` (
   `id_web` int(11) DEFAULT '0',
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
-  `mostrar_en_cuadro` tinyint(1) NOT NULL,
+  `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,
   `imagen3` blob,
   `imagen4` blob,

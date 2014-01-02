@@ -881,6 +881,7 @@ void FrmEmpresas::on_btnEditaEmpresa_clicked()
         if(e.name == current)
         {
             _targetGroupDbRecord = _empresas.value(ui->listWidgetGrupos->currentItem()->text()).second;
+            _idEmpresa = e.record.value("id").toInt();
             _llenarCampos(e.record);
             break;
         }
@@ -985,16 +986,22 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
 
     QString error;
     qDebug() << _targetGroupDbRecord;
-    int _targetEmpresa =_targetGroupDbRecord.value("id").toInt();
-    QString _target_database =_targetGroupDbRecord.value("db_name").toString();
 
-//    bool success = SqlCalls::SqlUpdate(data,"empresas",_empresas.value(ui->listWidgetGrupos->currentItem()->text()),
-//                                       QString("id = %1").arg(_targetEmpresa),error);
-//    bool success = SqlCalls::SqlUpdate(data,"empresas",QSqlDatabase::database(_target_database),QString("id = %1").arg(_targetEmpresa),error);
-//    if(success)
-//        TimedMessageBox *m = new TimedMessageBox(this,tr("Las modificaciones han sido guardadas"));
-//    else
-//        QMessageBox::warning(this,tr("Gestión de empresas"),tr("No se han podido guardar los datos de la empresa: %1").arg(error),
-//                             tr("Aceptar"));
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL","save_empresa");
+    db.setHostName(_targetGroupDbRecord.value("bd_host").toString());
+    db.setUserName(_targetGroupDbRecord.value("bd_user").toString());
+    db.setPassword(_targetGroupDbRecord.value("bd_pass").toString());
+    db.setPort(_targetGroupDbRecord.value("bd_port").toInt());
+    db.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
+    if(db.open())
+    {
+        if(SqlCalls::SqlUpdate(data,"empresas",db,QString("id = %1").arg(_idEmpresa),error))
+            TimedMessageBox *m = new TimedMessageBox(this,tr("Las modificaciones han sido guardadas"));
+        else
+            QMessageBox::warning(this,tr("Gestión de empresas"),tr("No se han podido guardar los datos de la empresa:\n %1").arg(error),
+                                 tr("Aceptar"));
+    }
+    db.close();
+    QSqlDatabase::removeDatabase("save_empresa");
     ui->stackedWidget->setCurrentWidget(ui->main_page);
 }
