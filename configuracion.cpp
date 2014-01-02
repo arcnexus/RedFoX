@@ -1239,6 +1239,10 @@ void Configuracion::ImprimirDirecto(QString report, QMap<QString, QString> query
         ReportRenderer r;
         QPrinter printer;
         QPrintDialog dlg(&printer);
+
+        if(dlg.exec()==QDialog::Rejected)
+            return;
+
         r.setPrinter(&printer);
         QString errorStr;
         int errorLine;

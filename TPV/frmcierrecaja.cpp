@@ -132,13 +132,13 @@ void FrmCierreCaja::on_btnIniciar_cierre_clicked()
 
     result.exec(cSQL);
     result.next();
-    double efectivo = result.record().value("efectivo").toDouble() + importe_deudas_efectivo;
+    double efectivo = result.record().value("efectivo").toDouble();// + importe_deudas_efectivo;
     ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                        efectivo,'f',
                                                                        Configuracion_global->decimales_campos_totales)));
     double efect = Configuracion_global->MonedatoDouble(ui->lblimporte_abertura->text()) +
-                                                         Configuracion_global->MonedatoDouble(ui->txtEfectivo->text()) +
-                                                         efectivo;
+                                                         Configuracion_global->MonedatoDouble(
+                                                            QString::number(efectivo,'f',2));
     ui->txtCaja_moneda->setText(Configuracion_global->toFormatoMoneda(QString::number(efect,'f',
                                                                                       Configuracion_global->decimales_campos_totales)));
 
@@ -239,6 +239,7 @@ void FrmCierreCaja::on_btnCierreParcial_clicked()
     ui->btnResumenExtras->setEnabled(true);
     ui->btnResumenSalidas->setEnabled(true);
     ui->btnResumentickets->setEnabled(true);
+    ui->btnResmenFacturas->setEnabled(true);
 
 }
 
@@ -661,4 +662,48 @@ void FrmCierreCaja::on_btnResumenExtras_clicked()
         }
 
     }
+}
+
+void FrmCierreCaja::on_btnResmenFacturas_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    //dlg_print.set_email(oCliente3->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+      //ui->lblimpreso->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        QString fecha = ui->calendarWidget->selectedDate().toString("yyyyMMdd");
+        parametros_sql["Empresa.cab_fac"] = QString("fecha = '%1'").arg(fecha);
+
+        QString report;
+            report ="res_facturas";
+
+        QMap <QString,QString> parametros;
+        parametros["fecha"] = QDate::currentDate().toString("dd/MM/yyyy");
+        parametros["fecha_ini"] = ui->calendarWidget->selectedDate().toString("dd/MM/yyyy");
+        parametros["fecha_fin"] = ui->calendarWidget->selectedDate().toString("dd/MM/yyyy");
+        qDebug() << Configuracion_global->nombreEmpresa;
+        parametros["empresa"] = Configuracion_global->nombreEmpresa;
+
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
+        }
+
+    }
+
 }
