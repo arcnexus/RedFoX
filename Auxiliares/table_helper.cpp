@@ -694,94 +694,100 @@ void Table_Helper::calcular_por_Base(QString sbase)
 void Table_Helper::rellenar_con_Articulo(int row)
 {
     QString codigo = helped_table->item(row,0)->text();
-    QSqlQuery query(Configuracion_global->groupDB);
-    QString sql;
-    if (this->comprando)
-        sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo_fabricante = '%1'").arg(codigo);
-    else
-        sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
-    query.prepare(sql);
-    if(query.exec())
+    if(codigo =="*")
     {
-        if(query.next() && codigo !=codigo_art)
-
+       searchArticulo();
+    } else
+    {
+        QSqlQuery query(Configuracion_global->groupDB);
+        QString sql;
+        if (this->comprando)
+            sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo_fabricante = '%1'").arg(codigo);
+        else
+            sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
+        query.prepare(sql);
+        if(query.exec())
         {
-            QSqlRecord r = query.record();
+            if(query.next() && codigo !=codigo_art)
 
-
-            if(r.value("descripcion_reducida").toString().isEmpty())
-                helped_table->item(row,2)->setText(r.value("descripcion").toString());
-            else
-                helped_table->item(row,2)->setText(r.value("descripcion_reducida").toString());
-
-            if (this->comprando)
             {
-                double coste = r.value("coste").toDouble();
-                helped_table->item(row,0)->setText(r.value("codigo_fabricante").toString().toUpper());
-                helped_table->item(row,3)->setText(QString::number(coste,'f',Configuracion_global->decimales));
-            }
-            else
-            {
-                helped_table->item(row,0)->setText(r.value("codigo").toString().toUpper());
-                double precio;
-                if(this->tipo_dto_tarifa == 1)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto1").toDouble()/100));
-                else if (this->tipo_dto_tarifa == 2)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
-                else if (this->tipo_dto_tarifa == 3)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto3").toDouble()/100));
-                else if (this->tipo_dto_tarifa == 4)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto4").toDouble()/100));
-                else if (this->tipo_dto_tarifa == 5)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto5").toDouble()/100));
-                else if (this->tipo_dto_tarifa == 6)
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto6").toDouble()/100));
+                QSqlRecord r = query.record();
+
+
+                if(r.value("descripcion_reducida").toString().isEmpty())
+                    helped_table->item(row,2)->setText(r.value("descripcion").toString());
                 else
-                    precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble());
+                    helped_table->item(row,2)->setText(r.value("descripcion_reducida").toString());
 
-                helped_table->item(row,3)->setText(QString::number(precio,'f',Configuracion_global->decimales));
-                helped_table->item(row,4)->setText(QString::number(precio,'f',Configuracion_global->decimales));
+                if (this->comprando)
+                {
+                    double coste = r.value("coste").toDouble();
+                    helped_table->item(row,0)->setText(r.value("codigo_fabricante").toString().toUpper());
+                    helped_table->item(row,3)->setText(QString::number(coste,'f',Configuracion_global->decimales));
+                }
+                else
+                {
+                    helped_table->item(row,0)->setText(r.value("codigo").toString().toUpper());
+                    double precio;
+                    if(this->tipo_dto_tarifa == 1)
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto1").toDouble()/100));
+                    else if (this->tipo_dto_tarifa == 2)
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto2").toDouble()/100));
+                    else if (this->tipo_dto_tarifa == 3)
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto3").toDouble()/100));
+                    else if (this->tipo_dto_tarifa == 4)
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto4").toDouble()/100));
+                    else if (this->tipo_dto_tarifa == 5)
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto5").toDouble()/100));
+                    else if (this->tipo_dto_tarifa == 6)
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble() *(r.value("porc_dto6").toDouble()/100));
+                    else
+                        precio = r.value("pvp").toDouble()-(r.value("pvp").toDouble());
+
+                    helped_table->item(row,3)->setText(QString::number(precio,'f',Configuracion_global->decimales));
+                    helped_table->item(row,4)->setText(QString::number(precio,'f',Configuracion_global->decimales));
+                }
+                helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
+                                                                   Configuracion_global->decimales_campos_totales));
+                if(use_re)
+                {
+                   float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
+                   helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
+                }
+               Articulo oArt(this);
+               float porc_dto = oArt.asigna_dto_linea(r.value("id").toInt(),id_cliente,0,0);
+               helped_table->item(row,5)->setText(QString::number(porc_dto,'f',Configuracion_global->decimales_campos_totales));
+               float dto = helped_table->item(row,4)->text().toDouble()*(porc_dto/100.0);
+               helped_table->item(row,6)->setText(QString::number(dto,'f',Configuracion_global->decimales_campos_totales));
+               double total = helped_table->item(row,4)->text().toDouble() - dto;
+               helped_table->item(row,9)->setText(QString::number(total,'f',Configuracion_global->decimales));
+               //-----------------
+               // Alineación
+               //-----------------
+               helped_table->item(row,1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,3)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,4)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,5)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,6)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,7)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,8)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+               helped_table->item(row,9)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+
+
             }
-            helped_table->item(row,7)->setText(QString::number(r.value("tipo_iva").toFloat(),'f',
-                                                               Configuracion_global->decimales_campos_totales));
-            if(use_re)
+            else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
             {
-               float rec = Configuracion_global->devolver_rec_iva(r.value("tipo_iva").toFloat());
-               helped_table->item(row,8)->setText(QString::number(rec,'f',Configuracion_global->decimales_campos_totales));
-            }
-           Articulo oArt(this);
-           float porc_dto = oArt.asigna_dto_linea(r.value("id").toInt(),id_cliente,0,0);
-           helped_table->item(row,5)->setText(QString::number(porc_dto,'f',Configuracion_global->decimales_campos_totales));
-           float dto = helped_table->item(row,4)->text().toDouble()*(porc_dto/100.0);
-           helped_table->item(row,6)->setText(QString::number(dto,'f',Configuracion_global->decimales_campos_totales));
-           double total = helped_table->item(row,4)->text().toDouble() - dto;
-           helped_table->item(row,9)->setText(QString::number(total,'f',Configuracion_global->decimales));
-           //-----------------
-           // Alineación
-           //-----------------
-           helped_table->item(row,1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,3)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,4)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,5)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,6)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,7)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,8)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-           helped_table->item(row,9)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-
-
-
-        }
-        else if(helped_table->item(row,0)->text() !="" && helped_table->item(row,2)->text().isEmpty())
-        {
-            qDebug() << sql;
-            if(QMessageBox::question(helped_table,
-                                 tr("Codigo desconocido"),
-                                 tr("Codigo de articulo desconocido "
-                                    "¿Desea introducir el árticulo? (si no lo hace no se registraran acumulados)")
-                                    ,tr("Usar de todos modos"),tr("Crear uno nuevo"))== QMessageBox::Accepted)
-            {
-                FrmArticulos f((QWidget*)helped_table->parent(),true);
-                f.exec();
+                qDebug() << sql;
+                if(QMessageBox::question(helped_table,
+                                     tr("Codigo desconocido"),
+                                     tr("Codigo de articulo desconocido "
+                                        "¿Desea introducir el árticulo? (si no lo hace no se registraran acumulados)")
+                                        ,tr("Usar de todos modos"),tr("Crear uno nuevo"))== QMessageBox::Accepted)
+                {
+                    FrmArticulos f((QWidget*)helped_table->parent(),true);
+                    f.exec();
+                }
             }
         }
     }
@@ -800,6 +806,7 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
         }
         if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Tab)
         {
+
             if(helped_table->currentColumn() != helped_table->columnCount()-1)
             {
                 if(helped_table->currentColumn()== 3 )
@@ -822,9 +829,10 @@ bool Table_Helper::eventFilter(QObject *target, QEvent *event)
             else
                 addRow();
         }
-        if(keyEvent->key() == Qt::Key_F2)
+        if(keyEvent->key() == Qt::Key_Escape)
         {
             searchArticulo();
+            return false;
         }
         emit i_recalc();
     }    

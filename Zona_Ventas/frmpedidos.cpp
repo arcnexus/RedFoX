@@ -825,6 +825,7 @@ void FrmPedidos::on_btnAnadir_clicked()
 void FrmPedidos::on_btnEditar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    ocultarBusqueda();
     if (oPedido->editable)
     {
         BloquearCampos(false);
@@ -1615,7 +1616,7 @@ void FrmPedidos::on_btnImprimir_clicked()
                 QMap <QString,QString> parametros_sql;
                 parametros_sql["Empresa.ped_cli"] = QString("id = %1").arg(oPedido->id);
                 parametros_sql["Empresa.lin_ped"] = QString("id_cab = %1").arg(oPedido->id);
-                QString report = "ped_cli_"+QString::number(oCliente3->ididioma);
+                QString report = "pedido_"+QString::number(oCliente3->ididioma);
 
 
                 QMap <QString,QString> parametros;

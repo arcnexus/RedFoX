@@ -60,6 +60,8 @@ private slots:
 
     void on_btnResumenExtras_clicked();
 
+    void on_btnResmenFacturas_clicked();
+
 private:
     Ui::FrmCierreCaja *ui;
     bool facturas_en_cierre;
