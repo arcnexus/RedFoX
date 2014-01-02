@@ -9,6 +9,7 @@ frmInventario::frmInventario(QWidget *parent) :
 
 {
     ui->setupUi(this);
+    ui->btnSincronizar->setVisible(false);
     // ------------------------
     // Tabla
     // ------------------------
@@ -43,7 +44,8 @@ void frmInventario::formato_tabla(QSqlTableModel *modelo)
     QVariantList sizes;
 
     headers << "id" << tr("código") <<tr("C.Barras") <<tr("R. Fabricante") << tr("Descripción") << tr("Stock Real");
-    sizes << 0 << 120 << 120 <<120 <<500 << 120;
+    headers <<"Stock Almacen";
+    sizes << 0 << 120 << 120 <<120 <<500 << 120 <<120;
     for(int i = 0; i < headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
@@ -68,10 +70,10 @@ void frmInventario::on_txtBuscar_textEdited(const QString &arg1)
 
 void frmInventario::on_btnSincronizar_clicked()
 {
-    QSqlQuery stock(Configuracion_global->groupDB);
-    QString cSql = "update articulos set stock_fisico_almacen = stock_real where id >0;";
-    if(stock.exec(cSql))
-        TimedMessageBox *t = new TimedMessageBox(this,tr("Se han sincronizado los stocks"));
+//    QSqlQuery stock(Configuracion_global->groupDB);
+//    QString cSql = "update articulos set stock_fisico_almacen = stock_real where id >0;";
+//    if(stock.exec(cSql))
+//        TimedMessageBox *t = new TimedMessageBox(this,tr("Se han sincronizado los stocks"));
 }
 
 void frmInventario::on_btnBuscar_clicked()
@@ -88,20 +90,21 @@ void frmInventario::on_btnImprimir_clicked()
 
         int valor = dlg_print.get_option();
         QMap <QString,QString> parametros_sql;
+        parametros_sql["General.articulos"]= "id > 0 order by codigo";
         QString report = "inventario_valorado";
 
 
         QMap <QString,QString> parametros;
         parametros["fecha"] = QDate::currentDate().toString("dd/MM/yyyy");
-        QSqlQuery queryValor(Configuracion_global->groupDB);
-        if(queryValor.exec("select sum(valor_stock) as valor from articulos where id >0"))
-            queryValor.next();
-        else
-            QMessageBox::warning(this,tr("Inventario"),
-                                 tr("No se pudo calcular el valor del stock: %1").arg(queryValor.lastError().text()));
-        double nValor = queryValor.value(0).toDouble();
-        QString cValor = QString::number(nValor,'f',Configuracion_global->decimales_campos_totales);
-        parametros["valor"] = Configuracion_global->toFormatoMoneda(cValor);
+//        QSqlQuery queryValor(Configuracion_global->groupDB);
+//        if(queryValor.exec("select sum(valor_stock) as valor from articulos where id >0"))
+//            queryValor.next();
+//        else
+//            QMessageBox::warning(this,tr("Inventario"),
+//                                 tr("No se pudo calcular el valor del stock: %1").arg(queryValor.lastError().text()));
+//        double nValor = queryValor.value(0).toDouble();
+//        QString cValor = QString::number(nValor,'f',Configuracion_global->decimales_campos_totales);
+//        parametros["valor"] = Configuracion_global->toFormatoMoneda(cValor);
         switch (valor) {
         case 1: // Impresora
             Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
