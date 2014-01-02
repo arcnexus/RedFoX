@@ -194,7 +194,8 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->btnAdd_TipoCliente,SIGNAL(clicked()),this,SLOT(AddCustomerType()));
-    connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
+    connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(DelCustomerType()));
+    connect(ui->btnBorrardireccion,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
 
@@ -763,7 +764,8 @@ void frmClientes::LLenarCliente()
     oCliente->cuenta_iva_repercutido=ui->txtcuenta_iva_repercutido->text();
     oCliente->cuenta_deudas=ui->txtcuenta_deudas->text();
     oCliente->cuenta_cobros=ui->txtcuenta_cobros->text();
-    oCliente->forma_pago=ui->cboforma_pago->currentText();
+    oCliente->id_forma_pago=Configuracion_global->Devolver_id_forma_pago(ui->cboforma_pago->currentData(Qt::DisplayRole).toString());
+    //oCliente->forma_pago=ui->cboforma_pago->currentText();
     oCliente->dia_pago1=ui->txtdia_pago1->value();
     oCliente->dia_pago2=ui->txtdia_pago2->value();
     oCliente->tarifa_cliente=ui->cbotarifa_cliente->currentText().toDouble();
@@ -1339,6 +1341,27 @@ void frmClientes::AddCustomerType()
 
         ui->lista_tipos->setModel(qModelTipos);
    }
+}
+
+void frmClientes::DelCustomerType()
+{
+    QModelIndex indice = ui->lista_tipos->currentIndex();
+    if (indice.isValid()) {
+        qDebug() << ui->lista_tipos->model()->data(indice,Qt::DisplayRole);
+        QSqlQuery qTipo(Configuracion_global->groupDB);
+        qTipo.prepare("DELETE FROM tipocliente WHERE id_cliente = :id_cliente AND tipo_cliente LIKE :tipo");
+        qTipo.bindValue(":id_cliente",oCliente->id);
+        qTipo.bindValue(":tipo",ui->lista_tipos->model()->data(indice,Qt::DisplayRole).toString());
+
+        if (!qTipo.exec())
+            QMessageBox::warning(this,tr("Borrar tipo cliente"),
+                                 tr("No se pudo borrar el tipo de cliente :%1").arg(qTipo.lastError().text()),tr("Aceptar"));
+        QSqlQueryModel *qModelTipos = new QSqlQueryModel(this);
+        qModelTipos->setQuery("select tipocliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
+                              Configuracion_global->groupDB);
+        ui->lista_tipos->setModel(qModelTipos);
+
+    }
 }
 
 
