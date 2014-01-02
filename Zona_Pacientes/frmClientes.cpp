@@ -195,6 +195,7 @@ frmClientes::frmClientes(QWidget *parent) :
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->btnAdd_TipoCliente,SIGNAL(clicked()),this,SLOT(AddCustomerType()));
     connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(DelCustomerType()));
+    connect(ui->btnBorrardireccion,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
 
@@ -763,7 +764,8 @@ void frmClientes::LLenarCliente()
     oCliente->cuenta_iva_repercutido=ui->txtcuenta_iva_repercutido->text();
     oCliente->cuenta_deudas=ui->txtcuenta_deudas->text();
     oCliente->cuenta_cobros=ui->txtcuenta_cobros->text();
-    oCliente->forma_pago=ui->cboforma_pago->currentText();
+    oCliente->id_forma_pago=Configuracion_global->Devolver_id_forma_pago(ui->cboforma_pago->currentData(Qt::DisplayRole).toString());
+    //oCliente->forma_pago=ui->cboforma_pago->currentText();
     oCliente->dia_pago1=ui->txtdia_pago1->value();
     oCliente->dia_pago2=ui->txtdia_pago2->value();
     oCliente->tarifa_cliente=ui->cbotarifa_cliente->currentText().toDouble();
