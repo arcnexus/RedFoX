@@ -489,14 +489,19 @@ void FrmCierreCaja::on_btnResumentickets_clicked()
       //ui->lblimpreso->setVisible(true);
         int valor = dlg_print.get_option();
         QMap <QString,QString> parametros_sql;
-        parametros_sql["Empresa.cab_tpv"] = QString("fecha = %1").arg(ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
-        parametros_sql["Empresa.e_s_caja"] = QString("fecha = %1 and entrada >2").arg(
-                    ui->calendarWidget->selectedDate().toString("yyyyMMdd"));
+        QString fecha = ui->calendarWidget->selectedDate().toString("yyyyMMdd");
+        parametros_sql["Empresa.cab_tpv"] = QString("fecha = '%1'").arg(fecha);
+
         QString report;
-            report ="resumen_tickets";
+            report ="res_tickets";
 
         QMap <QString,QString> parametros;
-        //TODO parametros
+        parametros["fecha"] = QDate::currentDate().toString("dd/MM/yyyy");
+        parametros["fecha_ini"] = ui->calendarWidget->selectedDate().toString("dd/MM/yyyy");
+        parametros["fecha_fin"] = ui->calendarWidget->selectedDate().toString("dd/MM/yyyy");
+        qDebug() << Configuracion_global->nombreEmpresa;
+        parametros["empresa"] = Configuracion_global->nombreEmpresa;
+
         switch (valor) {
         case 1: // Impresora
             Configuracion::ImprimirDirecto(report,parametros_sql,parametros);

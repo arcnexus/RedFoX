@@ -795,6 +795,7 @@ void MainWindow::showInfo()
   // ui->lineEmpresaActiva->setText(empresa);
     ui->lineUsuarioActivo->setText(user);
     Configuracion_global->cUsuarioActivo = user;
+    Configuracion_global->nombreEmpresa = empresa;
 }
 
 void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
