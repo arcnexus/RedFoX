@@ -766,8 +766,10 @@ void frmClientes::LLenarCliente()
     oCliente->cuenta_cobros=ui->txtcuenta_cobros->text();
     oCliente->id_forma_pago=Configuracion_global->Devolver_id_forma_pago(ui->cboforma_pago->currentData(Qt::DisplayRole).toString());
     //oCliente->forma_pago=ui->cboforma_pago->currentText();
+    oCliente->tipo_dto_tarifa=ui->cbotipo_dto->currentData(Qt::DisplayRole).toDouble();
     oCliente->dia_pago1=ui->txtdia_pago1->value();
     oCliente->dia_pago2=ui->txtdia_pago2->value();
+    oCliente->riesgo_maximo=Configuracion_global->MonedatoDouble(ui->txtrRiesgoPermitido->text());
     oCliente->tarifa_cliente=ui->cbotarifa_cliente->currentText().toDouble();
     oCliente->importe_a_cuenta=ui->txtimporte_a_cuenta->text().toDouble();
     oCliente->vales= ui->txtvales->text().replace(".","").toDouble();
@@ -782,7 +784,7 @@ void frmClientes::LLenarCliente()
     oCliente->ididioma = Configuracion_global->Devolver_id_idioma(ui->cboidiomaDocumentos->currentText());
     oCliente->idioma = ui->cboidiomaDocumentos->currentText();
     oCliente->observaciones = ui->txtObservaciones->text();
-    if (ui->chkClienteEmpresa)
+    if (ui->chkClienteEmpresa->isChecked())
         oCliente->lIRPF =true;
     else
         oCliente->lIRPF=false;
