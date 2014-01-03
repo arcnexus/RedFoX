@@ -265,6 +265,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     cab_fac["iva_gasto1"] = this->iva_gasto1;
     cab_fac["iva_gasto2"] = this->iva_gasto2;
     cab_fac["iva_gasto3"] = this->iva_gasto3;
+    this->editable = 0;
     cab_fac["editable"] = this->editable;
     cab_fac["id_divisa"] = this->id_divisa;
 

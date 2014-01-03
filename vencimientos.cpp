@@ -112,7 +112,7 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
     QString condiciones  = QString("id=%1").arg(id_cliente);
     QString error,error2,entidad,oficina,dc,cuenta;
     QDate vencimiento;
-    bool t_error;
+    bool t_error = false;
     m = SqlCalls::SelectRecord("clientes",condiciones,Configuracion_global->groupDB,error);
     int id_forma_pago;
     if(error.isEmpty())

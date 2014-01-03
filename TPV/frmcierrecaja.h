@@ -16,6 +16,7 @@ public:
     explicit FrmCierreCaja(QWidget *parent = 0);
     ~FrmCierreCaja();
     void cargar_datos_caja(int id);
+
 private slots:
 
     void on_btnIniciar_cierre_clicked();
