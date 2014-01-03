@@ -176,7 +176,7 @@ void Proveedor::Recuperar(int id)
 
 void Proveedor::Recuperar(QString cSQL)
 {
-    QSqlQuery qProveedor;
+    QSqlQuery qProveedor(Configuracion_global->groupDB);
     if(qProveedor.exec(cSQL)) {
         if(qProveedor.next()) {
             QSqlRecord rProveedor = qProveedor.record();
@@ -196,7 +196,7 @@ void Proveedor::Recuperar(QString cSQL)
 
 void Proveedor::Recuperar(QString cSQL, int nProcede)
 {
-    QSqlQuery qProveedor;
+    QSqlQuery qProveedor(Configuracion_global->groupDB);
     if(qProveedor.exec(cSQL)) {
         if(qProveedor.next()) {
             QSqlRecord rProveedor = qProveedor.record();
