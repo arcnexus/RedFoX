@@ -154,8 +154,9 @@ void Proveedor::Anadir()
 
 void Proveedor::Recuperar(int id)
 {
-    QSqlQuery qProveedor;
-    QString cSQL = "Select * from proveedores where id = "+QString::number(id);
+    QSqlQuery qProveedor(Configuracion_global->groupDB);
+    QString cSQL = "SELECT * FROM proveedores WHERE id = "+QString::number(id);
+
     if(qProveedor.exec(cSQL)) {
         if(qProveedor.next()) {
             QSqlRecord rProveedor = qProveedor.record();
