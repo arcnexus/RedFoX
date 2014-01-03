@@ -8,58 +8,47 @@ Articulo::Articulo(QObject *parent) : QObject(parent)
 
 void Articulo::Anadir()
 {
-    QSqlQuery query(Configuracion_global->groupDB);
-    query.prepare("INSERT INTO articulos (codigo)"
-                       " VALUES (:codigo)");
-    if(Configuracion_global->auto_codigoart ==false)
-        query.bindValue(":codigo",QString("_%1_").arg(rand()));
+    QString error;
+    QHash<QString,QVariant>data;
+    data["codigo"] = QString("_%1_").arg(rand());
+    int id = SqlCalls::SqlInsert(data,"articulos",Configuracion_global->groupDB,error);
+
+    if(id < 0) {
+        QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
+                             tr("Falló la inserción de un nuevo artículo :\n %1").arg(error),
+                             QObject::tr("Ok"));
+    }
     else
+    {
+        this->id = id;
+        Recuperar("Select * from articulos where id = "+QString::number(this->id));
 
-        query.bindValue(":codigo","auto_codigo");
+        //--------------------------
+        // Añado tarifas a artículo
+        //--------------------------
+        QSqlQuery queryTarifas(Configuracion_global->groupDB);
+        if(queryTarifas.exec("select * from codigotarifa"))
+        {
+            while (queryTarifas.next())
+            {
+                QSqlRecord r = queryTarifas.record();
+                QHash<QString,QVariant> _tar;
+                _tar["id_articulo"]= this->id;
+                _tar["id_pais"]=  r.value("id_pais");
+                _tar["id_monedas"]= r.value("id_monedas");
+                _tar["margen"]= Configuracion_global->margen;
+                _tar["margen_minimo"]= Configuracion_global->margen_minimo;
+                _tar["id_codigo_tarifa"]= r.value("id");
 
-
-     if(!query.exec()) {
-         QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
-                              tr("Falló la inserción de un nuevo artículo : %1").arg(query.lastError().text()),
-                              QObject::tr("Ok"));
-     } else {
-         this->id = query.lastInsertId().toInt();
-         Recuperar("Select * from articulos where id = "+QString::number(this->id));
-         //--------------------------
-         // Añado tarifas a artículo
-         //--------------------------
-         QSqlQuery queryTarifas(Configuracion_global->groupDB);
-         if(queryTarifas.exec("select * from codigotarifa")){
-             while (queryTarifas.next()){
-                 QSqlQuery anadirTarifa(Configuracion_global->groupDB);
-                 anadirTarifa.prepare("INSERT INTO tarifas ("
-                                   "id_articulo,"
-                                   "id_pais,"
-                                   "id_monedas,"
-                                   "margen,"
-                                   "margen_minimo,"
-                                   "id_codigo_tarifa) VALUES ("
-                                   ":id_articulo,"
-                                   ":id_pais,"
-                                   ":id_monedas,"
-                                   ":margen,"
-                                   ":margen_minimo,"
-                                   ":id_codigo_tarifa);");
-
-                 anadirTarifa.bindValue(":id_articulo",this->id);
-                 anadirTarifa.bindValue(":id_pais",queryTarifas.record().field("id_pais").value().toInt());
-                 anadirTarifa.bindValue(":id_monedas",queryTarifas.record().field("id_monedas").value().toInt());
-                 anadirTarifa.bindValue(":id_codigo_tarifa",queryTarifas.record().value("id").toInt());
-                 anadirTarifa.bindValue(":margen",Configuracion_global->margen);
-                 anadirTarifa.bindValue(":margen_minimo",Configuracion_global->margen_minimo);
-                 if(!anadirTarifa.exec())
-                     QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
-                                          tr("Falló la inserción de la tarifa: %1").arg(anadirTarifa.lastError().text()),
-                                          tr("Aceptar"));
-             }
-         }
-     }
-
+                if(SqlCalls::SqlInsert(_tar,"tarifas",Configuracion_global->groupDB,error) < 0)
+                {
+                    QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
+                                         tr("Falló la inserción de la tarifa: %1").arg(error),
+                                         tr("Aceptar"));
+                }
+            }
+        }
+    }
 
 }
 
@@ -105,22 +94,31 @@ void Articulo::Recuperar(QString cSQL, int nProcede)
 
 }
 
-void Articulo::Recuperar(int id)
+bool Articulo::Recuperar(int id)
 {
-    QSqlQuery qryArticulo(Configuracion_global->groupDB);
-    qryArticulo.prepare("select * from articulos where id ="+QString::number(id) +" limit 0,1");
-    if (qryArticulo.exec()) {
-        if(qryArticulo.next()){
-            QSqlRecord r = qryArticulo.record();
-            Cargar(r);
-        }  else {
-           TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"No se ha encontrado el artículo");
-
-        }
-    } else
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id = %1 limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(_map.contains(id))
     {
-        QMessageBox::critical(qApp->activeWindow(),"error al leer datos artículo:", qryArticulo.lastError().text());
+        Cargar(_map.value(id));
+        return true;
     }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("No se ha encontrado el artículo"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
+}
+
+bool Articulo::Next()
+{
+    return Recuperar(this->id + 1);
+}
+
+bool Articulo::Prev()
+{
+    return Recuperar(this->id - 1);
 }
 
 void Articulo::Cargar(QSqlRecord registro)
@@ -372,30 +370,21 @@ void Articulo::Vaciar()
 
 }
 
-void Articulo::Borrar(int nid)
+void Articulo::Borrar(int nid , bool ask)
 {
-    if(QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Artículo"),
+    bool borrar = !ask;
+    if(ask)
+        borrar = QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Artículo"),
                              qApp->tr("¿Desea realmente Borrar este artículo?\nEsta opción no se puede deshacer"),
-                             qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted)
+                             qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted;
+    if(borrar)
     {
-        QSqlQuery qryArticulo(Configuracion_global->groupDB);
-        qryArticulo.prepare("Delete from articulos where id = :nid");
-        // TODO - Borrar estadisticas y tarifas
-
-        qryArticulo.bindValue(":id",nid);
-        if(!qryArticulo.exec())
-        {
-            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Borrar Artíclo"),QObject::tr("Falló el borrado del Artículo"),QObject::tr("&Aceptar"));
-        }
-        else
-        {
-            // Busco el id más proximo
-            qryArticulo.prepare("select * from articulos where id <:nid");
-            qryArticulo.bindValue(":nid",this->id);
-            qryArticulo.exec();
-            QSqlRecord registro = qryArticulo.record();
-            this->id = registro.field("id").value().toInt();
-        }
+        QString error;
+        if(!SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error))
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
+        else        
+            if(!Next())
+                Prev();
     }
 }
 
@@ -1040,74 +1029,65 @@ QString Articulo::getcGrupo(int nid)
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
                                              double pvd_real,int id_divisa)
 {
-    QSqlQuery query_proveedor_alternativo(Configuracion_global->groupDB);
+    QHash<QString,QVariant> _data;
 
-    query_proveedor_alternativo.prepare("INSERT INTO articulos_prov_frec "
-                                        "(id_articulo,id_proveedor,pvd,oferta,codigo,descoferta,pvd_real,id_divisa)"
-                                        " VALUES (:id_articulo,:id_proveedor,:pvd, :oferta,:codigo,:descoferta,:pvd_real,:id_divisa)");
-    query_proveedor_alternativo.bindValue(":id_articulo",id_art);
-    query_proveedor_alternativo.bindValue(":id_proveedor",id_proveedor);
-    query_proveedor_alternativo.bindValue(":codigo",codigo);
-    query_proveedor_alternativo.bindValue(":pvd",pvd);
-    query_proveedor_alternativo.bindValue(":oferta",oferta);
-    query_proveedor_alternativo.bindValue(":descoferta",descoferta);
-    query_proveedor_alternativo.bindValue(":pvd_real",pvd_real);
-    query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
-    if(!query_proveedor_alternativo.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("Insertar proveedor frecuente"),
-                             tr("Falló la inserción de un nuevo proveedor: %1").arg(query_proveedor_alternativo.lastError().text()));
+    _data["id_articulo"]=id_art;
+    _data["id_proveedor"]=id_proveedor;
+    _data["pvd"]=pvd;
+    _data["oferta"]=oferta;
+    _data["codigo"]=codigo;
+    _data["descoferta"]=descoferta;
+    _data["pvd_real"]=pvd_real;
+    _data["id_divisa"]=id_divisa;
+
+    QString error;
+
+    if(!SqlCalls::SqlInsert(_data,"articulos_prov_frec",Configuracion_global->groupDB,error))
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Falló la inserción de un nuevo proveedor"),error);
         return false;
-
-
-    } else
+    }
+    else
         return true;
-
 }
 
 bool Articulo::guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta, QString oferta,
                                            double pvd_real, int id_divisa)
 {
-    QSqlQuery query_proveedor_alternativo(Configuracion_global->groupDB);
+    QHash<QString,QVariant> _data;
+    _data["pvd"]= pvd;
+    _data["oferta"]= oferta;
+    _data["codigo"]= codigo;
+    _data["descoferta"]= descoferta;
+    _data["pvd_real"]= pvd_real;
+    _data["id_divisa"]= id_divisa;
 
-    query_proveedor_alternativo.prepare("UPDATE articulos_prov_frec  set pvd = :pvd,oferta = :oferta, codigo = :codigo, "
-                                        "descoferta = :descoferta, pvd_real = :pvd_real, id_divisa =:id_divisa "
-                                        "where id = :id");
-    query_proveedor_alternativo.bindValue(":codigo",codigo);
-    query_proveedor_alternativo.bindValue(":pvd",pvd);
-    query_proveedor_alternativo.bindValue(":oferta",oferta);
-    query_proveedor_alternativo.bindValue(":descoferta",descoferta);
-    query_proveedor_alternativo.bindValue(":pvd_real",pvd_real);
-    query_proveedor_alternativo.bindValue(":id_divisa",id_divisa);
-    query_proveedor_alternativo.bindValue(":id",id);
-    if(!query_proveedor_alternativo.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("Actualizar proveedor frecuente"),
-                             tr("Falló la modificación de un nuevo proveedor: %1").arg(query_proveedor_alternativo.lastError().text()));
+    QString error;
+    if(!SqlCalls::SqlUpdate(_data,"articulos_prov_frec",Configuracion_global->groupDB,QString("id = %1").arg(id),error))
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Falló la modificación de un nuevo proveedor"),error);
         return false;
-
-
-    } else
+    }
+    else
         return true;
-
-
-
 }
 
 bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
 {
-    QSqlQuery queryProveedor(Configuracion_global->groupDB);
-    queryProveedor.prepare("update articulos Set id_proveedor = :id_proveedor where id = :id");
-    queryProveedor.bindValue(":id_proveedor",id_proveedor);
-    queryProveedor.bindValue(":id",id);
-    if (!queryProveedor.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("Cambiar proveedor"),
-                             tr("Falló el cambio de proveedor principal : %1").arg(queryProveedor.lastError().text()),
-                             tr("Aceptar"));
+    QHash<QString,QVariant> _data;
+    _data["id_proveedor"] = id_proveedor;
+
+    QString error;
+    if(!SqlCalls::SqlUpdate(_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(id),error))
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Falló el cambio de proveedor principal"),error,tr("Aceptar"));
         return false;
     }
-    this->id_proveedor = id_proveedor;
-    return true;
-
-
+    else
+    {
+        this->id_proveedor = id_proveedor;
+        return true;
+    }
 }
 
 bool Articulo::cambiar_pvp()

@@ -18,20 +18,22 @@ public:
     explicit FrmArticulos(QWidget *parent = 0, bool closeBtn = false);
     ~FrmArticulos();
     Articulo *oArticulo;
-    QSqlQueryModel *modArt;
     QSqlQueryModel *qTarifas;
-    QSqlRelationalTableModel * tarifa_model;
+    QSqlTableModel * tarifa_model;
     QSqlQueryModel *modelProv;
     QSqlQueryModel *modelTrazabilidad1;
     QSqlQueryModel *modelTrazabilidad2;
     QSqlQueryModel *promociones;
     QSqlQueryModel *volumen;
+    QSqlQueryModel *modelEmpresa;
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}    
 
     QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
+
+    void format_tables();
 private slots:
     void on_botSiguiente_clicked();
 
@@ -78,10 +80,10 @@ private slots:
     void LLenarGraficas();
     void LLenarGrafica_comparativa(int);
     void LlenarTablas();
-    void SeleccionarPestana(int);
+
     void listados();
 
-    void on_checkBox_toggled(bool checked);
+    void on_chkValorGrafica_toggled(bool checked);
     void ani_end();
     void toggleChecbox();
     void on_chkmostrarvalores_comparativa_toggled(bool checked);
@@ -100,9 +102,7 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_tabla_clicked(const QModelIndex &index);
-
-    void on_tabla_doubleClicked(const QModelIndex &index);
+    void on_tablaBusqueda_doubleClicked(const QModelIndex &index);
 
     void on_btnExcepciones_2_clicked();
 
@@ -174,9 +174,10 @@ private slots:
 
     void on_botBuscarGrupo_clicked();
 
+
 public slots:
     void AnadirSeccion();
-
+    void init();
 
 private:
     Ui::FrmArticulos *ui;
@@ -188,7 +189,6 @@ private:
     void CargarCamposEnArticulo();
     void VaciarCampos();
     void ChangeValues_TablaProveedores(int row, int column);
-    void formato_tabla();
 
 
     QListView *lista;
@@ -196,12 +196,11 @@ private:
     QString *Devolucion;
     QGridLayout *layout;
     bool anadir;
-    bool reformateado;
     void rellenar_grafica_proveedores();
     MonetaryDelegate *Delegado;
     QAction menuButton;
     QPushButton* shortCut;
-    QSqlQueryModel *m;
+    QSqlQueryModel *modelBusqueda;
 
 
     BarraBusqueda* m_busqueda;
@@ -209,6 +208,8 @@ private:
     bool nueva_oferta;
     int id_oferta;
 
+    //MODELS
+    QSqlQueryModel *modelTarifa;
 };
 
 #endif // FRMARTICULOS_H
