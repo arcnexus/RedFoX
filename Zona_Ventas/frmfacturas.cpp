@@ -484,12 +484,18 @@ void frmFacturas::VaciarCampos()
     ui->txtnumero_cuenta->setText("");
     ui->txtpedido_cliente->setText("");
     ui->chkrecargo_equivalencia->setCheckState(Qt::Unchecked);
-    ui->txtGastoDist1->setText("");
+    ui->txtGastoDist1->setText(tr("Portes"));
     ui->txtGastoDist2->setText("");
     ui->txtGastoDist3->setText("");
     ui->SpinGastoDist1->setValue(0);
     ui->SpinGastoDist2->setValue(0);
     ui->SpinGastoDist3->setValue(0);
+    ui->spin_porc_iva_gasto1->setValue(0);
+    ui->spin_porc_iva_gasto2->setValue(0);
+    ui->spin_porc_iva_gasto3->setValue(0);
+    ui->spin_iva_gasto1->setValue(0);
+    ui->spin_iva_gasto2->setValue(0);
+    ui->spin_iva_gasto3->setValue(0);
     ui->cboDivisa->setCurrentIndex( -1);
 
     helper.fillTable("empresa","lin_fac","id_Cab = -1");
@@ -817,6 +823,7 @@ void frmFacturas::totalChanged(double base, double dto, double subtotal, double 
     double dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
     base = subtotal -(dto+dtopp);
+    iva += ui->spin_iva_gasto1->value() + ui->spin_iva_gasto2->value()+ ui->spin_iva_gasto3->value();
     double irpf = base * (ui->spinporc_irpf->value()/100.0);
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
     ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
@@ -847,8 +854,17 @@ void frmFacturas::desglose1Changed(double base, double iva, double re, double to
     if(ui->spin_porc_iva_gasto3->value() == valor_porc_iva)
             base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist1->text());
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
+    //iva
+    //double valor_porc_iva = Configuracion_global->ivaList.at(0).toDouble();
+    if(ui->spin_porc_iva_gasto1->value() == valor_porc_iva)
+            iva += Configuracion_global->MonedatoDouble( ui->spin_iva_gasto1->text());
+    if(ui->spin_porc_iva_gasto2->value() == valor_porc_iva)
+            iva += Configuracion_global->MonedatoDouble( ui->spin_iva_gasto2->text());
+    if(ui->spin_porc_iva_gasto3->value() == valor_porc_iva)
+            iva += Configuracion_global->MonedatoDouble( ui->spin_iva_gasto3->text());
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
+
     ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total+iva+re,'f',Configuracion_global->decimales)));
 }
 
@@ -1567,33 +1583,33 @@ void frmFacturas::on_btnGuardar_clicked()
     bool succes = true;
     LLenarFactura();
     int tipo = 0; // 1 = Borrador - 2 = Factura
-    if(oFactura->factura.isEmpty()){
-        if(QMessageBox::question(this,tr("Gestión de facturas"),
-                                 tr("En que formato desea guardar el documento: "),
-                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
-            tipo = 2;
-        else
-            tipo = 1;
-    } else if(oFactura->factura == tr("BORRADOR"))
-    {
-        tipo = 1;
-        if(QMessageBox::question(this,tr("Gestión de facturas"),
-                                 tr("En que formato desea guardar el documento: "),
-                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
-            tipo = 2;
-    }
-    if(tipo == 1 && oFactura->factura.isEmpty())
-        oFactura->factura = tr("BORRADOR");
-    if(tipo == 2 && oFactura->factura.isEmpty()){
+//    if(oFactura->factura.isEmpty()){
+//        if(QMessageBox::question(this,tr("Gestión de facturas"),
+//                                 tr("En que formato desea guardar el documento: "),
+//                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
+//            tipo = 2;
+//        else
+//            tipo = 1;
+//    } else if(oFactura->factura == tr("BORRADOR"))
+//    {
+//        tipo = 1;
+//        if(QMessageBox::question(this,tr("Gestión de facturas"),
+//                                 tr("En que formato desea guardar el documento: "),
+//                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
+//            tipo = 2;
+//    }
+//    if(tipo == 1 && oFactura->factura.isEmpty())
+//        oFactura->factura = tr("BORRADOR");
+//    if(tipo == 2 && oFactura->factura.isEmpty()){
 
         oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
-        oFactura->editable = false;
-}
+
+//}
     succes = oFactura->GuardarFactura(oFactura->id,false);
     if(succes)
     {
         LLenarCampos();
-        if(Configuracion_global->contabilidad && oFactura->factura !=tr("BORRADOR"))
+        if(Configuracion_global->contabilidad && oFactura->apunte == 0)//&& oFactura->factura !=tr("BORRADOR"))
             succes = crear_asiento();
         if(!succes)
 
@@ -1609,6 +1625,13 @@ void frmFacturas::on_btnGuardar_clicked()
             Configuracion_global->contaDB.commit();
         Configuracion_global->empresaDB.commit();
         TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
+
+        // -------------------------------------------------
+        // Borrar vencimientos si existen para no duplicar
+        //--------------------------------------------------
+        QString clausula = QString("id_factura = %1").arg(oFactura->id);
+        QString error;
+        SqlCalls::SqlDelete("clientes_deuda",Configuracion_global->groupDB,clausula,error);
         //----------------------
         // Crear vencimientos
         //----------------------

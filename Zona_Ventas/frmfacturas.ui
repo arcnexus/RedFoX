@@ -1616,7 +1616,7 @@ color: rgb(255, 255, 255);</string>
 color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>[F2] - Buscar Artículo</string>
+              <string>[*+intro] = Buscar Artículo</string>
              </property>
             </widget>
            </item>
@@ -2618,6 +2618,97 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>txtfactura</tabstop>
+  <tabstop>txtcodigo_cliente</tabstop>
+  <tabstop>botBuscarCliente</tabstop>
+  <tabstop>txtcif</tabstop>
+  <tabstop>txt_tipo_dto_tarifa</tabstop>
+  <tabstop>cboDivisa</tabstop>
+  <tabstop>txtcliente</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
+  <tabstop>txtprovincia</tabstop>
+  <tabstop>comboPais</tabstop>
+  <tabstop>txtforma_pago</tabstop>
+  <tabstop>spinPorc_dto</tabstop>
+  <tabstop>spinPorc_dto_pp</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>spinporc_irpf</tabstop>
+  <tabstop>txtcodigo_entidad</tabstop>
+  <tabstop>txtdc_cuenta</tabstop>
+  <tabstop>txtoficina_entidad</tabstop>
+  <tabstop>txtnumero_cuenta</tabstop>
+  <tabstop>txtfecha</tabstop>
+  <tabstop>txtpedido_cliente</tabstop>
+  <tabstop>txtentregado_a_cuenta</tabstop>
+  <tabstop>anadirEntrega</tabstop>
+  <tabstop>txtimporte_pendiente</tabstop>
+  <tabstop>txtfecha_cobro</tabstop>
+  <tabstop>txtAsiento</tabstop>
+  <tabstop>btnAsignarTransportista</tabstop>
+  <tabstop>txtTransportista</tabstop>
+  <tabstop>cboDireccionesEntrega</tabstop>
+  <tabstop>txtDireccion1_entrega</tabstop>
+  <tabstop>txtDireccion2_entrega</tabstop>
+  <tabstop>txtCp_entrega</tabstop>
+  <tabstop>txtPoblacion_entrega</tabstop>
+  <tabstop>txtProvincia_entrega</tabstop>
+  <tabstop>cboPais_entrega</tabstop>
+  <tabstop>btnAnadirLinea</tabstop>
+  <tabstop>btn_borrarLinea</tabstop>
+  <tabstop>txtbase1</tabstop>
+  <tabstop>txtporc_iva1</tabstop>
+  <tabstop>txtiva1</tabstop>
+  <tabstop>txtporc_rec1</tabstop>
+  <tabstop>txtrec1</tabstop>
+  <tabstop>txttotal1</tabstop>
+  <tabstop>txtbase2</tabstop>
+  <tabstop>txtporc_iva2</tabstop>
+  <tabstop>txtiva2</tabstop>
+  <tabstop>txtporc_rec2</tabstop>
+  <tabstop>txtrec2</tabstop>
+  <tabstop>txttotal2</tabstop>
+  <tabstop>txtbase3</tabstop>
+  <tabstop>txtporc_iva3</tabstop>
+  <tabstop>txtiva3</tabstop>
+  <tabstop>txtporc_rec3</tabstop>
+  <tabstop>txtrec3</tabstop>
+  <tabstop>txttotal3</tabstop>
+  <tabstop>txtbase4</tabstop>
+  <tabstop>txtporc_iva4</tabstop>
+  <tabstop>txtiva4</tabstop>
+  <tabstop>txtporc_rec4</tabstop>
+  <tabstop>txtrec4</tabstop>
+  <tabstop>txttotal4</tabstop>
+  <tabstop>txtbase_total_2</tabstop>
+  <tabstop>txtiva_total</tabstop>
+  <tabstop>txttotal_recargo</tabstop>
+  <tabstop>txttotal_2</tabstop>
+  <tabstop>txtimporte_irpf</tabstop>
+  <tabstop>txtGastoDist1</tabstop>
+  <tabstop>SpinGastoDist1</tabstop>
+  <tabstop>spin_porc_iva_gasto1</tabstop>
+  <tabstop>spin_iva_gasto1</tabstop>
+  <tabstop>txtGastoDist2</tabstop>
+  <tabstop>SpinGastoDist2</tabstop>
+  <tabstop>spin_porc_iva_gasto2</tabstop>
+  <tabstop>spin_iva_gasto2</tabstop>
+  <tabstop>txtGastoDist3</tabstop>
+  <tabstop>SpinGastoDist3</tabstop>
+  <tabstop>spin_porc_iva_gasto3</tabstop>
+  <tabstop>spin_iva_gasto3</tabstop>
+  <tabstop>txtcomentario</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>txtsubtotal</tabstop>
+  <tabstop>txtimporte_descuento</tabstop>
+  <tabstop>txtDtoPP</tabstop>
+  <tabstop>txtbase</tabstop>
+  <tabstop>txtimporte_irpf_2</tabstop>
+  <tabstop>txtiva</tabstop>
+  <tabstop>txtrec</tabstop>
+  <tabstop>txttotal</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnSiguiente</tabstop>
@@ -2625,7 +2716,13 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <tabstop>btnImprimir</tabstop>
   <tabstop>btnEditar</tabstop>
   <tabstop>btnGuardar</tabstop>
+  <tabstop>btndeshacer</tabstop>
+  <tabstop>btnBorrar</tabstop>
   <tabstop>btnCobrar</tabstop>
+  <tabstop>cboVer</tabstop>
+  <tabstop>cbo_serie</tabstop>
+  <tabstop>Lineas</tabstop>
+  <tabstop>tabla_facturas</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>
