@@ -780,8 +780,8 @@ bool Configuracion::CargarDatosBD()
         this->globalDB.setDatabaseName("mayaglobal");
         this->globalDB.setHostName(Configuracion_global->global_host);
         qDebug() << Configuracion_global->global_user << Configuracion_global->global_pass;
-        //this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
-        this->globalDB.open("root","meganizado");//
+        this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+        //this->globalDB.open("root","meganizado");//
     }
 
     if (this->globalDB.lastError().isValid())
@@ -789,6 +789,7 @@ bool Configuracion::CargarDatosBD()
         QMessageBox::critical(0, "error:", this->globalDB.lastError().text());
     }
     return !this->globalDB.lastError().isValid();
+
 }
 
 void Configuracion::AbrirDbWeb()
@@ -1141,8 +1142,8 @@ QString Configuracion::DeCrypt(QString input)
     if(input.isEmpty())
         return input;
     int c = 0;
-        char* dd = new char[input.size()/2];
-        //char dd[input.size()/2];
+        //char* dd = new char[input.size()/2];
+        char dd[input.size()/2];
 
         for(int a = 0; a< input.size() ; a+=2)
         {
@@ -1171,7 +1172,7 @@ QString Configuracion::DeCrypt(QString input)
 
         QString ss = QString::fromStdString(decryptedtext);
         ss.remove(QRegExp("\\000"));
-        delete [] dd;
+       // delete [] dd;
         return ss;
 }
 
