@@ -831,6 +831,12 @@ void frmFacturas::desglose1Changed(double base, double iva, double re, double to
 {
     if(!ui->chkrecargo_equivalencia->isChecked())
         re = 0;
+    if(ui->spin_iva_gasto1->value() == Configuracion_global->ivaList.at(1).toDouble())
+            base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist1->text());
+    if(ui->spin_iva_gasto2->value() == Configuracion_global->ivaList.at(1).toDouble())
+            base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist2->text());
+    if(ui->spin_iva_gasto3->value() == Configuracion_global->ivaList.at(1).toDouble())
+            base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist1->text());
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
@@ -1654,3 +1660,5 @@ void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(const QString &ar
 
     }
 }
+
+
