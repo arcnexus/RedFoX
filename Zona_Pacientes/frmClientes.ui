@@ -39,7 +39,7 @@
    <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="paginaedicion">
       <layout class="QGridLayout" name="gridLayout_27">
@@ -2799,7 +2799,7 @@ color: rgb(255,255,255);</string>
                  <enum>QTabWidget::Rounded</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>5</number>
+                 <number>0</number>
                 </property>
                 <property name="movable">
                  <bool>true</bool>
