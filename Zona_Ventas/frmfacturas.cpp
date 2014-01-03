@@ -297,7 +297,12 @@ void frmFacturas::LLenarCampos() {
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
     ui->txt_tipo_dto_tarifa->setText(QString::number(oCliente1->tipo_dto_tarifa));
-
+    ui->txtGastoDist1->setText(oFactura->desc_gasto1);
+    ui->txtGastoDist2->setText(oFactura->desc_gasto2);
+    ui->txtGastoDist3->setText(oFactura->desc_gasto3);
+    ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
+    ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
+    ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
     ui->spin_porc_iva_gasto1->setValue(oFactura->porc_iva_gasto1);
     ui->spin_porc_iva_gasto2->setValue(oFactura->porc_iva_gasto2);
     ui->spin_porc_iva_gasto3->setValue(oFactura->porc_iva_gasto3);
@@ -547,6 +552,9 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btnAsignarTransportista->setEnabled(!state);
     ui->btnBuscar->setEnabled(state);
     ui->cboVer->setEnabled(state);
+    ui->spin_iva_gasto1->setEnabled(false);
+    ui->spin_iva_gasto2->setEnabled(false);
+    ui->spin_iva_gasto3->setEnabled(false);
 
     m_busqueda->block(!state);
 
@@ -831,6 +839,13 @@ void frmFacturas::desglose1Changed(double base, double iva, double re, double to
 {
     if(!ui->chkrecargo_equivalencia->isChecked())
         re = 0;
+    double valor_porc_iva = Configuracion_global->ivaList.at(0).toDouble();
+    if(ui->spin_porc_iva_gasto1->value() == valor_porc_iva)
+            base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist1->text());
+    if(ui->spin_porc_iva_gasto2->value() == valor_porc_iva)
+            base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist2->text());
+    if(ui->spin_porc_iva_gasto3->value() == valor_porc_iva)
+            base += Configuracion_global->MonedatoDouble( ui->SpinGastoDist1->text());
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
     ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
     ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
@@ -1653,4 +1668,45 @@ void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(const QString &ar
         }
 
     }
+}
+
+
+
+void frmFacturas::on_SpinGastoDist1_editingFinished()
+{
+    double importe_iva = ui->SpinGastoDist1->value() *(ui->spin_porc_iva_gasto1->value()/100);
+    ui->spin_iva_gasto1->setValue(importe_iva);
+    QString filter = QString("id_cab = '%1'").arg(oFactura->id);
+    helper.fillTable("empresa","lin_fac",filter);
+}
+
+void frmFacturas::on_spin_porc_iva_gasto1_editingFinished()
+{
+    double importe_iva = ui->SpinGastoDist1->value() *(ui->spin_porc_iva_gasto1->value()/100);
+    ui->spin_iva_gasto1->setValue(importe_iva);
+}
+
+void frmFacturas::on_SpinGastoDist2_editingFinished()
+{
+    double importe_iva = ui->SpinGastoDist2->value() *(ui->spin_porc_iva_gasto2->value()/100);
+    ui->spin_iva_gasto2->setValue(importe_iva);
+}
+
+void frmFacturas::on_spin_porc_iva_gasto2_editingFinished()
+{
+    double importe_iva = ui->SpinGastoDist2->value() *(ui->spin_porc_iva_gasto2->value()/100);
+    ui->spin_iva_gasto2->setValue(importe_iva);
+
+}
+
+void frmFacturas::on_SpinGastoDist3_editingFinished()
+{
+    double importe_iva = ui->SpinGastoDist3->value() *(ui->spin_porc_iva_gasto3->value()/100);
+    ui->spin_iva_gasto3->setValue(importe_iva);
+}
+
+void frmFacturas::on_spin_porc_iva_gasto3_editingFinished()
+{
+    double importe_iva = ui->SpinGastoDist3->value() *(ui->spin_porc_iva_gasto3->value()/100);
+    ui->spin_iva_gasto3->setValue(importe_iva);
 }

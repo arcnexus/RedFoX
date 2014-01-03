@@ -136,9 +136,8 @@ void FrmCierreCaja::on_btnIniciar_cierre_clicked()
     ui->txtEfectivo->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                        efectivo,'f',
                                                                        Configuracion_global->decimales_campos_totales)));
-    double efect = Configuracion_global->MonedatoDouble(ui->lblimporte_abertura->text()) +
-                                                         Configuracion_global->MonedatoDouble(
-                                                            QString::number(efectivo,'f',2));
+    double efect =  Configuracion_global->MonedatoDouble(ui->lblimporte_abertura->text()) + efectivo;
+
     ui->txtCaja_moneda->setText(Configuracion_global->toFormatoMoneda(QString::number(efect,'f',
                                                                                       Configuracion_global->decimales_campos_totales)));
 

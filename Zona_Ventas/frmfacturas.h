@@ -106,6 +106,20 @@ private slots:
     void filter_table(QString texto, QString orden, QString modo);
     void on_cboDireccionesEntrega_currentIndexChanged(const QString &arg1);
 
+
+    void on_SpinGastoDist1_editingFinished();
+
+
+    void on_spin_porc_iva_gasto1_editingFinished();
+
+    void on_SpinGastoDist2_editingFinished();
+
+    void on_spin_porc_iva_gasto2_editingFinished();
+
+    void on_SpinGastoDist3_editingFinished();
+
+    void on_spin_porc_iva_gasto3_editingFinished();
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
