@@ -211,7 +211,8 @@ SOURCES += main.cpp\
     Auxiliares/frmeditaravisos.cpp \
     EditorReports/reportacumulator.cpp \
     EditorReports/editacum.cpp \
-    Zona_Contabilidad/frmbuscarapuntecontable.cpp
+    Zona_Contabilidad/frmbuscarapuntecontable.cpp \
+    Auxiliares/frmeditline.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -389,7 +390,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/frmeditaravisos.h \
     EditorReports/reportacumulator.h \
     EditorReports/editacum.h \
-    Zona_Contabilidad/frmbuscarapuntecontable.h
+    Zona_Contabilidad/frmbuscarapuntecontable.h \
+    Auxiliares/frmeditline.h
 
 
 
@@ -482,7 +484,8 @@ FORMS    += mainwindow.ui \
     TPV/frmcrearvale.ui \
     Auxiliares/frmeditaravisos.ui \
     EditorReports/editacum.ui \
-    Zona_Contabilidad/frmbuscarapuntecontable.ui
+    Zona_Contabilidad/frmbuscarapuntecontable.ui \
+    Auxiliares/frmeditline.ui
 
 RESOURCES += \
     maya.qrc \
