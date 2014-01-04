@@ -222,3 +222,17 @@ void FrmTiposTarifa::asignarcambiodivisa(float valor)
 {
     oTipostarifa->valor_divisa = valor;
 }
+
+void FrmTiposTarifa::on_btnBorrar_clicked()
+{
+    QSqlQuery sql(Configuracion_global->groupDB);
+
+    bool borrar = QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Tarifa"),
+                         qApp->tr("¿Desea realmente Borrar esta Tarifa?\nEsta opción no se puede deshacer"),
+                         qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted;
+    if(borrar){
+    sql.exec("DELETE FROM codigotarifa WHERE id = '"+oTipostarifa->codigo_tarifa+"'");
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado de la Tarifa"),"error",QObject::tr("&Aceptar"));
+    }
+    llenar_lista();
+}

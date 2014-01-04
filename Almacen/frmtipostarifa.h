@@ -38,6 +38,8 @@ private slots:
     void cargar_datos_en_objeto();
     void asignarcambiodivisa(float valor);
 
+    void on_btnBorrar_clicked();
+
 private:
     Ui::FrmTiposTarifa *ui;
     TiposTarifa *oTipostarifa;

@@ -20,7 +20,7 @@ void frmPersonasContactoCliente::RefrescarTabla()
     QSqlQueryModel *lista = new QSqlQueryModel(this);
     QString cSQL = "select id, nombre, cargo_empresa, desc_telefono1,telefono1, desc_telefono2, "
             "telefono2, desc_movil1, movil,email"
-            " from Personascontactocliente where  id_cliente= "+ QString::number(nid_cliente);
+            " from personascontactocliente where  id_cliente= "+ QString::number(nid_cliente);
     lista->setQuery(cSQL,Configuracion_global->groupDB);
 ;
 
