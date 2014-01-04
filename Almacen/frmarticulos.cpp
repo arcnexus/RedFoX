@@ -34,8 +34,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->btn_cerrar->setVisible(closeBtn);
 
     ui->lbl_en_promocion->setVisible(false);
-    ui->stackedWidget->setCurrentIndex(1);
-    bloquearCampos(true);
+    ui->stackedWidget->setCurrentIndex(1);    
 
     //ALLOC MODELS
     modelEmpresa = new QSqlQueryModel(this);
@@ -112,7 +111,9 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     QList<QWidget*> ::Iterator it;
     this->installEventFilter(this);
     for( it = l.begin() ;it!= l.end();++it )
-        (*it)->installEventFilter(this);    
+        (*it)->installEventFilter(this);
+
+    bloquearCampos(true);
 }
 
 void FrmArticulos::init()
@@ -222,6 +223,47 @@ void FrmArticulos::setUpBusqueda()
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tablaBusqueda,SLOT(setFocus()));
 }
 
+void FrmArticulos::llenar_tabla_tarifas()
+{
+    modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,pvp_con_iva,simbolo "
+                         "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
+                         Configuracion_global->groupDB);
+    if (modelTarifa->lastError().isValid())
+        return;
+
+    modelTarifa->setHeaderData(0,Qt::Horizontal,tr("id"));
+    modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
+    modelTarifa->setHeaderData(2,Qt::Horizontal,tr("DESCRIPCIÓN"));
+    modelTarifa->setHeaderData(3,Qt::Horizontal,tr("PAIS"));
+    modelTarifa->setHeaderData(4,Qt::Horizontal,tr("DIVISA"));
+    modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%MARG."));
+    modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
+    modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
+    modelTarifa->setHeaderData(8,Qt::Horizontal,tr("PVP+IVA"));
+    modelTarifa->setHeaderData(9,Qt::Horizontal,tr("S"));
+
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(1,105);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(2,165);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(3,65);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(6,70);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(8,85);
+    ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(9,QHeaderView::Fixed);
+    ui->TablaTarifas->horizontalHeader()->resizeSection(9,20);
+}
+
 void FrmArticulos::mostrarBusqueda()
 {
     ui->stackedWidget->setCurrentIndex(1);
@@ -256,7 +298,7 @@ void FrmArticulos::on_botAnadir_clicked()
             VaciarCampos();
             oArticulo->Anadir();
             this->anadir = true;
-            LLenarCampos();
+            LLenarCampos(ui->Pestanas->currentIndex());
 
             if(Configuracion_global->auto_codigoart)
                 ui->txtcodigo->setText("auto_codigo");
@@ -287,7 +329,7 @@ void FrmArticulos::on_botSiguiente_clicked()
 {
     if(oArticulo->Next())
     {
-        LLenarCampos();
+        LLenarCampos(ui->Pestanas->currentIndex());
         ui->botBorrar->setEnabled(true);
         ui->botAnterior->setEnabled(true);
         ui->botEditar->setEnabled(true);
@@ -300,7 +342,7 @@ void FrmArticulos::on_botAnterior_clicked()
 {
     if(oArticulo->Prev())
     {
-        LLenarCampos();
+        LLenarCampos(ui->Pestanas->currentIndex());
         ui->botBorrar->setEnabled(true);
         ui->botSiguiente->setEnabled(true);
         ui->botEditar->setEnabled(true);
@@ -408,9 +450,15 @@ void FrmArticulos::bloquearCampos(bool state) {
     m_busqueda->block(!state);
 
     ui->Pestanas->blockSignals(!state);
+    m_busqueda->blockSignals(!state);
+
+    if(state)
+        emit unblock() ;
+    else
+        emit block();
 }
 
-void FrmArticulos::LLenarCampos()
+void FrmArticulos::LLenarCampos(int index)
 {
     //Widgets globales
     ui->lblkit->setVisible(oArticulo->kit);
@@ -418,14 +466,16 @@ void FrmArticulos::LLenarCampos()
     ui->lblDescripcion->setText(oArticulo->descripcion);
     ui->lbl_en_promocion->setVisible(oArticulo->articulo_promocionado);
 
-    if(ui->Pestanas->currentWidget() == ui->tab_articulo)
+    if(index == 0 /*ui->Pestanas->currentWidget() == ui->tab_articulo*/)
     {
-        //-----------------------
-        // llenamos combo iva
-        //-----------------------
-        int nIndex = ui->cboTipoIVA->findText(Configuracion_global->setTipoIva(oArticulo->id_tipos_iva));
-        if(nIndex >-1)
-            ui->cboTipoIVA->setCurrentIndex(nIndex);
+        //IVA desde config
+        for(auto i=0; i< Configuracion_global->iva_model->rowCount(); i++){
+            if(Configuracion_global->iva_model->record(i).value("id") == oArticulo->id_tipos_iva)
+            {
+                ui->cboTipoIVA->setCurrentText(Configuracion_global->iva_model->record(i).value("tipo").toString());
+                break;
+            }
+        }
         //----------------
         // lleno campos
         //----------------
@@ -433,8 +483,6 @@ void FrmArticulos::LLenarCampos()
         ui->txtcodigo_barras->setText(oArticulo->codigo_barras);
         ui->txtcodigo_fabricante->setText(oArticulo->codigo_fabricante);
         ui->txtdescripcion->setText(oArticulo->descripcion);
-        //ui->lblCodigo->setVisible(true);
-        //ui->lblDescripcion->setVisible(true);
         ui->txtdescripcionResumida->setText(oArticulo->descripcion_reducida);
         ui->txtproveedor->setText(oArticulo->proveedor);
         ui->txtcodigo_proveedor->setText(oArticulo->cCodProveedor);
@@ -443,18 +491,96 @@ void FrmArticulos::LLenarCampos()
         ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
         ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subSubFamilia)));
         ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupoart));
-
-        //       nIndex = ui->cboTipoIVA->findText(oArticulo->codigo_iva);
-        //       if (nIndex !=-1)
-        //               ui->cboTipoIVA->setCurrentIndex(nIndex);
+        ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
         ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',Configuracion_global->decimales));
         ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',Configuracion_global->decimales)));
         ui->chkmostrar_web->setChecked(oArticulo->mostrar_web==1);
         ui->txtMargen->setValue(oArticulo->margen);
         ui->txtMargen_min->setValue((oArticulo->margen_min));
+
+        //---------------------
+        // Tarifas
+        //---------------------
+        llenar_tabla_tarifas();
     }
 
-    else if (ui->Pestanas->currentWidget() == ui->tab_estadistica)
+    else if(index == 1 /*ui->Pestanas->currentWidget()==ui->tab_proveedores*/)
+    {
+        // Proveedores frecuentes
+        modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
+                            "where id_art = "+QString::number(oArticulo->id),
+                            Configuracion_global->groupDB);
+
+        if (modelProv->lastError().isValid())
+            return;
+
+        modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
+        modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
+        modelProv->setHeaderData(3,Qt::Horizontal,tr("COD.ART.PRO."));
+        modelProv->setHeaderData(4,Qt::Horizontal,tr("COSTE"));
+        modelProv->setHeaderData(5,Qt::Horizontal,tr("C.REAL"));
+        modelProv->setHeaderData(6,Qt::Horizontal,tr("DIVISA"));
+        modelProv->setHeaderData(7,Qt::Horizontal,tr("D.OFERTA"));
+        ui->tablaProveedores->setColumnHidden(0,true);
+        ui->tablaProveedores->setColumnHidden(8,true);
+
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
+        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
+
+        // Grafica proveedores
+        ui->graf_prov->Clear();
+        rellenar_grafica_proveedores();
+    }
+
+    else if(index == 2 /*ui->Pestanas->currentWidget() == ui->tab_promociones*/)
+    {
+        ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
+        ui->framePromocion->setEnabled(false);
+
+        ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
+
+
+        //-----------------------------
+        // LLENO  OFERTAS/promociones
+        //-----------------------------
+        promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
+                              Configuracion_global->empresaDB);
+        ui->tabla_ofertas->selectRow(0);
+    }
+
+    else if(index == 3 /*ui->Pestanas->currentWidget() == ui->tab_precios_volumen*/)
+    {
+        volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(
+                              oArticulo->id),Configuracion_global->groupDB);
+        ui->tabla_volumenes->selectRow(0);
+    }
+
+    else if(index == 4 /*ui->Pestanas->currentWidget() == ui->tab_imagenes*/)
+    {
+        //-----------------------------
+        // Recuperamos imagen desde BD
+        //-----------------------------
+        ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+        ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+        ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+        ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+        oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
+                                ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
+    }
+
+    else if(index == 5 /*ui->Pestanas->currentWidget() == ui->tab_estadistica*/)
     {
         ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
         ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
@@ -477,53 +603,48 @@ void FrmArticulos::LLenarCampos()
         ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
         ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
         ui->txtunidades_reservadas->setText(QString::number(oArticulo->unidades_reservadas));
+        GraficaImportes();
     }
 
-    else if(ui->Pestanas->currentWidget() == ui->tab_imagenes)
+    else if(index == 6 /*ui->Pestanas->currentWidget() == ui->tab_grafica*/)
     {
-        //-----------------------------
-        // Recuperamos imagen desde BD
-        //-----------------------------
-        ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-        ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-        ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-        ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-        oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
-                                ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
+        LLenarGraficas();
+        if(ui->radGrafica_importes->isChecked())
+            GraficaImportes();
+        else
+            GraficaUnidades();
     }
 
-    else if(ui->Pestanas->currentWidget() == ui->tab_promociones)
+    else if(index == 7 /*ui->Pestanas->currentWidget() == ui->tab_comparativa*/)
     {
-        ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
-        ui->framePromocion->setEnabled(false);
-
-        ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
-        ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
-
-        //-----------------------------
-        // LLENO  OFERTAS/promociones
-        //-----------------------------
-        promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
-                              Configuracion_global->empresaDB);
-        ui->tabla_ofertas->selectRow(0);
+        LLenarGrafica_comparativa(1);
     }
 
-    else if(ui->Pestanas->currentWidget() == ui->tab_precios_volumen)
+    else if(index == 8 /*ui->Pestanas->currentWidget() == ui->tab_Trazabilidad*/)
     {
-        volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(
-                              oArticulo->id),Configuracion_global->groupDB);
-        ui->tabla_volumenes->selectRow(0);
+        // -------------------
+        // TABLA TRAZABILIDAD
+        // -------------------
+
+        modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
+                                      Configuracion_global->groupDB);
+        if (modelTrazabilidad1->lastError().isValid())
+            return;
+
+        ui->tablaLotes->setColumnHidden(0,true);
+        ui->tablaLotes->setColumnHidden(6,true);
+        modelTrazabilidad1->setHeaderData(1,Qt::Horizontal,tr("LOTE"));
+        modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTidAD"));
+        modelTrazabilidad1->setHeaderData(3,Qt::Horizontal,tr("STOCK LOTE"));
+        modelTrazabilidad1->setHeaderData(4,Qt::Horizontal,tr("STOCK REAL"));
+        modelTrazabilidad1->setHeaderData(5,Qt::Horizontal,tr("FAC.COMPRA"));
+        modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("id"));
+        modelTrazabilidad1->setHeaderData(7,Qt::Horizontal,tr("FEC.COMPRA"));
+        modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCidAD"));
+        modelTrazabilidad1->setHeaderData(9,Qt::Horizontal,tr("PROVEEDOR"));
+        modelTrazabilidad1->setHeaderData(10,Qt::Horizontal,tr("DESCRIPCIÓN"));
+        modelTrazabilidad1->setHeaderData(11,Qt::Horizontal,tr("CÓDIGO"));
     }
-
-  // ------------------
-  // LLENO TABLAS DATOS
-  //-------------------
-  LlenarTablas();
-  //-------------------
-  // LLENO ACUMULADOS
-  //-------------------
-  LLenarGraficas();
-
 }
 
 void FrmArticulos::CargarCamposEnArticulo()
@@ -693,6 +814,15 @@ void FrmArticulos::rellenar_grafica_proveedores()
 
 void FrmArticulos::on_botEditar_clicked()
 {
+    if(sender() != ui->botEditar)
+    {
+        int id = ui->tablaBusqueda->model()->index(ui->tablaBusqueda->currentIndex().row(),0).data().toInt();
+        oArticulo->Recuperar(id);
+    }
+
+    for(auto i= 0; i < ui->Pestanas->count(); i++)
+        LLenarCampos(i);
+
     ui->stackedWidget->setCurrentIndex(0);
     bloquearCampos(false);
     ui->txtcodigo->setFocus();
@@ -705,13 +835,13 @@ void FrmArticulos::on_botEditar_clicked()
     ui->btnAnadir_oferta->setEnabled(promoted);
     ui->btnEditarOferta->setEnabled(promoted);
     ui->btnBorrar_oferta->setEnabled(promoted);
-    ocultarBusqueda();
+    ocultarBusqueda();        
 }
 
 void FrmArticulos::on_botBorrar_clicked()
 {
     oArticulo->Borrar(oArticulo->id,true);
-    LLenarCampos();
+    LLenarCampos(ui->Pestanas->currentIndex());
 }
 
 void FrmArticulos::on_botDeshacer_clicked()
@@ -719,15 +849,11 @@ void FrmArticulos::on_botDeshacer_clicked()
     if(this->anadir)
     {
         oArticulo->Borrar(oArticulo->id,false);
-        LLenarCampos();
+        LLenarCampos(ui->Pestanas->currentIndex());
     }
     else
     {
-        //        int nid = oArticulo->id;
-        //        QString cSql = "Select * from articulos where id =" +QString::number(oArticulo->id);
-        //        oArticulo->Recuperar(cSql);
-        //        oArticulo->id = nid;
-        LLenarCampos();
+        LLenarCampos(ui->Pestanas->currentIndex());
     }
     bloquearCampos(true);
 }
@@ -742,8 +868,8 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 {
     if(event->type() == QEvent::Show)
     {
-        if(target == ui->page)
-            actualizar();
+       // if(target == ui->page)
+       //     actualizar();
     }
     else if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
@@ -945,7 +1071,7 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
         }
         else
         {
-            LlenarTablas();
+            llenar_tabla_tarifas();
         }
     }
 }
@@ -974,7 +1100,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
                                  tr("Ocurrió un error al actualizar BD: %1").arg(error),
                                  tr("Aceptar"));
 
-        LlenarTablas();
+        llenar_tabla_tarifas();
     }
 }
 
@@ -994,8 +1120,7 @@ void FrmArticulos::btnBorrarTarifa_clicked()
         if(!SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id = %1").arg(pKey.toInt()),error))
             QMessageBox::warning(this,tr("Ocurrió un error al borrar"),
                                  error);
-        LlenarTablas();
-
+        llenar_tabla_tarifas();
     }
 
 }
@@ -1010,8 +1135,7 @@ void FrmArticulos::anadir_proveedor_clicked()
                                                  frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvd_real,frmAsociar.id_divisa);
         if (!ok)
             QMessageBox::warning(this,tr("Nuevo proveedor frecuente"),tr("Falló la inserción del proveedor"),tr("Aceptar"));
-        LLenarCampos();
-
+        LLenarCampos(ui->Pestanas->currentIndex());
     }
 
     //-----------------------
@@ -1037,7 +1161,7 @@ void FrmArticulos::editar_proveedor_clicked()
                                                  frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvd_real,frmAsociar.id_divisa);
         if (!ok)
             QMessageBox::warning(this,tr("Guardar proveedor frecuente"),tr("Falló la edición del proveedor"),tr("Aceptar"));
-        LLenarCampos();
+        LLenarCampos(ui->Pestanas->currentIndex());
 
     }
 }
@@ -1069,8 +1193,7 @@ void FrmArticulos::borrar_proveedor_clicked()
                                  tr("Se ha producido un error al borrar el proveedor frecuente: %1").arg(queryProv.lastError().text()),
                                  tr("Aceptar"));
         else
-
-            LlenarTablas();
+            LLenarCampos(ui->Pestanas->currentIndex());
     }
 }
 
@@ -1522,11 +1645,14 @@ void FrmArticulos::MostrarGrafica_comparativa(bool grafica_unidades)
 void FrmArticulos::LLenarGraficas()
 {
     QSqlQuery queryAcumulados(Configuracion_global->empresaDB);
-    if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id))){
+    if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id)))
+    {
         QMessageBox::warning(this,tr("Acumulados ejercicio"),
                              tr("Ocurrió un error al recuperar ficha de acumulados: %1").arg(queryAcumulados.lastError().text()),
                              tr("Aceptar"));
-    } else {
+    }
+    else
+    {
         queryAcumulados.next();
         //--------------------
         // Undidades compradas
@@ -1672,15 +1798,7 @@ void FrmArticulos::LLenarGraficas()
         ui->txtImporte_ventas_noviembre_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_noviembre").toDouble()));
         ui->txtImporte_ventas_diciembre_EA->setText(QString::number(queryAcumulados.record().value("acum_vent_diciembre").toDouble()));
 
-    }
-    if(ui->Pestanas->currentIndex()==5){
-        if(ui->radGrafica_importes->isChecked())
-            GraficaImportes();
-        else
-            GraficaUnidades();
-    }
-    if(ui->Pestanas->currentIndex()==6)
-        LLenarGrafica_comparativa(1);
+    }        
 }
 
 void FrmArticulos::LLenarGrafica_comparativa(int index)
@@ -1760,127 +1878,6 @@ void FrmArticulos::LLenarGrafica_comparativa(int index)
             }
             dbEmpresa2.close();
         }
-    }
-}
-
-
-
-void FrmArticulos::LlenarTablas()
-{
-    if(ui->Pestanas->currentWidget()==ui->tab_articulo)
-    {
-        //---------------------
-        // Tarifas
-        //---------------------        
-        modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,pvp_con_iva,simbolo "
-                             "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
-                             Configuracion_global->groupDB);
-        if (modelTarifa->lastError().isValid())
-            return;
-
-        modelTarifa->setHeaderData(0,Qt::Horizontal,tr("id"));
-        modelTarifa->setHeaderData(1,Qt::Horizontal,tr("CODIGO"));
-        modelTarifa->setHeaderData(2,Qt::Horizontal,tr("DESCRIPCIÓN"));
-        modelTarifa->setHeaderData(3,Qt::Horizontal,tr("PAIS"));
-        modelTarifa->setHeaderData(4,Qt::Horizontal,tr("DIVISA"));
-        modelTarifa->setHeaderData(5,Qt::Horizontal,tr("%MARG."));
-        modelTarifa->setHeaderData(6,Qt::Horizontal,tr("%M. MÍN."));
-        modelTarifa->setHeaderData(7,Qt::Horizontal,tr("PVP"));
-        modelTarifa->setHeaderData(8,Qt::Horizontal,tr("PVP+IVA"));
-        modelTarifa->setHeaderData(9,Qt::Horizontal,tr("S"));
-
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(0,0);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(1,105);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(2,165);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(3,65);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(4,70);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(5,70);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(6,70);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(7,85);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(8,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(8,85);
-        ui->TablaTarifas->horizontalHeader()->setSectionResizeMode(9,QHeaderView::Fixed);
-        ui->TablaTarifas->horizontalHeader()->resizeSection(9,20);
-    }
-
-    if(ui->Pestanas->currentWidget()==ui->tab_proveedores)
-    {
-        //-----------------------
-        // Proveedores frecuentes
-        //-----------------------
-
-        modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
-        "where id_art = "+QString::number(oArticulo->id),
-                            Configuracion_global->groupDB);
-
-        if (modelProv->lastError().isValid())
-            return;        
-
-        modelProv->setHeaderData(1,Qt::Horizontal,tr("COD.PROV."));
-        modelProv->setHeaderData(2,Qt::Horizontal,tr("PROVEEDOR"));
-        modelProv->setHeaderData(3,Qt::Horizontal,tr("COD.ART.PRO."));
-        modelProv->setHeaderData(4,Qt::Horizontal,tr("COSTE"));
-        modelProv->setHeaderData(5,Qt::Horizontal,tr("C.REAL"));
-        modelProv->setHeaderData(6,Qt::Horizontal,tr("DIVISA"));
-        modelProv->setHeaderData(7,Qt::Horizontal,tr("D.OFERTA"));
-        ui->tablaProveedores->setColumnHidden(0,true);
-        ui->tablaProveedores->setColumnHidden(8,true);
-
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
-
-        //--------------------
-        // Grafica proveedores
-        //--------------------
-
-       ui->graf_prov->Clear();
-
-       rellenar_grafica_proveedores();
-    }
-    if(ui->Pestanas->currentWidget() == ui->tab_Trazabilidad)
-    {
-        // -------------------
-        // TABLA TRAZABILIDAD
-        // -------------------
-
-        modelTrazabilidad1->setQuery( "select * from viewTrazabilidad1 where id_articulo = "+QString::number(oArticulo->id),
-                                      Configuracion_global->groupDB);
-        if (modelTrazabilidad1->lastError().isValid())
-            return;
-
-        ui->tablaLotes->setColumnHidden(0,true);
-        ui->tablaLotes->setColumnHidden(6,true);
-        modelTrazabilidad1->setHeaderData(1,Qt::Horizontal,tr("LOTE"));
-        modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTidAD"));
-        modelTrazabilidad1->setHeaderData(3,Qt::Horizontal,tr("STOCK LOTE"));
-        modelTrazabilidad1->setHeaderData(4,Qt::Horizontal,tr("STOCK REAL"));
-        modelTrazabilidad1->setHeaderData(5,Qt::Horizontal,tr("FAC.COMPRA"));
-        modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("id"));
-        modelTrazabilidad1->setHeaderData(7,Qt::Horizontal,tr("FEC.COMPRA"));
-        modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCidAD"));
-        modelTrazabilidad1->setHeaderData(9,Qt::Horizontal,tr("PROVEEDOR"));
-        modelTrazabilidad1->setHeaderData(10,Qt::Horizontal,tr("DESCRIPCIÓN"));
-        modelTrazabilidad1->setHeaderData(11,Qt::Horizontal,tr("CÓDIGO"));
     }
 }
 
@@ -2127,11 +2124,10 @@ void FrmArticulos::on_botCambiarImagen_4_clicked()
 
 void FrmArticulos::actualizar()
 {
-    if(!oArticulo->codigo.isEmpty())
+    if(!oArticulo->id >= 0)
     {
-        QString codigo = oArticulo->codigo;
-        oArticulo->Recuperar("Select * from articulos where codigo ='"+codigo+"' order by codigo limit 1 ",1);
-        LLenarCampos();
+        oArticulo->Recuperar(oArticulo->id);
+        LLenarCampos(ui->Pestanas->currentIndex());
         tarifa_model->setFilter("id_articulo = "+QString::number(oArticulo->id));
         tarifa_model->select();
     }
@@ -2148,7 +2144,8 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
         QImage imagen(ficheroImagen);
 
         label->setPixmap(QPixmap::fromImage(imagen));
-        label->setScaledContents(true);
+        //label->setScaledContents(true);
+
         QByteArray ba;
         QFile f(ficheroImagen);
         if(f.open(QIODevice::ReadOnly)) {
@@ -2157,7 +2154,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
         }
         QSqlQuery Articulo(Configuracion_global->groupDB);
         Articulo.prepare("update articulos set "+campo+" =:imagen where id = :nid");
-        Articulo.bindValue(":imagen",ba.toBase64());
+        Articulo.bindValue(":imagen",ba/*.toBase64()*/);
         Articulo.bindValue(":nid",oArticulo->id);
         if (!Articulo.exec())
         {
@@ -2180,7 +2177,7 @@ void FrmArticulos::on_txtcoste_editingFinished()
     {
         blockSignals(true);
         // TODO recalcular tarifas
-         blockSignals(false);
+        blockSignals(false);
     }
 }
 
@@ -2195,7 +2192,7 @@ void FrmArticulos::on_tablaBusqueda_doubleClicked(const QModelIndex &index)
     if(ui->stackedWidget->currentIndex() == 1)
         ui->stackedWidget->setCurrentIndex(0);
     oArticulo->Recuperar(id);
-    LLenarCampos();
+    LLenarCampos(ui->Pestanas->currentIndex());
     ui->botEditar->setEnabled(true);
 
     ocultarBusqueda();
@@ -2484,6 +2481,9 @@ void FrmArticulos::on_btnActivarOferta_clicked()
     if(QMessageBox::question(this,tr("Gestión de artíclos"),
                              tr("¿Desea cambiar la oferta activa para este producto?"),tr("No"),tr("Sí"))== QMessageBox::Accepted)
     {
+        if(!ui->tabla_ofertas->currentIndex().isValid())
+            return;
+
         QModelIndex index = ui->tabla_ofertas->currentIndex();
         int id = ui->tabla_ofertas->model()->data(ui->tabla_ofertas->currentIndex().model()->index(index.row(),0)).toInt();
         QHash <QString , QVariant > oferta;
@@ -2516,6 +2516,9 @@ void FrmArticulos::on_btnBorrar_oferta_clicked()
     if(QMessageBox::question(this,tr("Gestión de artículos"),tr("¿Desea borrar la oferta?\nEsta opción no se puede deshacer"),
                              tr("No"),tr("Sí"))==QMessageBox::Accepted)
     {
+        if(!ui->tabla_ofertas->currentIndex().isValid())
+            return;
+
         QModelIndex index = ui->tabla_ofertas->currentIndex();
         int id = ui->tabla_ofertas->model()->data(ui->tabla_ofertas->currentIndex().model()->index(index.row(),0)).toInt();
         QString error;
@@ -2557,6 +2560,10 @@ void FrmArticulos::on_txtPrecio_volumen_editingFinished()
 
 void FrmArticulos::on_btnEditar_volumen_clicked()
 {
+    if(!ui->tabla_volumenes->currentIndex().isValid())
+        return;
+    ui->tabla_volumenes->setEnabled(false);
+
     ui->btnAnadir_volumen->setEnabled(false);
     ui->btnEditar_volumen->setEnabled(false);
     ui->botGuardar->setEnabled(false);
@@ -2569,7 +2576,6 @@ void FrmArticulos::on_btnEditar_volumen_clicked()
     ui->spinDesde->setFocus();
     ui->spinDesde->selectAll();
     new_volumen = false;
-
 }
 
 void FrmArticulos::on_btnGuardar_volumen_clicked()
@@ -2613,20 +2619,14 @@ void FrmArticulos::on_btnGuardar_volumen_clicked()
     }
     volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(oArticulo->id),
                       Configuracion_global->groupDB);
+    ui->tabla_volumenes->setEnabled(true);
 }
 
 void FrmArticulos::on_tabla_volumenes_clicked(const QModelIndex &index)
 {
-    int id = ui->tabla_volumenes->model()->data(index.model()->index(index.row(),0)).toInt();
-    QMap <int, QSqlRecord> m;
-    QString error;
-    m = SqlCalls::SelectRecord("articulos_volumen",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
-    if(error.isEmpty())
-    {
-        ui->spinDesde->setValue(m.value(id).value("desde").toFloat());
-        ui->spinHasta->setValue(m.value(id).value("hasta").toFloat());
-        ui->txtPrecio_volumen->setText(Configuracion_global->toFormatoMoneda(m.value(id).value("precio").toString()));
-    }
+    ui->spinDesde->setValue(volumen->record(index.row()).value("desde").toDouble());
+    ui->spinHasta->setValue(volumen->record(index.row()).value("hasta").toDouble());
+    ui->txtPrecio_volumen->setText(volumen->record(index.row()).value("precio").toString());
 }
 
 void FrmArticulos::on_btnDeshacer_volumen_clicked()
@@ -2641,6 +2641,7 @@ void FrmArticulos::on_btnDeshacer_volumen_clicked()
     ui->spinHasta->setEnabled(false);
     ui->txtPrecio_volumen->setEnabled(false);
     on_tabla_volumenes_clicked(ui->tabla_volumenes->currentIndex());
+    ui->tabla_volumenes->setEnabled(true);
 }
 
 void FrmArticulos::on_btnBorrar_volumen_clicked()
@@ -2712,10 +2713,7 @@ void FrmArticulos::on_btnBorrarimagen_4_clicked()
 
 void FrmArticulos::on_Pestanas_currentChanged(int index)
 {
-    Q_UNUSED(index);
-    LLenarCampos();
-    if(ui->Pestanas->currentWidget()==ui->tab_estadistica)
-        ui->radGrafica_importes->click();
+    LLenarCampos(index);
 }
 
 void FrmArticulos::on_botBuscarGrupo_clicked()

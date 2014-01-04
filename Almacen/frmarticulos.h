@@ -79,7 +79,6 @@ private slots:
     void MostrarGrafica_comparativa(bool);
     void LLenarGraficas();
     void LLenarGrafica_comparativa(int);
-    void LlenarTablas();
 
     void listados();
 
@@ -185,7 +184,7 @@ private:
     bool Altas;
     bool new_volumen;
     void bloquearCampos(bool state);
-    void LLenarCampos();
+    void LLenarCampos(int index);
     void CargarCamposEnArticulo();
     void VaciarCampos();
     void ChangeValues_TablaProveedores(int row, int column);
@@ -210,6 +209,7 @@ private:
 
     //MODELS
     QSqlQueryModel *modelTarifa;
+    void llenar_tabla_tarifas();
 };
 
 #endif // FRMARTICULOS_H

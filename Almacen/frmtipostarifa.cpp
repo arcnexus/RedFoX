@@ -139,7 +139,6 @@ void FrmTiposTarifa::on_listatarifas_clicked(const QModelIndex &index)
 
 }
 
-
 void FrmTiposTarifa::on_btnAnadir_clicked()
 {
     oTipostarifa->clear();
@@ -156,7 +155,6 @@ void FrmTiposTarifa::on_btnAnadir_clicked()
 
 void FrmTiposTarifa::activar_controles(bool state)
 {
-
     ui->txtCodigo->setEnabled(state);
     ui->txtDescripcion->setEnabled(state);
     ui->cboMoneda->setEnabled(state);
