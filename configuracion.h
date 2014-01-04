@@ -89,6 +89,8 @@ public:
 
     bool contabilidad;
     bool ticket_factura;
+    bool descripcion_resumida_lineas;
+    bool referencia_fabricante_lineas_compras;
 
     bool enlace_web;
     QString pais;
