@@ -51,41 +51,20 @@ int TiposTarifa::anadir()
 
 bool TiposTarifa::guardar()
 {
-    QSqlQuery query_tarifas(Configuracion_global->groupDB);
-    query_tarifas.prepare("UPDATE codigotarifa SET "
+    QHash<QString,QVariant> _data;
 
-                          "descripcion=:descripcion,"
-                          "codigo_tarifa=:codigo_tarifa,"
-                          "id_pais=:id_pais,"
-                          "id_monedas=:id_monedas,"
-                          "margen=:margen,"
-                          "margen_min=:margen_min,"
-                          "porc_dto1 = :porc_dto1,"
-                          "porc_dto2 = :porc_dto2,"
-                          "porc_dto3 = :porc_dto3,"
-                          "porc_dto4 = :porc_dto4,"
-                          "porc_dto5 = :porc_dto5,"
-                          "porc_dto6 = :porc_dto6,"
-                            " WHERE id=:id");
-    query_tarifas.bindValue(":descripcion", this->descripcion);
-    query_tarifas.bindValue(":codigo_tarifa",this->codigo_tarifa);
-    query_tarifas.bindValue(":id_pais",this->id_pais);
-    query_tarifas.bindValue(":id_monedas",this->id_monedas);
-    query_tarifas.bindValue(":margen",this->margen);
-    query_tarifas.bindValue(":margen_min",this->margen_min);
-    query_tarifas.bindValue(":porc_dto1",this->porc_dto1);
-    query_tarifas.bindValue(":porc_dto2",this->porc_dto2);
-    query_tarifas.bindValue(":porc_dto3",this->porc_dto3);
-    query_tarifas.bindValue(":porc_dto4",this->porc_dto4);
-    query_tarifas.bindValue(":porc_dto5",this->porc_dto5);
-    query_tarifas.bindValue(":porc_dto6",this->porc_dto6);
-    query_tarifas.bindValue(":id",this->id);
-    if(query_tarifas.exec())
+    _data["descripcion"]= this->descripcion;
+    _data["codigo_tarifa"]= this->codigo_tarifa;
+    _data["id_pais"]= this->id_pais;
+    _data["id_monedas"]= this->id_monedas;
+    _data["margen"]= this->margen;
+    _data["margen_min"]= this->margen_min;
+
+    QString error;
+    if(SqlCalls::SqlUpdate(_data,"codigotarifa",Configuracion_global->groupDB,QString("id = %1").arg(this->id),error))
         return true;
     else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Tipos de tarifa"),
-                             tr("Falló la modificación de tipos de tarifa: %1").arg(query_tarifas.lastError().text()),
-                             tr("Aceptar"));
+        QMessageBox::warning(qApp->activeWindow(),tr("Falló la modificación de tipos de tarifa"),error,tr("Aceptar"));
         return false;
     }
 }
@@ -129,5 +108,4 @@ void TiposTarifa::cargar_datos(QSqlQuery queryTarifa)
     this->porc_dto4 = queryTarifa.record().value("porc_dto4").toFloat();
     this->porc_dto5 = queryTarifa.record().value("porc_dto5").toFloat();
     this->porc_dto6 = queryTarifa.record().value("porc_dto6").toFloat();
-
 }

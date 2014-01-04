@@ -154,8 +154,9 @@ void Proveedor::Anadir()
 
 void Proveedor::Recuperar(int id)
 {
-    QSqlQuery qProveedor;
-    QString cSQL = "Select * from proveedores where id = "+QString::number(id);
+    QSqlQuery qProveedor(Configuracion_global->groupDB);
+    QString cSQL = "SELECT * FROM proveedores WHERE id = "+QString::number(id);
+
     if(qProveedor.exec(cSQL)) {
         if(qProveedor.next()) {
             QSqlRecord rProveedor = qProveedor.record();
@@ -175,7 +176,7 @@ void Proveedor::Recuperar(int id)
 
 void Proveedor::Recuperar(QString cSQL)
 {
-    QSqlQuery qProveedor;
+    QSqlQuery qProveedor(Configuracion_global->groupDB);
     if(qProveedor.exec(cSQL)) {
         if(qProveedor.next()) {
             QSqlRecord rProveedor = qProveedor.record();
@@ -195,7 +196,7 @@ void Proveedor::Recuperar(QString cSQL)
 
 void Proveedor::Recuperar(QString cSQL, int nProcede)
 {
-    QSqlQuery qProveedor;
+    QSqlQuery qProveedor(Configuracion_global->groupDB);
     if(qProveedor.exec(cSQL)) {
         if(qProveedor.next()) {
             QSqlRecord rProveedor = qProveedor.record();

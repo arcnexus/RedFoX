@@ -90,9 +90,12 @@ private:
     void _insertNewGroup(QString grupo);
     void createGroup();
     QString _targetGroup;
-    QSqlRecord _targetGroupDbRecord;
+    QSqlDatabase _targetGroupDb;
     int _idEmpresa;
     void limpiar_campos();
+
+    QSqlQueryModel * tarifaEditModel;
+    QSqlQueryModel * monedaEditModel;
 };
 
 #endif // FRMEMPRESAS_H
