@@ -289,12 +289,7 @@ CREATE TABLE `@grupo@`.`clientes_intervalo_horario` (
 CREATE TABLE `@grupo@`.`codigotarifa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
-  `codigo_tarifa` varchar(20) DEFAULT NULL,
-  `dto` double DEFAULT NULL,
-  `desc_promo` varchar(45) DEFAULT NULL,
-  `cant_promo` int(11) DEFAULT NULL,
-  `cant_base` int(11) DEFAULT NULL,
-  `importe_dto` double DEFAULT NULL,
+  `codigo_tarifa` varchar(20) DEFAULT NULL,  
   `id_pais` int(11) DEFAULT NULL,
   `id_monedas` int(11) DEFAULT NULL,
   `margen` double DEFAULT NULL,

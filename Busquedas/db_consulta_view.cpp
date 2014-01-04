@@ -173,6 +173,12 @@ void db_consulta_view::on_resultado_list_clicked(const QModelIndex &index)
     int row = index.row();
     id = ui->resultado_list->model()->data(ui->resultado_list->model()->index(row,0)).toInt();
     ui->resultado_list->blockSignals(false);
+
+    QSqlQueryModel* model = reinterpret_cast<QSqlQueryModel*>(ui->resultado_list->model());
+    if(model)
+    {
+       _r = model->record(row) ;
+    }
 }
 
 void db_consulta_view::on_resultado_list_doubleClicked(const QModelIndex &index)
@@ -181,5 +187,11 @@ void db_consulta_view::on_resultado_list_doubleClicked(const QModelIndex &index)
     int row = index.row();
     id = ui->resultado_list->model()->data(ui->resultado_list->model()->index(row,0)).toInt();
     ui->resultado_list->blockSignals(false);
+    QSqlQueryModel* model = reinterpret_cast<QSqlQueryModel*>(ui->resultado_list->model());
+    if(model)
+    {
+       _r = model->record(row) ;
+    }
+
     ui->btn_aceptar->click();
 }

@@ -34,50 +34,6 @@
        <property name="rightMargin">
         <number>20</number>
        </property>
-       <item row="0" column="1">
-        <widget class="QLabel" name="lblCodigo">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>130</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>código</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="lblDescripcion">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>425</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Descripcion</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0" rowspan="2">
         <widget class="QFrame" name="frame_16">
          <property name="minimumSize">
@@ -469,6 +425,50 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="lblCodigo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>130</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>código</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="lblDescripcion">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>425</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Descripcion</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1" colspan="5">
         <widget class="QTabWidget" name="Pestanas">
@@ -1498,7 +1498,7 @@ color: rgb(255, 255, 255);</string>
                 </size>
                </property>
                <property name="editTriggers">
-                <set>QAbstractItemView::AllEditTriggers</set>
+                <set>QAbstractItemView::NoEditTriggers</set>
                </property>
                <property name="alternatingRowColors">
                 <bool>true</bool>
@@ -2429,33 +2429,7 @@ color: rgb(255, 255, 255);</string>
            <string>Precios por volumen</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_40">
-           <item row="0" column="3">
-            <spacer name="horizontalSpacer_10">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>218</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="0">
-            <spacer name="horizontalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>218</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="1" colspan="2">
+           <item row="0" column="0" colspan="2">
             <widget class="QFrame" name="frame_3">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -3498,7 +3472,7 @@ Imagen.</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox">
+               <widget class="QCheckBox" name="chkValorGrafica">
                 <property name="autoFillBackground">
                  <bool>false</bool>
                 </property>
@@ -6229,7 +6203,7 @@ alternate-background-color: rgb(255, 255, 255);</string>
         <number>20</number>
        </property>
        <item row="0" column="0">
-        <widget class="QTableView" name="tabla">
+        <widget class="QTableView" name="tablaBusqueda">
          <property name="styleSheet">
           <string notr="true">alternate-background-color: rgb(255, 255, 255);
 font: 8pt &quot;Sans&quot;;
@@ -6345,7 +6319,7 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>cboTipoGrafica</tabstop>
   <tabstop>radGrafica_unidades</tabstop>
   <tabstop>radGrafica_importes</tabstop>
-  <tabstop>checkBox</tabstop>
+  <tabstop>chkValorGrafica</tabstop>
   <tabstop>cboTipoGrafica_2</tabstop>
   <tabstop>radGrafica_unidades_2</tabstop>
   <tabstop>radGrafica_importes_2</tabstop>
@@ -6487,7 +6461,7 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>tabla_ofertas</tabstop>
   <tabstop>btnBorrar_oferta</tabstop>
   <tabstop>btnActivarOferta</tabstop>
-  <tabstop>tabla</tabstop>
+  <tabstop>tablaBusqueda</tabstop>
   <tabstop>tabla_volumenes</tabstop>
   <tabstop>btnAnadir_volumen</tabstop>
   <tabstop>btnEditar_volumen</tabstop>

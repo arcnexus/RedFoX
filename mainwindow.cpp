@@ -412,6 +412,7 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
     if(Articulos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _almacenModules.append(Articulos);
+        QTimer::singleShot(0,Articulos,SLOT(init()));
     }
     else
         delete Articulos;

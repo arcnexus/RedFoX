@@ -26,6 +26,7 @@ public:
     void set_campoBusqueda(QStringList campos);
     void set_db(QString nombre_db);
     int get_id() {return this->id;}
+    QSqlRecord get_record() {return this->_r;}
     
     int getId_tarifa_cliente() const;
     void setId_tarifa_cliente(int value);
@@ -44,6 +45,7 @@ private:
     QString tabla;
     int id;
     QSqlQueryModel *modelo;
+    QSqlRecord _r;
     int id_tarifa_cliente;
     int tipo_dto_tarifa;
 
