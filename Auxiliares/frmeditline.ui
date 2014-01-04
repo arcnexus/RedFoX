@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>846</width>
-    <height>329</height>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,347 +17,152 @@
    <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="4">
-    <widget class="QLineEdit" name="txtCantidad">
-     <property name="maximumSize">
-      <size>
-       <width>128</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="6" colspan="4">
-    <widget class="QPushButton" name="btnLote">
-     <property name="text">
-      <string>Lote.</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/desglose.png</normaloff>:/Icons/PNG/desglose.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5" colspan="3">
-    <widget class="QLabel" name="label_4">
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>PVP/
-Cliente</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="4">
-    <widget class="QLineEdit" name="txtImp_dto">
-     <property name="maximumSize">
-      <size>
-       <width>128</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="7">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>636</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="1" colspan="3">
-    <widget class="QLabel" name="label_2">
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>Descripción:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="7" colspan="2">
-    <widget class="QPushButton" name="btnCancelar">
-     <property name="text">
-      <string>Cancelar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/close.png</normaloff>:/Icons/PNG/close.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="9">
-    <widget class="QPushButton" name="btnAceptar">
-     <property name="text">
-      <string>Aceptar</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../maya.qrc">
-       <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
-    <widget class="QLabel" name="label_7">
-     <property name="maximumSize">
-      <size>
-       <width>128</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>Imp Dto</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="8" colspan="2">
-    <widget class="QLineEdit" name="txtImporte_iva">
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="8" colspan="2">
-    <widget class="QLineEdit" name="txt_tota_linea">
-     <property name="styleSheet">
-      <string notr="true">font: 18pt &quot;Sans Serif&quot;;</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>Código:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="8" colspan="2">
-    <widget class="QLabel" name="label_9">
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>Importe IVA</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="label_6">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>%Dto</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="5" colspan="3">
-    <widget class="QLabel" name="label_8">
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>%IVA</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="8" colspan="2">
-    <widget class="QLabel" name="label_5">
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
-     <property name="text">
-      <string>PVP/
-Recom.</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLineEdit" name="txtCodigo">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="3">
-    <widget class="QLineEdit" name="txtPorc_dto">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="5" colspan="3">
-    <widget class="QComboBox" name="cboIva"/>
-   </item>
-   <item row="5" column="4">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="1" colspan="3">
-    <widget class="QLineEdit" name="txtDescripcion"/>
-   </item>
-   <item row="5" column="0" rowspan="3" colspan="4">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 127);</string>
-     </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0" colspan="4">
+    <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Stock Producto</string>
+      <string>Datos Línea.</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_11">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="5" column="9">
+       <widget class="QLineEdit" name="txt_tota_linea">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>29</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>141</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 18pt &quot;Sans Serif&quot;;</string>
+        </property>
         <property name="text">
-         <string>Almacen:</string>
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_10">
-        <property name="enabled">
-         <bool>false</bool>
+       <widget class="QLabel" name="label_3">
+        <property name="maximumSize">
+         <size>
+          <width>59</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 85, 0);</string>
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
         </property>
         <property name="text">
-         <string>0,00</string>
+         <string>Cant.</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="2" colspan="2">
-       <widget class="QLabel" name="label_12">
+      <item row="4" column="0" colspan="10">
+       <widget class="QLineEdit" name="txtDescripcion"/>
+      </item>
+      <item row="3" column="0" colspan="10">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
         <property name="text">
-         <string>Real (Almacen + pendiente recibir):</string>
+         <string>Descripción</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item row="0" column="4">
-       <widget class="QLineEdit" name="lineEdit_11">
-        <property name="enabled">
-         <bool>false</bool>
+       <widget class="QLabel" name="label_5">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>PVP/
+Recom.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="txtCodigo">
+        <property name="minimumSize">
+         <size>
+          <width>131</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLabel" name="label_6">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 85, 0);</string>
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>%Dto</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QLabel" name="label_8">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>%IVA</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="txtCantidad">
+        <property name="maximumSize">
+         <size>
+          <width>59</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="text">
          <string>0,00</string>
@@ -367,17 +172,172 @@ color: rgb(0, 85, 0);</string>
         </property>
        </widget>
       </item>
+      <item row="5" column="0" colspan="3">
+       <widget class="QPushButton" name="btnLote">
+        <property name="text">
+         <string>Lote.</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/PNG/desglose.png</normaloff>:/Icons/PNG/desglose.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLineEdit" name="txtPvp_recomendado">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(236, 236, 236);
+color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>131</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Código</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="9">
+       <widget class="QComboBox" name="cboIva"/>
+      </item>
+      <item row="1" column="7">
+       <widget class="QLineEdit" name="txtPorc_dto">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <widget class="QLabel" name="label_4">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>PVP/
+Cliente</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="8">
+       <widget class="QLineEdit" name="txtPVP">
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="8">
+       <widget class="QLabel" name="label_10">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Total línea:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Stock Producto</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
       <item row="2" column="0">
        <widget class="QLabel" name="label_13">
         <property name="text">
          <string>Pendientes:</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Real (Almacen + pendiente recibir):</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_12">
+       <widget class="QLineEdit" name="txtPendientes_recibir">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>56</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
@@ -391,32 +351,8 @@ color: rgb(0, 85, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_15">
-        <property name="text">
-         <string>Unidades reservadas:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLineEdit" name="lineEdit_13">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 85, 0);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QDateEdit" name="dateEdit">
+      <item row="3" column="1">
+       <widget class="QDateEdit" name="dateFecha_recepcion">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -433,92 +369,279 @@ color: rgb(0, 85, 0);</string>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
+        <property name="displayFormat">
+         <string>dd/MM/yyyy</string>
+        </property>
        </widget>
       </item>
-      <item row="1" column="2">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="txtStockAlmacen">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>56</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 85, 0);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
        <widget class="QLabel" name="label_14">
         <property name="text">
          <string>Fecha prevista recepción:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="txtStock_real">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>56</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 85, 0);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Almacen:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_15">
+        <property name="text">
+         <string>Unidades reservadas:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="txtUnidades_reservadas">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 85, 0);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="label_3">
-     <property name="maximumSize">
+   <item row="1" column="1" colspan="3">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Información Producto</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="chk3_2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>3*2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="txtPvp_conIva">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 85, 0);
+background-color: rgb(255, 255, 202);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="lblpromocionado">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>PROMOCIONADO</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="chkdto">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>DTO</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_16">
+        <property name="text">
+         <string>PVP Recomendado con iva:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="chk_dtoweb">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>DTO WEB</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="chkprecio">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>PRECIO</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>128</width>
-       <height>16777215</height>
+       <width>636</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-     </property>
+    </spacer>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="btnCancelar">
      <property name="text">
-      <string>Cantidad</string>
+      <string>Cancelar</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/close.png</normaloff>:/Icons/PNG/close.png</iconset>
      </property>
     </widget>
    </item>
-   <item row="1" column="8" colspan="2">
-    <widget class="QLineEdit" name="txtPvp_recomendado">
+   <item row="2" column="3">
+    <widget class="QPushButton" name="btnAceptar">
      <property name="text">
-      <string>0,00</string>
+      <string>Aceptar</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="6" colspan="2">
-    <widget class="QLabel" name="label_10">
-     <property name="text">
-      <string>Total línea:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5" colspan="3">
-    <widget class="QLineEdit" name="txtPVP">
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="8" colspan="2">
-    <widget class="QLineEdit" name="txtPvp_conIva">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(0, 85, 0);
-background-color: rgb(255, 255, 202);</string>
-     </property>
-     <property name="text">
-      <string>0,00</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="5" colspan="3">
-    <widget class="QLabel" name="label_16">
-     <property name="text">
-      <string>PVP con iva:</string>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/OK.png</normaloff>:/Icons/PNG/OK.png</iconset>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtCodigo</tabstop>
+  <tabstop>txtCantidad</tabstop>
+  <tabstop>txtPvp_recomendado</tabstop>
+  <tabstop>txtPorc_dto</tabstop>
+  <tabstop>txtPVP</tabstop>
+  <tabstop>cboIva</tabstop>
+  <tabstop>btnAceptar</tabstop>
+  <tabstop>btnCancelar</tabstop>
+  <tabstop>txtStockAlmacen</tabstop>
+  <tabstop>txt_tota_linea</tabstop>
+  <tabstop>txtDescripcion</tabstop>
+  <tabstop>btnLote</tabstop>
+  <tabstop>txtPendientes_recibir</tabstop>
+  <tabstop>txtStock_real</tabstop>
+  <tabstop>txtPvp_conIva</tabstop>
+  <tabstop>chk3_2</tabstop>
+  <tabstop>chkdto</tabstop>
+  <tabstop>chk_dtoweb</tabstop>
+  <tabstop>chkprecio</tabstop>
+ </tabstops>
  <resources>
   <include location="../maya.qrc"/>
  </resources>

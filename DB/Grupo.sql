@@ -97,6 +97,7 @@ CREATE TABLE `@grupo@`.`articulos` (
   `margen` double DEFAULT NULL,
   `margen_min` double DEFAULT NULL,
   `coste_real` double DEFAULT NULL,
+  `lote` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

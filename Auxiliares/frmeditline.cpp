@@ -7,6 +7,16 @@ frmEditLine::frmEditLine(QWidget *parent) :
     ui(new Ui::frmEditLine)
 {
     ui->setupUi(this);
+    this->dto_tarifa =0;
+    ui->lblpromocionado->setVisible(false);
+    ui->chk3_2->setVisible(false);
+    ui->chkdto->setVisible(false);
+    ui->chkprecio->setVisible(false);
+    ui->chk_dtoweb->setVisible(false);
+    oArticulo = new Articulo(this);
+    //IVA desde config
+    ui->cboIva->setModel(Configuracion_global->iva_model);
+    ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
 }
 
 frmEditLine::~frmEditLine()
@@ -38,9 +48,24 @@ void frmEditLine::set_linea(int id,QString fichero)
     }
 }
 
+void frmEditLine::set_id_cliente(int id)
+{
+    this->id_cliente = id;
+}
+
+void frmEditLine::set_id_tarifa(int id)
+{
+    this->id_tarifa = id;
+}
+
 void frmEditLine::set_tipo(QString tipo)
 {
     this->tipo = tipo;
+}
+
+void frmEditLine::set_dto_tarifa(float dto)
+{
+    this->dto_tarifa = dto;
 }
 
 
@@ -56,29 +81,42 @@ void frmEditLine::on_txtCodigo_editingFinished()
         consulta.set_campoBusqueda(campos);
         consulta.set_texto_tabla("articulos");
         consulta.set_db("Maya");
-        consulta.setId_tarifa_cliente(this->tarifa);
-        consulta.setTipo_dto_tarifa(this->tipo_dto_tarifa);
-        if(this->tipo_dto_tarifa ==1)
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
-                         "porc_dto1/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
-        else if(this->tipo_dto_tarifa ==2)
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
-                         "porc_dto2/100))) as pvp, pvp as pvp_recom from vistaart_tarifa");
-        else if(this->tipo_dto_tarifa ==3)
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
-                         "porc_dto3/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
-        else if(this->tipo_dto_tarifa ==4)
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
-                         "porc_dto4/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
-        else if(this->tipo_dto_tarifa ==5)
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
-                         "porc_dto5/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
-        else if(this->tipo_dto_tarifa ==6)
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
-                         "porc_dto6/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
-        else if(this->tipo_dto_tarifa == 0)
+        consulta.setId_tarifa_cliente(this->id_tarifa);
+
+
+        if(Configuracion_global->importado_sp)
+        {
+
+            //--------------------------------
+            // precio cliente segun descuento
+            //--------------------------------
+            if(this->dto_tarifa ==1)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                             "porc_dto1/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
+            else if(this->dto_tarifa ==2)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                             "porc_dto2/100))) as pvp, pvp as pvp_recom from vistaart_tarifa");
+            else if(this->dto_tarifa ==3)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                             "porc_dto3/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
+            else if(this->dto_tarifa ==4)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                             "porc_dto4/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
+            else if(this->dto_tarifa ==5)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                             "porc_dto5/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
+            else if(this->dto_tarifa ==6)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,(pvp-(pvp*("
+                             "porc_dto6/100))) as pvp,pvp as pvp_recom from vistaart_tarifa");
+            else if(this->dto_tarifa == 0)
+                consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,pvp, pvp as pvp_recom"
+                                 " from vistaart_tarifa");
+        }
+        else
+        {
             consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,pvp, pvp as pvp_recom"
                              " from vistaart_tarifa");
+        }
         QStringList cabecera;
         QVariantList tamanos;
         QVariantList moneda;
@@ -97,10 +135,16 @@ void frmEditLine::on_txtCodigo_editingFinished()
        }
     } else
     {
+        QString error;
            this->id = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1'").arg(ui->txtCodigo->text()),
-                                               Configuracion_global->groupDB,error);
+                                               Configuracion_global->groupDB,error).toInt();
+        if(!error.isEmpty()){
+            QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo recuperar el artículo: %1").arg(error),
+                                 tr("Acceptar"));
+            close();
+        }
     }
-    cargar_articulo(this->id);
+    cargar_articulo(this->id,this->id_tarifa,this->dto_tarifa);
 
     ui->txtCodigo->blockSignals(false);
 }
@@ -113,6 +157,7 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
     QMap <int,QSqlRecord> m;
     QString error;
     float dto;
+    this->dto_tarifa = tipo_dto;
     QStringList condiciones;
     condiciones << QString("id = '%1'").arg(id);
     condiciones << QString("tarifa = %1").arg(tarifa);
@@ -144,31 +189,31 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
         ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                              i.value().value("pvp_con_iva").toDouble(),'f',
                                                                              Configuracion_global->decimales)));
-        ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                      i.value().value("pvp").toDouble(),'f',
-                                                                      Configuracion_global->decimales)));
-        ui->txtCantidad ="1";
+        ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
+                                                                                              Configuracion_global->decimales)));
+
+        ui->txtCantidad->setText("1");
         int index = ui->cboIva->findText(i.value().value("tipo_iva").toString());
         ui->cboIva->setCurrentIndex(index);
 
-        switch (tipo_dto) {
+        switch (this->dto_tarifa) {
         case 1:
             ui->txtPorc_dto->setText(i.value().value("porc_dto1").toString());
             break;
         case 2:
-            ui->txtPorc_dto->setText(i.value().value("porc_dto2").toFloat());
+            ui->txtPorc_dto->setText(i.value().value("porc_dto2").toString());
             break;
         case 3:
-            ui->txtPorc_dto->setText(dto = i.value().value("porc_dto3").toFloat());
+            ui->txtPorc_dto->setText(i.value().value("porc_dto3").toString());
             break;
         case 4:
-            ui->txtPorc_dto->setText(dto = i.value().value("porc_dto4").toFloat());
+            ui->txtPorc_dto->setText(i.value().value("porc_dto4").toString());
             break;
         case 5:
-            ui->txtPorc_dto->setText(dto = i.value().value("porc_dto5").toFloat());
+            ui->txtPorc_dto->setText(i.value().value("porc_dto5").toString());
             break;
         case 6:
-            ui->txtPorc_dto->setText(dto = i.value().value("porc_dto6").toFloat());
+            ui->txtPorc_dto->setText(i.value().value("porc_dto6").toString());
             break;
         default:
             ui->txtPorc_dto->setText("0");
@@ -176,13 +221,29 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
 
 
         }
- // ---------------------------- Aqui me he quedado----------------
+        double pvp = (i.value().value("pvp").toDouble()-(i.value().value("pvp").toDouble()*(ui->txtPorc_dto->text().toFloat()/100)));
+        ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                      pvp,'f', Configuracion_global->decimales)));
+        // STOCKS
+        ui->txtStockAlmacen->setText(i.value().value("stock_fisico_almacen").toString());
+        ui->txtStock_real->setText(i.value().value("stock_real").toString());
+        ui->txtPendientes_recibir->setText(i.value().value("unidades_pendientes_recibir").toString());
+
         // PROMOCIONES ARTÍCULO
-        if(this->articulo_promocionado)
+        bool art_promo = SqlCalls::SelectOneField("articulos","articulo_promocionado",
+                                                  QString("id=%1").arg(this->id),Configuracion_global->groupDB,
+                                   error).toBool();
+        if(art_promo)
         {
+            ui->lblpromocionado->setVisible(true);
+            ui->chk3_2->setVisible(true);
+            ui->chkdto->setVisible(true);
+            ui->chkprecio->setVisible(true);
+            ui->chk_dtoweb->setVisible(true);
+
             QStringList filter;
             filter << QString("id=%1").arg(i.value().value("id").toInt());
-            filter << "activa = 0";
+            filter << "activa = 1";
 
             QMap <int,QSqlRecord> p;
             p=SqlCalls::SelectRecord("articulos_ofertas",filter, Configuracion_global->empresaDB,error);
@@ -193,21 +254,21 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
                 //-------------
                 if(p.value(i.value().value("id").toInt()).value("oferta32").toBool())
                 {
+                    ui->chk3_2->setChecked(true);
                     float por_cada = p.value(i.value().value("id").toInt()).value("unidades").toFloat();
                     float regalo = p.value(i.value().value("id").toInt()).value("regalo").toFloat();
-                    int cant = cantidad / por_cada;
-                    h["regalo"] = cant * regalo;
-                    h["promocionado"] = true;
+                    int cant = cant / por_cada;
+                    this->unidades_regalo = cant * regalo;
                 }
                 //--------------
                 // Oferta web
                 //--------------
                 if(p.value(i.value().value("id").toInt()).value("oferta_web").toBool())
                 {
+                    ui->chk_dtoweb->setChecked(true);
                     float dto_web = p.value(i.value().value("id").toInt()).value("dto_web").toFloat();
                     if(dto_web > dto){
-                        dto = dto_web;
-                        h["promocionado"] = true;
+                        ui->txtPorc_dto->setText(QString::number(dto_web,'f',2));
                     }
                 }
                 //--------------
@@ -215,10 +276,10 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
                 //--------------
                 if(p.value(i.value().value("id").toInt()).value("oferta_dto").toBool())
                 {
+                    ui->chkdto->setChecked(true);
                     float dto_local = p.value(i.value().value("id").toInt()).value("dto_local").toFloat();
                     if(dto_local > dto){
-                        dto = dto_local;
-                        h["promocionado"] = true;
+                        ui->txtPorc_dto->setText(QString::number(dto_local,'f',2));
                     }
                 }
                 //----------------------
@@ -226,9 +287,9 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
                 //----------------------
                 if(p.value(i.value().value("id").toInt()).value("oferta_precio_final").toBool())
                 {
+                    ui->chkprecio->setChecked(true);
                     if(p.value(i.value().value("id").toInt()).value("precio_final").toDouble()<h.value("precio").toDouble()) {
-                        h["precio"] = p.value(i.value().value("id").toInt()).value("precio_final").toDouble();
-                        h["promocionado"] = true;
+                        ui->txtPVP->setText(QString::number(p.value(i.value().value("id").toInt()).value("precio_final").toDouble(),'f',2));
                     }
                 }
 
@@ -238,70 +299,54 @@ void frmEditLine::cargar_articulo(int id,int tarifa,int tipo_dto)
         //--------------------------
         // Control de Execpciones
         //--------------------------
+    // TODO
 
-        QMap <int,QSqlRecord> e;
-        // Coincice id_articulo e id_cliente
-        QStringList filter;
-        filter << QString("id_articulo= %1").arg(h.value("id").toInt());
-        filter << QString("id_cliente = %1").arg(id_cliente);
+    }
+    calcular();
+}
 
-        e = SqlCalls::SelectRecord("articulos_exepciones",filter,Configuracion_global->empresaDB,error);
-        QMapIterator<int,QSqlRecord> ex(e);
-        if(ex.hasNext()) {
-            while (ex.hasNext()) {
-                ex.next();
-                if(ex.value().value("importe_fijo").toDouble()>0)
-                    h["precio"] = ex.value().value("importe_fijo").toDouble();
-                if(ex.value().value("dto_fijo").toFloat()>0){
-                    if(ex.value().value("dto_fijo").toFloat()> h.value("dto").toFloat())
-                           h["dto"] = ex.value().value("dto_fijo");
-                }
-                if(ex.value().value("importe_moneda_aumento").toDouble()>0)
-                    h["precio"] = h.value("precio").toDouble() + ex.value().value("importe_moneda_aumento").toDouble();
-                if(ex.value().value("dto_aumento_fijo").toFloat()>0)
-                    h["dto"] = h.value("dto").toFloat() + ex.value().value("dto_aumento_fijo").toFloat();
-                if(ex.value().value("importe_porc_aumento").toDouble()>0)
-                    h["precio"] = h.value("precio").toDouble() +(h.value("precio").toDouble() *
-                                                                 (ex.value().value("importe_porc_aumento").toDouble()/100));
-                if(ex.value().value("dto_aumento_porc").toFloat()>0)
-                    h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
-                                                               ex.value().value("dto_aumento_porc").toFloat()/100));
-            }
-        } else
-        {
-            // coincide id_familia e id_cliente y id_cliente > 0
-            if(id_cliente >0)
-            {
-                QStringList filter;
-                filter << QString("id_familia=%1").arg(this->id_familia);
-                filter << QString("id_cliente=%1").arg(id_cliente);
-                e = SqlCalls::SelectRecord("articulos_excepciones",filter,Configuracion_global->empresaDB,error);
-                if(e.size()>0)
-                {
-                    QMapIterator<int,QSqlRecord> ae(e);
-                    while (ae.hasNext())
-                    {
-                        ae.next();
-                        if(ae.value().value("importe_fijo").toDouble()>0)
-                            h["precio"] = ae.value().value("importe_fijo").toDouble();
-                        if(ae.value().value("dto_fijo").toFloat()>0){
-                            if(ae.value().value("dto_fijo").toFloat() > h.value("dto").toFloat())
-                                h["dto"] = ae.value().value("dto_fijo");
-                        }
-                        if(ae.value().value("importe_moneda_aumento").toDouble()>0)
-                            h["precio"] = h.value("precio").toDouble() + ae.value().value("importe_moneda_aumento").toDouble();
-                        if(ae.value().value("dto_aumento_fijo").toFloat()>0)
-                            h["dto"] = h.value("dto").toFloat() + ae.value().value("dto_aumento_fijo").toFloat();
-                        if(ae.value().value("importe_porc_aumento").toDouble()>0)
-                            h["precio"] = h.value("precio").toDouble() +(h.value("precio").toDouble() *
-                                                                         (ae.value().value("importe_porc_aumento").toDouble()/100));
-                        if(ae.value().value("dto_aumento_porc").toFloat()>0)
-                            h["dto"] = h.value("dto").toFloat() + (h.value("dto").toFloat()*(
-                                                                       ae.value().value("dto_aumento_porc").toFloat()/100));
+void frmEditLine::calcular()
+{
+    double subtotal, dto, base;
+    subtotal = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+    dto = subtotal * (Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text()))/100;
+    base = subtotal -dto;
+    ui->txt_tota_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',
+                                                                     Configuracion_global->decimales_campos_totales)));
 
-                    }
-                } // TODO - EXCEPCIONES AGENTES Y OTRAS EXCEPCIONES
-            }
-        }
+}
 
+
+void frmEditLine::on_txtCantidad_editingFinished()
+{
+    calcular();
+}
+
+void frmEditLine::on_txtPVP_editingFinished()
+{
+    ui->txtPVP->blockSignals(true);
+    ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(ui->txtPVP->text()));
+    calcular();
+    ui->txtPVP->blockSignals(false);
+}
+
+void frmEditLine::on_txtPvp_recomendado_editingFinished()
+{
+    ui->txtPvp_recomendado->blockSignals(true);
+    ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(ui->txtPvp_recomendado->text()));
+    ui->txtPvp_recomendado->blockSignals(false);
+}
+
+void frmEditLine::on_txtPorc_dto_editingFinished()
+{
+    ui->txtPorc_dto->blockSignals(true);
+    ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(ui->txtPorc_dto->text()));
+    calcular();
+    ui->txtPorc_dto->blockSignals(false);
+}
+
+void frmEditLine::on_cboIva_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    calcular();
 }

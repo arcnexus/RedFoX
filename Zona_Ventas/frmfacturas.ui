@@ -558,7 +558,7 @@ color: rgb(0, 0, 0);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -1476,95 +1476,6 @@ color: rgb(255, 255, 255);</string>
            <string>Líneas de Factura</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="1" column="0" colspan="4">
-            <widget class="QTableWidget" name="Lineas">
-             <property name="horizontalScrollBarPolicy">
-              <enum>Qt::ScrollBarAsNeeded</enum>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="gridStyle">
-              <enum>Qt::DotLine</enum>
-             </property>
-             <property name="cornerButtonEnabled">
-              <bool>true</bool>
-             </property>
-             <property name="columnCount">
-              <number>10</number>
-             </property>
-             <attribute name="horizontalHeaderCascadingSectionResizes">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>100</number>
-             </attribute>
-             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-             <attribute name="verticalHeaderCascadingSectionResizes">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderStretchLastSection">
-              <bool>false</bool>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Codigo</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Cantidad</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Descripcion</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>P.V.P</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>subtotal</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>DTO</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>DTO%</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>% I.V.A.</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Total</string>
-              </property>
-             </column>
-             <column/>
-            </widget>
-           </item>
            <item row="0" column="3">
             <spacer name="horizontalSpacer_2">
              <property name="orientation">
@@ -1616,8 +1527,27 @@ color: rgb(255, 255, 255);</string>
 color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>[*+intro] = Buscar Artículo</string>
+              <string>DobleClick en linea para editar</string>
              </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="4">
+            <widget class="QTableView" name="Lineas">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
             </widget>
            </item>
           </layout>
@@ -2721,7 +2651,6 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <tabstop>btnCobrar</tabstop>
   <tabstop>cboVer</tabstop>
   <tabstop>cbo_serie</tabstop>
-  <tabstop>Lineas</tabstop>
   <tabstop>tabla_facturas</tabstop>
  </tabstops>
  <resources>

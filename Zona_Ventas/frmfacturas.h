@@ -120,6 +120,8 @@ private slots:
 
     void on_spin_porc_iva_gasto3_editingFinished();
 
+    void on_btnAnadirLinea_clicked();
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -134,6 +136,7 @@ private:
     QString moneda;
     QHash<QString,QString> h_Buscar;
     QSqlQueryModel *m_facturas;
+    QSqlQueryModel *modelLineas;
     void formato_tabla_facturas(QSqlQueryModel &modelo);
 
     bool eventFilter(QObject *obj, QEvent *event);
