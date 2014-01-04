@@ -564,7 +564,7 @@ void Cliente::AnadirPersonaContacto(int id, QString Nombre, QString desc_telefon
                                     QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2, QString cargo, QString email)
 {
     QSqlQuery qContactos(Configuracion_global->groupDB);
-    qContactos.prepare("INSERT INTO Personascontactocliente "
+    qContactos.prepare("INSERT INTO personascontactocliente "
                        "(nombre,"
                        "telefono1,"
                        "telefono2,"
@@ -621,7 +621,7 @@ void Cliente::GuardarPersonaContacto(int id, QString Nombre, QString desc_telefo
                                      QString cargo, QString email,int id_cliente)
 {
     QSqlQuery qContactos(Configuracion_global->groupDB);
-    qContactos.prepare("UPDATE Personascontactocliente set "
+    qContactos.prepare("UPDATE personascontactocliente set "
                        "nombre =:nombre,"
                        "telefono1 = :telefono1,"
                        "telefono2 = :telefono2,"
@@ -651,6 +651,7 @@ void Cliente::GuardarPersonaContacto(int id, QString Nombre, QString desc_telefo
                        qContactos.bindValue(":cargo",cargo);
                        qContactos.bindValue(":email",email);
                        qContactos.bindValue(":id",id);
+
                        if(!qContactos.exec())
                            QMessageBox::warning(qApp->activeWindow(),tr("editar personas de contacto"),
                                                 tr("Falló el guardar una persona de contacto: %1").arg(qContactos.lastError().text()));
@@ -659,7 +660,7 @@ void Cliente::GuardarPersonaContacto(int id, QString Nombre, QString desc_telefo
 bool Cliente::BorrarPersona_contacto(int id_persona)
 {
     QSqlQuery queryPersona(Configuracion_global->groupDB);
-    if(queryPersona.exec("delete from Personascontactocliente where id ="+QString::number(id_persona)))
+    if(queryPersona.exec("delete from personascontactocliente where id ="+QString::number(id_persona)))
         return true;
     else
     {
