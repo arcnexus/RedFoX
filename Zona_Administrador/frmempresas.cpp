@@ -277,7 +277,7 @@ void FrmEmpresas::_addEmpresa()
                     d.setValue(i);
                     QApplication::processEvents();
                 }
-            }
+            }            
         }
         f.close();
 
