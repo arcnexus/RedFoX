@@ -781,7 +781,11 @@ bool Configuracion::CargarDatosBD()
         this->globalDB.setHostName(Configuracion_global->global_host);
         qDebug() << Configuracion_global->global_user << Configuracion_global->global_pass;
         this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+<<<<<<< HEAD
+        //this->globalDB.open("root","meganizado");
+=======
         //this->globalDB.open("root","meganizado");//
+>>>>>>> 642c690d61fb574a1a713d17b13d190dc5b3f2af
     }
 
     if (this->globalDB.lastError().isValid())
