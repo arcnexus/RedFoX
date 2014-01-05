@@ -558,7 +558,7 @@ color: rgb(0, 0, 0);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -1527,7 +1527,7 @@ color: rgb(255, 255, 255);</string>
 color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>DobleClick en linea para editar</string>
+              <string>DobleClick o Enter en linea para editar / tecla + para nueva línea de ventas</string>
              </property>
             </widget>
            </item>

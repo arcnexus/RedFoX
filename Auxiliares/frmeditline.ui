@@ -70,24 +70,6 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="10">
-       <widget class="QLineEdit" name="txtDescripcion"/>
-      </item>
-      <item row="3" column="0" colspan="10">
-       <widget class="QLabel" name="label_2">
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Descripción</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="4">
        <widget class="QLabel" name="label_5">
         <property name="styleSheet">
@@ -135,21 +117,6 @@ color: rgb(255,255,255);</string>
         </property>
         <property name="text">
          <string>%Dto</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="9">
-       <widget class="QLabel" name="label_8">
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>%IVA</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -233,9 +200,6 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="9">
-       <widget class="QComboBox" name="cboIva"/>
-      </item>
       <item row="1" column="7">
        <widget class="QLineEdit" name="txtPorc_dto">
         <property name="maximumSize">
@@ -290,6 +254,54 @@ color: rgb(255,255,255);</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="10">
+       <widget class="QLabel" name="lbliva">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>+IVA</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="11">
+       <widget class="QLineEdit" name="txtDescripcion"/>
+      </item>
+      <item row="3" column="0" colspan="11">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Descripción</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="9" colspan="2">
+       <widget class="QComboBox" name="cboIva"/>
+      </item>
+      <item row="0" column="9" colspan="2">
+       <widget class="QLabel" name="label_8">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>%IVA</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>

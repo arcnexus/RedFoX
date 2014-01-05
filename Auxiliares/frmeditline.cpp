@@ -31,6 +31,7 @@ int frmEditLine::get_id()
 
 void frmEditLine::set_linea(int id,QString fichero)
 {
+    this->id = id;
     //-----------------------------------------------
     // Recuperar línea de ventas del fichero **fichero
     //-----------------------------------------------
@@ -220,7 +221,7 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
     while(i.hasNext())
     {
         i.next();
-        this->id = i.value().value("id").toInt();
+        this->id_articulo = i.value().value("id").toInt();
         if(this->tipo == "V")
         {
             ui->txtCodigo->setText(i.value().value("codigo").toString());
@@ -359,12 +360,35 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
 
 void frmEditLine::calcular()
 {
-    double subtotal, dto, base;
+    double dto;
+    if(ui->txtPorc_dto->text() =="0,00")
+    {
+        if(ui->txtPVP->text() != ui->txtPvp_recomendado->text())
+        {
+            dto = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) -
+                    Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+
+            float porc_dto = dto * 100 / Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+            ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
+                                                                                           Configuracion_global->decimales_campos_totales)));
+
+        }
+    }
+    double subtotal,base,precio_cliente,total_con_iva;
     subtotal = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
     dto = subtotal * (Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text()))/100;
     base = subtotal -dto;
+    precio_cliente = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text())-(
+                Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text())*
+                Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text())/100);
+
+    ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(precio_cliente,'f',Configuracion_global->decimales)));
     ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',
                                                                      Configuracion_global->decimales_campos_totales)));
+    total_con_iva = base + (base * ui->cboIva->currentText().toFloat()/100);
+    ui->lbliva->setToolTip(tr("Importe linea con iva: %1").arg(Configuracion_global->toFormatoMoneda(
+                                                                   QString::number(total_con_iva,'f',
+                                                                                   Configuracion_global->decimales_campos_totales))));
 
 }
 
@@ -378,6 +402,7 @@ void frmEditLine::on_txtPVP_editingFinished()
 {
     ui->txtPVP->blockSignals(true);
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(ui->txtPVP->text()));
+    ui->txtPorc_dto->setText("0,00");
     calcular();
     ui->txtPVP->blockSignals(false);
 }
@@ -411,20 +436,21 @@ void frmEditLine::on_btnAceptar_clicked()
     lin["descripcion"] = ui->txtDescripcion->text();
     lin["dto"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) - Configuracion_global->MonedatoDouble(
                 ui->txtPVP->text());
-    lin["id"] = this->id;
+    //lin["id"] = this->id;
     lin["id_articulo"]  =this->id_articulo;
     lin["id_cab"] = this->id_cab;
     lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
     lin["porc_iva"] = ui->cboIva->currentText().toFloat();
+    lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
     lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
     lin["promocion"] = ui->lblpromocionado->isVisible();
     lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
     QString error;
-    int new_id = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
+    bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                      error);
-    if(new_id >-1)
+    if(success)
         accept();
     else
     {

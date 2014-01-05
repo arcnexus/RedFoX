@@ -579,6 +579,28 @@ CREATE TABLE `@grupo@`.`personascontactoproveedor` (
   `email` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE `@grupo@`.`personascontactotransportista` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefono1` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefono2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefono3` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `movil` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `movil2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `desc_telefono1` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc_telefono2` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc_telefono3` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc_movil1` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc_movil2` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cargo_empresa` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
 CREATE TABLE `@grupo@`.`poblaciones` (
   `cod_pais` int(11) DEFAULT NULL,
   `poblacion` varchar(60) DEFAULT NULL,
@@ -719,8 +741,22 @@ CREATE TABLE `@grupo@`.`transportista` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo` varchar(15) DEFAULT NULL,
   `transportista` varchar(70) DEFAULT NULL,
-  `id_proveedor` int(11) DEFAULT NULL,
+  `cif` varchar(13) DEFAULT NULL,
+  `direccion1` varchar(45) DEFAULT NULL,
+  `direccion2` varchar(45) DEFAULT NULL,
+  `cp` varchar(10) DEFAULT NULL,
+  `poblacion` varchar(45) DEFAULT NULL,
+  `provincia` varchar(45) DEFAULT NULL,
+  `pais` varchar(45) DEFAULT NULL,
+  `telefono1` varchar(20) DEFAULT NULL,
+  `telefono2` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `movil` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `web` varchar(100) DEFAULT NULL,
+  `id_proveedor` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`trazabilidad1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

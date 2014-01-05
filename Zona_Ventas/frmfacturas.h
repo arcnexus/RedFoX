@@ -143,6 +143,7 @@ private:
 
     bool eventFilter(QObject *obj, QEvent *event);
     void buscar_poblacion(int tipo);
+    void calcular_factura();
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
