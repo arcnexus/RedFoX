@@ -12,6 +12,9 @@
 
 byte Configuracion::key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
 byte Configuracion::iv[ CryptoPP::AES::BLOCKSIZE ];
+QString Configuracion::Pass;
+
+using namespace CryptoPP;
 
 Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
@@ -60,6 +63,8 @@ Configuracion::Configuracion(QObject* parent) :
     iv[13] = 0x10;
     iv[14] = 0x10;
     iv[15] = 0x10;
+
+    Pass = "RedFox";
 }
 
 
@@ -1106,76 +1111,47 @@ void Configuracion::setUpKeys()
     iv[14] = 0x10;
     iv[15] = 0xa3;
 }
-QString Configuracion::Crypt(QString input)
+QString Configuracion::Crypt(QString plaintext)
 {
     setUpKeys();
-    std::string plaintext = input.toStdString();
-    std::string ciphertext;
-    std::string decryptedtext;
 
-    //
-    // Create Cipher Text
-    //
-    CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
-    CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
+    std::string text = plaintext.toStdString();
+    std::string pass = Pass.toStdString();
+    std::string CipherText;
 
-    CryptoPP::StreamTransformationFilter stfEncryptor(cbcEncryption, new CryptoPP::StringSink( ciphertext ) );
-    stfEncryptor.Put( reinterpret_cast<const unsigned char*>( plaintext.c_str() ), plaintext.length() + 1 );
-    stfEncryptor.MessageEnd();
+    StringSource( reinterpret_cast<const char*>(pass.c_str()), true, new HashFilter(*(new SHA256), new ArraySink(key, AES::DEFAULT_KEYLENGTH)) );
 
-    //
-    // Dump Cipher Text
-    //
+    CBC_Mode<AES>::Encryption Encryptor( key, sizeof(key), iv );
+    StringSource( text, true, new StreamTransformationFilter( Encryptor,new HexEncoder(new StringSink( CipherText ) ) ) );
 
-    QString output;
-    for( int i = 0; i < ciphertext.size(); i++ )
-    {
-        QString aux;
-        aux.sprintf("%02X",static_cast<byte>(ciphertext[i]));
-        output.append(aux);
-    }
-
-    return output;
+    return QString::fromStdString(CipherText);
 }
 
-QString Configuracion::DeCrypt(QString input)
+QString Configuracion::DeCrypt(QString ciphertext)
 {
     setUpKeys();
-    if(input.isEmpty())
-        return input;
-    int c = 0;
-        char* dd = new char[input.size()/2];
-       // char dd[input.size()/2];
 
-        for(int a = 0; a< input.size() ; a+=2)
-        {
-            bool ok;
-            int z =  input.mid(a,2).toInt(&ok,16);
-            dd[c] = QChar(z).toLatin1();
-            c++;
-        }
+    std::string text = ciphertext.toStdString();
+    std::string pass = Pass.toStdString();
+    std::string RecoveredText;
 
-        std::string ciphertext(dd);
-        int x = ciphertext.size();
-        std::string decryptedtext;
-        if(x<c)
-            return "";
-        ciphertext.erase(c);
+    StringSource( reinterpret_cast<const char*>(pass.c_str()), true, new HashFilter(*(new SHA256), new ArraySink(key, AES::DEFAULT_KEYLENGTH)) );
 
-        //
-        // Decrypt
-        //
-        CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
-        CryptoPP::CBC_Mode_ExternalCipher::Decryption cbcDecryption( aesDecryption, iv );
+    try
+    {
+        CBC_Mode<AES>::Decryption Decryptor( key, sizeof(key), iv );
+        StringSource( text, true, new HexDecoder(new StreamTransformationFilter( Decryptor, new StringSink( RecoveredText ) ) ) );
+    }
+    catch ( Exception& e)
+    {
+        return e.what();
+    }
+    catch (...)
+    {
+        return "Unknown Error";
+    }
 
-        CryptoPP::StreamTransformationFilter stfDecryptor(cbcDecryption, new CryptoPP::StringSink( decryptedtext ) );
-        stfDecryptor.Put( reinterpret_cast<const unsigned char*>( ciphertext.c_str() ), ciphertext.size() );
-        stfDecryptor.MessageEnd();
-
-        QString ss = QString::fromStdString(decryptedtext);
-        ss.remove(QRegExp("\\000"));
-        delete [] dd;
-        return ss;
+    return QString::fromStdString(RecoveredText);
 }
 
 QString Configuracion::SHA256HashString(QString input)

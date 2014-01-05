@@ -22,12 +22,14 @@
 #include <C:/CriptoCpp/aes.h>
 #include <C:/CriptoCpp/sha.h>
 #include <C:/CriptoCpp/base64.h>
+#include <C:/CriptoCpp/hex.h>
 #else
 #include </usr/include/cryptopp/modes.h>
 #include </usr/include/cryptopp/filters.h>
 #include </usr/include/cryptopp/aes.h>
 #include </usr/include/cryptopp/sha.h>
 #include </usr/include/cryptopp/base64.h>
+#include </usr/include/cryptopp/hex.h>
 #endif
 
 class Configuracion: public QObject
@@ -252,6 +254,7 @@ private:
     float readCambioBlock(QString s);
     static byte key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
     static byte iv[ CryptoPP::AES::BLOCKSIZE ];
+    static QString Pass;
     bool _block;
     float _cambio;
     static void setUpKeys();

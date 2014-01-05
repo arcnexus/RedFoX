@@ -173,7 +173,6 @@ private slots:
 
     void on_botBuscarGrupo_clicked();
 
-
 public slots:
     void AnadirSeccion();
     void init();
