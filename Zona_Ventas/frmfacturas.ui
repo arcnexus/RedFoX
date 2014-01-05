@@ -1542,6 +1542,9 @@ color: rgb(255, 255, 255);</string>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
+             <property name="horizontalScrollMode">
+              <enum>QAbstractItemView::ScrollPerItem</enum>
+             </property>
              <attribute name="horizontalHeaderStretchLastSection">
               <bool>true</bool>
              </attribute>

@@ -122,6 +122,8 @@ private slots:
 
     void on_btnAnadirLinea_clicked();
 
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

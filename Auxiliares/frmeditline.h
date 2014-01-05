@@ -22,6 +22,9 @@ public:
     void set_id_tarifa(int id);
     void set_tipo(QString tipo);
     void set_dto_tarifa(float dto);
+    void set_id_cab(int id_cabecera);
+    void set_tabla(QString t);
+
 
 
 
@@ -39,11 +42,14 @@ private slots:
 
     void on_cboIva_currentIndexChanged(const QString &arg1);
 
+    void on_btnAceptar_clicked();
+
 private:
     Ui::frmEditLine *ui;
-    int id,id_cliente,id_tarifa;
+    int id,id_cliente,id_tarifa,id_articulo,id_cab;
     QString tipo; // ("C" compras - "V" - Ventas)
-    void cargar_articulo(int id, int tarifa, int tipo_dto);
+    QString tabla,codigo_articulo;
+    void cargar_articulo(int id_art, int tarifa, int tipo_dto);
     int dto_tarifa;
     float unidades_regalo;
     Articulo *oArticulo;
