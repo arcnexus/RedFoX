@@ -228,11 +228,14 @@ void FrmTiposTarifa::on_btnBorrar_clicked()
     QSqlQuery sql(Configuracion_global->groupDB);
 
     bool borrar = QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Tarifa"),
-                         qApp->tr("¿Desea realmente Borrar esta Tarifa?\nEsta opción no se puede deshacer"),
+                         qApp->tr("¿Desea realmente Borrar Tarifa\n%1\nEsta opción no se puede deshacer").arg(oTipostarifa->descripcion),
                          qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted;
     if(borrar){
-    sql.exec("DELETE FROM codigotarifa WHERE id = '"+oTipostarifa->codigo_tarifa+"'");
-        QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado de la Tarifa"),"error",QObject::tr("&Aceptar"));
+    qDebug() << oTipostarifa->id;
+    if(!sql.exec("DELETE FROM codigotarifa WHERE id = '"+QString::number(oTipostarifa->id)+"'")){
+
+        QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado de la Tarifa"),"Error al borrar la tarifa",QObject::tr("&Aceptar"));
     }
     llenar_lista();
+    }
 }
