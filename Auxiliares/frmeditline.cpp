@@ -17,11 +17,38 @@ frmEditLine::frmEditLine(QWidget *parent) :
     //IVA desde config
     ui->cboIva->setModel(Configuracion_global->iva_model);
     ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
+    //-------------
+    // Eventos
+    //-------------
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
 }
 
 frmEditLine::~frmEditLine()
 {
     delete ui;
+}
+
+bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
+{
+
+    if (event->type() == QEvent::KeyPress) {
+
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+        if(keyEvent->key() == Qt::Key_Plus)
+        {
+            on_btnAnadir_mas_nueva_clicked();
+            return true;
+        }
+        if(keyEvent->key() == Qt::Key_Escape)
+            return true;
+    }
+
+    //return MayaModule::eventFilter(obj,event);
 }
 
 int frmEditLine::get_id()
@@ -192,7 +219,8 @@ void frmEditLine::on_txtCodigo_editingFinished()
             if(!error.isEmpty()){
                 QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo recuperar el artículo: %1").arg(error),
                                      tr("Acceptar"));
-                close();
+                vaciar_campos();
+                ui->txtCodigo->setFocus();
             }
         }
         cargar_articulo(this->id_articulo,this->id_tarifa,this->dto_tarifa);
@@ -358,6 +386,26 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
     calcular();
 }
 
+void frmEditLine::vaciar_campos()
+{
+    ui->txtCantidad->setText("1");
+    ui->txtCodigo->clear();
+    ui->txtDescripcion->clear();
+    ui->txtImporte_iva->setText("0,00");
+    ui->txtPendientes_recibir->setText("0,00");
+    ui->txtPorc_dto->setText("0");
+    ui->txtPVP->setText("0,00");
+    ui->txtPvp_conIva->setText("0,00");
+    ui->txtPvp_recomendado->setText("0,00");
+    ui->txtStockAlmacen->setText("0,00");
+    ui->txtStock_real->setText("0,00");
+    ui->txtTotal_con_iva->setText("0,00");
+    ui->txtUnidades_reservadas->setText("0,00");
+    ui->txt_total_linea->setText("0,00");
+    this->id = 0;
+    ui->txtCodigo->setFocus();
+}
+
 void frmEditLine::calcular()
 {
     double dto;
@@ -365,10 +413,14 @@ void frmEditLine::calcular()
     {
         if(ui->txtPVP->text() != ui->txtPvp_recomendado->text())
         {
+            double pvp_recom;
             dto = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) -
                     Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-
-            float porc_dto = dto * 100 / Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+            if(ui->txtPvp_recomendado->text() == "0,00")
+                pvp_recom = 1;
+            else
+                pvp_recom = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+            float porc_dto = (dto * 100) / pvp_recom;
             ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
                                                                                            Configuracion_global->decimales_campos_totales)));
 
@@ -386,9 +438,13 @@ void frmEditLine::calcular()
     ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',
                                                                      Configuracion_global->decimales_campos_totales)));
     total_con_iva = base + (base * ui->cboIva->currentText().toFloat()/100);
-    ui->lbliva->setToolTip(tr("Importe linea con iva: %1").arg(Configuracion_global->toFormatoMoneda(
-                                                                   QString::number(total_con_iva,'f',
-                                                                                   Configuracion_global->decimales_campos_totales))));
+    ui->txtImporte_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                   base * ui->cboIva->currentText().toFloat()/100,'f',
+                                                                   Configuracion_global->decimales_campos_totales)));
+    ui->txtTotal_con_iva->setText(Configuracion_global->toFormatoMoneda(
+                QString::number(total_con_iva,'f',
+                                Configuracion_global->decimales_campos_totales)));
+
 
 }
 
@@ -448,15 +504,78 @@ void frmEditLine::on_btnAceptar_clicked()
     lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
     QString error;
-    bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
-                                     error);
-    if(success)
-        accept();
-    else
+    if(this->id !=0)
     {
-        QMessageBox::warning(this,tr("Edición lineas detalle"),
-                             tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
-                             tr("Aceptar"));
-        close();
+        bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
+                                         error);
+        if(success)
+            accept();
+        else
+        {
+            QMessageBox::warning(this,tr("Edición lineas detalle"),
+                                 tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
+                                 tr("Aceptar"));
+            close();
+        }
+    } else
+    {
+        this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
+        if(this->id >0)
+            accept();
+        else
+        {
+            QMessageBox::warning(this,tr("Edición lineas detalle"),
+                                 tr("Falló al añadir la linea de detalle en la BD: %1").arg(error),
+                                 tr("Aceptar"));
+            close();
+        }
+
     }
+}
+
+void frmEditLine::on_btnAnadir_mas_nueva_clicked()
+{
+    QHash <QString, QVariant> lin;
+    lin["cantidad"] = ui->txtCantidad->text().toFloat();
+    lin["codigo"] = ui->txtCodigo->text();
+    lin["descripcion"] = ui->txtDescripcion->text();
+    lin["dto"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) - Configuracion_global->MonedatoDouble(
+                ui->txtPVP->text());
+    //lin["id"] = this->id;
+    lin["id_articulo"]  =this->id_articulo;
+    lin["id_cab"] = this->id_cab;
+    lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
+    lin["porc_iva"] = ui->cboIva->currentText().toFloat();
+    lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
+    lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+    lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+    lin["promocion"] = ui->lblpromocionado->isVisible();
+    lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+    lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
+    QString error;
+    if(this->id >0)
+    {
+        bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
+                                         error);
+        if(!success)
+        {
+            QMessageBox::warning(this,tr("Edición lineas detalle"),
+                                 tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
+                                 tr("Aceptar"));
+            close();
+        }
+    } else
+    {
+        this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
+        if(!this->id >0)
+
+        {
+            QMessageBox::warning(this,tr("Edición lineas detalle"),
+                                 tr("Falló al añadir la linea de detalle en la BD: %1").arg(error),
+                                 tr("Aceptar"));
+            close();
+        }
+    }
+   vaciar_campos();
+
 }

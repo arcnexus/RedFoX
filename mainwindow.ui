@@ -252,57 +252,7 @@ background-color: rgb(0,0,0);</string>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="1" rowspan="2">
-          <widget class="QPushButton" name="lineUsuarioActivo">
-           <property name="styleSheet">
-            <string notr="true">font: 75 10pt &quot;Cantarell&quot;;
-color: rgb(255, 255, 127);</string>
-           </property>
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4" rowspan="2">
-          <widget class="QPushButton" name="btn_salir">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip">
-            <string>Salir de Maya</string>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(133, 170, 142);</string>
-           </property>
-           <property name="text">
-            <string>Salir</string>
-           </property>
-           <property name="icon">
-            <iconset resource="maya.qrc">
-             <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>26</width>
-             <height>26</height>
-            </size>
-           </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0" rowspan="2">
+         <item row="0" column="0" rowspan="3">
           <widget class="QLabel" name="label">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -491,7 +441,43 @@ color: rgb(255, 255, 127);</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="3" rowspan="2">
+         <item row="0" column="4" rowspan="3">
+          <widget class="QPushButton" name="btn_salir">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Salir de Maya</string>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(133, 170, 142);</string>
+           </property>
+           <property name="text">
+            <string>Salir</string>
+           </property>
+           <property name="icon">
+            <iconset resource="maya.qrc">
+             <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>26</width>
+             <height>26</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3" rowspan="3">
           <widget class="QPushButton" name="btn_bloquear">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -530,22 +516,34 @@ background-color: rgb(133, 170, 142);</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="txtEjercicio">
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>16777215</height>
-            </size>
+         <item row="0" column="1" rowspan="3">
+          <widget class="QPushButton" name="lineUsuarioActivo">
+           <property name="styleSheet">
+            <string notr="true">font: 75 10pt &quot;Cantarell&quot;;
+color: rgb(255, 255, 127);</string>
            </property>
+           <property name="text">
+            <string>PushButton</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2" rowspan="3">
+          <widget class="QDateEdit" name="txtEjercicio">
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 127);</string>
            </property>
-           <property name="text">
-            <string>2014</string>
+           <property name="displayFormat">
+            <string>yyyy</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <property name="date">
+            <date>
+             <year>2014</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
            </property>
           </widget>
          </item>

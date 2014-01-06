@@ -291,6 +291,17 @@ background-color: #304163;</string>
                 </spacer>
                </item>
                <item>
+                <widget class="QPushButton" name="btnProforma">
+                 <property name="text">
+                  <string>Imp. Proforma</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../maya.qrc">
+                   <normaloff>:/Icons/PNG/impresora2.png</normaloff>:/Icons/PNG/impresora2.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QCheckBox" name="chklAprovado">
                  <property name="text">
                   <string>Aprovado</string>

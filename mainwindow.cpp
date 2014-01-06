@@ -1002,5 +1002,5 @@ void MainWindow::on_lineUsuarioActivo_clicked()
 
 void MainWindow::on_txtEjercicio_editingFinished()
 {
-    Configuracion_global->cEjercicio = ui->txtEjercicio->text();
+    Configuracion_global->cEjercicio = QString::number(ui->txtEjercicio->date().year());
 }

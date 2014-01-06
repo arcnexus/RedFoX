@@ -59,7 +59,7 @@
    <item>
     <widget class="QPushButton" name="btnLimpiar">
      <property name="text">
-      <string>Limpiar</string>
+      <string>Limpiar y Refrescar</string>
      </property>
      <property name="icon">
       <iconset resource="../maya.qrc">

@@ -44,16 +44,20 @@ private slots:
 
     void on_btnAceptar_clicked();
 
+    void on_btnAnadir_mas_nueva_clicked();
+
 private:
     Ui::frmEditLine *ui;
     int id,id_cliente,id_tarifa,id_articulo,id_cab;
     QString tipo; // ("C" compras - "V" - Ventas)
     QString tabla,codigo_articulo;
     void cargar_articulo(int id_art, int tarifa, int tipo_dto);
+    void vaciar_campos();
     int dto_tarifa;
     float unidades_regalo;
     Articulo *oArticulo;
     void calcular();
+    bool eventFilter(QObject *obj, QEvent *event);
 
 };
 

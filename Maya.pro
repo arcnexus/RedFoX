@@ -212,7 +212,8 @@ SOURCES += main.cpp\
     EditorReports/reportacumulator.cpp \
     EditorReports/editacum.cpp \
     Zona_Contabilidad/frmbuscarapuntecontable.cpp \
-    Auxiliares/frmeditline.cpp
+    Auxiliares/frmeditline.cpp \
+    Auxiliares/numericdelegate.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -391,7 +392,8 @@ HEADERS  += mainwindow.h \
     EditorReports/reportacumulator.h \
     EditorReports/editacum.h \
     Zona_Contabilidad/frmbuscarapuntecontable.h \
-    Auxiliares/frmeditline.h
+    Auxiliares/frmeditline.h \
+    Auxiliares/numericdelegate.h
 
 
 

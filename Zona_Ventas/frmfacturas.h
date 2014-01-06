@@ -50,13 +50,15 @@ private slots:
     void on_btnBuscar_clicked();
 
     void on_btnImprimir_clicked();
+    void mostrar_factura();
 
-    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-    void desglose1Changed(double base, double iva, double re, double total);
-    void desglose2Changed(double base, double iva, double re, double total);
-    void desglose3Changed(double base, double iva, double re, double total);
-    void desglose4Changed(double base, double iva, double re, double total);
+//    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
+//    void desglose1Changed(double base, double iva, double re, double total);
+//    void desglose2Changed(double base, double iva, double re, double total);
+//    void desglose3Changed(double base, double iva, double re, double total);
+//    void desglose4Changed(double base, double iva, double re, double total);
     void on_btnEditar_clicked();
+    void desbloquear_factura();
     void lineaReady(lineaDetalle* ld);
     void lineaDeleted(lineaDetalle*);
                          void on_tabWidget_2_currentChanged(int index);
@@ -123,6 +125,8 @@ private slots:
     void on_btnAnadirLinea_clicked();
 
     void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btn_borrarLinea_clicked();
 
 private:
     Ui::frmFacturas *ui;

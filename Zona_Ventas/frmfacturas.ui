@@ -45,39 +45,7 @@ background-color: #304163;</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="6">
-    <widget class="QComboBox" name="cboVer">
-     <property name="minimumSize">
-      <size>
-       <width>139</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>150</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QLabel" name="label_34">
-     <property name="maximumSize">
-      <size>
-       <width>46</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Ver:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="7">
+   <item row="1" column="0" colspan="6">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -558,7 +526,7 @@ color: rgb(0, 0, 0);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>3</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -1533,6 +1501,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="1" column="0" colspan="4">
             <widget class="QTableView" name="Lineas">
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustToContents</enum>
+             </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -2652,7 +2623,6 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <tabstop>btndeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
   <tabstop>btnCobrar</tabstop>
-  <tabstop>cboVer</tabstop>
   <tabstop>cbo_serie</tabstop>
   <tabstop>tabla_facturas</tabstop>
  </tabstops>
