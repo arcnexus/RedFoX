@@ -51,6 +51,7 @@ private slots:
 
     void on_btnImprimir_clicked();
     void mostrar_factura();
+    void refrescar_modelo();
 
 //    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
 //    void desglose1Changed(double base, double iva, double re, double total);

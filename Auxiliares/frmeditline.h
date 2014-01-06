@@ -59,6 +59,8 @@ private:
     void calcular();
     bool eventFilter(QObject *obj, QEvent *event);
 
+signals:
+    void refrescar_lineas();
 };
 
 #endif // FRMEDITLINE_H

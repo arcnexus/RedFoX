@@ -840,6 +840,12 @@ void frmFacturas::mostrar_factura()
     on_tabla_facturas_doubleClicked(ui->tabla_facturas->currentIndex());
 }
 
+void frmFacturas::refrescar_modelo()
+{
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                              "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
+}
+
 //void frmFacturas::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
 //{
 //    if(!ui->chkrecargo_equivalencia->isChecked())
@@ -1961,59 +1967,73 @@ void frmFacturas::on_spin_porc_iva_gasto3_editingFinished()
 
 void frmFacturas::on_btnAnadirLinea_clicked()
 {
-    QHash <QString,QVariant> lin;
-    QString error;
-    lin["id_cab"] = oFactura->id;
-    int new_id = SqlCalls::SqlInsert(lin,"lin_fac",Configuracion_global->empresaDB,error);
-    if(new_id >-1)
+    if(ui->btnGuardar->isEnabled())
     {
-        frmEditLine frmeditar(this);
-        frmeditar.set_linea(new_id,"lin_fac");
-        frmeditar.set_tabla("lin_fac");
-        frmeditar.set_id_cliente(oCliente1->id);
-        frmeditar.set_id_tarifa(oCliente1->idTarifa);
-        frmeditar.set_dto_tarifa(oCliente1->tipo_dto_tarifa);
-        frmeditar.set_id_cab(oFactura->id);
-        frmeditar.set_tipo("V");
-        if(!frmeditar.exec() == QDialog::Accepted)
-            SqlCalls::SqlDelete("lin_fac",Configuracion_global->groupDB,QString("id=%1").arg(new_id),error);
+//        QHash <QString,QVariant> lin;
+//        QString error;
+//        lin["id_cab"] = oFactura->id;
+//        int new_id = SqlCalls::SqlInsert(lin,"lin_fac",Configuracion_global->empresaDB,error);
+//        if(new_id >-1)
+//        {
+            frmEditLine frmeditar(this);
+            connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_linea(0,"lin_fac");
+            frmeditar.set_tabla("lin_fac");
+            frmeditar.set_id_cliente(oCliente1->id);
+            frmeditar.set_id_tarifa(oCliente1->idTarifa);
+            frmeditar.set_dto_tarifa(oCliente1->tipo_dto_tarifa);
+            frmeditar.set_id_cab(oFactura->id);
+            frmeditar.set_tipo("V");
+            if(!frmeditar.exec() == QDialog::Accepted)
+                //SqlCalls::SqlDelete("lin_fac",Configuracion_global->groupDB,QString("id=%1").arg(new_id),error);
 
 
-            modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                                  "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
-            calcular_factura();
+                modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                                      "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
+                calcular_factura();
 
+        //}
+    } else{
+        QMessageBox::warning(this,tr("Gestión de facturas"),tr("Debe editar la factura para añadir líneas"),
+                             tr("Aceptar"));
     }
 }
 
 void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
 {
-    int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
-    if(id_lin >0)
+    if(ui->btnGuardar->isEnabled())
     {
-        frmEditLine frmeditar(this);
+        int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
+        if(id_lin >0)
+        {
+            frmEditLine frmeditar(this);
+            connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_id_cliente(oCliente1->id);
+            frmeditar.set_id_tarifa(oCliente1->idTarifa);
+            frmeditar.set_dto_tarifa(oCliente1->tipo_dto_tarifa);
+            frmeditar.set_id_cab(oFactura->id);
+            frmeditar.set_tipo("V");
+            frmeditar.set_linea(id_lin,"lin_fac");
+            frmeditar.set_tabla("lin_fac");
+            frmeditar.exec();
 
-        frmeditar.set_id_cliente(oCliente1->id);
-        frmeditar.set_id_tarifa(oCliente1->idTarifa);
-        frmeditar.set_dto_tarifa(oCliente1->tipo_dto_tarifa);
-        frmeditar.set_id_cab(oFactura->id);
-        frmeditar.set_tipo("V");
-        frmeditar.set_linea(id_lin,"lin_fac");
-        frmeditar.set_tabla("lin_fac");
-        frmeditar.exec();
-
-        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                                  "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
-        calcular_factura();
-        ui->Lineas->setFocus();
+            refrescar_modelo();
+            calcular_factura();
+            ui->Lineas->setFocus();
+        } else
+        {
+            QMessageBox::warning(this, tr("Gestión de facturas"),tr("Debe editar la factura para poder modificar las líneas"),
+                                 tr("Aceptar"));
+        }
     }
+
 }
 
 
 void frmFacturas::on_btn_borrarLinea_clicked()
 {
     if(QMessageBox::question(this,tr("Lineas de facturas"), tr("¿Borrar la linea?"),
-                             tr("No"),tr("Borrar")) == QMessageBox::Yes)
+                             tr("No"),tr("Borrar")) == QMessageBox::Accepted)
     {
         QModelIndex index = ui->Lineas->currentIndex();
         int id_lin = ui->Lineas->model()->index(index.row(),0).data().toInt();

@@ -44,6 +44,11 @@ bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
             on_btnAnadir_mas_nueva_clicked();
             return true;
         }
+        if(keyEvent->key() == Qt::Key_End)
+        {
+            on_btnAceptar_clicked();
+            return true;
+        }
         if(keyEvent->key() == Qt::Key_Escape)
             return true;
     }
@@ -508,20 +513,24 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(success)
+        if(success){
+            emit refrescar_lineas();
             accept();
+        }
         else
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
                                  tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
                                  tr("Aceptar"));
-            close();
+
         }
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0)
+        if(this->id >0) {
+            emit refrescar_lineas();
             accept();
+        }
         else
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
@@ -557,23 +566,27 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(!success)
+        if(success)
+            emit refrescar_lineas();
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
                                  tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
                                  tr("Aceptar"));
-            close();
+
         }
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(!this->id >0)
+        if(this->id >0)
+        {
+            emit refrescar_lineas();
+        } else
 
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
                                  tr("Falló al añadir la linea de detalle en la BD: %1").arg(error),
                                  tr("Aceptar"));
-            close();
+
         }
     }
    vaciar_campos();
