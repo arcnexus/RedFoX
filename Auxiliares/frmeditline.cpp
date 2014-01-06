@@ -1,12 +1,13 @@
 #include "frmeditline.h"
 #include "ui_frmeditline.h"
-#include "Busquedas/db_consulta_view.h"
+#include "../Busquedas/db_consulta_view.h"
 
 frmEditLine::frmEditLine(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmEditLine)
 {
     ui->setupUi(this);
+
     this->dto_tarifa =0;
     ui->lblpromocionado->setVisible(false);
     ui->chk3_2->setVisible(false);
@@ -34,10 +35,11 @@ frmEditLine::~frmEditLine()
 
 bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
 {
-
     if (event->type() == QEvent::KeyPress) {
 
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+       //&&  keyEvent->modifiers() == Qt::ControlModifier
 
         if(keyEvent->key() == Qt::Key_Plus)
         {
@@ -52,8 +54,7 @@ bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent->key() == Qt::Key_Escape)
             return true;
     }
-
-    //return MayaModule::eventFilter(obj,event);
+    return QDialog::eventFilter(obj,event);
 }
 
 int frmEditLine::get_id()

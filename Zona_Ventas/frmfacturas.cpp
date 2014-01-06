@@ -949,12 +949,12 @@ void frmFacturas::on_btnEditar_clicked()
 void frmFacturas::desbloquear_factura()
 {
  if(QMessageBox::question(this,tr("Gestion de facturas"),tr("¿Desbloquear factura?"),
-                          tr("No"),tr("Si")) == QMessageBox::Yes)
+                          tr("No"),tr("Si")) == QMessageBox::Accepted)
  {
      QModelIndex Model = ui->Lineas->currentIndex();
      int id_fact = ui->tabla_facturas->model()->data(ui->Lineas->model()->index(Model.row(),0)).toInt();
      QHash <QString, QVariant> h;
-     h["editable = 1"];
+     h["editable"] = 1;
      QString error;
      bool success = SqlCalls::SqlUpdate(h,"cab_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id_fact),error);
      if(!success)
@@ -2017,7 +2017,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_tabla("lin_fac");
             frmeditar.exec();
 
-            refrescar_modelo();
+            //refrescar_modelo();
             calcular_factura();
             ui->Lineas->setFocus();
         } else
