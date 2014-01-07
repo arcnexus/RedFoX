@@ -1080,13 +1080,11 @@ void FrmArticulos::on_btnAnadirTarifa_clicked()
 
 void FrmArticulos::btnEditarTarifa_clicked()
 {
-    QModelIndex celda=ui->TablaTarifas->currentIndex();
-    QModelIndex index1=tarifa_model->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
-
-    QVariant pKey = tarifa_model->data(index1,Qt::EditRole);
-
+    if(!ui->TablaTarifas->currentIndex().isValid())
+        return;
+    int id_t = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),0),Qt::DisplayRole).toInt();
     FrmTarifas editTarifa(this);
-    editTarifa.capturar_datos(pKey.toInt(),ui->txtCoste_real->text());
+    editTarifa.capturar_datos(id_t,ui->txtCoste_real->text());
 
     if(editTarifa.exec() ==QDialog::Accepted)
     {
@@ -1096,7 +1094,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
         _data["margen_minimo"]= editTarifa.margen_min;
         _data["pvp"] = editTarifa.pvpDivisa;
 
-        if(!SqlCalls::SqlUpdate(_data,"tarifas",Configuracion_global->groupDB,QString("id = %1").arg(pKey.toInt()),error))
+        if(!SqlCalls::SqlUpdate(_data,"tarifas",Configuracion_global->groupDB,QString("id = %1").arg(id_t),error))
             QMessageBox::warning(this,tr("ATENCIÓN"),
                                  tr("Ocurrió un error al actualizar BD: %1").arg(error),
                                  tr("Aceptar"));
@@ -2190,12 +2188,14 @@ void FrmArticulos::on_btnBuscar_clicked()
 void FrmArticulos::on_tablaBusqueda_doubleClicked(const QModelIndex &index)
 {
     int id = ui->tablaBusqueda->model()->data(ui->tablaBusqueda->model()->index(index.row(),0),Qt::EditRole).toInt();
-    if(ui->stackedWidget->currentIndex() == 1)
-        ui->stackedWidget->setCurrentIndex(0);
     oArticulo->Recuperar(id);
-    LLenarCampos(ui->Pestanas->currentIndex());
-    ui->botEditar->setEnabled(true);
 
+    ui->Pestanas->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(0);
+
+    LLenarCampos(ui->Pestanas->currentIndex());    
+
+    ui->botEditar->setEnabled(true);
     ocultarBusqueda();
 }
 
