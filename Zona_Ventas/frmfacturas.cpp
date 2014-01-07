@@ -2020,11 +2020,12 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             //refrescar_modelo();
             calcular_factura();
             ui->Lineas->setFocus();
-        } else
-        {
-            QMessageBox::warning(this, tr("Gestión de facturas"),tr("Debe editar la factura para poder modificar las líneas"),
-                                 tr("Aceptar"));
         }
+    } else
+    {
+        QMessageBox::warning(this, tr("Gestión de facturas"),tr("Debe editar la factura para poder modificar las líneas"),
+                             tr("Aceptar"));
+
     }
 
 }

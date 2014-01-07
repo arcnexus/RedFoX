@@ -190,7 +190,8 @@ void FrmArticulos::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&FrmArticulos::ocultarBusqueda);
+    connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
+
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
     QPushButton * addproduct = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
