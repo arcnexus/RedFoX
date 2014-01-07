@@ -414,6 +414,11 @@ void frmEditLine::vaciar_campos()
 
 void frmEditLine::calcular()
 {
+    if(Configuracion_global->MonedatoDouble(ui->txtPVP->text()) <0 && ui->txtPvp_recomendado->text() =="0,00")
+    {
+        ui->txtPvp_recomendado->setText(ui->txtPVP->text());
+        ui->txtPorc_dto->setText("0,00");
+    }
     double dto;
     if(ui->txtPorc_dto->text() =="0,00")
     {
@@ -436,9 +441,12 @@ void frmEditLine::calcular()
     subtotal = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
     dto = subtotal * (Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text()))/100;
     base = subtotal -dto;
-    precio_cliente = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text())-(
-                Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text())*
-                Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text())/100);
+    if(Configuracion_global->MonedatoDouble(ui->txtPVP->text()) <0)
+        precio_cliente =  Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+     else
+        precio_cliente = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text())-(
+                    Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text())*
+                    Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text())/100);
 
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(precio_cliente,'f',Configuracion_global->decimales)));
     ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',
@@ -492,6 +500,8 @@ void frmEditLine::on_cboIva_currentIndexChanged(const QString &arg1)
 
 void frmEditLine::on_btnAceptar_clicked()
 {
+    if(ui->txtDescripcion->text().isEmpty())
+        on_txtCodigo_editingFinished();
     QHash <QString, QVariant> lin;
     lin["cantidad"] = ui->txtCantidad->text().toFloat();
     lin["codigo"] = ui->txtCodigo->text();
