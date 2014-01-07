@@ -107,8 +107,6 @@ private slots:
 
     void on_btnExcepciones_clicked();
 
-    void on_btnKit_2_clicked();
-
     void on_btnAnadir_oferta_clicked();
 
     void on_btnguardar_oferta_clicked();
