@@ -817,12 +817,17 @@ void FrmArticulos::on_botEditar_clicked()
 {
     if(sender() != ui->botEditar)
     {
-        int id = ui->tablaBusqueda->model()->index(ui->tablaBusqueda->currentIndex().row(),0).data().toInt();
+        QModelIndex index = ui->tablaBusqueda->currentIndex();
+        if(!index.isValid())
+            return;
+        int id = ui->tablaBusqueda->model()->index(index.row(),0).data().toInt();
         oArticulo->Recuperar(id);
     }
 
     for(auto i= 0; i < ui->Pestanas->count(); i++)
         LLenarCampos(i);
+
+    this->anadir = false;
 
     ui->stackedWidget->setCurrentIndex(0);
     bloquearCampos(false);
@@ -841,7 +846,15 @@ void FrmArticulos::on_botEditar_clicked()
 
 void FrmArticulos::on_botBorrar_clicked()
 {
-    oArticulo->Borrar(oArticulo->id,true);
+    int id = oArticulo->id;
+    if(sender() != ui->botBorrar)
+    {
+        QModelIndex index = ui->tablaBusqueda->currentIndex();
+        if(!index.isValid())
+            return;
+        id = ui->tablaBusqueda->model()->index(index.row(),0).data().toInt();
+    }
+    oArticulo->Borrar(id,true);
     LLenarCampos(ui->Pestanas->currentIndex());
 }
 
@@ -2369,9 +2382,15 @@ void FrmArticulos::on_btnExcepciones_3_clicked()
 
 void FrmArticulos::on_btnKit_clicked()
 {
-    QModelIndex index = ui->tablaBusqueda->currentIndex();
-    int id = ui->tablaBusqueda->model()->data(ui->tablaBusqueda->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oArticulo->Recuperar(id);
+    if(sender() != ui->btnKit)
+    {
+        QModelIndex index = ui->tablaBusqueda->currentIndex();
+        if(!index.isValid())
+            return;
+        int id = ui->tablaBusqueda->model()->data(ui->tablaBusqueda->model()->index(index.row(),0),Qt::DisplayRole).toInt();
+        oArticulo->Recuperar(id);
+    }
+
     if(!oArticulo->kit)
     {
         if(QMessageBox::question(this,tr("Gestión de Artículos"),tr("¿El Artículo no es un kit, ¿desea convertirlo a kit?"),
@@ -2382,21 +2401,21 @@ void FrmArticulos::on_btnKit_clicked()
             h["kit"] = true;
             bool success = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),
                                                error);
-            if(success){
+            if(success)
+            {
                 oArticulo->kit = true;
                 TimedMessageBox *t = new TimedMessageBox(this,tr("Articulo convertido en kit"));
-            } else
+                FrmKit kit(this);
+                kit.set_articulo(oArticulo->codigo);
+                kit.exec();
+            }
+            else
             {
                 QMessageBox::warning(this,tr("Gestión de Artículos"),
-                                     tr("Atención: No se puede convertir: %1")/*.arg(error)*/);
+                                     tr("Atención: No se puede convertir: %1").arg(error));
             }
         }
 
-    }
-    if(oArticulo->kit){
-        FrmKit kit(this);
-        kit.set_articulo(oArticulo->codigo);
-        kit.exec();
     }
 }
 
