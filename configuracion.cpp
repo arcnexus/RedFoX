@@ -79,7 +79,7 @@ toFormatoMoneda(QString cTexto)
         int decimals = Configuracion_global->decimales;
         aux.remove(",");
         aux.remove(".");
-        aux.remove("-");
+        //aux.remove("-");
         aux.remove("$");
         aux.remove("€");
         aux.remove("£");
@@ -146,6 +146,8 @@ toFormatoMoneda(QString cTexto)
 
 double Configuracion::MonedatoDouble(QString moneda)
 {
+    bool negative;
+    negative = false;
     if(moneda.isEmpty() || moneda == "0,00")
         return 0.00;
     moneda = moneda.replace(".","").replace(",",".");
@@ -153,7 +155,6 @@ double Configuracion::MonedatoDouble(QString moneda)
     int d;
     d= Configuracion_global->decimales_campos_totales;
     dblMoneda  = floor(moneda.toDouble() * pow(10., d) + .5) / pow(10., d);
-
     return dblMoneda;
 }
 
