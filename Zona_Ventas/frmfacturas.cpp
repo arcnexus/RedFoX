@@ -951,8 +951,8 @@ void frmFacturas::desbloquear_factura()
  if(QMessageBox::question(this,tr("Gestion de facturas"),tr("¿Desbloquear factura?"),
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
  {
-     QModelIndex Model = ui->Lineas->currentIndex();
-     int id_fact = ui->tabla_facturas->model()->data(ui->Lineas->model()->index(Model.row(),0)).toInt();
+     QModelIndex Model = ui->tabla_facturas->currentIndex();
+     int id_fact = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(Model.row(),0)).toInt();
      QHash <QString, QVariant> h;
      h["editable"] = 1;
      QString error;
