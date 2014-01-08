@@ -1197,4 +1197,4 @@ CREATE TABLE `@empresa@`.`vales` (
   `ejercicio` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-INSERT INTO `@empresa@`.`series` (`serie`) VALUES ('1');
+INSERT INTO `@empresa@`.`series` (`serie`) VALUES ('A');

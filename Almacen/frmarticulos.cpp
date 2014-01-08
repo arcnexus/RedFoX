@@ -69,9 +69,10 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->TablaTarifas->setItemDelegateForColumn(8, new MonetaryDelegate(this));
 
     ui->tablaBusqueda->setItemDelegateForColumn(5, new MonetaryDelegate(this));
-    ui->tablaBusqueda->setItemDelegateForColumn(6, new MonetaryDelegate(this));
+    ui->tablaBusqueda->setItemDelegateForColumn(6,new DelegateKit(this));
     ui->tablaBusqueda->setItemDelegateForColumn(7, new MonetaryDelegate(this));
-    ui->tablaBusqueda->setItemDelegateForColumn(8,new DelegateKit(this));
+    ui->tablaBusqueda->setItemDelegateForColumn(8, new MonetaryDelegate(this));
+
 
     ui->tabla_ofertas->setItemDelegateForColumn(1, new DelegateKit(this));
 
@@ -118,10 +119,16 @@ void FrmArticulos::init()
     modelEmpresa->setQuery("select * from vistaEmpresa",Configuracion_global->groupDB);
     promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
     volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
-    QString cSQL = "select id,descripcion, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit from vistaart_tarifa "
+
+    QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva from vistaart_tarifa "
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
+
+    if(modelBusqueda->rowCount() == 0)
+        modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit from articulos", Configuracion_global->groupDB);
+
     tarifa_model->select();
+
     GraficaUnidades();
     //SET TABLE FORMAT
     format_tables();
@@ -162,10 +169,10 @@ void FrmArticulos::format_tables()
 
     QStringList titulo;
     QVariantList col_size;
-    titulo <<"id" << tr("descripción")  << tr("Código") << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("P.V.P.")
-           << tr("PVP+IVA") << tr("KIT");
+    titulo <<"id" << tr("Código") << tr("Descripción")  << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("KIT") << tr("P.V.P.")
+           << tr("PVP+IVA") ;
 
-    col_size << 0<<400<<130<<130<<130<<100<<100<<100<<50;
+    col_size << 0<<130<<400<<130<<130<<100<<50<<100<<100;
     for(int i =0;i<titulo.size();i++)
     {
         modelBusqueda->setHeaderData(i,Qt::Horizontal,titulo.at(i));
@@ -791,11 +798,18 @@ void FrmArticulos::filter_table(QString texto, QString orden, QString modo)
     else
         mode ="DESC";
 
-QString cSQL = "select id,descripcion, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit from vistaart_tarifa where "+
+QString cSQL = "Select id,codigo, descripcion,  codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit from vistaart_tarifa where "+
         campo+" like '%"+texto.trimmed()+"%' and tarifa ="+
         QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
+    if(modelBusqueda->rowCount() == 0)
+    {
+        QString cSQL2 = "Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit from articulos where "+
+                campo+" like '%"+texto.trimmed()+"%' order by "+campo +" "+mode;
+        modelBusqueda->setQuery(cSQL2, Configuracion_global->groupDB);
+    }
+
     format_tables();
     ui->tablaBusqueda->selectRow(0);
 }
