@@ -702,7 +702,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
         QSqlQuery query(Configuracion_global->groupDB);
         QString sql;
         if (this->comprando)
-            sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo_fabricante = '%1'").arg(codigo);
+            sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1'").arg(codigo);
         else
             sql = QString("SELECT * FROM vistaart_tarifa WHERE codigo = '%1' and tarifa = %2").arg(codigo).arg(tarifa);
         query.prepare(sql);
@@ -722,7 +722,7 @@ void Table_Helper::rellenar_con_Articulo(int row)
                 if (this->comprando)
                 {
                     double coste = r.value("coste").toDouble();
-                    helped_table->item(row,0)->setText(r.value("codigo_fabricante").toString().toUpper());
+                    helped_table->item(row,0)->setText(r.value("codigo").toString().toUpper());
                     helped_table->item(row,3)->setText(QString::number(coste,'f',Configuracion_global->decimales));
                 }
                 else

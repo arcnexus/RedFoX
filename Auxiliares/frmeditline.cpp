@@ -18,6 +18,8 @@ frmEditLine::frmEditLine(QWidget *parent) :
     //IVA desde config
     ui->cboIva->setModel(Configuracion_global->iva_model);
     ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
+    int index = ui->cboIva->findText("21");
+    ui->cboIva->setCurrentIndex(index);
     //-------------
     // Eventos
     //-------------
@@ -414,6 +416,10 @@ void frmEditLine::vaciar_campos()
 
 void frmEditLine::calcular()
 {
+    double pvp_rec,porc_dto;
+    pvp_rec = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+    porc_dto = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
+
     if(Configuracion_global->MonedatoDouble(ui->txtPVP->text()) <0 && ui->txtPvp_recomendado->text() =="0,00")
     {
         ui->txtPvp_recomendado->setText(ui->txtPVP->text());
@@ -437,10 +443,19 @@ void frmEditLine::calcular()
 
         }
     }
+
     double subtotal,base,precio_cliente,total_con_iva;
     subtotal = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+    if(subtotal == -0)
+        subtotal = 0;
     dto = subtotal * (Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text()))/100;
     base = subtotal -dto;
+    if(pvp_rec ==0 && porc_dto ==0)
+    {
+        ui->txtPvp_recomendado->setText(ui->txtPVP->text());
+        ui->txtPorc_dto->setText("0,00");
+    }
+
     if(Configuracion_global->MonedatoDouble(ui->txtPVP->text()) <0)
         precio_cliente =  Configuracion_global->MonedatoDouble(ui->txtPVP->text());
      else

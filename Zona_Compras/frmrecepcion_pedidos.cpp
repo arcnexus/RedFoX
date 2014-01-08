@@ -138,12 +138,12 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             ui->tablaLineas->setItem(pos,0,item_columna0);
             ui->tablaLineas->setColumnHidden(0,true);
 
-            QTableWidgetItem *item_columna1 = new QTableWidgetItem(query_lineas.record().value("codigo_articulo_proveedor").toString());
+            QTableWidgetItem *item_columna1 = new QTableWidgetItem(query_lineas.record().value("codigo").toString());
             item_columna1->setFlags(item_columna1->flags() & (~Qt::ItemIsEditable));
             item_columna1->setTextColor(Qt::blue); // color de los items
             ui->tablaLineas->setItem(pos,1,item_columna1);
 
-            QTableWidgetItem *item_columna2 = new QTableWidgetItem(query_lineas.record().value("codigo_articulo_interno").toString());
+            QTableWidgetItem *item_columna2 = new QTableWidgetItem(query_lineas.record().value("codigo").toString());
             item_columna2->setFlags(item_columna2->flags() & (~Qt::ItemIsEditable));
             item_columna2->setTextColor(Qt::blue); // color de los items
             ui->tablaLineas->setItem(pos,2,item_columna2);
@@ -172,7 +172,7 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             if(query_lineas.record().value("cantidad_pendiente").toInt() <=0)
                 item_columna6->setBackgroundColor(Qt::green);
             if(query_lineas.record().value("cantidad_recibida").toInt()==0 )
-                item_columna6->setBackgroundColor(Qt::white);
+                item_columna6->setBackgroundColor(Qt::yellow);
 
             item_columna6->setTextColor(Qt::blue); // color de los items
             item_columna6->setFlags(item_columna6->flags() & (~Qt::ItemIsEditable));
@@ -183,9 +183,10 @@ void Frmrecepcion_pedidos::on_tablaPedidos_doubleClicked(const QModelIndex &inde
             QTableWidgetItem *item_columna7 = new QTableWidgetItem("0");
             item_columna7->setTextColor(Qt::black); // color de los items
             item_columna7->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            item_columna7->setBackgroundColor(Qt::white);
             ui->tablaLineas->setItem(pos,7,item_columna7);
 
-            QTableWidgetItem *item_columna8 = new QTableWidgetItem(QString::number(query_lineas.record().value("coste_bruto").toDouble(),'f',Configuracion_global->decimales));
+            QTableWidgetItem *item_columna8 = new QTableWidgetItem(QString::number(query_lineas.record().value("precio").toDouble(),'f',Configuracion_global->decimales));
             item_columna8->setTextColor(Qt::black); // color de los items
             ui->tablaLineas->setItem(pos,8,item_columna8);
             ui->tablaLineas->setItemDelegateForColumn(8,new MonetaryDelegate);
@@ -352,9 +353,8 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 
 
                         if(!queryProducto.exec("update articulos set stock_fisico_almacen = stock_fisico_almacen +" +QString::number(rec_act)+
-                                               ",stock_real = stock_real+"+QString::number(rec_act)+
                                                ",cantidad_pendiente_recibir = cantidad_pendiente_recibir-"+QString::number(rec_act)+
-                                               " where id = "+QString::number(nid)))
+                                               ",stock_real = stock_fisico_almacen + cantidad_pendiente_recibir where id = "+QString::number(nid)))
                         {
                             QMessageBox::warning(this,tr("ATENCIÓN"),
                                                  tr("Falló la actualización de stock %1").arg(queryProducto.lastError().text()),

@@ -526,7 +526,7 @@ color: rgb(0, 0, 0);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -2018,7 +2018,7 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QLineEdit" name="txtbase_total_2">
+              <widget class="QLineEdit" name="txtbase_total">
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -2057,7 +2057,7 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="6" column="6">
-              <widget class="QLineEdit" name="txttotal_2">
+              <widget class="QLineEdit" name="txttotal_total">
                <property name="text">
                 <string>0,00</string>
                </property>
@@ -2586,10 +2586,10 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <tabstop>txtporc_rec4</tabstop>
   <tabstop>txtrec4</tabstop>
   <tabstop>txttotal4</tabstop>
-  <tabstop>txtbase_total_2</tabstop>
+  <tabstop>txtbase_total</tabstop>
   <tabstop>txtiva_total</tabstop>
   <tabstop>txttotal_recargo</tabstop>
-  <tabstop>txttotal_2</tabstop>
+  <tabstop>txttotal_total</tabstop>
   <tabstop>txtimporte_irpf</tabstop>
   <tabstop>txtGastoDist1</tabstop>
   <tabstop>SpinGastoDist1</tabstop>
