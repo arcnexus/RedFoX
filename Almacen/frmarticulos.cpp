@@ -68,10 +68,10 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->TablaTarifas->setItemDelegateForColumn(7, new MonetaryDelegate(this));
     ui->TablaTarifas->setItemDelegateForColumn(8, new MonetaryDelegate(this));
 
-    ui->tablaBusqueda->setItemDelegateForColumn(4, new MonetaryDelegate(this));
     ui->tablaBusqueda->setItemDelegateForColumn(5, new MonetaryDelegate(this));
     ui->tablaBusqueda->setItemDelegateForColumn(6, new MonetaryDelegate(this));
-    ui->tablaBusqueda->setItemDelegateForColumn(7,new DelegateKit(this));
+    ui->tablaBusqueda->setItemDelegateForColumn(7, new MonetaryDelegate(this));
+    ui->tablaBusqueda->setItemDelegateForColumn(8,new DelegateKit(this));
 
     ui->tabla_ofertas->setItemDelegateForColumn(1, new DelegateKit(this));
 
@@ -83,10 +83,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //SET UP CHARTS
     ui->graf_prov->Clear();
     ui->graf_prov->verValoresEjeY(true);
-    ui->graf_prov->verValores(true);
-
-    //SET TABLE FORMAT
-    format_tables();
+    ui->graf_prov->verValores(true);  
 
     // CONEXIONES
     connect(ui->txtcoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
@@ -121,11 +118,13 @@ void FrmArticulos::init()
     modelEmpresa->setQuery("select * from vistaEmpresa",Configuracion_global->groupDB);
     promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
     volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
-    QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit,descripcion from vistaart_tarifa "
+    QString cSQL = "select id,descripcion, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit from vistaart_tarifa "
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
     tarifa_model->select();
     GraficaUnidades();
+    //SET TABLE FORMAT
+    format_tables();
 }
 
 void FrmArticulos::format_tables()
@@ -163,10 +162,10 @@ void FrmArticulos::format_tables()
 
     QStringList titulo;
     QVariantList col_size;
-    titulo <<"id" << tr("Código") << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("P.V.P.")
-           << tr("PVP+IVA") << tr("KIT")<< tr("descripción") ;
+    titulo <<"id" << tr("descripción")  << tr("Código") << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("P.V.P.")
+           << tr("PVP+IVA") << tr("KIT");
 
-    col_size << 0<<100<<100<<100<<50<<70<<70<<25<<400;
+    col_size << 0<<400<<130<<130<<130<<100<<100<<100<<50;
     for(int i =0;i<titulo.size();i++)
     {
         modelBusqueda->setHeaderData(i,Qt::Horizontal,titulo.at(i));
@@ -296,13 +295,22 @@ void FrmArticulos::on_botAnadir_clicked()
         {
             ocultarBusqueda();
             bloquearCampos(false);
+
             VaciarCampos();
             oArticulo->Anadir();
             this->anadir = true;
+
+            ui->Pestanas->setCurrentIndex(0);
             LLenarCampos(ui->Pestanas->currentIndex());
 
             if(Configuracion_global->auto_codigoart)
                 ui->txtcodigo->setText("auto_codigo");
+
+            ui->lblDescripcion->setText(tr("Nuevo artículo"));
+            ui->lblCodigo->setText("");
+
+            ui->lblDescripcion->repaint();
+            ui->lblCodigo->repaint();
 
             ui->stackedWidget->setCurrentIndex(0);
             ui->txtcodigo->setFocus();
@@ -397,6 +405,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->botEditar->setEnabled(state);
     ui->botGuardar->setEnabled(!state);
     ui->botSiguiente->setEnabled(state);
+    ui->btnKit->setEnabled(state);
 
     // Botones artículos
     ui->botBuscarSeccion->setEnabled(!state);
@@ -708,6 +717,7 @@ void FrmArticulos::CargarCamposEnArticulo()
 void FrmArticulos::VaciarCampos()
 {
    oArticulo->Vaciar();
+
    ui->txtcodigo->setText("");
    ui->txtcodigo_barras->setText("");
    ui->txtcodigo_fabricante->setText("");
@@ -781,12 +791,12 @@ void FrmArticulos::filter_table(QString texto, QString orden, QString modo)
     else
         mode ="DESC";
 
-QString cSQL = "select id, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit,descripcion from vistaart_tarifa where "+
+QString cSQL = "select id,descripcion, codigo, codigo_barras,codigo_fabricante,tipo_iva,pvp,pvp_con_iva,kit from vistaart_tarifa where "+
         campo+" like '%"+texto.trimmed()+"%' and tarifa ="+
         QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
-    //formato_tabla();
+    format_tables();
     ui->tablaBusqueda->selectRow(0);
 }
 
@@ -831,7 +841,7 @@ void FrmArticulos::on_botEditar_clicked()
 
     ui->stackedWidget->setCurrentIndex(0);
     bloquearCampos(false);
-    ui->txtcodigo->setFocus();
+    ui->txtcodigo->setReadOnly(true);
 
     //-------------------
     // OFERTAS
@@ -880,10 +890,9 @@ void FrmArticulos::AnadirSeccion()
 
 bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 {
-    if(event->type() == QEvent::Show)
+    if(target == this && event->type() == QEvent::Hide)
     {
-       // if(target == ui->page)
-       //     actualizar();
+       ui->Pestanas->setCurrentIndex(0);
     }
     else if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
@@ -2405,9 +2414,6 @@ void FrmArticulos::on_btnKit_clicked()
             {
                 oArticulo->kit = true;
                 TimedMessageBox *t = new TimedMessageBox(this,tr("Articulo convertido en kit"));
-                FrmKit kit(this);
-                kit.set_articulo(oArticulo->codigo);
-                kit.exec();
             }
             else
             {
@@ -2415,7 +2421,12 @@ void FrmArticulos::on_btnKit_clicked()
                                      tr("Atención: No se puede convertir: %1").arg(error));
             }
         }
-
+    }
+    if(oArticulo->kit)
+    {
+        FrmKit kit(this);
+        kit.set_articulo(oArticulo->codigo);
+        kit.exec();
     }
 }
 

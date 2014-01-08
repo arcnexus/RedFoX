@@ -27,6 +27,8 @@ private slots:
 
     void on_btnAnadirKits_clicked();
 
+    void on_btnQuitar_clicked();
+
 private:
     Ui::FrmKit *ui;
     QSqlQueryModel *m_arts;

@@ -113,12 +113,36 @@ bool Articulo::Recuperar(int id)
 
 bool Articulo::Next()
 {
-    return Recuperar(this->id + 1);
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id > %1 limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        return true;
+    }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha llegado al final del fichero"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
 }
 
 bool Articulo::Prev()
 {
-    return Recuperar(this->id - 1);
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id < %1 order by id desc limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        return true;
+    }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha llegado al inicio del fichero"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
 }
 
 void Articulo::Cargar(QSqlRecord registro)
@@ -198,7 +222,9 @@ void Articulo::Guardar()
     // Si está activada la autogeneración de código
     //---------------------------------------------
 
-    if (this->codigo == "auto_codigo"){
+    if (this->codigo == "auto_codigo")
+    {
+        //FIXME auto_codigo
         QString nuevo_codigo;
         QSqlQuery querycodigo(Configuracion_global->groupDB);
 
@@ -254,6 +280,7 @@ void Articulo::Guardar()
         }
 
     }
+
     QHash <QString, QVariant> articulo;
     QString error;
 
@@ -379,7 +406,23 @@ void Articulo::Borrar(int nid , bool ask)
                              qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted;
     if(borrar)
     {
-        QString error;
+        QString error = "";
+        QStringList _kits = SqlCalls::SelectList("kits","codigo_kit",QString("id_componente = %1").arg(nid),Configuracion_global->groupDB,error);
+        if(!_kits.isEmpty() || !error.isEmpty())
+        {
+            if(!_kits.isEmpty())
+                QMessageBox::critical(qApp->activeWindow(),tr("Articulo parte de kit"),tr("Borre primero los siguientes kits:\n")+_kits.join("\n"));
+            else
+                QMessageBox::critical(qApp->activeWindow(),tr("Error"),error);
+            return;
+        }
+
+        if(!SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id_articulo = %1").arg(nid),error))
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
+            return;
+        }
+
         if(!SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error))
             QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
         else        

@@ -63,15 +63,9 @@ void FrmKit::set_articulo(QString codigo)
     {
         i.next();
         ui->txtCodigo_kit->setText(i.value().value("codigo").toString());
-        ui->txtDesc_kit->setText(i.value().value("descripcion").toString());
-        ui->txtPvp_kit->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_con_iva").toDouble(),'f',
-                                                                                      Configuracion_global->decimales)));
+        ui->txtDesc_kit->setText(i.value().value("descripcion").toString());        
     }
-
     refrescar_tabla_escandallo(codigo);
-
-
-
 }
 
 void FrmKit::on_btnAnadir_clicked()
@@ -102,6 +96,11 @@ void FrmKit::on_btnAnadir_clicked()
 
 void FrmKit::on_btnGuardar_clicked()
 {
+    for(auto i=0; i< m_kits->rowCount(); i++)
+    {
+        if(m_kits->record(i).value(0).toString() == ui->txtCodigo->text())
+            return;
+    }
     QHash <QString, QVariant> h;
     h["codigo_kit"] = ui->txtCodigo_kit->text();
     h["codigo_componente"] = ui->txtCodigo->text();
@@ -205,4 +204,9 @@ void FrmKit::on_btnAnadirKits_clicked()
         TimedMessageBox *t = new TimedMessageBox(this,tr("Estock de artículos actualizado"));
     } else
         QMessageBox::warning(this,tr("Gestión de Kits"),tr("Ocurrió un error al recuperar el kit: %1").arg(error));
+}
+
+void FrmKit::on_btnQuitar_clicked()
+{
+    //TODO quitar elemnto kit
 }
