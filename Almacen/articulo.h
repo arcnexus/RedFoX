@@ -14,7 +14,7 @@ public:
     QString codigo_fabricante;
     QString descripcion;
     QString descripcion_reducida;
-    int id_proveedor;
+    int idProveedor;
     bool kit;
     QString proveedor;
     QString cCodProveedor;
@@ -85,6 +85,10 @@ public:
                                    int id_cliente);
     bool Devolucion(int id,double cantidad,double pvp,int id_cliente);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
+    void acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, int id_cliente);
+    void acumulado_compras(int id_articulo,float cantidad, QDate fecha, int idProveedor);
+
+    void acumulado_devoluciones(int id_articulo,float cantidad,QDate fecha, int id_cliente);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);
@@ -95,11 +99,11 @@ public:
     QString getsubfamilia(int nid);
     QString getcSubSubFamilia(int nid);
     QString getcGrupo(int nid);
-    bool agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta,
+    bool agregar_proveedor_alternativo(int id_art, int idProveedor, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvd_real, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvd_real, int id_divisa);
-    bool cambiarProveedorPrincipal(int id,int id_proveedor);
+    bool cambiarProveedorPrincipal(int id,int idProveedor);
     bool cambiar_pvp();
     static bool agregarStock(char accion, int id, int cantidad, double importe, QDate fecha);
     float asigna_dto_linea(int id_art, int id_cliente, float dto_esp, float dto_lin);

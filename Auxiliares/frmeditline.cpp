@@ -566,6 +566,9 @@ void frmEditLine::on_btnAceptar_clicked()
         }
 
     }
+    oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                QDate::currentDate(),id_cliente);
 }
 
 void frmEditLine::on_btnAnadir_mas_nueva_clicked()
@@ -615,6 +618,9 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
 
         }
     }
+    oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                QDate::currentDate(),id_cliente);
    vaciar_campos();
 
 }
