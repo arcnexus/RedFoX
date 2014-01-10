@@ -109,6 +109,7 @@ private:
 
     QSqlQuery qryArticulo;
     QSqlQuery qryTipoIva;
+    double coste_real_anterior;
 
 };
 
