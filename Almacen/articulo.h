@@ -85,10 +85,11 @@ public:
                                    int id_cliente);
     bool Devolucion(int id,double cantidad,double pvp,int id_cliente);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
-    void acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, int id_cliente);
-    void acumulado_compras(int id_articulo,float cantidad, QDate fecha, int idProveedor);
+    bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha);
 
-    void acumulado_devoluciones(int id_articulo,float cantidad,QDate fecha, int id_cliente);
+    void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
+
+    void acumulado_devoluciones(int id_articulo, float cantidad, QDate fecha);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);

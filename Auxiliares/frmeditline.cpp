@@ -539,21 +539,25 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(success){
+        if ( success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                QDate::currentDate()))
+        {
             emit refrescar_lineas();
             accept();
-        }
-        else
-        {
+        } else {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
-                                 tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
-                                 tr("Aceptar"));
+                             tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
+                             tr("Aceptar"));
 
         }
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0) {
+        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                      QDate::currentDate()))
+        {
             emit refrescar_lineas();
             accept();
         }
@@ -566,9 +570,7 @@ void frmEditLine::on_btnAceptar_clicked()
         }
 
     }
-    oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-                                QDate::currentDate(),id_cliente);
+
 }
 
 void frmEditLine::on_btnAnadir_mas_nueva_clicked()
@@ -591,11 +593,13 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
     QString error;
-    if(this->id >0)
+    if(this->id >0 )
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(success)
+        if(success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                  QDate::currentDate()))
             emit refrescar_lineas();
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
@@ -606,7 +610,9 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0)
+        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                      QDate::currentDate()))
         {
             emit refrescar_lineas();
         } else
@@ -618,9 +624,7 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
 
         }
     }
-    oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-                                QDate::currentDate(),id_cliente);
+
    vaciar_campos();
 
 }

@@ -894,20 +894,23 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
     }
 }
 
-void Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QDate fecha, int id_cliente)
+bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QDate fecha)
 {
     //--------------------------------
     // ACUMULADOS ARTICULO Y STOCK
     //--------------------------------
+    bool success;
     QSqlQuery art(Configuracion_global->groupDB);
     QString cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real -%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
     cSQL.append(QString("unidades_vendidas = unidades_vendidas -%3 where id= %4").arg(QString::number(cantidad,'f',2),
                                                                               QString::number(id_articulo)));
 
-    if(!art.exec(cSQL))
+    if(!art.exec(cSQL)){
+       success = false;
         QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
                              tr("No se ha podido guardar los acumulados: %1").arg(art.lastError().text()),
                              tr("Aceptar"));
+    }
     cSQL = QString("update acum_articulos set ");
     if(fecha.month() == 1){
          cSQL.append(QString("acum_vent_enero = acum_vent_enero + %1").arg(total));
@@ -960,66 +963,27 @@ void Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QD
     cSQL.append(QString(" where id_articulo = %1").arg(id_articulo));
     QSqlQuery art_ac(Configuracion_global->empresaDB);
 
-    if(!art_ac.exec(cSQL))
+    if(!art_ac.exec(cSQL)){
         QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
                              tr("No se ha podido guardar los acumulados: %1").arg(art_ac.lastError().text()),
                              tr("Aceptar"));
+        return false;
+    }
+    if (!success)
+        return false;
+    return true;
 
-    //----------------------------
-    // ACUMULADOS FICHA CLIENTE
-    //----------------------------
-    QSqlQuery cli(Configuracion_global->groupDB);
-    cSQL = QString("update clientes set acumulado_ventas = acumuladoventas +%1,").arg(total);
-    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio +%1,").arg(total));
-    cSQL.append(QString(" where id = %1").arg(id_cliente));
-    if(!cli.exec(cSQL))
-        QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
-                             tr("No se ha podido guardar los acumulados: %1").arg(cli.lastError().text()),
-                             tr("Aceptar"));
 
-    QSqlQuery cli_acum(Configuracion_global->empresaDB);
-    cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio + %1").arg(total);
-    cSQL.append(QString(",fecha_ultima_compra = '%1'").arg(fecha.toString("yyyyMMdd")));
-    if(fecha.month() ==1)
-        cSQL.append(QString(",acum_enero = acum_enero + %1").arg(total));
-    if(fecha.month() ==2)
-        cSQL.append(QString(",acum_febrero = acum_febrero + %1").arg(total));
-    if(fecha.month() ==3)
-        cSQL.append(QString(",acum_marzo = acum_marzo + %1").arg(total));
-    if(fecha.month() ==4)
-        cSQL.append(QString(",acum_abril = acum_abril + %1").arg(total));
-    if(fecha.month() ==5)
-        cSQL.append(QString(",acum_mayo = acum_mayo + %1").arg(total));
-    if(fecha.month() ==6)
-        cSQL.append(QString(",acum_junio = acum_junio + %1").arg(total));
-    if(fecha.month() ==7)
-        cSQL.append(QString(",acum_julio = acum_julio + %1").arg(total));
-    if(fecha.month() ==8)
-        cSQL.append(QString(",acum_agosto = acum_agosto + %1").arg(total));
-    if(fecha.month() ==9)
-        cSQL.append(QString(",acum_septiembre = acum_septiembre + %1").arg(total));
-    if(fecha.month() ==10)
-        cSQL.append(QString(",acum_octubre = acum_octubre + %1").arg(total));
-    if(fecha.month() ==11)
-        cSQL.append(QString(",acum_noviembre = acum_noviembre + %1").arg(total));
-    if(fecha.month() ==12)
-        cSQL.append(QString(",acum_diciembre = acum_diciembre + %1").arg(total));
-
-    cSQL.append(QString(" where id_cliente = %1").arg(id_cliente));
-    if(!cli_acum.exec(cSQL))
-        QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
-                             tr("No se ha podido guardar los acumulados: %1").arg(cli_acum.lastError().text()),
-                             tr("Aceptar"));
 
 
 }
 
-void Articulo::acumulado_compras(int id_articulo, float cantidad, QDate fecha, int idProveedor)
+void Articulo::acumulado_compras(int id_articulo, float cantidad, QDate fecha)
 {
 
 }
 
-void Articulo::acumulado_devoluciones(int id_articulo, float cantidad, QDate fecha, int id_cliente)
+void Articulo::acumulado_devoluciones(int id_articulo, float cantidad, QDate fecha)
 {
 
 }

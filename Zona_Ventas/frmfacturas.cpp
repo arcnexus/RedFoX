@@ -23,8 +23,9 @@ frmFacturas::frmFacturas( QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
 
 {
-    oFactura = new Factura();
-    oCliente1 = new Cliente();
+    oFactura = new Factura(this);
+    oCliente1 = new Cliente(this);
+    oArticulo = new Articulo(this);
     ui->setupUi(this);
     // Escondo/muestro campos según configuración
     if(Configuracion_global->lProfesional) {
@@ -2016,6 +2017,10 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
         int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
         if(id_lin >0)
         {
+
+//            if( (id_lin,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+//                                           Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+//                                           QDate::currentDate()))
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente1->id);

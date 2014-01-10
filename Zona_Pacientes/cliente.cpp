@@ -716,6 +716,124 @@ void Cliente::DescontarDeuda(int id_deuda, double pagado){
     qClientes_deuda.clear();
 
 }
+
+bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
+{
+    bool success = true;
+    //----------------------------
+    // ACUMULADOS FICHA CLIENTE
+    //----------------------------
+    QSqlQuery cli(Configuracion_global->groupDB);
+    QString cSQL;
+    cSQL = QString("update clientes set acumulado_ventas = acumulado_ventas +%1,").arg(total);
+    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio +%1,").arg(total));
+    cSQL.append(QString(" where id = %1").arg(id_cliente));
+    if(!cli.exec(cSQL)){
+        success = false;
+        QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
+                             tr("No se ha podido guardar los acumulados en la ficha del cliente: %1").arg(cli.lastError().text()),
+                             tr("Aceptar"));
+    }
+
+    QSqlQuery cli_acum(Configuracion_global->empresaDB);
+    cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio + %1").arg(total);
+    cSQL.append(QString(",fecha_ultima_compra = '%1'").arg(fecha.toString("yyyyMMdd")));
+    if(fecha.month() ==1)
+        cSQL.append(QString(",acum_enero = acum_enero + %1").arg(total));
+    if(fecha.month() ==2)
+        cSQL.append(QString(",acum_febrero = acum_febrero + %1").arg(total));
+    if(fecha.month() ==3)
+        cSQL.append(QString(",acum_marzo = acum_marzo + %1").arg(total));
+    if(fecha.month() ==4)
+        cSQL.append(QString(",acum_abril = acum_abril + %1").arg(total));
+    if(fecha.month() ==5)
+        cSQL.append(QString(",acum_mayo = acum_mayo + %1").arg(total));
+    if(fecha.month() ==6)
+        cSQL.append(QString(",acum_junio = acum_junio + %1").arg(total));
+    if(fecha.month() ==7)
+        cSQL.append(QString(",acum_julio = acum_julio + %1").arg(total));
+    if(fecha.month() ==8)
+        cSQL.append(QString(",acum_agosto = acum_agosto + %1").arg(total));
+    if(fecha.month() ==9)
+        cSQL.append(QString(",acum_septiembre = acum_septiembre + %1").arg(total));
+    if(fecha.month() ==10)
+        cSQL.append(QString(",acum_octubre = acum_octubre + %1").arg(total));
+    if(fecha.month() ==11)
+        cSQL.append(QString(",acum_noviembre = acum_noviembre + %1").arg(total));
+    if(fecha.month() ==12)
+        cSQL.append(QString(",acum_diciembre = acum_diciembre + %1").arg(total));
+
+    cSQL.append(QString(" where id_cliente = %1").arg(id_cliente));
+    if(!cli_acum.exec(cSQL)){
+        QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
+                             tr("No se ha podido guardar los acumulados en acumulados de cliente: %1").arg(cli_acum.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    if(!success)
+        return false;
+    return true;
+
+}
+
+bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)
+{
+    bool success = true;
+    //----------------------------
+    // ACUMULADOS FICHA CLIENTE
+    //----------------------------
+    QSqlQuery cli(Configuracion_global->groupDB);
+    QString cSQL;
+    cSQL = QString("update clientes set acumulado_ventas = acumulado_ventas -%1,").arg(total);
+    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio -%1,").arg(total));
+    cSQL.append(QString(" where id = %1").arg(id_cliente));
+    if(!cli.exec(cSQL)){
+        QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
+                             tr("No se ha podido restar por edición los acumulados en ficha de cliente: %1").arg(cli.lastError().text()),
+                             tr("Aceptar"));
+        success = false;
+    }
+
+    QSqlQuery cli_acum(Configuracion_global->empresaDB);
+    cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio - %1").arg(total);
+    cSQL.append(QString(",fecha_ultima_compra = '%1'").arg(fecha.toString("yyyyMMdd")));
+    if(fecha.month() ==1)
+        cSQL.append(QString(",acum_enero = acum_enero - %1").arg(total));
+    if(fecha.month() ==2)
+        cSQL.append(QString(",acum_febrero = acum_febrero - %1").arg(total));
+    if(fecha.month() ==3)
+        cSQL.append(QString(",acum_marzo = acum_marzo - %1").arg(total));
+    if(fecha.month() ==4)
+        cSQL.append(QString(",acum_abril = acum_abril - %1").arg(total));
+    if(fecha.month() ==5)
+        cSQL.append(QString(",acum_mayo = acum_mayo - %1").arg(total));
+    if(fecha.month() ==6)
+        cSQL.append(QString(",acum_junio = acum_junio - %1").arg(total));
+    if(fecha.month() ==7)
+        cSQL.append(QString(",acum_julio = acum_julio - %1").arg(total));
+    if(fecha.month() ==8)
+        cSQL.append(QString(",acum_agosto = acum_agosto - %1").arg(total));
+    if(fecha.month() ==9)
+        cSQL.append(QString(",acum_septiembre = acum_septiembre - %1").arg(total));
+    if(fecha.month() ==10)
+        cSQL.append(QString(",acum_octubre = acum_octubre - %1").arg(total));
+    if(fecha.month() ==11)
+        cSQL.append(QString(",acum_noviembre = acum_noviembre - %1").arg(total));
+    if(fecha.month() ==12)
+        cSQL.append(QString(",acum_diciembre = acum_diciembre - %1").arg(total));
+
+    cSQL.append(QString(" where id_cliente = %1").arg(id_cliente));
+    if(!cli_acum.exec(cSQL)){
+        QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
+                             tr("No se ha podido restar por edición los acumulados en  acumulados de cliente: %1").arg(cli_acum.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    if (!success)
+        return false;
+
+    return true;
+}
 void Cliente::Borrar(int id_cliente)
 {
     if(QMessageBox::question(qApp->activeWindow(),tr("Borrar Ficha"),
