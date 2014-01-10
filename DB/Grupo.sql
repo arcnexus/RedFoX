@@ -454,6 +454,7 @@ CREATE TABLE `@grupo@`.`gruposart` (
   `grupo_art` varchar(45) DEFAULT NULL,
   `image` blob,
   `type` varchar(4) DEFAULT NULL,
+  `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`histo_clientes_deuda` (
@@ -674,6 +675,7 @@ CREATE TABLE `@grupo@`.`subsubfamilias` (
   `subsub_familia` varchar(45) DEFAULT NULL,
   `im` blob,
   `type` varchar(4) DEFAULT NULL,
+  `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`tarifas` (
