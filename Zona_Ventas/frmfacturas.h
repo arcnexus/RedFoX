@@ -7,6 +7,7 @@
 #include "../Zona_Pacientes/cliente.h"
 #include "../Auxiliares/table_helper.h"
 #include "../mayamodule.h"
+#include "../Almacen/articulo.h"
 namespace Ui {
 class frmFacturas;
 }
@@ -151,6 +152,7 @@ private:
     void calcular_factura();
 
     BarraBusqueda* m_busqueda;
+    Articulo *oArticulo;
     void setUpBusqueda();
     QComboBox* cboSeries;
     QStringList series2_l;

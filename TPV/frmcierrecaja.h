@@ -15,6 +15,7 @@ class FrmCierreCaja : public QDialog
 public:
     explicit FrmCierreCaja(QWidget *parent = 0);
     ~FrmCierreCaja();
+
     void cargar_datos_caja(int id);
 
 private slots:

@@ -23,8 +23,9 @@ frmFacturas::frmFacturas( QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
 
 {
-    oFactura = new Factura();
-    oCliente1 = new Cliente();
+    oFactura = new Factura(this);
+    oCliente1 = new Cliente(this);
+    oArticulo = new Articulo(this);
     ui->setupUi(this);
     // Escondo/muestro campos según configuración
     if(Configuracion_global->lProfesional) {
@@ -334,6 +335,15 @@ void frmFacturas::LLenarCampos() {
     ui->spin_iva_gasto1->setValue(oFactura->iva_gasto1);
     ui->spin_iva_gasto2->setValue(oFactura->iva_gasto2);
     ui->spin_iva_gasto3->setValue(oFactura->iva_gasto3);
+    ui->txtbase_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->base,'f',
+                                                                                     Configuracion_global->decimales_campos_totales)));
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->iva,'f',
+                                                                                    Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->total_recargo,'f',
+                                                                                        Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_total->setText(Configuracion_global->toFormatoMoneda(QString::number((oFactura->total),'f',
+                                                                                      Configuracion_global->decimales_campos_totales)));
+
     //------------------------------
     // DIRECCION ALTERNATIVA
     //------------------------------
@@ -528,6 +538,12 @@ void frmFacturas::VaciarCampos()
     ui->spin_iva_gasto2->setValue(0);
     ui->spin_iva_gasto3->setValue(0);
     ui->cboDivisa->setCurrentIndex( -1);
+    ui->txtbase_total->clear();
+    ui->txtiva_total->clear();
+    ui->txttotal_recargo->clear();
+    ui->txttotal_total->clear();
+
+
 
     //helper.fillTable("empresa","lin_fac","id_Cab = -1");
 }
@@ -754,7 +770,7 @@ void frmFacturas::on_btnAnadir_clicked()
     calcular_factura();
     ui->Lineas->setFocus();
     emit block();
-
+    ui->txtGastoDist1->setText(tr("Portes:"));
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -939,6 +955,8 @@ void frmFacturas::on_btnEditar_clicked()
         m_busqueda->hideMe();
         in_edit = true;
         emit block();
+        Configuracion_global->empresaDB.transaction();
+        Configuracion_global->groupDB.transaction();
         ui->txtcodigo_cliente->setFocus();
         ui->stackedWidget->setCurrentIndex(0);
     } else
@@ -951,8 +969,8 @@ void frmFacturas::desbloquear_factura()
  if(QMessageBox::question(this,tr("Gestion de facturas"),tr("¿Desbloquear factura?"),
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
  {
-     QModelIndex Model = ui->Lineas->currentIndex();
-     int id_fact = ui->tabla_facturas->model()->data(ui->Lineas->model()->index(Model.row(),0)).toInt();
+     QModelIndex Model = ui->tabla_facturas->currentIndex();
+     int id_fact = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(Model.row(),0)).toInt();
      QHash <QString, QVariant> h;
      h["editable"] = 1;
      QString error;
@@ -1149,9 +1167,13 @@ void frmFacturas::on_btndeshacer_clicked()
 {
     Configuracion_global->groupDB.rollback();
     Configuracion_global->empresaDB.rollback();
+    if(Configuracion_global->contabilidad)
+        Configuracion_global->contaDB.rollback();
+    oFactura->RecuperarFactura(oFactura->id);
     LLenarCampos();
     BloquearCampos(true);
     emit unblock();
+
 }
 
 void frmFacturas::on_txtcodigo_cliente_editingFinished()
@@ -1442,12 +1464,16 @@ void frmFacturas::calcular_factura()
         {
             // base1
             base1 += li.value().value("total").toDouble();
+            iva1 = base1*(li.value().value("porc_iva").toFloat()/100);
+            re1 = base1*(li.value().value("porc_re").toFloat()/100);
             total1 = base1 + iva1 + re1;
         }
         // base2
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva2->text().toFloat())
         {
             base2 += li.value().value("total").toDouble();
+            iva2 = base2*(li.value().value("porc_iva").toFloat()/100);
+            re1 = base2*(li.value().value("porc_re").toFloat()/100);
             total2 = base2 + iva2 + re2;
 
         }
@@ -1455,6 +1481,8 @@ void frmFacturas::calcular_factura()
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva3->text().toFloat())
         {
             base3 += li.value().value("total").toDouble();
+            iva3 = base3*(li.value().value("porc_iva").toFloat()/100);
+            re3 = base3*(li.value().value("porc_re").toFloat()/100);
             total3 = base3 + iva3 + re3;
 
         }
@@ -1462,6 +1490,8 @@ void frmFacturas::calcular_factura()
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
         {
             base4 += li.value().value("total").toDouble();
+            iva4 = base4*(li.value().value("porc_iva").toFloat()/100);
+            re4 = base4*(li.value().value("porc_re").toFloat()/100);
             total4 = base4 + iva4 + re4;
         }
 
@@ -1574,10 +1604,10 @@ void frmFacturas::calcular_factura()
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
     ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
 
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtbase_total->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_total->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
 
 }
 
@@ -1801,31 +1831,8 @@ void frmFacturas::on_btnCobrar_clicked()
 
 void frmFacturas::on_btnGuardar_clicked()
 {
-
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->contaDB.transaction();
     bool succes = true;
     LLenarFactura();
-    int tipo = 0; // 1 = Borrador - 2 = Factura
-//    if(oFactura->factura.isEmpty()){
-//        if(QMessageBox::question(this,tr("Gestión de facturas"),
-//                                 tr("En que formato desea guardar el documento: "),
-//                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
-//            tipo = 2;
-//        else
-//            tipo = 1;
-//    } else if(oFactura->factura == tr("BORRADOR"))
-//    {
-//        tipo = 1;
-//        if(QMessageBox::question(this,tr("Gestión de facturas"),
-//                                 tr("En que formato desea guardar el documento: "),
-//                                 tr("Borrador"),tr("Factura")) == QMessageBox::Accepted)
-//            tipo = 2;
-//    }
-//    if(tipo == 1 && oFactura->factura.isEmpty())
-//        oFactura->factura = tr("BORRADOR");
-//    if(tipo == 2 && oFactura->factura.isEmpty()){
-
         oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
 
 //}
@@ -1845,9 +1852,8 @@ void frmFacturas::on_btnGuardar_clicked()
     }
     if(succes)
     {
-        if(Configuracion_global->contabilidad)
-            Configuracion_global->contaDB.commit();
-        Configuracion_global->empresaDB.commit();
+
+
         TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
 
         // -------------------------------------------------
@@ -1864,6 +1870,10 @@ void frmFacturas::on_btnGuardar_clicked()
                                   "c",oFactura->total);
         BloquearCampos(true);
         emit unblock();
+        if(Configuracion_global->contabilidad)
+        Configuracion_global->contaDB.commit();
+        Configuracion_global->empresaDB.commit();
+        Configuracion_global->groupDB.commit();
     }
     else
     {
@@ -1871,6 +1881,7 @@ void frmFacturas::on_btnGuardar_clicked()
                               tr("Error al guardar la factura.\n")+Configuracion_global->empresaDB.lastError().text(),
                               tr("Aceptar"));
         Configuracion_global->empresaDB.rollback();
+        Configuracion_global->groupDB.rollback();
         if(Configuracion_global->contabilidad)
             Configuracion_global->contaDB.rollback();
     }
@@ -2006,6 +2017,10 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
         int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
         if(id_lin >0)
         {
+
+//            if( (id_lin,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+//                                           Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+//                                           QDate::currentDate()))
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente1->id);

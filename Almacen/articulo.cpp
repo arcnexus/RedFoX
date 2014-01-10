@@ -160,7 +160,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->codigo_fabricante = registro.field("codigo_fabricante").value().toString();
     this->descripcion = registro.field("descripcion").value().toString();
     this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
-    this->id_proveedor = registro.field("id_proveedor").value().toInt();
+    this->idProveedor = registro.field("id_proveedor").value().toInt();
     this->id_familia = registro.field("id_familia").value().toInt();
     this->familia = registro.field("familia").value().toString();
     this->id_seccion = registro.field("id_seccion").value().toInt();
@@ -208,7 +208,7 @@ void Articulo::Cargar(QSqlRecord registro)
     // Recupero proveedor
     QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
     qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
-    qryProveedor->bindValue(":id",this->id_proveedor);
+    qryProveedor->bindValue(":id",this->idProveedor);
     if (!qryProveedor->exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
 
@@ -291,7 +291,7 @@ void Articulo::Guardar()
     articulo["codigo_fabricante"] = this->codigo_fabricante;
     articulo["descripcion"] = this->descripcion;
     articulo["descripcion_reducida"] = this->descripcion_reducida;
-    articulo["id_proveedor"] = this->id_proveedor;
+    articulo["id_proveedor"] = this->idProveedor;
     articulo["id_familia"] = this->id_familia;
    // articulo["familia"] = this->familia;
     articulo["id_seccion"] = this->id_seccion;
@@ -421,7 +421,7 @@ void Articulo::Vaciar()
     this->kit = false;
     proveedor= "";
     cCodProveedor= "";
-    this->id_proveedor = 0;
+    this->idProveedor = 0;
     this->id_familia = 0;
     this->familia = "";
     cod_familia = "";
@@ -1054,6 +1054,100 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
     }
 }
 
+bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QDate fecha)
+{
+    //--------------------------------
+    // ACUMULADOS ARTICULO Y STOCK
+    //--------------------------------
+    bool success;
+    QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real -%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
+    cSQL.append(QString("unidades_vendidas = unidades_vendidas -%3 where id= %4").arg(QString::number(cantidad,'f',2),
+                                                                              QString::number(id_articulo)));
+
+    if(!art.exec(cSQL)){
+       success = false;
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art.lastError().text()),
+                             tr("Aceptar"));
+    }
+    cSQL = QString("update acum_articulos set ");
+    if(fecha.month() == 1){
+         cSQL.append(QString("acum_vent_enero = acum_vent_enero + %1").arg(total));
+         cSQL.append(QString(",unid_vent_enero = unit_vent_enero +%1").arg(cantidad));
+    }
+    if(fecha.month() == 2){
+        cSQL.append(QString("acum_vent_febrero = acum_vent_febrero + %1").arg(total));
+        cSQL.append(QString(",unid_vent_febrero = unit_vent_febrero +%1").arg(cantidad));
+   }
+    if(fecha.month() == 3){
+        cSQL.append(QString("acum_vent_marzo = acum_vent_marzo + %1").arg(total));
+        cSQL.append(QString(",unid_vent_marzo = unit_vent_marzo +%1").arg(cantidad));
+   }
+    if(fecha.month() == 4){
+        cSQL.append(QString("acum_vent_abril = acum_vent_abril + %1").arg(total));
+        cSQL.append(QString(",unid_vent_abril = unit_vent_abril +%1").arg(cantidad));
+   }
+    if(fecha.month() == 5){
+        cSQL.append(QString("acum_vent_mayo = acum_vent_mayo + %1").arg(total));
+        cSQL.append(QString(",unid_vent_mayo = unit_vent_mayo +%1").arg(cantidad));
+   }
+    if(fecha.month() == 6){
+        cSQL.append(QString("acum_vent_junio = acum_vent_junio + %1").arg(total));
+        cSQL.append(QString(",unid_vent_junio = unit_vent_junio +%1").arg(cantidad));
+   }
+    if(fecha.month() == 7){
+        cSQL.append(QString("acum_vent_julio = acum_vent_julio + %1").arg(total));
+        cSQL.append(QString(",unid_vent_julio = unit_vent_julio +%1").arg(cantidad));
+   }
+    if(fecha.month() == 8){
+        cSQL.append(QString("acum_vent_agosto = acum_vent_agosto + %1").arg(total));
+    cSQL.append(QString(",unid_vent_agosto = unit_vent_agosto +%1").arg(cantidad));
+    }
+    if(fecha.month() == 9){
+        cSQL.append(QString("acum_vent_septiembre = acum_vent_septiembre + %1").arg(total));
+        cSQL.append(QString(",unid_vent_septiembre = unit_vent_septiembre +%1").arg(cantidad));
+   }
+    if(fecha.month() == 10){
+        cSQL.append(QString("acum_vent_octubre = acum_vent_octubre + %1").arg(total));
+        cSQL.append(QString(",unid_vent_octubre = unit_vent_octubre +%1").arg(cantidad));
+   }
+    if(fecha.month() == 11){
+        cSQL.append(QString("acum_vent_noviembre = acum_vent_noviembre + %1").arg(total));
+        cSQL.append(QString(",unid_vent_noviembre = unit_vent_noviembre +%1").arg(cantidad));
+   }
+    if(fecha.month() == 12){
+        cSQL.append(QString("acum_vent_diciembre = acum_vent_diciembre + %1").arg(total));
+        cSQL.append(QString(",unid_vent_diciembre = unit_vent_diciembre +%1").arg(cantidad));
+   }
+    cSQL.append(QString(" where id_articulo = %1").arg(id_articulo));
+    QSqlQuery art_ac(Configuracion_global->empresaDB);
+
+    if(!art_ac.exec(cSQL)){
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art_ac.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    if (!success)
+        return false;
+    return true;
+
+
+
+
+}
+
+void Articulo::acumulado_compras(int id_articulo, float cantidad, QDate fecha)
+{
+
+}
+
+void Articulo::acumulado_devoluciones(int id_articulo, float cantidad, QDate fecha)
+{
+
+}
+
 int Articulo::getidSeccion(QString seccion_)
 {
     QSqlQuery Query(Configuracion_global->groupDB);
@@ -1245,7 +1339,7 @@ bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
     }
     else
     {
-        this->id_proveedor = id_proveedor;
+        this->idProveedor = id_proveedor;
         return true;
     }
 }

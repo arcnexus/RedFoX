@@ -1086,7 +1086,7 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
     consulta.setFocus();
     if(consulta.exec())
     {
-        oArticulo->id_proveedor = consulta.get_id();
+        oArticulo->idProveedor = consulta.get_id();
         oArticulo->proveedor = consulta.get_record().value("proveedor").toString();
         oArticulo->cCodProveedor = consulta.get_record().value("codigo").toString();
         ui->txtcodigo_proveedor->setText(consulta.get_record().value("codigo").toString());

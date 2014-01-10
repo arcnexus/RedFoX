@@ -18,6 +18,8 @@ frmEditLine::frmEditLine(QWidget *parent) :
     //IVA desde config
     ui->cboIva->setModel(Configuracion_global->iva_model);
     ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
+    int index = ui->cboIva->findText("21");
+    ui->cboIva->setCurrentIndex(index);
     //-------------
     // Eventos
     //-------------
@@ -414,6 +416,10 @@ void frmEditLine::vaciar_campos()
 
 void frmEditLine::calcular()
 {
+    double pvp_rec,porc_dto;
+    pvp_rec = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+    porc_dto = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
+
     if(Configuracion_global->MonedatoDouble(ui->txtPVP->text()) <0 && ui->txtPvp_recomendado->text() =="0,00")
     {
         ui->txtPvp_recomendado->setText(ui->txtPVP->text());
@@ -437,10 +443,19 @@ void frmEditLine::calcular()
 
         }
     }
+
     double subtotal,base,precio_cliente,total_con_iva;
     subtotal = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+    if(subtotal == -0)
+        subtotal = 0;
     dto = subtotal * (Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text()))/100;
     base = subtotal -dto;
+    if(pvp_rec ==0 && porc_dto ==0)
+    {
+        ui->txtPvp_recomendado->setText(ui->txtPVP->text());
+        ui->txtPorc_dto->setText("0,00");
+    }
+
     if(Configuracion_global->MonedatoDouble(ui->txtPVP->text()) <0)
         precio_cliente =  Configuracion_global->MonedatoDouble(ui->txtPVP->text());
      else
@@ -524,21 +539,25 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(success){
+        if ( success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                QDate::currentDate()))
+        {
             emit refrescar_lineas();
             accept();
-        }
-        else
-        {
+        } else {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
-                                 tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
-                                 tr("Aceptar"));
+                             tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
+                             tr("Aceptar"));
 
         }
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0) {
+        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                      QDate::currentDate()))
+        {
             emit refrescar_lineas();
             accept();
         }
@@ -551,6 +570,7 @@ void frmEditLine::on_btnAceptar_clicked()
         }
 
     }
+
 }
 
 void frmEditLine::on_btnAnadir_mas_nueva_clicked()
@@ -573,11 +593,13 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
     QString error;
-    if(this->id >0)
+    if(this->id >0 )
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(success)
+        if(success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                  QDate::currentDate()))
             emit refrescar_lineas();
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
@@ -588,7 +610,9 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0)
+        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
+                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
+                                                      QDate::currentDate()))
         {
             emit refrescar_lineas();
         } else
@@ -600,6 +624,7 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
 
         }
     }
+
    vaciar_campos();
 
 }
