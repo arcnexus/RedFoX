@@ -20,14 +20,19 @@ public:
     QString cCodProveedor;
     int id_familia;
     QString familia;
+    QString cod_familia;
     int id_seccion;
     QString seccion;
+    QString cod_seccion;
     int id_subfamilia;
     QString subfamilia;
+    QString cod_subfamilia;
     int id_subSubFamilia;
     QString cSubSubFamilia;
+    QString cod_SubSubFamilia;
     int id_grupoart;
     QString cGrupoArt;
+    QString cod_GrupoArt;
     QString codigo_iva;
     double tipo_iva;
     float porc_dto;
@@ -104,13 +109,12 @@ public:
     static bool agregarStock(char accion, int id, int cantidad, double importe, QDate fecha);
     float asigna_dto_linea(int id_art, int id_cliente, float dto_esp, float dto_lin);
 
-    QString auto_codigo();
 private:
 
     QSqlQuery qryArticulo;
     QSqlQuery qryTipoIva;
     double coste_real_anterior;
-
+    QString codigo_anterior; //Solo valido para nuevos articulos
 };
 
 #endif // ARTICULO_H

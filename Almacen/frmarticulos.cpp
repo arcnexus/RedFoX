@@ -923,7 +923,7 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
     QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
     if(event->type() == QEvent::KeyPress)
     {
-        if(keyEvent->key() == Qt::Key_Return)
+        if(keyEvent->key() == Qt::Key_Return && target == ui->tablaBusqueda)
         {
             on_tablaBusqueda_doubleClicked(ui->tablaBusqueda->currentIndex());
             return true;
@@ -960,7 +960,6 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
 {
     db_consulta_view consulta(this);
     QStringList campos;
-    QString error;
     campos <<"id" << "codigo" <<"seccion";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("Secciones");
@@ -979,6 +978,7 @@ void FrmArticulos::on_botBuscarSeccion_clicked()
     {
         oArticulo->id_seccion = consulta.get_id();
         oArticulo->seccion = consulta.get_record().value("seccion").toString();
+        oArticulo->cod_seccion = consulta.get_record().value("codigo").toString();
         ui->txtseccion->setText(consulta.get_record().value("seccion").toString());
     }
 }
@@ -1005,6 +1005,7 @@ void FrmArticulos::on_botBuscarFamilia_clicked()
     { 
         oArticulo->id_familia = consulta.get_id();
         oArticulo->familia = consulta.get_record().value("familia").toString();
+        oArticulo->cod_familia = consulta.get_record().value("codigo").toString();
         ui->txtfamilia->setText(consulta.get_record().value("familia").toString());
     }
 }
@@ -1013,12 +1014,11 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
 {
     db_consulta_view consulta(this);
     QStringList campos;
-    QString error;
     campos <<"id" << "codigo" <<"sub_familia";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("Sub-Familias");
     consulta.set_db("Maya");
-    consulta.set_SQL(QString("select id,codigo, sub_familia from familias where id_familia = %1").arg(oArticulo->id_familia));
+    consulta.set_SQL(QString("select id,codigo, sub_familia from subfamilias where id_familia = %1").arg(oArticulo->id_familia));
     QStringList cabecera;
     QVariantList tamanos;
 
@@ -1032,6 +1032,7 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
     {
         oArticulo->id_subfamilia = consulta.get_id();
         oArticulo->subfamilia = consulta.get_record().value("sub_familia").toString();
+        oArticulo->cod_subfamilia = consulta.get_record().value("codigo").toString();
         ui->txtsubfamilia->setText(consulta.get_record().value("sub_familia").toString());
     }
 }
@@ -1059,6 +1060,7 @@ void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
     {
         oArticulo->id_subSubFamilia = consulta.get_id();
         oArticulo->cSubSubFamilia = consulta.get_record().value("subsub_familia").toString();
+        oArticulo->cod_SubSubFamilia = consulta.get_record().value("codigo").toString();
         ui->txtcSubSubFamilia->setText(consulta.get_record().value("subsub_familia").toString());
     }
 }
@@ -1268,26 +1270,6 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
             index1=modelProv->index(celda.row(),2);
             pKey=modelProv->data(index1,Qt::EditRole);
             ui->txtproveedor->setText(pKey.toString());
-    }
-
-}
-void FrmArticulos::calcular_codigo()
-{
-    if (Configuracion_global->auto_codigoart == true) {
-        if(!ui->txtseccion->text().isEmpty() && (ui->txtcodigo->text().isEmpty() || ui->txtcodigo->text() =="auto_codigo"))
-                ui->txtcodigo->setText(oArticulo->auto_codigo());
-        else {
-
-            QMessageBox mensaje;
-            mensaje.setWindowTitle(tr("Nuevo código"));
-            mensaje.setText(tr("Para autogenerar un código de producto como mínimo debe haber insertado una sección"));
-            mensaje.setAutoFillBackground(true);
-            mensaje.warning(this,tr("Nuevo código"),
-                            tr("Para autogenerar un código de producto como mínimo debe haber insertado una sección"),
-                            tr("Aceptar"));
-
-        }
-
     }
 
 }
@@ -2777,7 +2759,6 @@ void FrmArticulos::on_botBuscarGrupo_clicked()
 {
     db_consulta_view consulta(this);
     QStringList campos;
-    QString error;
     campos <<"id" << "codigo" <<"grupo_art";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("Grupos");
@@ -2794,17 +2775,9 @@ void FrmArticulos::on_botBuscarGrupo_clicked()
     consulta.setFocus();
     if(consulta.exec())
     {
-        int id = consulta.get_id();
-
-        QString familia,codigo;
-        QMap<int, QSqlRecord> fam;
-        fam = SqlCalls::SelectRecord("gruposart",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
-        familia = fam.value(id).value("grupo_art").toString();
-        codigo = fam.value(id).value("codigo").toString();
-        oArticulo->id_grupoart = id;
-        oArticulo->cGrupoArt = familia;
-
-        ui->txtcGupoArt->setText(familia);
-
+        oArticulo->id_grupoart = consulta.get_id();
+        oArticulo->cGrupoArt = consulta.get_record().value("grupo_art").toString();
+        oArticulo->cod_GrupoArt = consulta.get_record().value("codigo").toString();
+        ui->txtcGupoArt->setText(consulta.get_record().value("grupo_art").toString());
     }
 }

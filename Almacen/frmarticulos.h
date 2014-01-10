@@ -68,7 +68,6 @@ private slots:
     void editar_proveedor_clicked();
     void borrar_proveedor_clicked();
     void asignar_proveedor_principal_clicked();
-    void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
     void graficar(QString Tipo);
