@@ -222,11 +222,6 @@ void FrmArticulos::setUpBusqueda()
     connect(kit,SIGNAL(clicked()),this,SLOT(on_btnKit_clicked()));
     m_busqueda->addWidget(kit);
 
-    QPushButton* borra_kit = new QPushButton(QIcon(":/Icons/PNG/Delete.png"),tr("Borrar Kit"),this);
-    //connect(borra_kit,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));//TODO ??
-    m_busqueda->addWidget(borra_kit);
-
-
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tablaBusqueda,SLOT(setFocus()));
 }
 
@@ -871,22 +866,36 @@ void FrmArticulos::on_botEditar_clicked()
 void FrmArticulos::on_botBorrar_clicked()
 {
     int id = oArticulo->id;
+    bool isKit = oArticulo->kit;
+    QString codigo = oArticulo->codigo;
     if(sender() != ui->botBorrar)
     {
         QModelIndex index = ui->tablaBusqueda->currentIndex();
         if(!index.isValid())
             return;
         id = ui->tablaBusqueda->model()->index(index.row(),0).data().toInt();
+        isKit = ui->tablaBusqueda->model()->index(index.row(),6).data().toBool();
+        codigo = ui->tablaBusqueda->model()->index(index.row(),1).data().toString();
     }
-    oArticulo->Borrar(id,true);
+    oArticulo->Borrar(id,isKit,true,codigo);
+
     LLenarCampos(ui->Pestanas->currentIndex());
+    if(sender() != ui->botBorrar)
+    {
+        QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva from vistaart_tarifa "
+                "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
+        modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
+
+        if(modelBusqueda->rowCount() == 0)
+            modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit from articulos", Configuracion_global->groupDB);
+    }
 }
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
     if(this->anadir)
     {
-        oArticulo->Borrar(oArticulo->id,false);
+        oArticulo->Borrar(oArticulo->id,false,false);
         LLenarCampos(ui->Pestanas->currentIndex());
     }
     else
@@ -2439,8 +2448,28 @@ void FrmArticulos::on_btnKit_clicked()
     if(oArticulo->kit)
     {
         FrmKit kit(this);
-        kit.set_articulo(oArticulo->codigo);
+        kit.set_articulo(oArticulo->codigo, oArticulo->descripcion);
+        kit.setWindowState(kit.windowState() | Qt::WindowMaximized);
         kit.exec();
+        double newCoste = kit.getCoste();
+        if(newCoste != oArticulo->coste_real)
+        {
+            QHash <QString, QVariant> h;
+            QString error;
+            h["coste"] = h["coste_real"] = newCoste;
+            bool success = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),
+                                               error);
+            if(success)
+            {
+                oArticulo->coste = oArticulo->coste_real = newCoste;
+                LLenarCampos(ui->Pestanas->currentIndex());
+                QMessageBox::information(this,tr("Coste actualizado"),tr("Asegurese de revisas sus tarifas"));
+            }
+            else
+            {
+                QMessageBox::critical(this,tr("Error al actualizar coste"),error);
+            }
+        }
     }
 }
 
@@ -2448,18 +2477,6 @@ void FrmArticulos::on_btnAnadir_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
     on_botAnadir_clicked();
-}
-
-void FrmArticulos::on_btnBorrarKit_clicked()
-{
-    if(QMessageBox::question(this,tr("Gestión Artículos"),tr("¿Eliminar el kit?\nATENCIÓN: ESTA OPCIÓN NO SE PUEDE DESHACER"),
-                             tr("No"),tr("Borrar")))
-    {
-        QModelIndex index = ui->tablaBusqueda->currentIndex();
-        int id = ui->tablaBusqueda->model()->data(ui->tablaBusqueda->model()->index(index.row(),0)).toInt();
-        QMap <int,QSqlRecord> map;
-        // TODO - Terminar borrar kit;
-    }
 }
 
 void FrmArticulos::on_btnEditarOferta_clicked()

@@ -80,7 +80,7 @@ public:
     void Cargar(QSqlRecord registro);
     void Guardar();
     void Vaciar();
-    void Borrar(int nid, bool ask);
+    void Borrar(int nid,bool isKit, bool ask , QString codigo = QString());
     QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente,
                                    int id_cliente);
     bool Devolucion(int id,double cantidad,double pvp,int id_cliente);

@@ -14,8 +14,8 @@ class FrmKit : public QDialog
 public:
     explicit FrmKit(QWidget *parent = 0);
     ~FrmKit();
-    void set_articulo(QString codigo);
-    
+    void set_articulo(QString codigo, QString Descripcion);
+    double getCoste();
 private slots:
     void on_btnAnadir_clicked();
 
@@ -23,12 +23,11 @@ private slots:
 
     void on_txtBuscar_textEdited(const QString &arg1);
 
-    void on_btnCrearKit_clicked();
-
     void on_btnAnadirKits_clicked();
 
     void on_btnQuitar_clicked();
 
+    void valueChanged(double);
 private:
     Ui::FrmKit *ui;
     QSqlQueryModel *m_arts;

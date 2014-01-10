@@ -397,7 +397,7 @@ void Articulo::Vaciar()
 
 }
 
-void Articulo::Borrar(int nid , bool ask)
+void Articulo::Borrar(int nid , bool isKit, bool ask, QString codigo)
 {
     bool borrar = !ask;
     if(ask)
@@ -416,18 +416,57 @@ void Articulo::Borrar(int nid , bool ask)
                 QMessageBox::critical(qApp->activeWindow(),tr("Error"),error);
             return;
         }
+        bool allOk = true;
+        bool t = Configuracion_global->groupDB.transaction();
 
-        if(!SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id_articulo = %1").arg(nid),error))
+        allOk = SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id_articulo = %1").arg(nid),error);
+
+        if(!allOk)
         {
-            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Tarifas)"),error,QObject::tr("&Aceptar"));
+            if(t)
+                Configuracion_global->groupDB.rollback();
             return;
         }
 
-        if(!SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error))
-            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
+        if(isKit)
+        {
+            allOk = SqlCalls::SqlDelete("kits",Configuracion_global->groupDB,QString("codigo_kit = '%1'").arg(codigo),error);
+            if(!allOk)
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Componentes del kit)"),error,QObject::tr("&Aceptar"));
+                if(t)
+                    Configuracion_global->groupDB.rollback();
+                return;
+            }
+        }
+        allOk = SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error);
+        if(!allOk)
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Registro de Articulo)"),error,QObject::tr("&Aceptar"));
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            return;
+        }
         else        
-            if(!Next())
-                Prev();
+        {
+            if(t)
+                allOk = Configuracion_global->groupDB.commit();
+
+            if(!allOk)
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Commit)"),error,QObject::tr("&Aceptar"));
+                if(t)
+                    Configuracion_global->groupDB.rollback();
+                return;
+            }
+            else
+            {
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Articulo borrado con éxito"));
+                if(!Next())
+                    Prev();
+            }
+        }
     }
 }
 

@@ -126,8 +126,6 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void on_btnBorrarKit_clicked();
-
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
