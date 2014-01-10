@@ -105,7 +105,7 @@ color: rgb(255, 255, 255);</string>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="main_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -366,7 +366,7 @@ color: rgb(255, 255, 255);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1">
           <attribute name="title">
@@ -766,6 +766,9 @@ color: rgb(255, 255, 255);</string>
               <layout class="QGridLayout" name="gridLayout_14">
                <item row="2" column="3">
                 <widget class="QLineEdit" name="txtcuentaCliente">
+                 <property name="text">
+                  <string>430</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -822,6 +825,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="5" column="3">
                 <widget class="QLineEdit" name="txtCuenta_venta_mercaderias">
+                 <property name="text">
+                  <string>600</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -832,6 +838,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="6" column="3">
                 <widget class="QLineEdit" name="txtCuenta_venta_servicios">
+                 <property name="text">
+                  <string>610</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -893,6 +902,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="3" column="3">
                 <widget class="QLineEdit" name="txtcuenta_proveedores">
+                 <property name="text">
+                  <string>400</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -903,6 +915,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="4" column="3">
                 <widget class="QLineEdit" name="txtcuenta_acreedores">
+                 <property name="text">
+                  <string>410</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -2443,7 +2458,7 @@ color: rgb(255, 255, 255);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1_3">
           <attribute name="title">
@@ -2774,7 +2789,7 @@ color: rgb(255, 255, 255);</string>
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget_5">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_21">
               <attribute name="title">

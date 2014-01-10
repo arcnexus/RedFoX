@@ -15,9 +15,6 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     Configuracion_global->Cargar_iva();
     //Configuracion_global->Cargar_paises();
     ui->setupUi(this);
-    QSqlQueryModel *qUsers = new QSqlQueryModel(this);
-    qUsers->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
-    ui->cboUsuarioActivo->setModel(qUsers);
 
 
     ui->cboPaises->setModel(Configuracion_global->paises_model);
@@ -61,10 +58,6 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->txtCuentaAcreedores->setText(settings.value("cuenta_acreedores").toString());
     ui->txtcuenta_cobros->setText(settings.value("cuenta_cobros").toString());
     ui->txtcuenta_pagos->setText(settings.value("cuenta_pagos").toString());
-    nindex = ui->cboUsuarioActivo->findText(settings.value("cUsuarioActivo").toString());
-    if (nindex >-1)
-        ui->cboUsuarioActivo->setCurrentIndex(nindex);
-    ui->txtContrasenaActiva->setText(settings.value("contrasenaactiva").toString());
     ui->txtclaveV1_1->setText(settings.value("Clave1").toString());
     ui->txtclaveV1_2->setText(settings.value("Clave2").toString());
     ui->txtclaveV2_1->setText(settings.value("Clave3").toString());
@@ -121,14 +114,12 @@ void frmConfigmaya::configurar()
         settings.setValue("lProfesional",0);
 
     settings.setValue("irpf",ui->txtPorcIRPF->text());
-    settings.setValue("contrasenaactiva",ui->txtContrasenaActiva->text());
     settings.setValue("digitos_cuentas",ui->spidigitos_cuentaContable->value());
     settings.setValue("cuenta_clientes",ui->txtCuentaClientes->text());
     settings.setValue("cuenta_proveedores",ui->txtCuentaProveedores->text());
     settings.setValue("cuenta_acreedores",ui->txtCuentaAcreedores->text());
     settings.setValue("cuenta_cobros",ui->txtcuenta_cobros->text());
     settings.setValue("cuenta_pagos",ui->txtcuenta_pagos->text());
-    settings.setValue("cUsuarioActivo",ui->cboUsuarioActivo->currentText());
     settings.setValue("Clave1",ui->txtclaveV1_1->text());
     settings.setValue("Clave2",ui->txtclaveV1_2->text());
     settings.setValue("Clave3",ui->txtclaveV2_1->text());

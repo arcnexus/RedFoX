@@ -734,6 +734,12 @@ color: rgb(255, 255, 255);</string>
              <layout class="QGridLayout" name="gridLayout_16">
               <item row="0" column="0">
                <widget class="QLabel" name="label_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Código: </string>
                 </property>
@@ -746,12 +752,6 @@ color: rgb(255, 255, 255);</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
                 </property>
                 <property name="codeField" stdset="0">
                  <bool>true</bool>

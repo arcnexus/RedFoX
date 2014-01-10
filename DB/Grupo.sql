@@ -455,6 +455,7 @@ CREATE TABLE `@grupo@`.`gruposart` (
   `grupo_art` varchar(45) DEFAULT NULL,
   `image` blob,
   `type` varchar(4) DEFAULT NULL,
+  `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`histo_clientes_deuda` (
@@ -488,8 +489,9 @@ CREATE TABLE `@grupo@`.`kits` (
   `codigo_kit` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo_componente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cantidad` double NOT NULL DEFAULT '0',
-  `precio` double NOT NULL DEFAULT '0',
+  `coste_base` double NOT NULL DEFAULT '0',
   `porc_dto` float DEFAULT '0',
+  `coste_final` double DEFAULT NULL,
   `descripcion` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `descontar_stock` tinyint(1) NOT NULL DEFAULT '1',
   `id_componente` int(11) DEFAULT NULL,
@@ -696,6 +698,7 @@ CREATE TABLE `@grupo@`.`subsubfamilias` (
   `subsub_familia` varchar(45) DEFAULT NULL,
   `im` blob,
   `type` varchar(4) DEFAULT NULL,
+  `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`tarifas` (

@@ -21,7 +21,13 @@ void Articulo::Anadir()
     else
     {
         this->id = id;
-        Recuperar("Select * from articulos where id = "+QString::number(this->id));
+        //Recuperar("Select * from articulos where id = "+QString::number(this->id));
+        codigo_anterior = data.value("codigo").toString();
+        cod_seccion = "";
+        cod_familia = "";
+        cod_subfamilia = "";
+        cod_SubSubFamilia = "";
+        cod_GrupoArt = "";
 
         //--------------------------
         // Añado tarifas a artículo
@@ -113,12 +119,36 @@ bool Articulo::Recuperar(int id)
 
 bool Articulo::Next()
 {
-    return Recuperar(this->id + 1);
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id > %1 limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        return true;
+    }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha llegado al final del fichero"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
 }
 
 bool Articulo::Prev()
 {
-    return Recuperar(this->id - 1);
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id < %1 order by id desc limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        return true;
+    }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha llegado al inicio del fichero"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
 }
 
 void Articulo::Cargar(QSqlRecord registro)
@@ -174,7 +204,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->margen = registro.field("margen").value().toDouble();
     this->margen_min = registro.field("margen_min").value().toDouble();
     this->coste_real = registro.field("coste_real").value().toDouble();
-
+    this->coste_real_anterior = this->coste_real;
     // Recupero proveedor
     QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
     qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
@@ -197,62 +227,61 @@ void Articulo::Guardar()
     // --------------------------------------------
     // Si está activada la autogeneración de código
     //---------------------------------------------
-
-    if (this->codigo == "auto_codigo"){
-        QString nuevo_codigo;
-        QSqlQuery querycodigo(Configuracion_global->groupDB);
-
-        // seccion
-        querycodigo.prepare("select codigo from secciones where id = :id");
-        querycodigo.bindValue(":id",this->id_seccion);
-        querycodigo.exec();
-        querycodigo.next();
-        nuevo_codigo.append(querycodigo.record().value("codigo").toString().trimmed());
-
-        // familia
-        querycodigo.prepare("select codigo from familias where id = :id");
-        querycodigo.bindValue(":id",this->id_familia);
-        querycodigo.exec();
-        if(querycodigo.next())
-            nuevo_codigo.append(querycodigo.record().value("codigo").toString().trimmed());
-        else
-            nuevo_codigo.append("000");
-        //subfamilia
-        querycodigo.prepare("select codigo from subfamilias where id = :id");
-        querycodigo.bindValue(":id",this->id_subfamilia);
-        querycodigo.exec();
-        if(querycodigo.next())
-            nuevo_codigo.append(querycodigo.record().value("codigo").toString().trimmed());
-        else
-            nuevo_codigo.append("000");
-
-        //buscamos ultimo número de la serie
-        QString cSQL = "select codigo from articulos where codigo like '";
-                cSQL.append(nuevo_codigo);
-                cSQL.append("%' order by  codigo desc limit 0,1");
-        if(querycodigo.exec(cSQL)){
-            if (querycodigo.next())
-            {
-                QString ultcod;
-                int tamano =  Configuracion_global->tamano_codigo;
-                ultcod = querycodigo.record().value("codigo").toString();
-                int aum = ultcod.right(4).toInt();
-                aum++;
-
-                QString nuev,cnum;
-                cnum = QString::number(aum);
-                nuev = cnum.fill('0',(4-cnum.trimmed().size())).append(QString::number(aum));
-                this->codigo = ultcod.left(9).append(nuev);
-
-            } else{
-                this->codigo = nuevo_codigo+"0001";
-            }
-
-        } else
+    if(this->codigo != this->codigo_anterior)
+    {
+        if (this->codigo == "auto_codigo")
         {
-            this->codigo = nuevo_codigo +"0001";
-        }
+            int tamano =  Configuracion_global->tamano_codigo;
+            QString aux = cod_seccion + cod_familia + cod_subfamilia + cod_SubSubFamilia + cod_GrupoArt;
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_familia + cod_subfamilia + cod_SubSubFamilia + cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_subfamilia + cod_SubSubFamilia + cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_SubSubFamilia + cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux.chop(3);
+            }
+            QString error;
+            QStringList cods = SqlCalls::SelectList("articulos","codigo",
+                                                    QString("codigo like '%1%' order by codigo desc").arg(aux),
+                                                    Configuracion_global->groupDB,error);
+            QString codigo_nuevo;
+            QString formato = QString("%1.0f").arg(tamano-aux.length());
+            formato.prepend("%0");
+            std::string _x = formato.toStdString();
 
+            if(cods.isEmpty())
+            {
+                codigo_nuevo.sprintf(_x.c_str(),1.0);
+            }
+            else
+            {
+                foreach (QString s, cods) {
+                    QString codigo = s;
+                    codigo.remove(aux);
+                    if(codigo.at(0).isNumber())
+                    {
+                        double d_cod = codigo.toDouble();
+                        d_cod += 1;
+                        codigo_nuevo.sprintf(_x.c_str(),d_cod);
+                        break;
+                    }
+                }
+            }
+            this->codigo = aux+codigo_nuevo;
+        }
     }
     QHash <QString, QVariant> articulo;
     QString error;
@@ -312,29 +341,103 @@ void Articulo::Guardar()
                              QObject::tr("No se puede guardar el artículo ERROR: %1 ").arg(error),
                              QObject::tr("Ok"));
 
-    } else {
+    }
+    else
+    {
+        if(coste_real_anterior != coste_real)
+        {
+            QString error = "";
+            QMap<int,QSqlRecord> _kits = SqlCalls::SelectRecord("kits",QString("id_componente = %1").arg(this->id),Configuracion_global->groupDB,error);
+            if(!_kits.isEmpty() || !error.isEmpty())
+            {
+                if(!_kits.isEmpty())
+                {
+                    QMapIterator<int,QSqlRecord> _it(_kits);
+                    QStringList _affected_kits;
+                    while (_it.hasNext())
+                    {
+                        _it.next();
+                        QSqlRecord r = _it.value();
+                        _affected_kits.append(r.value("codigo_kit").toString());
+                        double coste_anterior = r.value("coste_base").toDouble();
+                        if(coste_anterior != coste_real)
+                        {
+                            int row_id = r.value("id").toInt();
+                            double coste_final_anterior = r.value("cantidad").toDouble() * r.value("coste_final").toDouble();
+                            double coste_final = coste_real * (1-(r.value("porc_dto").toDouble()/100));
+                            QHash<QString,QVariant> _data;
+                            _data["coste_base"] = coste_real;
+                            _data["coste_final"] = coste_final;
+
+                            if(SqlCalls::SqlUpdate(_data,"kits",Configuracion_global->groupDB,QString("id = %1").arg(row_id),error))
+                            {
+                                QMap<int,QSqlRecord> _articulo_kit = SqlCalls::SelectRecord("articulos",QString("codigo = '%1'").arg(r.value("codigo_kit").toString()),Configuracion_global->groupDB,error);
+                                if(!_articulo_kit.isEmpty())
+                                {
+                                    QSqlRecord art_r = _articulo_kit.first();
+                                    int art_id = art_r.value("id").toInt();
+                                    double art_coste_real = art_r.value("coste_real").toDouble();
+                                    art_coste_real -= coste_final_anterior;
+                                    art_coste_real += coste_final;
+
+                                    QHash<QString, QVariant> _art_data;
+                                    _art_data["coste_real"] = art_coste_real;
+                                    _art_data["coste"] = art_coste_real;
+
+                                    if(!SqlCalls::SqlUpdate(_art_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(art_id),error))
+                                        QMessageBox::warning(qApp->activeWindow(),tr("Error actualizando conste de kit afectado %1").arg(r.value("codigo_kit").toString()),error);
+                                }
+                            }
+                        }
+                    }
+
+                    QMessageBox::information(qApp->activeWindow(),tr("Kits afectados"),tr("Los cambios en este artículo afectaron a los siguientes kits:\n")
+                                             +_affected_kits.join("\n")+"\nNo olvide revisar las tarífas correspondientes.");
+                }
+                else
+                {
+                    QMessageBox::critical(qApp->activeWindow(),tr("Error"),error);
+                    return;
+                }
+            }
+            coste_real_anterior = coste_real;
+        }
         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
                                                   QObject::tr("Se ha guardado el artículo en la base de datos"));
-
     }
 
 }
 
 void Articulo::Vaciar()
 {
+    id_tipos_iva = 0;
+    id_web = 0;
     this->id = 0;
     this->codigo = "";
     this->codigo_barras="";
     this->codigo_fabricante = "";
     this->descripcion = "";
     this->descripcion_reducida = "";
+    this->kit = false;
+    proveedor= "";
+    cCodProveedor= "";
     this->id_proveedor = 0;
     this->id_familia = 0;
     this->familia = "";
+    cod_familia = "";
     this->id_seccion = 0;
     this->seccion = "";
+    this->cod_seccion = "";
     this->id_subfamilia =0;
     this->subfamilia = "";
+    this->cod_subfamilia = "";
+    id_subSubFamilia=0;
+    cSubSubFamilia="";
+    cod_SubSubFamilia="";
+    id_grupoart=0;
+    cGrupoArt="";
+    cod_GrupoArt="";
+    codigo_iva = "";
     this->tipo_iva = 0;
     this->coste = 0;
     this->porc_dto = 0;
@@ -367,10 +470,12 @@ void Articulo::Vaciar()
     this->nstock_fisico_almacen =0;
     this->coste_real = 0;
     this->mostrar_en_cuadro = false;
-
+    tipo_unidad = "";
+    paquetes = 0;
+    pvp = 0;
 }
 
-void Articulo::Borrar(int nid , bool ask)
+void Articulo::Borrar(int nid , bool isKit, bool ask, QString codigo)
 {
     bool borrar = !ask;
     if(ask)
@@ -379,12 +484,67 @@ void Articulo::Borrar(int nid , bool ask)
                              qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted;
     if(borrar)
     {
-        QString error;
-        if(!SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error))
-            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
+        QString error = "";
+        QStringList _kits = SqlCalls::SelectList("kits","codigo_kit",QString("id_componente = %1").arg(nid),Configuracion_global->groupDB,error);
+        if(!_kits.isEmpty() || !error.isEmpty())
+        {
+            if(!_kits.isEmpty())
+                QMessageBox::critical(qApp->activeWindow(),tr("Articulo parte de kit"),tr("Borre primero los siguientes kits:\n")+_kits.join("\n"));
+            else
+                QMessageBox::critical(qApp->activeWindow(),tr("Error"),error);
+            return;
+        }
+        bool allOk = true;
+        bool t = Configuracion_global->groupDB.transaction();
+
+        allOk = SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id_articulo = %1").arg(nid),error);
+
+        if(!allOk)
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Tarifas)"),error,QObject::tr("&Aceptar"));
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            return;
+        }
+
+        if(isKit)
+        {
+            allOk = SqlCalls::SqlDelete("kits",Configuracion_global->groupDB,QString("codigo_kit = '%1'").arg(codigo),error);
+            if(!allOk)
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Componentes del kit)"),error,QObject::tr("&Aceptar"));
+                if(t)
+                    Configuracion_global->groupDB.rollback();
+                return;
+            }
+        }
+        allOk = SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error);
+        if(!allOk)
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Registro de Articulo)"),error,QObject::tr("&Aceptar"));
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            return;
+        }
         else        
-            if(!Next())
-                Prev();
+        {
+            if(t)
+                allOk = Configuracion_global->groupDB.commit();
+
+            if(!allOk)
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Commit)"),error,QObject::tr("&Aceptar"));
+                if(t)
+                    Configuracion_global->groupDB.rollback();
+                return;
+            }
+            else
+            {
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Articulo borrado con éxito"));
+                if(!Next())
+                    Prev();
+            }
+        }
     }
 }
 
@@ -1376,31 +1536,6 @@ bool Articulo::agregarStock(char accion, int id, int cantidad, double importe,QD
     }
 
  return updated;
-
-}
-
-QString Articulo::auto_codigo()
-{
-    QString codigoIni;
-    int tamano_codigoIni;
-    codigoIni = this->seccion+this->familia+this->subfamilia+this->cSubSubFamilia+this->cGrupoArt;
-    tamano_codigoIni = codigoIni.length();
-    QSqlQuery queryArt("select codigo from articulos where codigo like '"+codigoIni+"%' order by codigo desc limit 1",
-                       Configuracion_global->groupDB);
-    if(queryArt.exec()){
-        queryArt.next();
-        QString lastcode = queryArt.record().value("codigo").toString();
-        int Realsize = lastcode.length();
-        QString code = lastcode.mid(tamano_codigoIni,(Realsize-tamano_codigoIni));
-        int icode = code.toInt();
-        icode++;
-        code = QString::number(icode);
-        while (code.length()< ( Realsize - tamano_codigoIni) )
-        {
-            code.prepend("0");
-        }
-        return codigoIni + code;
-    }
 
 }
 

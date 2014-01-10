@@ -299,70 +299,24 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="6" column="0">
-       <widget class="QRadioButton" name="radSubfamilia">
+      <item row="7" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSubFamilia"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QRadioButton" name="radSeccion">
         <property name="text">
-         <string>por Sub-Familia</string>
+         <string>Por Seccion</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="3">
-       <widget class="QLabel" name="label_12">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>AGREGAR NUEVA TARIFA A FICHA PRODUCTO/SERVICIO</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="2">
+      <item row="10" column="2">
        <widget class="QPushButton" name="btnAgregarTarifa">
         <property name="text">
          <string>Aplicar a Articulos</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QRadioButton" name="radFamilia">
-        <property name="text">
-         <string>por Familia</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1" colspan="2">
-       <widget class="QComboBox" name="cboGrupoArticulo"/>
-      </item>
-      <item row="5" column="1" colspan="2">
-       <widget class="QComboBox" name="cboFamilia"/>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QRadioButton" name="radTodos">
-        <property name="text">
-         <string>Todos los productos y servicios</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSeccion"/>
-      </item>
-      <item row="6" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSubFamilia"/>
-      </item>
-      <item row="9" column="0" colspan="2">
+      <item row="10" column="0" colspan="2">
        <widget class="QLabel" name="lblDescArt">
         <property name="styleSheet">
          <string notr="true">color: rgb(0, 0, 127);</string>
@@ -372,27 +326,10 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QRadioButton" name="radSeccion">
+      <item row="6" column="0">
+       <widget class="QRadioButton" name="radFamilia">
         <property name="text">
-         <string>Por Seccion</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSubSubFamilia"/>
-      </item>
-      <item row="7" column="0">
-       <widget class="QRadioButton" name="radSubSubFamilia">
-        <property name="text">
-         <string>por Sub-Sub-Familia</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0">
-       <widget class="QRadioButton" name="radGrupoArticulo">
-        <property name="text">
-         <string>por Grupo Artículo</string>
+         <string>por Familia</string>
         </property>
        </widget>
       </item>
@@ -501,6 +438,79 @@ color: rgb(255, 255, 255);</string>
          <widget class="QLineEdit" name="txtporc_dto6"/>
         </item>
        </layout>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QRadioButton" name="radTodos">
+        <property name="text">
+         <string>Todos los productos y servicios</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSubSubFamilia"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QRadioButton" name="radSubfamilia">
+        <property name="text">
+         <string>por Sub-Familia</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSeccion"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QRadioButton" name="radSubSubFamilia">
+        <property name="text">
+         <string>por Sub-Sub-Familia</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1" colspan="2">
+       <widget class="QComboBox" name="cboFamilia"/>
+      </item>
+      <item row="9" column="0">
+       <widget class="QRadioButton" name="radGrupoArticulo">
+        <property name="text">
+         <string>por Grupo Artículo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1" colspan="2">
+       <widget class="QComboBox" name="cboGrupoArticulo"/>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QLabel" name="label_12">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>AGREGAR NUEVA TARIFA A FICHA PRODUCTO/SERVICIO</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Tarifa seleccionada para añadir a articulos:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="comboTarifa"/>
       </item>
      </layout>
     </widget>

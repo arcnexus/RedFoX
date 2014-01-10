@@ -43,7 +43,7 @@ private slots:
 private:
     Ui::FrmTiposTarifa *ui;
     TiposTarifa *oTipostarifa;
-
+    QSqlQueryModel *mTarifas;
 };
 
 #endif // FRMTIPOSTARIFA_H

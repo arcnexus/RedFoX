@@ -73,6 +73,11 @@ OTROS:
 -Importación datos facturaplus. (Importar de Facturaplus -Contaplus facilita la captación de usuarios que ahora usen facturaplus como
                                  software de gestión de la clínica)
 
+10/1/14 -
+ALTER TABLE `Grupotesting`.`kits` CHANGE COLUMN `precio` `coste_base` DOUBLE NOT NULL DEFAULT '0' ,ADD COLUMN `coste_final` DOUBLE NULL AFTER `porc_dto`;
+UPDATE `Grupotesting`.`kits` SET `coste_final`=`coste_base` WHERE `id`>'0';
+ALTER TABLE `Grupotesting`.`subsubfamilias` ADD COLUMN `codigo` VARCHAR(45) NULL AFTER `type`;
+ALTER TABLE `Grupotesting`.`gruposart` ADD COLUMN `codigo` VARCHAR(45) NULL AFTER `type`;
 
 
 

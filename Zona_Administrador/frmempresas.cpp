@@ -426,7 +426,7 @@ void FrmEmpresas::_addEmpresa()
             q.bindValue(":tamanocodigo",ui->txttamano_codigoart->value());
             q.bindValue(":cuenta_cobros","");//TODO c cobros
             q.bindValue(":cuenta_pagos","");//TODO c pagos
-            q.bindValue(":id_divisa",0);//TODO divisa
+            q.bindValue(":id_divisa",monedaEditModel->record(ui->cboDivisas->currentIndex()).value("id"));
             q.bindValue(":enlaceweb",0);//TODO Grrr
             q.bindValue(":contabilidad",0);
             q.bindValue(":consultas",ui->txtConsultas->value());
@@ -439,7 +439,7 @@ void FrmEmpresas::_addEmpresa()
             q.bindValue(":margen",0);
             q.bindValue(":margen_minimo",0);
             q.bindValue(":seguimiento",0);
-            q.bindValue(":id_tarifa_predeterminada",0);
+            q.bindValue(":id_tarifa_predeterminada",tarifaEditModel->record(ui->cboTarifa->currentIndex()).value("id"));
             q.bindValue(":actualizardivisas",ui->chk_upate_divisas->isChecked());
             q.bindValue(":cuenta_ventas_mercaderias",ui->txtCuenta_venta_mercaderias->text());
             q.bindValue(":cuenta_ventas_servicios",ui->txtCuenta_venta_servicios->text());
@@ -475,7 +475,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     monedaEditModel = new QSqlQueryModel(this);
 
     tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
-    monedaEditModel->setQuery("Select `id`,`moneda` from codigotarifa",_targetGroupDb);
+    monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
 
     ui->cboTarifa_3->setModel(tarifaEditModel);
     ui->cboTarifa_3->setModelColumn(1);
@@ -620,24 +620,50 @@ void FrmEmpresas::on_btn_guardar_nuevo_clicked()
 {
     //Crear empresa @targetGroup
     _addEmpresa();
+
+    _targetGroupDb.close();
+    QSqlDatabase::removeDatabase("save_empresa");
+    tarifaEditModel->deleteLater();
+    monedaEditModel->deleteLater();
+
     ui->stackedWidget->setCurrentWidget(ui->main_page);
 }
 
 void FrmEmpresas::on_btn_crearGrupo_clicked()
 {
-    QProgressDialog* d = new QProgressDialog(this);
+    QProgressDialog d(this);
 
-    d->setValue(0);
-    d->setMinimum(0);
-    d->setMaximum(0);
-    d->show();
-    connect(this,&FrmEmpresas::endGroup,[this,d](bool b){
-        if(b){
-            ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
-        }
-        d->deleteLater();
-    });
-    QtConcurrent::run(this,&FrmEmpresas::createGroup);
+    d.setValue(0);
+    d.setMinimum(0);
+    d.setMaximum(0);
+    d.show();
+    QApplication::processEvents();
+    createGroup();
+
+    QSqlRecord _targetGroupDbRecord = _empresas.value(_targetGroup).second;
+    _targetGroupDb = QSqlDatabase::addDatabase("QMYSQL","save_empresa");
+    _targetGroupDb.setHostName(_targetGroupDbRecord.value("bd_host").toString());
+    _targetGroupDb.setUserName(_targetGroupDbRecord.value("bd_user").toString());
+    _targetGroupDb.setPassword(_targetGroupDbRecord.value("bd_pass").toString());
+    _targetGroupDb.setPort(_targetGroupDbRecord.value("bd_port").toInt());
+    _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
+
+    if(_targetGroupDb.open())
+    {
+        tarifaEditModel = new QSqlQueryModel(this);
+        monedaEditModel = new QSqlQueryModel(this);
+
+        tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
+        monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
+
+        ui->cboTarifa->setModel(tarifaEditModel);
+        ui->cboTarifa->setModelColumn(1);
+
+        ui->cboDivisas->setModel(monedaEditModel);
+        ui->cboDivisas->setModelColumn(1);
+
+        ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+    }
 }
 
 void FrmEmpresas::createGroup()
@@ -668,15 +694,19 @@ void FrmEmpresas::createGroup()
         db.setDatabaseName(grupo);
         error = !db.open();
 
+        QApplication::processEvents();
         if(!error)
             error = _insertMonedas(db, sError);
 
+        QApplication::processEvents();
         if(!error)
             error = _insertIVA(db, sError);
 
+        QApplication::processEvents();
         if(!error)
             error = _insertNivelAcesso(db, sError);
 
+        QApplication::processEvents();
         if(!error)
             error = _insertPaises(db, sError);
 
@@ -724,6 +754,7 @@ bool FrmEmpresas::_createTables(QSqlDatabase db)
             error = true;
             break;
         }
+        QApplication::processEvents();
     }
     return error;
 }
@@ -850,7 +881,31 @@ void FrmEmpresas::on_btn_add_empresaGrupo_clicked()
     if(ui->group_list->selectedItems().size() == 0)
         return;
     _targetGroup = ui->group_list->selectedItems().at(0)->text();
-    ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+
+    QSqlRecord _targetGroupDbRecord = _empresas.value(_targetGroup).second;
+    _targetGroupDb = QSqlDatabase::addDatabase("QMYSQL","save_empresa");
+    _targetGroupDb.setHostName(_targetGroupDbRecord.value("bd_host").toString());
+    _targetGroupDb.setUserName(_targetGroupDbRecord.value("bd_user").toString());
+    _targetGroupDb.setPassword(_targetGroupDbRecord.value("bd_pass").toString());
+    _targetGroupDb.setPort(_targetGroupDbRecord.value("bd_port").toInt());
+    _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
+
+    if(_targetGroupDb.open())
+    {
+        tarifaEditModel = new QSqlQueryModel(this);
+        monedaEditModel = new QSqlQueryModel(this);
+
+        tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
+        monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
+
+        ui->cboTarifa->setModel(tarifaEditModel);
+        ui->cboTarifa->setModelColumn(1);
+
+        ui->cboDivisas->setModel(monedaEditModel);
+        ui->cboDivisas->setModelColumn(1);
+
+        ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+    }
 }
 
 void FrmEmpresas::on_btn_edit_empresa_clicked()
@@ -959,7 +1014,7 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["tamano_codigo"]=  ui->txttamano_codigoart_3->value();
     data["cuenta_cobros"]=  ui->txtcuenta_cobros_3->text();
     data["cuenta_pagos"]=  ui->txtcuenta_pagos_3->text();   
-    data["id_divisa"]=  monedaEditModel->record(ui->cboDivisas->currentIndex()).value("id");
+    data["id_divisa"]=  monedaEditModel->record(ui->cboDivisas_3->currentIndex()).value("id");
     data["enlace_web"]=  ui->chkEnlace_web_3->isChecked();
     data["contabilidad"]=  ui->chkContabilidad_3->isChecked();
     data["consultas"]=  ui->txtConsultas_3->value();

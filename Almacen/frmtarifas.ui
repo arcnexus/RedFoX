@@ -311,6 +311,9 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="decimals">
+            <number>4</number>
+           </property>
            <property name="minimum">
             <double>0.000000000000000</double>
            </property>
@@ -338,6 +341,9 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="decimals">
+            <number>4</number>
            </property>
            <property name="minimum">
             <double>0.000000000000000</double>
