@@ -2,6 +2,7 @@
 #define FACTURA_H
 
 #include "../Auxiliares/Globlal_Include.h"
+#include"../Almacen/articulo.h"
 
 class Factura : public QObject
 {
@@ -113,6 +114,8 @@ public slots:
     bool GuardarApunte(int nasiento, int nid);
     bool Apunte();
     bool EditApunte(int num_apunte);
+private:
+    Articulo *oArticulo;
 };
 
 #endif // FACTURA_H
