@@ -237,47 +237,47 @@ void Cliente::GuardarWeb()
    Configuracion_global->CerrarDbWeb();
 }
 void Cliente::Anadir() {
-    QSqlQuery query(Configuracion_global->groupDB);
-         query.prepare("INSERT INTO clientes (codigo_cliente,cuenta_contable,cuenta_iva_repercutido,"
-                       "cuenta_deudas,cuenta_cobros,tarifa_cliente) "
-                       "VALUES (:codigo_cliente,:cuenta_contable,:cuenta_iva_repercutido,"
-                       ":cuenta_deudas,:cuenta_cobros,:tarifa_cliente)");
-         query.bindValue(":codigo_cliente", this->codigo_cliente);
-         query.bindValue(":cuenta_contable",this->cuenta_contable);
-         query.bindValue(":cuenta_iva_repercutido",this->cuenta_iva_repercutido);
-         query.bindValue(":cuenta_deudas", this->cuenta_deudas);
-         query.bindValue(":cuenta_cobros", this->cuenta_cobros);
-         query.bindValue(":tarifa_cliente",this->tarifa_cliente);
-
-         if(!query.exec()){
-             QMessageBox::critical(qApp->activeWindow(),"error al insertar:", query.executedQuery());
-         } else{
-             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Corectamente");
-             int nid = query.lastInsertId().toInt();
-             this->id = nid;
-             if (Configuracion_global->enlace_web)
-                 anadirWeb();
-         }
+     QHash <QString, QVariant > cliente;
+     cliente["codigo_cliente"]= this->codigo_cliente;
+     cliente["cuenta_contable"]= this->cuenta_contable;
+     cliente["cuenta_iva_repercutido"] = this->cuenta_iva_repercutido;
+     cliente["cuenta_deudas"]= this->cuenta_deudas;
+     cliente["cuenta_cobros"] = this->cuenta_cobros;
+     cliente["tarifa_cliente"] = this->tarifa_cliente;
+     QString error;
+     int new_id = SqlCalls::SqlInsert(cliente,"clientes",Configuracion_global->groupDB,error);
+     if(new_id <=0){
+         QMessageBox::critical(qApp->activeWindow(),"error al insertar:", error);
+     } else{
+         QHash <QString, QVariant> h;
+         h["id_cliente"] = new_id;
+         SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->empresaDB,error);
+         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Corectamente");
+         int nid = new_id;
+         this->id = nid;
+//         if (Configuracion_global->enlace_web)
+//             anadirWeb();
+     }
 }
 
 void Cliente::anadirWeb()
 {
 
-    Configuracion_global->AbrirDbWeb();
-    QSqlQuery queryClienteWeb(QSqlDatabase::database("dbweb"));
-    queryClienteWeb.prepare("INSERT INTO clientes (codigo_cliente,id_local) VALUES (:codigo_cliente,:id_local)");
-    queryClienteWeb.bindValue(":codigo_cliente",this->codigo_cliente);
-    queryClienteWeb.bindValue(":id_local",this->id);
+//    Configuracion_global->AbrirDbWeb();
+//    QSqlQuery queryClienteWeb(QSqlDatabase::database("dbweb"));
+//    queryClienteWeb.prepare("INSERT INTO clientes (codigo_cliente,id_local) VALUES (:codigo_cliente,:id_local)");
+//    queryClienteWeb.bindValue(":codigo_cliente",this->codigo_cliente);
+//    queryClienteWeb.bindValue(":id_local",this->id);
 
-    if(!queryClienteWeb.exec())
-        QMessageBox::warning(qApp->activeWindow(),tr("Añadir en web"),
-                             tr("No se ha podido crear el registro en la web: %1").arg(queryClienteWeb.lastError().text()),
-                             tr("Aceptar"));
-    else
-        this->id_web = queryClienteWeb.lastInsertId().toInt();
-        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha creado el cliente en la web"));
+//    if(!queryClienteWeb.exec())
+//        QMessageBox::warning(qApp->activeWindow(),tr("Añadir en web"),
+//                             tr("No se ha podido crear el registro en la web: %1").arg(queryClienteWeb.lastError().text()),
+//                             tr("Aceptar"));
+//    else
+//        this->id_web = queryClienteWeb.lastInsertId().toInt();
+//        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha creado el cliente en la web"));
 
-    Configuracion_global->CerrarDbWeb();
+//    Configuracion_global->CerrarDbWeb();
 }
 
 void Cliente::Recuperar(QString cSQL) {
@@ -726,7 +726,8 @@ bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
     QSqlQuery cli(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update clientes set acumulado_ventas = acumulado_ventas +%1,").arg(total);
-    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio +%1,").arg(total));
+    cSQL.append(QString("fecha_ultima_compra = '%1',").arg(fecha.toString("yyyyMMdd")));
+    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio +%1 ").arg(total));
     cSQL.append(QString(" where id = %1").arg(id_cliente));
     if(!cli.exec(cSQL)){
         success = false;
@@ -737,7 +738,6 @@ bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
 
     QSqlQuery cli_acum(Configuracion_global->empresaDB);
     cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio + %1").arg(total);
-    cSQL.append(QString(",fecha_ultima_compra = '%1'").arg(fecha.toString("yyyyMMdd")));
     if(fecha.month() ==1)
         cSQL.append(QString(",acum_enero = acum_enero + %1").arg(total));
     if(fecha.month() ==2)
@@ -785,7 +785,8 @@ bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)
     QSqlQuery cli(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update clientes set acumulado_ventas = acumulado_ventas -%1,").arg(total);
-    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio -%1,").arg(total));
+    cSQL.append(QString("fecha_ultima_compra = '%1',").arg(fecha.toString("yyyyMMdd")));
+    cSQL.append(QString("ventas_ejercicio = ventas_ejercicio -%1").arg(total));
     cSQL.append(QString(" where id = %1").arg(id_cliente));
     if(!cli.exec(cSQL)){
         QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
@@ -796,7 +797,6 @@ bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)
 
     QSqlQuery cli_acum(Configuracion_global->empresaDB);
     cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio - %1").arg(total);
-    cSQL.append(QString(",fecha_ultima_compra = '%1'").arg(fecha.toString("yyyyMMdd")));
     if(fecha.month() ==1)
         cSQL.append(QString(",acum_enero = acum_enero - %1").arg(total));
     if(fecha.month() ==2)

@@ -161,6 +161,7 @@ private:
     QString modo;
     QString serie;
     QString ejercicio;
+    QHash<QString,QVariant> acumulados;
 };
 
 #endif // FRMFACTURAS_H
