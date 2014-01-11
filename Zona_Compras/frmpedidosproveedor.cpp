@@ -37,7 +37,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     helper.blockTable(true);
 
     connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
-    connect(&helper,SIGNAL(lineaDeleted(int)),this,SLOT(lieaDeleted(int)));//TODO
+    connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));//TODO
 
 
     connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
@@ -317,7 +317,7 @@ void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
         //----------------------
         QSqlQuery querylin_ped_pro(Configuracion_global->empresaDB);
         querylin_ped_pro.prepare("delete from lin_ped_pro where id =:id");
-        querylin_ped_pro.bindValue(":id",id);
+        querylin_ped_pro.bindValue(":id",ld->idLinea);
         if(querylin_ped_pro.exec() && ok_Maya)
         {
             Configuracion_global->empresaDB.commit();

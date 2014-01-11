@@ -58,6 +58,7 @@ private:
     Articulo *oArticulo;
     void calcular();
     bool eventFilter(QObject *obj, QEvent *event);
+    QHash <QString,QVariant> anterior;
 
 signals:
     void refrescar_lineas();

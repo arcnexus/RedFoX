@@ -2018,9 +2018,6 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
         if(id_lin >0)
         {
 
-//            if( (id_lin,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-//                                           Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-//                                           QDate::currentDate()))
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente1->id);
@@ -2035,14 +2032,14 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             //refrescar_modelo();
             calcular_factura();
             ui->Lineas->setFocus();
+
+        } else
+        {
+            QMessageBox::warning(this, tr("Gestión de facturas"),tr("Debe editar la factura para poder modificar las líneas"),
+                                 tr("Aceptar"));
+
         }
-    } else
-    {
-        QMessageBox::warning(this, tr("Gestión de facturas"),tr("Debe editar la factura para poder modificar las líneas"),
-                             tr("Aceptar"));
-
     }
-
 }
 
 

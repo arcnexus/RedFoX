@@ -355,7 +355,7 @@ void Table_Helper::removeRow()
         for(int i = rowsList.count() - 1; i >= 0; i--)
         {
             lineaDetalle * aux = new lineaDetalle;
-            aux->idLinea = m_rows.at(i)->idLinea;
+            aux->idLinea = m_rows.at(rowsList.at(i))->idLinea;
             //copiar todos los valores a 'aux'
             helped_table->removeRow(rowsList.at(i));
             m_rows.remove(rowsList.at(i));//esto borra rowList(i) de la memoria....
