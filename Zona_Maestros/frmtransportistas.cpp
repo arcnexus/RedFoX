@@ -17,8 +17,9 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
     //------------------
     ui->stackedWidget->setCurrentIndex(0);
     m = new QSqlQueryModel(this);
-    m->setQuery("select codigo,transportista from transportista",Configuracion_global->groupDB);
+    m->setQuery("select id, codigo,transportista from transportista",Configuracion_global->groupDB);
     ui->tablaBusqueda->setModel(m);
+    ui->tablaBusqueda->hideColumn(0);
 
     //---------------
     // Cargo combos
@@ -267,8 +268,11 @@ void FrmTransportistas::on_btnEditar_2_clicked()
 
 void FrmTransportistas::on_tablaBusqueda_doubleClicked(const QModelIndex &index)
 {
-    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tablaBusqueda->model());
-    int id = Configuracion_global->devolver_id_tabla(model,index);
+//    QSqlQueryModel *model = qobject_cast<QSqlQueryModel*>(ui->tablaBusqueda->model());
+//    int id = Configuracion_global->devolver_id_tabla(model,index);
+
+    int id = ui->tablaBusqueda->model()->data(ui->tablaBusqueda->model()->index(index.row(),0),Qt::EditRole).toInt();
+
     QStringList filtro,extras;
     filtro << QString("id = %1").arg(id);
     extras << "";
@@ -326,14 +330,14 @@ void FrmTransportistas::filter_table(QString texto, QString orden, QString modo)
 {
     QHash <QString,QString> h;
     h[tr("Código")] = "codigo";
-    h[tr("Descripción")] = "forma_pago";
+    h[tr("Descripción")] = "transportista";
     QString order = h.value(orden);
     if(modo == tr("A-Z"))
         modo = "";
     else
         modo = "DESC";
 
-    m->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos,"
-                "numero_plazos, cuenta_cont_pago  from formpago where "+order+" like '%"+texto.trimmed()+
-                "%' order by "+order +" "+modo,Configuracion_global->groupDB);
+    m->setQuery("SELECT id , codigo, transportista "
+                "FROM transportista WHERE "+order+" LIKE '%"+texto.trimmed()+
+                "%' ORDER BY "+order +" "+modo,Configuracion_global->groupDB);
 }
