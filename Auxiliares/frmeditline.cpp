@@ -15,11 +15,14 @@ frmEditLine::frmEditLine(QWidget *parent) :
     ui->chkprecio->setVisible(false);
     ui->chk_dtoweb->setVisible(false);
     oArticulo = new Articulo(this);
+    //-------------------
     //IVA desde config
+    //-------------------
     ui->cboIva->setModel(Configuracion_global->iva_model);
     ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
     int index = ui->cboIva->findText("21");
     ui->cboIva->setCurrentIndex(index);
+
     //-------------
     // Eventos
     //-------------
@@ -81,6 +84,7 @@ void frmEditLine::set_linea(int id,QString fichero)
         this->codigo_articulo = ui->txtCodigo->text();
         ui->txtDescripcion->setText(m.value(id).value("descripcion").toString());
         ui->txtCantidad->setText(m.value(id).value("cantidad").toString());
+        anterior["cantidad"] = ui->txtCantidad->text().toFloat();
         ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(m.value(id).value("precio").toDouble(),
                                                                                   'f',Configuracion_global->decimales)));
         ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(m.value(id).value("porc_dto").toFloat(),
@@ -90,7 +94,7 @@ void frmEditLine::set_linea(int id,QString fichero)
                                                             Configuracion_global->decimales)));
         ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(m.value(id).value("total").toDouble(),
                                                                                            'f',Configuracion_global->decimales)));
-
+        anterior["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
         int index = ui->cboIva->findText(m.value(id).value("porc_iva").toString());
         ui->cboIva->setCurrentIndex(index);
 
@@ -539,9 +543,11 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if ( success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-                                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-                                                QDate::currentDate()))
+        if ( success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
+                                                                                              anterior.value("cantidad").toFloat(),
+                                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
+                                                                                     anterior["total"].toDouble(),
+                                                QDate::currentDate(),"V"))
         {
             emit refrescar_lineas();
             accept();
@@ -554,9 +560,11 @@ void frmEditLine::on_btnAceptar_clicked()
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-                                                      QDate::currentDate()))
+        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
+                                                                                        anterior.value("cantidad").toFloat(),
+                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
+                                                                                           anterior["total"].toDouble(),
+                                                      QDate::currentDate(),"V"))
         {
             emit refrescar_lineas();
             accept();
@@ -597,9 +605,11 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if(success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-                                                  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-                                                  QDate::currentDate()))
+        if(success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
+                                                                        anterior["cantidad"].toFloat(),
+                                                  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
+                                                                                       anterior["total"].toDouble(),
+                                                  QDate::currentDate(),"V"))
             emit refrescar_lineas();
         {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
@@ -610,9 +620,11 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     } else
     {
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),
-                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()),
-                                                      QDate::currentDate()))
+        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
+                                                                                  anterior["cantidad"].toFloat(),
+                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
+                                                                                           anterior["total"].toDouble(),
+                                                      QDate::currentDate(),"V"))
         {
             emit refrescar_lineas();
         } else
