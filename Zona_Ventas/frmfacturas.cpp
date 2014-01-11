@@ -811,6 +811,11 @@ void frmFacturas::on_btnBuscar_clicked()
 
 void frmFacturas::on_btnImprimir_clicked()
 {
+    if(ui->stackedWidget->currentIndex()==1){
+        QModelIndex index = ui->tabla_facturas->currentIndex();
+       oFactura->id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(index.row(),0),Qt::EditRole).toInt();
+       oFactura->RecuperarFactura(oFactura->id);
+    }
     oCliente1->Recuperar(oFactura->id_cliente);
     FrmDialogoImprimir dlg_print(this);
     dlg_print.set_email(oCliente1->email);
@@ -955,6 +960,11 @@ void frmFacturas::on_btnEditar_clicked()
         m_busqueda->hideMe();
         in_edit = true;
         emit block();
+        // ----------------------------
+        // Guardo datos para acumulados
+        //-----------------------------
+        acumulados["id_cliente"] = oFactura->id_cliente;
+        acumulados["total"] = oFactura->total;
         Configuracion_global->empresaDB.transaction();
         Configuracion_global->groupDB.transaction();
         ui->txtcodigo_cliente->setFocus();
@@ -1744,14 +1754,11 @@ void frmFacturas::on_btnBorrar_clicked()
     oFactura->id = ui->tabla_facturas->model()->data(ui->tabla_facturas->model()->index(
                                                          ui->tabla_facturas->currentIndex().row(),0)).toInt();
 
-    if(QMessageBox::question(this,tr("Gestión de Facturas"),
-                   tr("¿Desea Eliminar este borrador?"),tr("No"),tr("Sí")) == QMessageBox::Accepted)
-    {
-        oFactura->borrar(oFactura->id);
-        oFactura->clear();
-        LLenarCampos();
-        filter_table(this->texto,this->orden,this->modo);
-    }
+    oFactura->borrar(oFactura->id);
+    oFactura->clear();
+    LLenarCampos();
+    filter_table(this->texto,this->orden,this->modo);
+
 }
 
 void frmFacturas::on_spinPorc_dto_editingFinished()
@@ -1832,59 +1839,76 @@ void frmFacturas::on_btnCobrar_clicked()
 void frmFacturas::on_btnGuardar_clicked()
 {
     bool succes = true;
+
     LLenarFactura();
+    if(oFactura->factura.isEmpty())
         oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
 
-//}
-    succes = oFactura->GuardarFactura(oFactura->id,false);
+    //------------------------
+    // Acumulados clientes
+    //------------------------
+    double diferencia_total = oFactura->total - acumulados.value("total").toDouble();
+    if(acumulados["id_cliente"].toInt() != oFactura->id_cliente)
+    {
+        oCliente1->decrementar_acumulados(acumulados.value("id_cliente").toInt(),acumulados.value("total").toDouble(),
+                                          QDate::currentDate());
+        succes = oCliente1->incrementar_acumulados(oFactura->id_cliente,acumulados.value("total").toDouble(),QDate::currentDate());
+    } else
+        succes = oCliente1->incrementar_acumulados(oFactura->id_cliente,diferencia_total,QDate::currentDate());
+
     if(succes)
     {
-        LLenarCampos();
-        if(Configuracion_global->contabilidad && oFactura->apunte == 0)//&& oFactura->factura !=tr("BORRADOR"))
-            succes = crear_asiento();
-        if(!succes)
+        succes = oFactura->GuardarFactura(oFactura->id,false);
+        if(succes)
+        {
+            LLenarCampos();
+            if(Configuracion_global->contabilidad && oFactura->apunte == 0)
+                succes = crear_asiento();
+            if(!succes)
 
-            QMessageBox::critical(this,tr("Error"),
-                                  tr("Error al crear el asiento contable")+Configuracion_global->empresaDB.lastError().text(),
-                                  tr("&Aceptar"));
+                QMessageBox::critical(this,tr("Error"),
+                                      tr("Error al crear el asiento contable")+Configuracion_global->empresaDB.lastError().text(),
+                                      tr("&Aceptar"));
+            else
+                ui->txtAsiento->setText(QString::number(oFactura->apunte));
+        }
+        if(succes)
+        {
+
+
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
+
+            // -------------------------------------------------
+            // Borrar vencimientos si existen para no duplicar
+            //--------------------------------------------------
+            QString clausula = QString("id_factura = %1").arg(oFactura->id);
+            QString error;
+            SqlCalls::SqlDelete("clientes_deuda",Configuracion_global->groupDB,clausula,error);
+            //----------------------
+            // Crear vencimientos
+            //----------------------
+            vencimientos oVto(this);
+            oVto.calcular_vencimiento(oFactura->fecha,oFactura->id_cliente,0,oFactura->id,oFactura->serie+"/"+oFactura->factura,1,
+                                      "c",oFactura->total);
+            BloquearCampos(true);
+            emit unblock();
+            if(Configuracion_global->contabilidad)
+            Configuracion_global->contaDB.commit();
+            Configuracion_global->empresaDB.commit();
+            Configuracion_global->groupDB.commit();
+        }
         else
-            ui->txtAsiento->setText(QString::number(oFactura->apunte));
+        {
+            QMessageBox::critical(this,tr("Error"),
+                                  tr("Error al guardar la factura.\n")+Configuracion_global->empresaDB.lastError().text(),
+                                  tr("Aceptar"));
+            Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
+            if(Configuracion_global->contabilidad)
+                Configuracion_global->contaDB.rollback();
+        }
     }
-    if(succes)
-    {
 
-
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Factura guardada con éxito"));
-
-        // -------------------------------------------------
-        // Borrar vencimientos si existen para no duplicar
-        //--------------------------------------------------
-        QString clausula = QString("id_factura = %1").arg(oFactura->id);
-        QString error;
-        SqlCalls::SqlDelete("clientes_deuda",Configuracion_global->groupDB,clausula,error);
-        //----------------------
-        // Crear vencimientos
-        //----------------------
-        vencimientos oVto(this);
-        oVto.calcular_vencimiento(oFactura->fecha,oFactura->id_cliente,0,oFactura->id,oFactura->serie+"/"+oFactura->factura,1,
-                                  "c",oFactura->total);
-        BloquearCampos(true);
-        emit unblock();
-        if(Configuracion_global->contabilidad)
-        Configuracion_global->contaDB.commit();
-        Configuracion_global->empresaDB.commit();
-        Configuracion_global->groupDB.commit();
-    }
-    else
-    {
-        QMessageBox::critical(this,tr("Error"),
-                              tr("Error al guardar la factura.\n")+Configuracion_global->empresaDB.lastError().text(),
-                              tr("Aceptar"));
-        Configuracion_global->empresaDB.rollback();
-        Configuracion_global->groupDB.rollback();
-        if(Configuracion_global->contabilidad)
-            Configuracion_global->contaDB.rollback();
-    }
 
 }
 
@@ -2050,17 +2074,11 @@ void frmFacturas::on_btn_borrarLinea_clicked()
     {
         QModelIndex index = ui->Lineas->currentIndex();
         int id_lin = ui->Lineas->model()->index(index.row(),0).data().toInt();
-        QString error;
-        bool success = SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
-        if(!success)
-            QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al borrar la línea: %1").arg(error),
-                                 tr("Aceptar"));
-        else
-        {
-            modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+        oFactura->BorrarLineasFactura(id_lin);
+        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
-            calcular_factura();
-            ui->Lineas->setFocus();
-        }
+        calcular_factura();
+        ui->Lineas->setFocus();
+
     }
 }

@@ -377,7 +377,7 @@ void FrmDevolucionTicket::on_btnDevolucion_clicked()
                     // Restaurar Stock y acumulados.
                     Articulo oArticulo;
                     isOk = oArticulo.Devolucion(lin.value(id).value("id_articulo").toInt(),lin.value(id).value("cantidad").toFloat(),
-                                         lin.value(id).value("importe").toDouble(),0);
+                                         lin.value(id).value("importe").toDouble());
 
                     if(isOk){
                         // añadir linea ticket devolución.
@@ -516,7 +516,7 @@ void FrmDevolucionTicket::on_btnParcial_clicked()
                         // Restaurar Stock y acumulados.
                         Articulo oArticulo;
                         isOk = oArticulo.Devolucion(lin.value(id).value("id_articulo").toInt(),lin.value(id).value("dev_act").toFloat(),
-                                             lin.value(id).value("importe").toDouble(),0);
+                                             lin.value(id).value("importe").toDouble());
 
                         if(isOk){
                             // añadir linea ticket devolución.

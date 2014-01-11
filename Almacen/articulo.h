@@ -88,13 +88,13 @@ public:
     void Borrar(int nid,bool isKit, bool ask , QString codigo = QString());
     QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente,
                                    int id_cliente);
-    bool Devolucion(int id,double cantidad,double pvp,int id_cliente);
+    bool Devolucion(int id, double cantidad, double pvp);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
     bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
 
     void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
 
-    void acumulado_devoluciones(int id_articulo, float cantidad, QDate fecha);
+    bool acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);
