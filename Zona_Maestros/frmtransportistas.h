@@ -35,7 +35,7 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_btnEditar_2_clicked();
+    void on_btnEditar_clicked();
 
     void on_tablaBusqueda_doubleClicked(const QModelIndex &index);
 
@@ -52,7 +52,7 @@ private:
     void Bloquear_campos(bool state);
     void cargar_en_objeto();
     void llenar_campos();
-    void llenar_campos_proveedor();
+    void llenar_campos_transportista();
     bool anadiendo;
     bool eventFilter(QObject *obj, QEvent *event);
     void consultar_proveedor();

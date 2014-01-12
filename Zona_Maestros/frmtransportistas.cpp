@@ -11,7 +11,7 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
 
     transportistas oTransportista(this);
     anadiendo = false;
-    ui->txtCodigo_proveedor->installEventFilter(this);
+    //ui->txtCodigo_proveedor->installEventFilter(this);
     //------------------
     // Busqueda
     //------------------
@@ -42,6 +42,7 @@ void FrmTransportistas::on_btnAnadir_clicked()
     ui->stackedWidget->setCurrentIndex(1);
     Bloquear_campos(false);
     anadiendo = true;
+
     oTransportista.anadir();
     ui->txtCodigo->setFocus();
 }
@@ -53,7 +54,7 @@ void FrmTransportistas::Bloquear_campos(bool state)
     //--------------------------
     ui->txtCodigo->setReadOnly(state);
     ui->txtTransportista->setReadOnly(state);
-    ui->txtCodigo_proveedor->setReadOnly(state);
+    //ui->txtCodigo_proveedor->setReadOnly(state);
     //--------------------------
     // Botones
     //--------------------------
@@ -64,6 +65,12 @@ void FrmTransportistas::Bloquear_campos(bool state)
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
+
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->setReadOnly(state);
+    }
 }
 
 void FrmTransportistas::cargar_en_objeto()
@@ -71,10 +78,25 @@ void FrmTransportistas::cargar_en_objeto()
     QString error;
     oTransportista.h_transportista["codigo"] = ui->txtCodigo->text();
     oTransportista.h_transportista["transportista"] = ui->txtTransportista->text();
-    int id_proveedor = SqlCalls::SelectOneField("proveedores","id",QString("codigo = '%1'").arg(ui->txtCodigo_proveedor->text()),
-                                                Configuracion_global->groupDB,error).toInt();
+    oTransportista.h_transportista["cif"] = ui->txtcif->text();
+    oTransportista.h_transportista["fecha_alta"] = ui->txtfecha_alta->date().toString("yyyyMMdd");
+    oTransportista.h_transportista["direccion1"] = ui->txtdireccion1->text();
+    oTransportista.h_transportista["direccion2"] = ui->txtdireccion2->text();
+    oTransportista.h_transportista["cp"] = ui->txtcp->text();
+    oTransportista.h_transportista["poblacion"] = ui->txtpoblacion->text();
+    oTransportista.h_transportista["provincia"] = ui->txtprovincia->text();
+    oTransportista.h_transportista["pais"] = Configuracion_global->Devolver_id_pais(ui->cbopais->currentText());
+    oTransportista.h_transportista["telefono1"] = ui->txttelefono1->text();
+    oTransportista.h_transportista["telefono2"] = ui->txttelefono2->text();
+    oTransportista.h_transportista["fax"] = ui->txtfax->text();
+    oTransportista.h_transportista["movil"] = ui->txtmovil->text();
+    oTransportista.h_transportista["email"] = ui->txtemail->text();
+    oTransportista.h_transportista["web"] = ui->txtweb->text();
+    oTransportista.h_transportista["contacto"] = ui->txtpersona_contacto->text();
 
-    oTransportista.h_transportista["id_proveedor"] = id_proveedor;
+    //int id_proveedor = SqlCalls::SelectOneField("proveedores","id",QString("codigo = '%1'").arg(ui->txtCodigo_proveedor->text()),Configuracion_global->groupDB,error).toInt();
+
+    //oTransportista.h_transportista["id_proveedor"] = id_proveedor;
 }
 
 void FrmTransportistas::llenar_campos()
@@ -84,41 +106,63 @@ void FrmTransportistas::llenar_campos()
     //--------------------------
     ui->txtCodigo->setText(oTransportista.h_transportista.value("codigo").toString());
     ui->txtTransportista->setText(oTransportista.h_transportista.value("transportista").toString());
-    llenar_campos_proveedor();
+    ui->txtcif->setText(oTransportista.h_transportista.value("cif").toString());
+    ui->txtfecha_alta->setDate(oTransportista.h_transportista.value("fecha_alta").toDate());
+    ui->txtdireccion1->setText(oTransportista.h_transportista.value("direccion1").toString());
+    ui->txtdireccion2->setText(oTransportista.h_transportista.value("direccion2").toString());
+    ui->txtcp->setText(oTransportista.h_transportista.value("cp").toString());
+    ui->txtpoblacion->setText(oTransportista.h_transportista.value("poblacion").toString());
+    ui->txtprovincia->setText(oTransportista.h_transportista.value("provincia").toString());
+    int nindex = ui->cbopais->findText(oTransportista.RecuperarPais(oTransportista.h_transportista.value("pais").toInt()));
+    if(nindex >-1)
+        ui->cbopais->setCurrentIndex(nindex);
+    ui->txttelefono1->setText(oTransportista.h_transportista.value("telefono1").toString());
+    ui->txttelefono2->setText(oTransportista.h_transportista.value("telefono2").toString());
+    ui->txtfax->setText(oTransportista.h_transportista.value("fax").toString());
+    ui->txtmovil->setText(oTransportista.h_transportista.value("movil").toString());
+    ui->txtemail->setText(oTransportista.h_transportista.value("email").toString());
+    ui->txtweb->setText(oTransportista.h_transportista.value("web").toString());
+    ui->txtpersona_contacto->setText(oTransportista.h_transportista.value("contacto").toString());
+
+
+
+    llenar_campos_transportista();
 
 }
 
-void FrmTransportistas::llenar_campos_proveedor()
+void FrmTransportistas::llenar_campos_transportista()
 {
     //---------------------------------
     // Campos proveedor (solo lectura)
     //---------------------------------
-    ui->txtCodigo_proveedor->setText(oTransportista.oProveedor.codigo);
-    ui->txtProveedor->setText(oTransportista.oProveedor.proveedor);
-    ui->txtcif->setText(oTransportista.oProveedor.cif);
-    ui->txtdireccion1->setText(oTransportista.oProveedor.direccion1);
-    ui->txtdireccion2->setText(oTransportista.oProveedor.direccion2);
-    ui->txtcp->setText(oTransportista.oProveedor.cp);
-    ui->txtpoblacion->setText(oTransportista.oProveedor.poblacion);
-    ui->txtprovincia->setText(oTransportista.oProveedor.provincia);
-    int index = ui->cbopais->findText(oTransportista.oProveedor.pais);
-    ui->cbopais->setCurrentIndex(index);
-    ui->txttelefono1->setText(oTransportista.oProveedor.telefono1);
-    ui->txttelefono2->setText(oTransportista.oProveedor.telefono2);
-    ui->txttelefono3->setText(oTransportista.oProveedor.telefono3);
-    ui->txtfax->setText(oTransportista.oProveedor.fax);
-    ui->txtmovil->setText(oTransportista.oProveedor.movil);
-    ui->txtemail->setText(oTransportista.oProveedor.email);
-    ui->txtweb->setText(oTransportista.oProveedor.web);
-    ui->txtpersona_contacto->setText(oTransportista.oProveedor.persona_contacto);
-    llenar_contactos(oTransportista.oProveedor.id);
+//    ui->txtCodigo_proveedor->setText(oTransportista.oProveedor.codigo);
+//    ui->txtProveedor->setText(oTransportista.oProveedor.proveedor);
+
+
+//    ui->txtcif->setText(oTransportista.oProveedor.cif);
+//    ui->txtdireccion1->setText(oTransportista.oProveedor.direccion1);
+//    ui->txtdireccion2->setText(oTransportista.oProveedor.direccion2);
+//    ui->txtcp->setText(oTransportista.oProveedor.cp);
+//    ui->txtpoblacion->setText(oTransportista.oProveedor.poblacion);
+//    ui->txtprovincia->setText(oTransportista.oProveedor.provincia);
+//    int index = ui->cbopais->findText(oTransportista.oProveedor.pais);
+//    ui->cbopais->setCurrentIndex(index);
+//    ui->txttelefono1->setText(oTransportista.oProveedor.telefono1);
+//    ui->txttelefono2->setText(oTransportista.oProveedor.telefono2);
+//    ui->txttelefono3->setText(oTransportista.oProveedor.telefono3);
+//    ui->txtfax->setText(oTransportista.oProveedor.fax);
+//    ui->txtmovil->setText(oTransportista.oProveedor.movil);
+//    ui->txtemail->setText(oTransportista.oProveedor.email);
+//    ui->txtweb->setText(oTransportista.oProveedor.web);
+//    ui->txtpersona_contacto->setText(oTransportista.oProveedor.persona_contacto);
+//    llenar_contactos(oTransportista.oProveedor.id);
 }
 
 bool FrmTransportistas::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if(obj == ui->txtCodigo_proveedor)
+        if(obj == ui->txtCodigo)
         {
             if(keyEvent->key() == Qt::Key_F1)
                 consultar_proveedor();
@@ -139,9 +183,11 @@ void FrmTransportistas::on_btnGuardar_clicked()
 
     } else
     {
-
+        cargar_en_objeto();
+        oTransportista.guardar();
     }
     Bloquear_campos(true);
+    emit unblock();
 }
 
 void FrmTransportistas::on_btnSiguiente_clicked()
@@ -175,8 +221,8 @@ void FrmTransportistas::consultar_proveedor()
     {
         int id_proveedor = consulta.get_id();
 
-        oTransportista.oProveedor.Recuperar(id_proveedor);
-        llenar_campos_proveedor();
+        //oTransportista.oProveedor.Recuperar(id_proveedor);
+        llenar_campos_transportista();
     }
 }
 
@@ -235,7 +281,7 @@ void FrmTransportistas::setUpBusqueda()
     m_busqueda->addWidget(add);
 
     QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
-    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));
+    connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
     m_busqueda->addWidget(edit);
 
     QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
@@ -261,9 +307,14 @@ void FrmTransportistas::on_btnBuscar_clicked()
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-void FrmTransportistas::on_btnEditar_2_clicked()
+void FrmTransportistas::on_btnEditar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+    emit block();
+    Bloquear_campos(false);
+
+
+
 }
 
 void FrmTransportistas::on_tablaBusqueda_doubleClicked(const QModelIndex &index)
@@ -278,7 +329,7 @@ void FrmTransportistas::on_tablaBusqueda_doubleClicked(const QModelIndex &index)
     extras << "";
     oTransportista.recuperar(filtro,extras);
     llenar_campos();
-    Bloquear_campos(false);
+    Bloquear_campos(true);
     ui->stackedWidget->setCurrentIndex(1);
     ui->txtCodigo->setFocus();
 }
