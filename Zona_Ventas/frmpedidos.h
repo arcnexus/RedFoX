@@ -53,6 +53,7 @@ private slots:
     void desglose4Changed(double base, double iva, double re, double total);
     void lineaReady(lineaDetalle*);
     void lineaDeleted(lineaDetalle*);
+    void refrescar_modelo();
 
     void convertir_ealbaran();
     void convertir_enFactura();
@@ -89,6 +90,12 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
     void on_table_row_changed(QModelIndex actual,QModelIndex previous);
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btnAnadirLinea_clicked();
+
+    void on_btn_borrarLinea_clicked();
+
 private:
     Ui::frmPedidos *ui;
 
@@ -114,10 +121,12 @@ private:
     QSqlQueryModel *m;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
-
+    QSqlQueryModel *modelLineas;
+    void calcular_pedido();
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+    QString moneda;
 };
 
 #endif // FRMPEDidOS_H

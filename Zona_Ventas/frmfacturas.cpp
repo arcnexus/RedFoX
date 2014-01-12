@@ -2004,12 +2004,6 @@ void frmFacturas::on_btnAnadirLinea_clicked()
 {
     if(ui->btnGuardar->isEnabled())
     {
-//        QHash <QString,QVariant> lin;
-//        QString error;
-//        lin["id_cab"] = oFactura->id;
-//        int new_id = SqlCalls::SqlInsert(lin,"lin_fac",Configuracion_global->empresaDB,error);
-//        if(new_id >-1)
-//        {
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_linea(0,"lin_fac");
@@ -2020,14 +2014,10 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_tipo("V");
             if(!frmeditar.exec() == QDialog::Accepted)
-                //SqlCalls::SqlDelete("lin_fac",Configuracion_global->groupDB,QString("id=%1").arg(new_id),error);
-
-
                 modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
                 calcular_factura();
 
-        //}
     } else{
         QMessageBox::warning(this,tr("Gestión de facturas"),tr("Debe editar la factura para añadir líneas"),
                              tr("Aceptar"));
