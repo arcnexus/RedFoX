@@ -26,7 +26,8 @@ void FrmKit::refreshCantidades()
         if(m_arts->record(i).value("codigo").toString() == ui->txtCodigo_kit->text() )
             ui->spinCantRomper->setMaximum(m_arts->record(i).value("stock_fisico_almacen").toInt());
     }
-    ui->spinCant->setMaximum(qRound(cant - 0.5));
+    cant = qMax(0,qRound(cant - 0.5));
+    ui->spinCant->setMaximum(cant);
 }
 
 FrmKit::FrmKit(QWidget *parent) :
@@ -62,9 +63,10 @@ FrmKit::FrmKit(QWidget *parent) :
     // Tabla escandallo
     //-----------------------
     m_kits = new QSqlQueryModel(this);
-    m_kits->setQuery(QString("select codigo_componente,descripcion,cantidad,coste_base,porc_dto,coste_final from kits limit 0"),
+    m_kits->setQuery(QString("select id,codigo_componente,descripcion,cantidad,coste_base,porc_dto,coste_final from kits limit 0"),
                      Configuracion_global->groupDB);
     ui->tabla->setModel(m_kits);
+    ui->tabla->setColumnHidden(0,true);
 
     connect(ui->spinCoste,SIGNAL(valueChanged(double)),this,SLOT(valueChanged(double)));
     connect(ui->spinDto,SIGNAL(valueChanged(double)),this,SLOT(valueChanged(double)));    
@@ -104,7 +106,7 @@ void FrmKit::on_btnAnadir_clicked()
     ui->txtCodigo->setText(r.value("codigo").toString());
     ui->txtDescripcion->setText(r.value("descripcion").toString());
     ui->spinCoste->setValue(r.value("coste_real").toDouble());
-    this->id_componente = r.value("id").toInt();
+    this->id_componente = r.value("id").toInt();    
 }
 
 void FrmKit::on_btnGuardar_clicked()
@@ -136,7 +138,7 @@ void FrmKit::on_btnGuardar_clicked()
     if(id == -1)
         QMessageBox::warning(this,tr("Gestión de KITS"),tr("Ocurrió un fallo al insertar al kit: ")+error,tr("Aceptar"));
     else
-        refrescar_tabla_escandallo(ui->txtCodigo_kit->text());
+        set_articulo(ui->txtCodigo_kit->text(),ui->txtDescripcion->text());
 }
 
 void FrmKit::refrescar_tabla_escandallo(QString codigo)
@@ -144,7 +146,7 @@ void FrmKit::refrescar_tabla_escandallo(QString codigo)
     //-----------------------
     // Tabla escandallo
     //-----------------------
-    m_kits->setQuery(QString("select codigo_componente,descripcion,cantidad,coste_base,porc_dto,coste_final from kits where codigo_kit = '%1'").arg(codigo),
+    m_kits->setQuery(QString("select id,codigo_componente,descripcion,cantidad,coste_base,porc_dto,coste_final from kits where codigo_kit = '%1'").arg(codigo),
                      Configuracion_global->groupDB);
     ui->tabla->setModel(m_kits);
     QStringList headers;
@@ -235,7 +237,60 @@ void FrmKit::on_btnAnadirKits_clicked()
 
 void FrmKit::on_btnQuitar_clicked()
 {
-    //TODO quitar elemnto kit
+    if(!ui->tabla->currentIndex().isValid())
+        return;
+    bool t = Configuracion_global->groupDB.transaction();
+    QString codigo = m_kits->record(ui->tabla->currentIndex().row()).value("codigo_componente").toString();
+    float cant =  m_kits->record(ui->tabla->currentIndex().row()).value("cantidad").toFloat();
+    int id = m_kits->record(ui->tabla->currentIndex().row()).value("id").toInt();
+    QString error;
+
+    if(QMessageBox::question(this,tr("Eliminar componente de kit"),tr("¿Desea devolver el stock al componente?"),
+                          tr("No"),
+                          tr("Si")) == QMessageBox::Accepted)
+    {
+        QMap <int,QSqlRecord> art=
+                SqlCalls::SelectRecord("articulos",QString("codigo ='%1'").arg(codigo),Configuracion_global->groupDB,error);
+
+        if(!art.isEmpty() && art.first().value("controlar_stock").toBool())
+        {
+            QString SQL = QString("update articulos set stock_real = stock_real + %1,"
+                          "stock_fisico_almacen = stock_fisico_almacen +%1 where id = %2").arg((cant*ui->spinCantRomper->maximum())).arg(
+                        art.first().value("id").toInt());
+            QSqlQuery articulo(Configuracion_global->groupDB);
+            if(!articulo.exec(SQL))
+                QMessageBox::warning(this,tr("Gestión de Kits"),tr("Ocurrió un error al actulizar stock:\n%1").arg(
+                                         articulo.lastError().text()));
+            else
+                TimedMessageBox *t = new TimedMessageBox(this,tr("Estock de artículos actualizado"));
+        }
+        else if(!error.isEmpty())
+        {
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            QMessageBox::critical(this,tr("Error al actualizar stock"),error);
+            return;
+        }
+    }
+    if(!SqlCalls::SqlDelete("kits",Configuracion_global->groupDB,QString("id = %1").arg(id),error))
+    {
+        if(t)
+            Configuracion_global->groupDB.rollback();
+        QMessageBox::critical(this,tr("Error al eliminar componente"),error);
+        return;
+    }
+    if(t)
+    {
+        if(!Configuracion_global->groupDB.commit())
+        {
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            QMessageBox::critical(this,tr("Error al guardar en base de datos"),error);
+        }
+        else
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Componente eliminado con éxito"));
+    }
+    set_articulo(ui->txtCodigo_kit->text(),ui->txtDescripcion->text());
 }
 
 void FrmKit::valueChanged(double)
