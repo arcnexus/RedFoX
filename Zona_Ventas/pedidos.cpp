@@ -39,31 +39,30 @@ bool Pedidos::AnadirPedido()
     this->porc_rec1 = Configuracion_global->reList.at(3).toDouble();
     this->recargo_equivalencia = 0;
 
-    QSqlQuery ped_cli(Configuracion_global->empresaDB);
-     ped_cli.prepare("INSERT INTO ped_cli (pedido,porc_iva1,porc_iva2,porc_iva3,porc_iva4,"
-                     "porc_rec1,porc_rec2,porc_rec3,porc_rec4,id_cliente)"
-                   " VALUES (:pedido,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,"
-                     ":porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4,:id_cliente)");
+    QHash <QString,QVariant> ped;
+    QString error;
 
      this->pedido = NuevoNumeroPedido();
-     ped_cli.bindValue(":pedido",pedido);
-     ped_cli.bindValue(":porc_iva1",this->porc_iva1);
-     ped_cli.bindValue(":porc_iva2",this->porc_iva2);
-     ped_cli.bindValue(":porc_iva3",this->porc_iva3);
-     ped_cli.bindValue(":porc_iva4",this->porc_iva4);
-     ped_cli.bindValue(":porc_rec1",this->porc_rec1);
-     ped_cli.bindValue(":porc_rec2",this->porc_rec1);
-     ped_cli.bindValue(":porc_rec3",this->porc_rec1);
-     ped_cli.bindValue(":porc_rec4",this->porc_rec1);
-     ped_cli.bindValue(":id_cliente",id_cliente);
-     if(!ped_cli.exec())
+     ped["pedido"] = this->pedido;
+     ped["porc_iva1"] = this->porc_iva1;
+     ped["porc_iva2"] = this->porc_iva2;
+     ped["porc_iva3"] = this->porc_iva3;
+     ped["porc_iva4"] = this->porc_iva4;
+     ped["porc_rec1"] = this->porc_rec1;
+     ped["porc_rec2"] = this->porc_rec1;
+     ped["porc_rec3"] = this->porc_rec1;
+     ped["porc_rec4"] = this->porc_rec1;
+     ped["desc_gasto1"] = QObject::tr("Portes.");
+     ped["id_cliente"] = this->id_cliente;
+     int new_id = SqlCalls::SqlInsert(ped,"cab_ped",Configuracion_global->empresaDB,error);
+     if(new_id <1)
      {
-         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", ped_cli.lastError().text());
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", error);
          return false;
      }
      else
      {
-         this->id = ped_cli.lastInsertId().toInt();
+         this->id = new_id;
          return true;
      }
 }
