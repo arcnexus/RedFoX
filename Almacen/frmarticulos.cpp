@@ -2444,7 +2444,6 @@ void FrmArticulos::on_btnKit_clicked()
             if(success)
             {
                 oArticulo->coste = oArticulo->coste_real = newCoste;
-                LLenarCampos(ui->Pestanas->currentIndex());
                 QMessageBox::information(this,tr("Coste actualizado"),tr("Asegurese de revisas sus tarifas"));
             }
             else
@@ -2452,6 +2451,7 @@ void FrmArticulos::on_btnKit_clicked()
                 QMessageBox::critical(this,tr("Error al actualizar coste"),error);
             }
         }
+        LLenarCampos(ui->Pestanas->currentIndex());
     }
 }
 

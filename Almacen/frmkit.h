@@ -16,6 +16,7 @@ public:
     ~FrmKit();
     void set_articulo(QString codigo, QString Descripcion);
     double getCoste();
+    void refreshCantidades();
 private slots:
     void on_btnAnadir_clicked();
 
@@ -28,6 +29,8 @@ private slots:
     void on_btnQuitar_clicked();
 
     void valueChanged(double);
+    void on_btnRomperKit_clicked();
+
 private:
     Ui::FrmKit *ui;
     QSqlQueryModel *m_arts;

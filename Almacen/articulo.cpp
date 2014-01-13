@@ -1250,7 +1250,7 @@ QString Articulo::getsubfamilia(int nid)
                              tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
     } else
       Query.next();
-    return Query.record().field("subfamilia").value().toString();
+    return Query.record().field("sub_familia").value().toString();
 
 }
 
@@ -1264,7 +1264,7 @@ QString Articulo::getcSubSubFamilia(int nid)
                              tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
     } else
       Query.next();
-    return Query.record().field("subsubfamilia").value().toString();
+    return Query.record().field("subsub_familia").value().toString();
 }
 
 QString Articulo::getcGrupo(int nid)
@@ -1277,7 +1277,7 @@ QString Articulo::getcGrupo(int nid)
                              tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
     } else
       Query.next();
-    return Query.record().field("grupoart").value().toString();
+    return Query.record().field("grupo_art").value().toString();
 }
 
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
