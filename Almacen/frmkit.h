@@ -14,7 +14,7 @@ class FrmKit : public QDialog
 public:
     explicit FrmKit(QWidget *parent = 0);
     ~FrmKit();
-    void set_articulo(QString codigo, QString Descripcion);
+    void set_articulo(QString codigo, QString Descripcion, int stock);
     double getCoste();
     void refreshCantidades();
 private slots:
@@ -37,6 +37,7 @@ private:
     QSqlQueryModel *m_kits;
     int id_componente;
     void refrescar_tabla_escandallo(QString codigo);
+    int stock;
 };
 
 #endif // FRMKIT_H

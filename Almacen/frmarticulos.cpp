@@ -2430,7 +2430,7 @@ void FrmArticulos::on_btnKit_clicked()
     if(oArticulo->kit)
     {
         FrmKit kit(this);
-        kit.set_articulo(oArticulo->codigo, oArticulo->descripcion);
+        kit.set_articulo(oArticulo->codigo, oArticulo->descripcion, oArticulo->nstock_fisico_almacen);
         kit.setWindowState(kit.windowState() | Qt::WindowMaximized);
         kit.exec();
         double newCoste = kit.getCoste();
