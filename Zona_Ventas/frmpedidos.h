@@ -46,12 +46,7 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-    void desglose1Changed(double base, double iva, double re, double total);
-    void desglose2Changed(double base, double iva, double re, double total);
-    void desglose3Changed(double base, double iva, double re, double total);
-    void desglose4Changed(double base, double iva, double re, double total);
-    void lineaReady(lineaDetalle*);
+
     void lineaDeleted(lineaDetalle*);
     void refrescar_modelo();
 

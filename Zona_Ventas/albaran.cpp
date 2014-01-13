@@ -6,6 +6,7 @@ Albaran::Albaran(QObject *parent) :
     id(0)
 {
     //this->id =0;
+    oArticulo = new Articulo(this);
 }
 
 Albaran::~Albaran()
@@ -331,6 +332,36 @@ int Albaran::NuevoNumeroAlbaran(QString serie)
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
     }
     return albaran;
+}
+
+bool Albaran::borrar_linea(int id_lin)
+{
+    QMap <int,QSqlRecord> lin;
+    QHash <QString,QVariant> h;
+    QString error;
+    lin = SqlCalls::SelectRecord("lin_alb",QString("id=%1").arg(id_lin),Configuracion_global->empresaDB,error);
+    if(!error.isEmpty())
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Albaranes"),
+                             tr("Ocurrió un error al cargar datos de línea a borrar: %1").arg(error),
+                             tr("Aceptar"));
+        return false;
+    }
+
+        bool success = SqlCalls::SqlDelete("lin_alb",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
+        if(success)
+        {
+            if(oArticulo->acumulado_devoluciones(lin.value(id_lin).value("id_articulo").toInt(),
+                                         lin.value(id_lin).value("cantidad").toFloat(),
+                                                lin.value(id_lin).value("total").toDouble(),
+                                                QDate::currentDate(),"V"))
+                return true;
+        }
+        else
+        {
+            QMessageBox::critical(qApp->activeWindow(), "Error:",error);
+            return false;
+        }
 }
 
 
