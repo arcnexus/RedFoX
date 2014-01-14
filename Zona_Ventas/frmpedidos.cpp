@@ -1478,6 +1478,9 @@ void FrmPedidos::convertir_enFactura()
             fact["desc_gasto1"] = oPedido->gasto1;
             fact["desc_gasto2"] = oPedido->gasto2;
             fact["desc_gasto3"] = oPedido->gasto3;
+            fact["imp_gasto1"] = oPedido->imp_gasto1;
+            fact["imp_gasto2"] = oPedido->imp_gasto2;
+            fact["imp_gasto3"] = oPedido->imp_gasto3;
             fact["porc_iva_gasto1"] = oPedido->porc_iva_gasto1;
             fact["porc_iva_gasto2"] = oPedido->porc_iva_gasto2;
             fact["porc_iva_gasto3"] = oPedido->porc_iva_gasto3;

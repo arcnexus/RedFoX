@@ -96,6 +96,15 @@ frmFacturas::frmFacturas( QWidget *parent) :
     modelDivisas->setQuery("select moneda from monedas",Configuracion_global->groupDB);
     ui->cboDivisa->setModel(modelDivisas);
 
+    //-----------------------
+    // Rellenar ivas gastos
+    //-----------------------
+    ui->cbo_porc_gasto_iva1->addItems(Configuracion_global->ivaList);
+    ui->cbo_porc_gasto_iva2->addItems(Configuracion_global->ivaList);
+    ui->cbo_porc_gasto_iva3->addItems(Configuracion_global->ivaList);
+    ui->cbo_porc_gasto_iva1->setCurrentIndex(0);
+    ui->cbo_porc_gasto_iva2->setCurrentIndex(0);
+    ui->cbo_porc_gasto_iva3->setCurrentIndex(0);
 
     // --------------------------
     // campo busquedas
@@ -329,9 +338,12 @@ void frmFacturas::LLenarCampos() {
     ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
     ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
     ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
-    ui->spin_porc_iva_gasto1->setValue(oFactura->porc_iva_gasto1);
-    ui->spin_porc_iva_gasto2->setValue(oFactura->porc_iva_gasto2);
-    ui->spin_porc_iva_gasto3->setValue(oFactura->porc_iva_gasto3);
+    index = ui->cbo_porc_gasto_iva1->findText(QString::number(oFactura->porc_iva_gasto1));
+    ui->cbo_porc_gasto_iva1->setCurrentIndex(index);
+    index = ui->cbo_porc_gasto_iva2->findText(QString::number(oFactura->porc_iva_gasto2));
+    ui->cbo_porc_gasto_iva2->setCurrentIndex(index);
+    index = ui->cbo_porc_gasto_iva3->findText(QString::number(oFactura->porc_iva_gasto3));
+    ui->cbo_porc_gasto_iva3->setCurrentIndex(index);
     ui->spin_iva_gasto1->setValue(oFactura->iva_gasto1);
     ui->spin_iva_gasto2->setValue(oFactura->iva_gasto2);
     ui->spin_iva_gasto3->setValue(oFactura->iva_gasto3);
@@ -531,9 +543,9 @@ void frmFacturas::VaciarCampos()
     ui->SpinGastoDist1->setValue(0);
     ui->SpinGastoDist2->setValue(0);
     ui->SpinGastoDist3->setValue(0);
-    ui->spin_porc_iva_gasto1->setValue(0);
-    ui->spin_porc_iva_gasto2->setValue(0);
-    ui->spin_porc_iva_gasto3->setValue(0);
+    ui->cbo_porc_gasto_iva1->setCurrentIndex(ui->cbo_porc_gasto_iva1->findText(Configuracion_global->ivaList.at(0)));
+    ui->cbo_porc_gasto_iva2->setCurrentIndex(ui->cbo_porc_gasto_iva2->findText(Configuracion_global->ivaList.at(0)));
+    ui->cbo_porc_gasto_iva3->setCurrentIndex(ui->cbo_porc_gasto_iva3->findText(Configuracion_global->ivaList.at(0)));
     ui->spin_iva_gasto1->setValue(0);
     ui->spin_iva_gasto2->setValue(0);
     ui->spin_iva_gasto3->setValue(0);
@@ -684,9 +696,9 @@ void frmFacturas::LLenarFactura() {
     oFactura->imp_gasto1 = ui->SpinGastoDist1->value();
     oFactura->imp_gasto2 = ui->SpinGastoDist2->value();
     oFactura->imp_gasto3 = ui->SpinGastoDist3->value();
-    oFactura->porc_iva_gasto1 = ui->spin_porc_iva_gasto1->value();
-    oFactura->porc_iva_gasto2 = ui->spin_porc_iva_gasto2->value();
-    oFactura->porc_iva_gasto3 = ui->spin_porc_iva_gasto3->value();
+    oFactura->porc_iva_gasto1 = ui->cbo_porc_gasto_iva1->currentText().toFloat();
+    oFactura->porc_iva_gasto2 = ui->cbo_porc_gasto_iva2->currentText().toFloat();
+    oFactura->porc_iva_gasto3 = ui->cbo_porc_gasto_iva1->currentText().toFloat();
     oFactura->iva_gasto1 = ui->spin_iva_gasto1->value();
     oFactura->iva_gasto2 = ui->spin_iva_gasto2->value();
     oFactura->iva_gasto3 = ui->spin_iva_gasto3->value();
@@ -1419,41 +1431,41 @@ void frmFacturas::calcular_factura()
 
     }
     // añadir gastos extras
-    if(ui->spin_porc_iva_gasto1->value() == ui->txtporc_iva1->text().toFloat())
+    if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist1->value();
-    if(ui->spin_porc_iva_gasto2->value() == ui->txtporc_iva1->text().toFloat())
+    if(ui->cbo_porc_gasto_iva2->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist2->value();
-    if(ui->spin_porc_iva_gasto3->value() == ui->txtporc_iva1->text().toFloat())
+    if(ui->cbo_porc_gasto_iva3->currentText().toFloat()== ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
     iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia)
         re1 = base1 * (ui->txtrec1->text().toFloat()/100);
 
-    if(ui->spin_porc_iva_gasto1->value() == ui->txtporc_iva2->text().toFloat())
+    if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
-    if(ui->spin_porc_iva_gasto2->value() == ui->txtporc_iva2->text().toFloat())
+    if(ui->cbo_porc_gasto_iva2->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist2->value();
-    if(ui->spin_porc_iva_gasto3->value() == ui->txtporc_iva2->text().toFloat())
+    if(ui->cbo_porc_gasto_iva3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
     iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia)
         re2 = base2 * (ui->txtrec1->text().toFloat()/100);
 
-    if(ui->spin_porc_iva_gasto1->value() == ui->txtporc_iva3->text().toFloat())
+    if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
-    if(ui->spin_porc_iva_gasto2->value() == ui->txtporc_iva3->text().toFloat())
+    if(ui->cbo_porc_gasto_iva2->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist2->value();
-    if(ui->spin_porc_iva_gasto3->value() == ui->txtporc_iva3->text().toFloat())
+    if(ui->cbo_porc_gasto_iva3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
     iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia)
         re3 = base3 * (ui->txtrec3->text().toFloat()/100);
 
-    if(ui->spin_porc_iva_gasto1->value() == ui->txtporc_iva4->text().toFloat())
+    if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
-    if(ui->spin_porc_iva_gasto2->value() == ui->txtporc_iva4->text().toFloat())
+    if(ui->cbo_porc_gasto_iva2->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist2->value();
-    if(ui->spin_porc_iva_gasto3->value() == ui->txtporc_iva4->text().toFloat())
+    if(ui->cbo_porc_gasto_iva3->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
     iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia)
@@ -1868,7 +1880,7 @@ void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(const QString &ar
 
 void frmFacturas::on_SpinGastoDist1_editingFinished()
 {
-    double importe_iva = ui->SpinGastoDist1->value() *(ui->spin_porc_iva_gasto1->value()/100);
+    double importe_iva = ui->SpinGastoDist1->value() *(ui->cbo_porc_gasto_iva1->currentText().toFloat()/100);
     ui->spin_iva_gasto1->setValue(importe_iva);
     calcular_factura();
     //QString filter = QString("id_cab = '%1'").arg(oFactura->id);
@@ -1878,21 +1890,21 @@ void frmFacturas::on_SpinGastoDist1_editingFinished()
 
 void frmFacturas::on_spin_porc_iva_gasto1_editingFinished()
 {
-    double importe_iva = ui->SpinGastoDist1->value() *(ui->spin_porc_iva_gasto1->value()/100);
+    double importe_iva = ui->SpinGastoDist1->value() *(ui->cbo_porc_gasto_iva1->currentText().toFloat()/100);
     ui->spin_iva_gasto1->setValue(importe_iva);
     calcular_factura();
 }
 
 void frmFacturas::on_SpinGastoDist2_editingFinished()
 {
-    double importe_iva = ui->SpinGastoDist2->value() *(ui->spin_porc_iva_gasto2->value()/100);
+    double importe_iva = ui->SpinGastoDist2->value() *(ui->cbo_porc_gasto_iva2->currentText().toFloat()/100);
     ui->spin_iva_gasto2->setValue(importe_iva);
     calcular_factura();
 }
 
 void frmFacturas::on_spin_porc_iva_gasto2_editingFinished()
 {
-    double importe_iva = ui->SpinGastoDist2->value() *(ui->spin_porc_iva_gasto2->value()/100);
+    double importe_iva = ui->SpinGastoDist2->value() *(ui->cbo_porc_gasto_iva2->currentText().toFloat()/100);
     ui->spin_iva_gasto2->setValue(importe_iva);
     calcular_factura();
 
@@ -1900,14 +1912,14 @@ void frmFacturas::on_spin_porc_iva_gasto2_editingFinished()
 
 void frmFacturas::on_SpinGastoDist3_editingFinished()
 {
-    double importe_iva = ui->SpinGastoDist3->value() *(ui->spin_porc_iva_gasto3->value()/100);
+    double importe_iva = ui->SpinGastoDist3->value() *(ui->cbo_porc_gasto_iva3->currentText().toFloat()/100);
     ui->spin_iva_gasto3->setValue(importe_iva);
     calcular_factura();
 }
 
 void frmFacturas::on_spin_porc_iva_gasto3_editingFinished()
 {
-    double importe_iva = ui->SpinGastoDist3->value() *(ui->spin_porc_iva_gasto3->value()/100);
+    double importe_iva = ui->SpinGastoDist3->value() *(ui->cbo_porc_gasto_iva3->currentText().toFloat()/100);
     ui->spin_iva_gasto3->setValue(importe_iva);
     calcular_factura();
 }

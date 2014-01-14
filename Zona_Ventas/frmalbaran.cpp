@@ -1371,6 +1371,14 @@ void FrmAlbaran::on_btnFacturar_clicked()
             cab_fac["imp_gasto1"] = oAlbaran->imp_gasto1;
             cab_fac["imp_gasto2"] = oAlbaran->imp_gasto2;
             cab_fac["imp_gasto3"] = oAlbaran->imp_gasto3;
+            cab_fac["porc_iva_gasto1"] = oAlbaran->imp_gasto1;
+            cab_fac["porc_iva_gasto2"] = oAlbaran->imp_gasto2;
+            cab_fac["porc_iva_gasto3"] = oAlbaran->imp_gasto3;
+            cab_fac["iva_gasto1"] = oAlbaran->iva_gasto1;
+            cab_fac["iva_gasto2"] = oAlbaran->iva_gasto2;
+            cab_fac["iva_gasto3"] = oAlbaran->iva_gasto3;
+
+
             // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
            Factura oFactura;
 
