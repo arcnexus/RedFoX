@@ -16,6 +16,7 @@ transportistas::transportistas(QObject *parent) :
 int transportistas::anadir()
 {
     h_transportista.remove("id");
+
     QString error;
     int id  = SqlCalls::SqlInsert(h_transportista,"transportista",Configuracion_global->groupDB,error);
     if(id > -1)
@@ -117,3 +118,18 @@ QString transportistas::RecuperarPais(int nid)
     return "";
 }
 
+void transportistas::BorrarTransportista (int id)
+{
+    if(QMessageBox::question(qApp->activeWindow(),tr("Borrar Transportista"),
+                          tr("Está apunto de borrar un transportista\n¿Desea continuar?"),
+                          tr("No"),tr("Si")) == QMessageBox::Accepted)
+    {
+        QSqlQuery qTransportista(Configuracion_global->groupDB);
+        qTransportista.prepare("DELETE FROM transportista WHERE id =:id");
+        qTransportista.bindValue(":id",id);
+        if (!qTransportista.exec()) {
+            QMessageBox::warning(qApp->activeWindow(),tr("Borrar Cliente"),tr("Falló el borrado de tipos de cliente"),
+                                 tr("Aceptar"));
+        }
+}
+}

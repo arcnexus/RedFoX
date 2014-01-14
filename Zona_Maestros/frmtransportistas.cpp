@@ -42,8 +42,10 @@ void FrmTransportistas::on_btnAnadir_clicked()
     ui->stackedWidget->setCurrentIndex(1);
     Bloquear_campos(false);
     anadiendo = true;
+    vaciarCampos();
 
-    oTransportista.anadir();
+    oTransportista.h_transportista.clear();
+    //oTransportista.anadir();
     ui->txtCodigo->setFocus();
 }
 
@@ -178,6 +180,7 @@ void FrmTransportistas::on_btnGuardar_clicked()
     if(anadiendo)
     {
         cargar_en_objeto();
+
         oTransportista.anadir();
         anadiendo = false;
 
@@ -391,4 +394,31 @@ void FrmTransportistas::filter_table(QString texto, QString orden, QString modo)
     m->setQuery("SELECT id , codigo, transportista "
                 "FROM transportista WHERE "+order+" LIKE '%"+texto.trimmed()+
                 "%' ORDER BY "+order +" "+modo,Configuracion_global->groupDB);
+}
+
+void FrmTransportistas::vaciarCampos()
+{
+    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+    QLineEdit *lineEdit;
+    foreach (lineEdit, lineEditList) {
+        lineEdit->clear();
+    }
+}
+
+void FrmTransportistas::on_txtCodigo_editingFinished()
+{
+    if(ui->txtCodigo->text().isEmpty()){
+        QMessageBox::warning(this,tr("ATENCIÓN:"),
+                             tr("El campo de codigo no puede estar en blanco"),
+                             tr("Aceptar"));
+        ui->txtCodigo->setFocus();
+    }
+}
+
+void FrmTransportistas::on_btnBorrar_clicked()
+{
+    if(oTransportista.h_transportista["id"].isValid()){
+        oTransportista.BorrarTransportista(oTransportista.h_transportista["id"].toInt());
+        vaciarCampos();
+    }
 }

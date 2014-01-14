@@ -345,6 +345,202 @@ background-color: rgb(248, 245, 194);</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
+          <item row="1" column="3">
+           <widget class="QPushButton" name="pushButtonEditarContacto">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../EditorReports/resource.qrc">
+              <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLabel" name="label_60">
+            <property name="text">
+             <string>Móvil 1:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3" colspan="2">
+           <widget class="QLineEdit" name="txtMovil1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="txtDescripcionM1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="txtDescripcionT1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLabel" name="label_61">
+            <property name="text">
+             <string>Móvil 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_59">
+            <property name="text">
+             <string>Desc. M2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>Desc. T3:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QPushButton" name="pushButtonBorrarContacto">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="txtDescripcionM2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Telefono 3:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>Desc. T2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3" colspan="2">
+           <widget class="QLineEdit" name="txtTelefono3">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="text">
+             <string>email:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Desc.T1:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1" colspan="4">
+           <widget class="QLineEdit" name="txtemail_contacto">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3" colspan="2">
+           <widget class="QLineEdit" name="txtTelefono1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Nombre:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_62">
+            <property name="text">
+             <string>Cargo:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="4">
+           <widget class="QLineEdit" name="txtCargo">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pushButtonAadirContacto">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="4">
+           <widget class="QLineEdit" name="txtNombre">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>Telefono 2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="3" colspan="2">
+           <widget class="QLineEdit" name="txtMovil2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>Telefono 1:</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="5">
            <widget class="QTableView" name="tablaContactos">
             <property name="alternatingRowColors">
@@ -358,183 +554,29 @@ background-color: rgb(248, 245, 194);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="txtDescripcionT2">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3" colspan="2">
-           <widget class="QLineEdit" name="txtTelefono1">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_62">
-            <property name="text">
-             <string>Cargo:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QLabel" name="label_61">
-            <property name="text">
-             <string>Móvil 2:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="txtDescripcionT1">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="3" colspan="2">
-           <widget class="QLineEdit" name="txtMovil1">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
+          <item row="6" column="1">
            <widget class="QLineEdit" name="txtDescripcionT3">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_25">
-            <property name="text">
-             <string>Desc. T2:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3" colspan="2">
-           <widget class="QLineEdit" name="txtTelefono3">
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="txtDescripcionT2">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="7" column="0">
-           <widget class="QLabel" name="label_59">
-            <property name="text">
-             <string>Desc. M2:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_24">
-            <property name="text">
-             <string>Desc. T3:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3" colspan="2">
-           <widget class="QLineEdit" name="txtTelefono2">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="3" colspan="2">
-           <widget class="QLineEdit" name="txtMovil2">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" colspan="4">
-           <widget class="QLineEdit" name="txtNombre">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QLabel" name="label_60">
-            <property name="text">
-             <string>Móvil 1:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
            <widget class="QLabel" name="label_28">
             <property name="text">
              <string>Desc. M1:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1" colspan="4">
-           <widget class="QLineEdit" name="txtCargo">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="label_26">
-            <property name="text">
-             <string>Telefono 1:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="txtDescripcionM1">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string>Desc.T1:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="label_27">
-            <property name="text">
-             <string>Telefono 2:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLineEdit" name="txtDescripcionM2">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_34">
-            <property name="text">
-             <string>email:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Nombre:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLabel" name="label_29">
-            <property name="text">
-             <string>Telefono 3:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1" colspan="4">
-           <widget class="QLineEdit" name="txtemail_contacto">
+          <item row="5" column="3" colspan="2">
+           <widget class="QLineEdit" name="txtTelefono2">
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -920,6 +962,7 @@ background-color: #304163;</string>
  </widget>
  <resources>
   <include location="../maya.qrc"/>
+  <include location="../EditorReports/resource.qrc"/>
  </resources>
  <connections/>
 </ui>

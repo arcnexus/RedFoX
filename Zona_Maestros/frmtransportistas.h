@@ -24,6 +24,7 @@ public:
     
     QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
     
+protected:
 private slots:
     void on_btnAnadir_clicked();
 
@@ -44,6 +45,10 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void on_txtCodigo_editingFinished();
+
+    void on_btnBorrar_clicked();
+
 private:
     Ui::FrmTransportistas *ui;
     transportistas oTransportista;
@@ -61,6 +66,7 @@ private:
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+    void vaciarCampos();
 };
 
 #endif // FRMTRANSPORTISTAS_H

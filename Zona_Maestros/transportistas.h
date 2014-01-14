@@ -17,7 +17,8 @@ public:
     bool guardar();
     bool recuperar(QStringList filtro, QStringList extras);
     QString RecuperarPais(int nid);
-//    Proveedor oProveedor;
+    //    Proveedor oProveedor;
+    void BorrarTransportista(int id);
 private:
 
 
