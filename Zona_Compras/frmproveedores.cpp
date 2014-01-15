@@ -1,6 +1,6 @@
 #include "frmproveedores.h"
 #include "ui_frmproveedores.h"
-#include "proveedor.h"
+
 #include "frmfacturasproveedor.h"
 #include "frmpedidosproveedor.h"
 #include "frmalbaranproveedor.h"
@@ -10,11 +10,7 @@
 #include "../Auxiliares/entregascuenta.h"
 
 
-#ifdef WIN32
-//#define and && 4005401548072
 
-#endif
-Proveedor *oProveedor = new Proveedor();
 
 frmProveedores::frmProveedores(QWidget *parent) :
   MayaModule(module_zone(),module_name(),parent),
@@ -24,58 +20,108 @@ frmProveedores::frmProveedores(QWidget *parent) :
 
 {
     ui->setupUi(this);
+    oProveedor = new Proveedor();
     oProveedor->id = 0;
+
+    // cargar datos forma de pago.
+    qmFormaPago = new QSqlQueryModel(this);
+    qmFormaPago->setQuery("select id,codigo, forma_pago from formpago",Configuracion_global->groupDB);
+    ui->txtcodigoFormaPago->setModel(qmFormaPago);
+    ui->txtcodigoFormaPago->setModelColumn(1);
+    oProveedor->idFormadePago = qmFormaPago->record(ui->txtcodigoFormaPago->currentIndex()).value("id").toInt();
+
+    // Cargar divisas
+    modelDivisas = new QSqlQueryModel(this);
+    modelDivisas->setQuery("select id,moneda from monedas",Configuracion_global->groupDB);
+    ui->cboDivisas->setModel(modelDivisas);
+    ui->cboDivisas->setModelColumn(1);
+
+    // Cargar Paises
+    modelPais = new QSqlQueryModel(this);
+    modelPais->setQuery("select id,pais from paises",Configuracion_global->groupDB);
+    ui->txtpais->setModel(modelPais);
+    ui->txtpais->setModelColumn(1);
+    oProveedor->id_pais = modelPais->record(ui->txtpais->currentIndex()).value("id").toInt();
+
+    // Cargar Paises almacen
+    ui->txtpaisAlmacen->setModel(modelPais);
+    ui->txtpaisAlmacen->setModelColumn(1);
+    oProveedor->id_pais_almacen = modelPais->record(ui->txtpaisAlmacen->currentIndex()).value("id").toInt();
+
+    // CONTROLES
+    ui->btnGuardarContacto->setVisible(false);
     ui->txtfecha_alta->setDate(QDate::currentDate());
     ui->txtfecha_ultima_compra->setDate(QDate::currentDate());
-    //---------------------------
-    // cargar datos forma de pago.
-    //---------------------------
-    QSqlQueryModel *qmFormaPago = new QSqlQueryModel(this);
-    qmFormaPago->setQuery("select codigo, forma_pago from formpago",Configuracion_global->groupDB);
 
-    ui->txtcodigoFormaPago->setModel(qmFormaPago);
-    oProveedor->idFormadePago = Configuracion_global->Devolver_id_forma_pago(ui->txtcodigoFormaPago->currentText());
-
-    // ---------------
-    // Cargar divisas
-    //----------------
-    QSqlQueryModel * modelDivisas = new QSqlQueryModel(this);
-    modelDivisas->setQuery("select moneda from monedas",Configuracion_global->groupDB);
-    ui->cboDivisas->setModel(modelDivisas);
-
-    // ----------------
-    // Cargar Paises
-    // ----------------
-    QSqlQueryModel * modelPais = new QSqlQueryModel(this);
-    modelPais->setQuery("select pais from paises",Configuracion_global->groupDB);
-    ui->txtpais->setModel(modelPais);
-    oProveedor->id_pais = Configuracion_global->Devolver_id_pais(ui->txtpais->currentText());
-
-    // ---------------------
-    // Cargar Paises almacen
-    // ---------------------
-    QSqlQueryModel * modelPaisAlmacen = new QSqlQueryModel(this);
-    modelPaisAlmacen->setQuery("select pais from paises",Configuracion_global->groupDB);
-    ui->txtpaisAlmacen->setModel(modelPaisAlmacen);
-    oProveedor->id_pais_almacen = Configuracion_global->Devolver_id_pais(ui->txtpaisAlmacen->currentText());
-
-
-    // -----------------------
-    // CONTROLES
-    // -----------------------
-    ui->btnGuardarContacto->setVisible(false);
-
-    //---------------------------
     // TABLA PRINCIPAL BUSQUEDAS
-    //---------------------------
     model = new QSqlQueryModel(this);
     QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by proveedor";
     model->setQuery(cSQL,Configuracion_global->groupDB);
     ui->tabla->setModel(model);
     formato_tabla(model);
-    // -----------------------
+
+    //Articulos prov
+    modelArticulo = new QSqlQueryModel(this);
+    ui->tablaArticulos->setModel(modelArticulo);
+    ui->tablaArticulos->setColumnWidth(2,200);
+    ui->tablaArticulos->setItemDelegateForColumn(3,new MonetaryDelegate(this));
+
+    //Asientos
+    modelAsientos = new QSqlQueryModel(this);
+    ui->tablaAsientos->setModel(modelAsientos);
+    ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
+    ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate(this));
+    ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate(this));
+
+    //Deudas
+    modeloDeudas = new QSqlQueryModel(this);
+    ui->tablaPagos->setModel(modeloDeudas);
+    ui->tablaPagos->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tablaPagos->setItemDelegateForColumn(3,new DateDelegate(this));
+    ui->tablaPagos->setItemDelegateForColumn(4,new MonetaryDelegate(this));
+    ui->tablaPagos->setItemDelegateForColumn(5,new MonetaryDelegate(this));
+    ui->tablaPagos->setItemDelegateForColumn(6, new MonetaryDelegate(this));
+
+    //Contactos
+    modelContactos= new QSqlQueryModel(this);
+    ui->tablaContactos->setModel(modelContactos);
+
+    //pedidos
+    modelPedidos = new QSqlQueryModel(this);
+    ui->tablaColumnasPedidos->setModel(modelPedidos);
+    ui->tablaColumnasPedidos->setItemDelegateForColumn(2, new DateDelegate(this));
+    ui->tablaColumnasPedidos->setItemDelegateForColumn(3,new MonetaryDelegate(this));
+
+    //facturas
+    modelFacturas = new QSqlQueryModel(this);
+    ui->tablacolumnasFacturas->setModel(modelFacturas);
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(4,new MonetaryDelegate(this));
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(5,new MonetaryDelegate(this));
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(6,new MonetaryDelegate(this));
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(7,new MonetaryDelegate(this));
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(8,new MonetaryDelegate(this));
+    ui->tablacolumnasFacturas->setItemDelegateForColumn(9,new MonetaryDelegate(this));
+
+    //Albaranes
+    modelAlbaranes = new QSqlQueryModel(this);
+    ui->tablaColumnasAlbaran->setModel(modelAlbaranes);
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(4,new MonetaryDelegate(this));
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(5,new MonetaryDelegate(this));
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(6,new MonetaryDelegate(this));
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(7,new MonetaryDelegate(this));
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(8,new MonetaryDelegate(this));
+    ui->tablaColumnasAlbaran->setItemDelegateForColumn(9,new MonetaryDelegate(this));
+
+    //entregas
+    modelEntregas = new QSqlQueryModel(this);
+    ui->tabla_entregas->setModel(modelEntregas);
+    ui->tabla_entregas->setItemDelegateForColumn(1,new DateDelegate(this));
+    ui->tabla_entregas->setItemDelegateForColumn(3,new MonetaryDelegate(this));
+    ui->tabla_entregas->setItemDelegateForColumn(4,new MonetaryDelegate(this));
+
     // CONEXIONES
-    //------------------------
     connect(ui->btnAnadir_persona_contacto,SIGNAL(clicked()),this,SLOT(nuevo_contacto()));
     ui->tablaContactos->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->tablaPagos->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -87,9 +133,8 @@ frmProveedores::frmProveedores(QWidget *parent) :
 
     setUpBusqueda();
     BloquearCampos(true);
-    //------------------------
+
     // CONTROL DE EVENTOS
-    //------------------------
     QList<QWidget*> l = this->findChildren<QWidget*>();
     QList<QWidget*> ::Iterator it;
 
@@ -105,68 +150,54 @@ void frmProveedores::LLenarCampos()
 {
     ui->lblcodigo_proveedor->setText(oProveedor->codigo);
     ui->lblproveedor->setText(oProveedor->proveedor);
+
+    /* TabDatos => index 0  */
     ui->txtcodigo->setText(oProveedor->codigo);
     ui->txtproveedor->setText(oProveedor->proveedor);
+    ui->txtfecha_alta->setDate(oProveedor->fecha_alta);
     ui->txtcif->setText(oProveedor->cif);
+    ui->txttelefono1->setText(oProveedor->telefono1);
+    ui->txttelefono2->setText(oProveedor->telefono2);
+    ui->txttelefono3->setText(oProveedor->telefono3);
     ui->txtdireccion1->setText(oProveedor->direccion1);
     ui->txtdireccion2->setText(oProveedor->direccion2);
     ui->txtcp->setText(oProveedor->cp);
     ui->txtpoblacion->setText(oProveedor->poblacion);
     ui->txtprovincia->setText(oProveedor->provincia);
-    int index = ui->txtpais->findText(oProveedor->pais);
-    ui->txtpais->setCurrentIndex(index);
-    ui->txttelefono1->setText(oProveedor->telefono1);
-    ui->txttelefono2->setText(oProveedor->telefono2);
-    ui->txttelefono3->setText(oProveedor->telefono3);
+    ui->txtpais->setCurrentIndex(ui->txtpais->findText(oProveedor->pais));
     ui->txtfax->setText(oProveedor->fax);
     ui->txtmovil->setText(oProveedor->movil);
     ui->txtemail->setText(oProveedor->email);
     ui->txtweb->setText(oProveedor->web);
-    ui->txtpersona_contacto->setText(oProveedor->persona_contacto);
-    ui->txtdia_cobro->setText(QString::number(oProveedor->dia_cobro));
-    ui->txtdireccion_almacen->setText(oProveedor->direccion_almacen);
-    ui->txtcp_almacen->setText(oProveedor->cp_almacen);
-    ui->txtpoblacion_almacen->setText(oProveedor->poblacion_almacen);
-    ui->txtprovinciaAmacen->setText(oProveedor->provincia_almacen);
-    index = ui->txtpaisAlmacen->findText(oProveedor->paisAlmacen);
-    ui->txtpaisAlmacen->setCurrentIndex(index);
-    ui->txttelefono_almacen->setText(oProveedor->telefono_almacen);
-    ui->txtfax_almacen->setText(oProveedor->fax_almacen);
 
-    int nIndex = ui->txtcodigoFormaPago->findText(oProveedor->codigoFormaPago);
-    if (nIndex !=-1)
-    {
-        ui->txtcodigoFormaPago->setCurrentIndex(nIndex);
-        ui->txtforma_pago->setText(Configuracion_global->Devolver_forma_pago(oProveedor->idFormadePago));
+    /* TabContacto => index 1   */
+    contactos();
 
-    } else
-    {
-        ui->txtforma_pago->setText("");
-    }
-
-    ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);
-    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->importe_acumulado_compras,'f',Configuracion_global->decimales)));
+    /* TabFinanzas => index 2 */
     ui->txtentidad_bancaria_proveedor->setText(oProveedor->entidad_bancaria_proveedor);
     ui->txtoficina_bancaria_proveedor->setText(oProveedor->oficina_bancaria_proveedor);
-    ui->txtdc_proveedor->setText(oProveedor->dc_proveedor);
-    ui->txtcc_proveedor->setText(oProveedor->cc_proveedor);
     ui->txtentidad_pago_proveedor->setText(oProveedor->entidad_pago_proveedor);
     ui->txtoficina_pago_proveedor->setText(oProveedor->oficina_pago_proveedor);
+    ui->txtcodigoFormaPago->setCurrentIndex(ui->txtcodigoFormaPago->findText(oProveedor->codigoFormaPago));
+    ui->txtforma_pago->setText(qmFormaPago->record(ui->txtcodigoFormaPago->currentIndex()).value("forma_pago").toString());
+
+    switch (oProveedor->tipo_iva) {
+    case 1:
+        ui->radGeneral->setChecked(true);
+        break;
+    case 2:
+        ui->radUE->setChecked(true);
+        break;
+    case 3:
+        ui->radExportacion->setChecked(true);
+        break;
+    case 4:
+        ui->radExcento->setChecked(true);
+        break;
+    }
     ui->txtdc_pago_proveedor->setText(oProveedor->dc_pago_proveedor);
-    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->entregado_a_cuenta,'f',Configuracion_global->decimales)));
-    ui->txtretencion_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->retencion_irpf,'f',Configuracion_global->decimales)));
-    ui->txttipo_retencioirpf->setText(QString::number(oProveedor->tipo_retencion));
-    ui->txtcuenta_aplicacion->setText(oProveedor->cuenta_aplicacion);
-    ui->txtcomentarios->setText(oProveedor->comentarios);
-    ui->txtdto->setText(QString::number(oProveedor->dto));
-    ui->txtfecha_alta->setDate(oProveedor->fecha_alta);
-    ui->txtdeuda_maxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_maxima,'f',Configuracion_global->decimales)));
-    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_actual,'f',Configuracion_global->decimales)));
-    if (oProveedor->recargo_equivalencia==1)
-        ui->chkrecargo_equivalencia->setChecked(true);
-    else
-        ui->chkrecargo_equivalencia->setChecked(false);
-    ui->txttexto_para_pedidos->setPlainText(oProveedor->texto_para_pedidos);
+    ui->txtdc_proveedor->setText(oProveedor->dc_proveedor);
+    ui->txtcc_proveedor->setText(oProveedor->cc_proveedor);
 
     QString cOk;
     if(!ui->txtentidad_pago_proveedor->text().isEmpty() && !ui->txtoficina_pago_proveedor->text().isEmpty() &&
@@ -185,42 +216,92 @@ void frmProveedores::LLenarCampos()
         ui->lblCuenta1Valida->setText(tr("La cuenta es válida"));
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
+    ui->cboDivisas->setCurrentIndex(ui->cboDivisas->findText(oProveedor->s_Divisa));
 
-    //----------------------
-    // Tipo de iva proveedor
-    //----------------------
-    if(oProveedor->tipo_iva == 1)
-        ui->radGeneral->setChecked(true);
-    if(oProveedor->tipo_iva == 2)
-        ui->radUE->setChecked(true);
-    if(oProveedor->tipo_iva == 3)
-        ui->radExportacion->setChecked(true);
-    if(oProveedor->tipo_iva == 4)
-        ui->radExcento->setChecked(true);
-    //----------------------
-    //  Rellenar Historiales
-    //----------------------
+    /* tabPagos => index 3 */
 
-    historiales();
+    modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
+                           "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
+                           QString::number(oProveedor->id)+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
 
-    // --------------------
-    // Rellenar Acumulados
-    //---------------------
+    ui->tablaPagos->setColumnHidden(0,true);
+    ui->tablaPagos->setColumnWidth(1,80);
+    ui->tablaPagos->setColumnWidth(2,70);
+    ui->tablaPagos->setColumnWidth(3,70);
+    ui->tablaPagos->setColumnWidth(4,65);
+    ui->tablaPagos->setColumnWidth(5,65);
+    ui->tablaPagos->setColumnWidth(6,65);
+    ui->tablaPagos->setColumnWidth(8,200);
+    ui->tablaPagos->setColumnWidth(9,200);
+
+    modeloDeudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
+    modeloDeudas->setHeaderData(2,Qt::Horizontal,tr("F. Deuda"));
+    modeloDeudas->setHeaderData(3,Qt::Horizontal,tr("Vto"));
+    modeloDeudas->setHeaderData(4,Qt::Horizontal,tr("Importe"));
+    modeloDeudas->setHeaderData(5,Qt::Horizontal,tr("Pagado"));
+    modeloDeudas->setHeaderData(6,Qt::Horizontal,tr("Pendiente"));
+    modeloDeudas->setHeaderData(7,Qt::Horizontal,tr("Pago por...."));
+    modeloDeudas->setHeaderData(8,Qt::Horizontal,tr("N.Tarjeta/Cuenta"));
+    modeloDeudas->setHeaderData(9,Qt::Horizontal,tr("Asiento numero"));
+
+    ui->txtdeuda_actual->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_actual,'f',Configuracion_global->decimales)));
+    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->entregado_a_cuenta,'f',Configuracion_global->decimales)));
+    ui->txtretencion_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->retencion_irpf,'f',Configuracion_global->decimales)));
+    ui->txttipo_retencioirpf->setText(QString::number(oProveedor->tipo_retencion));
+    ui->chkrecargo_equivalencia->setChecked(oProveedor->recargo_equivalencia==1);
+    ui->txtdeuda_maxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_maxima,'f',Configuracion_global->decimales)));
+    ui->txtdia_cobro->setText(QString::number(oProveedor->dia_cobro));
+    ui->txtdto->setText(QString::number(oProveedor->dto));
+
+
+    /* tabAlmacen => index 4   */
+    ui->txtdireccion_almacen->setText(oProveedor->direccion_almacen);
+    ui->txtcp_almacen->setText(oProveedor->cp_almacen);
+    ui->txtpoblacion_almacen->setText(oProveedor->poblacion_almacen);
+    ui->txtprovinciaAmacen->setText(oProveedor->provincia_almacen);
+    ui->txtpaisAlmacen->setCurrentIndex(ui->txtpaisAlmacen->findText(oProveedor->paisAlmacen));
+    ui->txttelefono_almacen->setText(oProveedor->telefono_almacen);
+    ui->txtfax_almacen->setText(oProveedor->fax_almacen);
+
+    /* tabArticulos => index 5  */
+    modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
+                           "from articulos where id_proveedor =" +QString::number(oProveedor->id),
+                           Configuracion_global->groupDB);
+    ui->tablaArticulos->setColumnWidth(2,200);
+
+    /* txttexto_para_pedidos => index 6 */
+    ui->txttexto_para_pedidos->setPlainText(oProveedor->texto_para_pedidos);
+
+    /* tabConta => index 7 */
+    ui->txtcuenta_aplicacion->setText(oProveedor->cuenta_aplicacion);
+
+    modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
+                            "from diario where cta_principal = '"+oProveedor->cuenta_aplicacion +
+                            "' order by asiento + ' '+pos_en_asiento",
+                            Configuracion_global->contaDB);
+
+    ui->tablaAsientos->setColumnHidden(0,true);
+    ui->tablaAsientos->setColumnWidth(1,55);
+    ui->tablaAsientos->setColumnWidth(2,63);
+    ui->tablaAsientos->setColumnWidth(3,55);
+    ui->tablaAsientos->setColumnWidth(4,75);
+    ui->tablaAsientos->setColumnWidth(5,60);
+    ui->tablaAsientos->setColumnWidth(6,55);
+    ui->tablaAsientos->setColumnWidth(7,75);
+    ui->tablaAsientos->setColumnWidth(8,60);
+
+    /* tabEstad => index 8  */
     acumulados();
 
-    //---------------------
-    // Grafica
-    //---------------------
+
+    /* tabGraf => index 9 */
     grafica();
 
-    // -----------------------
-    // Cargar Contactos
-    // -----------------------
-    contactos();
+    /* tabComen => index 10 */
+    ui->txtcomentarios->setText(oProveedor->comentarios);
 
-
-
-
+    /* tabHisto => index 11*/
+    historiales();
 }
 
 void frmProveedores::CargarCamposEnProveedor()
@@ -241,7 +322,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->movil = ui->txtmovil->text();
     oProveedor->email = ui->txtemail->text();
     oProveedor->web = ui->txtweb->text();
-    oProveedor->persona_contacto = ui->txtpersona_contacto->text();
+    //oProveedor->persona_contacto = ui->txtpersona_contacto->text();
     oProveedor->dia_cobro = ui->txtdia_cobro->text().toInt();
     oProveedor->direccion_almacen = ui->txtdireccion_almacen->text();
     oProveedor->cp_almacen = ui->txtcp_almacen->text();
@@ -278,17 +359,8 @@ void frmProveedores::CargarCamposEnProveedor()
         oProveedor->tipo_iva = 3;
     if(ui->radExcento->isChecked())
         oProveedor->tipo_iva = 4;
-    cargar_forma_pago(ui->txtcodigoFormaPago->currentText());
-
+    oProveedor->idFormadePago = qmFormaPago->record(ui->txtcodigoFormaPago->currentIndex()).value("id").toInt();
 }
-
-void frmProveedores::cargar_forma_pago(QString codigo)
-{
-    int id_forma_pago = Configuracion_global->Devolver_id_codigo_forma_pago(codigo);
-    ui->txtforma_pago->setText(Configuracion_global->Devolver_forma_pago(id_forma_pago));
-    oProveedor->idFormadePago = id_forma_pago;
-}
-
 
 void frmProveedores::BloquearCampos(bool state)
 {
@@ -297,6 +369,7 @@ void frmProveedores::BloquearCampos(bool state)
     foreach (lineEdit, lineEditList) {
         lineEdit->setReadOnly(state);
     }
+
     // ComboBox
     QList<QComboBox *> ComboBoxList = this->findChildren<QComboBox *>();
     QComboBox *ComboBox;
@@ -309,12 +382,7 @@ void frmProveedores::BloquearCampos(bool state)
         foreach (SpinBox, SpinBoxList) {
             SpinBox->setReadOnly(state);
         }
-        // DoubleSpinBox
-    //    QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
-    //    QDoubleSpinBox *DSpinBox;
-    //    foreach (DSpinBox, DSpinBoxList) {
-    //        DSpinBox->setReadOnly(true);
-    //    }
+
     // CheckBox
     QList<QCheckBox *> CheckBoxList = this->findChildren<QCheckBox *>();
     QCheckBox *CheckBox;
@@ -347,23 +415,23 @@ void frmProveedores::BloquearCampos(bool state)
 
     m_busqueda->block(!state);
 
-
-
-
+    if(state)
+        emit unblock();
+    else
+        emit block();
 }
-
 
 
 void frmProveedores::on_btnSiguiente_clicked()
 {
-    oProveedor->Recuperar("Select * from proveedores where id>"+QString::number(oProveedor->id),1);
-    LLenarCampos();
+    if(oProveedor->Next())
+        LLenarCampos();
 }
 
 void frmProveedores::on_btnAnterior_clicked()
 {
-    oProveedor->Recuperar("Select * from proveedores where id<"+QString::number(oProveedor->id)+" order by id desc",2);
-    LLenarCampos();
+    if(oProveedor->Prev())
+        LLenarCampos();
 }
 
 void frmProveedores::on_btnGuardar_clicked()
@@ -399,6 +467,7 @@ void frmProveedores::on_btnEditar_clicked()
     BloquearCampos(false);
     ocultarBusqueda();
     ui->txtcodigo->setFocus();
+    editing = true;
 }
 
 void frmProveedores::on_btnAnadir_clicked()
@@ -410,84 +479,19 @@ void frmProveedores::on_btnAnadir_clicked()
     BloquearCampos(false);
     ocultarBusqueda();
     ui->txtcodigo->setFocus();
+    editing = false;
 }
 
 
 void frmProveedores::on_txtpoblacion_editingFinished()
 {
     // TODO BUSCAR POBLACIÓN.
-//    ui->txtpoblacion->setText(ui->txtpoblacion->text().toUpper());
-//    if (ui->txtcp->text().isEmpty() && !ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()) {
-//        FrmBuscarPoblacion BuscarPoblacion;
-
-//        //Configuracion_global->CargarDatos();
-//        BuscarPoblacion.setpoblacion(ui->txtpoblacion->text(),1);
-//        if(BuscarPoblacion.exec()) {
-//            //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-//            int nid = BuscarPoblacion.Devolverid();
-
-//            if(nid > 0) {
-//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//                QString cid;
-//                cid = QString::number(nid);
-//                qPoblacion.prepare("select col_3 as poblacion, col_4 as CP,col_6 as provincia from poblaciones where col_1 = :cid");
-//                qPoblacion.bindValue(":id",cid);
-//                if(!qPoblacion.exec()) {
-//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//                } else {
-//                    if (qPoblacion.next()) {
-//                        ui->txtpoblacion->setText(qPoblacion.value(0).toString());
-//                        ui->txtcp->setText(qPoblacion.value(1).toString());
-//                        ui->txtprovincia->setText(qPoblacion.value(2).toString());
-//                        int index = ui->txtpais->findText(Configuracion_global->pais);
-//                        ui->txtpais->setCurrentIndex(index);
-//                    }
-//                }
-
-//            }
-//        }
-//    }
-//    ui->txttelefono1->setFocus();
-
 }
 
 void frmProveedores::on_txtcp_editingFinished()
 {
     // TODO - BUSCAR POBLACION
-//    if (!ui->txtcp->text().isEmpty() && ui->txtpoblacion->text().isEmpty() && !ui->txtcp->isReadOnly()){
-//        FrmBuscarPoblacion BuscarPoblacion;
-
-//        BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-//        if(BuscarPoblacion.exec()) {
-//            int nid = BuscarPoblacion.Devolverid();
-//            if(nid > 0) {
-//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//                QString cid;
-//                cid = QString::number(nid);
-//                qPoblacion.prepare("select  poblacion,  cp, provincia from poblaciones where id = :cid");
-//                qPoblacion.bindValue(":id",cid);
-//                if(!qPoblacion.exec()) {
-//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//                } else {
-//                    if (qPoblacion.next()) {
-//                        ui->txtpoblacion->setText(qPoblacion.record().value("poblacion").toString());
-//                        ui->txtprovincia->setText(qPoblacion.record().value("provincia").toString());
-//                        int index = ui->txtpais->findText(Configuracion_global->pais);
-//                        ui->txtpais->setCurrentIndex(index);
-//                        ui->txttelefono1->setFocus();
-//                    }
-//                }
-
-//            }
-//        }
-//    }
-
 }
-
-
-
-
-
 
 void frmProveedores::on_btnBorrar_clicked()
 {
@@ -495,7 +499,8 @@ void frmProveedores::on_btnBorrar_clicked()
                                                                           "se borrarán todos los historiales de ese proveedor.\n"
                                                                           " Esta opción no se puede deshacer"),
                                      tr("Borrar"),tr("Cancelar Borrado"));
-    if(ndev ==0) {
+    if(ndev ==0)
+    {
         oProveedor->Borrar(oProveedor->id);
         oProveedor->Vaciar();
         LLenarCampos();
@@ -504,12 +509,16 @@ void frmProveedores::on_btnBorrar_clicked()
 
 void frmProveedores::on_btnDeshacer_clicked()
 {
-    int ndev = QMessageBox::question(NULL,tr("Gestión de proveedores"),tr("Se perderán los cambios realizados en la ficha\n"
-                                                                          " Esta opción no se puede deshacer\n\n"
-                                                                          "¿ Desea anular los cambios o continuar la edición?"),
-                                     tr("Continuar Edición"),tr("Anular cambios"));
-    if(ndev==1) {
-        oProveedor->Recuperar("Select * from proveedores where id = "+QString::number(oProveedor->id));
+    if(QMessageBox::question(NULL,tr("Gestión de proveedores"),
+                             tr("Se perderán los cambios realizados en la ficha\n"
+                                " Esta opción no se puede deshacer\n\n"
+                                "¿ Desea anular los cambios o continuar la edición?"),
+                             tr("Continuar Edición"),tr("Anular cambios")) == QDialog::Accepted)
+    {
+        if(!this->editing)
+        {
+            oProveedor->Borrar(oProveedor->id);
+        }
         LLenarCampos();
         BloquearCampos(true);
     }
@@ -634,42 +643,11 @@ void frmProveedores::on_txtcuentaPagoProveedor_editingFinished()
 void frmProveedores::on_txtcp_almacen_editingFinished()
 {
     // TODO - BUSCAR POBLACION
-//    if (!ui->txtcp_almacen->isReadOnly()) {
-//        if (!ui->txtcp_almacen->text().isEmpty() && ui->txtpoblacion_almacen->text().isEmpty()) {
-//            FrmBuscarPoblacion BuscarPoblacion;
-
-//            //Configuracion_global->CargarDatos();
-//            BuscarPoblacion.setpoblacion(ui->txtcp_almacen->text(),0);
-//            if(BuscarPoblacion.exec()) {
-//                int nid = BuscarPoblacion.Devolverid();
-//                if(nid > 0) {
-//                    QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//                    QString cid;
-//                    cid = QString::number(nid);
-//                    qPoblacion.prepare("select poblacion, cp, provincia from poblaciones where id = :cid");
-//                    qPoblacion.bindValue(":id",cid);
-//                    if(!qPoblacion.exec()) {
-//                        QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//                    } else {
-//                        if (qPoblacion.next()) {
-//                            ui->txtpoblacion_almacen->setText(qPoblacion.value(0).toString());
-//                            ui->txtprovinciaAmacen->setText(qPoblacion.value(2).toString());
-//                            int index = ui->txtpaisAlmacen->findText(Configuracion_global->pais);
-//                            ui->txtpaisAlmacen->setCurrentIndex(index);
-//                        }
-//                    }
-
-//                }
-//            }
-//        }
-//        ui->txttelefono_almacen->setFocus();
-//    }
 }
 
 void frmProveedores::on_txtpais_currentIndexChanged(const QString &arg1)
 {
-    QString pais = arg1;
-   oProveedor->id_pais = Configuracion_global->Devolver_id_pais(pais);
+   oProveedor->id_pais = modelPais->record(ui->txtpais->currentIndex()).value("id").toInt();
 }
 
 
@@ -725,33 +703,25 @@ void frmProveedores::ver_asiento()
 
 void frmProveedores::historiales()
 {
-    // -------------------------
     // Cargar historial Pedidos
-    //--------------------------
-    QSqlQueryModel *modelPedidos = new QSqlQueryModel(this);
     modelPedidos->setQuery("select id,pedido,fecha,total,recibido_completo from ped_pro where id_proveedor ="+
-                           QString::number(oProveedor->id)+" order by pedido desc",Configuracion_global->empresaDB);
-    ui->tablaColumnasPedidos->setModel(modelPedidos);
+                           QString::number(oProveedor->id)+" order by pedido desc",Configuracion_global->empresaDB);        
+
     ui->tablaColumnasPedidos->setColumnHidden(0,true);
     ui->tablaColumnasPedidos->setColumnWidth(1,120);
     ui->tablaColumnasPedidos->setColumnWidth(1,120);
     ui->tablaColumnasPedidos->setColumnWidth(3,120);
-    modelPedidos->setHeaderData(1,Qt::Horizontal,"PEDidO");
-    ui->tablaColumnasPedidos->setItemDelegateForColumn(2, new DateDelegate);
-    modelPedidos->setHeaderData(2,Qt::Horizontal,"Fecha");
-    ui->tablaColumnasPedidos->setItemDelegateForColumn(3,new MonetaryDelegate);
+    modelPedidos->setHeaderData(1,Qt::Horizontal,"Pedido");
+    modelPedidos->setHeaderData(2,Qt::Horizontal,"Fecha");    
     modelPedidos->setHeaderData(3,Qt::Horizontal,"Total");
     modelPedidos->setHeaderData(4,Qt::Horizontal,"C.");
 
 
-    // -------------------------
-    // Cargar Historial Facturas
-    //--------------------------
-    QSqlQueryModel *modelFacturas = new QSqlQueryModel(this);
+    // Cargar Historial Facturas    
     modelFacturas->setQuery("select id,factura,fecha,pedido,total_base,total_iva,total_retencion,total_recargo,total,importe_deuda_pendiente"
                             " from fac_pro where id_proveedor = "+QString::number(oProveedor->id)+
                             " order by factura desc",Configuracion_global->empresaDB);
-    ui->tablacolumnasFacturas->setModel(modelFacturas);
+
     ui->tablacolumnasFacturas->setColumnHidden(0,true);
     modelFacturas->setHeaderData(1,Qt::Horizontal,"N.Factura");
     modelFacturas->setHeaderData(2,Qt::Horizontal,"Fecha");
@@ -763,23 +733,11 @@ void frmProveedores::historiales()
     modelFacturas->setHeaderData(8,Qt::Horizontal,"TOTAL");
     modelFacturas->setHeaderData(9,Qt::Horizontal,"Pendiente");
 
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(4,new MonetaryDelegate);
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(5,new MonetaryDelegate);
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(6,new MonetaryDelegate);
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(7,new MonetaryDelegate);
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(8,new MonetaryDelegate);
-    ui->tablacolumnasFacturas->setItemDelegateForColumn(9,new MonetaryDelegate);
-
-
-    // --------------------------
-    // Cargar Historial Albaranes
-    //---------------------------
-    QSqlQueryModel *modelAlbaranes = new QSqlQueryModel(this);
+    // Cargar Historial Albaranes    
     modelAlbaranes->setQuery("select id,albaran,fecha,base_total,iva_total,"
                              " total from alb_pro where id_proveedor = "+QString::number(oProveedor->id)+
                              " order by albaran desc ",Configuracion_global->empresaDB);
-    ui->tablaColumnasAlbaran->setModel(modelAlbaranes);
+
     ui->tablaColumnasAlbaran->setColumnHidden(0,true);
     modelAlbaranes->setHeaderData(1,Qt::Horizontal,"N.Albarán");
     modelAlbaranes->setHeaderData(2,Qt::Horizontal,"Fecha");
@@ -791,115 +749,29 @@ void frmProveedores::historiales()
     modelAlbaranes->setHeaderData(8,Qt::Horizontal,"TOTAL");
     modelAlbaranes->setHeaderData(9,Qt::Horizontal,"Pendiente");
 
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(4,new MonetaryDelegate);
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(5,new MonetaryDelegate);
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(6,new MonetaryDelegate);
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(7,new MonetaryDelegate);
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(8,new MonetaryDelegate);
-    ui->tablaColumnasAlbaran->setItemDelegateForColumn(9,new MonetaryDelegate);
-
-    //---------------------
-    // Artículos proveedor
-    //---------------------
-    QSqlQueryModel *modelArticulo = new QSqlQueryModel(this);
-    modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
-                           "from articulos where id_proveedor =" +QString::number(oProveedor->id),
-                           Configuracion_global->groupDB);
-
-
-    ui->tablaArticulos->setModel(modelArticulo);
-    ui->tablaArticulos->setColumnWidth(2,200);
-    ui->tablaArticulos->setItemDelegateForColumn(3,new MonetaryDelegate);
-
-    //----------------------
-    // Deudas a Proveedores
-    //----------------------
-    QSqlQueryModel *modeloDeudas = new QSqlQueryModel(this);
-    modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
-                           "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
-                           QString::number(oProveedor->id)+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
-    ui->tablaPagos->setModel(modeloDeudas);
-    ui->tablaPagos->setColumnHidden(0,true);
-    ui->tablaPagos->setColumnWidth(1,80);
-    ui->tablaPagos->setColumnWidth(2,70);
-    ui->tablaPagos->setColumnWidth(3,70);
-    ui->tablaPagos->setColumnWidth(4,65);
-    ui->tablaPagos->setColumnWidth(5,65);
-    ui->tablaPagos->setColumnWidth(6,65);
-    ui->tablaPagos->setColumnWidth(8,200);
-    ui->tablaPagos->setColumnWidth(9,200);
-    ui->tablaPagos->setItemDelegateForColumn(2,new DateDelegate);
-    ui->tablaPagos->setItemDelegateForColumn(3,new DateDelegate);
-    ui->tablaPagos->setItemDelegateForColumn(4,new MonetaryDelegate);
-    ui->tablaPagos->setItemDelegateForColumn(5,new MonetaryDelegate);
-    ui->tablaPagos->setItemDelegateForColumn(6, new MonetaryDelegate);
-    modeloDeudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
-    modeloDeudas->setHeaderData(2,Qt::Horizontal,tr("F. Deuda"));
-    modeloDeudas->setHeaderData(3,Qt::Horizontal,tr("Vto"));
-    modeloDeudas->setHeaderData(4,Qt::Horizontal,tr("Importe"));
-    modeloDeudas->setHeaderData(5,Qt::Horizontal,tr("Pagado"));
-    modeloDeudas->setHeaderData(6,Qt::Horizontal,tr("Pendiente"));
-    modeloDeudas->setHeaderData(7,Qt::Horizontal,tr("Pago por...."));
-    modeloDeudas->setHeaderData(8,Qt::Horizontal,tr("N.Tarjeta/Cuenta"));
-    modeloDeudas->setHeaderData(9,Qt::Horizontal,tr("Asiento numero"));
-
-    //----------------------
-    // Asientos contables
-    //----------------------
-    QSqlQueryModel *modelAsientos = new QSqlQueryModel(this);
-
-    modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
-                            "from diario where cta_principal = '"+oProveedor->cuenta_aplicacion +
-                            "' order by asiento + ' '+pos_en_asiento",
-                            Configuracion_global->contaDB);
-
-    ui->tablaAsientos->setModel(modelAsientos);
-    ui->tablaAsientos->setColumnHidden(0,true);
-
-    ui->tablaAsientos->setColumnWidth(1,55);
-    ui->tablaAsientos->setColumnWidth(2,63);
-    ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate);
-    ui->tablaAsientos->setColumnWidth(3,55);
-    ui->tablaAsientos->setColumnWidth(4,75);
-    ui->tablaAsientos->setColumnWidth(5,60);
-    ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate);
-    ui->tablaAsientos->setColumnWidth(6,55);
-    ui->tablaAsientos->setColumnWidth(7,75);
-    ui->tablaAsientos->setColumnWidth(8,60);
-    ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate);
-
-    //------------------------------
-    // Historial entregas a cuenta
-    //------------------------------
-    QSqlQueryModel * modelEntregas = new QSqlQueryModel(this);
+    // Historial entregas a cuenta    
     modelEntregas->setQuery("select id,fecha_entrega,concepto,importe,disponible from proveedor_a_cuenta where id_proveedor = "+QString::number(oProveedor->id),
                             Configuracion_global->groupDB);
-    ui->tabla_entregas->setModel(modelEntregas);
+
     ui->tabla_entregas->setColumnHidden(0,true);
-    ui->tabla_entregas->setColumnWidth(1,100);
-    ui->tabla_entregas->setItemDelegateForColumn(1,new DateDelegate);
+    ui->tabla_entregas->setColumnWidth(1,100);    
     ui->tabla_entregas->setColumnWidth(2,250);
-    ui->tabla_entregas->setColumnWidth(3,80);
-    ui->tabla_entregas->setItemDelegateForColumn(3,new MonetaryDelegate);
+    ui->tabla_entregas->setColumnWidth(3,80);    
     ui->tabla_entregas->setColumnWidth(4,80);
-    ui->tabla_entregas->setItemDelegateForColumn(4,new MonetaryDelegate);
+
     QStringList cHeader;
     cHeader << tr("Fecha") <<tr("concepto") << tr("importe") <<tr("disponible");
     for(int pos = 0; pos < cHeader.size();pos++)
     {
         modelEntregas->setHeaderData(pos,Qt::Horizontal,cHeader.at(pos));
     }
-
-
-
 }
 
 void frmProveedores::acumulados()
 {
-    //----------------------
-    // Acumulados
-    //----------------------
+    ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);
+    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->importe_acumulado_compras,'f',Configuracion_global->decimales)));
+
     ui->txtEnero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->enero,'f',Configuracion_global->decimales)));
     ui->txtFebrero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->febrero,'f',Configuracion_global->decimales)));
     ui->txtMarzo->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->marzo,'f',Configuracion_global->decimales)));
@@ -912,7 +784,6 @@ void frmProveedores::acumulados()
     ui->txtOctubre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->octubre,'f',Configuracion_global->decimales)));
     ui->txtNoviembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->noviembre,'f',Configuracion_global->decimales)));
     ui->txtDiciembre->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->diciembre,'f',Configuracion_global->decimales)));
-
 }
 
 void frmProveedores::grafica()
@@ -935,13 +806,11 @@ void frmProveedores::grafica()
 
 void frmProveedores::contactos()
 {
-    QSqlQueryModel *modelContactos= new QSqlQueryModel(this);
+
     modelContactos->setQuery("select id,id_proveedor,cargo_empresa, nombre, desc_telefono1,telefono1,desc_telefono2,telefono2,"
                              "desc_telefono3, telefono3, desc_movil1,movil1,desc_movil2,movil2 "
                              "from personascontactoproveedor where id_proveedor ="+QString::number(oProveedor->id),
                              Configuracion_global->groupDB);
-
-    ui->tablaContactos->setModel(modelContactos);
 
     modelContactos->setHeaderData(0,Qt::Horizontal,tr("id"));
     modelContactos->setHeaderData(1,Qt::Horizontal,tr("id_proveedor"));
@@ -960,7 +829,6 @@ void frmProveedores::contactos()
 
     ui->tablaContactos->setColumnHidden(0,true);
     ui->tablaContactos->setColumnHidden(1,true);
-
 }
 
 void frmProveedores::menu_contactos(const QPoint &position)

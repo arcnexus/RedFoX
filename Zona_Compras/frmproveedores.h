@@ -3,6 +3,8 @@
 
 #include "../Auxiliares/Globlal_Include.h"
 #include "../mayamodule.h"
+#include "proveedor.h"
+
 namespace Ui {
 class frmProveedores;
 }
@@ -15,20 +17,24 @@ public:
     explicit frmProveedores(QWidget *parent = 0);
     int id_contacto;
     ~frmProveedores();
+
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Proveedores";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
-    QString ModuleMenuPath(){return tr("");}
-    
+    QString ModuleMenuPath(){return tr("");}    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+
 public slots:
+
+private slots:
     void BloquearCampos(bool state);
     void LLenarCampos();
     void CargarCamposEnProveedor();
-    void cargar_forma_pago(QString);
+
     void editar_contacto();
+
     void borrar_contacto();
-private slots:
+
     void on_btnSiguiente_clicked();
 
     void on_btnGuardar_clicked();
@@ -106,9 +112,11 @@ private slots:
     void on_tabla_doubleClicked(const QModelIndex &index);
 
     void on_tablaContactos_doubleClicked(const QModelIndex &index);
+
+
     void mostrarBusqueda();
     void ocultarBusqueda();
-    void filter_table(QString texto, QString orden, QString modo);
+    void filter_table(QString texto, QString orden, QString modo);    
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
@@ -118,9 +126,28 @@ private:
     QSqlQueryModel *model;
     void formato_tabla(QSqlQueryModel *modelo);
 
-
+    Proveedor * oProveedor;
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+
+    bool editing;
+
+
+    //////
+    QSqlQueryModel *qmFormaPago;
+    QSqlQueryModel * modelDivisas;
+    QSqlQueryModel * modelPais;
+
+    QSqlQueryModel *modelArticulo;
+    QSqlQueryModel *modelAsientos;
+    QSqlQueryModel *modeloDeudas;
+
+    QSqlQueryModel *modelContactos;
+
+    QSqlQueryModel *modelPedidos;
+    QSqlQueryModel *modelFacturas;
+    QSqlQueryModel *modelAlbaranes;
+    QSqlQueryModel * modelEntregas;
 };
 
 #endif // FRMPROVEEDORES_H

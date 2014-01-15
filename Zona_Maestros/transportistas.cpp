@@ -70,7 +70,7 @@ bool transportistas::recuperar(QStringList filtro,QStringList extras)
                 //--------------------------
                 // Recupero datos proveedor
                 //--------------------------
-                oProveedor.Recuperar(QString("select * from proveedores where id = %1").arg(h_transportista.value("id_proveedor").toInt()));
+                oProveedor.Recuperar(h_transportista.value("id_proveedor").toInt());
             }
 
 

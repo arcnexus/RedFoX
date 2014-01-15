@@ -297,11 +297,11 @@
         </widget>
        </item>
        <item row="3" column="1" rowspan="2" colspan="2">
-        <widget class="QTabWidget" name="tabWidget_5">
+        <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tabDatos">
           <attribute name="title">
            <string>Proveedor</string>
           </attribute>
@@ -629,7 +629,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_3">
+         <widget class="QWidget" name="tabContacto">
           <attribute name="title">
            <string>Contactos</string>
           </attribute>
@@ -825,7 +825,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_19">
+         <widget class="QWidget" name="tabFinanza">
           <attribute name="title">
            <string>Datos financieros</string>
           </attribute>
@@ -1008,7 +1008,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_14">
+         <widget class="QWidget" name="tabPagos">
           <attribute name="title">
            <string>Pagos</string>
           </attribute>
@@ -1242,7 +1242,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_15">
+         <widget class="QWidget" name="tabAlmacen">
           <attribute name="title">
            <string>Dirección almacén</string>
           </attribute>
@@ -1377,7 +1377,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_5">
+         <widget class="QWidget" name="tabArticulos">
           <attribute name="title">
            <string>Articulos</string>
           </attribute>
@@ -1391,7 +1391,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_6">
+         <widget class="QWidget" name="tabTextPedidos">
           <attribute name="title">
            <string>T. Pedidos</string>
           </attribute>
@@ -1408,7 +1408,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_7">
+         <widget class="QWidget" name="tabConta">
           <attribute name="title">
            <string>Contabilidad</string>
           </attribute>
@@ -1463,7 +1463,7 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_11">
+         <widget class="QWidget" name="tabEstad">
           <attribute name="title">
            <string>Estadistica</string>
           </attribute>
@@ -1916,7 +1916,7 @@ color: rgb(0, 0, 0);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_18">
+         <widget class="QWidget" name="tabGraf">
           <attribute name="title">
            <string>Grafica</string>
           </attribute>
@@ -1939,7 +1939,7 @@ color: rgb(0, 0, 0);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_16">
+         <widget class="QWidget" name="tabComen">
           <attribute name="title">
            <string>Comentarios</string>
           </attribute>
@@ -1949,7 +1949,7 @@ color: rgb(0, 0, 0);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_4">
+         <widget class="QWidget" name="tabHisto">
           <attribute name="title">
            <string>Historial</string>
           </attribute>
@@ -2095,8 +2095,6 @@ color: rgb(0, 0, 0);</string>
             </widget>
            </item>
           </layout>
-          <zorder>tabWidget_3</zorder>
-          <zorder>pestanaHistAlbaranes</zorder>
          </widget>
         </widget>
        </item>
@@ -2224,7 +2222,7 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnNuevoAlbaran</tabstop>
   <tabstop>tablaColumnasPedidos</tabstop>
   <tabstop>btnNuevoPedido</tabstop>
-  <tabstop>tabWidget_5</tabstop>
+  <tabstop>tabWidget</tabstop>
   <tabstop>txtcodigoFormaPago</tabstop>
   <tabstop>txtforma_pago</tabstop>
   <tabstop>btnAnadir</tabstop>
