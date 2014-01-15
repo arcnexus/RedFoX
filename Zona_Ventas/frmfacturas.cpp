@@ -877,6 +877,7 @@ void frmFacturas::refrescar_modelo()
 {
     modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                               "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
+    calcular_factura();
 }
 
 
@@ -1470,6 +1471,12 @@ void frmFacturas::calcular_factura()
     iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia)
         re4 = base4 * (ui->txtrec4->text().toFloat()/100);
+
+    // TOTALES PARCIALES
+    total1 = base1+iva1+re1;
+    total2 = base2+iva2+re2;
+    total3 = base3+iva3+re3;
+    total4 = base4+iva4+re4;
 
     // TOTALES GENERALES
 

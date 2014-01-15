@@ -279,7 +279,7 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
 
         ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                              i.value().value("pvp_con_iva").toDouble(),'f',
-                                                                             Configuracion_global->decimales)));
+                                                                             Configuracion_global->decimales_campos_totales)));
         ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
                                                                                               Configuracion_global->decimales)));
 
@@ -420,7 +420,7 @@ void frmEditLine::vaciar_campos()
 
 void frmEditLine::calcular()
 {
-    double pvp_rec,porc_dto;
+    double pvp_rec,porc_dto,total;
     pvp_rec = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
     porc_dto = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
 
@@ -441,10 +441,12 @@ void frmEditLine::calcular()
                 pvp_recom = 1;
             else
                 pvp_recom = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
-            float porc_dto = (dto * 100) / pvp_recom;
-            ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
-                                                                                           Configuracion_global->decimales_campos_totales)));
-
+            if(ui->txtPorc_dto->text() =="0,00" || ui->txtPorc_dto->text() =="0")
+            {
+                float porc_dto = (dto * 100) / pvp_recom;
+                ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
+                                                                                               Configuracion_global->decimales_campos_totales)));
+            }
         }
     }
 
@@ -468,7 +470,8 @@ void frmEditLine::calcular()
                     Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text())/100);
 
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(precio_cliente,'f',Configuracion_global->decimales)));
-    ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',
+    total = Configuracion_global->MonedatoDouble(Configuracion_global->toFormatoMoneda(QString::number(base)));
+    ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',
                                                                      Configuracion_global->decimales_campos_totales)));
     total_con_iva = base + (base * ui->cboIva->currentText().toFloat()/100);
     ui->txtImporte_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(
@@ -491,7 +494,7 @@ void frmEditLine::on_txtPVP_editingFinished()
 {
     ui->txtPVP->blockSignals(true);
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(ui->txtPVP->text()));
-    ui->txtPorc_dto->setText("0,00");
+    //ui->txtPorc_dto->setText("0,00");
     calcular();
     ui->txtPVP->blockSignals(false);
 }
