@@ -146,12 +146,8 @@ frmProveedores::~frmProveedores()
 {
     delete ui;
 }
-void frmProveedores::LLenarCampos()
+void frmProveedores::llenar_tabDatos()
 {
-    ui->lblcodigo_proveedor->setText(oProveedor->codigo);
-    ui->lblproveedor->setText(oProveedor->proveedor);
-
-    /* TabDatos => index 0  */
     ui->txtcodigo->setText(oProveedor->codigo);
     ui->txtproveedor->setText(oProveedor->proveedor);
     ui->txtfecha_alta->setDate(oProveedor->fecha_alta);
@@ -169,11 +165,10 @@ void frmProveedores::LLenarCampos()
     ui->txtmovil->setText(oProveedor->movil);
     ui->txtemail->setText(oProveedor->email);
     ui->txtweb->setText(oProveedor->web);
+}
 
-    /* TabContacto => index 1   */
-    contactos();
-
-    /* TabFinanzas => index 2 */
+void frmProveedores::llenar_tabFinanzas()
+{
     ui->txtentidad_bancaria_proveedor->setText(oProveedor->entidad_bancaria_proveedor);
     ui->txtoficina_bancaria_proveedor->setText(oProveedor->oficina_bancaria_proveedor);
     ui->txtentidad_pago_proveedor->setText(oProveedor->entidad_pago_proveedor);
@@ -217,9 +212,10 @@ void frmProveedores::LLenarCampos()
     else
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
     ui->cboDivisas->setCurrentIndex(ui->cboDivisas->findText(oProveedor->s_Divisa));
+}
 
-    /* tabPagos => index 3 */
-
+void frmProveedores::llenar_tabPagos()
+{
     modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
                            "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
                            QString::number(oProveedor->id)+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
@@ -252,9 +248,10 @@ void frmProveedores::LLenarCampos()
     ui->txtdeuda_maxima->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->deuda_maxima,'f',Configuracion_global->decimales)));
     ui->txtdia_cobro->setText(QString::number(oProveedor->dia_cobro));
     ui->txtdto->setText(QString::number(oProveedor->dto));
+}
 
-
-    /* tabAlmacen => index 4   */
+void frmProveedores::llenar_tabAlmacen()
+{
     ui->txtdireccion_almacen->setText(oProveedor->direccion_almacen);
     ui->txtcp_almacen->setText(oProveedor->cp_almacen);
     ui->txtpoblacion_almacen->setText(oProveedor->poblacion_almacen);
@@ -262,17 +259,10 @@ void frmProveedores::LLenarCampos()
     ui->txtpaisAlmacen->setCurrentIndex(ui->txtpaisAlmacen->findText(oProveedor->paisAlmacen));
     ui->txttelefono_almacen->setText(oProveedor->telefono_almacen);
     ui->txtfax_almacen->setText(oProveedor->fax_almacen);
+}
 
-    /* tabArticulos => index 5  */
-    modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
-                           "from articulos where id_proveedor =" +QString::number(oProveedor->id),
-                           Configuracion_global->groupDB);
-    ui->tablaArticulos->setColumnWidth(2,200);
-
-    /* txttexto_para_pedidos => index 6 */
-    ui->txttexto_para_pedidos->setPlainText(oProveedor->texto_para_pedidos);
-
-    /* tabConta => index 7 */
+void frmProveedores::llenar_tabConta()
+{
     ui->txtcuenta_aplicacion->setText(oProveedor->cuenta_aplicacion);
 
     modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
@@ -289,10 +279,43 @@ void frmProveedores::LLenarCampos()
     ui->tablaAsientos->setColumnWidth(6,55);
     ui->tablaAsientos->setColumnWidth(7,75);
     ui->tablaAsientos->setColumnWidth(8,60);
+}
+
+void frmProveedores::LLenarCampos()
+{
+    ui->lblcodigo_proveedor->setText(oProveedor->codigo);
+    ui->lblproveedor->setText(oProveedor->proveedor);
+
+    /* TabDatos => index 0  */
+    llenar_tabDatos();
+
+    /* TabContacto => index 1   */
+    contactos();
+
+    /* TabFinanzas => index 2 */
+    llenar_tabFinanzas();
+
+    /* tabPagos => index 3 */
+    llenar_tabPagos();
+
+
+    /* tabAlmacen => index 4   */
+    llenar_tabAlmacen();
+
+    /* tabArticulos => index 5  */
+    modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
+                           "from articulos where id_proveedor =" +QString::number(oProveedor->id),
+                           Configuracion_global->groupDB);
+    ui->tablaArticulos->setColumnWidth(2,200);
+
+    /* txttexto_para_pedidos => index 6 */
+    ui->txttexto_para_pedidos->setPlainText(oProveedor->texto_para_pedidos);
+
+    /* tabConta => index 7 */
+    llenar_tabConta();
 
     /* tabEstad => index 8  */
     acumulados();
-
 
     /* tabGraf => index 9 */
     grafica();
@@ -421,7 +444,6 @@ void frmProveedores::BloquearCampos(bool state)
         emit block();
 }
 
-
 void frmProveedores::on_btnSiguiente_clicked()
 {
     if(oProveedor->Next())
@@ -472,6 +494,13 @@ void frmProveedores::on_btnEditar_clicked()
 
 void frmProveedores::on_btnAnadir_clicked()
 {
+    qmFormaPago->setQuery("select id,codigo, forma_pago from formpago",Configuracion_global->groupDB);
+    if(qmFormaPago->rowCount() == 0)
+    {
+        QMessageBox::information(this,tr("Formas de pago"),
+                                 tr("Debe añadir al menos una forma de pago antes de poder añadir proveedores"));
+        return;
+    }
     ui->stackedWidget->setCurrentIndex(0);
     oProveedor->Vaciar();
     oProveedor->Anadir();
@@ -481,7 +510,6 @@ void frmProveedores::on_btnAnadir_clicked()
     ui->txtcodigo->setFocus();
     editing = false;
 }
-
 
 void frmProveedores::on_txtpoblacion_editingFinished()
 {
@@ -526,7 +554,6 @@ void frmProveedores::on_btnDeshacer_clicked()
 
 void frmProveedores::on_txtentidad_bancaria_proveedor_editingFinished()
 {
-
     QString cOk;
     if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
             !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
@@ -567,11 +594,8 @@ void frmProveedores::on_txtdc_proveedor_editingFinished()
         ui->lblCuenta1Valida->setText(tr("La cuenta no es válida"));
 }
 
-
-
 void frmProveedores::on_txtcc_proveedor_editingFinished()
 {
-
     QString cOk;
     if(!ui->txtentidad_bancaria_proveedor->text().isEmpty() && !ui->txtoficina_bancaria_proveedor->text().isEmpty() &&
             !ui->txtdc_proveedor->text().isEmpty() && !ui->txtcc_proveedor->text().isEmpty())
@@ -645,40 +669,14 @@ void frmProveedores::on_txtcp_almacen_editingFinished()
     // TODO - BUSCAR POBLACION
 }
 
-void frmProveedores::on_txtpais_currentIndexChanged(const QString &arg1)
+void frmProveedores::on_txtpais_currentIndexChanged(int index)
 {
-   oProveedor->id_pais = modelPais->record(ui->txtpais->currentIndex()).value("id").toInt();
+    oProveedor->id_pais = modelPais->record(index).value("id").toInt();
 }
 
-
-void frmProveedores::on_txtcodigoFormaPago_currentIndexChanged(const QString &arg1)
+void frmProveedores::on_txtcodigoFormaPago_currentIndexChanged(int index)
 {
-    QString codigo = arg1;
-    oProveedor->idFormadePago = Configuracion_global->Devolver_id_codigo_forma_pago(codigo);
-}
-
-void frmProveedores::on_btnNuevaFactura_clicked()
-{
-    FrmFacturasProveedor frmFactura(this,true);
-    frmFactura.setWindowState(Qt::WindowMaximized);
-    frmFactura.llenarProveedor(oProveedor->id);
-    frmFactura.exec();
-}
-
-void frmProveedores::on_btnNuevoAlbaran_clicked()
-{
-    FrmAlbaranProveedor frmAlbaran(this,true);
-    frmAlbaran.setWindowState(Qt::WindowMaximized);
-    frmAlbaran.llenarProveedor(oProveedor->id);
-    frmAlbaran.exec();
-}
-
-void frmProveedores::on_btnNuevoPedido_clicked()
-{
-    FrmPedidosProveedor frmPedidos(this,true);
-    frmPedidos.setWindowState(Qt::WindowMaximized);
-    frmPedidos.llenarProveedor(oProveedor->id,true);
-    frmPedidos.exec();
+    oProveedor->idFormadePago = qmFormaPago->record(index).value("id").toInt();
 }
 
 void frmProveedores::pagar_deuda()
@@ -687,18 +685,18 @@ void frmProveedores::pagar_deuda()
                              tr("¿Cobrar la deuda?"),
                              tr("Cancelar"),tr("Cobrar"))==QMessageBox::Accepted)
     {
-
+        //TODO frmProveedores::pagar_deuda()
     }
 }
 
 void frmProveedores::pagar_fraccion()
 {
-
+    //TODO frmProveedores::pagar_fraccion()
 }
 
 void frmProveedores::ver_asiento()
 {
-
+    //TODO frmProveedores::ver_asiento()
 }
 
 void frmProveedores::historiales()
@@ -808,7 +806,7 @@ void frmProveedores::contactos()
 {
 
     modelContactos->setQuery("select id,id_proveedor,cargo_empresa, nombre, desc_telefono1,telefono1,desc_telefono2,telefono2,"
-                             "desc_telefono3, telefono3, desc_movil1,movil1,desc_movil2,movil2 "
+                             "desc_telefono3, telefono3, desc_movil1,movil1,desc_movil2,movil2,email "
                              "from personascontactoproveedor where id_proveedor ="+QString::number(oProveedor->id),
                              Configuracion_global->groupDB);
 
@@ -833,19 +831,20 @@ void frmProveedores::contactos()
 
 void frmProveedores::menu_contactos(const QPoint &position)
 {
-   QPoint globalPos = ui->tablaContactos->mapToGlobal(position);
-   QMenu myMenu;
-   QAction *actionEditar = new QAction(tr("Editar Contacto"),this);
-   QAction *actionBorrar = new QAction(tr("Borrar contacto"),this);
-   myMenu.addAction(actionEditar);
-   myMenu.addAction(actionBorrar);
+    QPoint globalPos = ui->tablaContactos->mapToGlobal(position);
+    QMenu myMenu;
+    QAction *actionEditar = new QAction(tr("Editar Contacto"),this);
+    QAction *actionBorrar = new QAction(tr("Borrar contacto"),this);
+    myMenu.addAction(actionEditar);
+    myMenu.addAction(actionBorrar);
 
-       connect(actionEditar, SIGNAL(triggered()), this, SLOT(editar_contacto()));
-       connect(actionBorrar,SIGNAL(triggered()),this,SLOT(borrar_contacto()));
+    connect(actionEditar, SIGNAL(triggered()), this, SLOT(editar_contacto()));
+    connect(actionBorrar,SIGNAL(triggered()),this,SLOT(borrar_contacto()));
 
     myMenu.exec(globalPos);
 
-
+    actionEditar->deleteLater();
+    actionBorrar->deleteLater();
 }
 
 void frmProveedores::menu_deudas(const QPoint &position)
@@ -859,12 +858,15 @@ void frmProveedores::menu_deudas(const QPoint &position)
     QAction *actionAsiento = new QAction(tr("Ver asiento contable"),this);
     myMenu.addAction(actionAsiento);
 
-        connect(actionPagar, SIGNAL(triggered()), this, SLOT(pagar_deuda()));
-        connect(actionFraccion,SIGNAL(triggered()),this,SLOT(pagar_fraccion()));
-        connect(actionAsiento,SIGNAL(triggered()),this,SLOT(ver_asiento()));
+    connect(actionPagar, SIGNAL(triggered()), this, SLOT(pagar_deuda()));
+    connect(actionFraccion,SIGNAL(triggered()),this,SLOT(pagar_fraccion()));
+    connect(actionAsiento,SIGNAL(triggered()),this,SLOT(ver_asiento()));
 
+    myMenu.exec(globalPos);
 
-     myMenu.exec(globalPos);
+    actionPagar->deleteLater();
+    actionFraccion->deleteLater();
+    actionAsiento->deleteLater();
 }
 
 void frmProveedores::nuevo_contacto()
@@ -932,69 +934,61 @@ void frmProveedores::guardar_contacto()
 }
 
 void frmProveedores::editar_contacto()
-
-{
+{    
     QModelIndex index= ui->tablaContactos->currentIndex();
-    int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
-    this->id_contacto = nid;
-    QSqlQuery queryContactos(Configuracion_global->groupDB);
-    queryContactos.prepare("select * from personascontactoproveedor where id = :id");
-    queryContactos.bindValue(":id",this->id_contacto);
-    if (!queryContactos.exec())
+    if(!index.isValid())
+        return;
+
+    QSqlRecord r = modelContactos->record(index.row());
+    this->id_contacto = r.value("id").toInt();
+    ui->txtCargo->setText(r.value("cargo_empresa").toString());
+    ui->txtNombre->setText(r.value("nombre").toString());
+    ui->txtDescripcionT1->setText(r.value("desc_telefono1").toString());
+    ui->txtDescripcionT2->setText(r.value("desc_telefono2").toString());
+    ui->txtDescripcionT3->setText(r.value("desc_telefono3").toString());
+    ui->txtDescripcionM1->setText(r.value("desc_movil1").toString());
+    ui->txtDescripcionM2->setText(r.value("desc_movil2").toString());
+    ui->txtTelefono1->setText(r.value("telefono1").toString());
+    ui->txtTelefono2->setText(r.value("telefono2").toString());
+    ui->txtTelefono3->setText(r.value("telefono3").toString());
+    ui->txtMovil1->setText(r.value("movil1").toString());
+    ui->txtMovil2->setText(r.value("movil2").toString());
+    ui->txtCargo->setText(r.value("cargo_empresa").toString());
+    ui->txtemail_contacto->setText(r.value("email").toString());
+
+    if(ui->btnGuardar->isEnabled())
     {
-        QMessageBox::warning(this,tr("ATENCIÓN:"),
-                             tr("Ocurrió un error al recuperar los datos: %1").arg(queryContactos.lastError().text()),
-                             tr("Aceptar"));
-    } else
-    {
-        queryContactos.next();
-        ui->txtNombre->setText(queryContactos.record().value("nombre").toString());
-        ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
-        ui->txtDescripcionT1->setText(queryContactos.record().value("desc_telefono1").toString());
-        ui->txtDescripcionT2->setText(queryContactos.record().value("desc_telefono2").toString());
-        ui->txtDescripcionT3->setText(queryContactos.record().value("desc_telefono3").toString());
-        ui->txtDescripcionM1->setText(queryContactos.record().value("desc_movil1").toString());
-        ui->txtDescripcionM2->setText(queryContactos.record().value("desc_movil2").toString());
-        ui->txtTelefono1->setText(queryContactos.record().value("telefono1").toString());
-        ui->txtTelefono2->setText(queryContactos.record().value("telefono2").toString());
-        ui->txtTelefono3->setText(queryContactos.record().value("telefono3").toString());
-        ui->txtMovil1->setText(queryContactos.record().value("movil1").toString());
-        ui->txtMovil2->setText(queryContactos.record().value("movil2").toString());
-        ui->txtCargo->setText(queryContactos.record().value("cargo_empresa").toString());
-        ui->txtemail_contacto->setText(queryContactos.record().value("email").toString());
-        if(ui->btnGuardar->isEnabled())
-        {
-            ui->btnGuardarContacto->setVisible("true");
-            ui->txtDescripcionM1->setReadOnly(false);
-            ui->txtDescripcionM2->setReadOnly(false);
-            ui->txtDescripcionT1->setReadOnly(false);
-            ui->txtDescripcionT2->setReadOnly(false);
-            ui->txtDescripcionT3->setReadOnly(false);
-            ui->txtMovil1->setReadOnly(false);
-            ui->txtMovil2->setReadOnly(false);
-            ui->txtNombre->setReadOnly(false);
-            ui->txtTelefono1->setReadOnly(false);
-            ui->txtTelefono2->setReadOnly(false);
-            ui->txtTelefono3->setReadOnly(false);
-            ui->txtCargo->setReadOnly(false);
-            ui->txtemail_contacto->setReadOnly(false);
-            ui->txtNombre->setFocus();
-        }
+        ui->btnGuardarContacto->setVisible("true");
+        ui->txtDescripcionM1->setReadOnly(false);
+        ui->txtDescripcionM2->setReadOnly(false);
+        ui->txtDescripcionT1->setReadOnly(false);
+        ui->txtDescripcionT2->setReadOnly(false);
+        ui->txtDescripcionT3->setReadOnly(false);
+        ui->txtMovil1->setReadOnly(false);
+        ui->txtMovil2->setReadOnly(false);
+        ui->txtNombre->setReadOnly(false);
+        ui->txtTelefono1->setReadOnly(false);
+        ui->txtTelefono2->setReadOnly(false);
+        ui->txtTelefono3->setReadOnly(false);
+        ui->txtCargo->setReadOnly(false);
+        ui->txtemail_contacto->setReadOnly(false);
+        ui->txtNombre->setFocus();
     }
 }
 
 void frmProveedores::borrar_contacto()
 {
     QModelIndex index= ui->tablaContactos->currentIndex();
-    int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
-    this->id_contacto = nid;
-    QSqlQuery queryContactos(Configuracion_global->groupDB);
-    queryContactos.prepare("delete from personascontactoproveedor where id = :id");
-    queryContactos.bindValue(":id",this->id_contacto);
-    if (!queryContactos.exec())
+    if(!index.isValid())
+        return;
+
+    QSqlRecord r = modelContactos->record(index.row());
+    this->id_contacto = r.value("id").toInt();
+    QString error;
+    if(!SqlCalls::SqlDelete("personascontactoproveedor",Configuracion_global->groupDB,QString("id = %1").arg(this->id_contacto),error))
     {
         QMessageBox::warning(this,tr("ATENCIÓN:"),
-                             tr("Ocurrió un error al borrar el contacto: %1").arg(queryContactos.lastError().text()),
+                             tr("Ocurrió un error al borrar el contacto: %1").arg(error),
                              tr("Aceptar"));
     } else
     {
@@ -1031,14 +1025,6 @@ void frmProveedores::on_txtcif_editingFinished()
         ui->txtcif->setText(cif.toUpper());
     }
     blockSignals(false);
-}
-
-void frmProveedores::on_radModo_busqueda_toggled(bool checked)
-{
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
-    else
-        ui->stackedWidget->setCurrentIndex(0);
 }
 
 void frmProveedores::formato_tabla(QSqlQueryModel *modelo)
@@ -1141,6 +1127,7 @@ void frmProveedores::on_tablaContactos_doubleClicked(const QModelIndex &index)
 
 void frmProveedores::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }
