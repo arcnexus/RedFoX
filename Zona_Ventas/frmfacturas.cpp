@@ -228,7 +228,7 @@ frmFacturas::~frmFacturas()
 
 void frmFacturas::LLenarCampos() {
     int lEstado;
-    ui->lblFactura->setText(oFactura->factura);
+    ui->lblFactura->setText(oFactura->factura.replace("\n","").replace("\r",""));
     if(ui->lblFactura->text() == tr("BORRADOR"))
         ui->btnBorrar->setVisible(true);
     else

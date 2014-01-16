@@ -91,16 +91,25 @@ CREATE TABLE `@grupo@`.`articulos` (
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
+  `lotes` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,
   `imagen3` blob,
   `imagen4` blob,
   `margen` double DEFAULT NULL,
   `margen_min` double DEFAULT NULL,
   `coste_real` double DEFAULT NULL,
-  `lote` tinyint DEFAULT '0',
+  `lotes` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `@grupo@`.`articulos_lotes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
+  `lote` VARCHAR(45) NULL,
+  `caducidad` DATE NULL,
+  PRIMARY KEY (`id`));
+
 CREATE TABLE `@grupo@`.`articulos_prov_frec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_articulo` int(11) DEFAULT NULL,

@@ -68,8 +68,7 @@ Configuracion::Configuracion(QObject* parent) :
 }
 
 
-QString Configuracion::
-toFormatoMoneda(QString cTexto)
+QString Configuracion::toFormatoMoneda(QString cTexto)
 {
     if(cTexto.isEmpty())
         return "0,00";
@@ -148,12 +147,29 @@ double Configuracion::MonedatoDouble(QString moneda)
 {
     bool negative;
     negative = false;
+    if(!moneda.contains(",") && !moneda.contains("."))
+        moneda.append(",00");
     if(moneda.isEmpty() || moneda == "0,00")
         return 0.00;
+
     moneda = moneda.replace(".","").replace(",",".");
+
     double dblMoneda;
     int d;
-    d= Configuracion_global->decimales_campos_totales;
+    d= Configuracion_global->decimales;
+    if(d>2)
+    {
+        if (d==3)
+        {
+            if(moneda.right(1) =="5")
+                moneda = moneda.left(moneda.size()-1).append("6");
+        } else if(d==4)
+        {
+            if(moneda.right(2)=="50")
+                moneda = moneda.left(moneda.size()-2).append("51");
+
+        }
+    }
     dblMoneda  = floor(moneda.toDouble() * pow(10., d) + .5) / pow(10., d);
     return dblMoneda;
 }
