@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Entrada de lotes.</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -55,7 +55,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDateEdit" name="dateCaducidad"/>
+      <widget class="QDateEdit" name="dateCaducidad">
+       <property name="displayFormat">
+        <string>dd/MM/yyyy</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

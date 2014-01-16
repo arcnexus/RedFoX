@@ -20,6 +20,7 @@ void frmaddLotes::cargar_articulo(int id)
     art = SqlCalls::SelectRecord("articulos",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
     ui->lblcodigo->setText(art.value(id).value("codigo").toString());
     ui->lbldescripcion->setText(art.value(id).value("descripcion").toString());
+    ui->dateCaducidad->setDate(QDate::currentDate());
     this->id_articulo = id;
 }
 
