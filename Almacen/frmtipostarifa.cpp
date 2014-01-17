@@ -37,12 +37,6 @@ void FrmTiposTarifa::cargarDatos()
     ui->cboMoneda->setCurrentIndex(nindex);
     nindex = ui->cboPais->findText(Configuracion_global->Devolver_pais(oTipostarifa->id_pais));
     ui->cboPais->setCurrentIndex(nindex);
-    ui->txtporc_dto1->setText(QString::number(oTipostarifa->porc_dto1));
-    ui->txtporc_dto2->setText(QString::number(oTipostarifa->porc_dto2));
-    ui->txtporc_dto3->setText(QString::number(oTipostarifa->porc_dto3));
-    ui->txtporc_dto4->setText(QString::number(oTipostarifa->porc_dto4));
-    ui->txtporc_dto5->setText(QString::number(oTipostarifa->porc_dto5));
-    ui->txtporc_dto6->setText(QString::number(oTipostarifa->porc_dto6));
     //ui->txtImpDto->setText(Configuracion_global->toFormatoMoneda( QString::number(oTipostarifa->importe_dto,'f',Configuracion_global->decimales)));
     //ui->txtPromocion->setText(oTipostarifa->desc_promo);
 }
@@ -94,12 +88,6 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
                     _data["margen"]= oTipostarifa->margen;
                     _data["margen_minimo"]= oTipostarifa->margen_min;
                     _data["id_codigo_tarifa"]= oTipostarifa->id;
-                    _data["porc_dto1"]= oTipostarifa->porc_dto1;
-                    _data["porc_dto2"]= oTipostarifa->porc_dto2;
-                    _data["porc_dto3"]= oTipostarifa->porc_dto3;
-                    _data["porc_dto4"]= oTipostarifa->porc_dto4;
-                    _data["porc_dto5"]= oTipostarifa->porc_dto5;
-                    _data["porc_dto6"]= oTipostarifa->porc_dto6;
 
                     double coste = r.value("coste_real").toDouble();
                     float margen = oTipostarifa->margen;
@@ -149,7 +137,7 @@ void FrmTiposTarifa::on_btnAnadir_clicked()
 
 void FrmTiposTarifa::activar_controles(bool state)
 {
-    ui->txtCodigo->setEnabled(state);
+    ui->txtCodigo->setEnabled(state && !(ui->txtCodigo->text() == "PVP"));
     ui->txtDescripcion->setEnabled(state);
     ui->cboMoneda->setEnabled(state);
     ui->cboPais->setEnabled(state);
@@ -226,12 +214,6 @@ void FrmTiposTarifa::cargar_datos_en_objeto()
     oTipostarifa->margen_min = ui->spnMargen_min->value();
     oTipostarifa->id_monedas = Configuracion_global->Devolver_id_moneda(ui->cboMoneda->currentText());
     oTipostarifa->id_pais = Configuracion_global->Devolver_id_pais(ui->cboPais->currentText());
-    oTipostarifa->porc_dto1 = ui->txtporc_dto1->text().toFloat();
-    oTipostarifa->porc_dto2 = ui->txtporc_dto2->text().toFloat();
-    oTipostarifa->porc_dto3 = ui->txtporc_dto3->text().toFloat();
-    oTipostarifa->porc_dto4 = ui->txtporc_dto4->text().toFloat();
-    oTipostarifa->porc_dto5 = ui->txtporc_dto5->text().toFloat();
-    oTipostarifa->porc_dto6 = ui->txtporc_dto6->text().toFloat();
 }
 
 void FrmTiposTarifa::asignarcambiodivisa(float valor)
@@ -241,6 +223,8 @@ void FrmTiposTarifa::asignarcambiodivisa(float valor)
 
 void FrmTiposTarifa::on_btnBorrar_clicked()
 {
+    if(oTipostarifa->id == 1 )
+        return;
     QSqlQuery sql(Configuracion_global->groupDB);
 
     bool borrar = QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Tarifa"),

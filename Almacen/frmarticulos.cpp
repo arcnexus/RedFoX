@@ -1145,17 +1145,29 @@ void FrmArticulos::btnEditarTarifa_clicked()
             QMessageBox::warning(this,tr("ATENCIÓN"),
                                  tr("Ocurrió un error al actualizar BD: %1").arg(error),
                                  tr("Aceptar"));
-
+        if(id_t == 1) //Es tarifa pvp
+        {
+            QHash<QString,QVariant> _dat;
+            _dat["pvp"] = editTarifa.pvpDivisa;
+            if(!SqlCalls::SqlUpdate(_dat,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(oArticulo->id),error))
+                QMessageBox::warning(this,tr("ATENCIÓN"),
+                                     tr("Ocurrió un error al actualizar BD: %1").arg(error),
+                                     tr("Aceptar"));
+        }
         llenar_tabla_tarifas();
     }
 }
 
 void FrmArticulos::btnBorrarTarifa_clicked()
 {
-    QModelIndex celda=ui->TablaTarifas->currentIndex();
-    QModelIndex index1=tarifa_model->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
+    if(!ui->TablaTarifas->currentIndex().isValid())
+        return;
 
-    QVariant pKey = tarifa_model->data(index1,Qt::EditRole);
+    QString s = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),1),Qt::DisplayRole).toString();
+    if(s == "PVP")
+        return; //Prohibido borrar tarifa 1 (PVP)
+
+    int id_t = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),0),Qt::DisplayRole).toInt();
 
     if(QMessageBox::question(this,tr("Borrar Tarifa"),
                              tr("¿Desea realmente borrar esta tarifa para este artículo?"),
@@ -1163,7 +1175,9 @@ void FrmArticulos::btnBorrarTarifa_clicked()
                              tr("Borrar"))==QMessageBox::Accepted)
     {
         QString error;
-        if(!SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id = %1").arg(pKey.toInt()),error))
+        if(!SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,
+                                QString("id = %1").arg(id_t),
+                                error))
             QMessageBox::warning(this,tr("Ocurrió un error al borrar"),
                                  error);
         llenar_tabla_tarifas();
