@@ -49,6 +49,16 @@ private slots:
 
     void on_btnBorrar_clicked();
 
+    void on_btnAnadirContacto_clicked();
+
+    void on_btnEditarContacto_clicked();
+
+    void on_btnBorrarContacto_clicked();
+
+    void on_pushButtonGeuardarContacto_clicked();
+
+    void on_pushButtonGuardarContacto_clicked();
+
 private:
     Ui::FrmTransportistas *ui;
     transportistas oTransportista;
@@ -57,8 +67,7 @@ private:
     void Bloquear_campos(bool state);
     void cargar_en_objeto();
     void llenar_campos();
-    void llenar_campos_transportista();
-    bool anadiendo;
+    bool anadiendo , anadiendoContacto;
     bool eventFilter(QObject *obj, QEvent *event);
     void consultar_proveedor();
     QSqlQueryModel *m;
@@ -67,6 +76,8 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
     void vaciarCampos();
+    void llenar_campos_contactoTransportista(int id);
+    void bloquearCamposContacto(bool state);
 };
 
 #endif // FRMTRANSPORTISTAS_H

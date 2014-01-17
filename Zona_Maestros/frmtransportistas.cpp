@@ -11,6 +11,7 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
 
     transportistas oTransportista(this);
     anadiendo = false;
+    anadiendoContacto = false;
     //ui->txtCodigo_proveedor->installEventFilter(this);
     //------------------
     // Busqueda
@@ -28,6 +29,14 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
     paises->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
     ui->cbopais->setModel(paises);
     Bloquear_campos(true);
+
+    //---------------
+    //Llenar direcciones alternativas
+    //---------------
+    QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
+    qModeldireccion->setQuery("select nombre , telefono1 , telefono2 from personascontactotransportista where id_transportista = "+oTransportista.h_transportista.value("id").toString(),
+                              Configuracion_global->groupDB);
+    ui->tablaContactos->setModel(qModeldireccion);
 
     setUpBusqueda();
 }
@@ -67,12 +76,34 @@ void FrmTransportistas::Bloquear_campos(bool state)
     ui->btnEditar->setEnabled(state);
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
+    ui->btnAnadirContacto->setEnabled(!state);
+    ui->btnBorrarContacto->setEnabled(!state);
+    ui->btnEditarContacto->setEnabled(!state);
+//    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
+//    QLineEdit *lineEdit;
+//    foreach (lineEdit, lineEditList) {
+//        lineEdit->setReadOnly(state);
+//    }
+    ui->txtcif->setReadOnly(state);
+    ui->txtdireccion1->setReadOnly(state);
+    ui->txtdireccion2->setReadOnly(state);
+    ui->txtcp->setReadOnly(state);
+    ui->txtpoblacion->setReadOnly(state);
+    ui->txtprovincia->setReadOnly(state);
+    ui->txtfecha_alta->setEnabled(state);
+    ui->cbopais->setEnabled(state);
+    ui->txttelefono1->setReadOnly(state);
+    ui->txttelefono2->setReadOnly(state);
+    ui->txtmovil->setReadOnly(state);
+    ui->txtfax->setReadOnly(state);
+    ui->txtemail->setReadOnly(state);
+    ui->txtweb->setReadOnly(state);
+    ui->txtpersona_contacto->setReadOnly(state);
 
-    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
-    QLineEdit *lineEdit;
-    foreach (lineEdit, lineEditList) {
-        lineEdit->setReadOnly(state);
-    }
+
+
+
+
 }
 
 void FrmTransportistas::cargar_en_objeto()
@@ -95,6 +126,9 @@ void FrmTransportistas::cargar_en_objeto()
     oTransportista.h_transportista["email"] = ui->txtemail->text();
     oTransportista.h_transportista["web"] = ui->txtweb->text();
     oTransportista.h_transportista["contacto"] = ui->txtpersona_contacto->text();
+
+
+
 
     //int id_proveedor = SqlCalls::SelectOneField("proveedores","id",QString("codigo = '%1'").arg(ui->txtCodigo_proveedor->text()),Configuracion_global->groupDB,error).toInt();
 
@@ -128,36 +162,22 @@ void FrmTransportistas::llenar_campos()
 
 
 
-    llenar_campos_transportista();
-
+    llenar_campos_contactoTransportista(oTransportista.h_transportista.value("id").toInt());
+    qDebug() << oTransportista.h_transportista.value("id").toInt();
 }
 
-void FrmTransportistas::llenar_campos_transportista()
+void FrmTransportistas::llenar_campos_contactoTransportista(int id)
 {
-    //---------------------------------
-    // Campos proveedor (solo lectura)
-    //---------------------------------
-//    ui->txtCodigo_proveedor->setText(oTransportista.oProveedor.codigo);
-//    ui->txtProveedor->setText(oTransportista.oProveedor.proveedor);
 
-
-//    ui->txtcif->setText(oTransportista.oProveedor.cif);
-//    ui->txtdireccion1->setText(oTransportista.oProveedor.direccion1);
-//    ui->txtdireccion2->setText(oTransportista.oProveedor.direccion2);
-//    ui->txtcp->setText(oTransportista.oProveedor.cp);
-//    ui->txtpoblacion->setText(oTransportista.oProveedor.poblacion);
-//    ui->txtprovincia->setText(oTransportista.oProveedor.provincia);
-//    int index = ui->cbopais->findText(oTransportista.oProveedor.pais);
-//    ui->cbopais->setCurrentIndex(index);
-//    ui->txttelefono1->setText(oTransportista.oProveedor.telefono1);
-//    ui->txttelefono2->setText(oTransportista.oProveedor.telefono2);
-//    ui->txttelefono3->setText(oTransportista.oProveedor.telefono3);
-//    ui->txtfax->setText(oTransportista.oProveedor.fax);
-//    ui->txtmovil->setText(oTransportista.oProveedor.movil);
-//    ui->txtemail->setText(oTransportista.oProveedor.email);
-//    ui->txtweb->setText(oTransportista.oProveedor.web);
-//    ui->txtpersona_contacto->setText(oTransportista.oProveedor.persona_contacto);
-//    llenar_contactos(oTransportista.oProveedor.id);
+    //---------------
+    //Llenar direcciones alternativas
+    //---------------
+    QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
+    qModeldireccion->setQuery("select * from personascontactotransportista where id_transportista = "+QString::number(id),
+                              Configuracion_global->groupDB);
+    ui->tablaContactos->setModel(qModeldireccion);
+    ui->tablaContactos->hideColumn(0);
+    qDebug() << qModeldireccion->data(qModeldireccion->index(Qt::EditRole,0));
 }
 
 bool FrmTransportistas::eventFilter(QObject *obj, QEvent *event)
@@ -225,7 +245,7 @@ void FrmTransportistas::consultar_proveedor()
         int id_proveedor = consulta.get_id();
 
         //oTransportista.oProveedor.Recuperar(id_proveedor);
-        llenar_campos_transportista();
+        //llenar_campos_transportista();
     }
 }
 
@@ -343,7 +363,7 @@ void FrmTransportistas::on_tablaContactos_clicked(const QModelIndex &index)
     int nid = ui->tablaContactos->model()->data(ui->tablaContactos->model()->index(index.row(),0),Qt::EditRole).toInt();
     this->id_contacto = nid;
     QSqlQuery queryContactos(Configuracion_global->groupDB);
-    queryContactos.prepare("select * from personascontactoproveedor where id = :id");
+    queryContactos.prepare("select * from personascontactotransportista where id = :id");
     queryContactos.bindValue(":id",this->id_contacto);
     if (!queryContactos.exec())
     {
@@ -421,4 +441,62 @@ void FrmTransportistas::on_btnBorrar_clicked()
         oTransportista.BorrarTransportista(oTransportista.h_transportista["id"].toInt());
         vaciarCampos();
     }
+}
+
+void FrmTransportistas::on_btnAnadirContacto_clicked()
+{
+    anadiendoContacto = true;
+    ui->txtNombre->clear();
+    ui->txtCargo->clear();
+    ui->txtDescripcionT1->clear();
+    ui->txtDescripcionT2->clear();
+    ui->txtDescripcionT3->clear();
+    ui->txtDescripcionM1->clear();
+    ui->txtDescripcionM2->clear();
+    ui->txtTelefono1->clear();
+    ui->txtTelefono2->clear();
+    ui->txtTelefono3->clear();
+    ui->txtMovil1->clear();
+    ui->txtMovil2->clear();
+    ui->txtCargo->clear();
+    ui->txtemail_contacto->clear();
+    bloquearCamposContacto(false);
+    ui->txtNombre->setFocus();
+}
+
+void FrmTransportistas::on_btnEditarContacto_clicked()
+{
+    bloquearCamposContacto(false);
+    ui->txtNombre->setFocus();
+}
+
+void FrmTransportistas::on_btnBorrarContacto_clicked()
+{
+
+}
+
+
+
+void FrmTransportistas::bloquearCamposContacto(bool state)
+{
+    ui->txtNombre->setReadOnly(state);
+    ui->txtCargo->setReadOnly(state);
+    ui->txtDescripcionT1->setReadOnly(state);
+    ui->txtDescripcionT2->setReadOnly(state);
+    ui->txtDescripcionT3->setReadOnly(state);
+    ui->txtDescripcionM1->setReadOnly(state);
+    ui->txtDescripcionM2->setReadOnly(state);
+    ui->txtTelefono1->setReadOnly(state);
+    ui->txtTelefono2->setReadOnly(state);
+    ui->txtTelefono3->setReadOnly(state);
+    ui->txtMovil1->setReadOnly(state);
+    ui->txtMovil2->setReadOnly(state);
+    ui->txtCargo->setReadOnly(state);
+    ui->txtemail_contacto->setReadOnly(state);
+}
+
+
+void FrmTransportistas::on_pushButtonGuardarContacto_clicked()
+{
+
 }
