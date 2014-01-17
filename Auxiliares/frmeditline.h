@@ -54,6 +54,7 @@ private:
     void cargar_articulo(int id_art, int tarifa, int tipo_dto);
     void vaciar_campos();
     int dto_tarifa;
+    int id_lote;
     float unidades_regalo;
     Articulo *oArticulo;
     void calcular();

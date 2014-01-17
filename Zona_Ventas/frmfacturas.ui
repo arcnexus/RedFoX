@@ -526,7 +526,7 @@ color: rgb(0, 0, 0);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -1536,60 +1536,84 @@ color: rgb(255, 255, 255);</string>
              <item row="0" column="1">
               <widget class="QLabel" name="label_28">
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>BASE</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="label_55">
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>%IVA</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="0" column="3">
               <widget class="QLabel" name="label_56">
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>IVA</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="0" column="4">
               <widget class="QLabel" name="label_57">
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>%R.E.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="0" column="5">
               <widget class="QLabel" name="label_58">
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>R.E.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
              <item row="0" column="6">
               <widget class="QLabel" name="label_59">
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 192);</string>
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>TOTAL</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -2170,32 +2194,6 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
-               <widget class="QDoubleSpinBox" name="spin_porc_iva_gasto2">
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="minimum">
-                 <double>-9999999.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QDoubleSpinBox" name="spin_porc_iva_gasto1">
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="minimum">
-                 <double>-9999999.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="3">
                <widget class="QDoubleSpinBox" name="spin_iva_gasto2">
                 <property name="enabled">
@@ -2209,19 +2207,6 @@ color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="maximum">
                  <double>99999999.989999994635582</double>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QDoubleSpinBox" name="spin_porc_iva_gasto3">
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="minimum">
-                 <double>-9999999.000000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
                 </property>
                </widget>
               </item>
@@ -2312,6 +2297,15 @@ color: rgb(255, 255, 255);</string>
                  <set>Qt::AlignCenter</set>
                 </property>
                </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QComboBox" name="cbo_porc_gasto_iva1"/>
+              </item>
+              <item row="2" column="2">
+               <widget class="QComboBox" name="cbo_porc_gasto_iva2"/>
+              </item>
+              <item row="3" column="2">
+               <widget class="QComboBox" name="cbo_porc_gasto_iva3"/>
               </item>
              </layout>
             </widget>
@@ -2593,15 +2587,12 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <tabstop>txtimporte_irpf</tabstop>
   <tabstop>txtGastoDist1</tabstop>
   <tabstop>SpinGastoDist1</tabstop>
-  <tabstop>spin_porc_iva_gasto1</tabstop>
   <tabstop>spin_iva_gasto1</tabstop>
   <tabstop>txtGastoDist2</tabstop>
   <tabstop>SpinGastoDist2</tabstop>
-  <tabstop>spin_porc_iva_gasto2</tabstop>
   <tabstop>spin_iva_gasto2</tabstop>
   <tabstop>txtGastoDist3</tabstop>
   <tabstop>SpinGastoDist3</tabstop>
-  <tabstop>spin_porc_iva_gasto3</tabstop>
   <tabstop>spin_iva_gasto3</tabstop>
   <tabstop>txtcomentario</tabstop>
   <tabstop>tabWidget_2</tabstop>

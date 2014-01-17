@@ -2,6 +2,7 @@
 #define ALBARAN_H
 
 #include "../Auxiliares/Globlal_Include.h"
+#include "../Almacen/articulo.h"
 
 class Albaran : public QObject
 {
@@ -92,6 +93,9 @@ public slots:
     bool RecuperarAlbaran(QString cSQL);
     bool GuardarAlbaran(int nid_Albaran);
     int NuevoNumeroAlbaran(QString serie);
+    bool borrar_linea(int id_lin);
+private:
+    Articulo *oArticulo;
 };
 
 #endif // ALBARAN_H

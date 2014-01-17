@@ -3,6 +3,7 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Almacen/frmtarifas.h"
 #include "../Busquedas/frmbuscarcie.h"
+#include "../Almacen/frmaddlotes.h"
 
 
 Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
@@ -237,6 +238,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
             bool fallo = false;
             Configuracion_global->groupDB.transaction();
             Configuracion_global->empresaDB.transaction();
+
             //----------------------------------------------------
             // Marco el pedido como recibido al cambiar una linea
             //----------------------------------------------------
@@ -342,7 +344,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 
                 int stock_fisico_almacen, stockreal,nCPR;
                 QSqlQuery queryProducto(Configuracion_global->groupDB);
-                if(queryProducto.exec("select stock_fisico_almacen, stock_real, cantidad_pendiente_recibir from articulos where id = " +
+                if(queryProducto.exec("select stock_fisico_almacen, stock_real, cantidad_pendiente_recibir, lotes from articulos where id = " +
                                       QString::number(nid)))
                 {
                     if(queryProducto.next())
@@ -351,6 +353,17 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                         stockreal = queryProducto.record().value("stock_real").toInt();
                         nCPR = queryProducto.record().value("cantidad_pendiente_recibir").toInt();
 
+                        // ---------------------------------
+                        // LOTES
+                        //----------------------------------
+                        bool lote = queryProducto.record().value("lotes").toBool();
+                        if(lote)
+                        {
+                            frmaddLotes frmLotes(this);
+                            frmLotes.cargar_articulo(nid);
+                            frmLotes.exec();
+                        }
+                        //----------------------------------
 
                         if(!queryProducto.exec("update articulos set stock_fisico_almacen = stock_fisico_almacen +" +QString::number(rec_act)+
                                                ",cantidad_pendiente_recibir = cantidad_pendiente_recibir-"+QString::number(rec_act)+

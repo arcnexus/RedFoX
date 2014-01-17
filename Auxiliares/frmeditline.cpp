@@ -1,6 +1,7 @@
 #include "frmeditline.h"
 #include "ui_frmeditline.h"
 #include "../Busquedas/db_consulta_view.h"
+#include "../Almacen/frmselectlotes.h"
 
 frmEditLine::frmEditLine(QWidget *parent) :
     QDialog(parent),
@@ -204,7 +205,8 @@ void frmEditLine::on_txtCodigo_editingFinished()
             QStringList cabecera;
             QVariantList tamanos;
             QVariantList moneda;
-            cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp") <<(tr("P.RECOM."));
+            cabecera  << tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
+            cabecera <<tr("P.RECOM.");
             tamanos <<"0" << "100" << "100" << "100" << "320" <<"130" <<"130" <<"130";
             moneda <<"5" <<"6" <<"7";
             consulta.set_headers(cabecera);
@@ -276,10 +278,23 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
             else
                 ui->txtCodigo->setText(i.value().value("codigo").toString());
         }
+        if (i.value().value("lotes").toBool())
+        {
+            frmSelectLotes frmlotes(this);
+            frmlotes.set_id_articulo(id_art);
+            if(frmlotes.exec() == QDialog::Accepted)
+            {
+                QString lote = frmlotes.get_lote();
+                this->id_lote = frmlotes.get_id();
+                ui->txtDescripcion->setText(ui->txtDescripcion->text().append(lote));
+
+            }
+
+        }
 
         ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                              i.value().value("pvp_con_iva").toDouble(),'f',
-                                                                             Configuracion_global->decimales)));
+                                                                             Configuracion_global->decimales_campos_totales)));
         ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
                                                                                               Configuracion_global->decimales)));
 
@@ -420,7 +435,7 @@ void frmEditLine::vaciar_campos()
 
 void frmEditLine::calcular()
 {
-    double pvp_rec,porc_dto;
+    double pvp_rec,porc_dto,total;
     pvp_rec = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
     porc_dto = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
 
@@ -441,10 +456,12 @@ void frmEditLine::calcular()
                 pvp_recom = 1;
             else
                 pvp_recom = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
-            float porc_dto = (dto * 100) / pvp_recom;
-            ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
-                                                                                           Configuracion_global->decimales_campos_totales)));
-
+            if(ui->txtPorc_dto->text() =="0,00" || ui->txtPorc_dto->text() =="0")
+            {
+                float porc_dto = (dto * 100) / pvp_recom;
+                ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
+                                                                                               Configuracion_global->decimales_campos_totales)));
+            }
         }
     }
 
@@ -468,7 +485,8 @@ void frmEditLine::calcular()
                     Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text())/100);
 
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(precio_cliente,'f',Configuracion_global->decimales)));
-    ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',
+    total = Configuracion_global->MonedatoDouble(Configuracion_global->toFormatoMoneda(QString::number(base)));
+    ui->txt_total_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',
                                                                      Configuracion_global->decimales_campos_totales)));
     total_con_iva = base + (base * ui->cboIva->currentText().toFloat()/100);
     ui->txtImporte_iva->setText(Configuracion_global->toFormatoMoneda(QString::number(
@@ -491,7 +509,7 @@ void frmEditLine::on_txtPVP_editingFinished()
 {
     ui->txtPVP->blockSignals(true);
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(ui->txtPVP->text()));
-    ui->txtPorc_dto->setText("0,00");
+    //ui->txtPorc_dto->setText("0,00");
     calcular();
     ui->txtPVP->blockSignals(false);
 }
@@ -543,26 +561,49 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
                                          error);
-        if ( success){
-            if(anterior["id_articulo"].toInt()==this->id_articulo)
+        if ( success)
+        {
+            if(anterior["id_articulo"].toInt()==this->id_articulo) // Mismo articulo
+            {
+                oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
+                                                                                                  anterior.value("cantidad").toFloat(),
+                                                    Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
+                                                             anterior.value("total").toDouble(),QDate::currentDate(),"V");
+                // ----------------------------
+                // Lotes
+                //-----------------------------
+                if(this->id_lote>0);
+                {
+                    QSqlQuery lote(Configuracion_global->groupDB);
+                    lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
+                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
+                                  this->id_lote));
+
+                }
+            }
+            else{ // En la edición se cambió el artículo de la línea
+                oArticulo->acumulado_devoluciones(anterior.value("id_articulo").toInt(),anterior.value("cantidad").toFloat(),
+                                                    anterior.value("total").toDouble(),QDate::currentDate(),"V");
                 oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
                                                                                                   anterior.value("cantidad").toFloat(),
                                                     Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
                                                                                          anterior.value("total").toDouble(),
                                                     QDate::currentDate(),"V");
-        else{
-            oArticulo->acumulado_devoluciones(anterior.value("id_articulo").toInt(),anterior.value("cantidad").toFloat(),
-                                                anterior.value("total").toDouble(),
-                                                QDate::currentDate(),"V");
-            oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
-                                                                                              anterior.value("cantidad").toFloat(),
-                                                Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
-                                                                                     anterior.value("total").toDouble(),
-                                                QDate::currentDate(),"V");
-        }
+                // ----------------------------
+                // Lotes
+                //-----------------------------
+                if(this->id_lote>0);
+                {
+                    QSqlQuery lote(Configuracion_global->groupDB);
+                    lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
+                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
+                                  this->id_lote));
 
-        emit refrescar_lineas();
-        accept();
+                }
+            }
+
+            emit refrescar_lineas();
+            accept();
         } else {
             QMessageBox::warning(this,tr("Edición lineas detalle"),
                              tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
@@ -578,6 +619,20 @@ void frmEditLine::on_btnAceptar_clicked()
                                                                                            anterior.value("total").toDouble(),
                                                       QDate::currentDate(),"V"))
         {
+            // ----------------------------
+            // Lotes
+            //-----------------------------
+            if(this->id_lote>0);
+            {
+                QString idlote = QString::number(this->id_lote);
+                QSqlQuery lote(Configuracion_global->groupDB);
+                if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2").arg(
+                              QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),'f',2),
+                                  idlote)))
+                    QMessageBox::warning(this,tr("Edición de líneas"),
+                                         tr("No se pudo actualizar el stock del lote: %1").arg(lote.lastError().text()));
+
+            }
             emit refrescar_lineas();
             accept();
         }

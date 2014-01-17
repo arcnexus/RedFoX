@@ -91,16 +91,25 @@ CREATE TABLE `@grupo@`.`articulos` (
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
+  `lotes` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,
   `imagen3` blob,
   `imagen4` blob,
   `margen` double DEFAULT NULL,
   `margen_min` double DEFAULT NULL,
   `coste_real` double DEFAULT NULL,
-  `lote` tinyint DEFAULT '0',
+  `lotes` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `@grupo@`.`articulos_lotes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_articulo` INT NULL,
+  `lote` VARCHAR(45) NULL,
+  `caducidad` DATE NULL,
+  PRIMARY KEY (`id`));
+
 CREATE TABLE `@grupo@`.`articulos_prov_frec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_articulo` int(11) DEFAULT NULL,
@@ -816,7 +825,7 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
         `@grupo@`.`articulos`.`fecha_prevista_recepcion` AS `fecha_prevista_recepcion`,
         `@grupo@`.`articulos`.`unidades_reservadas` AS `unidades_reservadas`,
         `@grupo@`.`articulos`.`stock_maximo` AS `stock_maximo`,`@grupo@`.`articulos`.`stock_minimo` AS `stock_minimo`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`controlar_stock` AS `controlar_stock`,`@grupo@`.`articulos`.`kit` AS `kit`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`,
-        `@grupo@`.`tarifas`.`id_codigo_tarifa` AS `tarifa` from ((`@grupo@`.`articulos` left join `@grupo@`.`proveedores` ON ((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`))) join `@grupo@`.`tarifas` ON ((`@grupo@`.`articulos`.`id` = `@grupo@`.`tarifas`.`id_articulo`)));
+        `@grupo@`.`tarifas`.`id_codigo_tarifa` AS `tarifa`,`@grupo@`.`articulos`.`lotes` AS `lotes` from ((`@grupo@`.`articulos` left join `@grupo@`.`proveedores` ON ((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`))) join `@grupo@`.`tarifas` ON ((`@grupo@`.`articulos`.`id` = `@grupo@`.`tarifas`.`id_articulo`)));
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaarticulos` AS select `@grupo@`.`articulos`.`codigo` AS `codigo`,`@grupo@`.`articulos`.`codigo_barras` AS `codigo_barras`,`@grupo@`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,`@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`proveedores`.`proveedor` AS `proveedor`,`@grupo@`.`articulos`.`tipo_iva` AS `tipo_iva`,`@grupo@`.`articulos`.`coste` AS `coste`,`@grupo@`.`articulos`.`fecha_ultima_compra` AS `fecha_ultima_compra`,`@grupo@`.`articulos`.`fecha_ultima_venta` AS `fecha_ultima_venta`,`@grupo@`.`articulos`.`unidades_compradas` AS `unidades_compradas`,`@grupo@`.`articulos`.`unidades_vendidas` AS `unidades_vendidas`,`@grupo@`.`articulos`.`stock_maximo` AS `stock_maximo`,`@grupo@`.`articulos`.`stock_minimo` AS `stock_minimo`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`controlar_stock` AS `controlar_stock`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen` from (`@grupo@`.`articulos` left join `@grupo@`.`proveedores` on((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`)));
 CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`inventario` AS select `@grupo@`.`articulos`.`id` AS `id`,
 `@grupo@`.`articulos`.`codigo` AS `codigo`,`@grupo@`.`articulos`.`codigo_barras` AS `codigo_barras`,`@grupo@`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,

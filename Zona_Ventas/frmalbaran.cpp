@@ -5,11 +5,14 @@
 #include "../Busquedas/db_consulta_view.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate.h"
+#include "../Auxiliares/monetarydelegate_totals.h"
+#include "../Auxiliares/numericdelegate.h"
 #include "../Zona_Ventas/factura.h"
 #include "../vencimientos.h"
 //
 #include "../Almacen/articulo.h"
 #include<math.h>
+#include "../Auxiliares/frmeditline.h"
 
 Albaran *oAlbaran = new Albaran();
 Cliente *oCliente2 = new Cliente();
@@ -17,7 +20,7 @@ Cliente *oCliente2 = new Cliente();
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmAlbaran),
-    helper(this),
+   // helper(this),
     menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {
@@ -32,7 +35,7 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->comboPais->setModel(Configuracion_global->paises_model);
   //  ui->comboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
     ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
-    //ui->cboPais_entrega->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+  //  ui->cboPais_entrega->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     QSqlQueryModel *formas_pago = new QSqlQueryModel(this);
     formas_pago->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
@@ -48,33 +51,32 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
-    helper.set_Tipo(false);
-    helper.help_table(ui->Lineas);
+    // ------------------------------
+    // Modelo y formato tabla lineas
+    //-------------------------------
+    modelLineas = new QSqlQueryModel(this);
+    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                          "from lin_alb where id = 0;",Configuracion_global->empresaDB);
+    ui->Lineas->setModel(modelLineas);
 
-    connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
-
-    connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
-
-    connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
-            this,SLOT(totalChanged(double,double,double,double,double,double,QString)));
-
-    connect(&helper,SIGNAL(desglose1Changed(double,double,double,double)),
-            this,SLOT(desglose1Changed(double,double,double,double)));
-
-    connect(&helper,SIGNAL(desglose2Changed(double,double,double,double)),
-            this,SLOT(desglose2Changed(double,double,double,double)));
-
-    connect(&helper,SIGNAL(desglose3Changed(double,double,double,double)),
-            this,SLOT(desglose3Changed(double,double,double,double)));
-
-    connect(&helper,SIGNAL(desglose4Changed(double,double,double,double)),
-            this,SLOT(desglose4Changed(double,double,double,double)));
-
-    connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
-
-    connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
-
-    connect(ui->chklporc_rec,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
+    QStringList header;
+    QVariantList sizes;
+    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
+    header << tr("porc_dto") << tr("porc_iva") << tr("Total");
+    sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
+    for(int i = 0; i <header.size();i++)
+    {
+        ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
+        modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
+    }
+    ui->Lineas->setItemDelegateForColumn(3,new NumericDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(4,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(5,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(6,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(7,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
+//------------------------------
 
     VaciarCampos();
     ui->btn_borrar->setEnabled(false);
@@ -182,6 +184,7 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtprovincia->setText(oAlbaran->provincia);
     index = ui->comboPais->findText(Configuracion_global->Devolver_pais(oAlbaran->id_pais));
     ui->comboPais->setCurrentIndex(index);
+
     ui->txtDireccion1_entrega->setText(oAlbaran->direccion1_entrega);
     ui->txtDireccion2_entrega->setText(oAlbaran->direccion2_entrega);
     ui->txtCp_entrega->setText(oAlbaran->cp_entrega);
@@ -197,13 +200,13 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtcif->setText(oAlbaran->cif);
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda( QString::number(oAlbaran->subtotal,'f',Configuracion_global->decimales)));
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->dto,'f',Configuracion_global->decimales)));
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number( oAlbaran->base_total,'f',Configuracion_global->decimales)));
+    ui->txtbase_total->setText(Configuracion_global->toFormatoMoneda(QString::number( oAlbaran->base_total,'f',Configuracion_global->decimales)));
     ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number( oAlbaran->base_total,'f',Configuracion_global->decimales)));
 
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',Configuracion_global->decimales)));
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total_albaran,'f',Configuracion_global->decimales)));
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',Configuracion_global->decimales)));
+    ui->txttotal_total->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total_albaran,'f',Configuracion_global->decimales)));
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->total_albaran,'f',Configuracion_global->decimales)));
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',Configuracion_global->decimales)));
+    ui->txtrec_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',Configuracion_global->decimales)));
     lEstado = oAlbaran->impreso;
     if((lEstado == true)) {
         ui->lbimpreso->setVisible(true);
@@ -244,7 +247,7 @@ void FrmAlbaran::LLenarCampos() {
     ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec2,'f',Configuracion_global->decimales)));
     ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec3,'f',Configuracion_global->decimales)));
     ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec4,'f',Configuracion_global->decimales)));
-    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',Configuracion_global->decimales)));
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->rec_total,'f',Configuracion_global->decimales)));
     ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oAlbaran->iva_total,'f',Configuracion_global->decimales)));
     ui->txtpedido_cliente->setText(oAlbaran->pedido_cliente);
     ui->txtcNumFra->setText(oAlbaran->factura);
@@ -265,25 +268,16 @@ void FrmAlbaran::LLenarCampos() {
     ui->spiniva_gasto3->setValue(oAlbaran->iva_gasto3);
 
         if(oAlbaran->recargo_equivalencia==true)
-        ui->chklporc_rec->setChecked(true);
+        ui->chkrecargo_equivalencia->setChecked(true);
     else
-        ui->chklporc_rec->setChecked(false);
+        ui->chkrecargo_equivalencia->setChecked(false);
 
     ui->txtentregado_a_cuenta->setText(QString::number(oAlbaran->entregado_a_cuenta));
     ui->spinporc_Dto->setValue(oAlbaran->porc_dto);
     ui->spinPorc_dto_pp->setValue(oAlbaran->porc_dto_pp);
 
     oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
-    helper.set_tarifa(oCliente2->tarifa_cliente);
-    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
 
-    QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
-    helper.fillTable("empresa","lin_alb",filter);
-    helper.setId_cliente(oCliente2->id);
-    helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
     //-------------------
     // combo forma pago
     //-------------------
@@ -381,25 +375,19 @@ void FrmAlbaran::LLenarCamposCliente()
     // Datos fiscales
     //----------------------
     ui->txtcif->setText(oCliente2->cif_nif);
-    helper.set_tarifa(oCliente2->tarifa_cliente);
+    //helper.set_tarifa(oCliente2->tarifa_cliente);
     if (oCliente2->lIRPF==1) {
-        ui->chklporc_rec->setChecked(true);
+        ui->chkrecargo_equivalencia->setChecked(true);
         oAlbaran->recargo_equivalencia = (1);
     } else {
-        ui->chklporc_rec->setChecked(false);
+        ui->chkrecargo_equivalencia->setChecked(false);
         oAlbaran->recargo_equivalencia = (0);
     }
 
     oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
-    helper.set_tarifa(oCliente2->tarifa_cliente);
 
-    helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
     oAlbaran->id_cliente = oCliente2->id;
-    helper.setId_cliente(oCliente2->id);
-    helper.set_tipo_dto_tarifa(oCliente2->tipo_dto_tarifa);
+
     //---------------------------
     // DIVISA ALBARAN
     //---------------------------
@@ -428,9 +416,9 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtcif->setText("");
     ui->txtsubtotal->setText(0);
     ui->txtimporte_descuento->setText("0,00");
-    ui->txtbase->setText("0,00");
-    ui->txtiva->setText("0,00");
-    ui->txttotal->setText("0,00");
+    ui->txtbase_total->setText("0,00");
+    ui->txtiva_total->setText("0,00");
+    ui->txttotal_total->setText("0,00");
     ui->lbimpreso->setVisible(false);
     ui->lbfacturado->setVisible(false);
 
@@ -439,17 +427,6 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtbase2->setText(0);
     ui->txtbase3->setText(0);
     ui->txtbase4->setText(0);
-    //Configuracion_global->CargarDatos();
-
-    //QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
-    //ui->txtporc_iva1->setText(QString::number(Configuracion_global->ivas[keys.at(0)].value("iva").toDouble()));
-    //ui->txtporc_iva2->setText(QString::number(Configuracion_global->ivas[keys.at(1)].value("iva").toDouble()));
-    //ui->txtporc_iva3->setText(QString::number(Configuracion_global->ivas[keys.at(2)].value("iva").toDouble()));
-    //ui->txtporc_iva4->setText(QString::number(Configuracion_global->ivas[keys.at(3)].value("iva").toDouble()));
-    //ui->txtporc_rec1->clear();
-    //ui->txtporc_rec2->clear();
-    //ui->txtporc_rec3->clear();
-    //ui->txtporc_rec4->clear();
     ui->txtiva1->setText(0);
     ui->txtiva2->setText(0);
     ui->txtiva3->setText(0);
@@ -462,16 +439,16 @@ void FrmAlbaran::VaciarCampos() {
     ui->txtporc_rec2->setText(0);
     ui->txtporc_rec3->setText(0);
     ui->txtporc_rec4->setText(0);
-    ui->txttotal_recargo->setText(0);
+    ui->txtrec->setText(0);
     ui->txtentregado_a_cuenta->setText("0,00");
     ui->txtpedido_cliente->setText("");
     ui->txttotal_iva_2->setText("0,00");
     ui->txtbase_total_2->setText("0,00");
-    ui->txttotal_recargo_2->setText("0,00");
+    ui->txtrec_2->setText("0,00");
     ui->txttotal_2->setText("0,00");
     ui->txtsubtotal->setText("0,00");
 
-    helper.fillTable("empresa","lin_alb","id_Cab = -1");
+    //helper.fillTable("empresa","lin_alb","id_Cab = -1");
 }
 
 void FrmAlbaran::BloquearCampos(bool state)
@@ -527,8 +504,9 @@ void FrmAlbaran::BloquearCampos(bool state)
     ui->btn_borrarLinea->setEnabled(!state);
     ui->btn_borrar->setEnabled(state);    
     ui->btnFacturar->setEnabled(state);
+    ui->btnImprimir->setEnabled(true);
 
-    helper.blockTable(state);
+    //helper.blockTable(state);
     m_busqueda->block(!state);
 }
 
@@ -559,9 +537,9 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->cif= (ui->txtcif->text());
     oAlbaran->subtotal= (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text()));
     oAlbaran->dto= (Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text()));
-    oAlbaran->base_total= (Configuracion_global->MonedatoDouble(ui->txtbase->text()));
-    oAlbaran->iva_total= (Configuracion_global->MonedatoDouble(ui->txtiva->text()));
-    oAlbaran->total_albaran= (Configuracion_global->MonedatoDouble(ui->txttotal->text()));
+    oAlbaran->base_total= (Configuracion_global->MonedatoDouble(ui->txtbase_total->text()));
+    oAlbaran->iva_total= (Configuracion_global->MonedatoDouble(ui->txtiva_total->text()));
+    oAlbaran->total_albaran= (Configuracion_global->MonedatoDouble(ui->txttotal_total->text()));
     oAlbaran->comentario= (ui->txtcomentario->toPlainText());
     oAlbaran->base1= Configuracion_global->MonedatoDouble(ui->txtbase1->text());
     oAlbaran->base2= (Configuracion_global->MonedatoDouble(ui->txtbase2->text()));
@@ -587,9 +565,9 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->rec2= (Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text()));
     oAlbaran->rec3= (Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text()));
     oAlbaran->rec4= (Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text()));
-    oAlbaran->rec_total= (Configuracion_global->MonedatoDouble(ui->txttotal_recargo->text()));
+    oAlbaran->rec_total= (Configuracion_global->MonedatoDouble(ui->txtrec->text()));
     oAlbaran->dto = Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text());
-    if (ui->chklporc_rec->isChecked())
+    if (ui->chkrecargo_equivalencia->isChecked())
         oAlbaran->recargo_equivalencia = (1);
     else
         oAlbaran->recargo_equivalencia = (0);
@@ -625,7 +603,7 @@ void FrmAlbaran::on_btnSiguiente_clicked()
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
-        helper.fillTable("empresa","lin_alb",filter);
+        //helper.fillTable("empresa","lin_alb",filter);
         ui->btn_borrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btnFacturar->setEnabled(true);
@@ -644,6 +622,7 @@ void FrmAlbaran::on_btnSiguiente_clicked()
         ui->btnSiguiente->setEnabled(false);
         oAlbaran->id++;
     }
+    refrescar_modelo();
 }
 
 void FrmAlbaran::on_btnAnterior_clicked()
@@ -653,7 +632,7 @@ void FrmAlbaran::on_btnAnterior_clicked()
     {
         LLenarCampos();
         QString filter = QString("id_Cab = '%1'").arg(oAlbaran->id);
-        helper.fillTable("empresa","lin_alb",filter);
+        //helper.fillTable("empresa","lin_alb",filter);
         ui->btn_borrar->setEnabled(true);
         ui->btnEditar->setEnabled(true);
         ui->btnFacturar->setEnabled(true);
@@ -670,6 +649,7 @@ void FrmAlbaran::on_btnAnterior_clicked()
         ui->btnAnterior->setEnabled(false);
         oAlbaran->id = -1;
     }
+    refrescar_modelo();
 }
 
 void FrmAlbaran::on_btnAnadir_clicked()
@@ -823,300 +803,6 @@ void FrmAlbaran::on_btn_borrar_clicked()
     }
 }
 
-void FrmAlbaran::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
-{
-
-    subtotal +=(ui->SpinGastoDist1->value() + ui->SpinGastoDist2->value() + ui->SpinGastoDist3->value());
-    if(dto == 0)
-        dto = subtotal *(ui->spinporc_Dto->value()/100.0);
-    double dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
-    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
-    base = subtotal -(dto+dtopp);
-
-    if(oCliente2->grupo_iva == 1)
-        calcular_iva_gastos();
-    iva += (ui->spiniva_gasto1->value() + ui->spiniva_gasto2->value() + ui->spiniva_gasto3->value());
-    total = base + iva + re;
-    if(oCliente2->grupo_iva == 2 || oCliente2->grupo_iva == 3 || oCliente2->grupo_iva == 4)
-    {
-        iva = 0;
-        total = base;
-    }
-    QString sbase;
-    sbase = Configuracion_global->toRound(base,Configuracion_global->decimales_campos_totales);
-    //qDebug()  <<"BASE: " << sbase;
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(base,Configuracion_global->decimales_campos_totales)));
-    base = Configuracion_global->MonedatoDouble(ui->txtbase->text());
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dto,Configuracion_global->decimales_campos_totales)));
-    dto = Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text());
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(subtotal,Configuracion_global->decimales_campos_totales)));
-    subtotal = Configuracion_global->MonedatoDouble(ui->txtsubtotal->text());
-    if(oCliente2->grupo_iva == 1)
-    {
-        ui->txtiva->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(iva,Configuracion_global->decimales_campos_totales)));
-        ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(re,Configuracion_global->decimales_campos_totales)));
-    }
-    else
-    {
-        ui->txtiva->setText("0,00");
-        ui->txttotal_recargo->setText("0,00");
-    }
-    iva = Configuracion_global->MonedatoDouble(ui->txtiva->text());
-    re = Configuracion_global->MonedatoDouble(ui->txttotal_recargo->text());
-    total = base + iva + re;
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(total,Configuracion_global->decimales_campos_totales)));
-
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(base,Configuracion_global->decimales_campos_totales)));
-    if(oCliente2->grupo_iva ==1)
-    {
-        ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(iva,Configuracion_global->decimales_campos_totales)));
-        ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(re,Configuracion_global->decimales_campos_totales)));
-    } else
-    {
-        ui->txttotal_iva_2->setText("0,00");
-        ui->txttotal_recargo_2->setText("0,00");
-    }
-
-
-        ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(total,Configuracion_global->decimales_campos_totales)));
-}
-
-void FrmAlbaran::desglose1Changed(double base, double iva, double re, double total)
-{
-    if(oCliente2->grupo_iva == 2 || oCliente2->grupo_iva == 3 || oCliente2->grupo_iva == 4)
-    {
-        iva = 0;
-        total = base;
-    }
-//    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva1))
-//        base +=ui->SpinGastoDist1->value();
-//    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva1))
-//        base +=ui->SpinGastoDist2->value();
-//    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva1))
-//        base +=ui->SpinGastoDist3->value();
-
-    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(base,Configuracion_global->decimales_campos_totales)));
-    base = Configuracion_global->MonedatoDouble(ui->txtbase1->text());
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(iva,Configuracion_global->decimales_campos_totales)));
-    iva = Configuracion_global->MonedatoDouble(ui->txtiva1->text());
-    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(re,Configuracion_global->decimales_campos_totales)));
-    re = Configuracion_global->MonedatoDouble(ui->txtrec1->text());
-    total = base + iva + re;
-    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(total,Configuracion_global->decimales_campos_totales)));
-}
-
-void FrmAlbaran::desglose2Changed(double base, double iva, double re, double total)
-{
-    if(oCliente2->grupo_iva == 2 || oCliente2->grupo_iva == 3 || oCliente2->grupo_iva == 4)
-    {
-        iva = 0;
-        total = base;
-    }
-//    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva2))
-//        base +=ui->SpinGastoDist1->value();
-//    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva2))
-//        base +=ui->SpinGastoDist2->value();
-//    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva2))
-//        base +=ui->SpinGastoDist3->value();
-    total = base + iva + re;
-    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
-    base = Configuracion_global->MonedatoDouble(ui->txtbase2->text());
-    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
-    iva = Configuracion_global->MonedatoDouble(ui->txtiva1->text());
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
-    re = Configuracion_global->MonedatoDouble(ui->txtrec1->text());
-    total = base + iva + re;
-    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
-}
-
-void FrmAlbaran::desglose3Changed(double base, double iva, double re, double total)
-{
-    if(oCliente2->grupo_iva == 2 || oCliente2->grupo_iva == 3 || oCliente2->grupo_iva == 4)
-    {
-        iva = 0;
-        total = base;
-    }
-//    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva3))
-//        base +=ui->SpinGastoDist1->value();
-//    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva3))
-//        base +=ui->SpinGastoDist2->value();
-//    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva3))
-//        base +=ui->SpinGastoDist3->value();
-    total = base + iva + re;
-    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
-    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
-}
-
-void FrmAlbaran::desglose4Changed(double base, double iva, double re, double total)
-{
-    if(oCliente2->grupo_iva == 2 || oCliente2->grupo_iva == 3 || oCliente2->grupo_iva == 4)
-    {
-        iva = 0;
-        total = base;
-    }
-//    if(ui->cboporc_iva_gasto1->currentText() == QString::number(oAlbaran->porc_iva4))
-//        base +=ui->SpinGastoDist1->value();
-//    if(ui->cboporc_iva_gasto2->currentText() == QString::number(oAlbaran->porc_iva4))
-//        base +=ui->SpinGastoDist2->value();
-//    if(ui->cboporc_iva_gasto3->currentText() == QString::number(oAlbaran->porc_iva4))
-//        base +=ui->SpinGastoDist3->value();
-    total = base + iva + re;
-    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
-    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
-}
-
-void FrmAlbaran::lineaReady(lineaDetalle * ld)
-{
-    //-----------------------------------------------------
-    // Insertamos línea de pedido y controlamos acumulados
-    //-----------------------------------------------------
-
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-
-    //Nueva linea
-    if (ld->idLinea == -1)
-    {
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("select id from articulos where codigo =:codigo");
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec())
-            queryArticulos.next();
-        else
-            ok_Maya = false;
-        QSqlQuery query_lin_alb(Configuracion_global->empresaDB);
-        query_lin_alb.prepare("INSERT INTO lin_alb (id_Cab, id_articulo, codigo, cantidad,"
-                                  "descripcion, precio, subtotal, porc_dto,"
-                                  " dto, porc_iva, total)"
-                                  "VALUES (:id_cab,:id_articulo,:codigo,:cantidad,"
-                                  ":descripcion,:precio,:subtotal,:porc_dto,"
-                                  ":dto,:porc_iva,:total);");
-        query_lin_alb.bindValue(":id_cab", oAlbaran->id);
-        query_lin_alb.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_alb.bindValue(":codigo",ld->codigo);
-        query_lin_alb.bindValue(":descripcion",ld->descripcion);
-        query_lin_alb.bindValue(":cantidad",ld->cantidad);
-        query_lin_alb.bindValue(":precio",ld->precio);
-        query_lin_alb.bindValue(":subtotal",ld->subtotal);
-        query_lin_alb.bindValue(":porc_dto",ld->dto_perc);
-        query_lin_alb.bindValue(":dto",ld->dto);
-        query_lin_alb.bindValue(":iva",(ld->subtotal *ld->iva_perc)/100); // importe iva hay que calcularlo
-        query_lin_alb.bindValue(":total",ld->total);
-        if (!query_lin_alb.exec()){
-            ok_empresa = false;
-            QMessageBox::warning(this,tr("Gestión de albaranes"),
-                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_alb.lastError().text()),
-                                 tr("Aceptar"));
-        }
-        //TODO control de stock fact clientes
-
-        if(queryArticulos.exec() && ok_empresa){
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-
-        ld->idLinea = query_lin_alb.lastInsertId().toInt();
-
-    } else // Editando linea
-    {
-        //TODO control de stock editando en fact clientes
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("select id from articulos where codigo =:codigo");
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec())
-            queryArticulos.next();
-        else
-            ok_Maya = false;
-
-        QSqlQuery query_lin_alb(Configuracion_global->empresaDB);
-        query_lin_alb.prepare("UPDATE lin_alb SET "
-                                  "id_articulo =:id_articulo,"
-                                  "codigo =:codigo,"
-                                  "descripcion =:descripcion,"
-                                  "cantidad =:cantidad,"
-                                  "precio =:precio,"
-                                  "subtotal =:subtotal,"
-                                  "porc_dto =:porc_dto,"
-                                  "dto =:dto,"
-                                  "iva =:iva,"
-                                  "porc_iva =:porc_iva,"
-                                  "total =:total "
-                                  "WHERE id = :id;");
-
-        query_lin_alb.bindValue(":id_cab", oAlbaran->id);
-        query_lin_alb.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_alb.bindValue(":codigo",ld->codigo);
-        query_lin_alb.bindValue(":descripcion",ld->descripcion);
-        query_lin_alb.bindValue(":cantidad",ld->cantidad);
-        query_lin_alb.bindValue(":precio",ld->precio);
-        query_lin_alb.bindValue(":subtotal",ld->subtotal);
-        query_lin_alb.bindValue(":porc_dto",ld->dto_perc);
-        query_lin_alb.bindValue(":dto",ld->dto);
-        query_lin_alb.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_alb.bindValue(":iva",(ld->subtotal * ld->iva_perc)/100);
-        query_lin_alb.bindValue(":total",ld->total);
-        query_lin_alb.bindValue(":id",ld->idLinea);
-
-        if (!query_lin_alb.exec()) {
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_alb.lastError().text()),
-                                 tr("Aceptar"));
-            ok_empresa = false;
-        }
-        //TODO control stock editando linea alb
-        if(queryArticulos.exec() && ok_empresa && ok_Maya){
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    ld->cantidad_old = ld->cantidad;
-}
-
-void FrmAlbaran::lineaDeleted(lineaDetalle * ld)
-{
-    //todo borrar de la bd y stock y demas
-    //if id = -1 pasando olimpicamente
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-    if(ld->idLinea >-1)
-    {
-        //TODO control de stock
-        QSqlQuery q(Configuracion_global->empresaDB);
-        q.prepare("delete from lin_alb where id =:id");
-        q.bindValue(":id",ld->idLinea);
-        if(q.exec() && ok_Maya)
-        {
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    delete ld;
-}
-
-
-
 
 void FrmAlbaran::on_btndeshacer_clicked()
 {
@@ -1129,7 +815,7 @@ void FrmAlbaran::on_btndeshacer_clicked()
 void FrmAlbaran::on_tabWidget_2_currentChanged(int index)
 {
     Q_UNUSED(index);
-    helper.resizeTable();
+    //helper.resizeTable();
 }
 
 void FrmAlbaran::on_btnImprimir_clicked()
@@ -1139,31 +825,36 @@ void FrmAlbaran::on_btnImprimir_clicked()
     dlg_print.set_preview(false);
     if(dlg_print.exec() == dlg_print.Accepted)
     {
-        bool ok  /* =oFactura->set_impresa(true)*/;
-        if(ok)
-        {
-            ui->lbimpreso->setVisible(true);
-            int valor = dlg_print.get_option();
-             QMap <QString,QVariant> parametros;
 
-            switch (valor) {
-            case 1: // Impresora
-                //Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),false,false,parametros,this);
-                break;
-            case 2: // email
-                // TODO - enviar pdf por mail
-                break;
-            case 3: // PDF
-                //Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),true,false,parametros,this);
-                break;
-            case 4: //preview
-                //Configuracion_global->imprimir("factura_"+QString::number(oCliente2->ididioma),false,true,parametros,this);
-                break;
-            default:
-                break;
-            }
 
+      //  ui->lblFacturaImpresa->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        parametros_sql["Empresa.cab_alb"] = QString("id = %1").arg(oAlbaran->id);
+        parametros_sql["Empresa.lin_alb"] = QString("id_cab = %1").arg(oAlbaran->id);
+        QString report = "albaran_"+QString::number(oCliente2->ididioma);
+
+
+        QMap <QString,QString> parametros;
+        //TODO parametros
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            // TODO - enviar pdf por mail
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
         }
+
+
     }
 }
 
@@ -1299,6 +990,189 @@ void FrmAlbaran::on_cboseries_currentIndexChanged(const QString &arg1)
     filter_table(this->texto,this->orden,this->modo);
 }
 
+void FrmAlbaran::refrescar_modelo()
+{
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                              "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
+}
+
+void FrmAlbaran::calcular_albaran()
+{
+    double subtotal,dto,dtopp,base,iva,re,total;
+    double base1,iva1,re1,total1;
+    double base2,iva2,re2,total2;
+    double base3,iva3,re3,total3;
+    double base4,iva4,re4,total4;
+    base1= 0; base2 = 0; base3 =0;base4 = 0;
+    iva1=0; iva2 =0; iva3=0; iva4 = 0;
+    re1=0;re2=0;re3=0;re4 =0;
+    total1 =0; total2 =0;total3=0; total4=0;
+    subtotal =0; dto=0; dtopp =0; base =0; iva =0; re =0; total =0;
+    QMap <int,QSqlRecord> l;
+    QString error;
+    l = SqlCalls::SelectRecord("lin_alb",QString("id_cab=%1").arg(oAlbaran->id),Configuracion_global->empresaDB,error);
+    QMapIterator <int,QSqlRecord> li(l);
+    while(li.hasNext())
+    {
+        li.next();
+        subtotal += li.value().value("subtotal").toDouble();
+        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva1->text().toFloat())
+        {
+            // base1
+            base1 += li.value().value("total").toDouble();
+            iva1 = base1*(li.value().value("porc_iva").toFloat()/100);
+            re1 = base1*(li.value().value("porc_re").toFloat()/100);
+            total1 = base1 + iva1 + re1;
+        }
+        // base2
+        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva2->text().toFloat())
+        {
+            base2 += li.value().value("total").toDouble();
+            iva2 = base2*(li.value().value("porc_iva").toFloat()/100);
+            re1 = base2*(li.value().value("porc_re").toFloat()/100);
+            total2 = base2 + iva2 + re2;
+
+        }
+        // base3
+        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva3->text().toFloat())
+        {
+            base3 += li.value().value("total").toDouble();
+            iva3 = base3*(li.value().value("porc_iva").toFloat()/100);
+            re3 = base3*(li.value().value("porc_re").toFloat()/100);
+            total3 = base3 + iva3 + re3;
+
+        }
+        // base4
+        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
+        {
+            base4 += li.value().value("total").toDouble();
+            iva4 = base4*(li.value().value("porc_iva").toFloat()/100);
+            re4 = base4*(li.value().value("porc_re").toFloat()/100);
+            total4 = base4 + iva4 + re4;
+        }
+
+    }
+    // añadir gastos extras
+    if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
+        base1 += ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
+        base1 += ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
+        base1 += ui->SpinGastoDist3->value();
+    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re1 = base1 * (ui->txtrec1->text().toFloat()/100);
+
+    if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
+        base2 += ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
+        base2 += ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
+        base2 += ui->SpinGastoDist3->value();
+    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re2 = base2 * (ui->txtrec1->text().toFloat()/100);
+
+    if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
+        base3 += ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
+        base3 += ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
+        base3 += ui->SpinGastoDist3->value();
+    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re3 = base3 * (ui->txtrec3->text().toFloat()/100);
+
+    if(ui->cboporc_iva_gasto1->currentText().toFloat()  == ui->txtporc_iva4->text().toFloat())
+        base4 += ui->SpinGastoDist1->value();
+    if(ui->cboporc_iva_gasto2->currentText().toFloat()  == ui->txtporc_iva4->text().toFloat())
+        base4 += ui->SpinGastoDist2->value();
+    if(ui->cboporc_iva_gasto3->currentText().toFloat()  == ui->txtporc_iva4->text().toFloat())
+        base4 += ui->SpinGastoDist3->value();
+    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re4 = base4 * (ui->txtrec4->text().toFloat()/100);
+
+    // TOTALES GENERALES
+
+    if(l.size() >0)
+        dto += li.value().value("dto").toDouble();
+    base = base1 + base2+base3+base4;
+
+    dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
+    base -= dtopp;
+    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(dtopp,'f',
+                                                Configuracion_global->decimales_campos_totales)));
+
+
+    // Desglose llenar controles
+    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base1,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva1,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re1,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total1,'f',
+                                                                 Configuracion_global->decimales_campos_totales)));
+
+    // Desglose llenar controles
+    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base2,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva2,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re2,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total2,'f',
+                                                                 Configuracion_global->decimales_campos_totales)));
+    // Desglose llenar controles
+    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base3,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva3,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(re3,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total3,'f',
+                                                                 Configuracion_global->decimales_campos_totales)));
+    // Desglose llenar controles
+    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base4,'f',
+                                                                                Configuracion_global->decimales_campos_totales)));
+    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva4,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re4,'f',
+                                                                               Configuracion_global->decimales_campos_totales)));
+    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total4,'f',
+                                                                 Configuracion_global->decimales_campos_totales)));
+
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
+    iva = iva1 + iva2 +iva3+iva4;
+    re  = re1 +re2 + re3 + re4;
+    total = base + iva +re;
+
+    double irpf = base * (ui->spinporc_irpf->value()/100.0);
+    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
+
+    this->moneda = moneda;
+    ui->txtbase_total->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_total->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
+
+    ui->txtbase_total->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtiva_total->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtrec->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_total->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
+
+
+    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtrec_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
+
+}
+
 void FrmAlbaran::calcular_iva_gastos()
 {
     ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
@@ -1310,6 +1184,15 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if(obj == ui->Lineas){
+            if (keyEvent->key() == Qt::Key_Plus)
+            {
+                on_btnAnadirLinea_clicked();
+            }
+            if(keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)
+                on_Lineas_doubleClicked(ui->Lineas->currentIndex());
+
+        }
 //        if(obj == ui->txtcodigo_transportista)
 //        {
 //            if(keyEvent->key() == Qt::Key_F1)
@@ -1351,11 +1234,11 @@ void FrmAlbaran::on_cboOrden_currentIndexChanged(const QString &arg1)
 
 void FrmAlbaran::on_table2_clicked(const QModelIndex &index)
 {
-    int id = ui->table2->model()->data(ui->table2->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(id));
-    LLenarCampos();
-    BloquearCampos(true);
-    ui->table2->setFocus();
+//    int id = ui->table2->model()->data(ui->table2->model()->index(index.row(),0),Qt::EditRole).toInt();
+//    oAlbaran->RecuperarAlbaran("select * from cab_alb where id ="+QString::number(id));
+//    LLenarCampos();
+//    BloquearCampos(true);
+//    ui->table2->setFocus();
 }
 
 void FrmAlbaran::on_table2_doubleClicked(const QModelIndex &index)
@@ -1367,6 +1250,8 @@ void FrmAlbaran::on_table2_doubleClicked(const QModelIndex &index)
     ui->radEdicion->setChecked(true);
     ui->btnEditar->setEnabled(true);
     ocultarBusqueda();
+    refrescar_modelo();
+
 }
 
 void FrmAlbaran::on_btnBuscar_clicked()
@@ -1486,29 +1371,17 @@ void FrmAlbaran::on_btnFacturar_clicked()
             cab_fac["imp_gasto1"] = oAlbaran->imp_gasto1;
             cab_fac["imp_gasto2"] = oAlbaran->imp_gasto2;
             cab_fac["imp_gasto3"] = oAlbaran->imp_gasto3;
+            cab_fac["porc_iva_gasto1"] = oAlbaran->imp_gasto1;
+            cab_fac["porc_iva_gasto2"] = oAlbaran->imp_gasto2;
+            cab_fac["porc_iva_gasto3"] = oAlbaran->imp_gasto3;
+            cab_fac["iva_gasto1"] = oAlbaran->iva_gasto1;
+            cab_fac["iva_gasto2"] = oAlbaran->iva_gasto2;
+            cab_fac["iva_gasto3"] = oAlbaran->iva_gasto3;
+
+
             // h["total"] == ui->txttotal->text().replace(".","").replace(",",".").toDouble();
            Factura oFactura;
-    //        QDialog* dlg = new QDialog(this);
-    //        dlg->setWindowTitle(tr("Seleccione serie factura"));
-    //        dlg->resize(270,150);
-    //        QComboBox* box = new QComboBox(dlg);
-    //        QPushButton*  btn = new QPushButton("Aceptar",dlg);
-    //        QVBoxLayout lay(dlg);
 
-    //        lay.addWidget(box);
-    //        lay.addWidget(btn);
-
-    //        dlg->setLayout(&lay);
-
-    //        QSqlQueryModel *l = new QSqlQueryModel(this);
-    //        l->setQuery("select serie from series",Configuracion_global->empresaDB);
-    //        box->setModel(l);
-
-    //        connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
-    //        dlg->exec();//aki se podria poner otro boton y cancelar todo?
-
-    //        QString serie = box->currentText();
-    //        dlg->deleteLater();
             QString fra =  oFactura.NuevoNumeroFactura(oAlbaran->serie);
             QString num = oAlbaran->serie+"/"+ fra;
 
@@ -1641,8 +1514,7 @@ void FrmAlbaran::on_spinporc_Dto_editingFinished()
         if(!upd)
             QMessageBox::warning(this,tr("Cambio DTO"),tr("No se pudo realizar el cambio en las líneas, error:%1").arg(error),
                                  tr("Aceptar"));
-        else
-            helper.calculatotal();
+
     }
     //--------------------------
     // Calculo dto total
@@ -1651,7 +1523,7 @@ void FrmAlbaran::on_spinporc_Dto_editingFinished()
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
     oAlbaran->dto = dto;
     QString filter = QString("id_cab = '%1'").arg(oAlbaran->id);
-    helper.fillTable("empresa","lin_alb",filter);
+    //helper.fillTable("empresa","lin_alb",filter);
 
 
 }
@@ -1663,7 +1535,7 @@ void FrmAlbaran::on_spinPorc_dto_pp_editingFinished()
     ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
     oAlbaran->dto_pp = dto_pp;
     QString filter = QString("id_cab = '%1'").arg(oAlbaran->id);
-    helper.fillTable("empresa","lin_alb",filter);
+    //helper.fillTable("empresa","lin_alb",filter);
 }
 
 void FrmAlbaran::mostrarBusqueda()
@@ -1679,3 +1551,120 @@ void FrmAlbaran::ocultarBusqueda()
 }
 
 
+
+void FrmAlbaran::on_btnAnadirLinea_clicked()
+{
+    if(ui->btnGuardar->isEnabled())
+    {
+            frmEditLine frmeditar(this);
+            connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_linea(0,"lin_alb");
+            frmeditar.set_tabla("lin_alb");
+            frmeditar.set_id_cliente(oCliente2->id);
+            frmeditar.set_id_tarifa(oCliente2->idTarifa);
+            frmeditar.set_dto_tarifa(oCliente2->tipo_dto_tarifa);
+            frmeditar.set_id_cab(oAlbaran->id);
+            frmeditar.set_tipo("V");
+            if(!frmeditar.exec() == QDialog::Accepted)
+                modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                                      "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
+                calcular_albaran();
+
+    } else{
+        QMessageBox::warning(this,tr("Gestión de albaranes"),tr("Debe editar el albarán para añadir líneas"),
+                             tr("Aceptar"));
+    }
+
+}
+
+void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
+{
+    if(ui->btnGuardar->isEnabled())
+    {
+        int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
+        if(id_lin >0)
+        {
+
+            frmEditLine frmeditar(this);
+            connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_id_cliente(oCliente2->id);
+            frmeditar.set_id_tarifa(oCliente2->idTarifa);
+            frmeditar.set_dto_tarifa(oCliente2->tipo_dto_tarifa);
+            frmeditar.set_id_cab(oAlbaran->id);
+            frmeditar.set_tipo("V");
+            frmeditar.set_linea(id_lin,"lin_alb");
+            frmeditar.set_tabla("lin_alb");
+            frmeditar.exec();
+
+            //refrescar_modelo();
+            calcular_albaran();
+            ui->Lineas->setFocus();
+
+        }
+    }else
+    {
+        QMessageBox::warning(this, tr("Gestión de albaranes"),tr("Debe editar la albarán para poder modificar las líneas"),
+                             tr("Aceptar"));
+
+    }
+
+}
+
+void FrmAlbaran::on_btn_borrarLinea_clicked()
+{
+    if(QMessageBox::question(this,tr("Lineas de albarán"), tr("¿Borrar la linea?"),
+                             tr("No"),tr("Borrar")) == QMessageBox::Accepted)
+    {
+        QModelIndex index = ui->Lineas->currentIndex();
+        int id_lin = ui->Lineas->model()->index(index.row(),0).data().toInt();
+        //TODO .
+        oAlbaran->borrar_linea(id_lin);
+        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                                      "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
+        calcular_albaran();
+        ui->Lineas->setFocus();
+
+    }
+}
+
+void FrmAlbaran::on_SpinGastoDist1_valueChanged(double arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_iva_gastos();
+    calcular_albaran();
+}
+
+void FrmAlbaran::on_SpinGastoDist2_valueChanged(double arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_iva_gastos();
+    calcular_albaran();
+}
+
+void FrmAlbaran::on_SpinGastoDist3_valueChanged(double arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_iva_gastos();
+    calcular_albaran();
+}
+
+void FrmAlbaran::on_cboporc_iva_gasto1_currentIndexChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_iva_gastos();
+    calcular_albaran();
+}
+
+void FrmAlbaran::on_cboporc_iva_gasto2_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    calcular_iva_gastos();
+    calcular_albaran();
+}
+
+void FrmAlbaran::on_cboporc_iva_gasto3_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    calcular_iva_gastos();
+    calcular_albaran();
+}
