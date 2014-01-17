@@ -12,6 +12,7 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
     transportistas oTransportista(this);
     anadiendo = false;
     anadiendoContacto = false;
+    id_contacto = 0;
     //ui->txtCodigo_proveedor->installEventFilter(this);
     //------------------
     // Busqueda
@@ -79,6 +80,7 @@ void FrmTransportistas::Bloquear_campos(bool state)
     ui->btnAnadirContacto->setEnabled(!state);
     ui->btnBorrarContacto->setEnabled(!state);
     ui->btnEditarContacto->setEnabled(!state);
+    ui->pushButtonGuardarContacto->setEnabled(!state);
 //    QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
 //    QLineEdit *lineEdit;
 //    foreach (lineEdit, lineEditList) {
@@ -90,8 +92,8 @@ void FrmTransportistas::Bloquear_campos(bool state)
     ui->txtcp->setReadOnly(state);
     ui->txtpoblacion->setReadOnly(state);
     ui->txtprovincia->setReadOnly(state);
-    ui->txtfecha_alta->setEnabled(state);
-    ui->cbopais->setEnabled(state);
+    ui->txtfecha_alta->setReadOnly(state);
+    ui->cbopais->setEnabled(!state);
     ui->txttelefono1->setReadOnly(state);
     ui->txttelefono2->setReadOnly(state);
     ui->txtmovil->setReadOnly(state);
@@ -299,20 +301,20 @@ void FrmTransportistas::setUpBusqueda()
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
 
-    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir forma de pago"),this);
+    QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir transportista"),this);
     connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
     m_busqueda->addWidget(add);
 
-    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar forma de pago"),this);
+    QPushButton* edit = new QPushButton(QIcon(":/Icons/PNG/edit.png"),tr("Editar transportista"),this);
     connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
     m_busqueda->addWidget(edit);
 
-    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir forma de pago"),this);
+    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir transportista"),this);
    // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
     m_busqueda->addWidget(print);
 
-    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar forma de pago"),this);
-   // connect(del,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar transportista"),this);
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
     m_busqueda->addWidget(del);
 }
 
@@ -466,15 +468,38 @@ void FrmTransportistas::on_btnAnadirContacto_clicked()
 
 void FrmTransportistas::on_btnEditarContacto_clicked()
 {
-    bloquearCamposContacto(false);
+    if(id_contacto > 0){
+        bloquearCamposContacto(false);
     ui->txtNombre->setFocus();
+    }else{
+        QMessageBox::warning(qApp->activeWindow(),tr("Editar contacto"),
+                                 tr("Tiene que seleccionar un contacto para editar"),
+                                 tr("Aceptar"));
+
+    }
 }
 
 void FrmTransportistas::on_btnBorrarContacto_clicked()
 {
-
+    if(QMessageBox::question(qApp->activeWindow(),tr("Borrar Contacto"),
+                          tr("Está apunto de borrar un contacto\n¿Desea continuar?"),
+                          tr("No"),tr("Si")) == QMessageBox::Accepted)
+    {
+        if(id_contacto != 0){
+            QSqlQuery qTransportista(Configuracion_global->groupDB);
+        qTransportista.prepare("DELETE FROM personascontactotransportista WHERE id =:id");
+        qTransportista.bindValue(":id",id_contacto);
+        if (!qTransportista.exec()) {
+            QMessageBox::warning(qApp->activeWindow(),tr("Borrar Cliente"),tr("Falló el borrado de tipos de cliente"),
+                                 tr("Aceptar"));
+        }
+        }else{QMessageBox::warning(qApp->activeWindow(),tr("Borrar Contacto"),tr("Falló el borrado del contacto"),
+                                   tr("Aceptar"));
 }
-
+}
+    bloquearCamposContacto(true);
+    llenar_campos_contactoTransportista(oTransportista.h_transportista.value("id").toInt());
+}
 
 
 void FrmTransportistas::bloquearCamposContacto(bool state)
@@ -498,5 +523,45 @@ void FrmTransportistas::bloquearCamposContacto(bool state)
 
 void FrmTransportistas::on_pushButtonGuardarContacto_clicked()
 {
+    QHash <QString, QVariant> d;
+    QString error;
+    int id_alternativa;
+
+    //d["id"] = id_contacto;
+    d["nombre"]= ui->txtNombre->text();
+    d["telefono1"] = ui->txtTelefono1->text();
+    d["telefono2"] = ui->txtTelefono2->text();
+    d["telefono3"] = ui->txtTelefono3->text();
+    d["movil"] = ui->txtMovil1->text();
+    d["movil2"] = ui->txtMovil2->text();
+    d["id_transportista"] = oTransportista.h_transportista["id"].toInt();
+    d["desc_telefono1"] = ui->txtDescripcionT1->text();
+    d["desc_telefono2"] = ui->txtDescripcionT2->text();
+    d["desc_telefono3"] = ui->txtDescripcionT3->text();
+    d["desc_movil1"] = ui->txtDescripcionM1->text();
+    d["desc_movil2"] = ui->txtDescripcionM2->text();
+    d["cargo_empresa"] = ui->txtCargo->text();
+    d["email"] = ui->txtemail_contacto->text();
+    if(anadiendoContacto){
+        if (oTransportista.h_transportista["id"].toInt() == 0) {
+            QMessageBox::warning(qApp->activeWindow(),tr("Crear Contacto"),tr("Debe guardar el transportista antes \n de crear contactos"),
+                                               tr("Aceptar"));
+            return;
+        }
+        id_alternativa = SqlCalls::SqlInsert(d,"personascontactotransportista",Configuracion_global->groupDB, error);
+
+    }else{
+        id_alternativa = SqlCalls::SqlUpdate(d,"personascontactotransportista",Configuracion_global->groupDB,
+                                             QString("id=").append(QString::number(id_contacto)),error);
+
+    }
+    if(id_alternativa == -1){
+        QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
+                             tr("Ocurrió un error al guardar los datos del contacto: %1").arg(error),
+                             tr("Aceptar"));
+    }
+    anadiendoContacto = false;
+    bloquearCamposContacto(true);
+    llenar_campos_contactoTransportista(oTransportista.h_transportista.value("id").toInt());
 
 }

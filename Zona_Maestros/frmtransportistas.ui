@@ -967,6 +967,54 @@ background-color: #304163;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>txtCodigo</tabstop>
+  <tabstop>txtTransportista</tabstop>
+  <tabstop>txtcif</tabstop>
+  <tabstop>txtfecha_alta</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
+  <tabstop>txtprovincia</tabstop>
+  <tabstop>cbopais</tabstop>
+  <tabstop>txttelefono1</tabstop>
+  <tabstop>txttelefono2</tabstop>
+  <tabstop>txtmovil</tabstop>
+  <tabstop>txtfax</tabstop>
+  <tabstop>txtemail</tabstop>
+  <tabstop>txtweb</tabstop>
+  <tabstop>btnAbrirWeb</tabstop>
+  <tabstop>txtpersona_contacto</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnBorrar</tabstop>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>btnImprimir</tabstop>
+  <tabstop>btnEditar</tabstop>
+  <tabstop>btnAnadirContacto</tabstop>
+  <tabstop>btnEditarContacto</tabstop>
+  <tabstop>btnBorrarContacto</tabstop>
+  <tabstop>txtNombre</tabstop>
+  <tabstop>txtCargo</tabstop>
+  <tabstop>txtDescripcionT1</tabstop>
+  <tabstop>txtTelefono1</tabstop>
+  <tabstop>txtDescripcionT2</tabstop>
+  <tabstop>txtTelefono2</tabstop>
+  <tabstop>txtDescripcionT3</tabstop>
+  <tabstop>txtTelefono3</tabstop>
+  <tabstop>txtDescripcionM1</tabstop>
+  <tabstop>txtMovil1</tabstop>
+  <tabstop>txtDescripcionM2</tabstop>
+  <tabstop>txtMovil2</tabstop>
+  <tabstop>txtemail_contacto</tabstop>
+  <tabstop>pushButtonGuardarContacto</tabstop>
+  <tabstop>tablaBusqueda</tabstop>
+  <tabstop>tablaContactos</tabstop>
+ </tabstops>
  <resources>
   <include location="../maya.qrc"/>
   <include location="../EditorReports/resource.qrc"/>
