@@ -214,7 +214,8 @@ SOURCES += main.cpp\
     Zona_Contabilidad/frmbuscarapuntecontable.cpp \
     Auxiliares/frmeditline.cpp \
     Auxiliares/numericdelegate.cpp \
-    Almacen/frmaddlotes.cpp
+    Almacen/frmaddlotes.cpp \
+    Almacen/frmselectlotes.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -395,7 +396,8 @@ HEADERS  += mainwindow.h \
     Zona_Contabilidad/frmbuscarapuntecontable.h \
     Auxiliares/frmeditline.h \
     Auxiliares/numericdelegate.h \
-    Almacen/frmaddlotes.h
+    Almacen/frmaddlotes.h \
+    Almacen/frmselectlotes.h
 
 
 
@@ -490,7 +492,8 @@ FORMS    += mainwindow.ui \
     EditorReports/editacum.ui \
     Zona_Contabilidad/frmbuscarapuntecontable.ui \
     Auxiliares/frmeditline.ui \
-    Almacen/frmaddlotes.ui
+    Almacen/frmaddlotes.ui \
+    Almacen/frmselectlotes.ui
 
 RESOURCES += \
     maya.qrc \

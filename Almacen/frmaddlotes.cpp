@@ -31,8 +31,9 @@ void frmaddLotes::on_btnAnadir_clicked()
     lote["id_articulo"] = this->id_articulo;
     lote["lote"] = ui->txtLote->text();
     lote["caducidad"] = ui->dateCaducidad->date();
-    if(ui->txtLote->text().isEmpty())
-        QMessageBox::warning(this,tr("Gestión de artículos"),tr("Debe especificar el lote"),tr("Aceptar"));
+    lote["stock"] = ui->spinCantidad->value();
+    if(ui->txtLote->text().isEmpty()||ui->spinCantidad->value() ==0)
+        QMessageBox::warning(this,tr("Gestión de artículos"),tr("Debe especificar lote y cantidad"),tr("Aceptar"));
     else
     {
         int new_id = SqlCalls::SqlInsert(lote,"articulos_lotes",Configuracion_global->groupDB,error);
