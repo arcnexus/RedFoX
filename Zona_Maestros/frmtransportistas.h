@@ -55,7 +55,7 @@ private slots:
 
     void on_btnBorrarContacto_clicked();
 
-    void on_pushButtonGeuardarContacto_clicked();
+
 
     void on_pushButtonGuardarContacto_clicked();
 
