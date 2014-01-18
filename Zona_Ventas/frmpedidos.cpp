@@ -1808,7 +1808,6 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
-            frmeditar.set_dto_tarifa(oCliente3->tipo_dto_tarifa);
             frmeditar.set_id_cab(oPedido->id);
             frmeditar.set_tipo("V");
             frmeditar.set_linea(id_lin,"lin_ped");
@@ -1838,7 +1837,6 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmeditar.set_tabla("lin_ped");
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
-            frmeditar.set_dto_tarifa(oCliente3->tipo_dto_tarifa);
             frmeditar.set_id_cab(oPedido->id);
             frmeditar.set_tipo("V");
             if(!frmeditar.exec() == QDialog::Accepted)

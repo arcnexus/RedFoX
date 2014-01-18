@@ -114,6 +114,7 @@ void Factura::clear()
     iva_gasto3= 0;
     id_transportista = -1;
     editable = false;
+    tarifa_cliente = 1;
 }
 
 bool Factura::borrar(int id)
@@ -290,6 +291,7 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
     //this->editable = 0;
     cab_fac["editable"] = this->editable;
     cab_fac["id_divisa"] = this->id_divisa;
+    cab_fac["tarifa_cliente"] = this->tarifa_cliente;
 
     bool updated = SqlCalls::SqlUpdate(cab_fac,"cab_fac",Configuracion_global->empresaDB,clausula,error);
 
@@ -432,6 +434,7 @@ void Factura::cargar(QSqlRecord *registro)
     this->fecha_cobro = registro->field("fecha_cobro").value().toDate();
     this->ejercicio = registro->field("ejercicio").value().toInt();
     this->id_cliente = registro->field("id_cliente").value().toInt();
+    this->tarifa_cliente = registro->field("tarifa_cliente").value().toInt();
     this->cliente = registro->field("cliente").value().toString();
     this->direccion1 = registro->field("direccion1").value().toString();
     this->direccion2 = registro->field("direccion2").value().toString();

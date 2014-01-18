@@ -384,7 +384,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->visa_distancia2 = registro.field("visa_distancia2").value().toString();
         this->id_agente = registro.field("id_agente").value().toInt();
         this->id_transportista = registro.field("id_transportista").value().toInt();
-        this->tipo_dto_tarifa = registro.field("tipo_dto_tarifa").value().toInt();
+        this->tarifa_cliente = registro.field("id_tarifa").value().toInt();
         int irpf =registro.field("irpf").value().toInt();
         this->grupo_iva = registro.field("grupo_iva").value().toInt();
         if (irpf==1)
