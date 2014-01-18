@@ -158,7 +158,7 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
 {
     prov.clear();
 
-    prov.Recuperar("Select * from proveedores where id="+QString::number(id),0);
+    prov.Recuperar(id);
     ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
     ui->txtdireccion1->setText(prov.direccion1);

@@ -122,7 +122,7 @@ void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
         ui->tabWidget_2->setCurrentIndex(1);
         ui->btnAnadirLinea->clicked();
     }
-    prov.Recuperar("Select * from proveedores where id="+QString::number(id),1);
+    prov.Recuperar(id);
     ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
     ui->txtdireccion1->setText(prov.direccion1);

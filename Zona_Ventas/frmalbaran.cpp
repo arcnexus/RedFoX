@@ -1562,7 +1562,6 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
             frmeditar.set_tabla("lin_alb");
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
-            frmeditar.set_dto_tarifa(oCliente2->tipo_dto_tarifa);
             frmeditar.set_id_cab(oAlbaran->id);
             frmeditar.set_tipo("V");
             if(!frmeditar.exec() == QDialog::Accepted)
@@ -1589,7 +1588,6 @@ void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
-            frmeditar.set_dto_tarifa(oCliente2->tipo_dto_tarifa);
             frmeditar.set_id_cab(oAlbaran->id);
             frmeditar.set_tipo("V");
             frmeditar.set_linea(id_lin,"lin_alb");

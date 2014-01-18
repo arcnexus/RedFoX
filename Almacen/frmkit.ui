@@ -296,7 +296,7 @@ color: rgb(0, 0, 0);</string>
       <item row="10" column="0" colspan="2">
        <widget class="QFrame" name="frame_4">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(170, 152, 158);</string>
@@ -308,18 +308,8 @@ color: rgb(0, 0, 0);</string>
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
-         <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="btnRomperKit">
            <property name="text">
             <string>Romper Kit</string>
            </property>
@@ -333,6 +323,16 @@ color: rgb(0, 0, 0);</string>
            <property name="text">
             <string>Romper Kits (Añadirá stock
 a los productos del kit):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinCantRomper">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>
@@ -454,16 +454,13 @@ de los productos kit):</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="spinCant">
+          <widget class="QSpinBox" name="spinCant">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="maximum">
-            <double>99999999.989999994635582</double>
            </property>
           </widget>
          </item>

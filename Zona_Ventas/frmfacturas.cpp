@@ -331,7 +331,7 @@ void frmFacturas::LLenarCampos() {
     oFactura->id_cliente = oCliente1->id;
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
-    ui->txt_tipo_dto_tarifa->setText(QString::number(oCliente1->tipo_dto_tarifa));
+    ui->txt_tarifa->setText(QString::number(oCliente1->tarifa_cliente));
     ui->txtGastoDist1->setText(oFactura->desc_gasto1);
     ui->txtGastoDist2->setText(oFactura->desc_gasto2);
     ui->txtGastoDist3->setText(oFactura->desc_gasto3);
@@ -443,7 +443,7 @@ void frmFacturas::LLenarCamposCliente()
 
     oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
     ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
-    //helper.set_tarifa(oCliente1->tarifa_cliente);
+    ui->txt_tarifa->setText(QString::number(oCliente1->tarifa_cliente));
 
 //    helper.porc_iva1 = ui->txtporc_iva1->text().toFloat();
 //    helper.porc_iva2 = ui->txtporc_iva2->text().toFloat();
@@ -459,7 +459,6 @@ void frmFacturas::LLenarCamposCliente()
     ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
     ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
     ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
-    ui->txt_tipo_dto_tarifa->setText(QString::number(oCliente1->tipo_dto_tarifa));
     ui->spinPorc_dto->setValue(oFactura->porc_dto);
     ui->spinPorc_dto_pp->setValue(oFactura->porc_dto_pp);
     ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',Configuracion_global->decimales_campos_totales)));
@@ -1940,8 +1939,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmeditar.set_linea(0,"lin_fac");
             frmeditar.set_tabla("lin_fac");
             frmeditar.set_id_cliente(oCliente1->id);
-            frmeditar.set_id_tarifa(oCliente1->idTarifa);
-            frmeditar.set_dto_tarifa(oCliente1->tipo_dto_tarifa);
+            frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_tipo("V");
             if(!frmeditar.exec() == QDialog::Accepted)
@@ -1966,12 +1964,12 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente1->id);
-            frmeditar.set_id_tarifa(oCliente1->idTarifa);
-            frmeditar.set_dto_tarifa(oCliente1->tipo_dto_tarifa);
+            frmeditar.set_id_tarifa(oCliente1->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_tipo("V");
             frmeditar.set_linea(id_lin,"lin_fac");
             frmeditar.set_tabla("lin_fac");
+            frmeditar.set_editando();
             frmeditar.exec();
 
             //refrescar_modelo();

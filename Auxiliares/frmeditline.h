@@ -21,9 +21,9 @@ public:
     void set_id_cliente(int id);
     void set_id_tarifa(int id);
     void set_tipo(QString tipo);
-    void set_dto_tarifa(float dto);
     void set_id_cab(int id_cabecera);
     void set_tabla(QString t);
+    void set_editando();
 
 
 
@@ -58,6 +58,7 @@ private:
     float unidades_regalo;
     Articulo *oArticulo;
     void calcular();
+    bool editando;
     bool eventFilter(QObject *obj, QEvent *event);
     QHash <QString,QVariant> anterior;
 
