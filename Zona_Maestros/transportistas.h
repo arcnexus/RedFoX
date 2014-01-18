@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "../Auxiliares/Globlal_Include.h"
-#include "../Zona_Compras/proveedor.h"
+//#include "../Zona_Compras/proveedor.h"
 
 class transportistas : public QObject
 {
@@ -11,12 +11,14 @@ class transportistas : public QObject
 public:
     explicit transportistas(QObject *parent = 0);
     QHash <QString, QVariant> h_transportista;
-    QHash <QString, QVariant> h_proveedor;
+//    QHash <QString, QVariant> h_proveedor;
 
     int anadir();
     bool guardar();
     bool recuperar(QStringList filtro, QStringList extras);
-    Proveedor oProveedor;
+    QString RecuperarPais(int nid);
+    //    Proveedor oProveedor;
+    void BorrarTransportista(int id);
 private:
 
 
