@@ -3,6 +3,8 @@
 
 #include "../Auxiliares/Globlal_Include.h"
 #include "../mayamodule.h"
+#include "proveedor.h"
+
 namespace Ui {
 class frmProveedores;
 }
@@ -15,20 +17,36 @@ public:
     explicit frmProveedores(QWidget *parent = 0);
     int id_contacto;
     ~frmProveedores();
+
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Proveedores";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
-    QString ModuleMenuPath(){return tr("");}
-    
+    QString ModuleMenuPath(){return tr("");}    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+
+
 public slots:
-    void BloquearCampos(bool state);
-    void LLenarCampos();
-    void CargarCamposEnProveedor();
-    void cargar_forma_pago(QString);
-    void editar_contacto();
-    void borrar_contacto();
+
 private slots:
+    void BloquearCampos(bool state);
+
+    void LLenarCampos();
+    void llenar_tabDatos();
+    void llenar_tabFinanzas();
+    void llenar_tabPagos();
+    void llenar_tabAlmacen();
+    void llenar_tabConta();
+    void historiales();
+    void acumulados();
+    void grafica();
+    void contactos();
+
+    void CargarCamposEnProveedor();
+
+    void editar_contacto();
+
+    void borrar_contacto();
+
     void on_btnSiguiente_clicked();
 
     void on_btnGuardar_clicked();
@@ -65,26 +83,10 @@ private slots:
 
     void on_txtcp_almacen_editingFinished();
 
-    void on_txtpais_currentIndexChanged(const QString &arg1);
-
-
-
-    void on_txtcodigoFormaPago_currentIndexChanged(const QString &arg1);
-
-
-    void on_btnNuevaFactura_clicked();
-
-    void on_btnNuevoAlbaran_clicked();
-
-    void on_btnNuevoPedido_clicked();
     void pagar_deuda();
     void pagar_fraccion();
     void ver_asiento();
 
-    void historiales();
-    void acumulados();
-    void grafica();
-    void contactos();
     void menu_contactos(const QPoint&);
     void menu_deudas(const QPoint&);
     void nuevo_contacto();
@@ -99,16 +101,21 @@ private slots:
 
     void on_txtcif_editingFinished();
 
-    void on_radModo_busqueda_toggled(bool checked);
 
     void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
     void on_tablaContactos_doubleClicked(const QModelIndex &index);
+
+
     void mostrarBusqueda();
     void ocultarBusqueda();
-    void filter_table(QString texto, QString orden, QString modo);
+    void filter_table(QString texto, QString orden, QString modo);    
+    void on_txtpais_currentIndexChanged(int index);
+
+    void on_txtcodigoFormaPago_currentIndexChanged(int index);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
@@ -118,9 +125,28 @@ private:
     QSqlQueryModel *model;
     void formato_tabla(QSqlQueryModel *modelo);
 
-
+    Proveedor * oProveedor;
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+
+    bool editing;
+
+
+    //////
+    QSqlQueryModel *qmFormaPago;
+    QSqlQueryModel * modelDivisas;
+    QSqlQueryModel * modelPais;
+
+    QSqlQueryModel *modelArticulo;
+    QSqlQueryModel *modelAsientos;
+    QSqlQueryModel *modeloDeudas;
+
+    QSqlQueryModel *modelContactos;
+
+    QSqlQueryModel *modelPedidos;
+    QSqlQueryModel *modelFacturas;
+    QSqlQueryModel *modelAlbaranes;
+    QSqlQueryModel * modelEntregas;
 };
 
 #endif // FRMPROVEEDORES_H

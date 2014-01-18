@@ -98,7 +98,9 @@ CREATE TABLE `@grupo@`.`articulos` (
   `margen` double DEFAULT NULL,
   `margen_min` double DEFAULT NULL,
   `coste_real` double DEFAULT NULL,
-  `lotes` tinyint DEFAULT '0',
+  `valor_stock` double NOT NULL DEFAULT '0',
+  `lotes` tinyint(255) NOT NULL DEFAULT '0',
+  `pvp` double DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -125,11 +127,12 @@ CREATE TABLE `@grupo@`.`articulos_prov_frec` (
 CREATE TABLE `@grupo@`.`articulos_volumen` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_producto` int(11) DEFAULT NULL,
+  `id_tarifa` int(11) DEFAULT '1',
   `desde` float DEFAULT NULL,
   `hasta` float DEFAULT NULL,
   `precio` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`avisos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_tipoaviso` int(11) DEFAULT NULL,
@@ -219,8 +222,7 @@ CREATE TABLE `@grupo@`.`clientes` (
   `id_forma_pago` int(11) DEFAULT NULL,
   `dia_pago1` int(11) DEFAULT '0',
   `dia_pago2` int(11) DEFAULT '0',
-  `tarifa_cliente` int(11) DEFAULT '0',
-  `tipo_dto_tarifa` double DEFAULT '0',
+  `id_tarifa` double DEFAULT '1',
   `importe_a_cuenta` double DEFAULT '0',
   `vales` double DEFAULT '0',
   `entidad_bancaria` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -717,12 +719,6 @@ CREATE TABLE `@grupo@`.`tarifas` (
   `id_monedas` int(11) DEFAULT NULL,
   `margen` float DEFAULT NULL,
   `margen_minimo` float DEFAULT NULL,
-  `porc_dto1` double DEFAULT '0',
-  `porc_dto2` double DEFAULT '0',
-  `porc_dto3` double DEFAULT '0',
-  `porc_dto4` double DEFAULT '0',
-  `porc_dto5` double DEFAULT '0',
-  `porc_dto6` double DEFAULT '0',
   `pvp` double DEFAULT NULL,
   `id_codigo_tarifa` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -768,8 +764,7 @@ CREATE TABLE `@grupo@`.`transportista` (
   `web` varchar(100) DEFAULT NULL,
   `id_proveedor` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE `@grupo@`.`trazabilidad1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_articulo` int(11) DEFAULT NULL,
@@ -818,7 +813,6 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
         `@grupo@`.`articulos`.`id` AS `id`, `@grupo@`.`tarifas`.`pvp` + (`@grupo@`.`tarifas`.`pvp` *(`@grupo@`.`articulos`.`tipo_iva`/100)) AS `pvp_con_iva`,
         `@grupo@`.`articulos`.`descripcion` AS `descripcion`, `@grupo@`.`articulos`.`descripcion_reducida` AS `descripcion_reducida`,
         `@grupo@`.`articulos`.`tipo_iva` AS `tipo_iva`,`@grupo@`.`articulos`.`coste` AS `coste`,`@grupo@`.`tarifas`.`pvp` AS `pvp`,
-        `@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`,
         `@grupo@`.`articulos`.`cantidad_pendiente_recibir` AS `cantidad_pendiente_recibir`,
         `@grupo@`.`articulos`.`fecha_prevista_recepcion` AS `fecha_prevista_recepcion`,
         `@grupo@`.`articulos`.`unidades_reservadas` AS `unidades_reservadas`,
@@ -830,3 +824,4 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
 `@grupo@`.`articulos`.`codigo` AS `codigo`,`@grupo@`.`articulos`.`codigo_barras` AS `codigo_barras`,`@grupo@`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,
 `@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`from `@grupo@`.`articulos`;
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaempresa` AS select concat_ws(' ',`@grupo@`.`empresas`.`nombre`,`@grupo@`.`empresas`.`ejercicio`) AS `empresa`,`@grupo@`.`empresas`.`id` AS `id` from `@grupo@`.`empresas`;
+INSERT INTO `@grupo@`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');

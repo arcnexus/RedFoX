@@ -80,8 +80,49 @@ ALTER TABLE `Grupotesting`.`subsubfamilias` ADD COLUMN `codigo` VARCHAR(45) NULL
 ALTER TABLE `Grupotesting`.`gruposart` ADD COLUMN `codigo` VARCHAR(45) NULL AFTER `type`;
 
 
+15/1/14
+ALTER TABLE `grupoagugroup`.`clientes` DROP COLUMN `tarifa_cliente`, CHANGE COLUMN `tipo_dto_tarifa` `id_tarifa` DOUBLE NULL DEFAULT '1' ;
+ALTER TABLE `grupoagugroup`.`articulos_volumen` ADD COLUMN `id_tarifa` INT NULL DEFAULT '1' AFTER `id_producto`;
+ALTER TABLE `grupoagugroup`.`articulos` ADD COLUMN `pvp` DOUBLE NULL DEFAULT '0' AFTER `lotes`;
+delete FROM grupoagugroup.tarifas where id_codigo_tarifa = 2;
+UPDATE `grupoagugroup`.`tarifas` SET `id_codigo_tarifa`='0' WHERE `id` >'0';
+truncate grupoagugroup.codigotarifa;
+INSERT INTO `grupoagugroup`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');
+INSERT INTO `grupoagugroup`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('2', 'Factuplus dto 2', 'DTO2', '1', '1');
+INSERT INTO `grupoagugroup`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('3', 'Factuplus dto 3', 'DTO3', '1', '1');
+INSERT INTO `grupoagugroup`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('4', 'Factuplus dto 4', 'DTO4', '1', '1');
+INSERT INTO `grupoagugroup`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('5', 'Factuplus dto 5', 'DTO5', '1', '1');
+INSERT INTO `grupoagugroup`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('6', 'Factuplus dto 6', 'DTO6', '1', '1');
+ALTER TABLE `grupoagugroup`.`codigotarifa` ADD COLUMN `diff_pvp` DOUBLE NULL DEFAULT '0' AFTER `margen_min`;
+ALTER TABLE `grupoagugroup`.`tarifas` DROP COLUMN `porc_dto6`,DROP COLUMN `porc_dto5`,DROP COLUMN `porc_dto4`,DROP COLUMN `porc_dto3`,DROP COLUMN `porc_dto2`,DROP COLUMN `porc_dto1`;
 
-
-                                
+USE `grupoagugroup`;
+CREATE
+     OR REPLACE ALGORITHM = UNDEFINED
+    DEFINER = `root`@`localhost`
+    SQL SECURITY DEFINER
+VIEW `grupoagugroup`.`vistaart_tarifa` AS
+    select
+        `grupoagugroup`.`articulos`.`codigo` AS `codigo`,
+        `grupoagugroup`.`articulos`.`codigo_barras` AS `codigo_barras`,
+        `grupoagugroup`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,
+        `grupoagugroup`.`articulos`.`id` AS `id`,
+        (`grupoagugroup`.`tarifas`.`pvp` + (`grupoagugroup`.`tarifas`.`pvp` * (`grupoagugroup`.`articulos`.`tipo_iva` / 100))) AS `pvp_con_iva`,
+        `grupoagugroup`.`articulos`.`descripcion` AS `descripcion`,
+        `grupoagugroup`.`articulos`.`descripcion_reducida` AS `descripcion_reducida`,
+        `grupoagugroup`.`articulos`.`tipo_iva` AS `tipo_iva`,
+        `grupoagugroup`.`articulos`.`coste` AS `coste`,
+        `grupoagugroup`.`tarifas`.`pvp` AS `pvp`,
+        `grupoagugroup`.`articulos`.`stock_maximo` AS `stock_maximo`,
+        `grupoagugroup`.`articulos`.`stock_minimo` AS `stock_minimo`,
+        `grupoagugroup`.`articulos`.`stock_real` AS `stock_real`,
+        `grupoagugroup`.`articulos`.`controlar_stock` AS `controlar_stock`,
+        `grupoagugroup`.`articulos`.`kit` AS `kit`,
+        `grupoagugroup`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`,
+        `grupoagugroup`.`tarifas`.`id_codigo_tarifa` AS `tarifa`
+    from
+        ((`grupoagugroup`.`articulos`
+        left join `grupoagugroup`.`proveedores` ON ((`grupoagugroup`.`articulos`.`id_proveedor` = `grupoagugroup`.`proveedores`.`id`)))
+        join `grupoagugroup`.`tarifas` ON ((`grupoagugroup`.`articulos`.`id` = `grupoagugroup`.`tarifas`.`id_articulo`)));
         
 

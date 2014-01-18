@@ -22,12 +22,6 @@ public:
     float margen;
     float margen_min;
     float valor_divisa;
-    float porc_dto1;
-    float porc_dto2;
-    float porc_dto3;
-    float porc_dto4;
-    float porc_dto5;
-    float porc_dto6;
 
     void clear();
 public slots:

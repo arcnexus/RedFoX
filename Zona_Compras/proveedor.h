@@ -60,6 +60,8 @@ public:
     int recargo_equivalencia;
     QString texto_para_pedidos;
     double entregado_a_cuenta;
+    int id_divisa;
+    QString s_Divisa;
 
     // Acumulados
     double enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre;
@@ -77,9 +79,9 @@ signals:
 public slots:
     // Funcionamiento Base
     void Anadir();
-    void Recuperar(int id);
-    void Recuperar(QString cSQL);
-    void Recuperar(QString cSQL,int nProcede);
+    bool Recuperar(int id);
+    bool Next();
+    bool Prev();
     void Cargar(QSqlRecord &rProveedor);
     void Guardar();
     void Vaciar();

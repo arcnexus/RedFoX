@@ -19,12 +19,6 @@ void TiposTarifa::clear()
     id_monedas = 0;
     margen = 0;
     margen_min = 0;
-    porc_dto1 = 0;
-    porc_dto2 = 0;
-    porc_dto3 = 0;
-    porc_dto4 = 0;
-    porc_dto5 = 0;
-    porc_dto6 = 0;
 
 }
 
@@ -102,10 +96,4 @@ void TiposTarifa::cargar_datos(QSqlQuery queryTarifa)
     this->importe_dto = queryTarifa.record().value("importe_dto").toDouble();
     this->margen = queryTarifa.record().value("margen").toFloat();
     this->margen_min = queryTarifa.record().value("margen_min").toFloat();
-    this->porc_dto1 = queryTarifa.record().value("porc_dto1").toFloat();
-    this->porc_dto2 = queryTarifa.record().value("porc_dto2").toFloat();
-    this->porc_dto3 = queryTarifa.record().value("porc_dto3").toFloat();
-    this->porc_dto4 = queryTarifa.record().value("porc_dto4").toFloat();
-    this->porc_dto5 = queryTarifa.record().value("porc_dto5").toFloat();
-    this->porc_dto6 = queryTarifa.record().value("porc_dto6").toFloat();
 }
