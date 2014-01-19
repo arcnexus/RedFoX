@@ -331,7 +331,9 @@ void frmFacturas::LLenarCampos() {
     oFactura->id_cliente = oCliente1->id;
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
-    ui->txt_tarifa->setText(QString::number(oCliente1->tarifa_cliente));
+    QString error;
+    ui->txt_tarifa->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(oFactura->tarifa_cliente),
+                                                     Configuracion_global->groupDB,error).toString());
     ui->txtGastoDist1->setText(oFactura->desc_gasto1);
     ui->txtGastoDist2->setText(oFactura->desc_gasto2);
     ui->txtGastoDist3->setText(oFactura->desc_gasto3);
@@ -371,7 +373,7 @@ void frmFacturas::LLenarCampos() {
     //------------------------------
     ui->cboDireccionesEntrega->clear();
     QMap <int, QSqlRecord> di;
-    QString error;
+
     di = SqlCalls::SelectRecord("cliente_direcciones",QString("id_cliente = %1").arg(oCliente1->id),Configuracion_global->groupDB,
                                 error);
 
@@ -421,7 +423,9 @@ void frmFacturas::LLenarCamposCliente()
     ui->txtcp->setText(oCliente1->cp);
     ui->txtpoblacion->setText(oCliente1->poblacion);
     ui->txtprovincia->setText(oCliente1->provincia);
-    //ui->txtpais->setText(oCliente1->getpais());
+    QString pais = Configuracion_global->Devolver_pais(oCliente1->id_pais);
+    int id = ui->comboPais->findText(pais);
+    ui->comboPais->setCurrentIndex(id);
     ui->txtcif->setText(oCliente1->cif_nif);
     ui->chkrecargo_equivalencia->setChecked(oCliente1->recargo_equivalencia);
 
@@ -439,31 +443,27 @@ void frmFacturas::LLenarCamposCliente()
         ui->txtporc_rec4->setText("0.00");
     }
 
-
+    QString error;
 
     oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
     ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
-    ui->txt_tarifa->setText(QString::number(oCliente1->tarifa_cliente));
+    ui->txt_tarifa->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(oCliente1->idTarifa),
+                                                     Configuracion_global->groupDB,error).toString());
 
-//    helper.porc_iva1 = ui->txtporc_iva1->text().toFloat();
-//    helper.porc_iva2 = ui->txtporc_iva2->text().toFloat();
-//    helper.porc_iva3 = ui->txtporc_iva3->text().toFloat();
-//    helper.porc_iva4 = ui->txtporc_iva4->text().toFloat();
 
     oFactura->id_cliente = oCliente1->id;
     oFactura->id_transportista = oCliente1->id_transportista;
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oCliente1->id_transportista));
-    ui->txtGastoDist1->setText(oFactura->desc_gasto1);
-    ui->txtGastoDist2->setText(oFactura->desc_gasto2);
-    ui->txtGastoDist3->setText(oFactura->desc_gasto3);
-    ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
-    ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
-    ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
-    ui->spinPorc_dto->setValue(oFactura->porc_dto);
-    ui->spinPorc_dto_pp->setValue(oFactura->porc_dto_pp);
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',Configuracion_global->decimales_campos_totales)));
-    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto_pp,'f',Configuracion_global->decimales_campos_totales)));
-    //helper.set_tipo_dto_tarifa(oCliente1->tipo_dto_tarifa);
+//    ui->txtGastoDist1->setText(oFactura->desc_gasto1);
+//    ui->txtGastoDist2->setText(oFactura->desc_gasto2);
+//    ui->txtGastoDist3->setText(oFactura->desc_gasto3);
+//    ui->SpinGastoDist1->setValue(oFactura->imp_gasto1);
+//    ui->SpinGastoDist2->setValue(oFactura->imp_gasto2);
+//    ui->SpinGastoDist3->setValue(oFactura->imp_gasto3);
+//    ui->spinPorc_dto->setValue(oFactura->porc_dto);
+//    ui->spinPorc_dto_pp->setValue(oFactura->porc_dto_pp);
+//    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto,'f',Configuracion_global->decimales_campos_totales)));
+//    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->dto_pp,'f',Configuracion_global->decimales_campos_totales)));
 
     QString divisa = Configuracion_global->Devolver_moneda(oCliente1->idTarifa);
     int index = ui->cboDivisa->findText(divisa);
@@ -702,6 +702,9 @@ void frmFacturas::LLenarFactura() {
     oFactura->iva_gasto2 = ui->spin_iva_gasto2->value();
     oFactura->iva_gasto3 = ui->spin_iva_gasto3->value();
     oFactura->id_divisa  = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
+    QString error;
+    oFactura->tarifa_cliente = SqlCalls::SelectOneField("codigotarifa","id",QString("descripcion = '%1'").arg(ui->txt_tarifa->text()),
+                                                        Configuracion_global->groupDB,error).toInt();
 
 
 }
@@ -783,6 +786,7 @@ void frmFacturas::on_btnAnadir_clicked()
     emit block();
     ui->txtGastoDist1->setText(tr("Portes:"));
     ui->stackedWidget->setCurrentIndex(0);
+    ui->tabWidget_2->setCurrentIndex(0);
 }
 
 
@@ -1964,7 +1968,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_id_cliente(oCliente1->id);
-            frmeditar.set_id_tarifa(oCliente1->tarifa_cliente);
+            frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_tipo("V");
             frmeditar.set_linea(id_lin,"lin_fac");

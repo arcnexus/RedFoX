@@ -251,7 +251,7 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtemail->setText(oPres->email);
     ui->chklporc_rec->setChecked(oPres->recargo_equivalencia);
     oClientePres->Recuperar("Select * from clientes where id ="+QString::number(oPres->id_cliente));
-    helper.set_tarifa(oClientePres->tarifa_cliente);
+    //helper.s(oClientePres->tarifa_cliente);
     helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
     helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
     helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
@@ -745,7 +745,7 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
         int id = consulta.get_id();
         oClientePres->Recuperar("select * from clientes where id="+QString::number(id));
         LLenarCamposCliente();
-        helper.set_tarifa(oClientePres->tarifa_cliente);
+       // helper.set_tarifa(oClientePres->tarifa_cliente);
     }
 }
 
@@ -1622,7 +1622,7 @@ void FrmPresupuestosCli::on_txtcodigo_cliente_editingFinished()
     if(ui->txtcodigo_cliente->text() != oPres->codigo_cliente){
         oClientePres->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'");
         LLenarCamposCliente();
-        helper.set_tarifa(oClientePres->tarifa_cliente);
+        //helper.set_tarifa(oClientePres->tarifa_cliente);
     }
 }
 

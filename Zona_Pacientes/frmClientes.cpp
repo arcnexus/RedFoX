@@ -119,12 +119,6 @@ frmClientes::frmClientes(QWidget *parent) :
     QSqlQueryModel *qmidiomas = new QSqlQueryModel(this);
     qmidiomas->setQuery("select idioma from idiomas order by idioma", Configuracion_global->groupDB);
     ui->cboidiomaDocumentos->setModel(qmidiomas);
-    //------------------------
-    // rellenar descuentos
-    //------------------------
-    QStringList tipos_dto;
-    tipos_dto <<"1" <<"2" << "3" << "4" << "5" << "6";
-    ui->cbotipo_dto->addItems(tipos_dto);
 
     this->Altas = false;
     ui->blinkink->setVisible(false);
@@ -290,7 +284,7 @@ void frmClientes::LLenarCampos()
     //ui->cboforma_pago->setItemText);
     ui->txtdia_pago1->setValue(oCliente->dia_pago1);
     ui->txtdia_pago2->setValue(oCliente->dia_pago2);
-    indice = ui->cbotarifa_cliente->findText(Configuracion_global->Devolver_tarifa(oCliente->tarifa_cliente));
+    indice = ui->cbotarifa_cliente->findText(Configuracion_global->Devolver_tarifa(oCliente->idTarifa));
     ui->cbotarifa_cliente->setCurrentIndex( indice);
     ui->txtimporte_a_cuenta->setText( Configuracion_global->toFormatoMoneda(QString::number(oCliente->importe_a_cuenta,'f',Configuracion_global->decimales)));
     ui->txtvales->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->vales,'f',Configuracion_global->decimales)));
@@ -339,8 +333,7 @@ void frmClientes::LLenarCampos()
         QMessageBox::warning(this,tr("Gestión Clientes"),tr("Debe seleccionar un grupo de iva"),tr("Aceptar"));
         break;
     }
-    indice = ui->cbotipo_dto->findText(QString::number(oCliente->tipo_dto_tarifa));
-    ui->cbotipo_dto->setCurrentIndex(indice);
+
     QString divisa = Configuracion_global->Devolver_moneda(oCliente->id_divisa);
     indice = ui->cboDivisa->findText(divisa);
     ui->cboDivisa->setCurrentIndex(indice);
@@ -766,11 +759,11 @@ void frmClientes::LLenarCliente()
     oCliente->cuenta_cobros=ui->txtcuenta_cobros->text();
     oCliente->id_forma_pago=Configuracion_global->Devolver_id_forma_pago(ui->cboforma_pago->currentData(Qt::DisplayRole).toString());
     //oCliente->forma_pago=ui->cboforma_pago->currentText();
-    oCliente->tipo_dto_tarifa=ui->cbotipo_dto->currentData(Qt::DisplayRole).toDouble();
+
     oCliente->dia_pago1=ui->txtdia_pago1->value();
     oCliente->dia_pago2=ui->txtdia_pago2->value();
     oCliente->riesgo_maximo=Configuracion_global->MonedatoDouble(ui->txtrRiesgoPermitido->text());
-    oCliente->tarifa_cliente=ui->cbotarifa_cliente->currentText().toDouble();
+    oCliente->idTarifa=ui->cbotarifa_cliente->currentText().toDouble();
     oCliente->importe_a_cuenta=ui->txtimporte_a_cuenta->text().toDouble();
     oCliente->vales= ui->txtvales->text().replace(".","").toDouble();
     oCliente->entidad_bancaria=ui->txtentidad_bancaria->text();
@@ -793,7 +786,7 @@ void frmClientes::LLenarCliente()
     qTarifa.prepare("select id from codigotarifa where descripcion = '"+ui->cbotarifa_cliente->currentText()+"'");
     if(qTarifa.exec()){
         qTarifa.next();
-        oCliente->tarifa_cliente = qTarifa.record().field("id").value().toInt();
+        oCliente->idTarifa = qTarifa.record().field("id").value().toInt();
     }
     oCliente->visa1_caduca_ano = ui->txtvisa1_caduca_ano->text().toInt();
     oCliente->visa1_caduca_mes = ui->txtvisa1_caduca_mes->text().toInt();
