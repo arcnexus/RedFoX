@@ -215,7 +215,8 @@ SOURCES += main.cpp\
     Auxiliares/frmeditline.cpp \
     Auxiliares/numericdelegate.cpp \
     Almacen/frmaddlotes.cpp \
-    Almacen/frmselectlotes.cpp
+    Almacen/frmselectlotes.cpp \
+    Almacen/frmseccionesalmacen.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -397,7 +398,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/frmeditline.h \
     Auxiliares/numericdelegate.h \
     Almacen/frmaddlotes.h \
-    Almacen/frmselectlotes.h
+    Almacen/frmselectlotes.h \
+    Almacen/frmseccionesalmacen.h
 
 
 
@@ -493,7 +495,8 @@ FORMS    += mainwindow.ui \
     Zona_Contabilidad/frmbuscarapuntecontable.ui \
     Auxiliares/frmeditline.ui \
     Almacen/frmaddlotes.ui \
-    Almacen/frmselectlotes.ui
+    Almacen/frmselectlotes.ui \
+    Almacen/frmseccionesalmacen.ui
 
 RESOURCES += \
     maya.qrc \

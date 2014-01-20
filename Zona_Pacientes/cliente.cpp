@@ -389,7 +389,10 @@ void Cliente::cargar(QSqlQuery &query)
         else
             this->lIRPF = false;
 
-   }
+   } else
+       QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
+                            tr("No hay ningún cliente con estos criterios de búsqueda"),
+                            tr("Aceptar"));
 }
 
 void Cliente::clear()

@@ -897,6 +897,10 @@ void MainWindow::handle_permisosAgenda()
 
 void MainWindow::llenaravisos()
 {
+    Configuracion_global->Cargar_iva();
+    Configuracion_global->Cargar_paises();
+    Configuracion_global->Cargar_divisas();
+    Configuracion_global->Cargar_formas_pago();
    // m_avisos->setColor(QColor(50,50,50));
     /*QMap <int,QSqlRecord> map;
     QStringList clausulas,headers;

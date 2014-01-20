@@ -174,6 +174,8 @@ bool cargarEmpresa(QSqlRecord record)
 
     Configuracion_global->Cargar_iva();
     Configuracion_global->Cargar_paises();
+    Configuracion_global->Cargar_divisas();
+    Configuracion_global->Cargar_formas_pago();
     Configuracion_global->CargarClientes();
     Configuracion_global->CargarUsuarios();
     return true;

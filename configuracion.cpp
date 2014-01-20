@@ -22,6 +22,8 @@ Configuracion::Configuracion(QObject* parent) :
 
     iva_model = 0;
     paises_model = new QSqlQueryModel(this);
+    formapago_model = new QSqlQueryModel(this);
+    divisas_model = new QSqlQueryModel(this);
     client_model = 0;
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
@@ -295,7 +297,17 @@ QString Configuracion::setTipoIva(int idIva)
 void Configuracion::Cargar_paises()
 {
 
-    paises_model->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
+    paises_model->setQuery("select id,pais from paises order by pais",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_divisas()
+{
+    divisas_model->setQuery("select id,moneda from monedas order by moneda",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_formas_pago()
+{
+    formapago_model->setQuery("select * from formpago order by forma_pago",Configuracion_global->groupDB);
 }
 
 int Configuracion::Devolver_id_pais(QString pais)

@@ -134,10 +134,14 @@ public:
     int getidIva(QString cIva);
     QString setTipoIva(int idIva);
 
-    QHash <QString,QSqlRecord> paises;
-    //QSqlTableModel* paises_model;
+  //  QHash <QString,QSqlRecord> paises;
     QSqlQueryModel *paises_model;
+    QSqlQueryModel *divisas_model;
+    QSqlQueryModel *formapago_model;
+
     void Cargar_paises();
+    void Cargar_divisas();
+    void Cargar_formas_pago();
 
     int Devolver_id_pais(QString pais);
     static QString Devolver_pais(int id);
