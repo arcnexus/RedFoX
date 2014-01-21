@@ -17,177 +17,161 @@
    <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="3" column="2">
-    <widget class="QPushButton" name="pushButton">
-     <property name="styleSheet">
-      <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }
-</string>
-     </property>
-     <property name="text">
-      <string>Guardar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="styleSheet">
-      <string notr="true">QPushButton:disabled{color: 0; }
-QPushButton:enabled{color: rgb(255,255,255); }
-</string>
-     </property>
-     <property name="text">
-      <string>Cancelar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" rowspan="2">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="3" column="0">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QCheckBox" name="chkconta">
-        <property name="text">
-         <string>Modulo Contabilidad (Conta)</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QCheckBox" name="chkmedicum">
-        <property name="text">
-         <string>Modulo Medicina(Medic)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="label_32">
-        <property name="styleSheet">
-         <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Módulos RedFoX</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="3">
-    <widget class="QTabWidget" name="tabWidget_3">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>158</height>
-      </size>
-     </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="verticalSpacing">
+    <number>3</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="Pagina_general">
-      <attribute name="title">
-       <string>General</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="2" column="1" colspan="2">
-        <widget class="QSpinBox" name="spindigitos_factura">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QComboBox" name="cboPaises">
-         <property name="minimumSize">
-          <size>
-           <width>122</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="txtPorcIRPF">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>60</width>
-           <height>16777215</height>
-          </size>
+     <widget class="QWidget" name="welcome_page">
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Bienvenido a RedFox</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="label_8">
+        <widget class="QPushButton" name="btnInicio">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Pais:</string>
+          <string>Inicio</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QCheckBox" name="chkProfesional">
-         <property name="text">
-          <string>Profesional /Autonomo (Ret. IRPF)</string>
+       <item row="2" column="0" colspan="2">
+        <widget class="QListWidget" name="listWidget">
+         <item>
+          <property name="text">
+           <string>Configurar rutas de acceso a la base de datos</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Crear Super usuarios</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Activar/Desactivar módulos</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="bd_driver_page">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="txtHost"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="txtUsuario"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="txtdireccionBD">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="0" column="3" colspan="2">
-        <widget class="QCheckBox" name="chkPrestaShop">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+       <item row="1" column="0">
+        <widget class="QRadioButton" name="radMysql">
          <property name="text">
-          <string>Enlazar 'onTime' con TiendaWEB</string>
+          <string>MySQL</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_9">
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_5">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
-          <string>digitos factura:</string>
+          <string>direccion BD:</string>
          </property>
         </widget>
        </item>
        <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>usuario:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Puerto:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QRadioButton" name="radSqlite">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>SQLite</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="txtPuerto"/>
+       </item>
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label_33">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+         </property>
+         <property name="text">
+          <string>Configuración BD - Base de datos general</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Host:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="txtPassword"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Password:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
         <spacer name="verticalSpacer_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -202,644 +186,467 @@ color: rgb(255,255,255);</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="Pagina_contabilidad">
-      <attribute name="title">
-       <string>Parametros contabilidad</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_9">
-       <item row="0" column="0">
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_18">
-           <property name="text">
-            <string>Digitos cuentas contables</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="spidigitos_cuentaContable">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Cuenta cobros:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLineEdit" name="txtcuenta_cobros">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string>Cuenta clientes:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="txtCuentaClientes">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_23">
-           <property name="text">
-            <string>Cuenta pagos:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="txtcuenta_pagos">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>Cuenta proveedores:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="txtCuentaProveedores">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Cuenta acreedores:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="txtCuentaAcreedores">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
+     <widget class="QWidget" name="modulos_page">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_32">
+         <property name="styleSheet">
+          <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+         </property>
+         <property name="text">
+          <string>Módulos RedFoX</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer_3">
+       <item>
+        <widget class="QCheckBox" name="chkmedicum">
+         <property name="text">
+          <string>Modulo Medicina(Medic)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="chkconta">
+         <property name="text">
+          <string>Modulo Contabilidad (Conta)</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>186</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="btnAnadir_cuentas">
-         <property name="text">
-          <string>añadir cuentas clientes desde bd clientes</string>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="m">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTabWidget" name="tabWidget_3">
+         <property name="enabled">
+          <bool>true</bool>
          </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="txtnombre_cliente">
-         <property name="text">
-          <string>TextLabel</string>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>158</height>
+          </size>
          </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="Pagina_Vademecums">
+          <attribute name="title">
+           <string>Bases de Datos Medicina</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_10">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="chkVademecum_alopatico">
+             <property name="text">
+              <string>Activar Vademécum Data solutions</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Clave1:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLineEdit" name="txtclaveV1_1">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>Clave2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLineEdit" name="txtclaveV1_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="chkVademecum_homeopatia">
+             <property name="text">
+              <string>Activar Vademecum Homeopatía</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_27">
+             <property name="text">
+              <string>Clave1:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="txtclaveV2_1">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_26">
+             <property name="text">
+              <string>Clave2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QLineEdit" name="txtclaveV2_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="chk_vademecum_fitoterapia">
+             <property name="text">
+              <string>Activar Vademécum Fitoterapia</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_29">
+             <property name="text">
+              <string>Clave1:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="txtclaveV3_1">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_28">
+             <property name="text">
+              <string>Clave2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLineEdit" name="txtclaveV3_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QCheckBox" name="chkVademecum_MTC">
+             <property name="text">
+              <string>Activar Vademécum MTC</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_31">
+             <property name="text">
+              <string>Clave1:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="txtclaveV4_1">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_30">
+             <property name="text">
+              <string>Clave2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="QLineEdit" name="txtclaveV4_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>DBMedi_tec</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_36">
+             <property name="text">
+              <string>Nombre BD:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="txtnombre_bd_MediTec"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_34">
+             <property name="text">
+              <string>Host:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="txtHostBD_MediTec"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_35">
+             <property name="text">
+              <string>usuario:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="txtUsuarioDB_MediTec"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Password:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="txtPasswordDB_MediTec"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_16">
+             <property name="text">
+              <string>Puerto:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="txtPuerto_DB_MediTec"/>
+           </item>
+           <item row="5" column="1">
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="Pagina_Vademecums">
-      <attribute name="title">
-       <string>Bases de Datos Medicina</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_10">
+     <widget class="QWidget" name="create_user_page">
+      <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0">
-        <widget class="QCheckBox" name="chkVademecum_alopatico">
+        <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>Activar Vademécum Data solutions</string>
+          <string>Nombre</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="label_24">
-         <property name="text">
-          <string>Clave1:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="txtclaveV1_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label_25">
-         <property name="text">
-          <string>Clave2:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QLineEdit" name="txtclaveV1_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="txtname"/>
        </item>
        <item row="1" column="0">
-        <widget class="QCheckBox" name="chkVademecum_homeopatia">
+        <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Activar Vademecum Homeopatía</string>
+          <string>Contraseña</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="label_27">
-         <property name="text">
-          <string>Clave1:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="txtclaveV2_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="label_26">
-         <property name="text">
-          <string>Clave2:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLineEdit" name="txtclaveV2_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <widget class="QLineEdit" name="txtpass1">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QCheckBox" name="chk_vademecum_fitoterapia">
+        <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Activar Vademécum Fitoterapia</string>
+          <string>Repetir contraseña</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="label_29">
-         <property name="text">
-          <string>Clave1:</string>
+        <widget class="QLineEdit" name="txtpass2">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
          </property>
         </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="txtclaveV3_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="label_28">
-         <property name="text">
-          <string>Clave2:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLineEdit" name="txtclaveV3_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="chkVademecum_MTC">
-         <property name="text">
-          <string>Activar Vademécum MTC</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_31">
-         <property name="text">
-          <string>Clave1:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="txtclaveV4_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLabel" name="label_30">
-         <property name="text">
-          <string>Clave2:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QLineEdit" name="txtclaveV4_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>BD TiendaWEB</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="3" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPasswordDBWeb"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Password:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtPuerto_DBWeb"/>
-       </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtUsuarioDBweb"/>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtHostWeb"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Nombre BD web:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Host:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="txtnombre_bdWeb"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Puerto:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
-        <widget class="QLabel" name="label_15">
-         <property name="text">
-          <string>Dto fijo web:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="4">
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>usuario:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <spacer name="verticalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>DBMedi_tec</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_36">
-         <property name="text">
-          <string>Nombre BD:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="txtnombre_bd_MediTec"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_34">
-         <property name="text">
-          <string>Host:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="txtHostBD_MediTec"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_35">
-         <property name="text">
-          <string>usuario:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="txtUsuarioDB_MediTec"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_17">
-         <property name="text">
-          <string>Password:</string>
+          <string>Cuenta smtp</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="txtPasswordDB_MediTec"/>
+        <widget class="QLineEdit" name="txtsmtp"/>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_16">
+        <widget class="QLabel" name="label_11">
          <property name="text">
-          <string>Puerto:</string>
+          <string>Usuario e-mail</string>
          </property>
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QLineEdit" name="txtPuerto_DB_MediTec"/>
+        <widget class="QLineEdit" name="txtmail"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Contraseña e-mail</string>
+         </property>
+        </widget>
        </item>
        <item row="5" column="1">
-        <spacer name="verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QLineEdit" name="txtmailpass1">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Repetir contraseña e-mail</string>
          </property>
-        </spacer>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="txtmailpass2">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
     </widget>
    </item>
-   <item row="0" column="0" colspan="4">
-    <widget class="QFrame" name="frame">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>187</height>
-      </size>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="1" colspan="4">
-       <widget class="QLabel" name="label_33">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Configuración BD - Base de datos general</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="2">
-       <widget class="QLineEdit" name="txtPuerto"/>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="txtUsuario"/>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Puerto:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QRadioButton" name="radSqlite">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>SQLite</string>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Password:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLineEdit" name="txtdireccionBD">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QLineEdit" name="txtPassword"/>
-      </item>
-      <item row="3" column="3">
-       <widget class="QLabel" name="label_5">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>direccion BD:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Host:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="radMysql">
-        <property name="text">
-         <string>MySQL</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLineEdit" name="txtHost"/>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>usuario:</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>395</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>395</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSiguiente">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Siguiente</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCancel">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Salir</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>radMysql</tabstop>
-  <tabstop>radSqlite</tabstop>
-  <tabstop>txtHost</tabstop>
-  <tabstop>txtUsuario</tabstop>
-  <tabstop>txtPassword</tabstop>
-  <tabstop>txtPuerto</tabstop>
-  <tabstop>txtdireccionBD</tabstop>
-  <tabstop>chkmedicum</tabstop>
-  <tabstop>chkconta</tabstop>
   <tabstop>tabWidget_3</tabstop>
-  <tabstop>cboPaises</tabstop>
-  <tabstop>chkPrestaShop</tabstop>
-  <tabstop>chkProfesional</tabstop>
-  <tabstop>txtPorcIRPF</tabstop>
-  <tabstop>spindigitos_factura</tabstop>
-  <tabstop>spidigitos_cuentaContable</tabstop>
-  <tabstop>txtCuentaClientes</tabstop>
-  <tabstop>txtCuentaProveedores</tabstop>
-  <tabstop>txtCuentaAcreedores</tabstop>
-  <tabstop>txtcuenta_cobros</tabstop>
-  <tabstop>txtcuenta_pagos</tabstop>
   <tabstop>chkVademecum_alopatico</tabstop>
   <tabstop>txtclaveV1_1</tabstop>
   <tabstop>txtclaveV1_2</tabstop>
@@ -852,47 +659,26 @@ color: rgb(255,255,255);</string>
   <tabstop>chkVademecum_MTC</tabstop>
   <tabstop>txtclaveV4_1</tabstop>
   <tabstop>txtclaveV4_2</tabstop>
-  <tabstop>txtnombre_bdWeb</tabstop>
-  <tabstop>txtHostWeb</tabstop>
-  <tabstop>txtUsuarioDBweb</tabstop>
-  <tabstop>txtPasswordDBWeb</tabstop>
-  <tabstop>txtPuerto_DBWeb</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>btnCancel</tabstop>
+  <tabstop>btnSiguiente</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>btnCancel</sender>
    <signal>clicked()</signal>
    <receiver>frmConfigmaya</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>772</x>
-     <y>465</y>
+     <x>866</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
      <x>503</x>
      <y>403</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>frmConfigmaya</receiver>
-   <slot>configurar()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>686</x>
-     <y>465</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>372</x>
-     <y>398</y>
     </hint>
    </hints>
   </connection>

@@ -37,19 +37,22 @@ Login::Login(QWidget *parent) :
 
     if(Configuracion_global->CargarDatosBD())
         init();
-//    QString a = "RedFoX";
-//    QString b = Configuracion::Crypt(a);
-//    QString c = Configuracion::DeCrypt(b);
-
-//    qDebug() << b;
-//    qDebug() << c;
+    else
+    {
+        if(Configuracion_global->globalDB.isOpen())
+        {
+            frmConfigmaya frmConf;
+            if(frmConf.exec()==QDialog::Accepted)
+                TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
+        }
+        else
+            QMessageBox::critical(0, "error:", Configuracion_global->globalDB.lastError().text());
+    }
 }
 
 Login::~Login()
 {
     delete ui;
-
-    //dbMaya.close();
 }
 
 const QString Login::getUsuario() const
@@ -125,14 +128,14 @@ void Login::on_btnAcceder_clicked()
 
     if( !qryUsers.exec() ) 
 	{
-        QMessageBox::critical(qApp->activeWindow(), "Error:", qryUsers.lastError().text());
+        QMessageBox::critical(qApp->activeWindow(), tr("Error:"), qryUsers.lastError().text());
     } 
 	else 
 	{
        if (qryUsers.next()) 
 	   {
             QSqlRecord rUsuario = qryUsers.record();
-            if (Configuracion::SHA256HashString(ui->linePassword->text()) == qryUsers.value(2).toString().trimmed())
+            if (Configuracion::SHA256HashString(ui->linePassword->text()) == rUsuario.value("contrasena").toString().trimmed())
 			{
                 m_id = qryUsers.value(0).toInt();
                 QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
@@ -142,22 +145,42 @@ void Login::on_btnAcceder_clicked()
                 Configuracion_global->id_usuario_activo = this->getid_user();
                 Login::done(QDialog::Accepted);
             }
-			else 
-			{
-                QMessageBox::critical(this,"ACCESO DENEGADO","El usuario y la contraseña no se corresponden\n\n Verifique los datos");
-                ui->linePassword->setText("");
-                ui->linePassword->setFocus();
-            }
        } 
-	   else
-	   {
-           QMessageBox::critical(this,"Error","No existe ningún usuario con este nombre");
-           ui->lineUsuario->setText("");
-           ui->lineUsuario->setFocus();
-       }
+    }
+
+    QSqlQuery q(Configuracion_global->globalDB);
+    q.prepare( "SELECT * FROM mayaglobal.usuarios where nombre =:Nombre" );
+    q.bindValue(":Nombre",ui->lineUsuario->text());
+    if( !q.exec() )
+    {
+        QMessageBox::critical(qApp->activeWindow(), tr("Error:"), q.lastError().text());
+    }
+    else
+    {
+        if (q.next())
+        {
+            QSqlRecord rUsuario = q.record();
+            if (Configuracion::SHA256HashString(ui->linePassword->text()) == rUsuario.value("contrasena").toString().trimmed())
+            {
+                m_id = qryUsers.value(0).toInt();
+                QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+                settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
+                settings.setValue("nNivelAcceso",7);
+                settings.setValue("cCategoria", "ADMINISTRADOR");
+                Configuracion_global->id_usuario_activo = this->getid_user();
+                Configuracion_global->superUser = true;
+                Login::done(QDialog::Accepted);
+            }
+        }
+        else
+        {
+            QMessageBox::critical(this,tr("Error"),tr("Datos de acceso incorrectos"));
+            ui->lineUsuario->setText("");
+            ui->linePassword->setText("");
+            ui->lineUsuario->setFocus();
+        }
     }
 }
-
 void Login::Crearconfiguracion_clicked()
 {
     AreaRestringida_form check(this);
@@ -195,7 +218,7 @@ void Login::init()
 
     QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
-    QryEmpresas.prepare("Select * from grupos");
+    QryEmpresas.prepare("Select * from mayaglobal.grupos");
 
     if(QryEmpresas.exec())
 	{
@@ -255,17 +278,6 @@ void Login::init()
     //this->ui->linePassword->setText("patata");
 }
 
-void Login::on_pushButton_2_clicked()
-{
-    AreaRestringida_form check(this);
-    check.exec();
-    if(check.es_valido())
-    {
-        FrmUsuarios formUsers(this);
-        formUsers.setWindowState(Qt::WindowMaximized);
-        formUsers.exec();
-    }
-}
 void Login::on_comboGroup_currentTextChanged(const QString &arg1)
 {
     ui->cboEmpresa->clear();

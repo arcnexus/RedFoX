@@ -1,5 +1,5 @@
 CREATE DATABASE  IF NOT EXISTS `mayaglobal`;
-CREATE TABLE `grupos` (
+CREATE TABLE `mayaglobal`.`grupos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `bd_name` varchar(45) DEFAULT NULL,
@@ -11,11 +11,13 @@ CREATE TABLE `grupos` (
   `bd_port` varchar(45) DEFAULT '3306',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `usuarios` (
+CREATE TABLE `mayaglobal`.`usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
-  `contrasena` text,
-  `nivel` int(11) DEFAULT NULL,
-  `categoria` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `contrasena` varchar(45) DEFAULT NULL,
+  `cuenta_smtp` varchar(100) DEFAULT NULL,
+  `usuario_mail` varchar(100) DEFAULT NULL,
+  `password_mail` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre_UNIQUE` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

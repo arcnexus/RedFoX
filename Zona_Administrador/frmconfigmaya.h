@@ -25,8 +25,12 @@ private:
     QAction menuButton;
 private slots:
     void configurar();
-
-    void on_btnAnadir_cuentas_clicked();
+    void on_btnSiguiente_clicked();
+    bool checkForMayaGlobal();
+    void crear_MayaGlobal();
+    void doMenuSelection();
+    bool createSuperUser();
+    void on_btnInicio_clicked();
 };
 
 #endif // FRMCONFIGMAYA_H

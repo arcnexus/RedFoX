@@ -65,6 +65,7 @@ Configuracion::Configuracion(QObject* parent) :
     iv[15] = 0x10;
 
     Pass = "RedFox";
+    superUser = false;
 }
 
 
@@ -771,9 +772,7 @@ bool Configuracion::CargarDatosBD()
     this->global_routeLite = settings.value("cRutaDBMaya").toString();
     this->global_host = settings.value("cHostBDMaya").toString();
     this->global_user  =   DeCrypt(settings.value("cUserBDMaya").toString());
-//    qDebug() << global_user;
     this->global_pass = DeCrypt(settings.value("cPasswordBDMaya").toString());
-//    qDebug() << global_pass;
     this->global_port = settings.value("global_port").toInt();
 
     this->nombre_bdTiendaWeb = settings.value("nombre_bdTiendaWeb").toString();
@@ -799,21 +798,18 @@ bool Configuracion::CargarDatosBD()
     }
     else
     {
-        this->globalDB.setDatabaseName("mayaglobal");
         this->globalDB.setHostName(Configuracion_global->global_host);
-        qDebug() << Configuracion_global->global_user << Configuracion_global->global_pass;
         this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
-
-        //this->globalDB.open("root","meganizado");
-
     }
 
-    if (this->globalDB.lastError().isValid())
+    bool _mayaglobal = true;
+    if(this->globalDB.isOpen())
     {
-        QMessageBox::critical(0, "error:", this->globalDB.lastError().text());
+        QSqlQuery q(globalDB);
+        if(q.exec("SHOW DATABASES like 'mayaglobal'"))
+            _mayaglobal = q.next();
     }
-    return !this->globalDB.lastError().isValid();
-
+    return (!this->globalDB.lastError().isValid()) && _mayaglobal;
 }
 
 void Configuracion::AbrirDbWeb()

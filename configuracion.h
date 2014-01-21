@@ -101,6 +101,7 @@ public:
     QString cUsuarioActivo;
     int id_usuario_activo;
     QString cNivelUsuarioActivo;
+    bool superUser;
     int nivel;
     QSqlDatabase dbConfiguracion;
     QSqlDatabase dbWeb;

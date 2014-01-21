@@ -12,13 +12,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui(new Ui::frmConfigmaya),
     menuButton(QIcon(":/Icons/PNG/Config.png"),tr("Configuracion General"),this)
 {
-    Configuracion_global->Cargar_iva();
-    //Configuracion_global->Cargar_paises();
     ui->setupUi(this);
-
-
-    ui->cboPaises->setModel(Configuracion_global->paises_model);
-   // ui->cboPaises->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
 
     QFile f(qApp->applicationDirPath()+"/MayaConfig.ini");
     if(!f.exists())
@@ -30,34 +24,6 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->txtPuerto->setText(settings.value("cPuertoDBMaya").toString());
     ui->txtdireccionBD->setText(settings.value("cRutaDBMaya").toString());
 
-
-    ui->txtHostWeb->setText(settings.value("hostTiendaWeb").toString());
-    ui->txtUsuarioDBweb->setText(Configuracion::DeCrypt(settings.value("usuarioTiendaWeb").toString()));
-    ui->txtPasswordDBWeb->setText(Configuracion::DeCrypt(settings.value("Pass_web").toString()));
-    ui->txtPuerto_DBWeb->setText(settings.value("puertoTiendaWeb").toString());
-    ui->txtnombre_bdWeb->setText((settings.value("nombre_bdTiendaWeb").toString()));
-
-    int nindex = ui->cboPaises->findText(settings.value("pais").toString());
-    if (nindex > -1)
-        ui->cboPaises->setCurrentIndex(nindex);
-
-
-    ui->spindigitos_factura->setValue(settings.value("ndigitos_factura").toInt());
-
-
-    if(settings.value("lProfesional")==1)
-        ui->chkProfesional->setChecked(true);
-    else
-        ui->chkProfesional->setChecked(false);
-
-    ui->txtPorcIRPF->setText(settings.value("irpf").toString());
-
-    ui->spidigitos_cuentaContable->setValue(settings.value("digitos_cuentas").toInt());
-    ui->txtCuentaClientes->setText(settings.value("cuenta_clientes").toString());
-    ui->txtCuentaProveedores->setText(settings.value("cuenta_proveedores").toString());
-    ui->txtCuentaAcreedores->setText(settings.value("cuenta_acreedores").toString());
-    ui->txtcuenta_cobros->setText(settings.value("cuenta_cobros").toString());
-    ui->txtcuenta_pagos->setText(settings.value("cuenta_pagos").toString());
     ui->txtclaveV1_1->setText(settings.value("Clave1").toString());
     ui->txtclaveV1_2->setText(settings.value("Clave2").toString());
     ui->txtclaveV2_1->setText(settings.value("Clave3").toString());
@@ -66,6 +32,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->txtclaveV3_2->setText(settings.value("Clave6").toString());
     ui->txtclaveV4_1->setText(settings.value("Clave7").toString());
     ui->txtclaveV4_2->setText(settings.value("Clave8").toString());
+
     ui->txtHostBD_MediTec->setText(settings.value("HostDB_MediTec").toString());
     ui->txtnombre_bd_MediTec->setText(settings.value("NombreDB_MediTec").toString());
     ui->txtUsuarioDB_MediTec->setText(settings.value("UsuarioDB_MediTec").toString());
@@ -76,7 +43,6 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     else
         ui->radMysql->setChecked(false);
 
-    ui->chkPrestaShop->setChecked(settings.value("enlace_web").toBool());
 
     ui->chkmedicum->setChecked(settings.value("medicum").toBool());
     ui->chkconta->setChecked(settings.value("conta").toBool());
@@ -84,7 +50,6 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->chkVademecum_homeopatia->setChecked(settings.value("vad_home").toBool());
     ui->chkVademecum_MTC->setChecked(settings.value("vad_MTC").toBool());
     ui->chk_vademecum_fitoterapia->setChecked(settings.value("vad_fito").toBool());
-    ui->txtnombre_cliente->setText("");
 }
 
 frmConfigmaya::~frmConfigmaya()
@@ -94,8 +59,6 @@ frmConfigmaya::~frmConfigmaya()
 
 void frmConfigmaya::configurar()
 {
-
-
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
     if(ui->radMysql->isChecked())
         settings.setValue("cDriverBDMaya","QMYSQL");
@@ -105,21 +68,8 @@ void frmConfigmaya::configurar()
     settings.setValue("cHostBDMaya",ui->txtHost->text());
     settings.setValue("cUserBDMaya",Configuracion::Crypt(ui->txtUsuario->text()));
     settings.setValue("cPasswordBDMaya",Configuracion::Crypt(ui->txtPassword->text()));
-    settings.setValue("pais",ui->cboPaises->currentText());
-    settings.setValue(("global_port"),ui->txtPuerto->text());
-    settings.setValue("ndigitos_factura",ui->spindigitos_factura->value());
-    if(ui->chkProfesional->isChecked())
-        settings.setValue("lProfesional",1);
-    else
-        settings.setValue("lProfesional",0);
+    settings.setValue("cPuertoDBMaya",ui->txtPuerto->text());
 
-    settings.setValue("irpf",ui->txtPorcIRPF->text());
-    settings.setValue("digitos_cuentas",ui->spidigitos_cuentaContable->value());
-    settings.setValue("cuenta_clientes",ui->txtCuentaClientes->text());
-    settings.setValue("cuenta_proveedores",ui->txtCuentaProveedores->text());
-    settings.setValue("cuenta_acreedores",ui->txtCuentaAcreedores->text());
-    settings.setValue("cuenta_cobros",ui->txtcuenta_cobros->text());
-    settings.setValue("cuenta_pagos",ui->txtcuenta_pagos->text());
     settings.setValue("Clave1",ui->txtclaveV1_1->text());
     settings.setValue("Clave2",ui->txtclaveV1_2->text());
     settings.setValue("Clave3",ui->txtclaveV2_1->text());
@@ -153,74 +103,128 @@ void frmConfigmaya::configurar()
        settings.setValue("vad_fito",1);
    else
        settings.setValue("vad_fito",0);
-   settings.setValue("hostTiendaWeb", ui->txtHostWeb->text());
-   settings.setValue("usuarioTiendaWeb",Configuracion::Crypt(ui->txtUsuarioDBweb->text()));
-   settings.setValue("Pass_web",Configuracion::Crypt(ui->txtPasswordDBWeb->text()));
-   settings.setValue("puertoTiendaWeb",ui->txtPuerto_DBWeb->text());
-   settings.setValue("nombre_bdTiendaWeb",ui->txtnombre_bdWeb->text());
-   settings.setValue("enlace_web",ui->chkPrestaShop->isChecked());
-
 
    settings.setValue("HostDB_MediTec",ui->txtHostBD_MediTec->text());
    settings.setValue("NombreDB_MediTec",ui->txtnombre_bd_MediTec->text());
    settings.setValue("UsuarioDB_MediTec",ui->txtUsuarioDB_MediTec->text());
    settings.setValue("PasswordDB_MediTec",ui->txtPasswordDB_MediTec->text());
    settings.setValue("PuertoDB_MediTec",ui->txtPuerto_DB_MediTec->text());
-
-    accept();
 }
 
-void frmConfigmaya::on_btnAnadir_cuentas_clicked()
+void frmConfigmaya::on_btnSiguiente_clicked()
 {
-    QSqlQuery q_clientes(Configuracion_global->groupDB);
-    QSqlQuery q_cuentas(Configuracion_global->contaDB) ;
-    bool registros = true;
-    int id = 0;
-   while (registros) {
-       if(!q_clientes.exec("select * from clientes where id >"+QString::number(id)+" limit 0,1"))
-            qDebug () << q_clientes.lastError().text();
-        if(q_clientes.next())
+    int index = ui->stackedWidget->currentIndex();
+    switch (index) {
+    case 0:
+        doMenuSelection();
+        break;
+    case 1:
+        configurar();
+        if(!checkForMayaGlobal())
         {
+            crear_MayaGlobal();
+            ui->stackedWidget->setCurrentIndex(4);
+            ui->btnCancel->setEnabled(false);
+        }
+        break;
+    case 4:
+        if(createSuperUser())
+        {
+            ui->stackedWidget->setCurrentIndex(0);
+            ui->btnCancel->setEnabled(true);
+        }
+        break;
+    }
+}
 
-            ui->txtnombre_cliente->setText("Validando...: " + q_clientes.record().value("nombre_fiscal").toString());
-            QApplication::processEvents();
-            if(q_cuentas.exec("select codigo_cta from plan_general where codigo_cta ='"+q_clientes.record().value("codigo_cliente").toString()+"' limit 0,1"))
+bool frmConfigmaya::checkForMayaGlobal()
+{
+    if(!Configuracion_global->CargarDatosBD())
+        if(Configuracion_global->globalDB.isOpen())
+            return false;
+    return true;
+}
+
+void frmConfigmaya::crear_MayaGlobal()
+{
+    QFile f(":/DB/DB/Global.sql");
+    bool error = !f.open(QFile::ReadOnly);
+    QSqlQuery q(Configuracion_global->globalDB);
+    if(!error)
+    {
+        QString s = f.readAll();
+        s.replace("\r\n"," ");
+
+        QStringList querys = s.split(";",QString::SkipEmptyParts);
+
+        for(int i = 0; i< querys.size();i++)
+        {
+            if(!(querys.at(i)== "\n") && !querys.at(i).isEmpty())
             {
-                qDebug() <<q_cuentas.lastQuery();
-                id++;
-                if (!q_cuentas.next())
+                if(!q.exec(querys.at(i)))
                 {
-                    // ----------------------------------
-                    // Si no existe la cuenta la creamos
-                    // ----------------------------------
-                    q_cuentas.prepare("INSERT INTO plan_general (codigo_cta,descripcion,activo,codigo_balance,"
-                                      "cif_nif,direccion,"
-                                      "cp,poblacion,provincia,pais)"
-                                      "VALUES (:codigo_cta,:descripcion,:activo,:codigo_balance,"
-                                      ":cif_nif,:direccion,:cp,:poblacion,"
-                                      ":provincia,pais);");
-
-                    q_cuentas.bindValue(":codigo_cta",q_clientes.record().value("codigo_cliente").toString());
-                    q_cuentas.bindValue(":descripcion",q_clientes.record().value("nombre_fiscal").toString());
-                    q_cuentas.bindValue(":activo",true);
-                    q_cuentas.bindValue(":codigo_balance","ABIII1");
-                    q_cuentas.bindValue(":cif_nif",q_clientes.record().value("cif_nif").toString());
-                    q_cuentas.bindValue(":direccion",q_clientes.record().value("direccion1").toString());
-                    q_cuentas.bindValue(":cp",q_clientes.record().value("cp").toString());
-                    q_cuentas.bindValue(":poblacion",q_clientes.record().value("poblacion").toString());
-                    q_cuentas.bindValue(":provincia",q_clientes.record().value("provincia").toString());
-                    q_cuentas.bindValue(":pais",q_clientes.record().value("pais").toString());
-                    if(!q_cuentas.exec())
-                        QMessageBox::warning(this,tr("Configuración contable de Maya"),
-                                             tr("No se puede crear la cuenta : %1").arg(q_cuentas.lastError().text()));
-
-
+                    qDebug() << q.lastError().text();
+                    qDebug() << querys.at(i);
+                    error = true;
+                    break;
                 }
-            } else
-                qDebug() << q_cuentas.lastError().text();
-        }else
-        {
-            registros = false;
+            }
         }
     }
+    f.close();
+}
+
+void frmConfigmaya::doMenuSelection()
+{
+    if(!ui->listWidget->currentIndex().isValid())
+        return;
+    int index = ui->listWidget->currentIndex().row();
+    switch (index) {
+    case 0:
+        ui->stackedWidget->setCurrentWidget(ui->bd_driver_page);
+        break;
+    case 1:
+        ui->stackedWidget->setCurrentWidget(ui->create_user_page);
+        break;
+    default:        
+        break;
+    }
+}
+
+bool frmConfigmaya::createSuperUser()
+{
+    if(ui->txtname->text().isEmpty())
+    {
+        QMessageBox::warning(this,tr("Nombre de usuario"),tr("Especifique un nombre de usuario"));
+        return false;
+    }
+    if(ui->txtpass1->text() != ui->txtpass2->text())
+    {
+        QMessageBox::warning(this,tr("Revise sus contraseñas"),tr("Las contraseñas de usuario no coinciden"));
+        return false;
+    }
+    if(ui->txtmailpass1->text() != ui->txtmailpass2->text())
+    {
+        QMessageBox::warning(this,tr("Revise sus contraseñas"),tr("Las contraseñas de e-mail no coinciden"));
+        return false;
+    }
+    QHash<QString,QVariant> _data;
+    _data["nombre"] = ui->txtname->text();
+    _data["contrasena"] = Configuracion::SHA256HashString(ui->txtpass1->text());
+    _data["cuenta_smtp"] = ui->txtsmtp->text();
+    _data["usuario_mail"] = ui->txtmail->text();
+    _data["password_mail"] = Configuracion::SHA256HashString(ui->txtmailpass1->text());
+
+    QString error;
+    if(SqlCalls::SqlInsert(_data,"mayaglobal`.`usuarios",Configuracion_global->globalDB,error)<0)
+    {
+        QMessageBox::critical(this,tr("Error al insertar Super Usuario"),error);
+        return false;
+    }
+    return true;
+}
+
+void frmConfigmaya::on_btnInicio_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->welcome_page);
 }

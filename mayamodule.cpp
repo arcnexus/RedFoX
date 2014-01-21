@@ -17,6 +17,12 @@ MayaModule::~MayaModule()
 
 bool MayaModule::userHaveAcces(int id_user)
 {
+    if(Configuracion_global->superUser)
+    {
+        _user_level = Administrador;
+        return true;
+    }
+
     QSqlQuery q(Configuracion_global->groupDB);
     q.prepare("SELECT * FROM accesousuarios where id_modulo = :id and id_user=:id_user");
     q.bindValue(":id",_id_modulo);
@@ -26,7 +32,6 @@ bool MayaModule::userHaveAcces(int id_user)
         if(q.next())
         {
             _user_level = static_cast<accessLevel>(q.record().value(3).toInt());
-            Configuracion_global->nivel = _user_level;
         }
     }
     return (_user_level != SinAcceso);
