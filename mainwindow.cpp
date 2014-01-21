@@ -397,6 +397,13 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     else
         delete fpagos;
 
+    splash->showMessage(tr("Cargando modulos... Modulo cajas") , Qt::AlignLeft,Qt::white);
+    FrmCajas *cajas = new FrmCajas(this);
+    if(cajas->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(cajas);
+    }
+
 
     ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
     if(!e->Extensions().isEmpty())

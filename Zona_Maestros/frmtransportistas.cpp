@@ -34,10 +34,10 @@ FrmTransportistas::FrmTransportistas(QWidget *parent) :
     //---------------
     //Llenar direcciones alternativas
     //---------------
-    QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
-    qModeldireccion->setQuery("select nombre , telefono1 , telefono2 from personascontactotransportista where id_transportista = "+oTransportista.h_transportista.value("id").toString(),
-                              Configuracion_global->groupDB);
-    ui->tablaContactos->setModel(qModeldireccion);
+    //    QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
+    //    qModeldireccion->setQuery("select nombre , telefono1 , telefono2 from personascontactotransportista where id_transportista = "+oTransportista.h_transportista.value("id").toString(),
+    //                              Configuracion_global->groupDB);
+    //    ui->tablaContactos->setModel(qModeldireccion);
 
     setUpBusqueda();
 }
@@ -165,7 +165,7 @@ void FrmTransportistas::llenar_campos()
 
 
     llenar_campos_contactoTransportista(oTransportista.h_transportista.value("id").toInt());
-    qDebug() << oTransportista.h_transportista.value("id").toInt();
+    //qDebug() << oTransportista.h_transportista.value("id").toInt();
 }
 
 void FrmTransportistas::llenar_campos_contactoTransportista(int id)
@@ -175,10 +175,13 @@ void FrmTransportistas::llenar_campos_contactoTransportista(int id)
     //Llenar direcciones alternativas
     //---------------
     QSqlQueryModel *qModeldireccion = new QSqlQueryModel(this);
-    qModeldireccion->setQuery("select * from personascontactotransportista where id_transportista = "+QString::number(id),
+    qModeldireccion->setQuery("select id , nombre , telefono1 , cargo_empresa from personascontactotransportista where id_transportista = "+QString::number(id),
                               Configuracion_global->groupDB);
     ui->tablaContactos->setModel(qModeldireccion);
     ui->tablaContactos->hideColumn(0);
+//    QHeaderView *cabecera = new QHeaderView();
+//    cabecera
+//    ui->tablaContactos->setHorizontalHeader(cabecera);
     qDebug() << qModeldireccion->data(qModeldireccion->index(Qt::EditRole,0));
 }
 
