@@ -11,24 +11,17 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Gestor de Secciones</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEdit">
      <property name="styleSheet">
-      <string notr="true">background-color: #304163;
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>Secciones</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="0" column="2">
     <widget class="QLabel" name="label_2">
      <property name="styleSheet">
       <string notr="true">background-color: #304163;
@@ -42,13 +35,25 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="2">
-    <widget class="QTableView" name="tabla_secciones"/>
+   <item row="1" column="2" rowspan="2">
+    <widget class="QTableView" name="tabla_familias">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QTableView" name="tabla_familias"/>
+   <item row="5" column="2">
+    <widget class="QPushButton" name="btnSalir">
+     <property name="text">
+      <string>Salir</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/close.png</normaloff>:/Icons/PNG/close.png</iconset>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="1" rowspan="2">
+   <item row="3" column="2" rowspan="2">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -65,7 +70,11 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QLineEdit" name="txtCodigo"/>
+       <widget class="QLineEdit" name="txtCodigo">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_4">
@@ -75,7 +84,11 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item row="1" column="1" colspan="4">
-       <widget class="QLineEdit" name="txtSeccion"/>
+       <widget class="QLineEdit" name="txtSeccion">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="3">
        <widget class="QPushButton" name="btnCambiarImagen">
@@ -115,7 +128,56 @@ color: rgb(255, 255, 255);</string>
      </layout>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Filtrar:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Secciones</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" rowspan="2" colspan="2">
+    <widget class="QTableView" name="tabla_secciones">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="0">
       <widget class="QPushButton" name="pushButton_2">
@@ -167,7 +229,7 @@ color: rgb(255, 255, 255);</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="2" column="0">
       <widget class="QPushButton" name="pushButton_4">
        <property name="text">
         <string>Eliminar</string>
@@ -175,6 +237,13 @@ color: rgb(255, 255, 255);</string>
        <property name="icon">
         <iconset resource="../maya.qrc">
          <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>
@@ -188,7 +257,6 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btnEditar</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_4</tabstop>
   <tabstop>txtCodigo</tabstop>
   <tabstop>txtSeccion</tabstop>
   <tabstop>btnCambiarImagen</tabstop>
@@ -198,5 +266,22 @@ color: rgb(255, 255, 255);</string>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnSalir</sender>
+   <signal>clicked()</signal>
+   <receiver>frmSeccionesAlmacen</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>455</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>314</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

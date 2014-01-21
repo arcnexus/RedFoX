@@ -2,6 +2,7 @@
 #define FRMSECCIONESALMACEN_H
 
 #include <QDialog>
+#include "../Auxiliares/Globlal_Include.h"
 
 namespace Ui {
 class frmSeccionesAlmacen;
@@ -20,6 +21,7 @@ private slots:
 
 private:
     Ui::frmSeccionesAlmacen *ui;
+    QSqlQueryModel *model_secciones;
 };
 
 #endif // FRMSECCIONESALMACEN_H
