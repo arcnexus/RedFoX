@@ -579,13 +579,13 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
 void MainWindow::loadAminModules(QSplashScreen *splash)
 {
     splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
-    frmConfigmaya* c = new frmConfigmaya(this);
+/*    frmConfigmaya* c = new frmConfigmaya(this);
     if(c->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _adminModules.append(c);
     }
     else
-        delete c;
+        delete c;*/
 
     splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
     FrmEmpresas* e = new FrmEmpresas(this);
