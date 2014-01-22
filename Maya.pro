@@ -216,7 +216,8 @@ SOURCES += main.cpp\
     Auxiliares/numericdelegate.cpp \
     Almacen/frmaddlotes.cpp \
     Almacen/frmselectlotes.cpp \
-    Almacen/frmseccionesalmacen.cpp
+    Almacen/frmseccionesalmacen.cpp \
+    Almacen/frmfamiliasalmacen.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -399,7 +400,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/numericdelegate.h \
     Almacen/frmaddlotes.h \
     Almacen/frmselectlotes.h \
-    Almacen/frmseccionesalmacen.h
+    Almacen/frmseccionesalmacen.h \
+    Almacen/frmfamiliasalmacen.h
 
 
 
@@ -496,7 +498,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmeditline.ui \
     Almacen/frmaddlotes.ui \
     Almacen/frmselectlotes.ui \
-    Almacen/frmseccionesalmacen.ui
+    Almacen/frmseccionesalmacen.ui \
+    Almacen/frmfamiliasalmacen.ui
 
 RESOURCES += \
     maya.qrc \

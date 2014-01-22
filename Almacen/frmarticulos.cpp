@@ -2144,7 +2144,7 @@ void FrmArticulos::togglechkmostrarvalores_comparativa()
 
 void FrmArticulos::on_botCambiarImagen_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_1,"imagen");
+    CambiarImagen_clicked(ui->lblImagenArticulo_1,"imagen1");
 }
 
 void FrmArticulos::on_botCambiarImagen_2_clicked()
@@ -2192,14 +2192,34 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             ba = f.readAll();
             f.close();
         }
-        QSqlQuery Articulo(Configuracion_global->groupDB);
-        Articulo.prepare("update articulos set "+campo+" =:imagen where id = :nid");
-        Articulo.bindValue(":imagen",ba/*.toBase64()*/);
-        Articulo.bindValue(":nid",oArticulo->id);
-        if (!Articulo.exec())
+        // Si existe actualizamos, si no existe añadimos.
+        QString error;
+        int id_art = SqlCalls::SelectOneField("articulos_imagenes","id_articulo",QString("id_articulo =%1").arg(oArticulo->id),
+                                 Configuracion_global->groupDB,error).toInt();
+        if(id_art >0){
+            QSqlQuery Articulo(Configuracion_global->groupDB);
+
+            Articulo.prepare("update articulos_imagenes set "+campo+" =:imagen,id_articulo =:id_art where id_articulo = :nid");
+            Articulo.bindValue(":imagen",ba/*.toBase64()*/);
+            Articulo.bindValue(":nid",oArticulo->id);
+            Articulo.bindValue(":id_art",oArticulo->id);
+            if (!Articulo.exec())
+            {
+                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+                qDebug() << Articulo.lastError();
+            }
+        } else
         {
-            QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
-            qDebug() << Articulo.lastError();
+            QSqlQuery Articulo(Configuracion_global->groupDB);
+
+            Articulo.prepare("insert into articulos_imagenes ("+campo+",id_articulo)  values(:imagen,:id_art) ");
+            Articulo.bindValue(":imagen",ba/*.toBase64()*/);
+            Articulo.bindValue(":id_art",oArticulo->id);
+            if (!Articulo.exec())
+            {
+                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+                qDebug() << Articulo.lastError();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 #include "divisionalmacenext.h"
 #include "../db_table_view.h"
 #include "../Almacen/frmseccionesalmacen.h"
+#include "../Almacen/frmfamiliasalmacen.h"
 DivisionAlmacenExt::DivisionAlmacenExt(QObject *parent) :
     ModuleExtension(parent),
     Seccion("Secciones",this),
@@ -82,19 +83,7 @@ void DivisionAlmacenExt::handle_actions()
       }
       else if (sender() == &familias)
       {
-          Db_table_View form(qApp->activeWindow());
-          form.set_db("Maya");
-          form.set_table("familias");
-
-          form.setWindowTitle(tr("Familias"));
-
-          QStringList headers;
-          headers << tr("Codigo") << tr("Familia") << tr("Pertenece a");
-          form.set_table_headers(headers);
-
-          form.set_relation(3,QSqlRelation("secciones","id","seccion"));
-
-          form.set_columnHide(0);
+          frmFamiliasAlmacen form(qApp->activeWindow());
           form.exec();
       }
       else if (sender() == &subFam)

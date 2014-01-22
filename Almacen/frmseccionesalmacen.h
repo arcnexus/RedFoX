@@ -19,9 +19,22 @@ public:
 private slots:
     void on_btnAnadir_clicked();
 
+    void on_btnEditar_clicked();
+
+    void on_tabla_secciones_clicked(const QModelIndex &index);
+
+    void on_btnCambiarImagen_clicked();
+
+    void on_btnGuardar_clicked();
+
 private:
     Ui::frmSeccionesAlmacen *ui;
     QSqlQueryModel *model_secciones;
+    QSqlQueryModel *model_familias;
+    void cargarImagen(int id);
+    int id;
+    void setStatus(bool success);
+
 };
 
 #endif // FRMSECCIONESALMACEN_H

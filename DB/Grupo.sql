@@ -105,6 +105,15 @@ CREATE TABLE `@grupo@`.`articulos` (
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE `@grupo@`.`articulos_imagenes` (
+  `id_articulo` INT NOT NULL,
+  `imagen1` BLOB NULL,
+  `imagen2` BLOB NULL,
+  `imagen3` BLOB NULL,
+  `imagen4` BLOB NULL,
+  PRIMARY KEY (`id_articulo`));
+
+
 CREATE TABLE `@grupo@`.`articulos_lotes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_articulo` INT NULL,
