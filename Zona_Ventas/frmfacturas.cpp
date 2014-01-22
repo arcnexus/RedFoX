@@ -378,8 +378,9 @@ void frmFacturas::LLenarCampos() {
         }
     } else
     {
-        QMessageBox::warning(this,tr("Facturas a clientes"),
-                             tr("Ocurrió un error al recuperar las direcciones alternativas: %1").arg(error));
+        if(error !="No se encuentra")
+            QMessageBox::warning(this,tr("Facturas a clientes"),
+                             tr("Ocurrió un error al recuperar las direcciones alternativas:\n %1").arg(error));
 
     }
     //-------------------------------------- FIN DIRECCIONES ALTERNATIVAS

@@ -33,7 +33,7 @@ frmFamiliasAlmacen::frmFamiliasAlmacen(QWidget *parent) :
         model_familias->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     model_subfamilias = new QSqlQueryModel(this);
-    model_subfamilias->setQuery("select codigo,subfamilia from subfamilias where id_familia = 0 order by subfamilia");
+    model_subfamilias->setQuery("select codigo,sub_familia from subfamilias where id_familia = 0 order by subfamilia");
     ui->tabla_subfamilias->setModel(model_subfamilias);
     headers.clear();
     headers << tr("código") << tr("Subfamilia");
@@ -115,7 +115,7 @@ void frmFamiliasAlmacen::setStatus(bool success)
 void frmFamiliasAlmacen::on_tabla_secciones_clicked(const QModelIndex &index)
 {
     this->id_seccion= ui->tabla_secciones->model()->data(ui->tabla_secciones->model()->index(index.row(),0)).toInt();
-    model_familias->setQuery(QString("select codigo,familia from familias where id_seccion = %1").arg(this->id_seccion));
+    model_familias->setQuery(QString("select id,codigo,familia from familias where id_seccion = %1").arg(this->id_seccion));
 
 }
 
@@ -188,7 +188,7 @@ void frmFamiliasAlmacen::on_btnGuardar_clicked()
     setStatus(false);
     model_seccion->setQuery("select id, codigo, seccion from secciones order by seccion",
                             Configuracion_global->groupDB);
-    model_familias->setQuery(QString("select codigo,familia from familias where id_seccion = %1").arg(this->id_seccion));
+    model_familias->setQuery(QString("select id,codigo,familia from familias where id_seccion = %1").arg(this->id_seccion));
 }
 
 void frmFamiliasAlmacen::on_tabla_familias_clicked(const QModelIndex &index)
@@ -202,6 +202,6 @@ void frmFamiliasAlmacen::on_tabla_familias_clicked(const QModelIndex &index)
         ui->txtCodigo->setText(sec.value(this->id_familia).value("codigo").toString());
         ui->txtFamilia->setText(sec.value(this->id_familia).value("familia").toString());
         cargarImagen(this->id_familia);
-        model_subfamilias->setQuery(QString("select codigo,subfamilia from subfamilias where id_familia = %1").arg(this->id_familia));
+        model_subfamilias->setQuery(QString("select codigo,sub_familia from subfamilias where id_familia = %1").arg(this->id_familia));
     }
 }
