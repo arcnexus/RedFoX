@@ -91,7 +91,6 @@ CREATE TABLE `@grupo@`.`articulos` (
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
-  `lotes` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,
   `imagen3` blob,
   `imagen4` blob,
@@ -408,12 +407,6 @@ CREATE TABLE `@grupo@`.`empresas` (
   `cuenta_iva_soportado2_re` varchar(45) DEFAULT NULL,
   `cuenta_iva_soportado3_re` varchar(45) DEFAULT NULL,
   `cuenta_iva_soportado4_re` varchar(45) DEFAULT NULL,
-  `nombre_email` varchar(100) DEFAULT NULL,
-  `cuenta_mail` varchar(150) DEFAULT NULL,
-  `cuenta_pop` varchar(150) DEFAULT NULL,
-  `cuenta_imap` varchar(150) DEFAULT NULL,
-  `cuenta_smpt` varchar(150) DEFAULT NULL,
-  `password_cuenta` varchar(50) DEFAULT NULL,
   `importada_sp` tinyint(1) DEFAULT '0',
   `importe_cierre` double DEFAULT NULL,
   `facturas_en_cierre` tinyint(1) DEFAULT NULL,
@@ -816,7 +809,6 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
         `@grupo@`.`articulos`.`cantidad_pendiente_recibir` AS `cantidad_pendiente_recibir`,
         `@grupo@`.`articulos`.`fecha_prevista_recepcion` AS `fecha_prevista_recepcion`,
         `@grupo@`.`articulos`.`unidades_reservadas` AS `unidades_reservadas`,
-        `@grupo@`.`tarifas`.`porc_dto` as `porc_dto`,
         `@grupo@`.`articulos`.`stock_maximo` AS `stock_maximo`,`@grupo@`.`articulos`.`stock_minimo` AS `stock_minimo`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`controlar_stock` AS `controlar_stock`,`@grupo@`.`articulos`.`kit` AS `kit`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`,
         `@grupo@`.`tarifas`.`id_codigo_tarifa` AS `tarifa`,`@grupo@`.`articulos`.`lotes` AS `lotes` from ((`@grupo@`.`articulos` left join `@grupo@`.`proveedores` ON ((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`))) join `@grupo@`.`tarifas` ON ((`@grupo@`.`articulos`.`id` = `@grupo@`.`tarifas`.`id_articulo`)));
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaarticulos` AS select `@grupo@`.`articulos`.`codigo` AS `codigo`,`@grupo@`.`articulos`.`codigo_barras` AS `codigo_barras`,`@grupo@`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,`@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`proveedores`.`proveedor` AS `proveedor`,`@grupo@`.`articulos`.`tipo_iva` AS `tipo_iva`,`@grupo@`.`articulos`.`coste` AS `coste`,`@grupo@`.`articulos`.`fecha_ultima_compra` AS `fecha_ultima_compra`,`@grupo@`.`articulos`.`fecha_ultima_venta` AS `fecha_ultima_venta`,`@grupo@`.`articulos`.`unidades_compradas` AS `unidades_compradas`,`@grupo@`.`articulos`.`unidades_vendidas` AS `unidades_vendidas`,`@grupo@`.`articulos`.`stock_maximo` AS `stock_maximo`,`@grupo@`.`articulos`.`stock_minimo` AS `stock_minimo`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`controlar_stock` AS `controlar_stock`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen` from (`@grupo@`.`articulos` left join `@grupo@`.`proveedores` on((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`)));

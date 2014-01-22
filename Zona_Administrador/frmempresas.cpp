@@ -153,7 +153,7 @@ void FrmEmpresas::getEmpresas()
     _empresas.clear();
     QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
-    QryEmpresas.prepare("Select * from grupos");
+    QryEmpresas.prepare("Select * from mayaglobal.grupos");
 
     if(QryEmpresas.exec())
     {
@@ -648,6 +648,7 @@ void FrmEmpresas::on_btn_crearGrupo_clicked()
     _targetGroupDb.setPort(_targetGroupDbRecord.value("bd_port").toInt());
     _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
 
+    qDebug() << _targetGroupDbRecord.value("bd_pass").toString();
     if(_targetGroupDb.open())
     {
         tarifaEditModel = new QSqlQueryModel(this);
@@ -664,6 +665,8 @@ void FrmEmpresas::on_btn_crearGrupo_clicked()
 
         ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
     }
+    else
+        qDebug() << _targetGroupDb.lastError().text();
 }
 
 void FrmEmpresas::createGroup()
@@ -1048,12 +1051,6 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["cuenta_iva_soportado3_re"]=  ui->ivasoportadore3_3->text();
     data["cuenta_iva_soportado4_re"]=  ui->ivasoportadore4_3->text();
 
-    data["nombre_email"]=  ui->txtEmail_mostrar_3->text();
-    data["cuenta_mail"]=  ui->txtEmail_imap_3->text();
-    data["cuenta_pop"]=  ui->txtEmail_pop_3->text();
-    data["cuenta_imap"]= ui->txtEmail_imap_3->text();
-    data["cuenta_smpt"]= ui->txtEmail_smtp_3->text();
-    data["password_cuenta"]= ui->txtEmail_contrasena_3->text();
     //data["importada_sp"]=  ; esto debe ser true si ha sido importada (se debería hacer desde el programa de importación.
 
     data["importe_cierre"]= ui->spinImporte_abertura->value();
