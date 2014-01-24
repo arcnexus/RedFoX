@@ -98,11 +98,19 @@ public:
     QString pais;
     QString cEjercicio;
     QString cEmpresaActiva;
-    QString cUsuarioActivo;
+
     int id_usuario_activo;
-    QString cNivelUsuarioActivo;
-    bool superUser;
-    int nivel;
+
+    QString user_name;
+    QString user_long_name;
+    QString user_pass;
+    bool super_user;
+
+    QString user_mail_smpt;
+    QString user_mail_acc;
+    QString user_mail_pass;
+    int user_mail_port;
+
     QSqlDatabase dbConfiguracion;
     QSqlDatabase dbWeb;
     QSqlDatabase db_meditec;
@@ -174,7 +182,7 @@ public:
     void CargarClientes();
 
 
-    QSqlTableModel* usuarios_model;
+    QSqlQueryModel* usuarios_model;
     void CargarUsuarios();
 
     bool lProfesional;
@@ -242,6 +250,7 @@ public:
     static void ImprimirDirecto(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
     static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params);
     static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
+    static void EviarMail(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params, QString pdfName, QString dest_mail, QString dest_name, QString asunto, QString texto);
 public slots:
     void format_text();    
 private slots:

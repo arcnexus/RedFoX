@@ -8,7 +8,7 @@ frmCambiarUsuario::frmCambiarUsuario(QWidget *parent) :
 {
     ui->setupUi(this);
     QSqlQueryModel *users = new QSqlQueryModel(this);
-    users->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
+    users->setQuery("select nombre from mayaglobal.usuarios",Configuracion_global->globalDB);
     ui->cboUsers->setModel(users);
 
 }

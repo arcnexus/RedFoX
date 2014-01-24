@@ -63,11 +63,7 @@ int main(int argc, char *argv[])
        if(cargarEmpresa(l.getEmpresa()))
        {
            MainWindow w;
-           w.empresa = l.getEmpresaName();
-           w.user =l.getUsuario();
-           w.pass =l.getPass();
            w.showInfo();
-           Configuracion_global->id_usuario_activo = l.getid_user();
            w.showMaximized();
            w.loadModules();
            ret =  a.exec();
@@ -215,10 +211,8 @@ bool cargarEmpresa(QSqlRecord record)
         }
 
     }
-
-    Configuracion_global->Cargar_iva();
-    Configuracion_global->Cargar_paises();
     Configuracion_global->CargarClientes();
-    Configuracion_global->CargarUsuarios();
+    Configuracion_global->Cargar_iva();
+
     return true;
 }

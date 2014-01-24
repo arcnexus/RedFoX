@@ -85,7 +85,7 @@ private:
     bool _createTables(QSqlDatabase db);
     bool _insertMonedas(QSqlDatabase db, QString &error);
     bool _insertIVA(QSqlDatabase db, QString &error);
-    bool _insertNivelAcesso(QSqlDatabase db, QString &error);
+
     bool _insertPaises(QSqlDatabase db, QString &error);
     void _insertNewGroup(QString grupo);
     void createGroup();

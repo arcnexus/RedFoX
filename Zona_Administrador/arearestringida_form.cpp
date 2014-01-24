@@ -25,7 +25,7 @@ void AreaRestringida_form::login()
 {
     QSqlQuery qryUsers(Configuracion_global->globalDB);
 
-    if( !qryUsers.exec("SELECT id,nombre,contrasena FROM `mayaglobal`.`usuarios`") )
+    if( !qryUsers.exec("SELECT id,nombre,contrasena FROM `mayaglobal`.`usuarios` where super_user = 1") )
     {
         QMessageBox::critical(this, "error:", qryUsers.lastError().text());
     }
@@ -55,7 +55,7 @@ void AreaRestringida_form::login()
        }
        else
        {
-           //Si no existen super usuarios
+           //Si no existen usuarios
            m_valido = true;
            AreaRestringida_form::done(QDialog::Accepted);
        }

@@ -64,13 +64,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QString usuario;
-    QString empresa;
 
-    QString user;
-    QString pass;
     void showInfo();
-
     void updateDivisas();
     void loadModules();
 protected:

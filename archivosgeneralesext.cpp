@@ -197,7 +197,7 @@ void ArchivosGeneralesExt::handle_avisos()
     form.set_table_headers(headers);
 
     form.set_relation(6,QSqlRelation("tiposaviso","id","tipoaviso"));
-    form.set_relation(7,QSqlRelation("usuarios","id","nombre"));
+    form.set_relation(7,QSqlRelation("usuarios","id","nombre"));//FIXME usuarios
     form.set_columnHide(0);
     form.exec();
 }

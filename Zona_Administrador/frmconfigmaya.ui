@@ -17,37 +17,41 @@
    <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="verticalSpacing">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
     <number>3</number>
    </property>
-   <item row="0" column="0">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btnInicio">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Inicio</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Configuración de RedFox</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="welcome_page">
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Bienvenido a RedFox</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="btnInicio">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Inicio</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0" colspan="2">
         <widget class="QListWidget" name="listWidget">
          <item>
@@ -57,7 +61,17 @@
          </item>
          <item>
           <property name="text">
-           <string>Crear Super usuarios</string>
+           <string>Crear usuarios</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Editar usuarios</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Editar permisos de ususario</string>
           </property>
          </item>
          <item>
@@ -516,89 +530,350 @@ color: rgb(255,255,255);</string>
      </widget>
      <widget class="QWidget" name="create_user_page">
       <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>Nombre</string>
+          <string>Nombre (Usado para accedes a RedFox)</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QLineEdit" name="txtname"/>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
           <string>Contraseña</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QLineEdit" name="txtpass1">
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Repetir contraseña</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QLineEdit" name="txtpass2">
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
           <string>Cuenta smtp</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QLineEdit" name="txtsmtp"/>
        </item>
-       <item row="4" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>Usuario e-mail</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="6" column="1">
         <widget class="QLineEdit" name="txtmail"/>
        </item>
-       <item row="5" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>Contraseña e-mail</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="7" column="1">
         <widget class="QLineEdit" name="txtmailpass1">
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
           <string>Repetir contraseña e-mail</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="8" column="1">
         <widget class="QLineEdit" name="txtmailpass2">
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Nombre completo (aparecerá en los e-mails)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="txtNameComplete"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Puerto smtp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="spinSmtpPort">
+         <property name="maximum">
+          <number>9999999</number>
+         </property>
+         <property name="value">
+          <number>465</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QCheckBox" name="chk_createSuper">
+         <property name="text">
+          <string>Hacer este usuario SuperUsuario</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="edit_user_permiso">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Usuario</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cboUser_permiso"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_19">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Grupo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="cboGrupo_permiso"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_20">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Empresa</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="cboEmpresa_permiso"/>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QTabWidget" name="tabWidget_4">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab_manten">
+          <attribute name="title">
+           <string>Mantenimiento</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_compras">
+          <attribute name="title">
+           <string>Compras</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_ventas">
+          <attribute name="title">
+           <string>Ventas</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_archivos">
+          <attribute name="title">
+           <string>Archivos</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_almacen">
+          <attribute name="title">
+           <string>Almacen</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_utils">
+          <attribute name="title">
+           <string>Utilidades</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_conta">
+          <attribute name="title">
+           <string>Contabilidad</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_secMed">
+          <attribute name="title">
+           <string>Secretaria Medica</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_med">
+          <attribute name="title">
+           <string>Informacion Medica</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_admin">
+          <attribute name="title">
+           <string>Administrador</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_noZone">
+          <attribute name="title">
+           <string>Sin Zona</string>
+          </attribute>
+         </widget>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QCheckBox" name="chkSuperUser_permiso">
+         <property name="text">
+          <string>Super Usuario</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="edit_user_info">
+      <layout class="QFormLayout" name="formLayout_3">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_72">
+         <property name="text">
+          <string>Nombre completo (aparecerá en los e-mails)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="txtNameComplete_edit"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_71">
+         <property name="text">
+          <string>Nombre (Usado para accedes a RedFox)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="txtname_edit"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_69">
+         <property name="text">
+          <string>Contraseña</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="txtpass1_edit">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_67">
+         <property name="text">
+          <string>Cuenta smtp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="txtsmtp_edit"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_66">
+         <property name="text">
+          <string>Puerto smtp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="spinSmtpPort_edit">
+         <property name="maximum">
+          <number>9999999</number>
+         </property>
+         <property name="value">
+          <number>465</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_68">
+         <property name="text">
+          <string>Usuario e-mail</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="txtmail_edit"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_70">
+         <property name="text">
+          <string>Contraseña e-mail</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="txtmailpass1_edit">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QCheckBox" name="chk_Super_edit">
+         <property name="text">
+          <string>Hacer este usuario SuperUsuario</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QComboBox" name="cbo_user_edit"/>
+       </item>
+       <item row="9" column="0">
+        <widget class="QPushButton" name="btnGuardarEdit">
+         <property name="text">
+          <string>Guardar</string>
          </property>
         </widget>
        </item>
@@ -606,7 +881,7 @@ color: rgb(255,255,255);</string>
      </widget>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -646,21 +921,52 @@ color: rgb(255,255,255);</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tabWidget_3</tabstop>
+  <tabstop>txtNameComplete</tabstop>
+  <tabstop>txtname</tabstop>
+  <tabstop>txtpass1</tabstop>
+  <tabstop>txtpass2</tabstop>
+  <tabstop>txtsmtp</tabstop>
+  <tabstop>spinSmtpPort</tabstop>
+  <tabstop>txtmail</tabstop>
+  <tabstop>txtmailpass1</tabstop>
+  <tabstop>txtmailpass2</tabstop>
+  <tabstop>chk_createSuper</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnCancel</tabstop>
+  <tabstop>btnInicio</tabstop>
+  <tabstop>txtclaveV4_1</tabstop>
+  <tabstop>chkVademecum_MTC</tabstop>
+  <tabstop>txtclaveV4_2</tabstop>
+  <tabstop>listWidget</tabstop>
+  <tabstop>txtHost</tabstop>
+  <tabstop>txtUsuario</tabstop>
+  <tabstop>txtdireccionBD</tabstop>
+  <tabstop>radMysql</tabstop>
+  <tabstop>radSqlite</tabstop>
+  <tabstop>txtPuerto</tabstop>
+  <tabstop>txtPassword</tabstop>
+  <tabstop>chkmedicum</tabstop>
+  <tabstop>chkconta</tabstop>
+  <tabstop>txtnombre_bd_MediTec</tabstop>
+  <tabstop>txtHostBD_MediTec</tabstop>
+  <tabstop>txtUsuarioDB_MediTec</tabstop>
+  <tabstop>txtPasswordDB_MediTec</tabstop>
+  <tabstop>txtPuerto_DB_MediTec</tabstop>
   <tabstop>chkVademecum_alopatico</tabstop>
   <tabstop>txtclaveV1_1</tabstop>
   <tabstop>txtclaveV1_2</tabstop>
   <tabstop>chkVademecum_homeopatia</tabstop>
-  <tabstop>txtclaveV2_1</tabstop>
   <tabstop>txtclaveV2_2</tabstop>
   <tabstop>chk_vademecum_fitoterapia</tabstop>
   <tabstop>txtclaveV3_1</tabstop>
+  <tabstop>tabWidget_3</tabstop>
+  <tabstop>txtclaveV2_1</tabstop>
   <tabstop>txtclaveV3_2</tabstop>
-  <tabstop>chkVademecum_MTC</tabstop>
-  <tabstop>txtclaveV4_1</tabstop>
-  <tabstop>txtclaveV4_2</tabstop>
-  <tabstop>btnCancel</tabstop>
-  <tabstop>btnSiguiente</tabstop>
+  <tabstop>tabWidget_4</tabstop>
+  <tabstop>cboUser_permiso</tabstop>
+  <tabstop>chkSuperUser_permiso</tabstop>
+  <tabstop>cboGrupo_permiso</tabstop>
+  <tabstop>cboEmpresa_permiso</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

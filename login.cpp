@@ -19,31 +19,23 @@ Login::Login(QWidget *parent) :
     connect(ui->btnEmpresa,SIGNAL(clicked()),this,SLOT(btnEmpresa_clicked()));
     connect(ui->Crearconfiguracin,SIGNAL(clicked()),this,SLOT(Crearconfiguracion_clicked()));
 
-    if (! QFile::exists(qApp->applicationDirPath()+"/MayaConfig.ini")){
+    if (! QFile::exists(qApp->applicationDirPath()+"/MayaConfig.ini"))
+    {
         frmConfigmaya frmConf;
         if(frmConf.exec()==QDialog::Accepted)
             TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
-    } else
-    {
-        QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-        QString nombreusuario = settings.value("cUsuarioActivo").toString();
-        QString contrasena = Configuracion_global->DeCrypt(settings.value("contrasenaactiva").toString());
-        Configuracion_global->caja = QString::number(settings.value("cajaactiva").toInt());
-        Configuracion_global->Importe_apertura = Configuracion_global->MonedatoDouble(settings.value("importe_apertura").toString());
-        ui->lineUsuario->setText(nombreusuario);
-        ui->linePassword->setText(contrasena);
     }
 
 
-    if(Configuracion_global->CargarDatosBD())
-        init();
-    else
+    if(!init())
     {
         if(Configuracion_global->globalDB.isOpen())
         {
             frmConfigmaya frmConf;
-            if(frmConf.exec()==QDialog::Accepted)
+            if(frmConf.exec()==QDialog::Accepted){
                 TimedMessageBox * t = new TimedMessageBox(this,tr("Configuración inicial realizada con éxito"));
+                init();
+            }
         }
         else
             QMessageBox::critical(0, "error:", Configuracion_global->globalDB.lastError().text());
@@ -57,7 +49,7 @@ Login::~Login()
 
 const QString Login::getUsuario() const
 {
-    return ui->lineUsuario->text();
+    return ui->cboUsers->currentText();
 }
 
 const QString Login::getPass() const
@@ -121,36 +113,9 @@ void Login::on_btnAcceder_clicked()
     Configuracion_global->importado_sp = rEmpresa.value("importada_sp").toBool();
     Configuracion_global->porc_irpf = rEmpresa.value("porc_irpf").toFloat();
 
-    QSqlQuery qryUsers(Configuracion_global->groupDB);
-
-    qryUsers.prepare( "SELECT * FROM usuarios where nombre =:Nombre" );
-    qryUsers.bindValue(":Nombre",ui->lineUsuario->text());
-
-    if( !qryUsers.exec() ) 
-	{
-        QMessageBox::critical(qApp->activeWindow(), tr("Error:"), qryUsers.lastError().text());
-    } 
-	else 
-	{
-       if (qryUsers.next()) 
-	   {
-            QSqlRecord rUsuario = qryUsers.record();
-            if (Configuracion::SHA256HashString(ui->linePassword->text()) == rUsuario.value("contrasena").toString().trimmed())
-			{
-                m_id = qryUsers.value(0).toInt();
-                QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-                settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
-                settings.setValue("nNivelAcceso",rUsuario.field("nivelacceso").value().toInt());
-                settings.setValue("cCategoria",rUsuario.field("categoria").value().toString());
-                Configuracion_global->id_usuario_activo = this->getid_user();
-                Login::done(QDialog::Accepted);
-            }
-       } 
-    }
-
     QSqlQuery q(Configuracion_global->globalDB);
     q.prepare( "SELECT * FROM mayaglobal.usuarios where nombre =:Nombre" );
-    q.bindValue(":Nombre",ui->lineUsuario->text());
+    q.bindValue(":Nombre",ui->cboUsers->currentText());//NOTE cambiar esto para que busque en el model
     if( !q.exec() )
     {
         QMessageBox::critical(qApp->activeWindow(), tr("Error:"), q.lastError().text());
@@ -162,22 +127,22 @@ void Login::on_btnAcceder_clicked()
             QSqlRecord rUsuario = q.record();
             if (Configuracion::SHA256HashString(ui->linePassword->text()) == rUsuario.value("contrasena").toString().trimmed())
             {
-                m_id = qryUsers.value(0).toInt();
-                QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-                settings.setValue("cUsuarioActivo",rUsuario.field("nombre").value().toString());
-                settings.setValue("nNivelAcceso",7);
-                settings.setValue("cCategoria", "ADMINISTRADOR");
-                Configuracion_global->id_usuario_activo = this->getid_user();
-                Configuracion_global->superUser = true;
+                m_id = q.value(0).toInt();
+                Configuracion_global->user_name = rUsuario.value("nombre").toString();
+                Configuracion_global->user_long_name = rUsuario.value("nombre_completo").toString();
+                Configuracion_global->id_usuario_activo = m_id;
+                Configuracion_global->user_mail_smpt = rUsuario.value("cuenta_smtp").toString();
+                Configuracion_global->user_mail_acc= rUsuario.value("usuario_mail").toString();
+                Configuracion_global->user_mail_pass = Configuracion::DeCrypt(rUsuario.value("password_mail").toString());
+                Configuracion_global->user_mail_port = rUsuario.value("port_mail").toInt();
+                Configuracion_global->super_user = rUsuario.value("super_user").toBool();
                 Login::done(QDialog::Accepted);
             }
         }
         else
         {
             QMessageBox::critical(this,tr("Error"),tr("Datos de acceso incorrectos"));
-            ui->lineUsuario->setText("");
             ui->linePassword->setText("");
-            ui->lineUsuario->setFocus();
         }
     }
 }
@@ -210,8 +175,11 @@ void Login::on_pushButton_clicked()
 	this->hide();
 }
 
-void Login::init()
+bool Login::init()
 {
+    if(!Configuracion_global->CargarDatosBD())
+        return false;
+
     ui->comboGroup->clear();
     _empresas.clear();
     QString grupo = "";
@@ -271,11 +239,20 @@ void Login::init()
 		}
 	}
 
-	this->ui->lineUsuario->setFocus();
     ui->cboEmpresa->addItems(_empresas.value(grupo).empresas);
 
-   // this->ui->lineUsuario->setText("marc");
-    //this->ui->linePassword->setText("patata");
+    ui->cboUsers->setModel(Configuracion_global->usuarios_model);
+    ui->cboUsers->setModelColumn(1);
+
+    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
+    QString nombreusuario = settings.value("cUsuarioActivo").toString();
+    QString contrasena = Configuracion_global->DeCrypt(settings.value("contrasenaactiva").toString());
+    Configuracion_global->caja = QString::number(settings.value("cajaactiva").toInt());
+    Configuracion_global->Importe_apertura = Configuracion_global->MonedatoDouble(settings.value("importe_apertura").toString());
+    ui->cboUsers->setCurrentIndex(ui->cboUsers->findText(nombreusuario));
+    ui->linePassword->setText(contrasena);
+
+    return true;
 }
 
 void Login::on_comboGroup_currentTextChanged(const QString &arg1)

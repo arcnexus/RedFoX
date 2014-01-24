@@ -6,9 +6,7 @@ FrmRetirardeCaja::FrmRetirardeCaja(QWidget *parent) :
     ui(new Ui::FrmRetirardeCaja)
 {
     ui->setupUi(this);
-    QSqlQueryModel* modelo = new QSqlQueryModel(this);
-    modelo->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
-    ui->cbousuario->setModel(modelo);
+    ui->cbousuario->setModel(Configuracion_global->usuarios_model);
 }
 
 FrmRetirardeCaja::~FrmRetirardeCaja()
@@ -28,7 +26,7 @@ void FrmRetirardeCaja::on_btnAceptar_clicked()
     QHash <QString, QVariant> h;
     QString error;
     h["concepto"] = ui->txtMotivo->toPlainText();
-    int id_usuario = SqlCalls::SelectOneField("usuarios","id",QString("nombre = '%1'").arg(ui->cbousuario->currentText()),
+    int id_usuario = SqlCalls::SelectOneField("mayaglobal`.`usuarios","id",QString("nombre = '%1'").arg(ui->cbousuario->currentText()),
                                               Configuracion_global->groupDB,error).toInt();
     h["id_usuario"] = id_usuario;
     h["importe"] = Configuracion_global->MonedatoDouble(ui->txtImporte->text());

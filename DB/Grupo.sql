@@ -1,11 +1,4 @@
 CREATE SCHEMA IF NOT EXISTS `@grupo@` DEFAULT CHARACTER SET utf8 ;
-CREATE TABLE `@grupo@`.`accesousuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) DEFAULT NULL,
-  `id_modulo` int(11) DEFAULT NULL,
-  `id_nivel_acceso` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`agenda` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
@@ -510,12 +503,6 @@ CREATE TABLE `@grupo@`.`maestro_subfamilia_cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
   `id_maestro_familia_cliente` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `@grupo@`.`modulos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module_zone` int(11) DEFAULT NULL,
-  `module_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`monedas` (

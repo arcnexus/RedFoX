@@ -707,10 +707,6 @@ void FrmEmpresas::createGroup()
 
         QApplication::processEvents();
         if(!error)
-            error = _insertNivelAcesso(db, sError);
-
-        QApplication::processEvents();
-        if(!error)
             error = _insertPaises(db, sError);
 
         //TODO Poblaciones y Reports por defecto al crear grupo
@@ -805,23 +801,7 @@ bool FrmEmpresas::_insertIVA(QSqlDatabase db, QString& error)
         error = q.lastError().text();
     return !e;
 }
-bool FrmEmpresas::_insertNivelAcesso(QSqlDatabase db, QString& error)
-{
-    QSqlQuery q(db);
-    bool e;
-    e = q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');");
 
-    e &= q.exec("INSERT INTO `usuarios` (`nombre`, `contrasena`, `nivel_acceso`, `categoria`) VALUES ('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', '99', 'ADMINISTRADOR');");
-    if(!e)
-        error = q.lastError().text();
-    return !e;
-}
 bool FrmEmpresas::_insertPaises(QSqlDatabase db, QString& error)
 {
     bool e = false;

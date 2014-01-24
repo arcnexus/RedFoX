@@ -21,3 +21,15 @@ CREATE TABLE `mayaglobal`.`usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `nivelacceso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');
+INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');

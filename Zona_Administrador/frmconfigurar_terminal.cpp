@@ -9,9 +9,7 @@ frmConfigurar_terminal::frmConfigurar_terminal(QWidget *parent) :
     QSqlQueryModel *series = new QSqlQueryModel(this);
     series->setQuery("select serie from series",Configuracion_global->empresaDB);
     ui->cboserie->setModel(series);
-    QSqlQueryModel *users = new QSqlQueryModel(this);
-    users->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
-    ui->cboUsuarioActivo->setModel(users);
+    ui->cboUsuarioActivo->setModel(Configuracion_global->usuarios_model);
     QSqlQueryModel *cajas = new QSqlQueryModel(this);
     cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
     ui->cbocaja->setModel(cajas);

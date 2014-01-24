@@ -25,7 +25,7 @@ public:
 
 
 private slots:
-    void init();
+    bool init();
     void on_btnAcceder_clicked();
 
     void Crearconfiguracion_clicked();

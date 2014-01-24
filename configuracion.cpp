@@ -10,6 +10,7 @@
 #include <QSslError>
 #include <QPrintDialog>
 
+#include "Auxiliares/SMPT/SmtpMime"
 byte Configuracion::key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
 byte Configuracion::iv[ CryptoPP::AES::BLOCKSIZE ];
 QString Configuracion::Pass;
@@ -65,7 +66,6 @@ Configuracion::Configuracion(QObject* parent) :
     iv[15] = 0x10;
 
     Pass = "RedFox";
-    superUser = false;
 }
 
 
@@ -295,7 +295,6 @@ QString Configuracion::setTipoIva(int idIva)
 
 void Configuracion::Cargar_paises()
 {
-
     paises_model->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
 }
 
@@ -757,9 +756,9 @@ void Configuracion::CargarClientes()
 void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)
-        usuarios_model = new QSqlRelationalTableModel(this,Configuracion_global->groupDB);
-    usuarios_model->setTable("usuarios");
-    usuarios_model->select();
+        usuarios_model = new QSqlQueryModel(this);
+    usuarios_model->setQuery("SELECT * from mayaglobal.usuarios",Configuracion_global->globalDB);
+    qDebug() << usuarios_model->rowCount() << usuarios_model->lastError();
 }
 
 bool Configuracion::CargarDatosBD()
@@ -809,6 +808,10 @@ bool Configuracion::CargarDatosBD()
         if(q.exec("SHOW DATABASES like 'mayaglobal'"))
             _mayaglobal = q.next();
     }
+
+    Configuracion_global->CargarUsuarios();
+    Configuracion_global->Cargar_paises();
+
     return (!this->globalDB.lastError().isValid()) && _mayaglobal;
 }
 
@@ -1324,6 +1327,90 @@ void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> query
         predlg.setWindowState(Qt::WindowMaximized);
         connect(&predlg,SIGNAL(paintRequested(QPrinter*)),&r,SLOT(Print(QPrinter*)));
         predlg.exec();
+    }
+}
+
+void Configuracion::EviarMail(QString report, QMap<QString, QString> queryClausules, QMap<QString, QString> params,QString pdfName, QString dest_mail, QString dest_name , QString asunto , QString texto)
+{
+    QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
+    QString error;
+    QString rep = SqlCalls::SelectOneField("report","report_source",c,Configuracion_global->empresaDB,error).toString();
+    if(error.isEmpty())
+    {
+        ReportRenderer r;
+
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setResolution(300);
+
+#ifdef Q_WS_MAC
+        printer.setOutputFormat( QPrinter::NativeFormat );
+#else
+        printer.setOutputFormat( QPrinter::PdfFormat );
+#endif
+        QString output = qApp->applicationDirPath() + "/" + pdfName;
+        if(output.isEmpty())
+            return;
+        if(!output.endsWith(".pdf"))
+            output.append(".pdf");
+        printer.setOutputFileName( output );
+
+        r.setPrinter(&printer);
+        QString errorStr;
+        int errorLine;
+        int errorColumn;
+        QDomDocument doc;
+        if (!doc.setContent(rep, false, &errorStr, &errorLine,
+                            &errorColumn))
+        {
+            error = QString("Error: Parse error at line %1, column %2 : %3").arg(errorLine).arg(errorColumn).arg(errorStr);
+            TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),error,TimedMessageBox::Critical);
+            return;
+        }
+        bool error;
+        r.render(&printer,doc ,queryClausules,params,error);
+        r.Print(&printer);
+
+        SmtpClient smtp(Configuracion_global->user_mail_smpt, Configuracion_global->user_mail_port, SmtpClient::SslConnection);
+
+        smtp.setUser(Configuracion_global->user_mail_acc);
+        smtp.setPassword(Configuracion_global->user_mail_pass);
+
+        // Create a MimeMessage
+
+        MimeMessage message;
+
+        message.setSender(new EmailAddress(Configuracion_global->user_mail_acc, Configuracion_global->user_long_name));
+        message.addRecipient(new EmailAddress(dest_mail, dest_name));
+        message.setSubject(asunto);
+
+        // Add some text
+
+        MimeText text;
+        text.setText(texto);
+        message.addPart(&text);
+
+        // Now we create the attachment object
+        QFile * f = new QFile(output);
+        message.addPart(new MimeAttachment(f));
+
+        // Now we can send the mail
+
+        if(smtp.connectToHost())
+        {
+            if(smtp.login())
+            {
+            if(!smtp.sendMail(message))
+                TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),tr("Error al enviar mail: envio"),TimedMessageBox::Critical);
+            smtp.quit();
+            }
+            else
+              TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),tr("Error al enviar mail: datos de acceso"),TimedMessageBox::Critical);
+        }
+        else
+          TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),tr("Error al enviar mail: conexion con el servidor"),TimedMessageBox::Critical);
+
+        f->remove();
+        f->deleteLater();
     }
 }
 

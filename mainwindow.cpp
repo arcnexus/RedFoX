@@ -578,7 +578,7 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
 
 void MainWindow::loadAminModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
+   // splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
 /*    frmConfigmaya* c = new frmConfigmaya(this);
     if(c->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -587,7 +587,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
     else
         delete c;*/
 
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
+   /* splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
     FrmEmpresas* e = new FrmEmpresas(this);
     if(e->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
@@ -603,7 +603,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
         _adminModules.append(u);
     }
     else
-        delete u;
+        delete u*/;
 }
 
 void MainWindow::loadContaModules(QSplashScreen *splash)
@@ -787,16 +787,12 @@ MainWindow::~MainWindow()
 void MainWindow::showInfo()
 {
     if(!Configuracion_global->medic)
-        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial. (Empresa activa:")+empresa+
+        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial. (Empresa activa:")+Configuracion_global->nombreEmpresa+
                              tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
     else
 
-    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud. (Empresa activa:")+empresa+
+    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud. (Empresa activa:")+Configuracion_global->nombreEmpresa+
                          tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
-  // ui->lineEmpresaActiva->setText(empresa);
-    ui->lineUsuarioActivo->setText(user);
-    Configuracion_global->cUsuarioActivo = user;
-    Configuracion_global->nombreEmpresa = empresa;
 }
 
 void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
@@ -813,7 +809,6 @@ void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
 void MainWindow::on_btn_bloquear_clicked()
 {
     block_Maya_form form(this);
-    form.set_user(user,pass);
     this->hide();
     form.exec();
     this->show();
