@@ -806,5 +806,5 @@ void frmConfigmaya::on_btnGuardarEdit_clicked()
     if(!SqlCalls::SqlUpdate(_data,"mayaglobal`.`usuarios",Configuracion_global->globalDB,QString("id = %1").arg(id),error))
         QMessageBox::critical(this,tr("Error al actualizar datos de usuario"),error);
     else
-        TimedMessageBox * t = new TimedMessageBox(this,tr("Satos actualizados con éxito."));
+        TimedMessageBox * t = new TimedMessageBox(this,tr("Datos actualizados con éxito."));
 }
