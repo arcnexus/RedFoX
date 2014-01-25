@@ -21,7 +21,7 @@ frmEditLine::frmEditLine(QWidget *parent) :
     //IVA desde config
     //-------------------
     ui->cboIva->setModel(Configuracion_global->iva_model);
-    ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
+    ui->cboIva->setModelColumn(4);
     int index = ui->cboIva->findText("21");
     ui->cboIva->setCurrentIndex(index);
 
