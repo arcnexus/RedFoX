@@ -401,11 +401,14 @@ void Paper::reCalculateSeccion(Section * secSender)
         qreal oldP = sec->pos().ry();
         qreal diff = position-oldP;
         sec->setvPos(position);
-        position += sec->Height()+1;
+        position += sec->Height()+1;  
 
-        QList<Container *>::Iterator itemIt;
-        for(itemIt = sec->_items.begin();itemIt != sec->_items.end();++itemIt)
-            (*itemIt)->setPos((*itemIt)->pos().rx(),(*itemIt)->pos().ry()+diff);
+        QListIterator<Container *> itemIt(sec->_items);
+        while(itemIt.hasNext())
+        {
+            Container* c = itemIt.next();
+            c->setPos(c->pos().rx(),c->pos().ry()+diff);
+        }
 
         if(sec->Height() > maxHeigth.second)
         {
@@ -558,6 +561,23 @@ void Paper::setlblPaperMarginDer(double arg)
         m_lblPaperMarginDer = arg;
         emit lblPaperMarginDerChanged(arg);
     }
+}
+
+void Paper::newDoc()
+{
+    QListIterator<Section*> secIt(seccionPool);
+    QListIterator<Container*> itemIt(itemPool);
+
+    while(secIt.hasNext())
+        secIt.next()->deleteLater();
+
+    while(itemIt.hasNext())
+        itemIt.next()->deleteLater();
+
+    seccionPool.clear();
+    itemPool.clear();
+
+    this->scene()->update();
 }
 
 void Paper::itemMoved(Container * cont)
@@ -728,17 +748,7 @@ void Paper::stopInsertingItems()
 
 bool Paper::parseXML(QString xml, QString & error)
 {
-    QListIterator<Section*> secIt(seccionPool);
-    QListIterator<Container*> itemIt(itemPool);
-
-    while(secIt.hasNext())
-        secIt.next()->deleteLater();
-
-    while(itemIt.hasNext())
-        itemIt.next()->deleteLater();
-
-    seccionPool.clear();
-    itemPool.clear();
+    newDoc();
 
     QString errorStr;
     int errorLine;

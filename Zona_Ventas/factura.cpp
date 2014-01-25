@@ -159,8 +159,6 @@ bool Factura::borrar(int id)
 // Metodos utilidad Clase
 bool Factura::AnadirFactura()
 {
-
-    QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     this->porc_iva1 = Configuracion_global->ivaList.at(0).toFloat();
     this->porc_iva2 = Configuracion_global->ivaList.at(1).toFloat();
     this->porc_iva3 = Configuracion_global->ivaList.at(2).toFloat();

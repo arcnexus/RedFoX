@@ -21,7 +21,7 @@ Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
 
-    iva_model = 0;
+    iva_model = new QSqlQueryModel(this);
     paises_model = new QSqlQueryModel(this);
     client_model = 0;
     usuarios_model = 0;
@@ -224,12 +224,7 @@ void Configuracion::Cargar_iva()
         return Cargar_iva();
     }
 
-    if(iva_model == 0)
-    {
-        iva_model = new QSqlTableModel(this,Configuracion_global->groupDB);
-        iva_model->setTable("tiposiva");
-    }
-    iva_model->select();
+    iva_model->setQuery("SELECT * from `tiposiva`",Configuracion_global->groupDB);
 
     QString base1 , base2 , base3 ,base4;
     QString re1 , re2 , re3 , re4;

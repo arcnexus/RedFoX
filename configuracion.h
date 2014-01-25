@@ -135,7 +135,7 @@ public:
     int caducidad_vales;
 
     QHash <QString,QSqlRecord> ivas;
-    QSqlTableModel* iva_model;
+    QSqlQueryModel* iva_model;
     QStringList ivaList;
     QStringList grupo_iva;
     QStringList reList;

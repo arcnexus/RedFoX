@@ -60,7 +60,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->tablaLotes->setModel(modelTrazabilidad1);
     ui->tablaVentas->setModel(modelTrazabilidad2);
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
-    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
+    ui->cboTipoIVA->setModelColumn(2);
 
     //SET DELEGATES
     ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate(this));

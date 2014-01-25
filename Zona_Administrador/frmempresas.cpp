@@ -96,11 +96,7 @@ void FrmEmpresas:: CargarCamposEnEmpresa()
     oEmpresa.cuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
     oEmpresa.cuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
     oEmpresa.cuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
-    oEmpresa.Email_contrasena  = ui->txtEmail_contrasena->text();
-    oEmpresa.Email_imap = ui->txtEmail_imap->text();
-    oEmpresa.Email_pop = ui->txtEmail_pop->text();
-    oEmpresa.Email_smtp= ui->txtEmail_smtp->text();
-    oEmpresa.Email_usuario = ui->txtEmail_usuario->text();
+
     oEmpresa.irpf = ui->chkIRPF->isChecked();
     oEmpresa.porc_irpf = ui->spinPorc_irpf->value();
 }
@@ -572,11 +568,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->ivasoportadore2_3->setText(r.value("cuenta_iva_soportado2_re").toString());
     ui->ivasoportadore3_3->setText(r.value("cuenta_iva_soportado3_re").toString());
     ui->ivasoportadore4_3->setText(r.value("cuenta_iva_soportado4_re").toString());
-    ui->txtEmail_contrasena_3->setText(r.value("password_cuenta").toString());
-    ui->txtEmail_imap_3->setText(r.value("cuenta_imap").toString());
-    ui->txtEmail_pop_3->setText(r.value("cuenta_pop").toString());
-    ui->txtEmail_smtp_3->setText(r.value("cuenta_smtp").toString());
-    ui->txtEmail_usuario_3->setText(r.value("cuenta_mail").toString());
+
     ui->txtCaducidadvales_3->setValue(r.value("caducidad_vales").toInt());
 }
 

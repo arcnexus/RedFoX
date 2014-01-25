@@ -167,6 +167,7 @@ public slots:
     void setlblPaperMarginIzq(double arg);
     void setlblPaperMarginDer(double arg);
 
+    void newDoc();
 private slots:
     void itemMoved(Container *);
 private:

@@ -804,3 +804,4 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
 `@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`from `@grupo@`.`articulos`;
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaempresa` AS select concat_ws(' ',`@grupo@`.`empresas`.`nombre`,`@grupo@`.`empresas`.`ejercicio`) AS `empresa`,`@grupo@`.`empresas`.`id` AS `id` from `@grupo@`.`empresas`;
 INSERT INTO `@grupo@`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');
+INSERT INTO `@grupo@`.`secciones` (`seccion`, `codigo`) VALUES ('Sin sección', 'SS');
