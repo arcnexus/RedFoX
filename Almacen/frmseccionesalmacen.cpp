@@ -20,7 +20,8 @@ frmSeccionesAlmacen::frmSeccionesAlmacen(QWidget *parent) :
         model_secciones->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     model_familias = new QSqlQueryModel(this);
-    model_familias->setQuery("select codigo,familia from familias where id_seccion = 0");
+    model_familias->setQuery("select codigo,familia from familias where id_seccion = 0",
+                             Configuracion_global->groupDB);
     ui->tabla_familias->setModel(model_familias);
     headers << tr("código") << tr("Sección");
     sizes  << 120 <<200;
@@ -99,6 +100,7 @@ void frmSeccionesAlmacen::setStatus(bool success)
 
 void frmSeccionesAlmacen::on_tabla_secciones_clicked(const QModelIndex &index)
 {
+    int ids =  model_secciones->record(index.row()).value("id").toInt();
     this->id= ui->tabla_secciones->model()->data(ui->tabla_secciones->model()->index(index.row(),0)).toInt();
     if(this->id>0)
     {
@@ -108,7 +110,8 @@ void frmSeccionesAlmacen::on_tabla_secciones_clicked(const QModelIndex &index)
         ui->txtCodigo->setText(sec.value(this->id).value("codigo").toString());
         ui->txtSeccion->setText(sec.value(this->id).value("seccion").toString());
         cargarImagen(this->id);
-        model_familias->setQuery(QString("select codigo,familia from familias where id_seccion = %1").arg(this->id));
+        model_familias->setQuery(QString("select codigo,familia from familias where id_seccion = %1").arg(this->id),
+                                 Configuracion_global->groupDB);
     }
 }
 

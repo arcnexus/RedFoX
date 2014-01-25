@@ -478,6 +478,8 @@ void frmFacturas::LLenarCamposCliente()
     }
 
     oFactura->id_forma_pago = oCliente1->id_forma_pago;
+    oFactura->tarifa_cliente = SqlCalls::SelectOneField("codigotarifa","id",QString("descripcion = '%1'").arg(ui->txt_tarifa->text()),
+                                                        Configuracion_global->groupDB,error).toInt();
 
 }
 
