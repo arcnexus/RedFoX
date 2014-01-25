@@ -1588,7 +1588,7 @@ bool Articulo::cambiar_pvp()
 //                qTarifa.next();
 
 //                QString cMoneda = Configuracion_global->Devolver_moneda(qTarifa.record().field("id_monedas").value().toInt());
-            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->coste,'f',Configuracion_global->decimales));
+            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->coste,'f',Configuracion_global->decimales),this->id);
 //            if (Configuracion_global->divisa_local != cMoneda)
 //                Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,editTarifa->cod_divisa);
 //            else

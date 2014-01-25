@@ -133,7 +133,7 @@ void frmEditLine::set_id_tarifa(int id)
 {
     this->id_tarifa = id;
     QString error;
-    ui->txtTarifa->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(id),
+    ui->txtTarifa->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(this->id_tarifa),
                                                     Configuracion_global->groupDB,error).toString());
     if(!error.isEmpty())
         QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al localizar la tarifa: %1").arg(error));
