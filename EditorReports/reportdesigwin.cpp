@@ -412,3 +412,9 @@ void ReportDesigWin::on_itemList_itemSelectionChanged()
     }
     scene.blockSignals(false);
 }
+
+void ReportDesigWin::on_actionNuevo_triggered()
+{
+    paper.newDoc();
+    ui->itemList->clear();
+}

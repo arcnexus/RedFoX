@@ -126,3 +126,6 @@ VIEW `grupoagugroup`.`vistaart_tarifa` AS
         join `grupoagugroup`.`tarifas` ON ((`grupoagugroup`.`articulos`.`id` = `grupoagugroup`.`tarifas`.`id_articulo`)));
         
 
+22/01/2014
+
+ALTER TABLE `GrupoxxTest`.`empresas` DROP COLUMN `password_cuenta`,DROP COLUMN `cuenta_smpt`,DROP COLUMN `cuenta_imap`,DROP COLUMN `cuenta_pop`,DROP COLUMN `cuenta_mail`,DROP COLUMN `nombre_email`;

@@ -7,10 +7,7 @@ FrmCierreCaja::FrmCierreCaja(QWidget *parent) :
     ui(new Ui::FrmCierreCaja)
 {
     ui->setupUi(this);
-    // combos
-    QSqlQueryModel *users = new QSqlQueryModel(this);
-    users->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
-    ui->cboUsuarioCierre->setModel(users);
+    ui->cboUsuarioCierre->setModel(Configuracion_global->usuarios_model);
 
     QSqlQueryModel * cajas = new QSqlQueryModel(this);
     cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
@@ -57,7 +54,7 @@ void FrmCierreCaja::cargar_datos_caja(int id)
         ui->lblimporte_abertura->setText(Configuracion_global->toFormatoMoneda(
                                              QString::number(caja.value(id).value("importe_abertura_dia").toDouble(),
                                                      'f',Configuracion_global->decimales_campos_totales)));
-        QString user = SqlCalls::SelectOneField("usuarios","nombre",QString("id = %1").arg(
+        QString user = SqlCalls::SelectOneField("mayaglobal`.`usuarios","nombre",QString("id = %1").arg(
                                                     caja.value(id).value("id_usuario").toInt()),Configuracion_global->groupDB,
                                                 error).toString();
         if(error.isEmpty())

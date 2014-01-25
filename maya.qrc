@@ -202,5 +202,6 @@
         <file>DB/Grupo.sql</file>
         <file>DB/Medica.sql</file>
         <file>DB/Paises.sql</file>
+        <file>DB/Global.sql</file>
     </qresource>
 </RCC>

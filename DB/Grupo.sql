@@ -1,11 +1,4 @@
 CREATE SCHEMA IF NOT EXISTS `@grupo@` DEFAULT CHARACTER SET utf8 ;
-CREATE TABLE `@grupo@`.`accesousuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) DEFAULT NULL,
-  `id_modulo` int(11) DEFAULT NULL,
-  `id_nivel_acceso` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`agenda` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
@@ -91,7 +84,6 @@ CREATE TABLE `@grupo@`.`articulos` (
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
-  `lotes` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,
   `imagen3` blob,
   `imagen4` blob,
@@ -417,12 +409,6 @@ CREATE TABLE `@grupo@`.`empresas` (
   `cuenta_iva_soportado2_re` varchar(45) DEFAULT NULL,
   `cuenta_iva_soportado3_re` varchar(45) DEFAULT NULL,
   `cuenta_iva_soportado4_re` varchar(45) DEFAULT NULL,
-  `nombre_email` varchar(100) DEFAULT NULL,
-  `cuenta_mail` varchar(150) DEFAULT NULL,
-  `cuenta_pop` varchar(150) DEFAULT NULL,
-  `cuenta_imap` varchar(150) DEFAULT NULL,
-  `cuenta_smpt` varchar(150) DEFAULT NULL,
-  `password_cuenta` varchar(50) DEFAULT NULL,
   `importada_sp` tinyint(1) DEFAULT '0',
   `importe_cierre` double DEFAULT NULL,
   `facturas_en_cierre` tinyint(1) DEFAULT NULL,
@@ -526,12 +512,6 @@ CREATE TABLE `@grupo@`.`maestro_subfamilia_cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
   `id_maestro_familia_cliente` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `@grupo@`.`modulos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module_zone` int(11) DEFAULT NULL,
-  `module_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`monedas` (
@@ -834,3 +814,4 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
 `@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`from `@grupo@`.`articulos`;
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaempresa` AS select concat_ws(' ',`@grupo@`.`empresas`.`nombre`,`@grupo@`.`empresas`.`ejercicio`) AS `empresa`,`@grupo@`.`empresas`.`id` AS `id` from `@grupo@`.`empresas`;
 INSERT INTO `@grupo@`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');
+INSERT INTO `@grupo@`.`secciones` (`seccion`, `codigo`) VALUES ('Sin sección', 'SS');

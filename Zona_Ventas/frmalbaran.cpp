@@ -981,7 +981,7 @@ void FrmAlbaran::setUpBusqueda()
     m_busqueda->addWidget(borrar);
     this->orden = "Albarán";
 
-    if(Configuracion_global->nivel == 7)
+    if(userLevelInModule() == MayaModule::Administrador)
     {
         QPushButton* Forzar_edicion = new QPushButton(QIcon(":/Icons/PNG/abrecaja.png"),tr("Forzar edición"),this);
         connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));

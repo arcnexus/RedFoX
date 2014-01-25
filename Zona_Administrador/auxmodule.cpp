@@ -1,7 +1,6 @@
 #include "auxmodule.h"
 
-QSqlTableModel* AuxModule::_model;
-bool AuxModule::_modelIsSet = false;
+QStringList AuxModule::_model;
 
 AuxModule::AuxModule(QWidget *parent, QString label) :
     QWidget(parent),
@@ -10,50 +9,51 @@ AuxModule::AuxModule(QWidget *parent, QString label) :
     _combo(this)
 {
     name = label;
-    if(!_modelIsSet)
-        AuxModule::setModel();
+    AuxModule::setModel();
 
-    _combo.setModel(AuxModule::model());
-    _combo.setModelColumn(1);
+    _combo.addItems(AuxModule::model());
 
     _layout.addWidget(&_label);
     _layout.addWidget(&_combo);
-    this->setLayout(&_layout);
+    this->setLayout(&_layout);   
 }
 
 AuxModule::~AuxModule()
 {
-    if(AuxModule::_model)
-        AuxModule::_model->deleteLater();
-    _modelIsSet = false;
-}
 
+}
 
 int AuxModule::nivel()
 {
-    return AuxModule::model()->index(_combo.currentIndex(),0).data().toInt();
+    return _combo.currentIndex() + 1;
 }
 
 void AuxModule::setNivel(int idAcceso)
 {
-     for (int i = 0 ; i< AuxModule::model()->rowCount();i++)
-     {
-         if(AuxModule::model()->index(i,0).data().toInt() == idAcceso)
-         {
-             _combo.setCurrentIndex(i);
-             break;
-         }
-     }
+     _combo.setCurrentIndex(idAcceso -1);
+
+     connect(&_combo,SIGNAL(currentIndexChanged(int)),this,SLOT(save(int)));
 }
 
-QSqlTableModel *AuxModule::model()
+QStringList AuxModule::model()
 {
     return _model;
 }
 
 void AuxModule::setModel()
 {
-    _model = new QSqlTableModel(qApp,Configuracion_global->groupDB);
-    _model->setTable("nivelacceso");
-    _model->select();
+    _model.clear();
+    _model << "Sin Acceso"<<"Lectura parcial"<<"Lectura total"<<"Escritura parcial (editar)";
+    _model << "Escritura parcial (añadir)" << "Escritural total" << "Administrador";
+}
+
+void AuxModule::save(int index)
+{
+    QSqlQuery q2(QSqlDatabase::database("temp_loadEmp"));
+    QString s = QString("UPDATE %1 SET id_nivel_acceso=:lvl WHERE id_modulo=:mod AND id_user=:id;").arg(tabla);
+    q2.prepare(s);
+    q2.bindValue(":id", this->id_user);
+    q2.bindValue(":mod",this->id);
+    q2.bindValue(":lvl",index+1);
+    q2.exec();
 }

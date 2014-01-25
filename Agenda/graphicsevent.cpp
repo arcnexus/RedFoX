@@ -539,18 +539,16 @@ void GraphicsEvent::shareThis()
         }
     }
     QStringList users;
-    if(getUser.exec("SELECT * FROM usuarios"))
+    for (auto i=0 ; i<Configuracion_global->usuarios_model->rowCount() ; i++)
     {
-        while (getUser.next())
-        {
-            QSqlRecord r = getUser.record();
+            QSqlRecord r = Configuracion_global->usuarios_model->record(i);
             if(id_users.contains(r.value("id").toInt()))
                 if(r.value("id")!= id_user)
-                    users << r.value("nombre").toString();
-        }
+                    users << r.value("nombre").toString();        
     }
+
     if(id_user != Configuracion_global->id_usuario_activo)
-        users << Configuracion_global->cUsuarioActivo;
+        users << Configuracion_global->user_name;
     if(users.isEmpty())
     {
         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
@@ -564,7 +562,7 @@ void GraphicsEvent::shareThis()
     {
         int iUser;
         QSqlQuery user(Configuracion_global->groupDB);
-        QString sql = QString("SELECT id FROM usuarios WHERE nombre = '%1'").arg(sUser);
+        QString sql = QString("SELECT id FROM mayaglobal.usuarios WHERE nombre = '%1'").arg(sUser);
         if(user.exec(sql))
         {
             if(user.next())
@@ -576,7 +574,8 @@ void GraphicsEvent::shareThis()
                 QMessageBox::critical(qApp->activeWindow(),tr("Error"),tr("Error al recuperar usuario"));
                 return;
             }
-        }
+        }        
+
         QSqlQuery q(Configuracion_global->groupDB);
         q.prepare("INSERT INTO agenda"
                   "(fecha, hora, id_Usuario, cInicio, cFin, cAsunto,"

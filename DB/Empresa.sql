@@ -1,4 +1,17 @@
 CREATE SCHEMA IF NOT EXISTS `@empresa@` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+CREATE TABLE `@empresa@`.`accesousuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_modulo` int(11) DEFAULT NULL,
+  `id_nivel_acceso` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `@empresa@`.`modulos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `module_zone` int(11) DEFAULT NULL,
+  `module_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@empresa@`.`acum_articulos` (
   `id_articulo` int(11) NOT NULL,
   `unid_comp_enero` int(11) NOT NULL DEFAULT '0',

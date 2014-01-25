@@ -71,6 +71,8 @@ private slots:
 
     void on_itemList_itemSelectionChanged();
 
+    void on_actionNuevo_triggered();
+
 private:
     Ui::ReportDesigWin *ui;
     QGraphicsScene scene;

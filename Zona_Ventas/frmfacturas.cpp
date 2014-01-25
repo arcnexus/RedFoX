@@ -862,7 +862,7 @@ void frmFacturas::on_btnImprimir_clicked()
                 Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                 break;
             case 2: // email
-                // TODO - enviar pdf por mail
+                Configuracion::EviarMail(report,parametros_sql,parametros,"Paga_ya",oCliente1->email,oCliente1->nombre,"Haber si pagas nen","¡Te envio esta factura para que te acuerdes que tienes deudas con nosotros!\n:P");
                 break;
             case 3: // PDF
                 Configuracion::ImprimirPDF(report,parametros_sql,parametros);

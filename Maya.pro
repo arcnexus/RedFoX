@@ -137,7 +137,6 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimeattachment.cpp \
     Auxiliares/SMPT/emailaddress.cpp \
     mayamodule.cpp \
-    Zona_Administrador/frmusuarios.cpp \
     moduleextension.cpp \
     Almacen/divisionalmacenext.cpp \
     archivosgeneralesext.cpp \
@@ -321,7 +320,6 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimeattachment.h \
     Auxiliares/SMPT/emailaddress.h \
     mayamodule.h \
-    Zona_Administrador/frmusuarios.h \
     moduleextension.h \
     Almacen/divisionalmacenext.h \
     archivosgeneralesext.h \
@@ -455,7 +453,6 @@ FORMS    += mainwindow.ui \
     Busquedas/db_consulta_view.ui \
     Auxiliares/frmaddentregascuenta.ui \
     Zona_Ventas/frmgestioncobros.ui \
-    Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
     Almacen/frminventario.ui \
     EditorReports/sectioneditordlg.ui \

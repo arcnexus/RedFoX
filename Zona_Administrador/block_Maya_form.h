@@ -14,7 +14,7 @@ class block_Maya_form : public QDialog
 public:
     explicit block_Maya_form(QWidget *parent = 0);
     ~block_Maya_form();
-    void set_user(QString user, QString pass);
+
 private slots:
     void on_pushButton_clicked();
 

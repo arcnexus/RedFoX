@@ -27,6 +27,7 @@
     <property name="title">
      <string>Menu</string>
     </property>
+    <addaction name="actionNuevo"/>
     <addaction name="actionAbrir"/>
     <addaction name="actionGuardar"/>
     <addaction name="separator"/>
@@ -54,7 +55,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionTexto"/>
    <addaction name="actionParametro"/>
@@ -112,6 +113,7 @@
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionNuevo"/>
    <addaction name="actionAbrir"/>
    <addaction name="actionGuardar"/>
    <addaction name="actionAbrir_desde_BD"/>
@@ -355,8 +357,18 @@
     <string>Ver contorno objetos</string>
    </property>
   </action>
+  <action name="actionNuevo">
+   <property name="icon">
+    <iconset resource="../maya.qrc">
+     <normaloff>:/Icons/PNG/pedidos.png</normaloff>:/Icons/PNG/pedidos.png</iconset>
+   </property>
+   <property name="text">
+    <string>Nuevo</string>
+   </property>
+  </action>
  </widget>
  <resources>
+  <include location="../maya.qrc"/>
   <include location="resource.qrc"/>
  </resources>
  <connections/>
