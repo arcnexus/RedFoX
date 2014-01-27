@@ -388,9 +388,19 @@ void frmFacturas::LLenarCampos() {
     //---------------------------
     // DIVISA FACTURA
     //---------------------------
-    QString divisa = Configuracion_global->Devolver_moneda(oFactura->id_divisa);
-    index = ui->cboDivisa->findText(divisa);
-    ui->cboDivisa->setCurrentIndex(index);
+    for(int i =0;i<Configuracion_global->divisas_model->rowCount();i++)
+    {
+        if(Configuracion_global->divisas_model->record(i).value("id").toInt() == oFactura->id_divisa)
+        {
+            int ind_divisa = ui->cboDivisa->findText(Configuracion_global->divisas_model->record(i).value("moneda").toString());
+            ui->cboDivisa->setCurrentIndex(ind_divisa);
+            break;
+        }
+        else
+        {
+            ui->cboDivisa->setCurrentIndex(-1);
+        }
+    }
 
     //----------------------------
     // Lineas Facturas
@@ -642,7 +652,17 @@ void frmFacturas::LLenarFactura() {
     oFactura->cp = (ui->txtcp->text());
     oFactura->poblacion = (ui->txtpoblacion->text());
     oFactura->provincia = (ui->txtprovincia->text());
+
     oFactura->id_pais =Configuracion_global->Devolver_id_pais(ui->comboPais->currentText());
+
+    oFactura->direccion1_entrega = (ui->txtDireccion1_entrega->text());
+    oFactura->direccion2_entrega = (ui->txtDireccion2_entrega->text());
+    oFactura->cp_entrega = (ui->txtCp_entrega->text());
+    oFactura->poblacion_entrega = (ui->txtPoblacion_entrega->text());
+    oFactura->provincia_entrega = (ui->txtProvincia_entrega->text());
+
+    oFactura->id_pais_entrega =Configuracion_global->Devolver_id_pais(ui->cboPais_entrega->currentText());
+
     oFactura->cif = (ui->txtcif->text());
     if  (ui->chkrecargo_equivalencia->isChecked())
     {
@@ -1964,6 +1984,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
     {
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_fac");
             frmeditar.set_tabla("lin_fac");
             frmeditar.set_id_cliente(oCliente1->id);
@@ -1991,6 +2012,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
 
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_acumula(true);
             frmeditar.set_id_cliente(oCliente1->id);
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);

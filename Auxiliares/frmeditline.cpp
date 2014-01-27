@@ -162,6 +162,11 @@ void frmEditLine::set_editando()
     this->editando = true;
 }
 
+void frmEditLine::set_acumula(bool acum)
+{
+    this->realiza_acumulados = acum;
+}
+
 
 
 void frmEditLine::on_txtCodigo_editingFinished()
@@ -577,21 +582,33 @@ void frmEditLine::on_btnAceptar_clicked()
                                          error);
         if ( success)
         {
-            oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
-                                                                                              cant,
+            if(this->realiza_acumulados)
+            {
+                oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,
                                                 Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
                                                          anterior.value("total").toDouble(),QDate::currentDate(),"V");
-            // ----------------------------
-            // Lotes
-            //-----------------------------
-            if(this->id_lote>0);
-            {
-                QSqlQuery lote(Configuracion_global->groupDB);
-                lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
-                              Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,
-                              this->id_lote));
+                // ----------------------------
+                // Lotes
+                //-----------------------------
+                if(this->id_lote>0);
+                {
+                    QSqlQuery lote(Configuracion_global->groupDB);
+                    lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
+                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,
+                                  this->id_lote));
 
+                }
+            } else
+            {
+                // -------------------------------------------
+                // Si no acumula añade a unidades reservadas
+                //--------------------------------------------
+                QSqlQuery queryart(Configuracion_global->groupDB);
+                queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
+                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
+                                  this->id_articulo));
             }
+
 
 
             emit refrescar_lineas();
@@ -663,37 +680,9 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
     QString error;
-//    if(this->id >0 )
-//    {
-//        bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
-//                                         error);
-//        if(success && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
-//                                                                        anterior.value("cantidad").toFloat(),
-//                                                  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
-//                                                                                       anterior.value("total").toDouble(),
-//                                                  QDate::currentDate(),"V"))
-//        {
-//            emit refrescar_lineas();
-//            // ----------------------------
-//            // Lotes
-//            //-----------------------------
-//            if(this->id_lote>0);
-//            {
-//                QSqlQuery lote(Configuracion_global->groupDB);
-//                lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
-//                              Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
-//                              this->id_lote));
-//            }
-//        } else
-//        {
-//            QMessageBox::warning(this,tr("Edición lineas detalle"),
-//                                 tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
-//                                 tr("Aceptar"));
-
-//        }
-//    } else
- //   {
-        this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
+    this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
+    if(this->realiza_acumulados)
+    {
         if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
                                                                                   anterior.value("cantidad").toFloat(),
                                                       Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
@@ -719,8 +708,16 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
                                  tr("Aceptar"));
 
         }
-   // }
-
+    } else
+    {
+        // -------------------------------------------
+        // Si no acumula añade a unidades reservadas
+        //--------------------------------------------
+        QSqlQuery queryart(Configuracion_global->groupDB);
+        queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
+                          Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
+                          this->id_articulo));
+    }
    vaciar_campos();
 
 }

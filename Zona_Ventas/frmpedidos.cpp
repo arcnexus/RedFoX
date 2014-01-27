@@ -18,16 +18,15 @@
 FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmPedidos),
-    //helper(this),
     menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
 {
     ui->setupUi(this);
-//    QSqlQueryModel *pais = new QSqlQueryModel(this);
-//    pais->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
-
+    ui->tabWidget_2->setCurrentIndex(0);
     ui->cboPais->setModel(Configuracion_global->paises_model);
+    ui->cboPais->setModelColumn(1);
     ui->cbopais_entrega->setModel(Configuracion_global->paises_model);
+    ui->cbopais_entrega->setModelColumn(1);
     ui->cboPais->setCurrentIndex(-1);
     ui->cbopais_entrega->setCurrentIndex(-1);
     // Pongo valores por defecto
@@ -94,7 +93,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     // LLenar tabla
     //--------------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli order by pedido desc",Configuracion_global->empresaDB);
+    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
+                Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
     formato_tabla();
     connect(ui->tabla->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
@@ -144,11 +144,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->cboFormapago->setModel(formas_pago);
 
     //-----------------------
-    // Tarifas
+    // Divisas
     //-----------------------
-    QSqlQueryModel * modeloDivisa = new QSqlQueryModel(this);
-    modeloDivisa->setQuery("select moneda from monedas order by moneda",Configuracion_global->groupDB);
-    ui->cboDivisa->setModel(modeloDivisa);
+    ui->cboDivisa->setModel(Configuracion_global->divisas_model);
+    ui->cboDivisa->setModelColumn(1);
 
 
 
@@ -193,9 +192,20 @@ void FrmPedidos::LLenarCampos()
     ui->txtprovincia->setText(oPedido->provincia);
     ui->txtcp->setText(oPedido->cp);
 
-    int index = ui->cboPais->findText(Configuracion_global->Devolver_pais(oPedido->id_pais));
-    ui->cboPais->setCurrentIndex(index);
-
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido->id_pais)
+        {
+            int ind_pais = ui->cboPais->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+            ui->cboPais->setCurrentIndex(ind_pais);
+            break;
+        }
+        else
+        {
+            ui->cboPais->setCurrentIndex(-1);
+        }
+    }
+    ui->txtTarifa_cliente->setText(Configuracion_global->Devolver_tarifa(oPedido->id_tarifa));
     ui->txtcif->setText(oPedido->cif);
     ui->chkrecargo_equivalencia->setChecked(oPedido->recargo_equivalencia==1);
         //helper.set_tarifa(oCliente3->tarifa_cliente);
@@ -243,8 +253,20 @@ void FrmPedidos::LLenarCampos()
     ui->lblfacturado->setVisible(oPedido->facturado);
     ui->txtcNumFra->setText(oPedido->factura);
     ui->txtfecha_factura->setDate(oPedido->fecha_factura);
-    index = ui->cboFormapago->findText(Configuracion_global->Devolver_forma_pago(oPedido->id_forma_pago));
-    ui->cboFormapago->setCurrentIndex(index);
+    for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
+    {
+        if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oPedido->id_forma_pago)
+        {
+            int ind_fp = ui->cboFormapago->findText(Configuracion_global->formapago_model->record(i).value("forma_pago").toString());
+            ui->cboFormapago->setCurrentIndex(ind_fp);
+            break;
+        }
+        else
+        {
+            ui->cboFormapago->setCurrentIndex(-1);
+        }
+    }
+
 
     ui->txtcomentario->setText(oPedido->comentario);
     ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
@@ -255,8 +277,19 @@ void FrmPedidos::LLenarCampos()
     ui->txtcp_entrega->setText(oPedido->cp_entrega);
     ui->txtpoblacion_entrega->setText(oPedido->poblacion_entrega);
     ui->txtprovincia_entrega->setText(oPedido->provincia_entrega);
-    index = ui->cbopais_entrega->findText(Configuracion_global->Devolver_pais(oPedido->id_pais_entrega));
-    ui->cbopais_entrega->setCurrentIndex(index);
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido->id_pais)
+        {
+            int ind_pais = ui->cbopais_entrega->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+            ui->cbopais_entrega->setCurrentIndex(ind_pais);
+            break;
+        }
+        else
+        {
+            ui->cbopais_entrega->setCurrentIndex(-1);
+        }
+    }
     ui->txtemail_alternativo->setText(oPedido->email_entrega);
     ui->txtcomentarios_alternativo->setText(oPedido->comentarios_entrega);
     ui->chkenviado->setChecked(oPedido->enviado==1);
@@ -265,15 +298,7 @@ void FrmPedidos::LLenarCampos()
     ui->txtfecha_limite_entrega->setDate(oPedido->fecha_limite_entrega);
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda( QString::number(oPedido->total_pedido)));
     oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
-    //helper.set_tarifa(oPedido->tarifa_cliente);
-    //helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    //helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    //helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    //helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
-    //QString filter = QString("id_Cab = '%1'").arg(oPedido->id);
-    //helper.fillTable("empresa","lin_ped",filter);
-    //helper.set_tipo_dto_tarifa(oCliente3->tipo_dto_tarifa);
-    //helper.setId_cliente(oCliente3->id);
+
     //----------------
     // Transportista
     //----------------
@@ -287,9 +312,22 @@ void FrmPedidos::LLenarCampos()
     //-------------------
     // divisas
     //-------------------
-    QString divisa = Configuracion_global->Devolver_moneda(oPedido->id_divisa);
-    index = ui->cboDivisa->findText(divisa);
-    ui->cboDivisa->setCurrentIndex(index);
+    for(int i =0;i<Configuracion_global->divisas_model->rowCount();i++)
+    {
+        if(Configuracion_global->divisas_model->record(i).value("id").toInt() == oPedido->id_divisa)
+        {
+            int ind_divisa = ui->cboDivisa->findText(Configuracion_global->divisas_model->record(i).value("moneda").toString());
+            ui->cboDivisa->setCurrentIndex(ind_divisa);
+            break;
+        }
+        else
+        {
+            ui->cboDivisa->setCurrentIndex(-1);
+        }
+    }
+
+
+
     if(oPedido->traspasado_factura)
         ui->btn_convertir->setEnabled(false);
 
@@ -297,6 +335,7 @@ void FrmPedidos::LLenarCampos()
 
 void FrmPedidos::LLenarCamposCliente()
 {
+
     oPedido->id_cliente = oCliente3->id;
     ui->lblTopcliente->setText(oCliente3->nombre_fiscal);
     ui->txtcodigo_cliente->setText(oCliente3->codigo_cliente);
@@ -306,16 +345,22 @@ void FrmPedidos::LLenarCamposCliente()
     ui->txtcp->setText(oCliente3->cp);
     ui->txtpoblacion->setText(oCliente3->poblacion);
     ui->txtprovincia->setText(oCliente3->provincia);
-    int index = ui->cboPais->findText(oCliente3->pais);
-    ui->cboPais->setCurrentIndex(index);
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido->id_pais)
+        {
+            int ind_pais = ui->cboPais->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+            ui->cboPais->setCurrentIndex(ind_pais);
+            break;
+        }
+        else
+        {
+            ui->cboPais->setCurrentIndex(-1);
+        }
+    }
 
     ui->txtcif->setText(oCliente3->cif_nif);
-    //helper.set_tarifa(oCliente3->tarifa_cliente);
 
-    //helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    //helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    //helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    //helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
 
     if (oCliente3->recargo_equivalencia==1) {
         ui->chkrecargo_equivalencia->setChecked(true);
@@ -341,17 +386,18 @@ void FrmPedidos::LLenarCamposCliente()
         oPedido->porc_rec4 = 0;
 
     }
+    QString error;
+    ui->txtTarifa_cliente->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(oCliente3->idTarifa),
+                                                            Configuracion_global->groupDB,error).toString());
+    oPedido->id_tarifa = oCliente3->idTarifa;
+
     oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
-    //helper.set_tarifa(oPedido->tarifa_cliente);
-    //helper.set_tipo_dto_tarifa(oCliente3->tipo_dto_tarifa);
-    //helper.setId_cliente(oCliente3->id);
 
 
     //---------------------------------
     // Comprobar direccion alternativa
     //---------------------------------
     QMap <int,QSqlRecord> rec;
-    QString error;
     QStringList condiciones;
     condiciones << QString("id_cliente = %1").arg(oCliente3->id) << "direccion_envio = 1";
     rec = SqlCalls::SelectRecord("cliente_direcciones",condiciones,Configuracion_global->groupDB,error);
@@ -365,20 +411,58 @@ void FrmPedidos::LLenarCamposCliente()
         ui->txtcp_entrega->setText(i.value().value("cp").toString());
         ui->txtpoblacion_entrega->setText(i.value().value("poblacion").toString());
         ui->txtprovincia_entrega->setText(i.value().value("provincia").toString());
-        int index = ui->cbopais_entrega->findText(Configuracion_global->Devolver_pais(i.value().value("pais").toInt()));
-        ui->cbopais_entrega->setCurrentIndex(index);
+        for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+        {
+            if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido->id_pais_entrega)
+            {
+                int ind_pais = ui->cbopais_entrega->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+                ui->cbopais_entrega->setCurrentIndex(ind_pais);
+                break;
+            }
+            else
+            {
+                ui->cbopais_entrega->setCurrentIndex(-1);
+            }
+        }
         ui->txtemail_alternativo->setText(i.value().value("email").toString());
         ui->txtcomentarios_alternativo->setPlainText(i.value().value("comentarios").toString());
 
     }
-    index = ui->cboFormapago->findText(Configuracion_global->Devolver_forma_pago(oCliente3->id_forma_pago));
-    ui->cboFormapago->setCurrentIndex(index);
+    if(Configuracion_global->formapago_model->rowCount() >0)
+    {
+        for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
+        {
+            if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oPedido->id_forma_pago)
+            {
+                int ind_fp = ui->cboFormapago->findText(Configuracion_global->formapago_model->record(i).value(
+                                                             "forma_pago").toString());
+                ui->cboFormapago->setCurrentIndex(ind_fp);
+                break;
+            }
+            else
+            {
+                ui->cboFormapago->setCurrentIndex(-1);
+            }
+
+        }
+    }
     //-------------------
     // divisas
     //-------------------
-    QString divisa = Configuracion_global->Devolver_moneda(oCliente3->id_divisa);
-    index = ui->cboDivisa->findText(divisa);
-    ui->cboDivisa->setCurrentIndex(index);
+    for(int i =0;i<Configuracion_global->divisas_model->rowCount();i++)
+    {
+        if(Configuracion_global->divisas_model->record(i).value("id").toInt() == oPedido->id_divisa)
+        {
+            int ind_divisa = ui->cboDivisa->findText(Configuracion_global->divisas_model->record(i).value("moneda").toString());
+            ui->cboDivisa->setCurrentIndex(ind_divisa);
+            break;
+        }
+        else
+        {
+            ui->cboPais->setCurrentIndex(-1);
+        }
+    }
+
 }
 
 void FrmPedidos::VaciarCampos()
@@ -396,7 +480,10 @@ void FrmPedidos::VaciarCampos()
     ui->txtcp->setText("");
     ui->txtpoblacion->setText("");
     ui->txtprovincia->setText("");
-    //ui->txtpais->setText("");
+    ui->cboPais->setCurrentIndex(-1);
+    ui->cboFormapago->setCurrentIndex(-1);
+    ui->cboDivisa->setCurrentIndex(-1);
+    ui->cbopais_entrega->setCurrentIndex(-1);
     ui->txtcif->setText("");
     ui->txtsubtotal->setText(0);
     ui->txtdto->setText("0,00");
@@ -410,8 +497,6 @@ void FrmPedidos::VaciarCampos()
     ui->txtbase2->setText(0);
     ui->txtbase3->setText(0);
     ui->txtbase4->setText(0);
-    //Configuracion_global->CargarDatos();
-    //QList<QString> keys = Configuracion_global->ivas.uniqueKeys();
     ui->txtporc_iva1->setText(QString::number(Configuracion_global->ivaList.at(0).toDouble()));
     ui->txtporc_iva2->setText(QString::number(Configuracion_global->ivaList.at(1).toDouble()));
     ui->txtporc_iva3->setText(QString::number(Configuracion_global->ivaList.at(2).toDouble()));
@@ -460,8 +545,6 @@ void FrmPedidos::LLenarPedido()
     oPedido->pedido=ui->txtpedido->text().toInt();
     oPedido->fecha=ui->txtfecha->date();
     oPedido->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
-    //oPedido->pedido;
-    //oPedido->id_cliente;
     oPedido->codigo_cliente=ui->txtcodigo_cliente->text();
     oPedido->cliente=ui->txtcliente->text();
     oPedido->direccion1=ui->txtdireccion1->text();
@@ -508,13 +591,10 @@ void FrmPedidos::LLenarPedido()
 
     oPedido->impreso = ui->lblimpreso->isVisible();
 
-   // oPedido->factura=ui->txtcNumFra->text().toDouble();
     oPedido->fecha_factura=ui->txtfecha_factura->date();
 
     oPedido->comentario=ui->txtcomentario->toPlainText();
     oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
-    //oPedido->traspasado_albaran;
-    //oPedido->traspasado_factura;
     oPedido->direccion_entrega1 = ui->txtdireccion1_entrega->text();
     oPedido->direccion_entrega2 = ui->txtdireccion2_entrega->text();
     oPedido->cp_entrega=ui->txtcp_entrega->text();
@@ -576,7 +656,8 @@ void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
         modo = "DESC";
 
     m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli "
-                    "where "+order+" like '%" + texto.trimmed() + "%' order by "+order+" "+modo,Configuracion_global->empresaDB);
+                    "where "+order+" like '%" + texto.trimmed() + "%' and ejercicio ="+
+                    Configuracion_global->cEjercicio +" order by "+order+" "+modo,Configuracion_global->empresaDB);
 
     ui->tabla->selectRow(0);
 }
@@ -1137,6 +1218,7 @@ void FrmPedidos::on_btn_borrar_clicked()
         else
             Configuracion_global->empresaDB.rollback();
     }
+    refrescar_modelo();
 }
 
 void FrmPedidos::lineaDeleted(lineaDetalle * ld)
@@ -1641,10 +1723,27 @@ void FrmPedidos::on_tabWidget_2_currentChanged(int index)
 
 void FrmPedidos::on_txtcodigo_cliente_editingFinished()
 {
-    if(ui->txtcodigo_cliente->text() != oPedido->codigo_cliente){
+    if(ui->txtcodigo_cliente->text() != oPedido->codigo_cliente)
+    {
+        oCliente3->decrementar_acumulados(oCliente3->id,oPedido->total_pedido,QDate::currentDate());
+    }
+    if((ui->txtcodigo_cliente->text() != oPedido->codigo_cliente)&& !ui->txtcodigo_cliente->text().isEmpty()){
+        if(ui->txtcodigo_cliente->text().trimmed().size() < Configuracion_global->digitos_cuentas_contables)
+        {
+            QString ccod= Configuracion_global->cuenta_clientes;
+            QString ccli = ui->txtcodigo_cliente->text().trimmed();
+            int tam = Configuracion_global->digitos_cuentas_contables - (ccod.size() + ccli.size());
+            QString zeros;
+            for(int i = 0; i<tam;i++)
+            {
+                zeros.append("0");
+            }
+            ui->txtcodigo_cliente->setText(ccod+zeros+ccli);
+
+        }
         oCliente3->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'");
+        oPedido->id_cliente = oCliente3->id;
         LLenarCamposCliente();
-        //helper.set_tarifa(oCliente3->tarifa_cliente);
     }
 }
 
@@ -1806,6 +1905,7 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
 
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_acumula(false);
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
@@ -1833,6 +1933,7 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
     {
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_acumula(false);
             frmeditar.set_linea(0,"lin_ped");
             frmeditar.set_tabla("lin_ped");
             frmeditar.set_id_cliente(oCliente3->id);

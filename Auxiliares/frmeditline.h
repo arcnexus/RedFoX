@@ -24,6 +24,7 @@ public:
     void set_id_cab(int id_cabecera);
     void set_tabla(QString t);
     void set_editando();
+    void set_acumula(bool acum);
 
 
 
@@ -61,6 +62,7 @@ private:
     bool editando;
     bool eventFilter(QObject *obj, QEvent *event);
     QHash <QString,QVariant> anterior;
+    bool realiza_acumulados;
 
 signals:
     void refrescar_lineas();

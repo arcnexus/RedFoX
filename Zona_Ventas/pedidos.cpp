@@ -16,7 +16,7 @@ Pedidos::~Pedidos()
 bool Pedidos::BorrarLineas(int Iped)
 {
     QSqlQuery query(Configuracion_global->empresaDB);
-    QString sql = QString("DELETE FROM lin_ped WHERE id_Cab = %1").arg(Iped);
+    QString sql = QString("DELETE FROM lin_ped WHERE id = %1").arg(Iped);
     query.prepare(sql);
     if(query.exec())
         return true;
@@ -54,7 +54,8 @@ bool Pedidos::AnadirPedido()
      ped["porc_rec4"] = this->porc_rec1;
      ped["desc_gasto1"] = QObject::tr("Portes.");
      ped["id_cliente"] = this->id_cliente;
-     int new_id = SqlCalls::SqlInsert(ped,"cab_ped",Configuracion_global->empresaDB,error);
+     ped["ejercicio"] = Configuracion_global->cEjercicio.toInt();
+     int new_id = SqlCalls::SqlInsert(ped,"ped_cli",Configuracion_global->empresaDB,error);
      if(new_id <1)
      {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", error);
@@ -175,6 +176,7 @@ GuardarPedido(int nid_Pedido)
 bool Pedidos::RecuperarPedido(QString cSQL)
 {
     QSqlQuery ped_cli(Configuracion_global->empresaDB);
+    QString error;
     ped_cli.prepare(cSQL);
     if( !ped_cli.exec() )
     {
@@ -190,6 +192,8 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             albaran = r.value("albaran").toInt();
             pedido = r.value("pedido").toInt();
             id_divisa = r.value("id_divisa").toInt();
+            id_tarifa = SqlCalls::SelectOneField("clientes","id_tarifa",QString("id=%1").arg(r.value("id_cliente").toInt()),
+                                                 Configuracion_global->groupDB,error).toInt();
             fecha = r.value("fecha").toDate();
             editable = r.value("editable").toBool();
             id_cliente = r.value("id_cliente").toInt();
@@ -304,7 +308,4 @@ int Pedidos::NuevoNumeroPedido()
     return qMax(1,pedido);
 }
 
-void Pedidos::FacturarPedido()
-{
-    //TODO Pedidos::FacturarPedido()
-}
+
