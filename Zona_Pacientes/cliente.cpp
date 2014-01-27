@@ -90,7 +90,7 @@ void Cliente::Guardar() {
     h_cliente["id_agente"] = this->id_agente;
     h_cliente["id_transportista"] = this->id_transportista;
     h_cliente["grupo_iva"] = this->grupo_iva;
-    h_cliente["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
+   // h_cliente["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
 
     bool updated = SqlCalls::SqlUpdate(h_cliente,"clientes",Configuracion_global->groupDB,condiciones,error);
     if(!updated){
@@ -224,7 +224,7 @@ void Cliente::GuardarWeb()
    h_web["visa2_cod_valid"] = this->visa2_cod_valid;
    h_web["id_agente"] = this->id_agente;
    h_web["id_transportista"] = this->id_transportista;
-   h_web["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
+  // h_web["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
    bool updated = SqlCalls::SqlUpdate(h_web,"clientes",Configuracion_global->groupDB,condicion,error);
 
    if(!updated){
@@ -407,7 +407,7 @@ void Cliente::clear()
     this->nombre_comercial="";
     this->persona_contacto="";
     this->cif_nif="";
-    this->tipo_dto_tarifa =0;
+  //  this->tipo_dto_tarifa =0;
     this->cifVies="";
     this->direccion1="";
     this->direccion2="";
@@ -875,6 +875,7 @@ void Cliente::Borrar(int id_cliente)
         if (borrado_ok ==true) {
             Configuracion_global->groupDB.commit();
             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado corectamente"));
+            this->clear();
         } else {
             Configuracion_global->groupDB.rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
@@ -947,7 +948,12 @@ QString Cliente::Nuevocodigo_cliente()
         codigo = codigo.mid(Configuracion_global->cuenta_clientes.length());
     if (nCodigo == 0 || nCodigo == 1)
     {
-        cNum = "1";
+        cNum = Configuracion_global->cuenta_clientes;
+        while (cNum.length()< (Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_clientes.length()-1) )
+        {
+            cNum.prepend("0");
+        }
+        cNum.append("1");
     }
     else
         cNum = codigo;
@@ -956,7 +962,8 @@ QString Cliente::Nuevocodigo_cliente()
     {
         cNum.prepend("0");
     }
-    codigo = Configuracion_global->cuenta_clientes + cNum;
+    //codigo = Configuracion_global->cuenta_clientes + cNum;
+    codigo = cNum;
     cuenta_iva_repercutido = Configuracion_global->cuenta_iva_repercutido1 +cNum;
 
     return codigo;

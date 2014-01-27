@@ -715,6 +715,7 @@ void frmClientes::VaciarCampos()
     qModelTipos->setQuery("select tipocliente from tipocliente where id_cliente = -1",
                           Configuracion_global->groupDB);
     ui->lista_tipos->setModel(qModelTipos);
+    oCliente->codigo_cliente= "";
 
 
 }
@@ -847,8 +848,8 @@ void frmClientes::on_btnGuardar_clicked()
         LLenarCliente();
         oCliente->Guardar();
         bloquearCampos(true);
-      // NOTE ??? porqué?  Configuracion_global->CargarClientes();
         emit unblock();
+        Configuracion_global->groupDB.commit();
     } else
     {
         QMessageBox::warning(this,tr("Guardar ficha"),tr("tiene campos en blanco que no pueden quedar vacíos\n")+ cVacios,
@@ -860,6 +861,7 @@ void frmClientes::on_btnGuardar_clicked()
 
 void frmClientes::on_btnAnadir_clicked()
 {
+    Configuracion_global->groupDB.transaction();
     ui->stackedWidget->setCurrentIndex(0);
     emit block();
     bloquearCampos(false);
@@ -1120,16 +1122,22 @@ void frmClientes::bloquearCampos(bool state) {
 
 void frmClientes::on_btnDeshacer_clicked()
 {
+    Configuracion_global->groupDB.rollback();
     if(this->Altas){
-        oCliente->Borrar(oCliente->id);
+
+        //oCliente->Borrar(oCliente->id);
+        oCliente->Recuperar("Select * from clientes order by id desc limit 1 ");
         this->Altas = false;
+    } else {
+        QString cid = QString::number(oCliente->id);
+
+        oCliente->Recuperar(QString("Select * from clientes where id =%1").arg(cid));
     }
-    QString cid = QString::number(oCliente->id);
-    oCliente->Recuperar("Select * from clientes where id ="+cid+" order by id limit 1 ");
     LLenarCampos();
     bloquearCampos(true);
     set_blink();
     emit unblock();
+
 }
 
 void frmClientes::on_btnBorrar_clicked()
