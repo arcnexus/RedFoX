@@ -49,11 +49,7 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void txtPrimerApellido_editingFinished();
-
-    void txtSegundoApellido_editingFinished();
-
-    void txtnombre_editingFinished();
+    void txtApellido_Nombre_editingFinished();
 
     void txtpoblacion_editingFinished();
 
@@ -92,12 +88,6 @@ private slots:
     void refrescar_grafica();
     void set_blink();
 
-
-
-    void on_radBuscar_toggled(bool checked);
-
-    void on_radEditar_toggled(bool checked);
-
     void on_tabla_busquedas_doubleClicked(const QModelIndex &index);
 
     void on_tabla_busquedas_clicked(const QModelIndex &index);
@@ -106,9 +96,7 @@ private slots:
 
     void on_btnAnadirdireccion_clicked();
 
-    void on_btnAdd_customer_clicked();
-
-    void on_btnExcepciones_clicked();
+    void btnExcepciones_clicked();
 
     void mostrarBusqueda();
     void ocultarBusqueda();
@@ -122,17 +110,9 @@ private slots:
 
 private:
     Ui::frmClientes *ui;
-    QSqlQueryModel *modelFP;
-    QSqlQueryModel *modelFacturas;
-    QSqlQueryModel *modelPoblaciones;
-    QSqlQueryModel *qModeldireccion;
-    QSqlQueryModel *deudas ;
-    QSqlQueryModel *modelHistorial;
-    QSqlQueryModel * m_clientes;
-    QSqlDatabase dbCliente;
-    QSqlQuery tbpaciente;
+
     Cliente* oCliente;
-    //SqlCalls *llamadasSQL;
+
     bool Anadirdireccion /*= false*/;
     int iddireccionAlternativa;
     void formato_tabla_busquedas();
@@ -144,7 +124,25 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
 
-
     bool eventFilter(QObject *obj, QEvent *event);
+
+    //SQL MODELS
+    QSqlQueryModel *qModelTipos;
+    QSqlQueryModel *qModeldireccion;
+    QSqlQueryModel *Albaranes;
+    QSqlQueryModel *Facturas;
+    QSqlQueryModel *Presupuestos;
+    QSqlQueryModel *Vales;
+    QSqlQueryModel *Tickets;
+    QSqlQueryModel *modelAsientos;
+    QSqlQueryModel *queryTransportistas;
+    QSqlQueryModel *queryAgentes;
+    QSqlQueryModel *qTarifa;
+    QSqlQueryModel *qmidiomas;
+    QSqlQueryModel *modelFacturas;
+    QSqlQueryModel *modelPoblaciones;
+    QSqlQueryModel *deudas ;
+    QSqlQueryModel *modelHistorial;
+    QSqlQueryModel * m_clientes;
 };
 #endif

@@ -190,7 +190,7 @@ public:
     void CargarUsuarios();
 
     bool lProfesional;
-    int irpf;
+    bool irpf;
     float porc_irpf;
     int digitos_cuentas_contables;
     QString cuenta_clientes;
@@ -226,7 +226,7 @@ public:
     QString toFormatoMoneda(QString cTexto);
     double MonedatoDouble(QString moneda);
     bool EsNumero(QString texto);
-    void CargarDatos(int id);
+    void CargarDatos(QSqlRecord r);
     bool CargarDatosBD();
     void AbrirDbWeb();
     void CerrarDbWeb();

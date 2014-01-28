@@ -1,7 +1,7 @@
 #include "frmalbaran.h"
 #include "ui_frmalbaran.h"
-#include "albaran.h"
-#include "../Zona_Pacientes/cliente.h"
+
+
 #include "../Busquedas/db_consulta_view.h"
 #include "../Auxiliares/datedelegate.h"
 #include "../Auxiliares/monetarydelegate.h"
@@ -14,8 +14,7 @@
 #include<math.h>
 #include "../Auxiliares/frmeditline.h"
 
-Albaran *oAlbaran = new Albaran();
-Cliente *oCliente2 = new Cliente();
+
 
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -24,6 +23,9 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {
     ui->setupUi(this);
+
+    oAlbaran = new Albaran(this);
+    oCliente2 = new Cliente(this);
 
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);

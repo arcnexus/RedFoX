@@ -5,6 +5,9 @@
 #include "../Auxiliares/table_helper.h"
 #include "../mayamodule.h"
 #include "../Auxiliares/timedmessagebox.h"
+#include "albaran.h"
+#include "../Zona_Pacientes/cliente.h"
+
 namespace Ui {
 class FrmAlbaran;
 }
@@ -125,6 +128,9 @@ private:
     QString orden;
     QString modo;
     QString serie;
+
+    Albaran *oAlbaran ;
+    Cliente *oCliente2;
 };
 
 #endif // FRMALBARAN_H

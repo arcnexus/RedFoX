@@ -10,6 +10,7 @@ frmConfigurar_terminal::frmConfigurar_terminal(QWidget *parent) :
     series->setQuery("select serie from series",Configuracion_global->empresaDB);
     ui->cboserie->setModel(series);
     ui->cboUsuarioActivo->setModel(Configuracion_global->usuarios_model);
+    ui->cboUsuarioActivo->setModelColumn(1);
     QSqlQueryModel *cajas = new QSqlQueryModel(this);
     cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
     ui->cbocaja->setModel(cajas);
