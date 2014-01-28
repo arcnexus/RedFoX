@@ -137,7 +137,6 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimeattachment.cpp \
     Auxiliares/SMPT/emailaddress.cpp \
     mayamodule.cpp \
-    Zona_Administrador/frmusuarios.cpp \
     moduleextension.cpp \
     Almacen/divisionalmacenext.cpp \
     archivosgeneralesext.cpp \
@@ -216,8 +215,13 @@ SOURCES += main.cpp\
     Auxiliares/numericdelegate.cpp \
     Almacen/frmaddlotes.cpp \
     Almacen/frmselectlotes.cpp \
+<<<<<<< HEAD
     Zona_Maestros/frmcajas.cpp \
     Zona_Maestros/cajas.cpp
+=======
+    Almacen/frmseccionesalmacen.cpp \
+    Almacen/frmfamiliasalmacen.cpp
+>>>>>>> origin/master
 
 
 HEADERS  += mainwindow.h \
@@ -321,7 +325,6 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimeattachment.h \
     Auxiliares/SMPT/emailaddress.h \
     mayamodule.h \
-    Zona_Administrador/frmusuarios.h \
     moduleextension.h \
     Almacen/divisionalmacenext.h \
     archivosgeneralesext.h \
@@ -400,8 +403,13 @@ HEADERS  += mainwindow.h \
     Auxiliares/numericdelegate.h \
     Almacen/frmaddlotes.h \
     Almacen/frmselectlotes.h \
+<<<<<<< HEAD
     Zona_Maestros/frmcajas.h \
     Zona_Maestros/cajas.h
+=======
+    Almacen/frmseccionesalmacen.h \
+    Almacen/frmfamiliasalmacen.h
+>>>>>>> origin/master
 
 
 
@@ -455,7 +463,6 @@ FORMS    += mainwindow.ui \
     Busquedas/db_consulta_view.ui \
     Auxiliares/frmaddentregascuenta.ui \
     Zona_Ventas/frmgestioncobros.ui \
-    Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
     Almacen/frminventario.ui \
     EditorReports/sectioneditordlg.ui \
@@ -498,7 +505,12 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmeditline.ui \
     Almacen/frmaddlotes.ui \
     Almacen/frmselectlotes.ui \
+<<<<<<< HEAD
     Zona_Maestros/frmcajas.ui
+=======
+    Almacen/frmseccionesalmacen.ui \
+    Almacen/frmfamiliasalmacen.ui
+>>>>>>> origin/master
 
 RESOURCES += \
     maya.qrc \

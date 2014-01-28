@@ -21,7 +21,7 @@ frmEditLine::frmEditLine(QWidget *parent) :
     //IVA desde config
     //-------------------
     ui->cboIva->setModel(Configuracion_global->iva_model);
-    ui->cboIva->setModelColumn(Configuracion_global->iva_model->fieldIndex("iva"));
+    ui->cboIva->setModelColumn(4);
     int index = ui->cboIva->findText("21");
     ui->cboIva->setCurrentIndex(index);
 
@@ -132,6 +132,11 @@ void frmEditLine::set_id_cliente(int id)
 void frmEditLine::set_id_tarifa(int id)
 {
     this->id_tarifa = id;
+    QString error;
+    ui->txtTarifa->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(this->id_tarifa),
+                                                    Configuracion_global->groupDB,error).toString());
+    if(!error.isEmpty())
+        QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al localizar la tarifa: %1").arg(error));
 }
 
 void frmEditLine::set_tipo(QString tipo)
@@ -300,21 +305,40 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
             }
 
         }
+        ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_cliente").toDouble(),'f',
+                                                                                  Configuracion_global->decimales_campos_totales)));
 
         ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
                                                                              i.value().value("pvp_con_iva").toDouble(),'f',
                                                                              Configuracion_global->decimales_campos_totales)));
         ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
                                                                                               Configuracion_global->decimales)));
+        //-------------------------
+        // Calculamos %dto tarifa
+        //-------------------------
+        float pvp_recom;
+        dto = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) -
+                Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        if(ui->txtPvp_recomendado->text() == "0,00")
+            pvp_recom = 1;
+        else
+            pvp_recom = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+        if(ui->txtPorc_dto->text() =="0,00" || ui->txtPorc_dto->text() =="0")
+        {
+            float porc_dto = (dto * 100) / pvp_recom;
+            ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
+                                                                                           Configuracion_global->decimales_campos_totales)));
+        }
+        //---------------------------- Fin calculo & dto tarifa
 
         ui->txtCantidad->setText("1");
         int index = ui->cboIva->findText(i.value().value("tipo_iva").toString());
         ui->cboIva->setCurrentIndex(index);
 
     }
-    double pvp = (i.value().value("pvp").toDouble()-(i.value().value("pvp").toDouble()*(ui->txtPorc_dto->text().toFloat()/100)));
-    ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                  pvp,'f', Configuracion_global->decimales)));
+//    double pvp = (i.value().value("pvp").toDouble()-(i.value().value("pvp").toDouble()*(ui->txtPorc_dto->text().toFloat()/100)));
+//    ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(
+//                                                                  pvp,'f', Configuracion_global->decimales)));
     // STOCKS
     ui->txtStockAlmacen->setText(i.value().value("stock_fisico_almacen").toString());
     ui->txtStock_real->setText(i.value().value("stock_real").toString());

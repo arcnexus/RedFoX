@@ -7,14 +7,14 @@ PermisosAgendaForm::PermisosAgendaForm(QWidget *parent) :
     model(this,Configuracion_global->groupDB)
 {
     model.setTable("permisos_agenda");
-    model.setRelation(model.fieldIndex("id_Usuario_agenda"),QSqlRelation("usuarios","id","nombre"));
+    model.setRelation(model.fieldIndex("id_Usuario_agenda"),QSqlRelation("usuarios","id","nombre"));//FIXME usuarios
 
     ui->setupUi(this);
     ui->combo_from->setModel(Configuracion_global->usuarios_model);
-    ui->combo_from->setModelColumn(Configuracion_global->usuarios_model->fieldIndex("nombre"));
+    ui->combo_from->setModelColumn(1);
 
     ui->combo_to->setModel(Configuracion_global->usuarios_model);
-    ui->combo_to->setModelColumn(Configuracion_global->usuarios_model->fieldIndex("nombre"));
+    ui->combo_to->setModelColumn(1);
 
     model.setEditStrategy(QSqlTableModel::OnFieldChange);
 

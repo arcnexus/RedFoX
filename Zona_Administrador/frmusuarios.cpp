@@ -66,7 +66,7 @@ void FrmUsuarios::getModulesFromDB()
     addInfoMedicModule(0);
 }
 
-FrmUsuarios::FrmUsuarios(QWidget *parent) :
+FrmUsuarios::FrmUsuas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmUsuarios),
 

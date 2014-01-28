@@ -20,7 +20,6 @@ Cliente *oCliente2 = new Cliente();
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmAlbaran),
-   // helper(this),
     menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {
@@ -525,13 +524,28 @@ void FrmAlbaran::LLenarAlbaran()
     oAlbaran->poblacion= (ui->txtpoblacion->text());
     oAlbaran->provincia= (ui->txtprovincia->text());
     oAlbaran->pais= (ui->comboPais->currentText());
-    oAlbaran->id_pais = Configuracion_global->paises[ui->comboPais->currentText()].value("id").toInt();
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("pais").toString() == ui->comboPais->currentText())
+        {
+            oAlbaran->id_pais = Configuracion_global->paises_model->record(i).value("id").toInt();
+            break;
+        }
+    }
+//    oAlbaran->id_pais = Configuracion_global->paises[ui->comboPais->currentText()].value("id").toInt();
     oAlbaran->direccion1_entrega= (ui->txtDireccion1_entrega->text());
     oAlbaran->direccion2_entrega= (ui->txtDireccion2_entrega->text());
     oAlbaran->cp_entrega = (ui->txtCp_entrega->text());
     oAlbaran->poblacion_entrega= (ui->txtPoblacion_entrega->text());
     oAlbaran->provincia_entrega= (ui->txtProvincia_entrega->text());
-    oAlbaran->id_pais_entrega = Configuracion_global->paises[ui->cboPais_entrega->currentText()].value("id").toInt();
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("pais").toString() == ui->cboPais_entrega->currentText())
+        {
+            oAlbaran->id_pais_entrega = Configuracion_global->paises_model->record(i).value("id").toInt();
+            break;
+        }
+    }
     oAlbaran->email_entrega = ui->txtemail_alternativa->text();
     oAlbaran->comentarios_entrega = ui->txtcomentarios_alternativa->toPlainText();
     oAlbaran->cif= (ui->txtcif->text());
@@ -967,7 +981,7 @@ void FrmAlbaran::setUpBusqueda()
     m_busqueda->addWidget(borrar);
     this->orden = "Albarán";
 
-    if(Configuracion_global->nivel == 7)
+    if(userLevelInModule() == MayaModule::Administrador)
     {
         QPushButton* Forzar_edicion = new QPushButton(QIcon(":/Icons/PNG/abrecaja.png"),tr("Forzar edición"),this);
         connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));

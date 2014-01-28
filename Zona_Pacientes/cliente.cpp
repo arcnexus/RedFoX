@@ -55,7 +55,6 @@ void Cliente::Guardar() {
     h_cliente["id_forma_pago"] = this->id_forma_pago;
     h_cliente["dia_pago1"] = this->dia_pago1;
     h_cliente["dia_pago2"] = this->dia_pago2;
-    h_cliente["tarifa_cliente"] = this->tarifa_cliente;
     h_cliente["id_divisa"] = this->id_divisa;
     QString importe_a_cuenta;
     importe_a_cuenta = QString::number(this->importe_a_cuenta);
@@ -191,7 +190,7 @@ void Cliente::GuardarWeb()
    h_web["cuenta_cobros"] =  this->cuenta_cobros;
    h_web["dia_pago1"] = this->dia_pago1;
    h_web["dia_pago2"] = this->dia_pago2;
-   h_web["tarifa_cliente"] = this->tarifa_cliente;
+   h_web["id_tarifa"] = this->idTarifa;
    QString importe_a_cuenta;
    importe_a_cuenta = QString::number(this->importe_a_cuenta);
    importe_a_cuenta = importe_a_cuenta.replace(".","");
@@ -243,7 +242,7 @@ void Cliente::Anadir() {
      cliente["cuenta_iva_repercutido"] = this->cuenta_iva_repercutido;
      cliente["cuenta_deudas"]= this->cuenta_deudas;
      cliente["cuenta_cobros"] = this->cuenta_cobros;
-     cliente["tarifa_cliente"] = this->tarifa_cliente;
+     cliente["id_tarifa"] = this->idTarifa;
      QString error;
      int new_id = SqlCalls::SqlInsert(cliente,"clientes",Configuracion_global->groupDB,error);
      if(new_id <=0){
@@ -357,7 +356,6 @@ void Cliente::cargar(QSqlQuery &query)
         this->dia_pago1 = registro.field("dia_pago1").value().toInt();
         this->dia_pago2 = registro.field("dia_pago2").value().toInt();
         this->id_divisa = registro.field("id_divisa").value().toInt();
-        this->tarifa_cliente = registro.field("tarifa_cliente").value().toInt();
         this->importe_a_cuenta = registro.field("importe_a_cuenta").value().toDouble();
         this->vales = registro.field("vales").value().toDouble();
         this->entidad_bancaria = registro.field("entidad_bancaria").value().toString();
@@ -372,7 +370,7 @@ void Cliente::cargar(QSqlQuery &query)
         this->idioma = Configuracion_global->Devolver_idioma(this->ididioma);
         this->cifVies = registro.field("cif_vies").value().toString();
         this->id_web = registro.value("id_web").toInt();
-        this->idTarifa = registro.value("tarifa_cliente").toInt();
+        this->idTarifa = registro.value("id_tarifa").toInt();
         this->observaciones = registro.value("observaciones").toString();
         this->visa1_caduca_mes =registro.field("visa1_caduca_mes").value().toInt();
         this->visa2_caduca_mes = registro.field("visa2_caduca_mes").value().toInt();
@@ -384,7 +382,6 @@ void Cliente::cargar(QSqlQuery &query)
         this->visa_distancia2 = registro.field("visa_distancia2").value().toString();
         this->id_agente = registro.field("id_agente").value().toInt();
         this->id_transportista = registro.field("id_transportista").value().toInt();
-        this->tarifa_cliente = registro.field("id_tarifa").value().toInt();
         int irpf =registro.field("irpf").value().toInt();
         this->grupo_iva = registro.field("grupo_iva").value().toInt();
         if (irpf==1)
@@ -392,7 +389,10 @@ void Cliente::cargar(QSqlQuery &query)
         else
             this->lIRPF = false;
 
-   }
+   } else
+       QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
+                            tr("No hay ningún cliente con estos criterios de búsqueda"),
+                            tr("Aceptar"));
 }
 
 void Cliente::clear()
@@ -454,7 +454,6 @@ void Cliente::clear()
     this->forma_pago = "";
     this->dia_pago1 = 0;
     this->dia_pago2 = 0;
-    this->tarifa_cliente = 0;
     this->importe_a_cuenta=0;
     this->vales = 0;
     this->entidad_bancaria="";

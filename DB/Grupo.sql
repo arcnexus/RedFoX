@@ -1,11 +1,4 @@
 CREATE SCHEMA IF NOT EXISTS `@grupo@` DEFAULT CHARACTER SET utf8 ;
-CREATE TABLE `@grupo@`.`accesousuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) DEFAULT NULL,
-  `id_modulo` int(11) DEFAULT NULL,
-  `id_nivel_acceso` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`agenda` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
@@ -91,7 +84,6 @@ CREATE TABLE `@grupo@`.`articulos` (
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
-  `lotes` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,
   `imagen3` blob,
   `imagen4` blob,
@@ -104,6 +96,15 @@ CREATE TABLE `@grupo@`.`articulos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `@grupo@`.`articulos_imagenes` (
+  `id_articulo` INT NOT NULL,
+  `imagen1` BLOB NULL,
+  `imagen2` BLOB NULL,
+  `imagen3` BLOB NULL,
+  `imagen4` BLOB NULL,
+  PRIMARY KEY (`id_articulo`));
+
 
 CREATE TABLE `@grupo@`.`articulos_lotes` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -408,12 +409,6 @@ CREATE TABLE `@grupo@`.`empresas` (
   `cuenta_iva_soportado2_re` varchar(45) DEFAULT NULL,
   `cuenta_iva_soportado3_re` varchar(45) DEFAULT NULL,
   `cuenta_iva_soportado4_re` varchar(45) DEFAULT NULL,
-  `nombre_email` varchar(100) DEFAULT NULL,
-  `cuenta_mail` varchar(150) DEFAULT NULL,
-  `cuenta_pop` varchar(150) DEFAULT NULL,
-  `cuenta_imap` varchar(150) DEFAULT NULL,
-  `cuenta_smpt` varchar(150) DEFAULT NULL,
-  `password_cuenta` varchar(50) DEFAULT NULL,
   `importada_sp` tinyint(1) DEFAULT '0',
   `importe_cierre` double DEFAULT NULL,
   `facturas_en_cierre` tinyint(1) DEFAULT NULL,
@@ -517,12 +512,6 @@ CREATE TABLE `@grupo@`.`maestro_subfamilia_cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
   `id_maestro_familia_cliente` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `@grupo@`.`modulos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module_zone` int(11) DEFAULT NULL,
-  `module_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`monedas` (
@@ -812,11 +801,11 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaart_tarifa` AS select `@grupo@`.`articulos`.`codigo` AS `codigo`,`@grupo@`.`articulos`.`codigo_barras` AS `codigo_barras`,`@grupo@`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,
         `@grupo@`.`articulos`.`id` AS `id`, `@grupo@`.`tarifas`.`pvp` + (`@grupo@`.`tarifas`.`pvp` *(`@grupo@`.`articulos`.`tipo_iva`/100)) AS `pvp_con_iva`,
         `@grupo@`.`articulos`.`descripcion` AS `descripcion`, `@grupo@`.`articulos`.`descripcion_reducida` AS `descripcion_reducida`,
-        `@grupo@`.`articulos`.`tipo_iva` AS `tipo_iva`,`@grupo@`.`articulos`.`coste` AS `coste`,`@grupo@`.`tarifas`.`pvp` AS `pvp`,
+        `@grupo@`.`articulos`.`tipo_iva` AS `tipo_iva`,`@grupo@`.`articulos`.`coste` AS `coste`,`@grupo@`.`tarifas`.`pvp` AS `pvp_cliente`,
+        `@grupo@`.`articulos`.`pvp` as `pvp`,
         `@grupo@`.`articulos`.`cantidad_pendiente_recibir` AS `cantidad_pendiente_recibir`,
         `@grupo@`.`articulos`.`fecha_prevista_recepcion` AS `fecha_prevista_recepcion`,
         `@grupo@`.`articulos`.`unidades_reservadas` AS `unidades_reservadas`,
-        `@grupo@`.`tarifas`.`porc_dto` as `porc_dto`,
         `@grupo@`.`articulos`.`stock_maximo` AS `stock_maximo`,`@grupo@`.`articulos`.`stock_minimo` AS `stock_minimo`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`controlar_stock` AS `controlar_stock`,`@grupo@`.`articulos`.`kit` AS `kit`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`,
         `@grupo@`.`tarifas`.`id_codigo_tarifa` AS `tarifa`,`@grupo@`.`articulos`.`lotes` AS `lotes` from ((`@grupo@`.`articulos` left join `@grupo@`.`proveedores` ON ((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`))) join `@grupo@`.`tarifas` ON ((`@grupo@`.`articulos`.`id` = `@grupo@`.`tarifas`.`id_articulo`)));
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaarticulos` AS select `@grupo@`.`articulos`.`codigo` AS `codigo`,`@grupo@`.`articulos`.`codigo_barras` AS `codigo_barras`,`@grupo@`.`articulos`.`codigo_fabricante` AS `codigo_fabricante`,`@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`proveedores`.`proveedor` AS `proveedor`,`@grupo@`.`articulos`.`tipo_iva` AS `tipo_iva`,`@grupo@`.`articulos`.`coste` AS `coste`,`@grupo@`.`articulos`.`fecha_ultima_compra` AS `fecha_ultima_compra`,`@grupo@`.`articulos`.`fecha_ultima_venta` AS `fecha_ultima_venta`,`@grupo@`.`articulos`.`unidades_compradas` AS `unidades_compradas`,`@grupo@`.`articulos`.`unidades_vendidas` AS `unidades_vendidas`,`@grupo@`.`articulos`.`stock_maximo` AS `stock_maximo`,`@grupo@`.`articulos`.`stock_minimo` AS `stock_minimo`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`controlar_stock` AS `controlar_stock`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen` from (`@grupo@`.`articulos` left join `@grupo@`.`proveedores` on((`@grupo@`.`articulos`.`id_proveedor` = `@grupo@`.`proveedores`.`id`)));
@@ -825,3 +814,4 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
 `@grupo@`.`articulos`.`descripcion` AS `descripcion`,`@grupo@`.`articulos`.`stock_real` AS `stock_real`,`@grupo@`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`from `@grupo@`.`articulos`;
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaempresa` AS select concat_ws(' ',`@grupo@`.`empresas`.`nombre`,`@grupo@`.`empresas`.`ejercicio`) AS `empresa`,`@grupo@`.`empresas`.`id` AS `id` from `@grupo@`.`empresas`;
 INSERT INTO `@grupo@`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');
+INSERT INTO `@grupo@`.`secciones` (`seccion`, `codigo`) VALUES ('Sin sección', 'SS');

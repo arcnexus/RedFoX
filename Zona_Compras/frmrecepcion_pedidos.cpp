@@ -451,7 +451,8 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                         {
                             FrmTarifas frmtarifas;
                             frmtarifas.capturar_datos(queryProducto.record().field("id").value().toInt(),
-                                                      QString::number(queryProducto.record().field("coste").value().toDouble(),'f',Configuracion_global->decimales));
+                                                      QString::number(queryProducto.record().field("coste").value().toDouble(),
+                                                                      'f',Configuracion_global->decimales),id);
                             frmtarifas.exec();
                         }
                     }

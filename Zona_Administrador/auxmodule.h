@@ -10,26 +10,28 @@ public:
     explicit AuxModule(QWidget *parent = 0, QString label="");
     ~AuxModule();
     int id;
+    int id_user;
+    QString tabla;
     MayaModule::module_zone zone;
     QString name;
 
     int nivel();
     void setNivel(int idAcceso);
 
-    static QSqlTableModel *model();
+    static QStringList model();
     static void setModel();
 
 signals:
     
 public slots:
+private slots:
+    void save(int index);
 private:
     QLabel _label;
     QComboBox _combo;
     QHBoxLayout _layout;
 
-    static QSqlTableModel *_model;
-    static bool _modelIsSet;
-
+    static QStringList _model;
 };
 
 #endif // AUXMODULE_H

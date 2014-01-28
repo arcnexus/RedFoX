@@ -1,14 +1,34 @@
 #include "frmtarifas.h"
 #include "ui_frmtarifas.h"
+#include "../Auxiliares/monetarydelegate.h"
 
 FrmTarifas::FrmTarifas(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FrmTarifas)
 {
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(0);
     QSqlQueryModel *modelo = new QSqlQueryModel(this);
     modelo->setQuery("Select descripcion from codigotarifa",Configuracion_global->groupDB);
     ui->listaTarifa->setModel(modelo);
+    modelVolumenes = new QSqlQueryModel(this);
+    ui->tabla_volumenes->setModel(modelVolumenes);
+    this->id_volumen =0;
+    this->id_tarifa =0;
+    modelVolumenes->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_tarifa = %1").arg(this->id_tarifa),
+                             Configuracion_global->groupDB);
+    QStringList headers;
+    QVariantList sizes;
+    headers << "id" <<tr("Desde") << tr("Hasta") << tr("Precio");
+    sizes << 0 << 60 << 60 <<100;
+    for(int i=0;i<headers.size();i++)
+    {
+        ui->tabla_volumenes->setColumnWidth(i,sizes.at(i).toInt());
+        modelVolumenes->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        if(i>0)
+            ui->tabla_volumenes->setItemDelegateForColumn(i,new MonetaryDelegate(this));
+    }
+
 
 
     //-----------
@@ -30,10 +50,6 @@ FrmTarifas::FrmTarifas(QWidget *parent) :
     ui->spinMargen->setValue(Configuracion_global->margen);
     ui->spinmargen_minimo->setValue(Configuracion_global->margen_minimo);
 
-    //---------------------
-    //  Importados SP
-    //---------------------
-    ui->frame_dtos_sp->setVisible(Configuracion_global->importado_sp);
 
 
 }
@@ -49,7 +65,7 @@ void FrmTarifas::capturar_coste(float Coste)
     ui->txtCosteLocal->setText(Configuracion_global->toFormatoMoneda(QString::number(Coste)));
 }
 
-void FrmTarifas::capturar_datos(int id, QString costeLocal){
+void FrmTarifas::capturar_datos(int id, QString costeLocal, int id_prod){
     ui->listaTarifa->hide();
     QSqlQuery queryTarifas(Configuracion_global->groupDB);
     if(!queryTarifas.exec("select * from tarifas where id="+QString::number(id))){
@@ -68,6 +84,7 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
                 ui->txtCodTarifa->setText(queryGrupotarifa.record().field("codigo_tarifa").value().toString());
                 ui->txtDescTarifa->setText(queryGrupotarifa.record().field("descripcion").value().toString());
             }
+            this->id_producto = id_prod;
             ui->txtPais->setText(Configuracion_global->Devolver_pais(queryTarifas.record().field("id_pais").value().toInt()));
             ui->txtMoneda->setText(Configuracion_global->Devolver_moneda(queryTarifas.record().value("id_monedas").toInt()));
             ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(queryTarifas.record().value("pvp").toString()));
@@ -95,18 +112,16 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal){
                 Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
             else
                 asignarcambiodivisa(1);
-            ui->dspin_porc_dto1->setValue(queryTarifas.record().field("porc_dto1").value().toDouble());
-            ui->dspin_porc_dto2->setValue(queryTarifas.record().field("porc_dto2").value().toDouble());
-            ui->dspin_porc_dto3->setValue(queryTarifas.record().field("porc_dto3").value().toDouble());
-            ui->dspin_porc_dto4->setValue(queryTarifas.record().field("porc_dto4").value().toDouble());
-            ui->dspin_porc_dto5->setValue(queryTarifas.record().field("porc_dto5").value().toDouble());
-            ui->dspin_porc_dto6->setValue(queryTarifas.record().field("porc_dto6").value().toDouble());
 
+            modelVolumenes->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_tarifa = %1").arg(this->id_tarifa),
+                                     Configuracion_global->groupDB);
         }
 
 
-   }
+    }
 }
+
+
 
 void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
 {
@@ -134,12 +149,6 @@ void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
             Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
         else
             asignarcambiodivisa(1);
-        ui->dspin_porc_dto1->setValue(qTarifa.record().field("porc_dto1").value().toDouble());
-        ui->dspin_porc_dto2->setValue(qTarifa.record().field("porc_dto2").value().toDouble());
-        ui->dspin_porc_dto3->setValue(qTarifa.record().field("porc_dto3").value().toDouble());
-        ui->dspin_porc_dto4->setValue(qTarifa.record().field("porc_dto4").value().toDouble());
-        ui->dspin_porc_dto5->setValue(qTarifa.record().field("porc_dto5").value().toDouble());
-        ui->dspin_porc_dto6->setValue(qTarifa.record().field("porc_dto6").value().toDouble());
     }
     calcular_precio(ui->spinMargen->value());
 
@@ -218,4 +227,69 @@ void FrmTarifas::on_btnDesbloquearDivisa_clicked(bool checked)
 void FrmTarifas::on_spinMargen_editingFinished()
 {
     calcular_precio(ui->spinMargen->value());
+}
+
+void FrmTarifas::controles_volumenes(bool state)
+{
+    ui->spinDesde->setEnabled(state);
+    ui->spinHasta->setEnabled(state);
+    ui->txtPrecio_volumen->setEnabled(state);
+    ui->txtPrecio_volumen->setReadOnly(!state);
+    ui->btnAnadir_volumen->setEnabled(!state);
+    ui->btnEditar_volumen->setEnabled(!state);
+    ui->btnGuardar_volumen->setEnabled(state);
+    ui->btnDeshacer_volumen->setEnabled(state);
+    ui->btnBorrar_volumen->setEnabled(!state);
+
+}
+
+void FrmTarifas::on_btnAnadir_volumen_clicked()
+{
+ui->spinDesde->setValue(0);
+ui->spinHasta->setValue(0);
+ui->txtPrecio_volumen->setText("0,00");
+controles_volumenes(true);
+ui->spinDesde->setFocus();
+
+
+}
+
+void FrmTarifas::on_btnEditar_volumen_clicked()
+{
+   controles_volumenes(true);
+   ui->spinDesde->setFocus();
+}
+
+void FrmTarifas::on_btnGuardar_volumen_clicked()
+{
+    QHash <QString,QVariant> hvol;
+    QString error;
+    hvol["desde"] = ui->spinDesde->value();
+    hvol["hasta"] = ui->spinHasta->value();
+    hvol["precio"] = Configuracion_global->MonedatoDouble(ui->txtPrecio_volumen->text());
+    if(this->id_volumen ==0) // Añadir
+    {
+        hvol["id_producto"] =  this->id_producto;
+        hvol["id_tarifa"] = this->id_tarifa;
+        SqlCalls::SqlInsert(hvol,"articulos_volumen",Configuracion_global->groupDB,error);
+    } else // Editando
+    {
+        SqlCalls::SqlUpdate(hvol,"articulos_volumen",Configuracion_global->groupDB,QString("id=%1").arg(this->id_volumen), error);
+    }
+    if(!error.isEmpty())
+        QMessageBox::warning(this,tr("Artículos por volumen"),tr("Ocurrió un error al guardar los volumen en la BD: %1").arg(error),
+                             tr("Aceptar"));
+    else
+        modelVolumenes->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_tarifa = %1").arg(this->id_tarifa),
+                                 Configuracion_global->groupDB);
+    controles_volumenes(false);
+
+
+}
+
+void FrmTarifas::on_txtPrecio_volumen_editingFinished()
+{
+    ui->txtPrecio_volumen->blockSignals(true);
+    ui->txtPrecio_volumen->setText(Configuracion_global->toFormatoMoneda(ui->txtPrecio_volumen->text()));
+    ui->txtPrecio_volumen->blockSignals(false);
 }

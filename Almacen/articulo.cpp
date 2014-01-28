@@ -1022,10 +1022,10 @@ bool Articulo::Devolucion(int id, double cantidad, double pvp)
 }
 
 
-void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
+void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLabel *label4)
 {
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
-    qryArticulo.prepare("Select imagen,imagen2,imagen3,imagen4 from articulos where id = :id");
+    qryArticulo.prepare("Select imagen1,imagen2,imagen3,imagen4 from articulos_imagenes where id_articulo = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
         if (qryArticulo.next()){
@@ -1033,11 +1033,12 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
             // imagen1
             //--------
             QSqlRecord registro =  qryArticulo.record();
-            QByteArray ba1 = registro.field("imagen").value().toByteArray();
-            QPixmap pm1;
-            pm1.loadFromData(QByteArray::fromBase64(ba1));
-            if(!registro.field("imagen").value().isNull());
-                label->setPixmap(pm1);
+            QByteArray ba1 = registro.field("imagen1").value().toByteArray();
+            ba1 = registro.field("imagen1").value().toByteArray();
+            QPixmap pm11;
+            pm11.loadFromData(ba1);
+            if(!registro.field("imagen1").value().isNull())
+                label1->setPixmap(pm11);
             //--------
             // imagen2
             //--------
@@ -1062,11 +1063,14 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
             pm14.loadFromData(ba1);
             if(!registro.field("imagen4").value().isNull())
                 label4->setPixmap(pm14);
-        } else
-            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
-                                    QObject::tr("No se pueden recuperar la imagenes asociadas al artículo"),
-                                    QObject::tr("Ok"));
-    }
+        } //else
+//            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
+//                                    QObject::tr("No se pueden recuperar la imagenes asociadas al artículo"),
+//                                    QObject::tr("Ok"));
+    } else
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
+                                QObject::tr("No se pueden recuperar la imagenes asociadas al artículo: %1").arg(qryArticulo.lastError().text()),
+                                QObject::tr("Ok"));
 }
 
 bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QDate fecha, QString accion)
@@ -1584,7 +1588,7 @@ bool Articulo::cambiar_pvp()
 //                qTarifa.next();
 
 //                QString cMoneda = Configuracion_global->Devolver_moneda(qTarifa.record().field("id_monedas").value().toInt());
-            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->coste,'f',Configuracion_global->decimales));
+            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->coste,'f',Configuracion_global->decimales),this->id);
 //            if (Configuracion_global->divisa_local != cMoneda)
 //                Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,editTarifa->cod_divisa);
 //            else

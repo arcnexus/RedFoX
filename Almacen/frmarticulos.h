@@ -142,20 +142,6 @@ private slots:
 
     void on_btnBorrar_oferta_clicked();
 
-    void on_btnAnadir_volumen_clicked();
-
-    void on_txtPrecio_volumen_editingFinished();
-
-    void on_btnEditar_volumen_clicked();
-
-    void on_btnGuardar_volumen_clicked();
-
-    void on_tabla_volumenes_clicked(const QModelIndex &index);
-
-    void on_btnDeshacer_volumen_clicked();
-
-    void on_btnBorrar_volumen_clicked();
-
     void on_btnBorrarImagen_1_clicked();
 
     void on_btnBorrarimagen_2_clicked();

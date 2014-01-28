@@ -70,7 +70,6 @@ public:
     QString forma_pago;
     int dia_pago1;
     int dia_pago2;
-    int tarifa_cliente;
     double importe_a_cuenta;
     double vales;
     QString entidad_bancaria;

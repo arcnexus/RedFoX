@@ -30,7 +30,6 @@ public:
 private:
     Ui::frmNuevosAvisos *ui;
     QSqlQueryModel *m_empresas;
-    QSqlQueryModel *m_usuarios;
     QSqlQueryModel *m_avisos;
 };
 

@@ -53,14 +53,13 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //SET MODEL ON TABLE
     ui->cboEmpresa2->setModel(modelEmpresa);
     ui->tabla_ofertas->setModel(promociones);
-    ui->tabla_volumenes->setModel(volumen);
     ui->tablaBusqueda->setModel(modelBusqueda);
     ui->TablaTarifas->setModel(modelTarifa);
     ui->tablaProveedores->setModel(modelProv);
     ui->tablaLotes->setModel(modelTrazabilidad1);
     ui->tablaVentas->setModel(modelTrazabilidad2);
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
-    ui->cboTipoIVA->setModelColumn(Configuracion_global->iva_model->fieldIndex("tipo"));
+    ui->cboTipoIVA->setModelColumn(2);
 
     //SET DELEGATES
     ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate(this));
@@ -79,7 +78,6 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->tablaProveedores->setItemDelegateForColumn(5,new MonetaryDelegate);
     ui->tablaProveedores->setItemDelegateForColumn(4,new MonetaryDelegate);
 
-    ui->tabla_volumenes->setItemDelegateForColumn(3, new MonetaryDelegate(this));
 
     //SET UP CHARTS
     ui->graf_prov->Clear();
@@ -148,17 +146,6 @@ void FrmArticulos::format_tables()
     }
     ui->tabla_ofertas->setColumnHidden(0,true);
 
-    QStringList cabeceras;
-    QVariantList tamanos;
-    cabeceras << tr("id") << tr("Desde") << tr("Hasta") << tr("PVP");
-    tamanos   <<      0   <<       70    <<      70     <<     100;
-
-    for(int x = 0; x<tamanos.size(); x++)
-    {
-        ui->tabla_volumenes->setColumnWidth(x,tamanos.at(x).toInt());
-        volumen->setHeaderData(x,Qt::Horizontal,cabeceras.at(x));
-    }
-    ui->tabla_volumenes->setColumnHidden(0,true);
 
     QStringList headers;
     headers << "Pais"   << "Moneda" << "Codigo de tarifa" << "Descripción";
@@ -434,13 +421,12 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->radGrafica_importes_2->setEnabled(state);
     ui->radGrafica_unidades_2->setEnabled(state);
     ui->chkmostrarvalores_comparativa->setEnabled(state);
-    ui->btnAnadirTarifa->setEnabled(!state);
-    ui->btnEditartarifa->setEnabled(!state);
-    ui->btnBorrarTarifa->setEnabled(!state);
+    ui->btnAnadirTarifa->setEnabled(true);
+    ui->btnEditartarifa->setEnabled(true);
+    ui->btnBorrarTarifa->setEnabled(true);
     ui->btnActivarOferta->setEnabled(!state);
     ui->btnBorrar_oferta->setEnabled(!state);
-    ui->btnAnadir_volumen->setEnabled(!state);
-    ui->btnEditar_volumen->setEnabled(!state);
+
 
     //----------------------------------------------------
     // activo controles que deben estar activos.
@@ -454,10 +440,6 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->chkOferta_dto->setEnabled(false);
     ui->chkOferta_pvp->setEnabled(false);
     ui->chkOferta_web->setEnabled(false);
-
-    ui->spinDesde->setEnabled(false);
-    ui->spinHasta->setEnabled(false);
-    ui->txtPrecio_volumen->setEnabled(false);
 
     m_busqueda->block(!state);
 
@@ -574,12 +556,20 @@ void FrmArticulos::LLenarCampos(int index)
 
     else if(index == 3 /*ui->Pestanas->currentWidget() == ui->tab_precios_volumen*/)
     {
-        volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(
-                              oArticulo->id),Configuracion_global->groupDB);
-        ui->tabla_volumenes->selectRow(0);
+
     }
 
-    else if(index == 4 /*ui->Pestanas->currentWidget() == ui->tab_imagenes*/)
+
+    else if(index == 4 /*web*/)
+    {
+        //--------------------------------------------------------------
+        // Recuperamos datos articulo distintivos según web/idioma/pais
+        //--------------------------------------------------------------
+        // Mostramos el primer pais que encontramos para el artículo
+        //--------------------------------------------------------------
+
+    }
+    else if(index == 5 /*imagenes*/)
     {
         //-----------------------------
         // Recuperamos imagen desde BD
@@ -592,7 +582,9 @@ void FrmArticulos::LLenarCampos(int index)
                                 ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
     }
 
-    else if(index == 5 /*ui->Pestanas->currentWidget() == ui->tab_estadistica*/)
+
+
+    else if(index == 7 /*ui->Pestanas->currentWidget() == ui->tab_estadistica*/)
     {
         ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
         ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
@@ -618,7 +610,7 @@ void FrmArticulos::LLenarCampos(int index)
         GraficaImportes();
     }
 
-    else if(index == 6 /*ui->Pestanas->currentWidget() == ui->tab_grafica*/)
+    else if(index == 8 /*ui->Pestanas->currentWidget() == ui->tab_grafica*/)
     {
         LLenarGraficas();
         if(ui->radGrafica_importes->isChecked())
@@ -627,12 +619,12 @@ void FrmArticulos::LLenarCampos(int index)
             GraficaUnidades();
     }
 
-    else if(index == 7 /*ui->Pestanas->currentWidget() == ui->tab_comparativa*/)
+    else if(index == 9 /*ui->Pestanas->currentWidget() == ui->tab_comparativa*/)
     {
         LLenarGrafica_comparativa(1);
     }
 
-    else if(index == 8 /*ui->Pestanas->currentWidget() == ui->tab_Trazabilidad*/)
+    else if(index == 10/*ui->Pestanas->currentWidget() == ui->tab_Trazabilidad*/)
     {
         // -------------------
         // TABLA TRAZABILIDAD
@@ -664,7 +656,7 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->codigo= ui->txtcodigo->text();
     oArticulo->codigo_barras =ui->txtcodigo_barras->text();
     oArticulo->codigo_fabricante=ui->txtcodigo_fabricante->text();
-    oArticulo->descripcion =ui->txtdescripcion->text();
+    oArticulo->descripcion =ui->txtdescripcion->toPlainText();
     oArticulo->descripcion_reducida = ui->txtdescripcionResumida->text();
     oArticulo->familia=ui->txtfamilia->text();
     oArticulo->seccion=ui->txtseccion->text();
@@ -1131,7 +1123,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
         return;
     int id_t = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),0),Qt::DisplayRole).toInt();
     FrmTarifas editTarifa(this);
-    editTarifa.capturar_datos(id_t,ui->txtCoste_real->text());
+    editTarifa.capturar_datos(id_t,ui->txtCoste_real->text(),oArticulo->id);
 
     if(editTarifa.exec() ==QDialog::Accepted)
     {
@@ -2144,7 +2136,7 @@ void FrmArticulos::togglechkmostrarvalores_comparativa()
 
 void FrmArticulos::on_botCambiarImagen_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_1,"imagen");
+    CambiarImagen_clicked(ui->lblImagenArticulo_1,"imagen1");
 }
 
 void FrmArticulos::on_botCambiarImagen_2_clicked()
@@ -2192,14 +2184,34 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             ba = f.readAll();
             f.close();
         }
-        QSqlQuery Articulo(Configuracion_global->groupDB);
-        Articulo.prepare("update articulos set "+campo+" =:imagen where id = :nid");
-        Articulo.bindValue(":imagen",ba/*.toBase64()*/);
-        Articulo.bindValue(":nid",oArticulo->id);
-        if (!Articulo.exec())
+        // Si existe actualizamos, si no existe añadimos.
+        QString error;
+        int id_art = SqlCalls::SelectOneField("articulos_imagenes","id_articulo",QString("id_articulo =%1").arg(oArticulo->id),
+                                 Configuracion_global->groupDB,error).toInt();
+        if(id_art >0){
+            QSqlQuery Articulo(Configuracion_global->groupDB);
+
+            Articulo.prepare("update articulos_imagenes set "+campo+" =:imagen,id_articulo =:id_art where id_articulo = :nid");
+            Articulo.bindValue(":imagen",ba/*.toBase64()*/);
+            Articulo.bindValue(":nid",oArticulo->id);
+            Articulo.bindValue(":id_art",oArticulo->id);
+            if (!Articulo.exec())
+            {
+                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+                qDebug() << Articulo.lastError();
+            }
+        } else
         {
-            QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
-            qDebug() << Articulo.lastError();
+            QSqlQuery Articulo(Configuracion_global->groupDB);
+
+            Articulo.prepare("insert into articulos_imagenes ("+campo+",id_articulo)  values(:imagen,:id_art) ");
+            Articulo.bindValue(":imagen",ba/*.toBase64()*/);
+            Articulo.bindValue(":id_art",oArticulo->id);
+            if (!Articulo.exec())
+            {
+                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+                qDebug() << Articulo.lastError();
+            }
         }
     }
 }
@@ -2585,134 +2597,7 @@ void FrmArticulos::on_btnBorrar_oferta_clicked()
     }
 }
 
-void FrmArticulos::on_btnAnadir_volumen_clicked()
-{
-    ui->btnAnadir_volumen->setEnabled(false);
-    ui->btnEditar_volumen->setEnabled(false);
-    ui->botGuardar->setEnabled(false);
-    ui->botDeshacer->setEnabled(false);
-    ui->btnGuardar_volumen->setEnabled(true);
-    ui->btnDeshacer_volumen->setEnabled(true);
-    ui->spinDesde->setEnabled(true);
-    ui->spinHasta->setEnabled(true);
-    ui->txtPrecio_volumen->setEnabled(true);
-    ui->spinDesde->setValue(0);
-    ui->spinHasta->setValue(0);
-    ui->txtPrecio_volumen->setText("0,00");
-    ui->spinDesde->setFocus();
-    ui->spinDesde->selectAll();
-    new_volumen = true;
-}
 
-void FrmArticulos::on_txtPrecio_volumen_editingFinished()
-{
-    blockSignals(true);
-    ui->txtPrecio_volumen->setText(Configuracion_global->toFormatoMoneda(ui->txtPrecio_volumen->text()));
-    blockSignals(false);
-}
-
-void FrmArticulos::on_btnEditar_volumen_clicked()
-{
-    if(!ui->tabla_volumenes->currentIndex().isValid())
-        return;
-    ui->tabla_volumenes->setEnabled(false);
-
-    ui->btnAnadir_volumen->setEnabled(false);
-    ui->btnEditar_volumen->setEnabled(false);
-    ui->botGuardar->setEnabled(false);
-    ui->botDeshacer->setEnabled(false);
-    ui->btnGuardar_volumen->setEnabled(true);
-    ui->btnDeshacer_volumen->setEnabled(true);
-    ui->spinDesde->setEnabled(true);
-    ui->spinHasta->setEnabled(true);
-    ui->txtPrecio_volumen->setEnabled(true);
-    ui->spinDesde->setFocus();
-    ui->spinDesde->selectAll();
-    new_volumen = false;
-}
-
-void FrmArticulos::on_btnGuardar_volumen_clicked()
-{
-    ui->btnAnadir_volumen->setEnabled(true);
-    ui->btnEditar_volumen->setEnabled(true);
-    ui->botGuardar->setEnabled(true);
-    ui->botDeshacer->setEnabled(true);
-    ui->btnGuardar_volumen->setEnabled(false);
-    ui->btnDeshacer_volumen->setEnabled(false);
-    ui->spinDesde->setEnabled(false);
-    ui->spinHasta->setEnabled(false);
-    ui->txtPrecio_volumen->setEnabled(false);
-    QHash <QString,QVariant> h;
-    QString error;
-
-    h["desde"] = ui->spinDesde->value();
-    h["hasta"] = ui->spinHasta->value();
-    h["precio"] = Configuracion_global->MonedatoDouble( ui->txtPrecio_volumen->text());
-
-    if(new_volumen) {
-        new_volumen = false;
-        h["id_producto"] = oArticulo->id;
-        int new_id = SqlCalls::SqlInsert(h,"articulos_volumen",Configuracion_global->groupDB,error);
-        if(new_id == -1)
-            QMessageBox::warning(this,tr("Gestión de Artículos"),
-                                 tr("Se ha producido un error al insertar precio segun volumen: %1").arg(error));
-
-    }   else
-    {
-            int id_vol;
-            QModelIndex index;
-            index = ui->tabla_volumenes->currentIndex();
-            id_vol = ui->tabla_volumenes->model()->data(ui->tabla_volumenes->currentIndex().model()->index(index.row(),0)).toInt();
-
-            bool succes = SqlCalls::SqlUpdate(h,"articulos_volumen",Configuracion_global->groupDB,QString("id = %1").arg(id_vol),error);
-            if(!succes)
-                QMessageBox::warning(this,tr("Gestión de Artículos"),
-                                     tr("Se ha producido un error al editar precio segun volumen: %1").arg(error));
-
-    }
-    volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(oArticulo->id),
-                      Configuracion_global->groupDB);
-    ui->tabla_volumenes->setEnabled(true);
-}
-
-void FrmArticulos::on_tabla_volumenes_clicked(const QModelIndex &index)
-{
-    ui->spinDesde->setValue(volumen->record(index.row()).value("desde").toDouble());
-    ui->spinHasta->setValue(volumen->record(index.row()).value("hasta").toDouble());
-    ui->txtPrecio_volumen->setText(volumen->record(index.row()).value("precio").toString());
-}
-
-void FrmArticulos::on_btnDeshacer_volumen_clicked()
-{
-    ui->btnAnadir_volumen->setEnabled(true);
-    ui->btnEditar_volumen->setEnabled(true);
-    ui->botGuardar->setEnabled(true);
-    ui->botDeshacer->setEnabled(true);
-    ui->btnGuardar_volumen->setEnabled(false);
-    ui->btnDeshacer_volumen->setEnabled(false);
-    ui->spinDesde->setEnabled(false);
-    ui->spinHasta->setEnabled(false);
-    ui->txtPrecio_volumen->setEnabled(false);
-    on_tabla_volumenes_clicked(ui->tabla_volumenes->currentIndex());
-    ui->tabla_volumenes->setEnabled(true);
-}
-
-void FrmArticulos::on_btnBorrar_volumen_clicked()
-{
-    QModelIndex index = ui->tabla_volumenes->currentIndex();
-    int id = ui->tabla_volumenes->model()->data(ui->tabla_volumenes->model()->index(index.row(),0)).toInt();
-    if(QMessageBox::question(this,tr("Gestión de producto"),tr("¿Desea borrar esta oferta por volumen? \n Esta opción no se puede deshacer"),
-                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
-    {
-        QString error;
-        bool succes = SqlCalls::SqlDelete("articulos_volumen",Configuracion_global->groupDB,QString("id=%1").arg(id),error);
-        if (!succes)
-            QMessageBox::warning(this,tr("Gestión de productos"),tr("Ocurrió un error al borrar oferta por volumen : %1").arg(error));
-    }
-    volumen->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_producto = %1").arg(oArticulo->id),
-                      Configuracion_global->groupDB);
-
-}
 
 void FrmArticulos::on_btnBorrarImagen_1_clicked()
 {

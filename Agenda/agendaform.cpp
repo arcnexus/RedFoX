@@ -15,7 +15,7 @@ AgendaForm::AgendaForm(QWidget *parent) :
 
 
     ui->combo_user->setModel(Configuracion_global->usuarios_model);
-    ui->combo_user->setModelColumn(Configuracion_global->usuarios_model->fieldIndex("nombre"));
+    ui->combo_user->setModelColumn(1);
 
     event_color = QColor::fromRgb(qRgb(51,102,255));
 
@@ -88,8 +88,8 @@ void AgendaForm::on_btn_buscaUser_clicked()
 {
     QString s = QInputDialog::getText(this,"Nombre","Nombre de usuario");
     Db_table_View form(this);
-    form.set_db("Maya");
-    form.set_table("usuarios");
+    form.set_db("Global");
+    form.set_table("mayaglobal.usuarios");
 
     form.setWindowTitle(tr("Usuarios"));
 
