@@ -93,7 +93,7 @@ public:
 public slots:
     bool BorrarLineas(int Iped);
     // Metodos de trabajo Clase Pedido
-    bool AnadirPedido();
+    int AnadirPedido();
     bool RecuperarPedido(QString cSQL);
     bool GuardarPedido(int nid_Pedido);
     int NuevoNumeroPedido();

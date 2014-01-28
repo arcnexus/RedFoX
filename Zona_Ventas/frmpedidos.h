@@ -122,6 +122,9 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
     QString moneda;
+    QString texto;
+    QString orden;
+    QString modo;
 };
 
 #endif // FRMPEDidOS_H

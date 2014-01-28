@@ -15,18 +15,41 @@ Pedidos::~Pedidos()
 
 bool Pedidos::BorrarLineas(int Iped)
 {
-    QSqlQuery query(Configuracion_global->empresaDB);
-    QString sql = QString("DELETE FROM lin_ped WHERE id = %1").arg(Iped);
-    query.prepare(sql);
-    if(query.exec())
+    QMap <int,QSqlRecord>  l;
+    QString error,error2;
+    bool success,success2;
+    l= SqlCalls::SelectRecord("lin_ped",QString("id_cab = %1").arg(Iped),Configuracion_global->empresaDB,error);
+    QMapIterator <int,QSqlRecord>lin(l);
+    QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL;
+    while(lin.hasNext())
+    {
+        lin.next();
+        cSQL = QString("update articulos set unidades_reservadas = unidades_reservadas -%1 where id = %2").arg(
+                    lin.value().value("cantidad").toFloat(),lin.value().value("id").toInt());
+        success =art.exec(cSQL);
+        success2 = SqlCalls::SqlDelete("lin_ped",Configuracion_global->empresaDB,QString("id = %1").arg(
+                                           lin.value().value("id").toInt()),error2);
+        if(!success || !success2)
+            break;
+    }
+
+    if (success)
         return true;
     else
     {
-        QMessageBox::critical(qApp->activeWindow(), "Error:",query.lastError().text());
+//        if(!error.isEmpty())
+//            QMessageBox::critical(qApp->activeWindow(), QObject::tr("Pedidos"),
+//                              QObject::tr(QString("Se ha producido un error al borrar:%1").arg(error)),
+//                              QObject::tr("Aceptar"));
+//        if(!error2.isEmpty())
+//            QMessageBox::critical(qApp->activeWindow(), QObject::tr("Pedidos"),
+//                              QObject::tr(QString("Se ha producido un error al borrar:%1").arg(error2)),
+//                              QObject::tr("Aceptar"));
         return false;
     }
 }
-bool Pedidos::AnadirPedido()
+int Pedidos::AnadirPedido()
 {
     this->porc_iva1 = Configuracion_global->ivaList.at(0).toDouble();
     this->porc_iva2 = Configuracion_global->ivaList.at(1).toDouble();
@@ -59,12 +82,12 @@ bool Pedidos::AnadirPedido()
      if(new_id <1)
      {
          QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", error);
-         return false;
+         return -1;
      }
      else
      {
          this->id = new_id;
-         return true;
+         return new_id;
      }
 }
 // Guardar el Pedido

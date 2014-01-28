@@ -253,7 +253,8 @@ void frmEditLine::on_txtCodigo_editingFinished()
                 ui->txtCodigo->setFocus();
             }
         }
-        cargar_articulo(this->id_articulo,this->id_tarifa,this->dto_tarifa);
+        if(this->id_articulo >0)
+            cargar_articulo(this->id_articulo,this->id_tarifa,this->dto_tarifa);
     }
     ui->txtCodigo->blockSignals(false);
 }
@@ -607,6 +608,7 @@ void frmEditLine::on_btnAceptar_clicked()
                 queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
                                   Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
                                   this->id_articulo));
+                emit refrescar_lineas();
             }
 
 
@@ -717,6 +719,7 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
         queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
                           Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
                           this->id_articulo));
+        emit refrescar_lineas();
     }
    vaciar_campos();
 
