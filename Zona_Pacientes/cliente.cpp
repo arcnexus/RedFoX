@@ -6,6 +6,11 @@
 Cliente::Cliente(QObject *parent) :
     QObject(parent)
 {
+    this->id = 0;
+    id_pais = 1;
+    pais = "España";
+    id_divisa = 1;
+    idTarifa = Configuracion_global->id_tarifa_predeterminada;
 }
 void Cliente::Guardar() {
     bool transaccion = true;
@@ -929,44 +934,29 @@ void Cliente::Actualizar_de_web()
 QString Cliente::Nuevocodigo_cliente()
 {
     QString codigo;
-    QString cNum;
-    unsigned long nCodigo;
-    QSqlQuery *qClientes = new QSqlQuery(Configuracion_global->groupDB);
-    if(qClientes->exec("select codigo_cliente from clientes  order by codigo_cliente desc limit 1"))
+    double nCodigo = 1;
+    QSqlQuery qClientes(Configuracion_global->groupDB);
+    if(qClientes.exec("select codigo_cliente from clientes  order by codigo_cliente desc limit 1"))
     {
-        if (qClientes->next())
+        if (qClientes.next())
         {
-            QSqlRecord registro = qClientes->record();
+            QSqlRecord registro = qClientes.record();
             codigo = registro.field("codigo_cliente").value().toString();
-            nCodigo = codigo.toULong();
+            nCodigo = codigo.mid(Configuracion_global->cuenta_clientes.length()).toULong();
             nCodigo ++;
             codigo = QString::number(nCodigo);
         }
    }
-    qDebug() <<"ncodigo"<< nCodigo;
-    if(codigo.length() == Configuracion_global->digitos_cuentas_contables)
-        codigo = codigo.mid(Configuracion_global->cuenta_clientes.length());
-    if (nCodigo == 0 || nCodigo == 1)
-    {
-        cNum = Configuracion_global->cuenta_clientes;
-        while (cNum.length()< (Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_clientes.length()-1) )
-        {
-            cNum.prepend("0");
-        }
-        cNum.append("1");
-    }
-    else
-        cNum = codigo;
 
-    while (cNum.length()< (Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_clientes.length()) )
-    {
-        cNum.prepend("0");
-    }
-    //codigo = Configuracion_global->cuenta_clientes + cNum;
-    codigo = cNum;
-    cuenta_iva_repercutido = Configuracion_global->cuenta_iva_repercutido1 +cNum;
+    QString codigo_nuevo;
+    QString formato = QString("%1.0f").arg(Configuracion_global->digitos_cuentas_contables-Configuracion_global->cuenta_clientes.length());
+    formato.prepend("%0");
+    std::string _x = formato.toStdString();
+    codigo_nuevo.sprintf(_x.c_str(),nCodigo);
 
-    return codigo;
+    codigo_nuevo.prepend(Configuracion_global->cuenta_clientes);
+    cuenta_iva_repercutido = Configuracion_global->cuenta_iva_repercutido1 +codigo_nuevo;
+    return codigo_nuevo;
 }
 
 int Cliente::Buscarid_pais(QString Pais)

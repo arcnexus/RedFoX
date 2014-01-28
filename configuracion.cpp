@@ -864,62 +864,51 @@ void Configuracion::CerrarBDMediTec()
 {
     db_meditec.close();
 }
-void Configuracion::CargarDatos(int id)
+void Configuracion::CargarDatos(QSqlRecord r)
 {
-    QSqlQuery qEmpresa(Configuracion_global->groupDB);
-    qEmpresa.prepare("Select * from empresas where id =:id");
-    qEmpresa.bindValue(":id",id);
-    if (qEmpresa.exec()) {
-        qEmpresa.next();
-        this->pais = qEmpresa.record().field("pais").value().toString();
-        this->cEjercicio = qEmpresa.record().field("ejercicio").value().toString();
-        this->ndigitos_factura = qEmpresa.record().field("digitos_factura").value().toInt();
+    qDebug() << r;
+    this->pais = r.field("pais").value().toString();
+    this->cEjercicio = r.field("ejercicio").value().toString();
+    this->ndigitos_factura = r.field("digitos_factura").value().toInt();
 
-        if(qEmpresa.record().field("lProfesional").value().toInt()==1)
-            this->lProfesional = true;
-        else
-            this->lProfesional = false;
-        this->irpf = qEmpresa.record().field("IIRPF").value().toInt();
-        this->serie = qEmpresa.record().field("serie").value().toString();
-        this->digitos_cuentas_contables = qEmpresa.record()./*field("digitos_cuenta").*/value("digitos_cuenta").toInt();
-        this->cuenta_clientes = qEmpresa.record().field("codigo_cuenta_clientes").value().toString();
-        this->cuenta_acreedores = qEmpresa.record().field("codigo_cuenta_acreedores").value().toString();
-        this->cuenta_proveedores = qEmpresa.record().field("codigo_cuenta_proveedores").value().toString();
-        this->auto_codigoart = qEmpresa.record().value("auto_codigo").toBool();
-        this->tamano_codigo = qEmpresa.record().value("tamano_codigo").toInt();
-        this->cuenta_cobrosClientes = qEmpresa.record().value("cuenta_cobros").toString();
-        this->cuenta_pagosProveedor = qEmpresa.record().value("cuenta_pagos").toString();
-        this->cuenta_venta_mercaderias = qEmpresa.record().value("cuenta_ventas_mercaderias").toString();
-        this->cuenta_venta_servicios = qEmpresa.record().value("cuenta_ventas_servicios").toString();
-        this->cuenta_iva_repercutido1 = qEmpresa.record().value("cuenta_iva_repercutido1").toString();
-        this->cuenta_iva_repercutido2 = qEmpresa.record().value("cuenta_iva_repercutido2").toString();
-        this->cuenta_iva_repercutido3 = qEmpresa.record().value("cuenta_iva_repercutido3").toString();
-        this->cuenta_iva_repercutido4 = qEmpresa.record().value("cuenta_iva_repercutido4").toString();
-        this->cuenta_iva_soportado1 = qEmpresa.record().value("cuenta_iva_soportado1").toString();
-        this->cuenta_iva_soportado2 = qEmpresa.record().value("cuenta_iva_soportado2").toString();
-        this->cuenta_iva_soportado3 = qEmpresa.record().value("cuenta_iva_soportado3").toString();
-        this->cuenta_iva_soportado4 = qEmpresa.record().value("cuenta_iva_soportado4").toString();
-        this->cuenta_iva_repercutidoRe1 = qEmpresa.record().value("cuenta_iva_repercutido1_re").toString();
-        this->cuenta_iva_repercutidoRe2 = qEmpresa.record().value("cuenta_iva_repercutido2_re").toString();
-        this->cuenta_iva_repercutidoRe3 = qEmpresa.record().value("cuenta_iva_repercutido3_re").toString();
-        this->cuenta_iva_repercutidoRe4 = qEmpresa.record().value("cuenta_iva_repercutido4_re").toString();
-        this->cuenta_iva_soportado_re1 = qEmpresa.record().value("cuenta_iva_soportado1_re").toString();
-        this->cuenta_iva_soportado_re2 = qEmpresa.record().value("cuenta_iva_soportado2_re").toString();
-        this->cuenta_iva_soportado_re3 = qEmpresa.record().value("cuenta_iva_soportado3_re").toString();
-        this->cuenta_iva_soportado_re4 = qEmpresa.record().value("cuenta_iva_soportado4_re").toString();
-        this->medic = qEmpresa.record().value("medica").toBool();
-        this->internacional = qEmpresa.record().value("internacional").toBool();
-        this->margen = qEmpresa.record().value("margen").toDouble();
-        this->margen_minimo = qEmpresa.record().value("margen_minimo").toDouble();
-        this->activar_seguimiento = qEmpresa.record().value("seguimiento").toBool();
-        this->irpf = qEmpresa.record().value("usar_irpf").toBool();
-        this->caducidad_vales = qEmpresa.record().value("caducidad_vales").toInt();
-
-
-    } else {
-        qDebug() << qEmpresa.lastError().text();
-        QMessageBox::warning(qApp->activeWindow(),tr("EMPRESA"),tr("Falló la carga de datos de empresa"),tr("Aceptar"));
-    }
+    if(r.field("lProfesional").value().toInt()==1)
+        this->lProfesional = true;
+    else
+        this->lProfesional = false;
+    this->serie = r.field("serie").value().toString();
+    this->digitos_cuentas_contables = r./*field("digitos_cuenta").*/value("digitos_cuenta").toInt();
+    this->cuenta_clientes = r.field("codigo_cuenta_clientes").value().toString();
+    this->cuenta_acreedores = r.field("codigo_cuenta_acreedores").value().toString();
+    this->cuenta_proveedores = r.field("codigo_cuenta_proveedores").value().toString();
+    this->auto_codigoart = r.value("auto_codigo").toBool();
+    this->tamano_codigo = r.value("tamano_codigo").toInt();
+    this->cuenta_cobrosClientes = r.value("cuenta_cobros").toString();
+    this->cuenta_pagosProveedor = r.value("cuenta_pagos").toString();
+    this->cuenta_venta_mercaderias = r.value("cuenta_ventas_mercaderias").toString();
+    this->cuenta_venta_servicios = r.value("cuenta_ventas_servicios").toString();
+    this->cuenta_iva_repercutido1 = r.value("cuenta_iva_repercutido1").toString();
+    this->cuenta_iva_repercutido2 = r.value("cuenta_iva_repercutido2").toString();
+    this->cuenta_iva_repercutido3 = r.value("cuenta_iva_repercutido3").toString();
+    this->cuenta_iva_repercutido4 = r.value("cuenta_iva_repercutido4").toString();
+    this->cuenta_iva_soportado1 = r.value("cuenta_iva_soportado1").toString();
+    this->cuenta_iva_soportado2 = r.value("cuenta_iva_soportado2").toString();
+    this->cuenta_iva_soportado3 = r.value("cuenta_iva_soportado3").toString();
+    this->cuenta_iva_soportado4 = r.value("cuenta_iva_soportado4").toString();
+    this->cuenta_iva_repercutidoRe1 = r.value("cuenta_iva_repercutido1_re").toString();
+    this->cuenta_iva_repercutidoRe2 = r.value("cuenta_iva_repercutido2_re").toString();
+    this->cuenta_iva_repercutidoRe3 = r.value("cuenta_iva_repercutido3_re").toString();
+    this->cuenta_iva_repercutidoRe4 = r.value("cuenta_iva_repercutido4_re").toString();
+    this->cuenta_iva_soportado_re1 = r.value("cuenta_iva_soportado1_re").toString();
+    this->cuenta_iva_soportado_re2 = r.value("cuenta_iva_soportado2_re").toString();
+    this->cuenta_iva_soportado_re3 = r.value("cuenta_iva_soportado3_re").toString();
+    this->cuenta_iva_soportado_re4 = r.value("cuenta_iva_soportado4_re").toString();
+    this->medic = r.value("medica").toBool();
+    this->internacional = r.value("internacional").toBool();
+    this->margen = r.value("margen").toDouble();
+    this->margen_minimo = r.value("margen_minimo").toDouble();
+    this->activar_seguimiento = r.value("seguimiento").toBool();
+    this->irpf = r.value("usar_irpf").toBool();
+    this->caducidad_vales = r.value("caducidad_vales").toInt();
 }
 
 QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, QString CC)

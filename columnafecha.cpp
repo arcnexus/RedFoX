@@ -8,7 +8,8 @@
 #include "columnafecha.h"
 
 
-ColumnaFecha::ColumnaFecha()
+ColumnaFecha::ColumnaFecha(QObject * parent):
+    QItemDelegate(parent)
     {
     // TODO Auto-generated constructor stub
 

@@ -101,7 +101,7 @@ bool cargarEmpresa(QSqlRecord record)
         Configuracion_global->internacional = false;
 
     Configuracion_global->enlace_web = record.field("enlace_web").value().toBool();
-    Configuracion_global->CargarDatos(record.field("id").value().toInt());
+    Configuracion_global->CargarDatos(record);
 
     QApplication::processEvents();
 
@@ -211,6 +211,12 @@ bool cargarEmpresa(QSqlRecord record)
         }
 
     }
+
+    QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
+    calles.setDatabaseName(qApp->applicationDirPath() + "/poblaciones/Poblaciones.sqlite");
+    if(!calles.open())
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
+
 	Configuracion_global->Cargar_iva();
     Configuracion_global->Cargar_paises();
     Configuracion_global->Cargar_divisas();
