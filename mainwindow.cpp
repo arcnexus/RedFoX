@@ -791,6 +791,10 @@ void MainWindow::showInfo()
 
     this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud. (Empresa activa:")+Configuracion_global->nombreEmpresa+
                          tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
+    QString error;
+    ui->lineUsuarioActivo->setText(SqlCalls::SelectOneField("usuarios","nombre",QString("id=%1").arg(
+                                                                Configuracion_global->id_usuario_activo),Configuracion_global->globalDB,
+                                                            error).toString());
 }
 
 void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)

@@ -71,6 +71,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     ui->tablaBusqueda->setItemDelegateForColumn(6,new DelegateKit(this));
     ui->tablaBusqueda->setItemDelegateForColumn(7, new MonetaryDelegate(this));
     ui->tablaBusqueda->setItemDelegateForColumn(8, new MonetaryDelegate(this));
+    ui->tablaBusqueda->setItemDelegateForColumn(9,new MonetaryDelegate(this));
 
 
     ui->tabla_ofertas->setItemDelegateForColumn(1, new DelegateKit(this));
@@ -118,12 +119,12 @@ void FrmArticulos::init()
     promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
     volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
 
-    QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva from vistaart_tarifa "
+    QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
 
     if(modelBusqueda->rowCount() == 0)
-        modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit from articulos", Configuracion_global->groupDB);
+        modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos", Configuracion_global->groupDB);
 
     tarifa_model->select();
 
@@ -157,9 +158,9 @@ void FrmArticulos::format_tables()
     QStringList titulo;
     QVariantList col_size;
     titulo <<"id" << tr("Código") << tr("Descripción")  << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("KIT") << tr("P.V.P.")
-           << tr("PVP+IVA") ;
+           << tr("PVP+IVA") << tr("S.Alm.") ;
 
-    col_size << 0<<130<<400<<130<<130<<100<<50<<100<<100;
+    col_size << 0<<130<<400<<130<<130<<100<<50<<100<<100<<100;
     for(int i =0;i<titulo.size();i++)
     {
         modelBusqueda->setHeaderData(i,Qt::Horizontal,titulo.at(i));
@@ -584,7 +585,7 @@ void FrmArticulos::LLenarCampos(int index)
 
 
 
-    else if(index == 7 /*ui->Pestanas->currentWidget() == ui->tab_estadistica*/)
+    else if(index == 6 /*ui->Pestanas->currentWidget() == ui->tab_estadistica*/)
     {
         ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
         ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
@@ -610,7 +611,7 @@ void FrmArticulos::LLenarCampos(int index)
         GraficaImportes();
     }
 
-    else if(index == 8 /*ui->Pestanas->currentWidget() == ui->tab_grafica*/)
+    else if(index == 7 /*ui->Pestanas->currentWidget() == ui->tab_grafica*/)
     {
         LLenarGraficas();
         if(ui->radGrafica_importes->isChecked())
@@ -619,12 +620,12 @@ void FrmArticulos::LLenarCampos(int index)
             GraficaUnidades();
     }
 
-    else if(index == 9 /*ui->Pestanas->currentWidget() == ui->tab_comparativa*/)
+    else if(index == 8 /*ui->Pestanas->currentWidget() == ui->tab_comparativa*/)
     {
         LLenarGrafica_comparativa(1);
     }
 
-    else if(index == 10/*ui->Pestanas->currentWidget() == ui->tab_Trazabilidad*/)
+    else if(index == 9/*ui->Pestanas->currentWidget() == ui->tab_Trazabilidad*/)
     {
         // -------------------
         // TABLA TRAZABILIDAD
@@ -638,13 +639,13 @@ void FrmArticulos::LLenarCampos(int index)
         ui->tablaLotes->setColumnHidden(0,true);
         ui->tablaLotes->setColumnHidden(6,true);
         modelTrazabilidad1->setHeaderData(1,Qt::Horizontal,tr("LOTE"));
-        modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTidAD"));
+        modelTrazabilidad1->setHeaderData(2,Qt::Horizontal,tr("CANTIAD"));
         modelTrazabilidad1->setHeaderData(3,Qt::Horizontal,tr("STOCK LOTE"));
         modelTrazabilidad1->setHeaderData(4,Qt::Horizontal,tr("STOCK REAL"));
         modelTrazabilidad1->setHeaderData(5,Qt::Horizontal,tr("FAC.COMPRA"));
-        modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("id"));
+        modelTrazabilidad1->setHeaderData(6,Qt::Horizontal,tr("ID"));
         modelTrazabilidad1->setHeaderData(7,Qt::Horizontal,tr("FEC.COMPRA"));
-        modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCidAD"));
+        modelTrazabilidad1->setHeaderData(8,Qt::Horizontal,tr("CADUCIDAD"));
         modelTrazabilidad1->setHeaderData(9,Qt::Horizontal,tr("PROVEEDOR"));
         modelTrazabilidad1->setHeaderData(10,Qt::Horizontal,tr("DESCRIPCIÓN"));
         modelTrazabilidad1->setHeaderData(11,Qt::Horizontal,tr("CÓDIGO"));
@@ -792,7 +793,7 @@ QString cSQL = "Select id,codigo, descripcion,  codigo_barras,codigo_fabricante,
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
     if(modelBusqueda->rowCount() == 0)
     {
-        QString cSQL2 = "Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit from articulos where "+
+        QString cSQL2 = "Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos where "+
                 campo+" like '%"+texto.trimmed()+"%' order by "+campo +" "+mode;
         modelBusqueda->setQuery(cSQL2, Configuracion_global->groupDB);
     }
@@ -874,12 +875,12 @@ void FrmArticulos::on_botBorrar_clicked()
     LLenarCampos(ui->Pestanas->currentIndex());
     if(sender() != ui->botBorrar)
     {
-        QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva from vistaart_tarifa "
+        QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,,stock_fisico_almacen from vistaart_tarifa "
                 "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
         modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
 
         if(modelBusqueda->rowCount() == 0)
-            modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit from articulos", Configuracion_global->groupDB);
+            modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos", Configuracion_global->groupDB);
     }
 }
 
