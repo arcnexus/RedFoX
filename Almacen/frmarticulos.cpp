@@ -28,13 +28,17 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     id_oferta = 0;    
     ui->setupUi(this);
 
-    oArticulo = new Articulo(this);
+
     shortCut->setToolTip(tr("Gestión del fichero de artículos"));
     shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
-    ui->btn_cerrar->setVisible(closeBtn);
+    ui->btn_cerrar->setVisible(closeBtn);    
+}
 
+void FrmArticulos::init()
+{
+    oArticulo = new Articulo(this);
     ui->lbl_en_promocion->setVisible(false);
-    ui->stackedWidget->setCurrentIndex(1);    
+    ui->stackedWidget->setCurrentIndex(1);
 
     //ALLOC MODELS
     modelEmpresa = new QSqlQueryModel(this);
@@ -83,7 +87,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     //SET UP CHARTS
     ui->graf_prov->Clear();
     ui->graf_prov->verValoresEjeY(true);
-    ui->graf_prov->verValores(true);  
+    ui->graf_prov->verValores(true);
 
     // CONEXIONES
     connect(ui->txtcoste,SIGNAL(editingFinished()),Configuracion_global,SLOT(format_text()));
@@ -111,10 +115,7 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
         (*it)->installEventFilter(this);
 
     bloquearCampos(true);
-}
 
-void FrmArticulos::init()
-{
     modelEmpresa->setQuery("select * from vistaEmpresa",Configuracion_global->groupDB);
     promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
     volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
