@@ -212,10 +212,10 @@ bool cargarEmpresa(QSqlRecord record)
 
     }
 
-    QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
-    calles.setDatabaseName(qApp->applicationDirPath() + "/poblaciones/Poblaciones.sqlite");
-    if(!calles.open())
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
+//    QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
+//    calles.setDatabaseName(qApp->applicationDirPath() + "/poblaciones/Poblaciones.sqlite");
+//    if(!calles.open())
+//        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
 
 	Configuracion_global->Cargar_iva();
     Configuracion_global->Cargar_paises();

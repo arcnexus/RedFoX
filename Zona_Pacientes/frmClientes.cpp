@@ -599,11 +599,17 @@ void frmClientes::VaciarCampos()
     ui->txtnombre_comercial->setText("");
     ui->txtcif_nif->setText("");
     ui->txtCifIntracomunitario->setText("");
+    ui->txtcp->setText("");
     ui->txtdireccion1->setText("");
     ui->txtdireccion2->setText("");
     ui->txtpoblacion->setText("");
     ui->txtprovincia->setText("");
     ui->cboPais->clearEditText();
+    ui->txtcpPoblacionAlternativa->setText("");
+    ui->txtpoblacionAlternativa->setText("");
+    ui->txtprovinciaAlternativa->setText("");
+    ui->cbopaisAlternativa->clearEditText();
+    ui->cboforma_pago->setCurrentIndex(-1);
     ui->txttelefono1->setText("");
     ui->txttelefono2->setText("");
     ui->txtfax->setText("");
@@ -653,6 +659,7 @@ void frmClientes::VaciarCampos()
     ui->txtvisa2_cod_valid->setText("");
     ui->txtvisa_distancia1->setText("");
     ui->txtvisa_distancia2->setText("");
+    ui->txtNombreFiscal->setText("");
 
 
     // Tipos de clientes
@@ -889,6 +896,7 @@ void frmClientes::on_btnAnadir_clicked()
 
         LLenarCliente();
         ui->cboidiomaDocumentos->setCurrentIndex(1);
+        ui->cboforma_pago->setCurrentIndex(-1);
         oCliente->Anadir();
         ui->txtcif_nif->setText(linea.text());
         set_blink();

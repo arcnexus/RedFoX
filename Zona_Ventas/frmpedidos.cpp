@@ -247,6 +247,15 @@ void FrmPedidos::LLenarCampos()
     ui->SpinGastoDist1->setValue(oPedido->imp_gasto1);
     ui->SpinGastoDist2->setValue(oPedido->imp_gasto2);
     ui->SpinGastoDist3->setValue(oPedido->imp_gasto3);
+    ui->spiniva_gasto1->setValue(oPedido->iva_gasto1);
+    ui->spiniva_gasto2->setValue(oPedido->iva_gasto2);
+    ui->spiniva_gasto3->setValue(oPedido->iva_gasto2);
+    int index = ui->cboporc_iva_gasto1->findText(QString::number(oPedido->porc_iva_gasto1));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    index = ui->cboporc_iva_gasto2->findText(QString::number(oPedido->porc_iva_gasto2));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    index = ui->cboporc_iva_gasto3->findText(QString::number(oPedido->porc_iva_gasto3));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
     ui->lblimpreso->setVisible(oPedido->impreso);
 
     ui->lblfacturado->setVisible(oPedido->facturado);
@@ -679,9 +688,6 @@ void FrmPedidos::on_table_row_changed(QModelIndex actual, QModelIndex previous)
 
 void FrmPedidos::calcular_iva_gastos()
 {
-    ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
-    ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
-    ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
     calcular_pedido();
 }
 
@@ -774,6 +780,10 @@ void FrmPedidos::calcular_pedido()
     total1 =0; total2 =0;total3=0; total4=0;
     subtotal =0; dto=0; dtopp =0; base =0; irpf = 0; iva =0; re =0; total =0;
 
+    ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
+    ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
+    ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
+
     QMap <int,QSqlRecord> l;
     QString error;
     l = SqlCalls::SelectRecord("lin_ped",QString("id_cab=%1").arg(oPedido->id),Configuracion_global->empresaDB,error);
@@ -864,7 +874,10 @@ void FrmPedidos::calcular_pedido()
     if(l.size() >0)
         dto += li.value().value("dto").toDouble();
     base = base1 + base2+base3+base4;
-
+    total1 = base1 +iva1 +re1;
+    total2 = base2 +iva2 +re2;
+    total3 = base3 +iva3 +re3;
+    total4 = base4 +iva4 +re4;
     dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
     base -= dtopp;
     irpf = base *(ui->spinPorc_irpf->value()/100.0);
