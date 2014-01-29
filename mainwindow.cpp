@@ -365,6 +365,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Clientes);
+        QTimer::singleShot(0,Clientes,SLOT(init()));
     }
     else
         delete Clientes;

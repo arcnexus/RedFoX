@@ -2688,7 +2688,7 @@ color: rgb(255,255,255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_3">
+         <widget class="QWidget" name="tab_historial">
           <attribute name="title">
            <string>Historial</string>
           </attribute>

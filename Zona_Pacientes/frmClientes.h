@@ -24,13 +24,14 @@ public:
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Clientes";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
-    QString ModuleMenuPath(){return tr("");}
-    
+    QString ModuleMenuPath(){return tr("");}    
     QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 
+    void init_querys();
 signals:
 
 public slots:
+    void init();
     void LLenarCampos();
     void LLenarCliente();
     void VaciarCampos();
@@ -90,8 +91,6 @@ private slots:
 
     void on_tabla_busquedas_doubleClicked(const QModelIndex &index);
 
-    void on_tabla_busquedas_clicked(const QModelIndex &index);
-
     void on_btnGuardardireccionAlternativa_clicked();
 
     void on_btnAnadirdireccion_clicked();
@@ -129,6 +128,7 @@ private:
     //SQL MODELS
     QSqlQueryModel *qModelTipos;
     QSqlQueryModel *qModeldireccion;
+    QSqlQueryModel *Pedidos;
     QSqlQueryModel *Albaranes;
     QSqlQueryModel *Facturas;
     QSqlQueryModel *Presupuestos;

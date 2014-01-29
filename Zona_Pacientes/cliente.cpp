@@ -688,9 +688,19 @@ void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direcci
     d["cp"] = CP;
     d["poblacion"] = Poblacion;
     d["provincia"] =Provincia;
-    int id_pais = SqlCalls::SelectOneField("paises","id",QString("pais ='%1'").arg(Pais),Configuracion_global->groupDB,error).toInt();
+
+    id_pais = -1;
+    for(auto i = 0; i< Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("pais").toString() == Pais)
+        {
+            id_pais = Configuracion_global->paises_model->record(i).value("id").toInt();
+            break;
+        }
+    }
     if (id_pais >0)
-    d["id_pais"] =id_pais;
+        d["id_pais"] =id_pais;
+
     d["email"] = email;
     d["comentarios"] = comentarios;
     d["id_cliente"] = id_cliente;

@@ -23,7 +23,19 @@ frmClientes::frmClientes(QWidget *parent) :
     // Modo busqueda
     ui->stackedWidget->setCurrentIndex(1);
     this->Altas = false;
+}
 
+void frmClientes::init_querys()
+{
+    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",Configuracion_global->groupDB);
+    queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
+    queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
+    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
+    qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
+}
+
+void frmClientes::init()
+{
     oCliente = new Cliente(this);
 
     //ALLOCS MODELS
@@ -31,6 +43,7 @@ frmClientes::frmClientes(QWidget *parent) :
     qModelTipos         = new QSqlQueryModel(this);
     deudas              = new QSqlQueryModel(this);
     qModeldireccion     = new QSqlQueryModel(this);
+    Pedidos             = new QSqlQueryModel(this);
     Albaranes           = new QSqlQueryModel(this);
     Facturas            = new QSqlQueryModel(this);
     Presupuestos        = new QSqlQueryModel(this);
@@ -54,8 +67,9 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->tablaVales->setItemDelegateForColumn(2, new DateDelegate(this));
     ui->tablaVales->setItemDelegateForColumn(3, new DateDelegate(this));
 
-    ui->tablaPresupuestos->setItemDelegateForColumn(2, new MonetaryDelegate(this,false));
-    ui->tablaPresupuestos->setItemDelegateForColumn(3, new MonetaryDelegate(this,false));
+    ui->tablaPresupuestos->setItemDelegateForColumn(2, new DateDelegate(this));
+    ui->tablaPresupuestos->setItemDelegateForColumn(3, new DateDelegate(this));
+    ui->tablaPresupuestos->setItemDelegateForColumn(4, new MonetaryDelegate(this,false));
 
     ui->tablaFacturas->setItemDelegateForColumn(2, new DateDelegate(this));
     ui->tablaFacturas->setItemDelegateForColumn(3, new DateDelegate(this));
@@ -101,6 +115,7 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->cbopaisAlternativa           ->setModel(Configuracion_global->paises_model);
     ui->cboidiomaDocumentos          ->setModel(qmidiomas);
     ui->tablahistorial_deudas        ->setModel(modelHistorial);
+    ui->tablaPedidos                 ->setModel(Pedidos);
 
     //CONFIG COMBOS
     ui->cbotransportista->setModelColumn(1);
@@ -109,38 +124,8 @@ frmClientes::frmClientes(QWidget *parent) :
     ui->cboPais         ->setModelColumn(1);
     ui->cbopaisAlternativa->setModelColumn(1);
     ui->cbotarifa_cliente ->setModelColumn(1);
-
-    //CONFIG TABLE HEADERS
-    ui->TablaDeudas->setColumnHidden(0,true);
-    deudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
-    deudas->setHeaderData(2,Qt::Horizontal,tr("Importe"));
-    deudas->setHeaderData(3,Qt::Horizontal,tr("Pagado"));
-    deudas->setHeaderData(4,Qt::Horizontal,tr("Pendiente"));
-    deudas->setHeaderData(5,Qt::Horizontal,tr("Fecha"));
-    deudas->setHeaderData(6,Qt::Horizontal,tr("Vencimiento"));
-
-    QStringList headers;
-    headers << "id" <<"id_cab" <<tr("Fecha Movim.") << tr("Imp.Ant.") <<tr("pagado") <<tr("cambio") <<tr("Pendiente");
-    headers <<tr("Entidad") << tr("oficina") <<tr("dc") <<tr("cuenta") << tr("efectivo") << tr("tarjeta") ;
-    headers << tr("cheque") <<tr("Transf.") << tr("Domic.") <<("PyPal") <<tr("Vales");
-
-    QVariantList sizes;
-    sizes << 0 << 0 <<100<<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 << 90 <<90 <<90 <<90 <<90;
-    for(int i = 0; i< sizes.size(); i++)
-    {
-        modelHistorial->setHeaderData(i,Qt::Horizontal,headers.at(i));
-        ui->tablahistorial_deudas->setColumnWidth(i,sizes.at(i).toInt());
-    }
-    ui->tablahistorial_deudas->setColumnHidden(0,true);
-    ui->tablahistorial_deudas->setColumnHidden(1,true);
-
+    ui->cboagente->setModelColumn(1);
     ui->lista_direccionesAlternativas->setModelColumn(1);
-    //QUERYS
-    m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",Configuracion_global->groupDB);
-    queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
-    queryAgentes->setQuery("Select nombre from agentes",Configuracion_global->groupDB);
-    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
-    qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
 
     //SEARCH HASH
     h_Buscar["Población"]="poblacion";
@@ -210,11 +195,6 @@ frmClientes::frmClientes(QWidget *parent) :
     QList<QWidget*> ::Iterator it;
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
-
-    QList<QWidget*> l2 = ui->tab_coments->findChildren<QWidget*>();
-    QList<QWidget*> ::Iterator it2;
-    for( it2 = l2.begin() ;it2!= l2.end();++it2 )
-        qDebug() << (*it2)->objectName();
 }
 
 frmClientes::~frmClientes()
@@ -223,6 +203,9 @@ frmClientes::~frmClientes()
 }
 void frmClientes::LLenarCampos()
 {
+    /* Global */
+    ui->txtNombreFiscal->setText(oCliente->nombre_fiscal);
+
     /*  tab_datos */
     if (oCliente->codigo_cliente.isEmpty())
         oCliente->codigo_cliente = oCliente->Nuevocodigo_cliente();
@@ -256,6 +239,8 @@ void frmClientes::LLenarCampos()
     ui->txtObservaciones->setText(oCliente->observaciones);
     qModelTipos->setQuery("select tipo_cliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
                           Configuracion_global->groupDB);
+
+    set_blink();
 
     /*  tab direcciones  */
     qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
@@ -327,7 +312,7 @@ void frmClientes::LLenarCampos()
             break;
         }
     }
-
+    ValidarCC();
 
     /* tab_estadistica */
 
@@ -402,89 +387,87 @@ void frmClientes::LLenarCampos()
                 + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
 
+    ui->tablahistorial_deudas->setColumnHidden(0,true);
+    ui->tablahistorial_deudas->setColumnHidden(1,true);
+
+    ui->TablaDeudas->setColumnHidden(0,true);
+    deudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
+    deudas->setHeaderData(2,Qt::Horizontal,tr("Importe"));
+    deudas->setHeaderData(3,Qt::Horizontal,tr("Pagado"));
+    deudas->setHeaderData(4,Qt::Horizontal,tr("Pendiente"));
+    deudas->setHeaderData(5,Qt::Horizontal,tr("Fecha"));
+    deudas->setHeaderData(6,Qt::Horizontal,tr("Vencimiento"));
+
     /*  tab_coments  */
 
-/*
-"txtcomentarios"
-"txtfecha_nacimiento"
-"chklBloqueoCliente"
-"txtcomentario_bloqueo"
-"txtacceso_web"
-"txtpassword_web"
-"cboidiomaDocumentos"
-"txtfecha_alta"
-"txtrRiesgoPermitido"
-"cboagente"
-"cbotransportista"
-*/
-
-
-
-    ui->txtNombreFiscal->setText(oCliente->nombre_fiscal);
-
-    ui->txtfecha_alta->setDate(oCliente->fecha_alta);
-
-    ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->riesgo_maximo,'f',
-                                                                                           Configuracion_global->decimales_campos_totales)));
     ui->txtcomentarios->setText(oCliente->comentarios);
-
-    ui->chklBloqueoCliente->setChecked(oCliente->bloqueado);
-
-    ui->txtcomentario_bloqueo->setText(oCliente->comentario_bloqueo);
-
     ui->txtfecha_nacimiento->setDate(oCliente->fecha_nacimiento);
+    ui->chklBloqueoCliente->setChecked(oCliente->bloqueado);
+    ui->txtcomentario_bloqueo->setText(oCliente->comentario_bloqueo);
     ui->txtacceso_web->setText(oCliente->acceso_web);
     ui->txtpassword_web->setText(oCliente->password_web);
-
     ui->cboidiomaDocumentos->setCurrentIndex(ui->cboidiomaDocumentos->findText(oCliente->idioma));
+    ui->txtfecha_alta->setDate(oCliente->fecha_alta);
+    ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente->riesgo_maximo,'f',
+                                                                                           Configuracion_global->decimales_campos_totales)));
 
-    int indice = ui->cbotransportista->findText(Configuracion_global->devolver_transportista(oCliente->id_transportista));
-    ui->cbotransportista->setCurrentIndex(indice);
+    for(auto i = 0; i<queryTransportistas->rowCount();i++)
+    {
+        if(queryTransportistas->record(i).value("id").toInt() == oCliente->id_transportista)
+        {
+            ui->cbotransportista->setCurrentIndex(i);
+            break;
+        }
+    }
+    for(auto i = 0; i<queryAgentes->rowCount();i++)
+    {
+        if(queryAgentes->record(i).value("id").toInt() == oCliente->id_agente)
+        {
+            ui->cboagente->setCurrentIndex(i);
+            break;
+        }
+    }
 
-    indice = ui->cboagente->findText(Configuracion_global->devolver_agente(oCliente->id_agente));
-    ui->cboagente->setCurrentIndex(indice);
+    /* tab_historial */
 
+         /********************************************************************
+         * PEDIDOS
+         ********************************************************************/
+    cSQL= "Select id,pedido,fecha,fecha_limite_entrega,albaran,total_pedido from ped_cli where id_cliente =" + QString::number(oCliente->id);
+    Pedidos->setQuery(cSQL,Configuracion_global->empresaDB);
 
+    ui->tablaPedidos->setColumnWidth(0,0);
+    ui->tablaPedidos->setColumnWidth(1,85);
+    ui->tablaPedidos->setColumnWidth(2,85);
+    ui->tablaPedidos->setColumnWidth(3,85);
+    ui->tablaPedidos->setColumnWidth(4,85);
+    ui->tablaPedidos->setColumnWidth(5,85);
 
-
-    // --------------------------
-    // Validaciones de seguridad
-    //---------------------------
-    ValidarCC();
-
-    // Tablas
-    //----------------
-    // DEUDAS
-    //----------------
-
-
-
-
-
-    /********************************************************************
-    * ALBARANES
-    *******************************************************************/
-
-
-    cSQL= "Select id,albaran,fecha,nFactura,total_albaran from cab_alb where id_cliente =" + QString::number(oCliente->id);
+    Pedidos->setHeaderData(1, Qt::Horizontal, QObject::tr("PEDIDO"));
+    Pedidos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
+    Pedidos->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA LIMITE"));
+    Pedidos->setHeaderData(4, Qt::Horizontal, QObject::tr("ALBARÁN"));
+    Pedidos->setHeaderData(5, Qt::Horizontal, QObject::tr("TOTAL"));
+        /********************************************************************
+        * ALBARANES
+        *******************************************************************/
+    cSQL= "Select id,albaran,fecha,factura,total_albaran from cab_alb where id_cliente =" + QString::number(oCliente->id);
     Albaranes->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->TablaAlbaranes->setColumnWidth(0,0);
     ui->TablaAlbaranes->setColumnWidth(1,85);
     ui->TablaAlbaranes->setColumnWidth(2,85);
     ui->TablaAlbaranes->setColumnWidth(3,85);
-    ui->TablaAlbaranes->setColumnWidth(4,85);
+    ui->TablaAlbaranes->setColumnWidth(4,85);       
 
     Albaranes->setHeaderData(1, Qt::Horizontal, QObject::tr("ALBARAN"));
     Albaranes->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
     Albaranes->setHeaderData(3, Qt::Horizontal, QObject::tr("FACTURA"));
     Albaranes->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
 
-    /********************************************************************
-   * FACTURAS
-   *******************************************************************/
-
-
+        /********************************************************************
+       * FACTURAS
+       *******************************************************************/
     cSQL= "Select id,factura,fecha,fecha_cobro,total from cab_fac where id_cliente =" + QString::number(oCliente->id);
     Facturas->setQuery(cSQL,Configuracion_global->empresaDB);
 
@@ -499,13 +482,9 @@ void frmClientes::LLenarCampos()
     Facturas->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA COBRO"));
     Facturas->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
 
-
-  /********************************************************************
-  * PRESUPUESTOS
-  *******************************************************************/
-
-
-
+      /********************************************************************
+      * PRESUPUESTOS
+      *******************************************************************/
     cSQL= "Select id,presupuesto,fecha,valido_hasta,total from cab_pre where id_cliente =" + QString::number(oCliente->id);
     Presupuestos->setQuery(cSQL,Configuracion_global->empresaDB);
 
@@ -520,13 +499,9 @@ void frmClientes::LLenarCampos()
     Presupuestos->setHeaderData(3, Qt::Horizontal, QObject::tr("FECHA APRO."));
     Presupuestos->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
 
-
- /********************************************************************
- * VALES
- *******************************************************************/
-
-
-
+     /********************************************************************
+     * VALES
+     *******************************************************************/
     cSQL= "Select id,Numero,fecha,fecha_vencimiento_vale,importe from vales where id_cliente =" + QString::number(oCliente->id);
     Vales->setQuery(cSQL,Configuracion_global->empresaDB);
 
@@ -540,14 +515,9 @@ void frmClientes::LLenarCampos()
     Vales->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
     Vales->setHeaderData(3, Qt::Horizontal, QObject::tr("VTO."));
     Vales->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
-
-
     /********************************************************************
     * TICKETS
     *******************************************************************/
-
-
-
     cSQL= "Select id,ticket,fecha,hora,importe from cab_tpv where id_cliente =" + QString::number(oCliente->id);
     Tickets->setQuery(cSQL,Configuracion_global->empresaDB);
 
@@ -562,12 +532,9 @@ void frmClientes::LLenarCampos()
     Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
     Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
 
-
     //----------------------
     // Asientos contables
     //----------------------
-
-
     modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
                             "from diario where cta_principal = '"+oCliente->cuenta_contable +
                             "' order by asiento + ' '+pos_en_asiento",
@@ -582,10 +549,7 @@ void frmClientes::LLenarCampos()
     ui->tablaAsientos->setColumnWidth(5,60);
     ui->tablaAsientos->setColumnWidth(6,55);
     ui->tablaAsientos->setColumnWidth(7,75);
-    ui->tablaAsientos->setColumnWidth(8,60);
-
-
-    set_blink();
+    ui->tablaAsientos->setColumnWidth(8,60);   
 }
 void frmClientes::VaciarCampos()
 {
@@ -732,8 +696,8 @@ void frmClientes::LLenarCliente()
     oCliente->cuenta_iva_repercutido=ui->txtcuenta_iva_repercutido->text();
     oCliente->cuenta_deudas=ui->txtcuenta_deudas->text();
     oCliente->cuenta_cobros=ui->txtcuenta_cobros->text();
-    oCliente->id_forma_pago=Configuracion_global->Devolver_id_forma_pago(ui->cboforma_pago->currentData(Qt::DisplayRole).toString());
-    //oCliente->forma_pago=ui->cboforma_pago->currentText();
+
+    oCliente->id_forma_pago=Configuracion_global->formapago_model->record(ui->cboforma_pago->currentIndex()).value("id").toInt();
 
     oCliente->dia_pago1=ui->txtdia_pago1->value();
     oCliente->dia_pago2=ui->txtdia_pago2->value();
@@ -751,14 +715,10 @@ void frmClientes::LLenarCliente()
     oCliente->importe_pendiente=ui->txtimporteAcumulado->text().toDouble();
     oCliente->acceso_web=ui->txtacceso_web->text();
     oCliente->password_web=ui->txtpassword_web->text();
-    oCliente->ididioma = Configuracion_global->Devolver_id_idioma(ui->cboidiomaDocumentos->currentText());
+    oCliente->ididioma = qmidiomas->record(ui->cboidiomaDocumentos->currentIndex()).value("id").toInt();
     oCliente->idioma = ui->cboidiomaDocumentos->currentText();
     oCliente->observaciones = ui->txtObservaciones->text();
-    if (ui->chkClienteEmpresa->isChecked())
-        oCliente->lIRPF =true;
-    else
-        oCliente->lIRPF=false;
-
+    oCliente->lIRPF =ui->chkClienteEmpresa->isChecked();
     oCliente->visa1_caduca_ano = ui->txtvisa1_caduca_ano->text().toInt();
     oCliente->visa1_caduca_mes = ui->txtvisa1_caduca_mes->text().toInt();
     oCliente->visa1_cod_valid = ui->txtvisa1_cod_valid->text().toInt();
@@ -767,8 +727,10 @@ void frmClientes::LLenarCliente()
     oCliente->visa2_cod_valid = ui->txtvisa2_cod_valid->text().toInt();
     oCliente->visa_distancia1 = ui->txtvisa_distancia1->text();
     oCliente->visa_distancia2 = ui->txtvisa_distancia2->text();
-    oCliente->id_transportista = Configuracion_global->devolver_id_transportista(ui->cbotransportista->currentText());
-    oCliente->id_agente = Configuracion_global->devolver_id_agente(ui->cboagente->currentText());
+
+    oCliente->id_transportista = queryTransportistas->record(ui->cbotransportista->currentIndex()).value("id").toInt();
+    oCliente->id_agente = queryAgentes->record(ui->cboagente->currentIndex()).value("id").toInt();
+
     if (ui->radGeneral->isChecked())
         oCliente->grupo_iva = 1;
     if(ui->radUE->isChecked())
@@ -777,8 +739,8 @@ void frmClientes::LLenarCliente()
         oCliente->grupo_iva = 3;
     if(ui->radExportacion->isChecked())
         oCliente->grupo_iva = 4;
-    oCliente->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
 
+    oCliente->id_divisa = Configuracion_global->divisas_model->record(ui->cboDivisa->currentIndex()).value("id").toInt();
 }
 
 
@@ -875,6 +837,7 @@ void frmClientes::on_btnAnadir_clicked()
     {
         QMessageBox::information(this,tr("Altas de clientes"),tr("Ya existe un cliente con ese numero de identificación"),
                                  tr("Aceptar"));
+        ui->stackedWidget->setCurrentIndex(0);
         oCliente->Recuperar(id);
         LLenarCampos();
         bloquearCampos(true);
@@ -936,14 +899,18 @@ void frmClientes::txtcif_nif_editingFinished()
         if(QMessageBox::question(this,tr("Gestión de clientes"),tr("¿Desea cambiar el CIF/DNI del cliente?"),
                                  tr("No"),tr("Sí")) == QMessageBox::Accepted)
         {
-            if (ui->txtcif_nif->text().length() == 8){
+            if (ui->txtcif_nif->text().length() == 8)
+            {
                 QString cif = Configuracion::letraDNI(ui->txtcif_nif->text());
                 ui->txtcif_nif->setText(cif.toUpper());
-            } else if (ui->txtcif_nif->text().length() < 8)
+                oCliente->cif_nif = cif.toUpper();
+            }
+            else if (ui->txtcif_nif->text().length() < 8)
             {
                 TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("DNI Demasiado pequeño para calcular letra"));
             }
-        } else
+        }
+        else
         {
            ui->txtcif_nif->setText(oCliente->cif_nif);
         }
@@ -953,7 +920,12 @@ void frmClientes::txtcif_nif_editingFinished()
 
 void frmClientes::on_btnEditar_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    if(ui->stackedWidget->currentIndex() == 1 )
+    {
+        if(!ui->tabla_busquedas->currentIndex().isValid())
+            return;
+        on_tabla_busquedas_doubleClicked(ui->tabla_busquedas->currentIndex());
+    }
     emit block();
     bloquearCampos(false);
     ui->txtcodigo_cliente->setEnabled(false);
@@ -1036,11 +1008,6 @@ void frmClientes::on_btnDeshacer_clicked()
     {
         oCliente->Recuperar("Select * from clientes order by id desc limit 1 ");
         this->Altas = false;
-    }
-    else
-    {
-        QString cid = QString::number(oCliente->id);
-        oCliente->Recuperar(QString("Select * from clientes where id =%1").arg(cid));
     }
 
     LLenarCampos();
@@ -1536,13 +1503,6 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
 
 }
 
-//void frmClientes::on_tabla_busquedas_row_changed(QModelIndex current, QModelIndex previous)
-//{
-//    Q_UNUSED(previous);
-//    //on_tabla_busquedas_clicked(current);
-
-//}
-
 void frmClientes::setUpBusqueda()
 {
     m_busqueda = new BarraBusqueda(this);
@@ -1561,7 +1521,6 @@ void frmClientes::setUpBusqueda()
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
     connect(m_busqueda,SIGNAL(hideMe()),this,SLOT(ocultarBusqueda()));
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
-
 
     QPushButton* add = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
     connect(add,SIGNAL(clicked()),this,SLOT(on_btnAnadir_clicked()));
@@ -1590,6 +1549,14 @@ void frmClientes::setUpBusqueda()
 
 bool frmClientes::eventFilter(QObject *obj, QEvent *event)
 {
+    if(event->type() == QEvent::Show && obj == this)
+    {
+        static bool _init_ = true;
+        if(_init_)
+            init_querys();
+        _init_ = false;
+    }
+
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
     if(event->type() == QEvent::KeyPress)
@@ -1597,10 +1564,10 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if(ui->stackedWidget->currentIndex()==1)
         {
-
             if(keyEvent->key() == Qt::Key_Return)
             {
-                on_tabla_busquedas_doubleClicked(ui->tabla_busquedas->currentIndex());
+                if(ui->tabla_busquedas->currentIndex().isValid())
+                    on_tabla_busquedas_doubleClicked(ui->tabla_busquedas->currentIndex());
                 return true;
             }
         }
@@ -1614,25 +1581,20 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
                     ocultarBusqueda();
                 else
                     mostrarBusqueda();
-
             }
         }
     }
     return MayaModule::eventFilter(obj,event);
 }
 
-void frmClientes::on_tabla_busquedas_clicked(const QModelIndex &index)
-{
-    int id = ui->tabla_busquedas->model()->data(ui->tabla_busquedas->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oCliente->Recuperar(id);
-    LLenarCampos();
-}
-
 void frmClientes::on_btnGuardardireccionAlternativa_clicked()
 {
-    if(ui->cbopaisAlternativa->currentText().isEmpty()){
+    if(ui->cbopaisAlternativa->currentText().isEmpty())
+    {
         TimedMessageBox * t = new TimedMessageBox(this,tr("Debe rellenar el campo pais para poder guardar"));
-    } else {
+    }
+    else
+    {
         ui->txtdescripcion_direccion->setEnabled(false);
         ui->txtdireccion1Alternativa1->setEnabled(false);
         ui->txtdireccion1Alternativa2->setEnabled(false);
@@ -1643,7 +1605,6 @@ void frmClientes::on_btnGuardardireccionAlternativa_clicked()
         ui->txtemail_alternativa->setEnabled(false);
         ui->txtcomentarios_alternativa->setEnabled(false);
 
-        //TODO REVISAR ESTOS METODOS!!!
         if (Anadirdireccion)
             oCliente->Guardardireccion(true,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
                                    ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
@@ -1737,8 +1698,6 @@ void frmClientes::ocultarBusqueda()
     _hideBarraBusqueda(m_busqueda);
 }
 
-
-
 void frmClientes::on_btnCobroTotal_clicked()
 {
     QModelIndex index;
@@ -1801,5 +1760,16 @@ void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
     //-------------------------
     modelHistorial->setQuery(QString("select * from histo_clientes_deuda where id_cab = %1").arg(id),
                              Configuracion_global->groupDB);
+    QStringList headers;
+    headers << "id" <<"id_cab" <<tr("Fecha Movim.") << tr("Imp.Ant.") <<tr("pagado") <<tr("cambio") <<tr("Pendiente");
+    headers <<tr("Entidad") << tr("oficina") <<tr("dc") <<tr("cuenta") << tr("efectivo") << tr("tarjeta") ;
+    headers << tr("cheque") <<tr("Transf.") << tr("Domic.") <<("PyPal") <<tr("Vales");
 
+    QVariantList sizes;
+    sizes << 0 << 0 <<100<<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 << 90 <<90 <<90 <<90 <<90;
+    for(int i = 0; i< sizes.size(); i++)
+    {
+        modelHistorial->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        ui->tablahistorial_deudas->setColumnWidth(i,sizes.at(i).toInt());
+    }
 }
