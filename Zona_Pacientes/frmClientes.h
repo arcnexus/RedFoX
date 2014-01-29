@@ -9,6 +9,7 @@
 #include "cliente.h"
 #include "../sqlcalls.h"
 #include "../mayamodule.h"
+#include <QCompleter>
 namespace Ui {
 class frmClientes;
 }
@@ -52,8 +53,6 @@ private slots:
 
     void txtApellido_Nombre_editingFinished();
 
-    void txtpoblacion_editingFinished();
-
     void txtprovincia_editingFinished();
 
     void txtcif_nif_editingFinished();
@@ -67,7 +66,6 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void txtcp_editingFinished();
 
     void txtrRiesgoPermitido_editingFinished();
 
@@ -107,6 +105,10 @@ private slots:
 
     void on_TablaDeudas_clicked(const QModelIndex &index);
 
+    void on_txtcp_editingFinished();
+
+    void on_txtdireccion2_editingFinished();
+
 private:
     Ui::frmClientes *ui;
 
@@ -143,6 +145,12 @@ private:
     QSqlQueryModel *modelPoblaciones;
     QSqlQueryModel *deudas ;
     QSqlQueryModel *modelHistorial;
-    QSqlQueryModel * m_clientes;
+    QSqlQueryModel *m_clientes;
+
+    QCompleter * pob_completer;
+    QSqlTableModel * pob_completer_model;
+
+    QCompleter * calle_completer;
+    QSqlTableModel * calle_completer_model;
 };
 #endif

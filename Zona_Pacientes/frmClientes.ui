@@ -3002,32 +3002,32 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnBorrar</tabstop>
   <tabstop>tabwidget</tabstop>
   <tabstop>btnFichaPaciente</tabstop>
+  <tabstop>txtcodigo_cliente</tabstop>
+  <tabstop>txtcif_nif</tabstop>
+  <tabstop>txtCifIntracomunitario</tabstop>
+  <tabstop>btnValidarVIES</tabstop>
   <tabstop>txtnombre</tabstop>
+  <tabstop>txtPrimerApellido</tabstop>
+  <tabstop>txtSegundoApellido</tabstop>
   <tabstop>txtnombre_fiscal</tabstop>
   <tabstop>txtnombre_comercial</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
   <tabstop>txtdireccion1</tabstop>
   <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtprovincia</tabstop>
+  <tabstop>cboPais</tabstop>
+  <tabstop>txttelefono1</tabstop>
+  <tabstop>txttelefono2</tabstop>
+  <tabstop>txtmovil</tabstop>
+  <tabstop>txtfax</tabstop>
+  <tabstop>txtemail</tabstop>
   <tabstop>txtweb</tabstop>
+  <tabstop>txtObservaciones</tabstop>
+  <tabstop>btnVer_OtrosContactos</tabstop>
+  <tabstop>btnAdd_TipoCliente</tabstop>
   <tabstop>lista_tipos</tabstop>
-  <tabstop>lista_direccionesAlternativas</tabstop>
-  <tabstop>txtdescripcion_direccion</tabstop>
-  <tabstop>txtdireccion1Alternativa1</tabstop>
-  <tabstop>txtdireccion1Alternativa2</tabstop>
-  <tabstop>txtcpPoblacionAlternativa</tabstop>
-  <tabstop>txtpoblacionAlternativa</tabstop>
-  <tabstop>txtprovinciaAlternativa</tabstop>
-  <tabstop>cbopaisAlternativa</tabstop>
-  <tabstop>txtemail_alternativa</tabstop>
-  <tabstop>txtcomentarios_alternativa</tabstop>
-  <tabstop>btnEditardireccionAlternativa</tabstop>
-  <tabstop>btnGuardardireccionAlternativa</tabstop>
-  <tabstop>btnDeshacerdireccionAlternativa</tabstop>
-  <tabstop>radGeneral</tabstop>
-  <tabstop>radUE</tabstop>
-  <tabstop>radExcento</tabstop>
-  <tabstop>radExportacion</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>txtcuenta_contable</tabstop>
+  <tabstop>btndel_TipoCliente</tabstop>
   <tabstop>txtcuenta_iva_repercutido</tabstop>
   <tabstop>txtcuenta_deudas</tabstop>
   <tabstop>chkClienteEmpresa</tabstop>
@@ -3076,6 +3076,40 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnAnadirdireccion</tabstop>
   <tabstop>tabla_busquedas</tabstop>
   <tabstop>btnBorrardireccion</tabstop>
+  <tabstop>txtcomentarios_alternativa</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>lista_direccionesAlternativas</tabstop>
+  <tabstop>btnGuardardireccionAlternativa</tabstop>
+  <tabstop>radExportacion</tabstop>
+  <tabstop>radUE</tabstop>
+  <tabstop>radExcento</tabstop>
+  <tabstop>btnDeshacerdireccionAlternativa</tabstop>
+  <tabstop>btnEditardireccionAlternativa</tabstop>
+  <tabstop>txtdireccion1Alternativa1</tabstop>
+  <tabstop>radGeneral</tabstop>
+  <tabstop>txtdescripcion_direccion</tabstop>
+  <tabstop>txtcuenta_contable</tabstop>
+  <tabstop>txtcpPoblacionAlternativa</tabstop>
+  <tabstop>txtprovinciaAlternativa</tabstop>
+  <tabstop>txtdireccion1Alternativa2</tabstop>
+  <tabstop>txtemail_alternativa</tabstop>
+  <tabstop>txtpoblacionAlternativa</tabstop>
+  <tabstop>cbopaisAlternativa</tabstop>
+  <tabstop>cbotarifa_cliente</tabstop>
+  <tabstop>cboDivisa</tabstop>
+  <tabstop>cboforma_pago</tabstop>
+  <tabstop>txtdia_pago1</tabstop>
+  <tabstop>txtdia_pago2</tabstop>
+  <tabstop>txtporc_dto_cliente</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>txtentidad_bancaria</tabstop>
+  <tabstop>txtoficina_bancaria</tabstop>
+  <tabstop>txtdc</tabstop>
+  <tabstop>txtcuenta_corriente</tabstop>
+  <tabstop>btnCobroTotal</tabstop>
+  <tabstop>radPendientes</tabstop>
+  <tabstop>radPagadas</tabstop>
+  <tabstop>tablahistorial_deudas</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

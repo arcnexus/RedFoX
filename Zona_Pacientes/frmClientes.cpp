@@ -32,6 +32,7 @@ void frmClientes::init_querys()
     queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
     qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
+    pob_completer_model->setTable("municipios");
 }
 
 void frmClientes::init()
@@ -55,6 +56,21 @@ void frmClientes::init()
     qTarifa             = new QSqlQueryModel(this);
     qmidiomas           = new QSqlQueryModel(this);
     modelHistorial      = new QSqlQueryModel(this);
+
+    pob_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
+    pob_completer_model->setTable("municipios");
+    pob_completer = new QCompleter(pob_completer_model,this);
+    pob_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    pob_completer->setCompletionColumn(3);
+    ui->txtpoblacion->setCompleter(pob_completer);
+
+    calle_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
+    calle_completer_model->setTable("calles");
+    calle_completer = new QCompleter(calle_completer_model,this);
+    calle_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    calle_completer->setCompletionColumn(2);
+    ui->txtdireccion1->setCompleter(calle_completer);
+    ui->txtdireccion2->setCompleter(calle_completer);
 
     //DELEGATES
     ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
@@ -853,7 +869,7 @@ void frmClientes::on_btnAnadir_clicked()
         VaciarCampos();
 
         this->Altas = true;
-        ui->txtcodigo_cliente->setText(oCliente->Nuevocodigo_cliente());
+        ui->txtcodigo_cliente->setText(oCliente->Nuevocodigo_cliente());      
         ui->txtcuenta_contable->setText(ui->txtcodigo_cliente->text());
         ui->txtcodigo_cliente->setFocus();
 
@@ -862,6 +878,7 @@ void frmClientes::on_btnAnadir_clicked()
         ui->cboforma_pago->setCurrentIndex(-1);
         oCliente->Anadir();
         ui->txtcif_nif->setText(linea.text());
+        oCliente->cif_nif = linea.text();
         set_blink();
     }
 }
@@ -879,11 +896,6 @@ void frmClientes::txtApellido_Nombre_editingFinished()
         ui->txtnombre_fiscal->setText(ui->txtPrimerApellido->text() + " "+ ui->txtSegundoApellido->text() + ", "+ui->txtnombre->text());
         ui->txtNombreFiscal->setText(ui->txtnombre_fiscal->text());
     }
-}
-
-void frmClientes::txtpoblacion_editingFinished()
-{
-    //TODO - BUSCAR POBLACION QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
 }
 
 void frmClientes::txtprovincia_editingFinished()
@@ -1026,11 +1038,6 @@ void frmClientes::on_btnBuscar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
     mostrarBusqueda();
-}
-
-void frmClientes::txtcp_editingFinished()
-{
-    //TODO - BUSCAR POBLACION
 }
 
 
@@ -1772,4 +1779,34 @@ void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
         modelHistorial->setHeaderData(i,Qt::Horizontal,headers.at(i));
         ui->tablahistorial_deudas->setColumnWidth(i,sizes.at(i).toInt());
     }
+}
+
+void frmClientes::on_txtcp_editingFinished()
+{
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovincia->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->cboPais->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1)
+            ui->txtpoblacion->setFocus();
+        else
+            ui->txtdireccion1->setFocus();
+    }
+}
+
+void frmClientes::on_txtdireccion2_editingFinished()
+{
+    if(!ui->txtprovincia->text().isEmpty())
+        ui->txttelefono1->setFocus();
 }
