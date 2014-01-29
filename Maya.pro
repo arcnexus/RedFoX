@@ -215,8 +215,13 @@ SOURCES += main.cpp\
     Auxiliares/numericdelegate.cpp \
     Almacen/frmaddlotes.cpp \
     Almacen/frmselectlotes.cpp \
+<<<<<<< HEAD
+    Zona_Maestros/frmcajas.cpp \
+    Zona_Maestros/cajas.cpp
+=======
     Almacen/frmseccionesalmacen.cpp \
     Almacen/frmfamiliasalmacen.cpp
+>>>>>>> origin/master
 
 
 HEADERS  += mainwindow.h \
@@ -398,8 +403,13 @@ HEADERS  += mainwindow.h \
     Auxiliares/numericdelegate.h \
     Almacen/frmaddlotes.h \
     Almacen/frmselectlotes.h \
+<<<<<<< HEAD
+    Zona_Maestros/frmcajas.h \
+    Zona_Maestros/cajas.h
+=======
     Almacen/frmseccionesalmacen.h \
     Almacen/frmfamiliasalmacen.h
+>>>>>>> origin/master
 
 
 
@@ -495,8 +505,12 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmeditline.ui \
     Almacen/frmaddlotes.ui \
     Almacen/frmselectlotes.ui \
+<<<<<<< HEAD
+    Zona_Maestros/frmcajas.ui
+=======
     Almacen/frmseccionesalmacen.ui \
     Almacen/frmfamiliasalmacen.ui
+>>>>>>> origin/master
 
 RESOURCES += \
     maya.qrc \

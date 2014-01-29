@@ -51,6 +51,7 @@
 #include "../Zona_Contabilidad/frmcuadro_cuentas.h"
 
 #include "../Zona_Maestros/frmtransportistas.h"
+#include "../Zona_Maestros/frmcajas.h"
 
 #include "barraavisos.h"
 namespace Ui {
