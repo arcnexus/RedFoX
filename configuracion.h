@@ -255,6 +255,8 @@ public:
     static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params);
     static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
     static void EviarMail(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params, QString pdfName, QString dest_mail, QString dest_name, QString asunto, QString texto);
+
+    static bool SqlToODS(QString fileName, QString query, QSqlDatabase db, QStringList headers, QString& error);
 public slots:
     void format_text();    
 private slots:

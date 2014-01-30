@@ -129,3 +129,6 @@ VIEW `grupoagugroup`.`vistaart_tarifa` AS
 22/01/2014
 
 ALTER TABLE `GrupoxxTest`.`empresas` DROP COLUMN `password_cuenta`,DROP COLUMN `cuenta_smpt`,DROP COLUMN `cuenta_imap`,DROP COLUMN `cuenta_pop`,DROP COLUMN `cuenta_mail`,DROP COLUMN `nombre_email`;
+
+30/01/14
+ALTER TABLE `proveedores` CHANGE COLUMN `codigo` `codigo` VARCHAR(15) NULL DEFAULT '0' ;

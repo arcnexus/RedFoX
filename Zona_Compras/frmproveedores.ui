@@ -563,7 +563,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="txtpais"/>
+              <widget class="QComboBox" name="cboPais"/>
              </item>
             </layout>
            </item>

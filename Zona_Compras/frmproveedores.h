@@ -28,6 +28,9 @@ public:
 public slots:
 
 private slots:
+    void init();
+    void init_querys();
+
     void BloquearCampos(bool state);
 
     void LLenarCampos();
@@ -56,8 +59,6 @@ private slots:
     void on_btnAnadir_clicked();
 
     void on_btnAnterior_clicked();
-
-    void on_txtpoblacion_editingFinished();
 
     void on_txtcp_editingFinished();
 
@@ -92,17 +93,12 @@ private slots:
     void nuevo_contacto();
     void guardar_contacto();
 
-
-
     void on_btnBuscar_clicked();
 
     void on_btnAnadirEntrega_clicked();
 
 
     void on_txtcif_editingFinished();
-
-
-    void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
@@ -112,9 +108,6 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);    
-    void on_txtpais_currentIndexChanged(int index);
-
-    void on_txtcodigoFormaPago_currentIndexChanged(int index);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -122,7 +115,7 @@ private:
     Ui::frmProveedores *ui;
     QAction menuButton;
     QPushButton *push;
-    QSqlQueryModel *model;
+    QSqlQueryModel *modelBusqueda;
     void formato_tabla(QSqlQueryModel *modelo);
 
     Proveedor * oProveedor;
@@ -130,12 +123,6 @@ private:
     void setUpBusqueda();
 
     bool editing;
-
-
-    //////
-    QSqlQueryModel *qmFormaPago;
-    QSqlQueryModel * modelDivisas;
-    QSqlQueryModel * modelPais;
 
     QSqlQueryModel *modelArticulo;
     QSqlQueryModel *modelAsientos;
@@ -147,6 +134,12 @@ private:
     QSqlQueryModel *modelFacturas;
     QSqlQueryModel *modelAlbaranes;
     QSqlQueryModel * modelEntregas;
+
+    QCompleter * pob_completer;
+    QSqlTableModel * pob_completer_model;
+
+    QCompleter * calle_completer;
+    QSqlTableModel * calle_completer_model;
 };
 
 #endif // FRMPROVEEDORES_H
