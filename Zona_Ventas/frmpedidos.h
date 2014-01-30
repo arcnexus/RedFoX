@@ -27,6 +27,7 @@ public:
     QString ModuleMenuPath(){return tr("");}
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+    void init_querys();
 signals:
 
 private slots:
@@ -114,6 +115,7 @@ private:
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;
+    QSqlQueryModel *iva;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
     QSqlQueryModel *modelLineas;
