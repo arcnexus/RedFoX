@@ -2,11 +2,12 @@
 #define PRESUPUESTO_H
 
 #include "../Auxiliares/Globlal_Include.h"
-
-class Presupuesto
+#include <QObject>
+class Presupuesto : public QObject
 {
+    Q_OBJECT
 public:
-    Presupuesto();
+    Presupuesto(QObject* parent);
     ~Presupuesto();
     int id;
     int presupuesto;

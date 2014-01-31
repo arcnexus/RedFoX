@@ -870,15 +870,12 @@ void Configuracion::CerrarBDMediTec()
 }
 void Configuracion::CargarDatos(QSqlRecord r)
 {
-    qDebug() << r;
     this->pais = r.field("pais").value().toString();
     this->cEjercicio = r.field("ejercicio").value().toString();
     this->ndigitos_factura = r.field("digitos_factura").value().toInt();
 
-    if(r.field("lProfesional").value().toInt()==1)
-        this->lProfesional = true;
-    else
-        this->lProfesional = false;
+    this->lProfesional = r.value("usar_irpf").toBool();
+
     this->serie = r.field("serie").value().toString();
     this->digitos_cuentas_contables = r./*field("digitos_cuenta").*/value("digitos_cuenta").toInt();
     this->cuenta_clientes = r.field("codigo_cuenta_clientes").value().toString();

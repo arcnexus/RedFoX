@@ -1,7 +1,8 @@
 #include "presupuesto.h"
 
 
-Presupuesto::Presupuesto()
+Presupuesto::Presupuesto(QObject *parent):
+    QObject(parent)
 {
     this->id = 0;
     this->editable = true;
