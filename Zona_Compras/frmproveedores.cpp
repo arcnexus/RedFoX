@@ -533,7 +533,26 @@ void frmProveedores::on_btnAnadir_clicked()
 
 void frmProveedores::on_txtcp_editingFinished()
 {
-    // TODO - BUSCAR POBLACION
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovincia->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->cboPais->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1)
+            ui->txtpoblacion->setFocus();
+        else
+            ui->txtdireccion1->setFocus();
+    }
 }
 
 void frmProveedores::on_btnBorrar_clicked()
@@ -1169,4 +1188,10 @@ bool frmProveedores::eventFilter(QObject *obj, QEvent *event)
         }
     }
     return MayaModule::eventFilter(obj,event);
+}
+
+void frmProveedores::on_txtdireccion2_editingFinished()
+{
+    if(!ui->txtprovincia->text().isEmpty())
+        ui->txttelefono1->setFocus();
 }

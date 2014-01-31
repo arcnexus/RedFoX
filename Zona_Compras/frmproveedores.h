@@ -109,6 +109,8 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);    
 
+    void on_txtdireccion2_editingFinished();
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
