@@ -43,8 +43,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     // Modelo y formato tabla lineas
     //-------------------------------
     modelLineas = new QSqlQueryModel(this);
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                          "from lin_ped where id = 0;",Configuracion_global->empresaDB);
+//    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+//                          "from lin_ped where id = 0;",Configuracion_global->empresaDB);
     ui->Lineas->setModel(modelLineas);
     QStringList header;
     QVariantList sizes;
@@ -93,8 +93,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     // LLenar tabla
     //--------------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
-                Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+//    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
+//                Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
     ui->tabla->setModel(m);
     formato_tabla();
     connect(ui->tabla->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
@@ -104,8 +104,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //--------------------
     // %Iva combos gastos
     //--------------------
-    QSqlQueryModel *iva = new QSqlQueryModel(this);
-    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
+    iva = new QSqlQueryModel(this);
+    //iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
     ui->cboporc_iva_gasto1->setModel(iva);
     int index = ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0));
     ui->cboporc_iva_gasto1->setCurrentIndex(index);
@@ -153,8 +153,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //----------------------
     // Control de eventos
     //----------------------
-//    ui->txtcodigo_cliente->installEventFilter(this);
-//    ui->txtcodigo_transportista->installEventFilter(this);
+
     QList<QWidget*> l = this->findChildren<QWidget*>();
     QList<QWidget*> ::Iterator it;
 
@@ -173,6 +172,17 @@ FrmPedidos::~FrmPedidos()
     delete oPedido;
     delete oCliente3;
 }
+
+void FrmPedidos::init_querys()
+{
+
+    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                          "from lin_ped where id = 0;",Configuracion_global->empresaDB);
+    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
+                Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
+}
+
 
 void FrmPedidos::LLenarCampos()
 {
@@ -207,7 +217,6 @@ void FrmPedidos::LLenarCampos()
     ui->txtTarifa_cliente->setText(Configuracion_global->Devolver_tarifa(oPedido->id_tarifa));
     ui->txtcif->setText(oPedido->cif);
     ui->chkrecargo_equivalencia->setChecked(oPedido->recargo_equivalencia==1);
-        //helper.set_tarifa(oCliente3->tarifa_cliente);
     ui->txtsubtotal->setText(QString::number(oPedido->subtotal));
     ui->spin_porc_dto_especial->setValue(oPedido->porc_dto);
     ui->spinPorc_dto_pp->setValue(oPedido->porc_dto_pp);
@@ -278,8 +287,6 @@ void FrmPedidos::LLenarCampos()
 
     ui->txtcomentario->setText(oPedido->comentario);
     ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
-    //oPedido->traspasado_albaran;
-    //oPedido->traspasado_factura;
     ui->txtdireccion1_entrega->setText(oPedido->direccion_entrega1);
     ui->txtdireccion2_entrega->setText(oPedido->direccion_entrega2);
     ui->txtcp_entrega->setText(oPedido->cp_entrega);
@@ -723,6 +730,10 @@ void FrmPedidos::buscar_transportista()
 
 bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
 {
+    if(event->type() == QEvent::Show && obj == this)
+    {
+        init_querys();
+    }
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
@@ -1417,11 +1428,12 @@ void FrmPedidos::convertir_ealbaran()
         // ----------------
         // Lineas de albaran
         // ----------------
-        int added_l;
+        bool transaccion;
+        int new_id;
         QHash <QString, QVariant> h_l;
         QString d = QString("id_cab = %1").arg(oPedido->id);
         QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("lin_ped", d,Configuracion_global->empresaDB, error);
-          QMapIterator<int, QSqlRecord> i_l(map);
+        QMapIterator<int, QSqlRecord> i_l(map);
           while (i_l.hasNext())
           {
               i_l.next();
@@ -1431,11 +1443,45 @@ void FrmPedidos::convertir_ealbaran()
               h_l.remove("id");
               h_l["id_cab"] = added;
               h_l.remove("cantidad_a_servir");
-             added_l = SqlCalls::SqlInsert(h_l,"lin_alb",Configuracion_global->empresaDB,error);
-             if(added_l == -1)
+             new_id = SqlCalls::SqlInsert(h_l,"lin_alb",Configuracion_global->empresaDB,error);
+             // Unidades reservadas
+             QString cSQL = QString("update articulos set unidades_reservadas = unidades_reservadas - %1").arg(
+             QString::number(h_l.value("cantidad").toFloat(),'f',Configuracion_global->decimales_campos_totales));
+             cSQL.append(" where id = %1").arg(QString::number(r_l.value("id_articulo").toInt()));
+            QSqlQuery q(Configuracion_global->groupDB);
+             if(!q.exec())
+                 new_id = -2;
+             // Stock y acumulados
+             Articulo oArt;
+             oArt.acumulado_ventas(h_l.value("id_articulo").toInt(),h_l.value("cantidad").toFloat(),h_l.value("total").toDouble(),
+                                   QDate::currentDate(),"V");
+
+            switch (new_id) {
+            case -1:
+
+                QMessageBox::warning(this,tr("Pedidos cliente"),
+                                     tr("Ocurrió un error al crear las líneas de factura: %1").arg(error));
+
+                transaccion = false;
+
+               break;
+            case -2:
+
+                QMessageBox::warning(this,tr("Pedidos cliente"),
+                                     tr("Ocurrió un error al actualizar el stock de unidades reservadas :").arg(q.lastError().text()));
+
+                transaccion = false;
+                break;
+            default:
+                break;
+             if(new_id == -1)
                  break;
+
+            }
           }
-        if(added_l == -1 || added == -1)
+
+
+        if(new_id == -1 || new_id == -1)
         {
             Configuracion_global->empresaDB.rollback();
 //            qDebug() <<added;
@@ -1637,13 +1683,7 @@ void FrmPedidos::convertir_enFactura()
                         h_lineas_fac["total"] = lineas_ped.record().value("total").toDouble();
                         int new_id = SqlCalls::SqlInsert(h_lineas_fac,"lin_fac",Configuracion_global->empresaDB,error);
 
-                        if(new_id == -1)
-                        {
-                            QMessageBox::warning(this,tr("Pedidos cliente"),
-                                                 tr("Ocurrió un error al crear las líneas de factura: %1").arg(error));
 
-                            transaccion = false;
-                        }
                     }
                 }
 

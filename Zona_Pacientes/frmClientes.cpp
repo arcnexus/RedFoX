@@ -1558,10 +1558,7 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Show && obj == this)
     {
-        static bool _init_ = true;
-        if(_init_)
-            init_querys();
-        _init_ = false;
+        init_querys();
     }
 
     if(event->type() == QEvent::Resize)
@@ -1798,8 +1795,10 @@ void frmClientes::on_txtcp_editingFinished()
         ui->txtprovincia->setText(pob_completer_model->record(0).value("CodProv").toString());
         ui->cboPais->setCurrentText("España");
 
-        if(pob_completer_model->rowCount() > 1)
+        if(pob_completer_model->rowCount() > 1){
+            ui->txtpoblacion->setText("");
             ui->txtpoblacion->setFocus();
+        }
         else
             ui->txtdireccion1->setFocus();
     }
