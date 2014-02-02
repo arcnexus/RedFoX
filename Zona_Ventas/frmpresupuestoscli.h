@@ -94,6 +94,7 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void calcular_presupuesto();
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;
@@ -107,6 +108,7 @@ private:
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;
+    QSqlQueryModel *modelLineas;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
 

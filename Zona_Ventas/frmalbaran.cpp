@@ -94,7 +94,8 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     // llenar tabla
     //--------------
     m = new QSqlQueryModel(this);
-    m->setQuery("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb order by albaran desc",Configuracion_global->empresaDB);
+    m->setQuery(QString("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb where ejercicio =%1 order by albaran desc").arg(
+                    Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
    // ui->tabla->setModel(m);
     ui->table2->setModel(m);
     formato_tabla();
@@ -918,7 +919,7 @@ void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
     else
         modo = "DESC";
     cSQL = "select id, serie, albaran,fecha,cif,total_albaran,cliente from cab_alb where "+order+" like '%"+texto.trimmed()+
-            "%' and serie = '"+this->serie+"' order by "+order +" "+modo;
+            "%' and serie = '"+this->serie+"'  and ejercicio ="+Configuracion_global->cEjercicio+ " order by "+order +" "+modo;
     m->setQuery(cSQL,Configuracion_global->empresaDB);
     //ui->table2->selectRow(0);
 }

@@ -110,7 +110,7 @@ background-color: #304163;</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="title">
@@ -217,6 +217,13 @@ background-color: #304163;</string>
              </property>
             </widget>
            </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>Cif/Nif/Nie:</string>
+             </property>
+            </widget>
+           </item>
            <item row="9" column="1">
             <widget class="QLineEdit" name="txtcif">
              <property name="minimumSize">
@@ -233,10 +240,17 @@ background-color: #304163;</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="label_15">
+           <item row="10" column="0">
+            <widget class="QLabel" name="label_51">
              <property name="text">
-              <string>Cif/Nif/Nie:</string>
+              <string>%Dto Esp:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Código cliente:</string>
              </property>
             </widget>
            </item>
@@ -259,17 +273,20 @@ background-color: #304163;</string>
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_51">
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>%Dto Esp:</string>
+              <string>Cliente:</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>Código cliente:</string>
+           <item row="3" column="1" colspan="3">
+            <widget class="QLineEdit" name="txtcliente">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>24</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -640,14 +657,7 @@ color: rgb(255,255,255);</string>
              </item>
             </layout>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Cliente:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
+           <item row="12" column="1">
             <spacer name="verticalSpacer_3">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -659,16 +669,6 @@ color: rgb(255,255,255);</string>
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="3" column="1" colspan="3">
-            <widget class="QLineEdit" name="txtcliente">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>24</height>
-              </size>
-             </property>
-            </widget>
            </item>
            <item row="1" column="0" colspan="4">
             <widget class="QLabel" name="label_50">
@@ -690,20 +690,6 @@ color: rgb(255,255,255);</string>
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="text">
-              <string>Pais:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="3">
-            <widget class="QCheckBox" name="chklporc_rec">
-             <property name="text">
-              <string>Recargo de equivalencia</string>
-             </property>
-            </widget>
-           </item>
            <item row="6" column="2" colspan="2">
             <widget class="QLineEdit" name="txtpoblacion">
              <property name="sizePolicy">
@@ -717,6 +703,27 @@ color: rgb(255,255,255);</string>
                <width>0</width>
                <height>24</height>
               </size>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="3">
+            <widget class="QCheckBox" name="chkrecargo_equivalencia">
+             <property name="text">
+              <string>Recargo de equivalencia</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_14">
+             <property name="text">
+              <string>Pais:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>C.P:</string>
              </property>
             </widget>
            </item>
@@ -770,32 +777,6 @@ color: rgb(255, 255, 255);</string>
              </item>
             </layout>
            </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="text">
-              <string>C.P:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="3">
-            <widget class="QDoubleSpinBox" name="spin_porc_dto_pp">
-             <property name="maximumSize">
-              <size>
-               <width>100</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="minimum">
-              <double>-999999999.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>999999.989999999990687</double>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="0">
             <widget class="QLabel" name="label_5">
              <property name="text">
@@ -829,6 +810,45 @@ color: rgb(255, 255, 255);</string>
                <width>240</width>
                <height>16777215</height>
               </size>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="3">
+            <widget class="QDoubleSpinBox" name="spinPorc_irpf">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="2">
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>IRPF</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="3">
+            <widget class="QDoubleSpinBox" name="spinPorc_dto_pp">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="minimum">
+              <double>-999999999.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>999999.989999999990687</double>
              </property>
             </widget>
            </item>
@@ -1129,7 +1149,7 @@ color: rgb(255, 255, 255);</string>
             </widget>
            </item>
            <item row="1" column="0" colspan="3">
-            <widget class="QTableWidget" name="tableWidget">
+            <widget class="QTableView" name="Lineas">
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -1145,22 +1165,6 @@ color: rgb(255, 255, 255);</string>
              <property name="cornerButtonEnabled">
               <bool>false</bool>
              </property>
-             <property name="columnCount">
-              <number>10</number>
-             </property>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
-             <column/>
             </widget>
            </item>
           </layout>
@@ -1169,8 +1173,44 @@ color: rgb(255, 255, 255);</string>
           <attribute name="title">
            <string>Desglose</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="txtimporte_irpf">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>80</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_17">
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>IRPF:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="3">
             <layout class="QGridLayout" name="gridLayout_9">
              <item row="0" column="1">
               <widget class="QLabel" name="label_43">
@@ -1826,7 +1866,7 @@ color: rgb(255, 255, 255);</string>
              </item>
             </layout>
            </item>
-           <item>
+           <item row="3" column="0" colspan="3">
             <widget class="QGroupBox" name="groupBox">
              <property name="title">
               <string>Gastos distribuidos</string>
@@ -1849,17 +1889,12 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QDoubleSpinBox" name="spinPorc_iva_gasto1"/>
-              </item>
               <item row="1" column="3">
-               <widget class="QDoubleSpinBox" name="spinIvaGasto1"/>
-              </item>
-              <item row="2" column="2">
-               <widget class="QDoubleSpinBox" name="spinPorc_iva_gasto2"/>
-              </item>
-              <item row="3" column="2">
-               <widget class="QDoubleSpinBox" name="spinPorc_iva_gasto3"/>
+               <widget class="QDoubleSpinBox" name="spinIva_gasto1">
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
               </item>
               <item row="1" column="0">
                <widget class="QLineEdit" name="txtGastoDist1">
@@ -1896,10 +1931,18 @@ color: rgb(255, 255, 255);</string>
                </widget>
               </item>
               <item row="2" column="3">
-               <widget class="QDoubleSpinBox" name="spinIva_gasto2"/>
+               <widget class="QDoubleSpinBox" name="spinIva_gasto2">
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QDoubleSpinBox" name="spinIva_gasto3"/>
+               <widget class="QDoubleSpinBox" name="spinIva_gasto3">
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_34">
@@ -1957,21 +2000,17 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
+              <item row="1" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto1"/>
+              </item>
+              <item row="2" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto2"/>
+              </item>
+              <item row="3" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto3"/>
+              </item>
              </layout>
             </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>80</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>

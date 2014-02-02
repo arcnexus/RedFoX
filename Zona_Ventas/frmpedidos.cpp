@@ -43,13 +43,13 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     // Modelo y formato tabla lineas
     //-------------------------------
     modelLineas = new QSqlQueryModel(this);
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio_recom,porc_dto,precio ,subtotal,porc_iva,total "
                           "from lin_ped where id = 0;",Configuracion_global->empresaDB);
     ui->Lineas->setModel(modelLineas);
     QStringList header;
     QVariantList sizes;
-    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
-    header << tr("porc_dto") << tr("porc_iva") << tr("Total");
+    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto") << tr("pvp.") << tr("Subtotal");
+    header  << tr("porc_iva") << tr("Total");
     sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
     for(int i = 0; i <header.size();i++)
     {
@@ -846,7 +846,7 @@ void FrmPedidos::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
     iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
+    if(ui->chkrecargo_equivalencia->isChecked())
         re2 = base2 * (ui->txtrec1->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
@@ -856,7 +856,7 @@ void FrmPedidos::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
     iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
+    if(ui->chkrecargo_equivalencia->isChecked())
         re3 = base3 * (ui->txtrec3->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
@@ -866,7 +866,7 @@ void FrmPedidos::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
     iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
+    if(ui->chkrecargo_equivalencia->isChecked())
         re4 = base4 * (ui->txtrec4->text().toFloat()/100);
 
     // TOTALES GENERALES
@@ -1284,7 +1284,7 @@ void FrmPedidos::lineaDeleted(lineaDetalle * ld)
 
 void FrmPedidos::refrescar_modelo()
 {
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
                               "from lin_ped where id_cab = %1;").arg(oPedido->id),Configuracion_global->empresaDB);
 }
 
@@ -1452,7 +1452,7 @@ void FrmPedidos::convertir_ealbaran()
 
                 t = new TimedMessageBox(qApp->activeWindow(),
                                                           QObject::tr("Se ha creado el albarán num:")+QString::number(num));
-                oPedido->RecuperarPedido("select * from cab_alb where id ="+QString::number(oPedido->id));
+                oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(oPedido->id));
                 //-------------------------------------
                 // Insertamos datos albaran en pedido
                 //-------------------------------------
@@ -1480,7 +1480,7 @@ void FrmPedidos::convertir_enFactura()
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)
         {
             LLenarPedido();
-            if(ui->txtalbaran->text().isEmpty())
+            if(ui->txtalbaran->text()=="0")
                 convertir_ealbaran();
 
             QString serie;
