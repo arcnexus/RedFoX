@@ -13,7 +13,7 @@
 class  ColumnaFecha: public QItemDelegate
     {
 public:
-    ColumnaFecha();
+    ColumnaFecha(QObject* parent);
     virtual ~ColumnaFecha();
 
 

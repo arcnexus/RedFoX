@@ -96,11 +96,7 @@ void FrmEmpresas:: CargarCamposEnEmpresa()
     oEmpresa.cuenta_iva_soportado_re2 = ui->ivasoportadore2->text();
     oEmpresa.cuenta_iva_soportado_re3 = ui->ivasoportadore3->text();
     oEmpresa.cuenta_iva_soportado_re4 = ui->ivasoportadore4->text();
-    oEmpresa.Email_contrasena  = ui->txtEmail_contrasena->text();
-    oEmpresa.Email_imap = ui->txtEmail_imap->text();
-    oEmpresa.Email_pop = ui->txtEmail_pop->text();
-    oEmpresa.Email_smtp= ui->txtEmail_smtp->text();
-    oEmpresa.Email_usuario = ui->txtEmail_usuario->text();
+
     oEmpresa.irpf = ui->chkIRPF->isChecked();
     oEmpresa.porc_irpf = ui->spinPorc_irpf->value();
 }
@@ -153,7 +149,7 @@ void FrmEmpresas::getEmpresas()
     _empresas.clear();
     QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
-    QryEmpresas.prepare("Select * from grupos");
+    QryEmpresas.prepare("Select * from mayaglobal.grupos");
 
     if(QryEmpresas.exec())
     {
@@ -426,7 +422,7 @@ void FrmEmpresas::_addEmpresa()
             q.bindValue(":tamanocodigo",ui->txttamano_codigoart->value());
             q.bindValue(":cuenta_cobros","");//TODO c cobros
             q.bindValue(":cuenta_pagos","");//TODO c pagos
-            q.bindValue(":id_divisa",0);//TODO divisa
+            q.bindValue(":id_divisa",monedaEditModel->record(ui->cboDivisas->currentIndex()).value("id"));
             q.bindValue(":enlaceweb",0);//TODO Grrr
             q.bindValue(":contabilidad",0);
             q.bindValue(":consultas",ui->txtConsultas->value());
@@ -439,7 +435,7 @@ void FrmEmpresas::_addEmpresa()
             q.bindValue(":margen",0);
             q.bindValue(":margen_minimo",0);
             q.bindValue(":seguimiento",0);
-            q.bindValue(":id_tarifa_predeterminada",0);
+            q.bindValue(":id_tarifa_predeterminada",tarifaEditModel->record(ui->cboTarifa->currentIndex()).value("id"));
             q.bindValue(":actualizardivisas",ui->chk_upate_divisas->isChecked());
             q.bindValue(":cuenta_ventas_mercaderias",ui->txtCuenta_venta_mercaderias->text());
             q.bindValue(":cuenta_ventas_servicios",ui->txtCuenta_venta_servicios->text());
@@ -475,7 +471,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     monedaEditModel = new QSqlQueryModel(this);
 
     tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
-    monedaEditModel->setQuery("Select `id`,`moneda` from codigotarifa",_targetGroupDb);
+    monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
 
     ui->cboTarifa_3->setModel(tarifaEditModel);
     ui->cboTarifa_3->setModelColumn(1);
@@ -572,11 +568,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->ivasoportadore2_3->setText(r.value("cuenta_iva_soportado2_re").toString());
     ui->ivasoportadore3_3->setText(r.value("cuenta_iva_soportado3_re").toString());
     ui->ivasoportadore4_3->setText(r.value("cuenta_iva_soportado4_re").toString());
-    ui->txtEmail_contrasena_3->setText(r.value("password_cuenta").toString());
-    ui->txtEmail_imap_3->setText(r.value("cuenta_imap").toString());
-    ui->txtEmail_pop_3->setText(r.value("cuenta_pop").toString());
-    ui->txtEmail_smtp_3->setText(r.value("cuenta_smtp").toString());
-    ui->txtEmail_usuario_3->setText(r.value("cuenta_mail").toString());
+
     ui->txtCaducidadvales_3->setValue(r.value("caducidad_vales").toInt());
 }
 
@@ -620,24 +612,53 @@ void FrmEmpresas::on_btn_guardar_nuevo_clicked()
 {
     //Crear empresa @targetGroup
     _addEmpresa();
+
+    _targetGroupDb.close();
+    QSqlDatabase::removeDatabase("save_empresa");
+    tarifaEditModel->deleteLater();
+    monedaEditModel->deleteLater();
+
     ui->stackedWidget->setCurrentWidget(ui->main_page);
 }
 
 void FrmEmpresas::on_btn_crearGrupo_clicked()
 {
-    QProgressDialog* d = new QProgressDialog(this);
+    QProgressDialog d(this);
 
-    d->setValue(0);
-    d->setMinimum(0);
-    d->setMaximum(0);
-    d->show();
-    connect(this,&FrmEmpresas::endGroup,[this,d](bool b){
-        if(b){
-            ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
-        }
-        d->deleteLater();
-    });
-    QtConcurrent::run(this,&FrmEmpresas::createGroup);
+    d.setValue(0);
+    d.setMinimum(0);
+    d.setMaximum(0);
+    d.show();
+    QApplication::processEvents();
+    createGroup();
+
+    QSqlRecord _targetGroupDbRecord = _empresas.value(_targetGroup).second;
+    _targetGroupDb = QSqlDatabase::addDatabase("QMYSQL","save_empresa");
+    _targetGroupDb.setHostName(_targetGroupDbRecord.value("bd_host").toString());
+    _targetGroupDb.setUserName(_targetGroupDbRecord.value("bd_user").toString());
+    _targetGroupDb.setPassword(_targetGroupDbRecord.value("bd_pass").toString());
+    _targetGroupDb.setPort(_targetGroupDbRecord.value("bd_port").toInt());
+    _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
+
+    qDebug() << _targetGroupDbRecord.value("bd_pass").toString();
+    if(_targetGroupDb.open())
+    {
+        tarifaEditModel = new QSqlQueryModel(this);
+        monedaEditModel = new QSqlQueryModel(this);
+
+        tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
+        monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
+
+        ui->cboTarifa->setModel(tarifaEditModel);
+        ui->cboTarifa->setModelColumn(1);
+
+        ui->cboDivisas->setModel(monedaEditModel);
+        ui->cboDivisas->setModelColumn(1);
+
+        ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+    }
+    else
+        qDebug() << _targetGroupDb.lastError().text();
 }
 
 void FrmEmpresas::createGroup()
@@ -668,15 +689,15 @@ void FrmEmpresas::createGroup()
         db.setDatabaseName(grupo);
         error = !db.open();
 
+        QApplication::processEvents();
         if(!error)
             error = _insertMonedas(db, sError);
 
+        QApplication::processEvents();
         if(!error)
             error = _insertIVA(db, sError);
 
-        if(!error)
-            error = _insertNivelAcesso(db, sError);
-
+        QApplication::processEvents();
         if(!error)
             error = _insertPaises(db, sError);
 
@@ -724,6 +745,7 @@ bool FrmEmpresas::_createTables(QSqlDatabase db)
             error = true;
             break;
         }
+        QApplication::processEvents();
     }
     return error;
 }
@@ -771,23 +793,7 @@ bool FrmEmpresas::_insertIVA(QSqlDatabase db, QString& error)
         error = q.lastError().text();
     return !e;
 }
-bool FrmEmpresas::_insertNivelAcesso(QSqlDatabase db, QString& error)
-{
-    QSqlQuery q(db);
-    bool e;
-    e = q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');");
-    e &= q.exec("INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');");
 
-    e &= q.exec("INSERT INTO `usuarios` (`nombre`, `contrasena`, `nivel_acceso`, `categoria`) VALUES ('admin', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', '99', 'ADMINISTRADOR');");
-    if(!e)
-        error = q.lastError().text();
-    return !e;
-}
 bool FrmEmpresas::_insertPaises(QSqlDatabase db, QString& error)
 {
     bool e = false;
@@ -850,7 +856,31 @@ void FrmEmpresas::on_btn_add_empresaGrupo_clicked()
     if(ui->group_list->selectedItems().size() == 0)
         return;
     _targetGroup = ui->group_list->selectedItems().at(0)->text();
-    ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+
+    QSqlRecord _targetGroupDbRecord = _empresas.value(_targetGroup).second;
+    _targetGroupDb = QSqlDatabase::addDatabase("QMYSQL","save_empresa");
+    _targetGroupDb.setHostName(_targetGroupDbRecord.value("bd_host").toString());
+    _targetGroupDb.setUserName(_targetGroupDbRecord.value("bd_user").toString());
+    _targetGroupDb.setPassword(_targetGroupDbRecord.value("bd_pass").toString());
+    _targetGroupDb.setPort(_targetGroupDbRecord.value("bd_port").toInt());
+    _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
+
+    if(_targetGroupDb.open())
+    {
+        tarifaEditModel = new QSqlQueryModel(this);
+        monedaEditModel = new QSqlQueryModel(this);
+
+        tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
+        monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
+
+        ui->cboTarifa->setModel(tarifaEditModel);
+        ui->cboTarifa->setModelColumn(1);
+
+        ui->cboDivisas->setModel(monedaEditModel);
+        ui->cboDivisas->setModelColumn(1);
+
+        ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
+    }
 }
 
 void FrmEmpresas::on_btn_edit_empresa_clicked()
@@ -959,7 +989,7 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["tamano_codigo"]=  ui->txttamano_codigoart_3->value();
     data["cuenta_cobros"]=  ui->txtcuenta_cobros_3->text();
     data["cuenta_pagos"]=  ui->txtcuenta_pagos_3->text();   
-    data["id_divisa"]=  monedaEditModel->record(ui->cboDivisas->currentIndex()).value("id");
+    data["id_divisa"]=  monedaEditModel->record(ui->cboDivisas_3->currentIndex()).value("id");
     data["enlace_web"]=  ui->chkEnlace_web_3->isChecked();
     data["contabilidad"]=  ui->chkContabilidad_3->isChecked();
     data["consultas"]=  ui->txtConsultas_3->value();
@@ -993,12 +1023,6 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["cuenta_iva_soportado3_re"]=  ui->ivasoportadore3_3->text();
     data["cuenta_iva_soportado4_re"]=  ui->ivasoportadore4_3->text();
 
-    data["nombre_email"]=  ui->txtEmail_mostrar_3->text();
-    data["cuenta_mail"]=  ui->txtEmail_imap_3->text();
-    data["cuenta_pop"]=  ui->txtEmail_pop_3->text();
-    data["cuenta_imap"]= ui->txtEmail_imap_3->text();
-    data["cuenta_smpt"]= ui->txtEmail_smtp_3->text();
-    data["password_cuenta"]= ui->txtEmail_contrasena_3->text();
     //data["importada_sp"]=  ; esto debe ser true si ha sido importada (se debería hacer desde el programa de importación.
 
     data["importe_cierre"]= ui->spinImporte_abertura->value();

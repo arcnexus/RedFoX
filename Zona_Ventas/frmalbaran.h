@@ -5,6 +5,9 @@
 #include "../Auxiliares/table_helper.h"
 #include "../mayamodule.h"
 #include "../Auxiliares/timedmessagebox.h"
+#include "albaran.h"
+#include "../Zona_Pacientes/cliente.h"
+
 namespace Ui {
 class FrmAlbaran;
 }
@@ -47,14 +50,7 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-    void desglose1Changed(double base, double iva, double re, double total);
-    void desglose2Changed(double base, double iva, double re, double total);
-    void desglose3Changed(double base, double iva, double re, double total);
-    void desglose4Changed(double base, double iva, double re, double total);
 
-    void lineaReady(lineaDetalle*);
-    void lineaDeleted(lineaDetalle*);
     void on_btndeshacer_clicked();
 
     void on_tabWidget_2_currentChanged(int index);
@@ -81,15 +77,38 @@ private slots:
 
     void mostrarBusqueda();
     void ocultarBusqueda();
-    void filter_table(QString texto, QString orden, QString modo);
+
     void on_table2_row_moved(QModelIndex actual,QModelIndex previous);
     void on_cboseries_currentIndexChanged(const QString &arg1);
+    void refrescar_modelo();
+    void calcular_albaran();
 
+    void on_btnAnadirLinea_clicked();
+
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btn_borrarLinea_clicked();
+
+    void on_SpinGastoDist1_valueChanged(double arg1);
+
+    void on_SpinGastoDist2_valueChanged(double arg1);
+
+    void on_SpinGastoDist3_valueChanged(double arg1);
+
+    void on_cboporc_iva_gasto1_currentIndexChanged(const QString &arg1);
+
+    void on_cboporc_iva_gasto2_currentIndexChanged(int index);
+
+    void on_cboporc_iva_gasto3_currentIndexChanged(int index);
+
+    void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;
+    QSqlQueryModel *modelLineas;
     Table_Helper helper;
     bool in_edit;
+    QString moneda;
 
     QAction menuButton;
     QPushButton* push;
@@ -109,6 +128,9 @@ private:
     QString orden;
     QString modo;
     QString serie;
+
+    Albaran *oAlbaran ;
+    Cliente *oCliente2;
 };
 
 #endif // FRMALBARAN_H

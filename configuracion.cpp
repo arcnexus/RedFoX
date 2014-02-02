@@ -10,6 +10,11 @@
 #include <QSslError>
 #include <QPrintDialog>
 
+#include "Auxiliares/SMPT/SmtpMime"
+
+#include <quazip.h>
+#include <quazipfile.h>
+
 byte Configuracion::key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
 byte Configuracion::iv[ CryptoPP::AES::BLOCKSIZE ];
 QString Configuracion::Pass;
@@ -20,8 +25,10 @@ Configuracion::Configuracion(QObject* parent) :
     QObject(parent)
 {
 
-    iva_model = 0;
+    iva_model = new QSqlQueryModel(this);
     paises_model = new QSqlQueryModel(this);
+    formapago_model = new QSqlQueryModel(this);
+    divisas_model = new QSqlQueryModel(this);
     client_model = 0;
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
@@ -68,8 +75,7 @@ Configuracion::Configuracion(QObject* parent) :
 }
 
 
-QString Configuracion::
-toFormatoMoneda(QString cTexto)
+QString Configuracion::toFormatoMoneda(QString cTexto)
 {
     if(cTexto.isEmpty())
         return "0,00";
@@ -148,12 +154,29 @@ double Configuracion::MonedatoDouble(QString moneda)
 {
     bool negative;
     negative = false;
+    if(!moneda.contains(",") && !moneda.contains("."))
+        moneda.append(",00");
     if(moneda.isEmpty() || moneda == "0,00")
         return 0.00;
+
     moneda = moneda.replace(".","").replace(",",".");
+
     double dblMoneda;
     int d;
-    d= Configuracion_global->decimales_campos_totales;
+    d= Configuracion_global->decimales;
+    if(d>2)
+    {
+        if (d==3)
+        {
+            if(moneda.right(1) =="5")
+                moneda = moneda.left(moneda.size()-1).append("6");
+        } else if(d==4)
+        {
+            if(moneda.right(2)=="50")
+                moneda = moneda.left(moneda.size()-2).append("51");
+
+        }
+    }
     dblMoneda  = floor(moneda.toDouble() * pow(10., d) + .5) / pow(10., d);
     return dblMoneda;
 }
@@ -207,12 +230,7 @@ void Configuracion::Cargar_iva()
         return Cargar_iva();
     }
 
-    if(iva_model == 0)
-    {
-        iva_model = new QSqlTableModel(this,Configuracion_global->groupDB);
-        iva_model->setTable("tiposiva");
-    }
-    iva_model->select();
+    iva_model->setQuery("SELECT * from `tiposiva`",Configuracion_global->groupDB);
 
     QString base1 , base2 , base3 ,base4;
     QString re1 , re2 , re3 , re4;
@@ -279,7 +297,17 @@ QString Configuracion::setTipoIva(int idIva)
 void Configuracion::Cargar_paises()
 {
 
-    paises_model->setQuery("select pais from paises order by pais",Configuracion_global->groupDB);
+    paises_model->setQuery("select id,pais from paises order by pais",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_divisas()
+{
+    divisas_model->setQuery("select id,moneda from monedas order by moneda",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_formas_pago()
+{
+    formapago_model->setQuery("select * from formpago order by forma_pago",Configuracion_global->groupDB);
 }
 
 int Configuracion::Devolver_id_pais(QString pais)
@@ -740,9 +768,9 @@ void Configuracion::CargarClientes()
 void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)
-        usuarios_model = new QSqlRelationalTableModel(this,Configuracion_global->groupDB);
-    usuarios_model->setTable("usuarios");
-    usuarios_model->select();
+        usuarios_model = new QSqlQueryModel(this);
+    usuarios_model->setQuery("SELECT * from mayaglobal.usuarios",Configuracion_global->globalDB);
+    qDebug() << usuarios_model->rowCount() << usuarios_model->lastError();
 }
 
 bool Configuracion::CargarDatosBD()
@@ -755,9 +783,7 @@ bool Configuracion::CargarDatosBD()
     this->global_routeLite = settings.value("cRutaDBMaya").toString();
     this->global_host = settings.value("cHostBDMaya").toString();
     this->global_user  =   DeCrypt(settings.value("cUserBDMaya").toString());
-//    qDebug() << global_user;
     this->global_pass = DeCrypt(settings.value("cPasswordBDMaya").toString());
-//    qDebug() << global_pass;
     this->global_port = settings.value("global_port").toInt();
 
     this->nombre_bdTiendaWeb = settings.value("nombre_bdTiendaWeb").toString();
@@ -783,21 +809,22 @@ bool Configuracion::CargarDatosBD()
     }
     else
     {
-        this->globalDB.setDatabaseName("mayaglobal");
         this->globalDB.setHostName(Configuracion_global->global_host);
-        qDebug() << Configuracion_global->global_user << Configuracion_global->global_pass;
         this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
-
-        //this->globalDB.open("root","meganizado");
-
     }
 
-    if (this->globalDB.lastError().isValid())
+    bool _mayaglobal = true;
+    if(this->globalDB.isOpen())
     {
-        QMessageBox::critical(0, "error:", this->globalDB.lastError().text());
+        QSqlQuery q(globalDB);
+        if(q.exec("SHOW DATABASES like 'mayaglobal'"))
+            _mayaglobal = q.next();
     }
-    return !this->globalDB.lastError().isValid();
 
+    Configuracion_global->CargarUsuarios();
+    Configuracion_global->Cargar_paises();
+
+    return (!this->globalDB.lastError().isValid()) && _mayaglobal;
 }
 
 void Configuracion::AbrirDbWeb()
@@ -841,62 +868,48 @@ void Configuracion::CerrarBDMediTec()
 {
     db_meditec.close();
 }
-void Configuracion::CargarDatos(int id)
+void Configuracion::CargarDatos(QSqlRecord r)
 {
-    QSqlQuery qEmpresa(Configuracion_global->groupDB);
-    qEmpresa.prepare("Select * from empresas where id =:id");
-    qEmpresa.bindValue(":id",id);
-    if (qEmpresa.exec()) {
-        qEmpresa.next();
-        this->pais = qEmpresa.record().field("pais").value().toString();
-        this->cEjercicio = qEmpresa.record().field("ejercicio").value().toString();
-        this->ndigitos_factura = qEmpresa.record().field("digitos_factura").value().toInt();
+    this->pais = r.field("pais").value().toString();
+    this->cEjercicio = r.field("ejercicio").value().toString();
+    this->ndigitos_factura = r.field("digitos_factura").value().toInt();
 
-        if(qEmpresa.record().field("lProfesional").value().toInt()==1)
-            this->lProfesional = true;
-        else
-            this->lProfesional = false;
-        this->irpf = qEmpresa.record().field("IIRPF").value().toInt();
-        this->serie = qEmpresa.record().field("serie").value().toString();
-        this->digitos_cuentas_contables = qEmpresa.record()./*field("digitos_cuenta").*/value("digitos_cuenta").toInt();
-        this->cuenta_clientes = qEmpresa.record().field("codigo_cuenta_clientes").value().toString();
-        this->cuenta_acreedores = qEmpresa.record().field("codigo_cuenta_acreedores").value().toString();
-        this->cuenta_proveedores = qEmpresa.record().field("codigo_cuenta_proveedores").value().toString();
-        this->auto_codigoart = qEmpresa.record().value("auto_codigo").toBool();
-        this->tamano_codigo = qEmpresa.record().value("tamano_codigo").toInt();
-        this->cuenta_cobrosClientes = qEmpresa.record().value("cuenta_cobros").toString();
-        this->cuenta_pagosProveedor = qEmpresa.record().value("cuenta_pagos").toString();
-        this->cuenta_venta_mercaderias = qEmpresa.record().value("cuenta_ventas_mercaderias").toString();
-        this->cuenta_venta_servicios = qEmpresa.record().value("cuenta_ventas_servicios").toString();
-        this->cuenta_iva_repercutido1 = qEmpresa.record().value("cuenta_iva_repercutido1").toString();
-        this->cuenta_iva_repercutido2 = qEmpresa.record().value("cuenta_iva_repercutido2").toString();
-        this->cuenta_iva_repercutido3 = qEmpresa.record().value("cuenta_iva_repercutido3").toString();
-        this->cuenta_iva_repercutido4 = qEmpresa.record().value("cuenta_iva_repercutido4").toString();
-        this->cuenta_iva_soportado1 = qEmpresa.record().value("cuenta_iva_soportado1").toString();
-        this->cuenta_iva_soportado2 = qEmpresa.record().value("cuenta_iva_soportado2").toString();
-        this->cuenta_iva_soportado3 = qEmpresa.record().value("cuenta_iva_soportado3").toString();
-        this->cuenta_iva_soportado4 = qEmpresa.record().value("cuenta_iva_soportado4").toString();
-        this->cuenta_iva_repercutidoRe1 = qEmpresa.record().value("cuenta_iva_repercutido1_re").toString();
-        this->cuenta_iva_repercutidoRe2 = qEmpresa.record().value("cuenta_iva_repercutido2_re").toString();
-        this->cuenta_iva_repercutidoRe3 = qEmpresa.record().value("cuenta_iva_repercutido3_re").toString();
-        this->cuenta_iva_repercutidoRe4 = qEmpresa.record().value("cuenta_iva_repercutido4_re").toString();
-        this->cuenta_iva_soportado_re1 = qEmpresa.record().value("cuenta_iva_soportado1_re").toString();
-        this->cuenta_iva_soportado_re2 = qEmpresa.record().value("cuenta_iva_soportado2_re").toString();
-        this->cuenta_iva_soportado_re3 = qEmpresa.record().value("cuenta_iva_soportado3_re").toString();
-        this->cuenta_iva_soportado_re4 = qEmpresa.record().value("cuenta_iva_soportado4_re").toString();
-        this->medic = qEmpresa.record().value("medica").toBool();
-        this->internacional = qEmpresa.record().value("internacional").toBool();
-        this->margen = qEmpresa.record().value("margen").toDouble();
-        this->margen_minimo = qEmpresa.record().value("margen_minimo").toDouble();
-        this->activar_seguimiento = qEmpresa.record().value("seguimiento").toBool();
-        this->irpf = qEmpresa.record().value("usar_irpf").toBool();
-        this->caducidad_vales = qEmpresa.record().value("caducidad_vales").toInt();
+    this->lProfesional = r.value("usar_irpf").toBool();
 
-
-    } else {
-        qDebug() << qEmpresa.lastError().text();
-        QMessageBox::warning(qApp->activeWindow(),tr("EMPRESA"),tr("Falló la carga de datos de empresa"),tr("Aceptar"));
-    }
+    this->serie = r.field("serie").value().toString();
+    this->digitos_cuentas_contables = r./*field("digitos_cuenta").*/value("digitos_cuenta").toInt();
+    this->cuenta_clientes = r.field("codigo_cuenta_clientes").value().toString();
+    this->cuenta_acreedores = r.field("codigo_cuenta_acreedores").value().toString();
+    this->cuenta_proveedores = r.field("codigo_cuenta_proveedores").value().toString();
+    this->auto_codigoart = r.value("auto_codigo").toBool();
+    this->tamano_codigo = r.value("tamano_codigo").toInt();
+    this->cuenta_cobrosClientes = r.value("cuenta_cobros").toString();
+    this->cuenta_pagosProveedor = r.value("cuenta_pagos").toString();
+    this->cuenta_venta_mercaderias = r.value("cuenta_ventas_mercaderias").toString();
+    this->cuenta_venta_servicios = r.value("cuenta_ventas_servicios").toString();
+    this->cuenta_iva_repercutido1 = r.value("cuenta_iva_repercutido1").toString();
+    this->cuenta_iva_repercutido2 = r.value("cuenta_iva_repercutido2").toString();
+    this->cuenta_iva_repercutido3 = r.value("cuenta_iva_repercutido3").toString();
+    this->cuenta_iva_repercutido4 = r.value("cuenta_iva_repercutido4").toString();
+    this->cuenta_iva_soportado1 = r.value("cuenta_iva_soportado1").toString();
+    this->cuenta_iva_soportado2 = r.value("cuenta_iva_soportado2").toString();
+    this->cuenta_iva_soportado3 = r.value("cuenta_iva_soportado3").toString();
+    this->cuenta_iva_soportado4 = r.value("cuenta_iva_soportado4").toString();
+    this->cuenta_iva_repercutidoRe1 = r.value("cuenta_iva_repercutido1_re").toString();
+    this->cuenta_iva_repercutidoRe2 = r.value("cuenta_iva_repercutido2_re").toString();
+    this->cuenta_iva_repercutidoRe3 = r.value("cuenta_iva_repercutido3_re").toString();
+    this->cuenta_iva_repercutidoRe4 = r.value("cuenta_iva_repercutido4_re").toString();
+    this->cuenta_iva_soportado_re1 = r.value("cuenta_iva_soportado1_re").toString();
+    this->cuenta_iva_soportado_re2 = r.value("cuenta_iva_soportado2_re").toString();
+    this->cuenta_iva_soportado_re3 = r.value("cuenta_iva_soportado3_re").toString();
+    this->cuenta_iva_soportado_re4 = r.value("cuenta_iva_soportado4_re").toString();
+    this->medic = r.value("medica").toBool();
+    this->internacional = r.value("internacional").toBool();
+    this->margen = r.value("margen").toDouble();
+    this->margen_minimo = r.value("margen_minimo").toDouble();
+    this->activar_seguimiento = r.value("seguimiento").toBool();
+    this->irpf = r.value("usar_irpf").toBool();
+    this->caducidad_vales = r.value("caducidad_vales").toInt();
 }
 
 QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString DC, QString CC)
@@ -1312,6 +1325,324 @@ void Configuracion::ImprimirPreview(QString report, QMap<QString, QString> query
         predlg.setWindowState(Qt::WindowMaximized);
         connect(&predlg,SIGNAL(paintRequested(QPrinter*)),&r,SLOT(Print(QPrinter*)));
         predlg.exec();
+    }
+}
+
+void Configuracion::EviarMail(QString report, QMap<QString, QString> queryClausules, QMap<QString, QString> params,QString pdfName, QString dest_mail, QString dest_name , QString asunto , QString texto)
+{
+    QString c = QString("report_name = '%1' ORDER BY report_grade DESC").arg(report);
+    QString error;
+    QString rep = SqlCalls::SelectOneField("report","report_source",c,Configuracion_global->empresaDB,error).toString();
+    if(error.isEmpty())
+    {
+        ReportRenderer r;
+
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setResolution(300);
+
+#ifdef Q_WS_MAC
+        printer.setOutputFormat( QPrinter::NativeFormat );
+#else
+        printer.setOutputFormat( QPrinter::PdfFormat );
+#endif
+        QString output = qApp->applicationDirPath() + "/" + pdfName;
+        if(output.isEmpty())
+            return;
+        if(!output.endsWith(".pdf"))
+            output.append(".pdf");
+        printer.setOutputFileName( output );
+
+        r.setPrinter(&printer);
+        QString errorStr;
+        int errorLine;
+        int errorColumn;
+        QDomDocument doc;
+        if (!doc.setContent(rep, false, &errorStr, &errorLine,
+                            &errorColumn))
+        {
+            error = QString("Error: Parse error at line %1, column %2 : %3").arg(errorLine).arg(errorColumn).arg(errorStr);
+            TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),error,TimedMessageBox::Critical);
+            return;
+        }
+        bool error;
+        r.render(&printer,doc ,queryClausules,params,error);
+        r.Print(&printer);
+
+        SmtpClient smtp(Configuracion_global->user_mail_smpt, Configuracion_global->user_mail_port, SmtpClient::SslConnection);
+
+        smtp.setUser(Configuracion_global->user_mail_acc);
+        smtp.setPassword(Configuracion_global->user_mail_pass);
+
+        // Create a MimeMessage
+
+        MimeMessage message;
+
+        message.setSender(new EmailAddress(Configuracion_global->user_mail_acc, Configuracion_global->user_long_name));
+        message.addRecipient(new EmailAddress(dest_mail, dest_name));
+        message.setSubject(asunto);
+
+        // Add some text
+
+        MimeText text;
+        text.setText(texto);
+        message.addPart(&text);
+
+        // Now we create the attachment object
+        QFile * f = new QFile(output);
+        message.addPart(new MimeAttachment(f));
+
+        // Now we can send the mail
+
+        if(smtp.connectToHost())
+        {
+            if(smtp.login())
+            {
+            if(!smtp.sendMail(message))
+                TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),tr("Error al enviar mail: envio"),TimedMessageBox::Critical);
+            smtp.quit();
+            }
+            else
+              TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),tr("Error al enviar mail: datos de acceso"),TimedMessageBox::Critical);
+        }
+        else
+          TimedMessageBox* t = new TimedMessageBox(qApp->activeWindow(),tr("Error al enviar mail: conexion con el servidor"),TimedMessageBox::Critical);
+
+        f->remove();
+        f->deleteLater();
+    }
+}
+
+bool Configuracion::SqlToODS(QString fileName, QString query, QSqlDatabase db, QStringList headers, QString &error)
+{
+    QSqlQuery q(db);
+
+    if(q.exec(query))
+    {
+        QFile f(qApp->applicationDirPath()+"/content.xml");
+        if(!f.open(QFile::WriteOnly))
+        {
+            error = "Content.xml:: open";
+            return false;
+        }
+        QTextStream out(&f);
+        const int Indent = 4;
+        QDomDocument doc;
+
+        QDomElement root = doc.createElement("office:document-content");
+        root.setAttribute("xmlns:office","urn:oasis:names:tc:opendocument:xmlns:office:1.0");
+        root.setAttribute("xmlns:meta","urn:oasis:names:tc:opendocument:xmlns:meta:1.0");
+        root.setAttribute("xmlns:config","urn:oasis:names:tc:opendocument:xmlns:config:1.0");
+        root.setAttribute("xmlns:text","urn:oasis:names:tc:opendocument:xmlns:text:1.0");
+        root.setAttribute("xmlns:table","urn:oasis:names:tc:opendocument:xmlns:table:1.0");
+        root.setAttribute("xmlns:draw","urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" );
+        root.setAttribute("xmlns:presentation","urn:oasis:names:tc:opendocument:xmlns:presentation:1.0");
+        root.setAttribute("xmlns:dr3d","urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0");
+        root.setAttribute("xmlns:chart","urn:oasis:names:tc:opendocument:xmlns:chart:1.0");
+        root.setAttribute("xmlns:form","urn:oasis:names:tc:opendocument:xmlns:form:1.0");
+        root.setAttribute("xmlns:script","urn:oasis:names:tc:opendocument:xmlns:script:1.0");
+        root.setAttribute("xmlns:style","urn:oasis:names:tc:opendocument:xmlns:style:1.0");
+        root.setAttribute("xmlns:number","urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0");
+        root.setAttribute("xmlns:math","http://www.w3.org/1998/Math/MathML");
+        root.setAttribute("xmlns:svg","urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0");
+        root.setAttribute("xmlns:fo","urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0");
+        root.setAttribute("xmlns:anim","urn:oasis:names:tc:opendocument:xmlns:animation:1.0");
+        root.setAttribute("xmlns:smil","urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0");
+        root.setAttribute("xmlns:officeooo","http://openoffice.org/2009/office");
+        root.setAttribute("xmlns:delta","http://www.deltaxml.com/ns/track-changes/delta-namespace");
+        root.setAttribute("xmlns:split","http://www.deltaxml.com/ns/track-changes/split-namespace");
+        root.setAttribute("xmlns:ac","http://www.deltaxml.com/ns/track-changes/attribute-change-namespace");
+        root.setAttribute("office:version","1.2");
+        root.setAttribute("xmlns:dc","http://purl.org/dc/elements/1.1/");
+        root.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
+
+        doc.appendChild(root);
+
+        QDomElement office_styles = doc.createElement("office:automatic-styles");
+
+        QDomElement _style = doc.createElement("style:style");
+        _style.setAttribute("style:name","ta1");
+        _style.setAttribute("style:family","table");
+        _style.setAttribute("style:master-page-name","Standard1");
+        QDomElement style_table = doc.createElement("style:table-properties");
+        style_table.setAttribute("table:display","true");
+
+        QDomElement style_style = doc.createElement("style:style");
+        style_style.setAttribute("style:name","ce1");
+        style_style.setAttribute("style:family","table-cell");
+
+        _style.appendChild(style_table);
+        _style.appendChild(style_style);
+        office_styles.appendChild(_style);
+        root.appendChild(office_styles);
+
+        QDomElement office_body = doc.createElement("office:body");
+        QDomElement office_spreadsheet = doc.createElement("office:spreadsheet");
+        QDomElement table_table = doc.createElement("table:table");
+        table_table.setAttribute("table:name","Hoja1");
+        table_table.setAttribute("table:style-name","ta1");
+
+        QDomElement table_table_columnA = doc.createElement("table:table-column");
+        table_table_columnA.setAttribute("table:default-cell-style-name","ce1");
+
+        QDomElement table_table_columnB = doc.createElement("table:table-column");
+        table_table_columnB.setAttribute("table:number-columns-repeated","2");
+
+
+
+        root.appendChild(office_body);
+        office_body.appendChild(office_spreadsheet);
+        office_spreadsheet.appendChild(table_table);
+        table_table.appendChild(table_table_columnA);
+        table_table.appendChild(table_table_columnB);
+
+        while(q.next())
+        {
+            QSqlRecord r = q.record();
+            static bool do_headers = true;
+            if(do_headers)
+            {
+                QDomElement table_table_row = doc.createElement("table:table-row");
+                table_table.appendChild(table_table_row);
+
+                if(!headers.isEmpty())
+                {
+                    for(int c = 0; c< headers.size(); c++)
+                    {
+                        QString value = headers.at(c);
+
+                        QDomElement table_table_cell = doc.createElement("table:table-cell");
+                        table_table_cell.setAttribute("office:value-type","string");
+                        table_table_cell.setAttribute("office:string-value",value);
+
+                        QDomElement text_p = doc.createElement("text:p");
+                        QDomText txt = doc.createTextNode(value);
+                        text_p.appendChild(txt);
+                        table_table_cell.appendChild(text_p);
+
+                        table_table_row.appendChild(table_table_cell);
+                    }
+                }
+                else
+                {
+                    for(int c = 0; c< r.count(); c++)
+                    {
+                        QString value = r.fieldName(c);
+
+                        QDomElement table_table_cell = doc.createElement("table:table-cell");
+                        table_table_cell.setAttribute("office:value-type","string");
+                        table_table_cell.setAttribute("office:string-value",value);
+
+                        QDomElement text_p = doc.createElement("text:p");
+                        QDomText txt = doc.createTextNode(value);
+                        text_p.appendChild(txt);
+                        table_table_cell.appendChild(text_p);
+
+                        table_table_row.appendChild(table_table_cell);
+                    }
+                }
+                do_headers = false;
+            }
+
+            QDomElement table_table_row = doc.createElement("table:table-row");
+            table_table.appendChild(table_table_row);
+
+            for(int c = 0; c< r.count(); c++)
+            {
+                QString value = r.value(c).toString();
+
+                QDomElement table_table_cell = doc.createElement("table:table-cell");
+                table_table_cell.setAttribute("office:value-type","string");
+                table_table_cell.setAttribute("office:string-value",value);
+
+                QDomElement text_p = doc.createElement("text:p");
+                QDomText txt = doc.createTextNode(value);
+                text_p.appendChild(txt);
+                table_table_cell.appendChild(text_p);
+
+                table_table_row.appendChild(table_table_cell);
+            }
+        }
+
+        QDomNode xmlNode = doc.createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+        doc.insertBefore(xmlNode, doc.firstChild());
+        out.setCodec("UTF-8");
+        doc.save(out, Indent);
+        f.close();
+
+        QString content = qApp->applicationDirPath()+"/content.xml";
+
+        QuaZip zip(fileName);
+        zip.setFileNameCodec("IBM866");
+
+        if (!zip.open(QuaZip::mdCreate)) {
+            error =  QString("Zip open: %1").arg(zip.getZipError());
+            return false;
+        }
+
+        QuaZipFile outFile(&zip);
+        QFile inFile;
+
+        QStringList _root_list;
+        _root_list << content <<  ":/ODS/Auxiliares/QuaZIP/ODS/meta.xml" << ":/ODS/Auxiliares/QuaZIP/ODS/mimetype" << ":/ODS/Auxiliares/QuaZIP/ODS/settings.xml" << ":/ODS/Auxiliares/QuaZIP/ODS/styles.xml";
+        _root_list << ":/ODS/Auxiliares/QuaZIP/ODS/META-INF/manifest.xml";
+        _root_list << ":/ODS/Auxiliares/QuaZIP/ODS/Thumbnails/thumbnail.png";
+
+        QFileInfoList _root_files;
+        foreach (QString fn, _root_list) _root_files << QFileInfo(fn);
+
+        char c;
+        foreach(QFileInfo fileInfo, _root_files)
+        {
+            QString fileNameWithRelativePath;
+            if(fileInfo.filePath() == content)
+               fileNameWithRelativePath = fileInfo.fileName();
+            else
+                fileNameWithRelativePath= fileInfo.filePath().replace(":/ODS/Auxiliares/QuaZIP/ODS/","");
+
+            inFile.setFileName(fileInfo.filePath());
+
+            if (!inFile.open(QIODevice::ReadOnly)) {
+                error =  QString("inFile open: %1").arg(inFile.errorString().toLocal8Bit().constData());
+                return false;
+            }
+
+            if (!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(fileNameWithRelativePath, fileInfo.filePath()))) {
+                error = QString("outFile open: %1").arg(outFile.getZipError());
+                return false;
+            }
+
+            while (inFile.getChar(&c) && outFile.putChar(c));
+
+            if (outFile.getZipError() != UNZ_OK) {
+                error = QString("outFile putChar: %1").arg(outFile.getZipError());
+                return false;
+            }
+
+            outFile.close();
+
+            if (outFile.getZipError() != UNZ_OK) {
+                error = QString("outFile close: %1").arg(outFile.getZipError());
+                return false;
+            }
+
+            inFile.close();
+        }
+
+        zip.close();
+
+        if (zip.getZipError() != 0) {
+            error = QString("Zip close: %1").arg(zip.getZipError());
+            return false;
+        }
+
+        f.remove();
+
+        return true;
+    }
+    else
+    {
+        error = q.lastError().text();
+        return false;
     }
 }
 

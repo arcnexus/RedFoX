@@ -105,7 +105,7 @@ color: rgb(255, 255, 255);</string>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="main_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -366,7 +366,7 @@ color: rgb(255, 255, 255);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1">
           <attribute name="title">
@@ -662,7 +662,7 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLineEdit" name="txtndigitos_factura">
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>50</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -766,6 +766,9 @@ color: rgb(255, 255, 255);</string>
               <layout class="QGridLayout" name="gridLayout_14">
                <item row="2" column="3">
                 <widget class="QLineEdit" name="txtcuentaCliente">
+                 <property name="text">
+                  <string>430</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -822,6 +825,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="5" column="3">
                 <widget class="QLineEdit" name="txtCuenta_venta_mercaderias">
+                 <property name="text">
+                  <string>600</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -832,6 +838,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="6" column="3">
                 <widget class="QLineEdit" name="txtCuenta_venta_servicios">
+                 <property name="text">
+                  <string>610</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -893,6 +902,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="3" column="3">
                 <widget class="QLineEdit" name="txtcuenta_proveedores">
+                 <property name="text">
+                  <string>400</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -903,6 +915,9 @@ color: rgb(255, 255, 255);</string>
                </item>
                <item row="4" column="3">
                 <widget class="QLineEdit" name="txtcuenta_acreedores">
+                 <property name="text">
+                  <string>410</string>
+                 </property>
                  <property name="placeholderText">
                   <string>(F1 - lista)</string>
                  </property>
@@ -2087,150 +2102,6 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_9">
-          <attribute name="title">
-           <string>Datos conexión email</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_19">
-           <item row="6" column="1">
-            <widget class="QLineEdit" name="txtEmail_imap">
-             <property name="placeholderText">
-              <string>imap.sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_54">
-             <property name="text">
-              <string>Cuenta SMTP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_35">
-             <property name="text">
-              <string>Nombre a mostrar:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="txtEmail_contrasena">
-             <property name="placeholderText">
-              <string>su contraseña </string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QLabel" name="label_70">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>Datos Servidor</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="txtEmail_usuario">
-             <property name="placeholderText">
-              <string>usuario@sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLineEdit" name="txtEmail_smtp">
-             <property name="placeholderText">
-              <string>smtp.sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_50">
-             <property name="text">
-              <string>Contraseña:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_53">
-             <property name="text">
-              <string>Cuenta POP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLineEdit" name="txtEmail_pop">
-             <property name="placeholderText">
-              <string>pop3.sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_69">
-             <property name="text">
-              <string>Cuenta IMAP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_36">
-             <property name="text">
-              <string>Usuario:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_51">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>Datos cuenta</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="txtEmail_mostrar">
-             <property name="placeholderText">
-              <string>Nombre Empresa o su nombre</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <spacer name="verticalSpacer_9">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
        <item row="1" column="0">
@@ -2443,7 +2314,7 @@ color: rgb(255, 255, 255);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1_3">
           <attribute name="title">
@@ -2576,7 +2447,7 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLineEdit" name="txtndigitos_factura_3">
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>50</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2774,7 +2645,7 @@ color: rgb(255, 255, 255);</string>
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget_5">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_21">
               <attribute name="title">
@@ -4216,150 +4087,6 @@ color: rgb(255, 255, 255);</string>
               </item>
              </layout>
             </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_30">
-          <attribute name="title">
-           <string>Datos conexión email</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_58">
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_213">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>Datos cuenta</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_210">
-             <property name="text">
-              <string>Nombre a mostrar:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="txtEmail_mostrar_3">
-             <property name="placeholderText">
-              <string>Nombre Empresa o su nombre</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_211">
-             <property name="text">
-              <string>Usuario:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="txtEmail_usuario_3">
-             <property name="placeholderText">
-              <string>usuario@sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_212">
-             <property name="text">
-              <string>Contraseña:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="txtEmail_contrasena_3">
-             <property name="placeholderText">
-              <string>su contraseña </string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QLabel" name="label_217">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>Datos Servidor</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_214">
-             <property name="text">
-              <string>Cuenta POP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLineEdit" name="txtEmail_pop_3">
-             <property name="placeholderText">
-              <string>pop3.sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_216">
-             <property name="text">
-              <string>Cuenta IMAP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLineEdit" name="txtEmail_imap_3">
-             <property name="placeholderText">
-              <string>imap.sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_215">
-             <property name="text">
-              <string>Cuenta SMTP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLineEdit" name="txtEmail_smtp_3">
-             <property name="placeholderText">
-              <string>smtp.sudominio.com</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <spacer name="verticalSpacer_22">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>229</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>

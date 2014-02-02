@@ -490,7 +490,7 @@ color: rgb(255, 255, 255);</string>
           </font>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>6</number>
          </property>
          <widget class="QWidget" name="tab_articulo">
           <property name="styleSheet">
@@ -500,6 +500,466 @@ color: rgb(255, 255, 255);</string>
            <string>Artículo</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_8">
+           <item row="1" column="4" colspan="3">
+            <widget class="QFrame" name="frame_11">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>45</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_14">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Código en Proveedor:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="txtcodigo_fabricante">
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QFrame" name="frame_13">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>45</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_16">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Código: </string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="txtcodigo">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="codeField" stdset="0">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="2" colspan="2">
+            <widget class="QFrame" name="frame_12">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>45</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_15">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Código EAN:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="txtcodigo_barras">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>148</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="testField" stdset="0">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+             <zorder>txtcodigo_barras</zorder>
+             <zorder>label_3</zorder>
+            </widget>
+           </item>
+           <item row="2" column="1" colspan="6">
+            <widget class="QLineEdit" name="txtdescripcionResumida">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>27</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Artículo:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Proveedor Habitual:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2" colspan="4">
+            <widget class="QLineEdit" name="txtproveedor">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="txtcodigo_proveedor">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="placeholderText">
+              <string>F1-Buscar</string>
+             </property>
+             <property name="locateField" stdset="0">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="6">
+            <widget class="QPushButton" name="btnBuscarProveedor">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="7" rowspan="2">
+            <widget class="QFrame" name="FrameRF">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="2" column="1">
+               <widget class="QTextEdit" name="txtcomentario">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_18">
+                <property name="text">
+                 <string>Comentarios:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="7" rowspan="6">
+            <widget class="QFrame" name="frame_20">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_42">
+              <item row="1" column="0">
+               <widget class="QTextEdit" name="txtdescripcion"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Descripción</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QFrame" name="frame_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_19">
+                <property name="text">
+                 <string>Tipo IVA:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cboTipoIVA"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="6" column="0" rowspan="3" colspan="7">
+            <widget class="QFrame" name="frame_8">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="1" column="0">
+               <widget class="QPushButton" name="btnAnadirTarifa">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Añadir Tarifa</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btnBorrarTarifa">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Borrar Tarifa</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btnEditartarifa">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Editar Tarifa</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="3">
+               <widget class="QTableView" name="TablaTarifas">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="4" column="4" colspan="3">
+            <widget class="QFrame" name="frame_2">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="chkcontrolar_stock">
+                <property name="text">
+                 <string>Controlar stock</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QFrame" name="frame_10">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_13">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="chkmostrar_web">
+                <property name="toolTip">
+                 <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
+                </property>
+                <property name="text">
+                 <string>Mostrar en web</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="5" column="0" colspan="7">
             <widget class="QFrame" name="frame_5">
              <property name="sizePolicy">
@@ -647,356 +1107,6 @@ color: rgb(255, 255, 255);</string>
              </layout>
             </widget>
            </item>
-           <item row="0" column="4" colspan="3">
-            <widget class="QFrame" name="frame_11">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>45</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_14">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Código en Proveedor:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="txtcodigo_fabricante">
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="7" rowspan="6">
-            <widget class="QFrame" name="FrameRF">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="1" column="0">
-               <widget class="QTextEdit" name="txtcomentario">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_18">
-                <property name="text">
-                 <string>Comentarios:</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QFrame" name="frame_13">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>45</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_16">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>Código: </string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="txtcodigo">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="codeField" stdset="0">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="2" colspan="2">
-            <widget class="QFrame" name="frame_12">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>45</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_15">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Código EAN:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="txtcodigo_barras">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>148</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="testField" stdset="0">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-             <zorder>txtcodigo_barras</zorder>
-             <zorder>label_3</zorder>
-            </widget>
-           </item>
-           <item row="6" column="0" colspan="7">
-            <widget class="QFrame" name="frame_8">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="1" column="0">
-               <widget class="QPushButton" name="btnAnadirTarifa">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Añadir Tarifa</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>24</width>
-                  <height>24</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QPushButton" name="btnBorrarTarifa">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Borrar Tarifa</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>24</width>
-                  <height>24</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnEditartarifa">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Editar Tarifa</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" colspan="3">
-               <widget class="QTableView" name="TablaTarifas">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="4" column="3" colspan="2">
-            <widget class="QFrame" name="frame_10">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_13">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="chkmostrar_web">
-                <property name="toolTip">
-                 <string>Seleccionar si se desea que el artículo aparezca en la tienda virtual en su web</string>
-                </property>
-                <property name="text">
-                 <string>Mostrar en web</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QFrame" name="frame_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_19">
-                <property name="text">
-                 <string>Tipo IVA:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="cboTipoIVA"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="4" column="5" colspan="2">
-            <widget class="QFrame" name="frame_2">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="chkcontrolar_stock">
-                <property name="text">
-                 <string>Controlar stock</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="4" column="1" colspan="2">
             <widget class="QFrame" name="frame_7">
              <property name="sizePolicy">
@@ -1056,428 +1166,334 @@ color: rgb(255, 255, 255);</string>
              </layout>
             </widget>
            </item>
-           <item row="2" column="1" colspan="6">
-            <widget class="QLineEdit" name="txtdescripcionResumida">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>27</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1" colspan="6">
-            <widget class="QLineEdit" name="txtdescripcion">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>27</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="txtcodigo_proveedor">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>100</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="placeholderText">
-              <string>F1-Buscar</string>
-             </property>
-             <property name="locateField" stdset="0">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2" colspan="4">
-            <widget class="QLineEdit" name="txtproveedor">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>24</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="6">
-            <widget class="QPushButton" name="btnBuscarProveedor">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>16</width>
-               <height>16</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Proveedor Habitual:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>Descripción:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Descripción Resumida:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="7">
-            <widget class="QFrame" name="FrameRF_2">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>grupos</string>
+          </attribute>
+          <widget class="QFrame" name="FrameRF_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>60</y>
+             <width>122</width>
+             <height>273</height>
+            </rect>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Sección:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>Sección:</string>
+               <widget class="QLineEdit" name="txtseccion">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="locateField" stdset="0">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <widget class="QLineEdit" name="txtseccion">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locateField" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="botBuscarSeccion">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>25</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Asociar Sección.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../maya.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_10">
+               <widget class="QPushButton" name="botBuscarSeccion">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Asociar Sección.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
                 <property name="text">
-                 <string>Familia:</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
                 </property>
                </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <item>
-                 <widget class="QLineEdit" name="txtfamilia">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locateField" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="botBuscarFamilia">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>25</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../maya.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>Subfamilia:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <item>
-                 <widget class="QLineEdit" name="txtsubfamilia">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locateField" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="botBuscarSubfamilia">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>25</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../maya.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Sub-sub Familia:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_8">
-                <item>
-                 <widget class="QLineEdit" name="txtcSubSubFamilia">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locateField" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="botBuscarSubSubFamilia">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>25</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../maya.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_16">
-                <property name="text">
-                 <string>Grupo:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_9">
-                <item>
-                 <widget class="QLineEdit" name="txtcGupoArt">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                  <property name="locateField" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="botBuscarGrupo">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>25</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../maya.qrc">
-                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
               </item>
              </layout>
-            </widget>
-           </item>
-          </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>Familia:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QLineEdit" name="txtfamilia">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="locateField" stdset="0">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="botBuscarFamilia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>Subfamilia:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLineEdit" name="txtsubfamilia">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="locateField" stdset="0">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="botBuscarSubfamilia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string>Sub-sub Familia:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLineEdit" name="txtcSubSubFamilia">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="locateField" stdset="0">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="botBuscarSubSubFamilia">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Grupo:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QLineEdit" name="txtcGupoArt">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="locateField" stdset="0">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="botBuscarGrupo">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
          <widget class="QWidget" name="tab_proveedores">
           <attribute name="title">
@@ -2424,180 +2440,342 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_precios_volumen">
+         <widget class="QWidget" name="tab_web">
           <attribute name="title">
-           <string>Precios por volumen</string>
+           <string>Web</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_40">
-           <item row="0" column="0" colspan="2">
-            <widget class="QFrame" name="frame_3">
+          <layout class="QGridLayout" name="gridLayout_43">
+           <item row="4" column="1" colspan="6">
+            <widget class="QTextEdit" name="txtDescWebIdioma"/>
+           </item>
+           <item row="5" column="6" rowspan="2">
+            <widget class="QLabel" name="imagen3_web_idioma">
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/Box.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_66">
+             <property name="styleSheet">
+              <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Pais</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_51">
+             <property name="text">
+              <string>Articulo:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" rowspan="8">
+            <widget class="QTableView" name="tablaPaises_web">
+             <property name="maximumSize">
+              <size>
+               <width>239</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="5">
+            <widget class="QPushButton" name="btnImg_web3_delete">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_56">
+             <property name="text">
+              <string>Idioma</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="5">
+            <widget class="QPushButton" name="btnImg_web3_add">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="5">
+            <widget class="QPushButton" name="btnImg_web4_add">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="6" rowspan="2">
+            <widget class="QLabel" name="imagen4_web_idioma">
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/Box.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1" colspan="6">
+            <widget class="QLabel" name="label_64">
+             <property name="styleSheet">
+              <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Descripción:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="5">
+            <widget class="QPushButton" name="btnImg_web4_delete">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2" colspan="5">
+            <widget class="QLineEdit" name="txtArticulowebidioma"/>
+           </item>
+           <item row="1" column="2" colspan="5">
+            <widget class="QComboBox" name="cboIdiomasweb"/>
+           </item>
+           <item row="5" column="4" rowspan="2">
+            <widget class="QLabel" name="imagen1_web_idioma">
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/Box.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="4" rowspan="2">
+            <widget class="QLabel" name="imagen2_web_idioma">
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/Box.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QPushButton" name="btnImg_web1_add">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QPushButton" name="btnImg_web1_delete">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="3">
+            <widget class="QPushButton" name="btnImg_web2_add">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="3">
+            <widget class="QPushButton" name="btnImg_web2_delete">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../maya.qrc">
+               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" rowspan="4" colspan="2">
+            <widget class="QFrame" name="frame_21">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QGridLayout" name="gridLayout_41">
-              <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="frame_19">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_32">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label">
-                   <property name="text">
-                    <string>desde</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_38">
-                   <property name="text">
-                    <string>precio:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLineEdit" name="txtPrecio_volumen">
-                   <property name="text">
-                    <string>0,00</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                   <property name="readOnly">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_17">
-                   <property name="text">
-                    <string>hasta</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QDoubleSpinBox" name="spinDesde">
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                   <property name="maximum">
-                    <double>999999.989999999990687</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QDoubleSpinBox" name="spinHasta">
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                   <property name="maximum">
-                    <double>999999.989999999990687</double>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="0" column="2" rowspan="2">
-               <widget class="QTableView" name="tabla_volumenes">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="btnAnadir_volumen">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Añadir</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnGuardar_volumen">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Guardar</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="btnEditar_volumen">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Editar</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btnDeshacer_volumen">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Deshacer</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QPushButton" name="btnBorrar_volumen">
-                <property name="text">
-                 <string>Borrar</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QPushButton" name="pushButton">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>151</width>
+                <height>22</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Agregar a pais</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../maya.qrc">
+                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="geometry">
+               <rect>
+                <x>170</x>
+                <y>10</y>
+                <width>81</width>
+                <height>22</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Editar</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../maya.qrc">
+                <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>40</y>
+                <width>151</width>
+                <height>22</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Guardar</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../maya.qrc">
+                <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_4">
+              <property name="geometry">
+               <rect>
+                <x>170</x>
+                <y>40</y>
+                <width>81</width>
+                <height>22</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Deshacer</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../maya.qrc">
+                <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_5">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>100</y>
+                <width>241</width>
+                <height>22</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Borrar de pais</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../maya.qrc">
+                <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+              </property>
+             </widget>
+             <widget class="QCheckBox" name="checkBox">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>70</y>
+                <width>241</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Mostrar en web</string>
+              </property>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -6265,11 +6443,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>txtcodigo</tabstop>
   <tabstop>txtcodigo_barras</tabstop>
   <tabstop>txtcodigo_fabricante</tabstop>
-  <tabstop>txtdescripcion</tabstop>
-  <tabstop>txtdescripcionResumida</tabstop>
-  <tabstop>txtcodigo_proveedor</tabstop>
-  <tabstop>txtproveedor</tabstop>
-  <tabstop>btnBuscarProveedor</tabstop>
   <tabstop>cboTipoIVA</tabstop>
   <tabstop>txtcoste</tabstop>
   <tabstop>chkmostrar_web</tabstop>
@@ -6281,10 +6454,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnEditartarifa</tabstop>
   <tabstop>btnBorrarTarifa</tabstop>
   <tabstop>txtcomentario</tabstop>
-  <tabstop>txtfamilia</tabstop>
-  <tabstop>txtsubfamilia</tabstop>
-  <tabstop>txtcSubSubFamilia</tabstop>
-  <tabstop>txtcGupoArt</tabstop>
   <tabstop>tablaProveedores</tabstop>
   <tabstop>btnAnadirProveedores</tabstop>
   <tabstop>btnEditarProveedorFrecuente</tabstop>
@@ -6442,12 +6611,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnKit</tabstop>
   <tabstop>txtCoste_real</tabstop>
   <tabstop>txtdto</tabstop>
-  <tabstop>txtseccion</tabstop>
-  <tabstop>botBuscarSeccion</tabstop>
-  <tabstop>botBuscarFamilia</tabstop>
-  <tabstop>botBuscarSubfamilia</tabstop>
-  <tabstop>botBuscarSubSubFamilia</tabstop>
-  <tabstop>botBuscarGrupo</tabstop>
   <tabstop>txtOfertaregalo_de</tabstop>
   <tabstop>txtOferta_Fecha_fin</tabstop>
   <tabstop>txtOferta_Fecha_ini</tabstop>
@@ -6462,14 +6625,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnBorrar_oferta</tabstop>
   <tabstop>btnActivarOferta</tabstop>
   <tabstop>tablaBusqueda</tabstop>
-  <tabstop>tabla_volumenes</tabstop>
-  <tabstop>btnAnadir_volumen</tabstop>
-  <tabstop>btnEditar_volumen</tabstop>
-  <tabstop>btnGuardar_volumen</tabstop>
-  <tabstop>btnDeshacer_volumen</tabstop>
-  <tabstop>spinDesde</tabstop>
-  <tabstop>spinHasta</tabstop>
-  <tabstop>txtPrecio_volumen</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

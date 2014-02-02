@@ -7,6 +7,7 @@
 #include "../Zona_Pacientes/cliente.h"
 #include "../Auxiliares/table_helper.h"
 #include "../mayamodule.h"
+#include "../Almacen/articulo.h"
 namespace Ui {
 class frmFacturas;
 }
@@ -38,6 +39,7 @@ public:
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 
+    void formato_tabla_lineas();
 private slots:
     void on_btnSiguiente_clicked();
 
@@ -62,7 +64,6 @@ private slots:
     void desbloquear_factura();
     void lineaReady(lineaDetalle* ld);
     void lineaDeleted(lineaDetalle*);
-                         void on_tabWidget_2_currentChanged(int index);
 
     bool crear_asiento();
     
@@ -72,27 +73,13 @@ private slots:
 
     void on_anadirEntrega_clicked();
 
-
-    void on_radBuscar_toggled(bool checked);
-
-    void on_radEditar_toggled(bool checked);
-
-    void on_cboVer_currentTextChanged(const QString &arg1);
-
     void on_btnAsignarTransportista_clicked();
 
     void on_tabla_facturas_doubleClicked(const QModelIndex &index);
 
-    void on_tabla_facturas_clicked(const QModelIndex &index);
-
-
     void on_btnArticulos_clicked();
 
     void on_cboseries_currentIndexChanged(const QString &arg1);
-
-    void on_cboBuscar_currentIndexChanged(const QString &arg1);
-
-    void on_cboModo_currentIndexChanged(const QString &arg1);
 
     void on_btnBorrar_clicked();
 
@@ -107,8 +94,6 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
-    void on_cboDireccionesEntrega_currentIndexChanged(const QString &arg1);
-
 
     void on_SpinGastoDist1_editingFinished();
 
@@ -129,6 +114,8 @@ private slots:
 
     void on_btn_borrarLinea_clicked();
 
+    void on_cboDireccionesEntrega_currentIndexChanged(int index);
+
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;
@@ -144,13 +131,14 @@ private:
     QHash<QString,QString> h_Buscar;
     QSqlQueryModel *m_facturas;
     QSqlQueryModel *modelLineas;
-    void formato_tabla_facturas(QSqlQueryModel &modelo);
+    void formato_tabla_facturas();
 
     bool eventFilter(QObject *obj, QEvent *event);
     void buscar_poblacion(int tipo);
     void calcular_factura();
 
     BarraBusqueda* m_busqueda;
+    Articulo *oArticulo;
     void setUpBusqueda();
     QComboBox* cboSeries;
     QStringList series2_l;
@@ -159,6 +147,10 @@ private:
     QString modo;
     QString serie;
     QString ejercicio;
+    QHash<QString,QVariant> acumulados;
+
+    QSqlQueryModel * model_series;
+    QSqlQueryModel * model_dir_entrega;
 };
 
 #endif // FRMFACTURAS_H

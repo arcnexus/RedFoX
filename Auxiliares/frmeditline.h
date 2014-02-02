@@ -21,9 +21,10 @@ public:
     void set_id_cliente(int id);
     void set_id_tarifa(int id);
     void set_tipo(QString tipo);
-    void set_dto_tarifa(float dto);
     void set_id_cab(int id_cabecera);
     void set_tabla(QString t);
+    void set_editando();
+    void set_acumula(bool acum);
 
 
 
@@ -54,10 +55,14 @@ private:
     void cargar_articulo(int id_art, int tarifa, int tipo_dto);
     void vaciar_campos();
     int dto_tarifa;
+    int id_lote;
     float unidades_regalo;
     Articulo *oArticulo;
     void calcular();
+    bool editando;
     bool eventFilter(QObject *obj, QEvent *event);
+    QHash <QString,QVariant> anterior;
+    bool realiza_acumulados;
 
 signals:
     void refrescar_lineas();

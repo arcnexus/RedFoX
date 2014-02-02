@@ -92,6 +92,9 @@
             <height>32</height>
            </size>
           </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -124,31 +127,8 @@
             <height>32</height>
            </size>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(0,0,0);</string>
-          </property>
-          <property name="text">
-           <string>Usuarios</string>
-          </property>
-          <property name="icon">
-           <iconset resource="maya.qrc">
-            <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
+          <property name="autoDefault">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -216,31 +196,6 @@
              </property>
              <property name="pixmap">
               <pixmap resource="maya.qrc">:/Icons/PNG/logoagupunt.png</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_6">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>166</width>
-               <height>53</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="maya.qrc">:/Icons/jpg/Vademecum DataSolutions.jpg</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -637,22 +592,6 @@ border-color: rgb(192, 192, 255);
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineUsuario">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>27</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);
-border-color: rgb(192, 192, 255);
-</string>
-          </property>
-         </widget>
-        </item>
         <item row="3" column="1">
          <widget class="QComboBox" name="cboEmpresa">
           <property name="minimumSize">
@@ -905,6 +844,16 @@ border-color: rgb(192, 192, 255);
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cboUsers">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>27</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item row="1" column="0" colspan="3">
@@ -939,6 +888,9 @@ border-color: rgb(192, 192, 255);
           <property name="text">
            <string>Cerrar</string>
           </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -949,7 +901,6 @@ border-color: rgb(192, 192, 255);
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineUsuario</tabstop>
   <tabstop>linePassword</tabstop>
   <tabstop>btnAcceder</tabstop>
   <tabstop>pushButton</tabstop>

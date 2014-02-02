@@ -7,7 +7,7 @@
 
 #include "Zona_Administrador/frmconfigmaya.h"
 #include "Zona_Administrador/frmempresas.h"
-#include "Zona_Administrador/frmusuarios.h"
+
 #include "../Zona_Administrador/block_Maya_form.h"
 
 #include "../Auxiliares/Globlal_Include.h"
@@ -51,6 +51,7 @@
 #include "../Zona_Contabilidad/frmcuadro_cuentas.h"
 
 #include "../Zona_Maestros/frmtransportistas.h"
+#include "../Zona_Maestros/frmcajas.h"
 
 #include "barraavisos.h"
 namespace Ui {
@@ -64,13 +65,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QString usuario;
-    QString empresa;
 
-    QString user;
-    QString pass;
     void showInfo();
-
     void updateDivisas();
     void loadModules();
 protected:

@@ -2,6 +2,7 @@
 #define FACTURA_H
 
 #include "../Auxiliares/Globlal_Include.h"
+#include"../Almacen/articulo.h"
 
 class Factura : public QObject
 {
@@ -16,6 +17,7 @@ public:
     QDate fecha_cobro;
     int ejercicio;
     int id_cliente;
+    int tarifa_cliente;
     QString cliente;
     QString direccion1;
     QString direccion2;
@@ -113,6 +115,8 @@ public slots:
     bool GuardarApunte(int nasiento, int nid);
     bool Apunte();
     bool EditApunte(int num_apunte);
+private:
+    Articulo *oArticulo;
 };
 
 #endif // FACTURA_H

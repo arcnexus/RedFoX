@@ -365,6 +365,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Clientes);
+        QTimer::singleShot(0,Clientes,SLOT(init()));
     }
     else
         delete Clientes;
@@ -374,6 +375,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Proveedores->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Proveedores);
+        QTimer::singleShot(0,Proveedores,SLOT(init()));
     }
     else
         delete Proveedores;
@@ -396,6 +398,13 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     }
     else
         delete fpagos;
+
+    splash->showMessage(tr("Cargando modulos... Modulo cajas") , Qt::AlignLeft,Qt::white);
+    FrmCajas *cajas = new FrmCajas(this);
+    if(cajas->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
+        _mantenModules.append(cajas);
+    }
 
 
     ArchivosGeneralesExt* e = new ArchivosGeneralesExt(this);
@@ -578,24 +587,22 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
 
 void MainWindow::loadAminModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
-    frmConfigmaya* c = new frmConfigmaya(this);
+   // splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
+/*    frmConfigmaya* c = new frmConfigmaya(this);
     if(c->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _adminModules.append(c);
     }
     else
-        delete c;
-
+        delete c;*/
+    if(Configuracion_global->super_user)
+    {
     splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
     FrmEmpresas* e = new FrmEmpresas(this);
-    if(e->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
         _adminModules.append(e);
     }
-    else
-        delete e;
 
+/*
     splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Usuarios")  ,Qt::AlignLeft,Qt::white);
     FrmUsuarios* u = new FrmUsuarios(this);
     if(u->userHaveAcces(Configuracion_global->id_usuario_activo))
@@ -603,7 +610,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
         _adminModules.append(u);
     }
     else
-        delete u;
+        delete u*/;
 }
 
 void MainWindow::loadContaModules(QSplashScreen *splash)
@@ -787,16 +794,16 @@ MainWindow::~MainWindow()
 void MainWindow::showInfo()
 {
     if(!Configuracion_global->medic)
-        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial. (Empresa activa:")+empresa+
+        this->setWindowTitle("RedFox SGC - "+tr("Software GNU de gestión empresarial. (Empresa activa:")+Configuracion_global->nombreEmpresa+
                              tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
     else
 
-    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud. (Empresa activa:")+empresa+
+    this->setWindowTitle("RedFox SGC - "+tr("Software GNU para los profesionales de la salud. (Empresa activa:")+Configuracion_global->nombreEmpresa+
                          tr(" - Ejercicio activo: ")+Configuracion_global->cEjercicio+")");
-  // ui->lineEmpresaActiva->setText(empresa);
-    ui->lineUsuarioActivo->setText(user);
-    Configuracion_global->cUsuarioActivo = user;
-    Configuracion_global->nombreEmpresa = empresa;
+    QString error;
+    ui->lineUsuarioActivo->setText(SqlCalls::SelectOneField("usuarios","nombre",QString("id=%1").arg(
+                                                                Configuracion_global->id_usuario_activo),Configuracion_global->globalDB,
+                                                            error).toString());
 }
 
 void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
@@ -813,7 +820,6 @@ void MainWindow::actualizar_divisas(float valor_divisa, QString divisaDest)
 void MainWindow::on_btn_bloquear_clicked()
 {
     block_Maya_form form(this);
-    form.set_user(user,pass);
     this->hide();
     form.exec();
     this->show();
@@ -897,6 +903,10 @@ void MainWindow::handle_permisosAgenda()
 
 void MainWindow::llenaravisos()
 {
+    Configuracion_global->Cargar_iva();
+    Configuracion_global->Cargar_paises();
+    Configuracion_global->Cargar_divisas();
+    Configuracion_global->Cargar_formas_pago();
    // m_avisos->setColor(QColor(50,50,50));
     /*QMap <int,QSqlRecord> map;
     QStringList clausulas,headers;

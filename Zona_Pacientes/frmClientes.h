@@ -9,6 +9,7 @@
 #include "cliente.h"
 #include "../sqlcalls.h"
 #include "../mayamodule.h"
+#include <QCompleter>
 namespace Ui {
 class frmClientes;
 }
@@ -24,13 +25,14 @@ public:
     module_zone module_zone(){return Mantenimiento;}
     QString module_name(){return "Clientes";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
-    QString ModuleMenuPath(){return tr("");}
-    
+    QString ModuleMenuPath(){return tr("");}    
     QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 
+    void init_querys();
 signals:
 
 public slots:
+    void init();
     void LLenarCampos();
     void LLenarCliente();
     void VaciarCampos();
@@ -49,13 +51,7 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void txtPrimerApellido_editingFinished();
-
-    void txtSegundoApellido_editingFinished();
-
-    void txtnombre_editingFinished();
-
-    void txtpoblacion_editingFinished();
+    void txtApellido_Nombre_editingFinished();
 
     void txtprovincia_editingFinished();
 
@@ -70,7 +66,6 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void txtcp_editingFinished();
 
     void txtrRiesgoPermitido_editingFinished();
 
@@ -92,23 +87,13 @@ private slots:
     void refrescar_grafica();
     void set_blink();
 
-
-
-    void on_radBuscar_toggled(bool checked);
-
-    void on_radEditar_toggled(bool checked);
-
     void on_tabla_busquedas_doubleClicked(const QModelIndex &index);
-
-    void on_tabla_busquedas_clicked(const QModelIndex &index);
 
     void on_btnGuardardireccionAlternativa_clicked();
 
     void on_btnAnadirdireccion_clicked();
 
-    void on_btnAdd_customer_clicked();
-
-    void on_btnExcepciones_clicked();
+    void btnExcepciones_clicked();
 
     void mostrarBusqueda();
     void ocultarBusqueda();
@@ -120,19 +105,15 @@ private slots:
 
     void on_TablaDeudas_clicked(const QModelIndex &index);
 
+    void on_txtcp_editingFinished();
+
+    void on_txtdireccion2_editingFinished();
+
 private:
     Ui::frmClientes *ui;
-    QSqlQueryModel *modelFP;
-    QSqlQueryModel *modelFacturas;
-    QSqlQueryModel *modelPoblaciones;
-    QSqlQueryModel *qModeldireccion;
-    QSqlQueryModel *deudas ;
-    QSqlQueryModel *modelHistorial;
-    QSqlQueryModel * m_clientes;
-    QSqlDatabase dbCliente;
-    QSqlQuery tbpaciente;
+
     Cliente* oCliente;
-    //SqlCalls *llamadasSQL;
+
     bool Anadirdireccion /*= false*/;
     int iddireccionAlternativa;
     void formato_tabla_busquedas();
@@ -144,7 +125,32 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
 
-
     bool eventFilter(QObject *obj, QEvent *event);
+
+    //SQL MODELS
+    QSqlQueryModel *qModelTipos;
+    QSqlQueryModel *qModeldireccion;
+    QSqlQueryModel *Pedidos;
+    QSqlQueryModel *Albaranes;
+    QSqlQueryModel *Facturas;
+    QSqlQueryModel *Presupuestos;
+    QSqlQueryModel *Vales;
+    QSqlQueryModel *Tickets;
+    QSqlQueryModel *modelAsientos;
+    QSqlQueryModel *queryTransportistas;
+    QSqlQueryModel *queryAgentes;
+    QSqlQueryModel *qTarifa;
+    QSqlQueryModel *qmidiomas;
+    QSqlQueryModel *modelFacturas;
+    QSqlQueryModel *modelPoblaciones;
+    QSqlQueryModel *deudas ;
+    QSqlQueryModel *modelHistorial;
+    QSqlQueryModel *m_clientes;
+
+    QCompleter * pob_completer;
+    QSqlTableModel * pob_completer_model;
+
+    QCompleter * calle_completer;
+    QSqlTableModel * calle_completer_model;
 };
 #endif

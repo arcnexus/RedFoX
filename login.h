@@ -25,7 +25,7 @@ public:
 
 
 private slots:
-    void init();
+    bool init();
     void on_btnAcceder_clicked();
 
     void Crearconfiguracion_clicked();
@@ -33,8 +33,6 @@ private slots:
     void btnEmpresa_clicked();
 
     void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
 
     void on_comboGroup_currentTextChanged(const QString &arg1);
 

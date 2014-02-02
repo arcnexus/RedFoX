@@ -6,6 +6,9 @@ Proveedor::Proveedor(QObject *parent) :
     QObject(parent)
 {
     this->id = 0;
+    id_pais = 1;
+    pais = "España";
+    id_divisa = 1;
 }
 
 void Proveedor::cargaracumulados(int id_proveedor)
@@ -138,87 +141,89 @@ void Proveedor::guardar_persona_contacto(int id, QString Nombre, QString desc_te
 
 void Proveedor::Anadir()
 {
-    QScopedPointer<QSqlQuery>QProveedor(new QSqlQuery(Configuracion_global->groupDB));
-    //QSqlQuery *QProveedor = new QSqlQuery(Configuracion_global->groupDB);
-    if (!QProveedor->exec("insert into proveedores (codigo) values('')"))
-            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión de proveedores"),
-                                 QObject::tr("No se ha podido crear una nueva ficha de proveedor. Error: ")+
-                                 QProveedor->lastError().text(),QObject::tr("Aceptar"));
-    else {
-        int nid  = QProveedor->lastInsertId().toInt();
-        Recuperar( "Select * from proveedores where id = "+QString::number(nid));
-        this->codigo = Nuevocodigo_proveedor();
+    QString error;
+    QHash<QString,QVariant> _data;
+    _data["codigo"] = Nuevocodigo_proveedor();
+    int nid  = SqlCalls::SqlInsert(_data,"proveedores",Configuracion_global->groupDB,error);
+    if(nid != -1)
+    {
+        this->codigo = _data.value("codigo").toString();
         this->cuenta_aplicacion = this->codigo;
+        this->id = nid;
+    }
+    else
+    {
+        QMessageBox::warning(qApp->activeWindow(),
+                             QObject::tr("Gestión de proveedores"),
+                             QObject::tr("No se ha podido crear una nueva ficha de proveedor:\n")+
+                             error,QObject::tr("Aceptar"));
     }
 }
 
-void Proveedor::Recuperar(int id)
+bool Proveedor::Recuperar(int id)
 {
-    QSqlQuery qProveedor(Configuracion_global->groupDB);
-    QString cSQL = "SELECT * FROM proveedores WHERE id = "+QString::number(id);
-
-    if(qProveedor.exec(cSQL)) {
-        if(qProveedor.next()) {
-            QSqlRecord rProveedor = qProveedor.record();
-            Cargar(rProveedor);
-        } else
-        {
-            TimedMessageBox * t;
-            t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
-
-
-        }
-    } else
-     QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
-                                 qProveedor.lastError().text() ,QObject::tr("Ok"));
-    cargaracumulados(this->id);
+    QString error;
+    QMap<int, QSqlRecord> _map = SqlCalls::SelectRecord("proveedores",QString("id = %1").arg(id),Configuracion_global->groupDB,error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        cargaracumulados(this->id);
+        return true;
+    }
+    else
+    {
+        if(error.isEmpty())
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
+        else
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),
+                                 QObject::tr("Problema en la BD no se puede recuperar el proveedor:\n")+
+                                        error ,QObject::tr("Ok"));
+    }
+    return false;
 }
 
-void Proveedor::Recuperar(QString cSQL)
+bool Proveedor::Next()
 {
-    QSqlQuery qProveedor(Configuracion_global->groupDB);
-    if(qProveedor.exec(cSQL)) {
-        if(qProveedor.next()) {
-            QSqlRecord rProveedor = qProveedor.record();
-            Cargar(rProveedor);
-        } else
-        {
-            TimedMessageBox * t;
-            t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
-
-
-        }
-    } else
-     QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
-                                 qProveedor.lastError().text() ,QObject::tr("Ok"));
-    cargaracumulados(this->id);
+    QString error;
+    QMap<int, QSqlRecord> _map = SqlCalls::SelectRecord("proveedores",QString("id > %1").arg(id),Configuracion_global->groupDB,error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        cargaracumulados(this->id);
+        return true;
+    }
+    else
+    {
+        if(error.isEmpty())
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se alcanzó el final del archivo"));
+        else
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),
+                                 QObject::tr("Problema en la BD no se puede recuperar el proveedor:\n")+
+                                        error ,QObject::tr("Ok"));
+    }
+    return false;
 }
 
-void Proveedor::Recuperar(QString cSQL, int nProcede)
+bool Proveedor::Prev()
 {
-    QSqlQuery qProveedor(Configuracion_global->groupDB);
-    if(qProveedor.exec(cSQL)) {
-        if(qProveedor.next()) {
-            QSqlRecord rProveedor = qProveedor.record();
-            Cargar(rProveedor);
-        } else {
-            TimedMessageBox * t;
-            switch (nProcede) {
-            case 1:
-                t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al último proveedor"));
-                break;
-            case 2:
-                  t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se ha llegado al primer proveedor"));
-                 break;
-            default:
-                  t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("No se encuentra el proveedor"));
-                break;
-            }
-        }
-    } else
-     QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),QObject::tr("Problema en la BD no se puede recuperar el proveedor Error: ")+
-                                 qProveedor.lastError().text() ,QObject::tr("Ok"));
-    cargaracumulados(this->id);
+    QString error;
+    QMap<int, QSqlRecord> _map = SqlCalls::SelectRecord("proveedores",QString("id < %1").arg(id),Configuracion_global->groupDB,error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        cargaracumulados(this->id);
+        return true;
+    }
+    else
+    {
+        if(error.isEmpty())
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),QObject::tr("Se alcanzó el final del archivo"));
+        else
+            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Gestión Proveedores"),
+                                 QObject::tr("Problema en la BD no se puede recuperar el proveedor:\n")+
+                                        error ,QObject::tr("Ok"));
+    }
+    return false;
 }
 
 void Proveedor::Cargar(QSqlRecord &rProveedor)
@@ -402,7 +407,8 @@ void Proveedor::Vaciar()
     this->cp = "";
     this->poblacion = "";
     this->provincia = "";
-    this->pais = "";
+    this->pais = "España";
+    this->id_pais = 1;
     this->telefono1 = "";
     this->telefono2 = "";
     this->telefono3 = "";
@@ -441,21 +447,19 @@ void Proveedor::Vaciar()
     this->recargo_equivalencia = 0;
     this->texto_para_pedidos = "";
     this->entregado_a_cuenta = 0;
-    this->idFormadePago =0;
-    this->id_pais_almacen =0;
+    this->idFormadePago =1;
+    this->id_pais_almacen =1;
+    id_divisa = 1;
 }
 
 void Proveedor::Borrar(int nid)
-{
-    QScopedPointer<QSqlQuery>qProveedor(new QSqlQuery(Configuracion_global->groupDB));
-    //QSqlQuery *qProveedor = new QSqlQuery(Configuracion_global->groupDB);
-    qProveedor->prepare("delete from proveedores where id = "+QString::number(nid));
-    if(qProveedor->exec())
-        QMessageBox::information(qApp->activeWindow(),tr("Gestión de Proveedores"),
-                                 tr("Se ha borrado corectamente la ficha del proveedor")+
-                             qProveedor->lastError().text(),tr("Aceptar"));   else
+{        
+    QString error;
+    if(SqlCalls::SqlDelete("proveedores",Configuracion_global->groupDB,QString("id = %1").arg(nid),error))
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Proveedor borrado con éxito"));
+    else
         QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Proveedores"),
-                             tr("No Se ha borrado la ficha del proveedor ERROR:  %1").arg(qProveedor->lastError().text())
+                             tr("No Se ha borrado la ficha del proveedor:\n%1").arg(error)
                              ,tr("Aceptar"));
 }
 
@@ -514,29 +518,31 @@ void Proveedor::clear()
 }
 
 QString Proveedor::Nuevocodigo_proveedor()
-{
-    QString codigo;
-    QString cNum;
-    int nCodigo;
-    QScopedPointer<QSqlQuery>qProveedores(new QSqlQuery(Configuracion_global->groupDB));
-    //QSqlQuery *qProveedores = new QSqlQuery(Configuracion_global->groupDB);
-    if(qProveedores->exec("select codigo from proveedores  order by codigo desc limit 1")) {
-        if (qProveedores->next()) {
-            QSqlRecord registro = qProveedores->record();
-            codigo = registro.field("codigo").value().toString();
-            nCodigo = codigo.toInt();
-            nCodigo ++;
-            codigo = QString::number(nCodigo);
-        }
-   }
-   if (nCodigo == 0 || nCodigo == 1) {
-        cNum = "1";
-        while (cNum.length()< (Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_proveedores.length()) ) {
-            cNum.prepend("0");
-        }
-        codigo = Configuracion_global->cuenta_proveedores + cNum;
-    }
-   return codigo;
+{   
+   QString codigo;
+   double nCodigo = 1;
+   QSqlQuery qProveedores(Configuracion_global->groupDB);
+
+   if(qProveedores.exec("select codigo from proveedores  order by codigo desc limit 1"))
+   {
+       if (qProveedores.next())
+       {
+           QSqlRecord registro = qProveedores.record();
+           codigo = registro.field("codigo").value().toString();
+           nCodigo = codigo.mid(Configuracion_global->cuenta_clientes.length()).toDouble();
+           nCodigo ++;
+           codigo = QString::number(nCodigo);
+       }
+  }
+
+   QString codigo_nuevo;
+   QString formato = QString("%1.0f").arg(Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_proveedores.length());
+   formato.prepend("%0");
+   std::string _x = formato.toStdString();
+   codigo_nuevo.sprintf(_x.c_str(),nCodigo);
+
+   codigo_nuevo.prepend(Configuracion_global->cuenta_proveedores);
+   return codigo_nuevo;
 }
 
 

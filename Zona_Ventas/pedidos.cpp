@@ -15,18 +15,41 @@ Pedidos::~Pedidos()
 
 bool Pedidos::BorrarLineas(int Iped)
 {
-    QSqlQuery query(Configuracion_global->empresaDB);
-    QString sql = QString("DELETE FROM lin_ped WHERE id_Cab = %1").arg(Iped);
-    query.prepare(sql);
-    if(query.exec())
+    QMap <int,QSqlRecord>  l;
+    QString error,error2;
+    bool success,success2;
+    l= SqlCalls::SelectRecord("lin_ped",QString("id_cab = %1").arg(Iped),Configuracion_global->empresaDB,error);
+    QMapIterator <int,QSqlRecord>lin(l);
+    QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL;
+    while(lin.hasNext())
+    {
+        lin.next();
+        cSQL = QString("update articulos set unidades_reservadas = unidades_reservadas -%1 where id = %2").arg(
+                    lin.value().value("cantidad").toFloat(),lin.value().value("id").toInt());
+        success =art.exec(cSQL);
+        success2 = SqlCalls::SqlDelete("lin_ped",Configuracion_global->empresaDB,QString("id = %1").arg(
+                                           lin.value().value("id").toInt()),error2);
+        if(!success || !success2)
+            break;
+    }
+
+    if (success)
         return true;
     else
     {
-        QMessageBox::critical(qApp->activeWindow(), "Error:",query.lastError().text());
+//        if(!error.isEmpty())
+//            QMessageBox::critical(qApp->activeWindow(), QObject::tr("Pedidos"),
+//                              QObject::tr(QString("Se ha producido un error al borrar:%1").arg(error)),
+//                              QObject::tr("Aceptar"));
+//        if(!error2.isEmpty())
+//            QMessageBox::critical(qApp->activeWindow(), QObject::tr("Pedidos"),
+//                              QObject::tr(QString("Se ha producido un error al borrar:%1").arg(error2)),
+//                              QObject::tr("Aceptar"));
         return false;
     }
 }
-bool Pedidos::AnadirPedido()
+int Pedidos::AnadirPedido()
 {
     this->porc_iva1 = Configuracion_global->ivaList.at(0).toDouble();
     this->porc_iva2 = Configuracion_global->ivaList.at(1).toDouble();
@@ -39,32 +62,32 @@ bool Pedidos::AnadirPedido()
     this->porc_rec1 = Configuracion_global->reList.at(3).toDouble();
     this->recargo_equivalencia = 0;
 
-    QSqlQuery ped_cli(Configuracion_global->empresaDB);
-     ped_cli.prepare("INSERT INTO ped_cli (pedido,porc_iva1,porc_iva2,porc_iva3,porc_iva4,"
-                     "porc_rec1,porc_rec2,porc_rec3,porc_rec4,id_cliente)"
-                   " VALUES (:pedido,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4,"
-                     ":porc_rec1,:porc_rec2,:porc_rec3,:porc_rec4,:id_cliente)");
+    QHash <QString,QVariant> ped;
+    QString error;
 
      this->pedido = NuevoNumeroPedido();
-     ped_cli.bindValue(":pedido",pedido);
-     ped_cli.bindValue(":porc_iva1",this->porc_iva1);
-     ped_cli.bindValue(":porc_iva2",this->porc_iva2);
-     ped_cli.bindValue(":porc_iva3",this->porc_iva3);
-     ped_cli.bindValue(":porc_iva4",this->porc_iva4);
-     ped_cli.bindValue(":porc_rec1",this->porc_rec1);
-     ped_cli.bindValue(":porc_rec2",this->porc_rec1);
-     ped_cli.bindValue(":porc_rec3",this->porc_rec1);
-     ped_cli.bindValue(":porc_rec4",this->porc_rec1);
-     ped_cli.bindValue(":id_cliente",id_cliente);
-     if(!ped_cli.exec())
+     ped["pedido"] = this->pedido;
+     ped["porc_iva1"] = this->porc_iva1;
+     ped["porc_iva2"] = this->porc_iva2;
+     ped["porc_iva3"] = this->porc_iva3;
+     ped["porc_iva4"] = this->porc_iva4;
+     ped["porc_rec1"] = this->porc_rec1;
+     ped["porc_rec2"] = this->porc_rec1;
+     ped["porc_rec3"] = this->porc_rec1;
+     ped["porc_rec4"] = this->porc_rec1;
+     ped["desc_gasto1"] = QObject::tr("Portes.");
+     ped["id_cliente"] = this->id_cliente;
+     ped["ejercicio"] = Configuracion_global->cEjercicio.toInt();
+     int new_id = SqlCalls::SqlInsert(ped,"ped_cli",Configuracion_global->empresaDB,error);
+     if(new_id <1)
      {
-         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", ped_cli.lastError().text());
-         return false;
+         QMessageBox::critical(qApp->activeWindow(),"error al guardar datos Pedido:", error);
+         return -1;
      }
      else
      {
-         this->id = ped_cli.lastInsertId().toInt();
-         return true;
+         this->id = new_id;
+         return new_id;
      }
 }
 // Guardar el Pedido
@@ -176,6 +199,7 @@ GuardarPedido(int nid_Pedido)
 bool Pedidos::RecuperarPedido(QString cSQL)
 {
     QSqlQuery ped_cli(Configuracion_global->empresaDB);
+    QString error;
     ped_cli.prepare(cSQL);
     if( !ped_cli.exec() )
     {
@@ -191,6 +215,8 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             albaran = r.value("albaran").toInt();
             pedido = r.value("pedido").toInt();
             id_divisa = r.value("id_divisa").toInt();
+            id_tarifa = SqlCalls::SelectOneField("clientes","id_tarifa",QString("id=%1").arg(r.value("id_cliente").toInt()),
+                                                 Configuracion_global->groupDB,error).toInt();
             fecha = r.value("fecha").toDate();
             editable = r.value("editable").toBool();
             id_cliente = r.value("id_cliente").toInt();
@@ -305,7 +331,4 @@ int Pedidos::NuevoNumeroPedido()
     return qMax(1,pedido);
 }
 
-void Pedidos::FacturarPedido()
-{
-    //TODO Pedidos::FacturarPedido()
-}
+

@@ -10,6 +10,8 @@ FrmTiposTarifa::FrmTiposTarifa(QWidget *parent) :
     ui->setupUi(this);
     ui->lblDescArt->setVisible(false);
     oTipostarifa = new TiposTarifa(this);
+    mTarifas = new QSqlQueryModel(this);
+
 
     ui->cboPais->setModel(Configuracion_global->paises_model);
     //ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
@@ -35,12 +37,6 @@ void FrmTiposTarifa::cargarDatos()
     ui->cboMoneda->setCurrentIndex(nindex);
     nindex = ui->cboPais->findText(Configuracion_global->Devolver_pais(oTipostarifa->id_pais));
     ui->cboPais->setCurrentIndex(nindex);
-    ui->txtporc_dto1->setText(QString::number(oTipostarifa->porc_dto1));
-    ui->txtporc_dto2->setText(QString::number(oTipostarifa->porc_dto2));
-    ui->txtporc_dto3->setText(QString::number(oTipostarifa->porc_dto3));
-    ui->txtporc_dto4->setText(QString::number(oTipostarifa->porc_dto4));
-    ui->txtporc_dto5->setText(QString::number(oTipostarifa->porc_dto5));
-    ui->txtporc_dto6->setText(QString::number(oTipostarifa->porc_dto6));
     //ui->txtImpDto->setText(Configuracion_global->toFormatoMoneda( QString::number(oTipostarifa->importe_dto,'f',Configuracion_global->decimales)));
     //ui->txtPromocion->setText(oTipostarifa->desc_promo);
 }
@@ -52,80 +48,67 @@ void FrmTiposTarifa::on_btnAgregarTarifa_clicked()
     {
         ui->lblDescArt->setVisible(true);
         ui->lblDescArt->setText("Calculando.....");
+
+        int nid = mTarifas->record(ui->comboTarifa->currentIndex()).value("id").toInt();
+        oTipostarifa->recuperar(nid);
+
         if(ui->radTodos->isChecked())
-        {
-            int id = 0;
-            bool end = false;
-            QSqlQuery queryArticulo(Configuracion_global->groupDB);
+        {          
             // TODO PREPARAR PARA MULTIDIVISA
+
             QString cod_div_local = Configuracion_global->cod_divisa_local;
             QString cod_div_extra = Configuracion_global->Devolver_codDivisa(oTipostarifa->id_monedas);
             if (cod_div_local!= cod_div_extra)
                 oTipostarifa->valor_divisa = Configuracion_global->getCambioBlock(cod_div_local,cod_div_extra);
-                //Configuracion_global->getCambio(cod_div_local,cod_div_extra,1);
             else
-            {
                 oTipostarifa->valor_divisa = 1;
-            }
 
+            QString error;
+            QMap<int,QString> _art_con_tarifa = SqlCalls::SelectMap<int,QString>("tarifas","id_articulo","id_codigo_tarifa",
+                                                                                 QString("id_codigo_tarifa = %1").arg(oTipostarifa->id),
+                                                                                 Configuracion_global->groupDB,error
+                    );
 
-            while (end == false)
+            QMap<int,QSqlRecord> _arts = SqlCalls::SelectRecord("articulos","id>0",Configuracion_global->groupDB,error);
+
+            QMapIterator<int,QSqlRecord> _it(_arts);
+            while(_it.hasNext())
             {
-                if (queryArticulo.exec("select * from articulos where id >" + QString::number(id)))
-                    if(queryArticulo.next()){
-                        id = queryArticulo.record().value("id").toInt();
-                        // Comprovamos que no exista ya la tarifa
-                        QSqlQuery querytarifa(Configuracion_global->groupDB);
-                        querytarifa.prepare("Select id from tarifas where id_codigo_tarifa = :id_codigo_tarifa and id_articulo =:id_art");
-                        querytarifa.bindValue(":id_codigo_tarifa",oTipostarifa->id);
-                        querytarifa.bindValue(":id_art",queryArticulo.record().value("id").toInt());
-                        if(querytarifa.exec())
-                        {
-                            if(!querytarifa.next())
-                            {
-                                ui->lblDescArt->setText(queryArticulo.record().value("descripcion").toString());
-                                QApplication::processEvents();
-                                querytarifa.prepare("INSERT INTO tarifas (id_articulo,id_pais,id_monedas,margen,"
-                                                    "margen_minimo,pvp,id_codigo_tarifa,porc_dto1,porc_dto2,"
-                                                    "porc_dto3,porc_dto4,porc_dto5,porc-dto6) VALUES (:id_articulo,:id_pais,"
-                                                    ":id_monedas,:margen,:margen_minimo,:pvp,:id_codigo_tarifa,"
-                                                    ":porc_dto1,:porc_dto2,:porc_dto3,:porc_dto4,:porc_dto5,:porc_dto6);");
-                                querytarifa.bindValue(":id_articulo",id);
-                                querytarifa.bindValue(":id_pais",oTipostarifa->id_pais);
-                                querytarifa.bindValue(":id_monedas",oTipostarifa->id_monedas);
-                                querytarifa.bindValue(":margen",oTipostarifa->margen);
-                                querytarifa.bindValue(":margen_minimo",oTipostarifa->margen_min);
-                                querytarifa.bindValue(":id_codigo_tarifa",oTipostarifa->id);
-                                querytarifa.bindValue(":porc_dto1", oTipostarifa->porc_dto1);
-                                querytarifa.bindValue(":porc_dto2", oTipostarifa->porc_dto2);
-                                querytarifa.bindValue(":porc_dto3", oTipostarifa->porc_dto3);
-                                querytarifa.bindValue(":porc_dto4", oTipostarifa->porc_dto4);
-                                querytarifa.bindValue(":porc_dto5", oTipostarifa->porc_dto5);
-                                querytarifa.bindValue(":porc_dto6", oTipostarifa->porc_dto6);
+                _it.next();
+                if(!_art_con_tarifa.contains(_it.key()))
+                {
+                    QSqlRecord r = _it.value();
+                    ui->lblDescArt->setText(r.value("descripcion").toString());
+                    QApplication::processEvents();
 
-                                double coste = queryArticulo.record().value("coste_real").toDouble();
-                                float margen = oTipostarifa->margen;
-                                double pvp, pvp_divisa;
-                                pvp = (coste*100)/(100-margen);
-                                pvp_divisa = pvp * oTipostarifa->valor_divisa;
-                                if (oTipostarifa->valor_divisa == 1)
-                                    querytarifa.bindValue(":pvp",pvp);
-                                else
-                                    querytarifa.bindValue(":pvp",pvp_divisa);
-                                if(!querytarifa.exec())
-                                {
-                                    QMessageBox::warning(this,tr("Tipos de tarifas"),
-                                                         tr("Ocurrió un error al crear la tarifa: %1 ").arg(querytarifa.lastError().text()),
-                                                         tr("Aceptar"));
-                                    break;
-                                }
-                            }
-                        }
-                     } else {
-                        end = true;
+                    QHash<QString,QVariant> _data;
+                    _data["id_articulo"]= _it.key();
+                    _data["id_pais"]= oTipostarifa->id_pais;
+                    _data["id_monedas"]= oTipostarifa->id_monedas;
+                    _data["margen"]= oTipostarifa->margen;
+                    _data["margen_minimo"]= oTipostarifa->margen_min;
+                    _data["id_codigo_tarifa"]= oTipostarifa->id;
+
+                    double coste = r.value("coste_real").toDouble();
+                    float margen = oTipostarifa->margen;
+                    double pvp, pvp_divisa;
+                    pvp = (coste*100)/(100-margen);
+                    pvp_divisa = pvp * oTipostarifa->valor_divisa;
+
+                    if (oTipostarifa->valor_divisa == 1)
+                        _data["pvp"]= pvp;
+                    else
+                        _data["pvp"]= pvp_divisa;
+
+                    if(SqlCalls::SqlInsert(_data,"tarifas",Configuracion_global->groupDB,error) < 0 )
+                    {
+                        QMessageBox::warning(this,tr("Ocurrió un error al crear la tarifa:"),
+                                             error,
+                                             tr("Aceptar"));
+                        break;
                     }
                 }
-
+            }
         }
         ui->lblDescArt->setText(tr("¡Proceso terminado!"));
     }
@@ -136,7 +119,6 @@ void FrmTiposTarifa::on_listatarifas_clicked(const QModelIndex &index)
     int nid =ui->listatarifas->model()->data(ui->listatarifas->model()->index(index.row(),0),Qt::EditRole).toInt();
     oTipostarifa->recuperar(nid);
     cargarDatos();
-
 }
 
 void FrmTiposTarifa::on_btnAnadir_clicked()
@@ -155,7 +137,7 @@ void FrmTiposTarifa::on_btnAnadir_clicked()
 
 void FrmTiposTarifa::activar_controles(bool state)
 {
-    ui->txtCodigo->setEnabled(state);
+    ui->txtCodigo->setEnabled(state && !(ui->txtCodigo->text() == "PVP"));
     ui->txtDescripcion->setEnabled(state);
     ui->cboMoneda->setEnabled(state);
     ui->cboPais->setEnabled(state);
@@ -181,6 +163,26 @@ void FrmTiposTarifa::on_btnGuardar_clicked()
     cargar_datos_en_objeto();
     if(oTipostarifa->guardar())
     {
+        if(Configuracion_global->id_tarifa_predeterminada==0)
+        {
+            if(QMessageBox::question(this,tr("¿Tarífa prederterminada?"),
+                                  tr("¿Desea convertir esta tarifa en predeterminada?"),
+                                     tr("No"),
+                                     tr("Si")) == QMessageBox::Accepted)
+            {
+                QHash<QString,QVariant> _data;
+                _data["id_tarifa_predeterminada"] = oTipostarifa->id;
+                QString error;
+                if(SqlCalls::SqlUpdate(_data,"empresas",Configuracion_global->groupDB,
+                                       QString("id = %1").arg(Configuracion_global->idEmpresa),error))
+                {
+                    Configuracion_global->id_tarifa_predeterminada = oTipostarifa->id;
+                    TimedMessageBox * t = new TimedMessageBox(this,tr("Tarifa predeterminada cambiada con éxito"));
+                }
+                else
+                    QMessageBox::critical(this,tr("Error al asignar tarifa predeterminada"),error);
+            }
+        }
         activar_controles(false);
         llenar_lista();
     }
@@ -194,12 +196,14 @@ void FrmTiposTarifa::on_btnDeshacer_clicked()
 }
 
 void FrmTiposTarifa::llenar_lista()
-{
-    QSqlQueryModel *mTarifas = new QSqlQueryModel(this);
+{    
     mTarifas->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     ui->listatarifas->setModel(mTarifas);
     ui->listatarifas->setColumnHidden(0,true);
     mTarifas->setHeaderData(1,Qt::Horizontal,tr("Tarifa"));
+
+    ui->comboTarifa->setModel(mTarifas);
+    ui->comboTarifa->setModelColumn(1);
 }
 
 void FrmTiposTarifa::cargar_datos_en_objeto()
@@ -210,12 +214,6 @@ void FrmTiposTarifa::cargar_datos_en_objeto()
     oTipostarifa->margen_min = ui->spnMargen_min->value();
     oTipostarifa->id_monedas = Configuracion_global->Devolver_id_moneda(ui->cboMoneda->currentText());
     oTipostarifa->id_pais = Configuracion_global->Devolver_id_pais(ui->cboPais->currentText());
-    oTipostarifa->porc_dto1 = ui->txtporc_dto1->text().toFloat();
-    oTipostarifa->porc_dto2 = ui->txtporc_dto2->text().toFloat();
-    oTipostarifa->porc_dto3 = ui->txtporc_dto3->text().toFloat();
-    oTipostarifa->porc_dto4 = ui->txtporc_dto4->text().toFloat();
-    oTipostarifa->porc_dto5 = ui->txtporc_dto5->text().toFloat();
-    oTipostarifa->porc_dto6 = ui->txtporc_dto6->text().toFloat();
 }
 
 void FrmTiposTarifa::asignarcambiodivisa(float valor)
@@ -225,6 +223,8 @@ void FrmTiposTarifa::asignarcambiodivisa(float valor)
 
 void FrmTiposTarifa::on_btnBorrar_clicked()
 {
+    if(oTipostarifa->id == 1 )
+        return;
     QSqlQuery sql(Configuracion_global->groupDB);
 
     bool borrar = QMessageBox::question(qApp->activeWindow(),qApp->tr("Borrar Tarifa"),

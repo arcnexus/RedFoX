@@ -10,14 +10,8 @@
     <x>0</x>
     <y>0</y>
     <width>1073</width>
-    <height>563</height>
+    <height>648</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>800</width>
-    <height>513</height>
-   </size>
   </property>
   <property name="baseSize">
    <size>
@@ -39,7 +33,7 @@
    <item row="1" column="0" colspan="5">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="paginaedicion">
       <layout class="QGridLayout" name="gridLayout_27">
@@ -310,18 +304,12 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QTabWidget" name="tabWidget">
+        <widget class="QTabWidget" name="tabwidget">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>636</width>
-           <height>0</height>
-          </size>
          </property>
          <property name="autoFillBackground">
           <bool>false</bool>
@@ -329,7 +317,7 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tab_datos">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -337,298 +325,9 @@
            <string>Cliente</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_25">
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_13">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Dirección:                   </string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_15">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>CP:                                 </string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1" colspan="5">
-            <widget class="QLineEdit" name="txtnombre_comercial">
-             <property name="maximumSize">
-              <size>
-               <width>774</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1" colspan="5">
-            <widget class="QLineEdit" name="txtdireccion1">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1" colspan="5">
-            <widget class="QLineEdit" name="txtdireccion2">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtweb">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="locale">
-              <locale language="Catalan" country="Spain"/>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>direccion 2:                </string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Nombre Comercial:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="3">
-            <widget class="QLabel" name="label_21">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Fax:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1" colspan="5">
-            <widget class="QLineEdit" name="txtnombre_fiscal">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_17">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Provincia:                    </string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="3">
-            <widget class="QLabel" name="label_24">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Mail:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="1">
-            <spacer name="verticalSpacer_2">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLineEdit" name="txtcp">
-             <property name="maximumSize">
-              <size>
-               <width>100</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="label_18">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Pais:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="2">
-            <widget class="QLabel" name="label_16">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Población:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtprovincia">
-             <property name="maximumSize">
-              <size>
-               <width>600</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
-            <widget class="QLabel" name="label_25">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Observaciones:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="5">
-            <widget class="QLabel" name="label_20">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Teléfono 2:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="4">
-            <widget class="QLineEdit" name="txtfax">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="3">
-            <widget class="QLabel" name="label_19">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Teléfono1:                   </string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_23">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>web:                              </string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="4">
-            <widget class="QLineEdit" name="txtemail">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_11">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Nombre Fiscal:          </string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="4">
-            <widget class="QLineEdit" name="txttelefono1">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="3" colspan="3">
-            <widget class="QLineEdit" name="txtpoblacion">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1" colspan="2">
-            <widget class="QComboBox" name="cboPais">
-             <property name="styleSheet">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="5">
-            <widget class="QLabel" name="label_22">
-             <property name="styleSheet">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Móvil:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="6">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
+           <item row="1" column="0" rowspan="2">
+            <layout class="QGridLayout" name="gridLayout_30">
+             <item row="3" column="0">
               <widget class="QLabel" name="label_3">
                <property name="styleSheet">
                 <string/>
@@ -638,34 +337,432 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLineEdit" name="txtnombre">
+             <item row="0" column="5">
+              <widget class="QLineEdit" name="txtCifIntracomunitario">
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
-               <property name="echoMode">
-                <enum>QLineEdit::Normal</enum>
-               </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLabel" name="label_4">
+             <item row="0" column="6">
+              <widget class="QPushButton" name="btnValidarVIES">
                <property name="styleSheet">
                 <string/>
                </property>
                <property name="text">
-                <string>Primer Apellido:       </string>
+                <string>Validar VIES</string>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLineEdit" name="txtPrimerApellido">
+             <item row="13" column="0">
+              <widget class="QLabel" name="label_17">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Provincia:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_15">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>CP:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtnombre_comercial">
+               <property name="maximumSize">
+                <size>
+                 <width>774</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
               </widget>
              </item>
-             <item>
+             <item row="18" column="0">
+              <widget class="QLabel" name="label_24">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Mail:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="2">
+              <widget class="QLabel" name="label_16">
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="4">
+              <widget class="QLabel" name="label_21">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Fax:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Móvil:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtdireccion1">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Teléfono1:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1" colspan="3">
+              <widget class="QLineEdit" name="txttelefono1">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtnombre_fiscal">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="5" colspan="2">
+              <widget class="QLineEdit" name="txtfax">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="3" colspan="4">
+              <widget class="QLineEdit" name="txtpoblacion">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtdireccion2">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtprovincia">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="5" colspan="2">
+              <widget class="QLineEdit" name="txttelefono2">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLineEdit" name="txtcp">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="4">
+              <widget class="QLabel" name="label_20">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Teléfono 2:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Dirección:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Nombre Comercial:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLabel" name="label_8">
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Nif IVA:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtemail">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="4">
+              <widget class="QLabel" name="label_18">
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QLabel" name="label_14">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Direccion 2:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="5" colspan="2">
+              <widget class="QComboBox" name="cboPais">
+               <property name="styleSheet">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtmovil">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>web:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_11">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Nombre Fiscal:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="maximumSize">
+                <size>
+                 <width>49</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Código:                        </string>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtweb">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="locale">
+                <locale language="Catalan" country="Spain"/>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="4">
+              <widget class="QLabel" name="label_25">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Observaciones:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="5" colspan="2">
+              <widget class="QLineEdit" name="txtObservaciones">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Cif/Nif:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
               <widget class="QLabel" name="label_5">
                <property name="minimumSize">
                 <size>
@@ -687,8 +784,52 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="styleSheet">
+                <string/>
+               </property>
+               <property name="text">
+                <string>Primer Apellido:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtnombre">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::Normal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1" colspan="6">
+              <widget class="QLineEdit" name="txtPrimerApellido">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1" colspan="6">
               <widget class="QLineEdit" name="txtSegundoApellido">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtcodigo_cliente">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1" colspan="3">
+              <widget class="QLineEdit" name="txtcif_nif">
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -696,282 +837,7 @@
              </item>
             </layout>
            </item>
-           <item row="1" column="0" colspan="8">
-            <widget class="QWidget" name="widget" native="true">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>39</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>39</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_2">
-              <property name="topMargin">
-               <number>2</number>
-              </property>
-              <property name="rightMargin">
-               <number>5</number>
-              </property>
-              <property name="bottomMargin">
-               <number>2</number>
-              </property>
-              <item row="0" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <widget class="QLabel" name="label">
-                  <property name="maximumSize">
-                   <size>
-                    <width>49</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>Código:                        </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="txtcodigo_cliente">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="readOnly">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer">
-                  <property name="styleSheet">
-                   <string/>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Expanding</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>41</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_2">
-                  <property name="styleSheet">
-                   <string/>
-                  </property>
-                  <property name="text">
-                   <string>Cif/Nif:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="txtcif_nif">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_8">
-                  <property name="styleSheet">
-                   <string/>
-                  </property>
-                  <property name="text">
-                   <string>Nif IVA:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="txtCifIntracomunitario">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnValidarVIES">
-                  <property name="styleSheet">
-                   <string/>
-                  </property>
-                  <property name="text">
-                   <string>Validar VIES</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="2" column="6" colspan="2">
-            <widget class="QPushButton" name="btnVer_OtrosContactos">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>145</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Otras personas de contacto</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Personas de contacto</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>15</width>
-               <height>15</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="6" rowspan="5" colspan="2">
-            <widget class="QFrame" name="frame_2">
-             <property name="maximumSize">
-              <size>
-               <width>250</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="1" column="0" rowspan="2">
-               <widget class="QListView" name="lista_tipos">
-                <property name="maximumSize">
-                 <size>
-                  <width>190</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnAdd_TipoCliente">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>15</width>
-                  <height>15</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btndel_TipoCliente">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="styleSheet">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>15</width>
-                  <height>15</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" colspan="2">
-               <widget class="QLabel" name="label_46">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>TIPO CLIENTE</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="8" column="6" colspan="2">
-            <widget class="QLineEdit" name="txttelefono2">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="6" colspan="2">
-            <widget class="QLineEdit" name="txtmovil">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1" colspan="7">
-            <widget class="QLineEdit" name="txtObservaciones">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="8">
+           <item row="0" column="0" colspan="2">
             <widget class="QPushButton" name="btnFichaPaciente">
              <property name="minimumSize">
               <size>
@@ -998,49 +864,218 @@ color: rgb(0, 0, 241);</string>
              </property>
             </widget>
            </item>
-           <item row="12" column="4" colspan="4">
-            <widget class="Blinkink" name="blinkink">
-             <property name="maximumSize">
-              <size>
-               <width>600</width>
-               <height>16777215</height>
-              </size>
+           <item row="1" column="1" rowspan="2">
+            <widget class="QStackedWidget" name="blink_stack">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="styleSheet">
-              <string notr="true"> background-color: rgba(255, 96, 43, 0.317333);</string>
+             <property name="currentIndex">
+              <number>0</number>
              </property>
-             <property name="color" stdset="0">
-              <color>
-               <red>255</red>
-               <green>96</green>
-               <blue>43</blue>
-              </color>
-             </property>
-             <property name="blink" stdset="0">
-              <bool>true</bool>
-             </property>
-             <property name="blinkDuration" stdset="0">
-              <number>1500</number>
-             </property>
-             <property name="icon" stdset="0">
-              <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
-             </property>
-             <property name="topTex" stdset="0">
-              <string>Tiene campos pendientes de rellenar</string>
-             </property>
-             <property name="bottomTex" stdset="0">
-              <string>nombre, cif, ....</string>
-             </property>
+             <widget class="QWidget" name="page">
+              <layout class="QGridLayout" name="gridLayout_2">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QPushButton" name="btnVer_OtrosContactos">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>145</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Otras personas de contacto</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Personas de contacto</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../maya.qrc">
+                   <normaloff>:/Icons/PNG/users.png</normaloff>:/Icons/PNG/users.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>15</width>
+                   <height>15</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QFrame" name="frame_2">
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_5">
+                  <item row="1" column="0" rowspan="2">
+                   <widget class="QListView" name="lista_tipos">
+                    <property name="styleSheet">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_46">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <property name="text">
+                     <string>TIPO CLIENTE</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1" rowspan="2">
+                   <layout class="QVBoxLayout" name="verticalLayout_2">
+                    <item>
+                     <widget class="QPushButton" name="btnAdd_TipoCliente">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string/>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../maya.qrc">
+                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>15</width>
+                        <height>15</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_3">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btndel_TipoCliente">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string/>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../maya.qrc">
+                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>15</width>
+                        <height>15</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="page_2">
+              <layout class="QGridLayout" name="gridLayout_17">
+               <item row="0" column="0">
+                <widget class="Blinkink" name="blinkink">
+                 <property name="styleSheet">
+                  <string notr="true"> background-color: rgba(255, 96, 43, 0.317333);</string>
+                 </property>
+                 <property name="color" stdset="0">
+                  <color>
+                   <red>255</red>
+                   <green>96</green>
+                   <blue>43</blue>
+                  </color>
+                 </property>
+                 <property name="blink" stdset="0">
+                  <bool>true</bool>
+                 </property>
+                 <property name="blinkDuration" stdset="0">
+                  <number>1500</number>
+                 </property>
+                 <property name="icon" stdset="0">
+                  <pixmap resource="../maya.qrc">:/Icons/PNG/avisos.png</pixmap>
+                 </property>
+                 <property name="topTex" stdset="0">
+                  <string>Tiene campos pendientes de rellenar</string>
+                 </property>
+                 <property name="bottomTex" stdset="0">
+                  <string>nombre, cif, ....</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_2">
+         <widget class="QWidget" name="tab_direcciones">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <attribute name="title">
-           <string>direcciones alternativas</string>
+           <string>Direcciones alternativas</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout">
            <item row="1" column="0" rowspan="2" colspan="2">
@@ -1287,468 +1322,224 @@ color: rgb(255,255,255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_5">
+         <widget class="QWidget" name="tab_Datos_bancarios_financieros">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <attribute name="title">
            <string>Datos Bancarios y Financieros</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_15">
-           <item row="2" column="4">
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="3" colspan="3">
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <item>
-              <widget class="QLabel" name="label_68">
-               <property name="text">
-                <string>Día de pago 1:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="txtdia_pago1"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_69">
-               <property name="text">
-                <string>Día de pago 2:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="txtdia_pago2"/>
-             </item>
-            </layout>
-           </item>
-           <item row="0" column="1" colspan="5">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout">
-               <item>
-                <widget class="QLabel" name="label_32">
-                 <property name="text">
-                  <string>Porcentaje DTO Fijo:</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="txtporc_dto_cliente">
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="groupBox">
-               <property name="minimumSize">
-                <size>
-                 <width>182</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="title">
-                <string>Iva Cliente</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_29">
-                <item row="0" column="1">
-                 <widget class="QRadioButton" name="radUE">
-                  <property name="text">
-                   <string>U.E.</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QRadioButton" name="radGeneral">
-                  <property name="text">
-                   <string>General</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QRadioButton" name="radExcento">
-                  <property name="text">
-                   <string>Exento</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QRadioButton" name="radExportacion">
-                  <property name="text">
-                   <string>Exportación</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="chkrecargo_equivalencia">
-               <property name="text">
-                <string>Recargo Equivalencia</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="0">
-            <spacer name="horizontalSpacer_13">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="3" column="6">
-            <spacer name="horizontalSpacer_14">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_66">
-             <property name="maximumSize">
-              <size>
-               <width>60</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Tipo dto:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="5" rowspan="2">
-            <widget class="QFrame" name="frame_7">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>350</width>
-               <height>250</height>
-              </size>
-             </property>
+          <layout class="QGridLayout" name="gridLayout_16">
+           <item row="0" column="0">
+            <widget class="QFrame" name="frame_9">
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QGridLayout" name="gridLayout_17">
+             <layout class="QFormLayout" name="formLayout_5">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_33">
+                <property name="text">
+                 <string>Tarifa Cliente:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="cbotarifa_cliente"/>
+              </item>
               <item row="1" column="0">
-               <layout class="QGridLayout" name="gridLayout_14">
-                <item row="5" column="2" colspan="3">
-                 <spacer name="horizontalSpacer_12">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="10" column="4">
-                 <widget class="QLineEdit" name="txtvisa2_cod_valid">
-                  <property name="maximumSize">
-                   <size>
-                    <width>47</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="3">
-                 <widget class="QLineEdit" name="txtvisa2_caduca_ano">
-                  <property name="maximumSize">
-                   <size>
-                    <width>47</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="1">
-                 <widget class="QLabel" name="label_45">
-                  <property name="text">
-                   <string>tarjeta</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="4">
-                 <widget class="QLineEdit" name="txtvisa1_cod_valid">
-                  <property name="maximumSize">
-                   <size>
-                    <width>47</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label_79">
-                  <property name="text">
-                   <string>Oficina:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_77">
-                  <property name="text">
-                   <string>Importe Vales:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_78">
-                  <property name="text">
-                   <string>Entidad:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="1">
-                 <widget class="QLineEdit" name="txtoficina_bancaria">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="2">
-                 <spacer name="horizontalSpacer_11">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="5" column="0">
-                 <widget class="QLabel" name="label_80">
-                  <property name="text">
-                   <string>D.C.:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <widget class="QLineEdit" name="txtdc">
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="3">
-                 <widget class="QLineEdit" name="txtvisa1_caduca_ano">
-                  <property name="maximumSize">
-                   <size>
-                    <width>47</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="0">
-                 <widget class="QLabel" name="label_81">
-                  <property name="text">
-                   <string>Cuenta</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="1" colspan="2">
-                 <widget class="QLineEdit" name="txtcuenta_corriente"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_76">
-                  <property name="text">
-                   <string>Entregado a cuenta:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QLineEdit" name="txtentidad_bancaria">
-                  <property name="maximumSize">
-                   <size>
-                    <width>50</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="2">
-                 <spacer name="horizontalSpacer_10">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="0" colspan="3">
+               <widget class="QLabel" name="label_65">
+                <property name="text">
+                 <string>Divisa:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cboDivisa"/>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_67">
+                <property name="text">
+                 <string>Forma de Pago:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="cboforma_pago"/>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_68">
+                <property name="text">
+                 <string>Día de pago 1:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="txtdia_pago1"/>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_69">
+                <property name="text">
+                 <string>Día de pago 2:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QSpinBox" name="txtdia_pago2"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_32">
+                <property name="text">
+                 <string>Porcentaje DTO Fijo:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="txtporc_dto_cliente">
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QFrame" name="frame_6">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_15">
+              <item row="1" column="0" colspan="2">
+               <widget class="QPushButton" name="pushButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>27</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Ver Asientos Cliente</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_72">
+                <property name="text">
+                 <string>Cuenta IVA Repercutido:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="txtcuenta_iva_repercutido"/>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_74">
+                <property name="text">
+                 <string>Cuenta Cobros:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_70">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#ff0000;&quot;&gt;Contabilidad (P.G.C):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="txtcuenta_deudas"/>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="txtcuenta_contable"/>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_73">
+                <property name="text">
+                 <string>Cuenta deudas:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_71">
+                <property name="text">
+                 <string>Cuenta contable:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="txtcuenta_cobros"/>
+              </item>
+              <item row="6" column="1">
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QFrame" name="frame_7">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_14">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_75">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#ff0000;&quot;&gt;Datos financieros:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
                  <widget class="QCheckBox" name="chkClienteEmpresa">
                   <property name="text">
                    <string>Cliente Empresa (Aplicar IRPF)</string>
                   </property>
                  </widget>
                 </item>
-                <item row="9" column="0">
-                 <widget class="QLabel" name="label_26">
+                <item>
+                 <widget class="QCheckBox" name="chkrecargo_equivalencia">
                   <property name="text">
-                   <string>Visa1 distancia:</string>
+                   <string>Recargo Equivalencia</string>
                   </property>
                  </widget>
                 </item>
-                <item row="10" column="0">
-                 <widget class="QLabel" name="label_41">
-                  <property name="text">
-                   <string>Visa2_distancia:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="2">
-                 <widget class="QLineEdit" name="txtvisa1_caduca_mes">
-                  <property name="maximumSize">
-                   <size>
-                    <width>47</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="2">
-                 <widget class="QLineEdit" name="txtvisa2_caduca_mes">
-                  <property name="maximumSize">
-                   <size>
-                    <width>47</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="1">
-                 <widget class="QLineEdit" name="txtvisa_distancia1">
-                  <property name="minimumSize">
-                   <size>
-                    <width>133</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="10" column="1">
-                 <widget class="QLineEdit" name="txtvisa_distancia2">
-                  <property name="minimumSize">
-                   <size>
-                    <width>133</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="2">
-                 <widget class="QLabel" name="label_59">
-                  <property name="text">
-                   <string>mes/cad</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="3">
-                 <widget class="QLabel" name="label_60">
-                  <property name="text">
-                   <string>año/cad</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="4">
-                 <widget class="QLabel" name="label_61">
-                  <property name="text">
-                   <string>codigo</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="3" colspan="2">
-                 <widget class="QLabel" name="lblCuentavalida">
-                  <property name="text">
-                   <string>Cuenta Valida</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QLabel" name="label_65">
-                  <property name="text">
-                   <string>Divisa:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="4">
-                 <widget class="QComboBox" name="cboDivisa"/>
-                </item>
-                <item row="1" column="3">
-                 <widget class="QLabel" name="label_33">
-                  <property name="text">
-                   <string>Tarifa Cliente:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="4">
-                 <widget class="QComboBox" name="cbotarifa_cliente"/>
-                </item>
-                <item row="1" column="1">
+               </layout>
+              </item>
+              <item row="2" column="0">
+               <layout class="QGridLayout" name="gridLayout_31">
+                <item row="0" column="3" colspan="5">
                  <widget class="QLineEdit" name="txtimporte_a_cuenta">
                   <property name="enabled">
                    <bool>false</bool>
@@ -1764,7 +1555,14 @@ color: rgb(255,255,255);</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_76">
+                  <property name="text">
+                   <string>Entregado a cuenta:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3" colspan="5">
                  <widget class="QLineEdit" name="txtvales">
                   <property name="enabled">
                    <bool>false</bool>
@@ -1780,132 +1578,261 @@ color: rgb(255,255,255);</string>
                   </property>
                  </widget>
                 </item>
-               </layout>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_75">
-                <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#ff0000;&quot;&gt;Datos financieros:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="3" column="1" colspan="4">
-            <widget class="QFrame" name="frame_6">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>250</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_16">
-              <item row="2" column="0">
-               <layout class="QFormLayout" name="formLayout">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_71">
-                  <property name="text">
-                   <string>Cuenta contable:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_contable"/>
-                </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="label_72">
+                 <widget class="QLabel" name="label_77">
                   <property name="text">
-                   <string>Cuenta IVA Repercutido:</string>
+                   <string>Importe Vales:</string>
                   </property>
                  </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_iva_repercutido"/>
                 </item>
                 <item row="2" column="0">
-                 <widget class="QLabel" name="label_73">
+                 <widget class="QLabel" name="label_78">
                   <property name="text">
-                   <string>Cuenta deudas:</string>
+                   <string>Entidad:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="7">
+                 <widget class="QLabel" name="lblCuentavalida">
+                  <property name="text">
+                   <string>Cuenta Valida</string>
                   </property>
                  </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_deudas"/>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_74">
-                  <property name="text">
-                   <string>Cuenta Cobros:</string>
+                 <widget class="QLineEdit" name="txtentidad_bancaria">
+                  <property name="maximumSize">
+                   <size>
+                    <width>50</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="1">
-                 <widget class="QLineEdit" name="txtcuenta_cobros"/>
+                <item row="2" column="2">
+                 <widget class="QLabel" name="label_79">
+                  <property name="text">
+                   <string>Oficina:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QLineEdit" name="txtoficina_bancaria">
+                  <property name="maximumSize">
+                   <size>
+                    <width>50</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="4">
+                 <widget class="QLabel" name="label_80">
+                  <property name="text">
+                   <string>D.C.:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="5">
+                 <widget class="QLineEdit" name="txtdc">
+                  <property name="maximumSize">
+                   <size>
+                    <width>30</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="6">
+                 <widget class="QLabel" name="label_81">
+                  <property name="text">
+                   <string>Cuenta</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="7">
+                 <widget class="QLineEdit" name="txtcuenta_corriente"/>
                 </item>
                </layout>
               </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_70">
-                <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#ff0000;&quot;&gt;Contabilidad (P.G.C):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="pushButton">
+              <item row="2" column="1">
+               <widget class="QGroupBox" name="groupBox">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>27</height>
+                  <width>182</width>
+                  <height>0</height>
                  </size>
                 </property>
-                <property name="text">
-                 <string>Ver Asientos Cliente</string>
+                <property name="title">
+                 <string>Iva Cliente</string>
                 </property>
+                <layout class="QGridLayout" name="gridLayout_29">
+                 <item row="0" column="1">
+                  <widget class="QRadioButton" name="radUE">
+                   <property name="text">
+                    <string>U.E.</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QRadioButton" name="radGeneral">
+                   <property name="text">
+                    <string>General</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QRadioButton" name="radExcento">
+                   <property name="text">
+                    <string>Exento</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QRadioButton" name="radExportacion">
+                   <property name="text">
+                    <string>Exportación</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
+              </item>
+              <item row="3" column="0">
+               <layout class="QGridLayout" name="gridLayout_10">
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_45">
+                  <property name="text">
+                   <string>tarjeta</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="label_59">
+                  <property name="text">
+                   <string>mes/cad</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QLabel" name="label_60">
+                  <property name="text">
+                   <string>año/cad</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QLabel" name="label_61">
+                  <property name="text">
+                   <string>codigo</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_26">
+                  <property name="text">
+                   <string>Visa1 distancia:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="txtvisa_distancia1">
+                  <property name="minimumSize">
+                   <size>
+                    <width>133</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLineEdit" name="txtvisa1_caduca_mes">
+                  <property name="maximumSize">
+                   <size>
+                    <width>47</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QLineEdit" name="txtvisa1_caduca_ano">
+                  <property name="maximumSize">
+                   <size>
+                    <width>47</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="4">
+                 <widget class="QLineEdit" name="txtvisa1_cod_valid">
+                  <property name="maximumSize">
+                   <size>
+                    <width>47</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_41">
+                  <property name="text">
+                   <string>Visa2_distancia:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="txtvisa_distancia2">
+                  <property name="minimumSize">
+                   <size>
+                    <width>133</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QLineEdit" name="txtvisa2_caduca_mes">
+                  <property name="maximumSize">
+                   <size>
+                    <width>47</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QLineEdit" name="txtvisa2_caduca_ano">
+                  <property name="maximumSize">
+                   <size>
+                    <width>47</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="4">
+                 <widget class="QLineEdit" name="txtvisa2_cod_valid">
+                  <property name="maximumSize">
+                   <size>
+                    <width>47</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
            </item>
-           <item row="2" column="2">
-            <widget class="QComboBox" name="cbotipo_dto"/>
-           </item>
-           <item row="1" column="1" colspan="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <item>
-              <widget class="QLabel" name="label_67">
-               <property name="text">
-                <string>Forma de Pago:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="cboforma_pago"/>
-             </item>
-            </layout>
-           </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_4">
+         <widget class="QWidget" name="tab_estadistica">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -2425,7 +2352,7 @@ color: rgb(255,255,255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_8">
+         <widget class="QWidget" name="tab_deudas">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -2541,7 +2468,7 @@ color: rgb(255,255,255);</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_6">
+         <widget class="QWidget" name="tab_coments">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -3073,34 +3000,14 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>botListados</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>tabwidget</tabstop>
   <tabstop>btnFichaPaciente</tabstop>
-  <tabstop>txtcodigo_cliente</tabstop>
-  <tabstop>txtcif_nif</tabstop>
-  <tabstop>txtCifIntracomunitario</tabstop>
-  <tabstop>btnValidarVIES</tabstop>
-  <tabstop>txtnombre</tabstop>
-  <tabstop>txtPrimerApellido</tabstop>
-  <tabstop>txtSegundoApellido</tabstop>
-  <tabstop>btnVer_OtrosContactos</tabstop>
   <tabstop>txtnombre_fiscal</tabstop>
   <tabstop>txtnombre_comercial</tabstop>
   <tabstop>txtdireccion1</tabstop>
   <tabstop>txtdireccion2</tabstop>
-  <tabstop>txtcp</tabstop>
-  <tabstop>txtpoblacion</tabstop>
-  <tabstop>txtprovincia</tabstop>
-  <tabstop>cboPais</tabstop>
-  <tabstop>txttelefono1</tabstop>
-  <tabstop>txtfax</tabstop>
-  <tabstop>txtemail</tabstop>
-  <tabstop>txttelefono2</tabstop>
-  <tabstop>txtmovil</tabstop>
   <tabstop>txtweb</tabstop>
-  <tabstop>txtObservaciones</tabstop>
   <tabstop>lista_tipos</tabstop>
-  <tabstop>btnAdd_TipoCliente</tabstop>
-  <tabstop>btndel_TipoCliente</tabstop>
   <tabstop>lista_direccionesAlternativas</tabstop>
   <tabstop>txtdescripcion_direccion</tabstop>
   <tabstop>txtdireccion1Alternativa1</tabstop>
@@ -3114,25 +3021,15 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnEditardireccionAlternativa</tabstop>
   <tabstop>btnGuardardireccionAlternativa</tabstop>
   <tabstop>btnDeshacerdireccionAlternativa</tabstop>
-  <tabstop>txtporc_dto_cliente</tabstop>
   <tabstop>radGeneral</tabstop>
   <tabstop>radUE</tabstop>
   <tabstop>radExcento</tabstop>
   <tabstop>radExportacion</tabstop>
-  <tabstop>chkrecargo_equivalencia</tabstop>
-  <tabstop>cboforma_pago</tabstop>
-  <tabstop>txtdia_pago1</tabstop>
-  <tabstop>txtdia_pago2</tabstop>
-  <tabstop>cbotipo_dto</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>txtcuenta_contable</tabstop>
   <tabstop>txtcuenta_iva_repercutido</tabstop>
   <tabstop>txtcuenta_deudas</tabstop>
   <tabstop>chkClienteEmpresa</tabstop>
-  <tabstop>txtentidad_bancaria</tabstop>
-  <tabstop>txtoficina_bancaria</tabstop>
-  <tabstop>txtdc</tabstop>
-  <tabstop>txtcuenta_corriente</tabstop>
   <tabstop>txtvisa_distancia1</tabstop>
   <tabstop>txtvisa1_caduca_mes</tabstop>
   <tabstop>txtvisa1_caduca_ano</tabstop>

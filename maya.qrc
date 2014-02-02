@@ -72,7 +72,6 @@
         <file>PNG/Delete.png</file>
         <file>PNG/logo.png</file>
         <file>PNG/print2.png</file>
-        <file>jpg/Vademecum DataSolutions.jpg</file>
         <file>PNG/DefineControls.png</file>
         <file>PNG/Prescription.png</file>
         <file>PNG/OK.png</file>
@@ -202,5 +201,14 @@
         <file>DB/Grupo.sql</file>
         <file>DB/Medica.sql</file>
         <file>DB/Paises.sql</file>
+        <file>DB/Global.sql</file>
+    </qresource>
+    <qresource prefix="/ODS">
+        <file>Auxiliares/QuaZIP/ODS/meta.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/mimetype</file>
+        <file>Auxiliares/QuaZIP/ODS/settings.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/styles.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/META-INF/manifest.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/Thumbnails/thumbnail.png</file>
     </qresource>
 </RCC>

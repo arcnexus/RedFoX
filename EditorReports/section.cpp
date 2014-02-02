@@ -337,6 +337,8 @@ QDomElement Section::xml(QDomDocument doc, QList<Container *> &usedItems , QMap<
     QRectF myRect(mapRectToScene(this->rect()));
     QList<QGraphicsItem*>items =this->scene()->items(myRect);
     QListIterator<QGraphicsItem*> it(items);
+
+    QList<QDomNode> _node_list;
     while (it.hasNext())
     {
         QGraphicsItem* c = it.next();
@@ -346,11 +348,29 @@ QDomElement Section::xml(QDomDocument doc, QList<Container *> &usedItems , QMap<
             if(!usedItems.contains(cont))
             {
                 querys[cont->query()] = true;
-                node.appendChild(cont->xml(doc,marginPoint(),sectionPool));
+                _node_list.append(cont->xml(doc,marginPoint(),sectionPool));
                 usedItems.append(cont);
             }
         }
     }
+
+    QListIterator<QDomNode> _it(_node_list);
+    QList<QDomNode> _rect_list;
+    QList<QDomNode> _noRect_list;
+    while(_it.hasNext())
+    {
+        QDomNode n = _it.next();
+        if(n.toElement().attribute("id") == "RoundRect")
+            _rect_list.append(n);
+        else
+           _noRect_list.append(n);
+    }
+
+    for(auto i= 0; i< _rect_list.size();i++)
+        node.appendChild(_rect_list.at(i));
+
+    for(auto i= 0; i< _noRect_list.size();i++)
+        node.appendChild(_noRect_list.at(i));
 
     return node;
 }

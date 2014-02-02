@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>846</width>
-    <height>505</height>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="4" column="2">
        <widget class="QLineEdit" name="txtPvp_conIva">
         <property name="enabled">
          <bool>false</bool>
@@ -54,7 +54,7 @@ background-color: rgb(255, 255, 202);</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
+      <item row="1" column="0" colspan="3">
        <widget class="QLabel" name="lblpromocionado">
         <property name="enabled">
          <bool>true</bool>
@@ -77,7 +77,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="2" column="2">
        <widget class="QCheckBox" name="chkdto">
         <property name="enabled">
          <bool>true</bool>
@@ -104,7 +104,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="3" column="2">
        <widget class="QCheckBox" name="chkprecio">
         <property name="enabled">
          <bool>true</bool>
@@ -114,7 +114,7 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
+      <item row="0" column="0" colspan="3">
        <widget class="QPushButton" name="btnLote">
         <property name="text">
          <string>Lote.</string>
@@ -128,6 +128,16 @@ color: rgb(255, 255, 255);</string>
           <width>32</width>
           <height>32</height>
          </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="txt_cant_regalo">
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -345,64 +355,7 @@ color: rgb(0, 85, 0);</string>
       <string>Datos Línea.</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="6" column="10">
-       <widget class="QLineEdit" name="txtTotal_con_iva">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(236, 236, 236);
-color: rgb(0, 192, 0);</string>
-        </property>
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="9">
-       <widget class="QLabel" name="label_7">
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Total con IVA:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="9">
-       <widget class="QLabel" name="label_10">
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Total línea:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="8">
-       <widget class="QLineEdit" name="txtPorc_dto">
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="11">
-       <widget class="QLineEdit" name="txtDescripcion"/>
-      </item>
-      <item row="3" column="0" colspan="11">
+      <item row="3" column="0" colspan="13">
        <widget class="QLabel" name="label_2">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -417,23 +370,23 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="10">
-       <widget class="QLineEdit" name="txt_total_linea">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>29</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>141</width>
-          <height>16777215</height>
-         </size>
-        </property>
+      <item row="4" column="0" colspan="13">
+       <widget class="QLineEdit" name="txtDescripcion"/>
+      </item>
+      <item row="6" column="10">
+       <widget class="QLabel" name="label_7">
         <property name="styleSheet">
-         <string notr="true">font: 18pt &quot;Sans Serif&quot;;</string>
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
         </property>
+        <property name="text">
+         <string>Total con IVA:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="9">
+       <widget class="QLineEdit" name="txtPorc_dto">
         <property name="text">
          <string>0,00</string>
         </property>
@@ -458,7 +411,61 @@ Recom.</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="8">
+      <item row="0" column="10">
+       <widget class="QLabel" name="label_4">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>PVP/
+Cliente</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="12">
+       <widget class="QLineEdit" name="txt_total_linea">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>29</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>141</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 18pt &quot;Sans Serif&quot;;</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="10">
+       <widget class="QLineEdit" name="txtPVP">
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="12">
+       <widget class="QComboBox" name="cboIva"/>
+      </item>
+      <item row="6" column="9">
        <widget class="QLineEdit" name="txtImporte_iva">
         <property name="enabled">
          <bool>false</bool>
@@ -475,7 +482,7 @@ color: rgb(0, 192, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="10">
+      <item row="0" column="12">
        <widget class="QLabel" name="label_8">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -490,52 +497,8 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="7">
-       <widget class="QLabel" name="label_9">
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>IVA:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="9">
-       <widget class="QLabel" name="label_4">
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>PVP/
-Cliente</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="10">
-       <widget class="QComboBox" name="cboIva"/>
-      </item>
-      <item row="1" column="9">
-       <widget class="QLineEdit" name="txtPVP">
-        <property name="text">
-         <string>0,00</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="7">
-       <widget class="QLineEdit" name="txtPvp_recomendado">
+      <item row="6" column="12">
+       <widget class="QLineEdit" name="txtTotal_con_iva">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -551,7 +514,7 @@ color: rgb(0, 192, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="8">
+      <item row="0" column="9">
        <widget class="QLabel" name="label_6">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -566,37 +529,15 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="6">
-       <widget class="QLabel" name="label_3">
-        <property name="maximumSize">
-         <size>
-          <width>59</width>
-          <height>16777215</height>
-         </size>
-        </property>
+      <item row="6" column="7">
+       <widget class="QLabel" name="label_9">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
 font: 14pt &quot;Sans Serif&quot;;
 color: rgb(255,255,255);</string>
         </property>
         <property name="text">
-         <string>Cant.</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLineEdit" name="txtCantidad">
-        <property name="maximumSize">
-         <size>
-          <width>59</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>0,00</string>
+         <string>IVA:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -625,6 +566,37 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
+      <item row="1" column="6">
+       <widget class="QLineEdit" name="txtCantidad">
+        <property name="maximumSize">
+         <size>
+          <width>59</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="10">
+       <widget class="QLabel" name="label_10">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Total línea:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1" colspan="5">
        <widget class="QLabel" name="label">
         <property name="minimumSize">
@@ -649,6 +621,66 @@ color: rgb(255,255,255);</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="QLineEdit" name="txtPvp_recomendado">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(236, 236, 236);
+color: rgb(0, 192, 0);</string>
+        </property>
+        <property name="text">
+         <string>0,00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="label_3">
+        <property name="maximumSize">
+         <size>
+          <width>59</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Cant.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <widget class="QLabel" name="label_18">
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Tarifa</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="8">
+       <widget class="QLineEdit" name="txtTarifa">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

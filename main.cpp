@@ -29,26 +29,66 @@
 Q_IMPORT_PLUGIN(qsqlmysql)
 Q_IMPORT_PLUGIN(qsqlite)
 #endif
+
+bool cargarEmpresa(QSqlRecord record);
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    qDebug() << "drivers: "<< QSqlDatabase::drivers();
+    QStringList d = QSqlDatabase::drivers();    
+
+    if(d.isEmpty())
+    {
+        QMessageBox::critical(0,QObject::tr("Driver"),QObject::tr("No sql drivers.\n"
+                                                                  "La aplicación va a cerrarse.\n"
+                                                                  "Por favor instala un driver Sql para usar RedFox SGC"));
+        return 0;
+    }
+
+    Configuracion_global = new Configuracion;
+
+    //QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
+   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+   a.setStyle("fusion");
+
+   QFile file(":Icons/maya.qss");
+   if(file.open(QFile::ReadOnly))
+        a.setStyleSheet(file.readAll());
+
+   Login l;
+   int ret = 0;
+   if ( l.exec()==QDialog::Accepted)
+   {
+       if(cargarEmpresa(l.getEmpresa()))
+       {
+           MainWindow w;
+           w.showInfo();
+           w.showMaximized();
+           w.loadModules();
+           ret =  a.exec();
+       }
+   }
+   delete Configuracion_global;
+   return ret;
+}
+
 bool cargarEmpresa(QSqlRecord record)
 {
-    //-----------------------
     // Cargar datos empresa
-    //-----------------------
-    // DBEMpresa
-    //splash.showMessage(tr("Cargando configuración de base de datos"),Qt::AlignBottom);
 
     Configuracion_global->ruta_bd_empresa = record.field("ruta_bd_sqlite").value().toString();
 
     Configuracion_global->divisa_local = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
     Configuracion_global->cod_divisa_local = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
     Configuracion_global->divisa_local_reducida = "";
-
     Configuracion_global->contabilidad = record.field("contabilidad").value().toBool();
     Configuracion_global->ticket_factura = record.field("ticket_factura").value().toBool(); // el tiquet y la factura son correlativos
     Configuracion_global->id_tarifa_predeterminada = record.field("id_tarifa_predeterminada").value().toInt();
     Configuracion_global->actualizar_divisas = record.field("actualizar_divisas").value().toBool();
     Configuracion_global->ndigitos_factura = record.field("digitos_factura").value().toInt();
     Configuracion_global->tpv_forzar_cantidad = record.field("tpv_forzar_cantidad").value().toBool();
+    Configuracion_global->idEmpresa = record.value("id").toInt();
 
     if(record.field("medica").value().toInt()==1)
         Configuracion_global->medic = true;
@@ -61,7 +101,7 @@ bool cargarEmpresa(QSqlRecord record)
         Configuracion_global->internacional = false;
 
     Configuracion_global->enlace_web = record.field("enlace_web").value().toBool();
-    Configuracion_global->CargarDatos(record.field("id").value().toInt());
+    Configuracion_global->CargarDatos(record);
 
     QApplication::processEvents();
 
@@ -172,62 +212,17 @@ bool cargarEmpresa(QSqlRecord record)
 
     }
 
-    Configuracion_global->Cargar_iva();
+    QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
+    calles.setDatabaseName(qApp->applicationDirPath() + "/poblaciones/Poblaciones.sqlite");
+    if(!calles.open())
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
+
+	Configuracion_global->Cargar_iva();
     Configuracion_global->Cargar_paises();
+    Configuracion_global->Cargar_divisas();
+    Configuracion_global->Cargar_formas_pago();
     Configuracion_global->CargarClientes();
     Configuracion_global->CargarUsuarios();
+
     return true;
 }
-
-
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    qDebug() << "drivers: "<< QSqlDatabase::drivers();
-    QStringList d = QSqlDatabase::drivers();    
-
-    if(d.isEmpty())
-    {
-        QMessageBox::critical(0,QObject::tr("Driver"),QObject::tr("No sql drivers.\n"
-                                                                  "La aplicación va a cerrarse.\n"
-                                                                  "Por favor instala un driver Sql para usar RedFox SGC"));
-        return 0;
-    }
-
-    Configuracion_global = new Configuracion;
-
-
-
-    QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
-    #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-        QTextCodec::setCodecForTr(linuxCodec);
-        QTextCodec::setCodecForCStrings(linuxCodec);
-   #endif
-   QTextCodec::setCodecForLocale(linuxCodec);
-   a.setStyle("fusion");
-
-   QFile file(":Icons/maya.qss");
-
-
-   if(file.open(QFile::ReadOnly))
-        a.setStyleSheet(file.readAll());
-
-   Login l;
-   if ( l.exec()==QDialog::Accepted)
-   {
-       if(cargarEmpresa(l.getEmpresa()))
-       {
-           MainWindow w;
-           w.empresa = l.getEmpresaName();
-           w.user =l.getUsuario();
-           w.pass =l.getPass();
-           w.showInfo();
-           Configuracion_global->id_usuario_activo = l.getid_user();
-           w.showMaximized();
-           w.loadModules();
-           return a.exec();
-       }
-   }
-   return 0;
-}
-

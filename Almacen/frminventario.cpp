@@ -51,7 +51,7 @@ void frmInventario::formato_tabla(QSqlTableModel *modelo)
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         modelo->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->tabla->setColumnHidden(6,true);
+    //ui->tabla->setColumnHidden(6,true);
 }
 
 void frmInventario::on_txtBuscar_textEdited(const QString &arg1)

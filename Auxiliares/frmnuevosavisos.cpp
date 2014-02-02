@@ -8,14 +8,14 @@ frmNuevosAvisos::frmNuevosAvisos(QWidget *parent) :
 {
     ui->setupUi(this);
     m_empresas = new QSqlQueryModel(this);
-    m_usuarios = new QSqlQueryModel(this);
+
     m_avisos = new QSqlQueryModel(this);
     m_empresas->setQuery("select nombre from empresas",Configuracion_global->groupDB);
-    m_usuarios->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
+
     m_avisos->setQuery("select tipoaviso from tiposaviso",Configuracion_global->groupDB);
 
     ui->cboEmpresa->setModel(m_empresas);
-    ui->cboUsuarios->setModel(m_usuarios);
+    ui->cboUsuarios->setModel(Configuracion_global->usuarios_model);
     ui->cboTipoAviso->setModel(m_avisos);
 }
 
@@ -85,7 +85,7 @@ int frmNuevosAvisos::get_id_Empresa()
 int frmNuevosAvisos::get_id_usuario_destino()
 {
     QString error;
-    int id = SqlCalls::SelectOneField("usuarios","id",QString("nombre ='%1'").arg(ui->cboUsuarios->currentText()),
+    int id = SqlCalls::SelectOneField("mayaglobal`.`usuarios","id",QString("nombre ='%1'").arg(ui->cboUsuarios->currentText()),
                                       Configuracion_global->groupDB,error).toInt();
     return id;
 }

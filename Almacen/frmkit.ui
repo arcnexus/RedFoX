@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1096</width>
-    <height>533</height>
+    <width>1077</width>
+    <height>671</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,13 +33,64 @@ background-color: rgb(248, 245, 194);</string>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="0" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="txtCodigo_kit">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Código:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="txtDesc_kit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="btnQuitar">
+     <property name="text">
+      <string>Quitar producto</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../maya.qrc">
+       <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" rowspan="2">
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>552</width>
+       <width>500</width>
        <height>16777215</height>
       </size>
      </property>
@@ -54,21 +105,20 @@ color: rgb(0, 0, 0);</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="15" column="0" colspan="7">
+      <item row="12" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="btnDeshacer">
-          <property name="enabled">
-           <bool>false</bool>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="text">
-           <string>Deshacer</string>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
           </property>
-          <property name="icon">
-           <iconset resource="../maya.qrc">
-            <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-          </property>
-         </widget>
+         </spacer>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
@@ -83,10 +133,10 @@ color: rgb(0, 0, 0);</string>
         </item>
        </layout>
       </item>
-      <item row="13" column="0" colspan="7">
-       <widget class="QFrame" name="frame_2">
+      <item row="5" column="0" colspan="2">
+       <widget class="QFrame" name="frame_3">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(170, 152, 158);</string>
+         <string notr="true">background-color: rgb(255, 85, 0);</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -94,19 +144,73 @@ color: rgb(0, 0, 0);</string>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_11">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="1" column="3">
+          <widget class="QDoubleSpinBox" name="spinCantidad">
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);</string>
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
            </property>
-           <property name="text">
-            <string>Crear Kits (Descontará stock productos kit):</string>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>999999999.990000009536743</double>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="spinCant">
+         <item row="2" column="1" colspan="3">
+          <widget class="QLineEdit" name="txtDescripcion">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Coste en Kit</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="txtCodigo">
+           <property name="minimumSize">
+            <size>
+             <width>139</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Descripción:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Código:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Dto:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="spinCoste">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -114,29 +218,63 @@ color: rgb(0, 0, 0);</string>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="minimum">
+            <double>-10000000.000000000000000</double>
+           </property>
            <property name="maximum">
-            <double>99999999.989999994635582</double>
+            <double>1000000000.000000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="btnAnadirKits">
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Añadir stock Kit (3)</string>
+            <string>Cantidad:</string>
            </property>
-           <property name="icon">
-            <iconset resource="../maya.qrc">
-             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QLabel" name="lblCoste">
+           <property name="text">
+            <string>0,0</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Coste:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QDoubleSpinBox" name="spinDto">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);
+</string>
+           </property>
+           <property name="maximum">
+            <double>100.000000000000000</double>
            </property>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
-      <item row="11" column="0">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cboSentido">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0" colspan="2">
        <widget class="QPushButton" name="btnGuardar">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>&lt;&lt;Agregar(2)</string>
@@ -147,34 +285,122 @@ color: rgb(0, 0, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0" colspan="7">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QPushButton" name="btnAnadir">
-          <property name="text">
-           <string>Preparar componente kit (1)</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../maya.qrc">
-            <normaloff>:/Icons/images/down_arrow.png</normaloff>:/Icons/images/down_arrow.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnQuitar">
-          <property name="text">
-           <string>Quitar producto</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../maya.qrc">
-            <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="txtBuscar">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
       </item>
-      <item row="5" column="0" colspan="7">
+      <item row="10" column="0" colspan="2">
+       <widget class="QFrame" name="frame_4">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(170, 152, 158);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="2" column="1">
+          <widget class="QPushButton" name="btnRomperKit">
+           <property name="text">
+            <string>Romper Kit</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" rowspan="2">
+          <widget class="QLabel" name="label_12">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Romper Kits (Añadirá stock
+a los productos del kit):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinCantRomper">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>Sentido:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QPushButton" name="btnAnadir">
+        <property name="text">
+         <string>Preparar componente kit (1)</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../maya.qrc">
+          <normaloff>:/Icons/images/down_arrow.png</normaloff>:/Icons/images/down_arrow.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>Buscar por:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cboOrden">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>Filtro:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
        <widget class="QTableView" name="tabla_buscar">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>92</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(191, 255, 191);
 alternate-background-color: rgb(222, 255, 222);</string>
@@ -193,10 +419,10 @@ alternate-background-color: rgb(222, 255, 222);</string>
         </attribute>
        </widget>
       </item>
-      <item row="9" column="1" rowspan="3" colspan="6">
-       <widget class="QFrame" name="frame_3">
+      <item row="9" column="0" colspan="2">
+       <widget class="QFrame" name="frame_2">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 85, 0);</string>
+         <string notr="true">background-color: rgb(170, 152, 158);</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -204,115 +430,34 @@ alternate-background-color: rgb(222, 255, 222);</string>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="1" column="1" colspan="3">
-          <widget class="QLineEdit" name="txtDescripcion">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btnAnadirKits">
+           <property name="text">
+            <string>Añadir stock Kit (3)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../maya.qrc">
+             <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_9">
+         <item row="0" column="0" rowspan="2">
+          <widget class="QLabel" name="label_11">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
-            <string>PVP:</string>
+            <string>Crear Kits (Descontará stock
+de los productos kit):</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="txtCodigo">
-           <property name="minimumSize">
-            <size>
-             <width>139</width>
-             <height>0</height>
-            </size>
-           </property>
+          <widget class="QSpinBox" name="spinCant">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Descripción:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Código:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QDoubleSpinBox" name="spinPVP">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="minimum">
-            <double>-10000000.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>1000000000.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Cantidad:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="spinCantidad">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-           </property>
-           <property name="minimum">
-            <double>1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>999999999.990000009536743</double>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Dto:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QLineEdit" name="txtDto">
-           <property name="minimumSize">
-            <size>
-             <width>73</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>126</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-           </property>
-           <property name="text">
-            <string>0,00</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -322,119 +467,16 @@ color: rgb(0, 0, 0);</string>
         </layout>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string>Buscar por:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string>Sentido:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label">
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string>Filtro:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1" colspan="6">
-       <widget class="QLineEdit" name="txtBuscar">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1" colspan="4">
-       <widget class="QComboBox" name="cboSentido">
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1" colspan="6">
-       <widget class="QComboBox" name="cboOrden">
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Código:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="txtCodigo_kit">
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLineEdit" name="txtDesc_kit"/>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>PVP</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QLineEdit" name="txtPvp_kit">
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>0,00</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>btnAnadir</tabstop>
-  <tabstop>btnQuitar</tabstop>
-  <tabstop>btnDeshacer</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>txtCodigo_kit</tabstop>
   <tabstop>tabla</tabstop>
   <tabstop>txtDesc_kit</tabstop>
-  <tabstop>txtPvp_kit</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

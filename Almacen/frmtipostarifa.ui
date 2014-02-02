@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>887</width>
-    <height>503</height>
+    <height>505</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -299,12 +299,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="6" column="0">
-       <widget class="QRadioButton" name="radSubfamilia">
+      <item row="2" column="0" colspan="2">
+       <widget class="QRadioButton" name="radTodos">
         <property name="text">
-         <string>por Sub-Familia</string>
+         <string>Todos los productos y servicios</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
+      </item>
+      <item row="4" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSeccion"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboTarifa"/>
       </item>
       <item row="0" column="0" colspan="3">
        <widget class="QLabel" name="label_12">
@@ -333,6 +342,23 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
+      <item row="8" column="0">
+       <widget class="QRadioButton" name="radGrupoArticulo">
+        <property name="text">
+         <string>por Grupo Artículo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Tarifa seleccionada para añadir a articulos:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1" colspan="2">
+       <widget class="QComboBox" name="cboGrupoArticulo"/>
+      </item>
       <item row="5" column="0">
        <widget class="QRadioButton" name="radFamilia">
         <property name="text">
@@ -340,27 +366,12 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="1" colspan="2">
-       <widget class="QComboBox" name="cboGrupoArticulo"/>
-      </item>
-      <item row="5" column="1" colspan="2">
-       <widget class="QComboBox" name="cboFamilia"/>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QRadioButton" name="radTodos">
+      <item row="6" column="0">
+       <widget class="QRadioButton" name="radSubfamilia">
         <property name="text">
-         <string>Todos los productos y servicios</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>por Sub-Familia</string>
         </property>
        </widget>
-      </item>
-      <item row="4" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSeccion"/>
-      </item>
-      <item row="6" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSubFamilia"/>
       </item>
       <item row="9" column="0" colspan="2">
        <widget class="QLabel" name="lblDescArt">
@@ -372,6 +383,12 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
+      <item row="6" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSubFamilia"/>
+      </item>
+      <item row="7" column="1" colspan="2">
+       <widget class="QComboBox" name="cboSubSubFamilia"/>
+      </item>
       <item row="4" column="0">
        <widget class="QRadioButton" name="radSeccion">
         <property name="text">
@@ -379,8 +396,8 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1" colspan="2">
-       <widget class="QComboBox" name="cboSubSubFamilia"/>
+      <item row="5" column="1" colspan="2">
+       <widget class="QComboBox" name="cboFamilia"/>
       </item>
       <item row="7" column="0">
        <widget class="QRadioButton" name="radSubSubFamilia">
@@ -388,119 +405,6 @@ color: rgb(255,255,255);</string>
          <string>por Sub-Sub-Familia</string>
         </property>
        </widget>
-      </item>
-      <item row="8" column="0">
-       <widget class="QRadioButton" name="radGrupoArticulo">
-        <property name="text">
-         <string>por Grupo Artículo</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="3">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(25, 19, 71);
-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>% Dto 1</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_4">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(25, 19, 71);
-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>% Dto 2</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="label_5">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(25, 19, 71);
-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>% Dto 3</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="label_8">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(25, 19, 71);
-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>% Dto 4</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="label_9">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(25, 19, 71);
-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>%Dto 5</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QLabel" name="label_10">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(25, 19, 71);
-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="text">
-           <string>% Dto6 </string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="txtporc_dto1"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="txtporc_dto2"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="txtporc_dto3"/>
-        </item>
-        <item row="1" column="3">
-         <widget class="QLineEdit" name="txtporc_dto4"/>
-        </item>
-        <item row="1" column="4">
-         <widget class="QLineEdit" name="txtporc_dto5"/>
-        </item>
-        <item row="1" column="5">
-         <widget class="QLineEdit" name="txtporc_dto6"/>
-        </item>
-       </layout>
       </item>
      </layout>
     </widget>

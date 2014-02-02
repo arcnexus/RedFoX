@@ -210,12 +210,6 @@ public:
     QString driver_db_contabilidad;
     QString RutaBD_Contabilidad_sqlite;
     bool ticket_factura;
-    // EMAIL
-    QString Email_contrasena;
-    QString Email_imap;
-    QString Email_pop;
-    QString Email_smtp;
-    QString Email_usuario;
 
 };
 

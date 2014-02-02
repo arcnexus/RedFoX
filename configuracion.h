@@ -98,10 +98,19 @@ public:
     QString pais;
     QString cEjercicio;
     QString cEmpresaActiva;
-    QString cUsuarioActivo;
+
     int id_usuario_activo;
-    QString cNivelUsuarioActivo;
-    int nivel;
+
+    QString user_name;
+    QString user_long_name;
+    QString user_pass;
+    bool super_user;
+
+    QString user_mail_smpt;
+    QString user_mail_acc;
+    QString user_mail_pass;
+    int user_mail_port;
+
     QSqlDatabase dbConfiguracion;
     QSqlDatabase dbWeb;
     QSqlDatabase db_meditec;
@@ -126,7 +135,7 @@ public:
     int caducidad_vales;
 
     QHash <QString,QSqlRecord> ivas;
-    QSqlTableModel* iva_model;
+    QSqlQueryModel* iva_model;
     QStringList ivaList;
     QStringList grupo_iva;
     QStringList reList;
@@ -134,10 +143,14 @@ public:
     int getidIva(QString cIva);
     QString setTipoIva(int idIva);
 
-    QHash <QString,QSqlRecord> paises;
-    //QSqlTableModel* paises_model;
+  //  QHash <QString,QSqlRecord> paises;
     QSqlQueryModel *paises_model;
+    QSqlQueryModel *divisas_model;
+    QSqlQueryModel *formapago_model;
+
     void Cargar_paises();
+    void Cargar_divisas();
+    void Cargar_formas_pago();
 
     int Devolver_id_pais(QString pais);
     static QString Devolver_pais(int id);
@@ -173,11 +186,11 @@ public:
     void CargarClientes();
 
 
-    QSqlTableModel* usuarios_model;
+    QSqlQueryModel* usuarios_model;
     void CargarUsuarios();
 
     bool lProfesional;
-    int irpf;
+    bool irpf;
     float porc_irpf;
     int digitos_cuentas_contables;
     QString cuenta_clientes;
@@ -213,7 +226,7 @@ public:
     QString toFormatoMoneda(QString cTexto);
     double MonedatoDouble(QString moneda);
     bool EsNumero(QString texto);
-    void CargarDatos(int id);
+    void CargarDatos(QSqlRecord r);
     bool CargarDatosBD();
     void AbrirDbWeb();
     void CerrarDbWeb();
@@ -241,6 +254,9 @@ public:
     static void ImprimirDirecto(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
     static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params);
     static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
+    static void EviarMail(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params, QString pdfName, QString dest_mail, QString dest_name, QString asunto, QString texto);
+
+    static bool SqlToODS(QString fileName, QString query, QSqlDatabase db, QStringList headers, QString& error);
 public slots:
     void format_text();    
 private slots:

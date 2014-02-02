@@ -14,20 +14,25 @@ public:
     QString codigo_fabricante;
     QString descripcion;
     QString descripcion_reducida;
-    int id_proveedor;
+    int idProveedor;
     bool kit;
     QString proveedor;
     QString cCodProveedor;
     int id_familia;
     QString familia;
+    QString cod_familia;
     int id_seccion;
     QString seccion;
+    QString cod_seccion;
     int id_subfamilia;
     QString subfamilia;
+    QString cod_subfamilia;
     int id_subSubFamilia;
     QString cSubSubFamilia;
+    QString cod_SubSubFamilia;
     int id_grupoart;
     QString cGrupoArt;
+    QString cod_GrupoArt;
     QString codigo_iva;
     double tipo_iva;
     float porc_dto;
@@ -80,11 +85,16 @@ public:
     void Cargar(QSqlRecord registro);
     void Guardar();
     void Vaciar();
-    void Borrar(int nid, bool ask);
+    void Borrar(int nid,bool isKit, bool ask , QString codigo = QString());
     QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente,
                                    int id_cliente);
-    bool Devolucion(int id,double cantidad,double pvp,int id_cliente);
+    bool Devolucion(int id, double cantidad, double pvp);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
+    bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
+
+    void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
+
+    bool acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);
@@ -95,21 +105,21 @@ public:
     QString getsubfamilia(int nid);
     QString getcSubSubFamilia(int nid);
     QString getcGrupo(int nid);
-    bool agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta,
+    bool agregar_proveedor_alternativo(int id_art, int idProveedor, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvd_real, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvd_real, int id_divisa);
-    bool cambiarProveedorPrincipal(int id,int id_proveedor);
+    bool cambiarProveedorPrincipal(int id,int idProveedor);
     bool cambiar_pvp();
     static bool agregarStock(char accion, int id, int cantidad, double importe, QDate fecha);
     float asigna_dto_linea(int id_art, int id_cliente, float dto_esp, float dto_lin);
 
-    QString auto_codigo();
 private:
 
     QSqlQuery qryArticulo;
     QSqlQuery qryTipoIva;
-
+    double coste_real_anterior;
+    QString codigo_anterior; //Solo valido para nuevos articulos
 };
 
 #endif // ARTICULO_H

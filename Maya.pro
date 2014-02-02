@@ -137,7 +137,6 @@ SOURCES += main.cpp\
     Auxiliares/SMPT/mimeattachment.cpp \
     Auxiliares/SMPT/emailaddress.cpp \
     mayamodule.cpp \
-    Zona_Administrador/frmusuarios.cpp \
     moduleextension.cpp \
     Almacen/divisionalmacenext.cpp \
     archivosgeneralesext.cpp \
@@ -213,8 +212,13 @@ SOURCES += main.cpp\
     EditorReports/editacum.cpp \
     Zona_Contabilidad/frmbuscarapuntecontable.cpp \
     Auxiliares/frmeditline.cpp \
-    Auxiliares/numericdelegate.cpp
-
+    Auxiliares/numericdelegate.cpp \
+    Almacen/frmaddlotes.cpp \
+    Almacen/frmselectlotes.cpp \
+    Zona_Maestros/frmcajas.cpp \
+    Zona_Maestros/cajas.cpp \
+    Almacen/frmseccionesalmacen.cpp \
+    Almacen/frmfamiliasalmacen.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -317,7 +321,6 @@ HEADERS  += mainwindow.h \
     Auxiliares/SMPT/mimeattachment.h \
     Auxiliares/SMPT/emailaddress.h \
     mayamodule.h \
-    Zona_Administrador/frmusuarios.h \
     moduleextension.h \
     Almacen/divisionalmacenext.h \
     archivosgeneralesext.h \
@@ -393,7 +396,13 @@ HEADERS  += mainwindow.h \
     EditorReports/editacum.h \
     Zona_Contabilidad/frmbuscarapuntecontable.h \
     Auxiliares/frmeditline.h \
-    Auxiliares/numericdelegate.h
+    Auxiliares/numericdelegate.h \
+    Almacen/frmaddlotes.h \
+    Almacen/frmselectlotes.h \
+    Zona_Maestros/frmcajas.h \
+    Zona_Maestros/cajas.h \
+    Almacen/frmseccionesalmacen.h \
+    Almacen/frmfamiliasalmacen.h
 
 
 
@@ -447,7 +456,6 @@ FORMS    += mainwindow.ui \
     Busquedas/db_consulta_view.ui \
     Auxiliares/frmaddentregascuenta.ui \
     Zona_Ventas/frmgestioncobros.ui \
-    Zona_Administrador/frmusuarios.ui \
     Zona_Contabilidad/frmcuadro_cuentas.ui \
     Almacen/frminventario.ui \
     EditorReports/sectioneditordlg.ui \
@@ -487,7 +495,12 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmeditaravisos.ui \
     EditorReports/editacum.ui \
     Zona_Contabilidad/frmbuscarapuntecontable.ui \
-    Auxiliares/frmeditline.ui
+    Auxiliares/frmeditline.ui \
+    Almacen/frmaddlotes.ui \
+    Almacen/frmselectlotes.ui \
+    Zona_Maestros/frmcajas.ui \
+    Almacen/frmseccionesalmacen.ui \
+    Almacen/frmfamiliasalmacen.ui
 
 RESOURCES += \
     maya.qrc \
@@ -583,3 +596,10 @@ else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/Cr
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/CryptoLIBS/debug/cryptopp562.lib
 
 unix:!macx: LIBS += -lcryptopp
+
+unix|win32: LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazip
+
+INCLUDEPATH += $$PWD/Auxiliares/QuaZIP
+DEPENDPATH += $$PWD/Auxiliares/QuaZIP
+
+!win32: LIBS += -lz

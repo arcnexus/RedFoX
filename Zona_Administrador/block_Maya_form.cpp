@@ -13,16 +13,10 @@ block_Maya_form::~block_Maya_form()
     delete ui;
 }
 
-void block_Maya_form::set_user(QString user, QString pass)
-{
-    this->user = user;
-    this->pass = pass;
-}
-
 void block_Maya_form::on_pushButton_clicked()
 {
-    if(ui->txt_user->text() == user)
-        if(ui->txt_pass->text() == pass)
+    if(ui->txt_user->text() == Configuracion_global->user_name)
+        if(ui->txt_pass->text() == Configuracion_global->user_pass)
             this->hide();
 }
 void block_Maya_form::keyPressEvent(QKeyEvent *e)

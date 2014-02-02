@@ -14,6 +14,7 @@ public:
     QDate fecha;
     int id_cliente;
     int id_divisa;
+    int id_tarifa;
     int id_transportista;
     QString codigo_cliente;
     QString cliente;
@@ -92,13 +93,12 @@ public:
 public slots:
     bool BorrarLineas(int Iped);
     // Metodos de trabajo Clase Pedido
-    bool AnadirPedido();
+    int AnadirPedido();
     bool RecuperarPedido(QString cSQL);
     bool GuardarPedido(int nid_Pedido);
     int NuevoNumeroPedido();
 
-    void calcularPedido();
-    void FacturarPedido();
+
 };
 
 #endif // PEDidOS_H

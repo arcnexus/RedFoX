@@ -20,31 +20,52 @@ void Articulo::Anadir()
     }
     else
     {
-        this->id = id;
-        Recuperar("Select * from articulos where id = "+QString::number(this->id));
-
-        //--------------------------
-        // Añado tarifas a artículo
-        //--------------------------
-        QSqlQuery queryTarifas(Configuracion_global->groupDB);
-        if(queryTarifas.exec("select * from codigotarifa"))
+        //-----------------------------------------------
+        // Creamos registro de articulo en acum_articulos
+        //-----------------------------------------------
+        QHash <QString, QVariant> h;
+        h["id_articulo"] = id;
+        int new_id = SqlCalls::SqlInsert(h,"acum_articulos",Configuracion_global->empresaDB,error);
+        if(new_id<0){
+            QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
+                                 tr("Falló la inserción de un nuevo acumulado de artículo :\n %1").arg(error),
+                                 QObject::tr("Ok"));
+        } else
         {
-            while (queryTarifas.next())
-            {
-                QSqlRecord r = queryTarifas.record();
-                QHash<QString,QVariant> _tar;
-                _tar["id_articulo"]= this->id;
-                _tar["id_pais"]=  r.value("id_pais");
-                _tar["id_monedas"]= r.value("id_monedas");
-                _tar["margen"]= Configuracion_global->margen;
-                _tar["margen_minimo"]= Configuracion_global->margen_minimo;
-                _tar["id_codigo_tarifa"]= r.value("id");
 
-                if(SqlCalls::SqlInsert(_tar,"tarifas",Configuracion_global->groupDB,error) < 0)
+            this->id = id;
+
+            //Recuperar("Select * from articulos where id = "+QString::number(this->id));
+            codigo_anterior = data.value("codigo").toString();
+            cod_seccion = "";
+            cod_familia = "";
+            cod_subfamilia = "";
+            cod_SubSubFamilia = "";
+            cod_GrupoArt = "";
+
+            //--------------------------
+            // Añado tarifas a artículo
+            //--------------------------
+            QSqlQuery queryTarifas(Configuracion_global->groupDB);
+            if(queryTarifas.exec("select * from codigotarifa"))
+            {
+                while (queryTarifas.next())
                 {
-                    QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
-                                         tr("Falló la inserción de la tarifa: %1").arg(error),
-                                         tr("Aceptar"));
+                    QSqlRecord r = queryTarifas.record();
+                    QHash<QString,QVariant> _tar;
+                    _tar["id_articulo"]= this->id;
+                    _tar["id_pais"]=  r.value("id_pais");
+                    _tar["id_monedas"]= r.value("id_monedas");
+                    _tar["margen"]= Configuracion_global->margen;
+                    _tar["margen_minimo"]= Configuracion_global->margen_minimo;
+                    _tar["id_codigo_tarifa"]= r.value("id");
+
+                    if(SqlCalls::SqlInsert(_tar,"tarifas",Configuracion_global->groupDB,error) < 0)
+                    {
+                        QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
+                                             tr("Falló la inserción de la tarifa: %1").arg(error),
+                                             tr("Aceptar"));
+                    }
                 }
             }
         }
@@ -113,12 +134,36 @@ bool Articulo::Recuperar(int id)
 
 bool Articulo::Next()
 {
-    return Recuperar(this->id + 1);
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id > %1 limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        return true;
+    }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha llegado al final del fichero"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
 }
 
 bool Articulo::Prev()
 {
-    return Recuperar(this->id - 1);
+    QString error;
+    QMap<int,QSqlRecord> _map = SqlCalls::SelectRecord("articulos",QString("id < %1 order by id desc limit 1").arg(id),Configuracion_global->groupDB, error);
+    if(!_map.isEmpty())
+    {
+        Cargar(_map.first());
+        return true;
+    }
+    else if(error.isEmpty())
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Se ha llegado al inicio del fichero"));
+    else
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al leer datos artículo:"), error);
+
+    return false;
 }
 
 void Articulo::Cargar(QSqlRecord registro)
@@ -130,7 +175,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->codigo_fabricante = registro.field("codigo_fabricante").value().toString();
     this->descripcion = registro.field("descripcion").value().toString();
     this->descripcion_reducida = registro.field("descripcion_reducida").value().toString();
-    this->id_proveedor = registro.field("id_proveedor").value().toInt();
+    this->idProveedor = registro.field("id_proveedor").value().toInt();
     this->id_familia = registro.field("id_familia").value().toInt();
     this->familia = registro.field("familia").value().toString();
     this->id_seccion = registro.field("id_seccion").value().toInt();
@@ -143,15 +188,15 @@ void Articulo::Cargar(QSqlRecord registro)
     this->porc_dto = registro.field("porc_dto").value().toFloat();
     this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();
     this->fecha_ultima_venta = registro.field("fecha_ultima_venta").value().toDate();
-    this->unidades_compradas = registro.field("unidades_compradas").value().toInt();
-    this->unidades_vendidas = registro.field("unidades_vendidas").value().toInt();
+    this->unidades_compradas = registro.field("unidades_compradas").value().toFloat();
+    this->unidades_vendidas = registro.field("unidades_vendidas").value().toFloat();
     this->importe_acumulado_compras = registro.field("importe_acumulado_compras").value().toDouble();
     this->importe_acumulado_ventas = registro.field("importe_acumulado_ventas").value().toDouble();
     this->comentario = registro.field("comentario").value().toString();
-    this->stock_maximo = registro.field("stock_maximo").value().toInt();
-    this->stock_minimo = registro.field("stock_minimo").value().toInt();
-    this->stock_real = registro.field("stock_real").value().toInt();
-    this->nstock_fisico_almacen = registro.field("stock_fisico_almacen").value().toInt();
+    this->stock_maximo = registro.field("stock_maximo").value().toFloat();
+    this->stock_minimo = registro.field("stock_minimo").value().toFloat();
+    this->stock_real = registro.field("stock_real").value().toFloat();
+    this->nstock_fisico_almacen = registro.field("stock_fisico_almacen").value().toFloat();
     this->tipo_unidad = registro.field("tipo_unidad").value().toString();
     this->controlar_stock = registro.field("controlar_stock").value().toInt();
     this->modelo = registro.field("modelo").value().toString();
@@ -160,8 +205,8 @@ void Articulo::Cargar(QSqlRecord registro)
     this->composicion = registro.field("composicion").value().toString();
     this->pvp_incluye_iva = registro.field("pvp_incluye_iva").value().toInt();
     this->fecha_prevista_recepcion = registro.field("fecha_prevista_recepcion").value().toDate();
-    this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toInt();
-    this->unidades_reservadas = registro.field("unidades_reservadas").value().toInt();
+    this->cantidad_pendiente_recibir = registro.field("cantidad_pendiente_recibir").value().toFloat();
+    this->unidades_reservadas = registro.field("unidades_reservadas").value().toFloat();
     this->mostrar_web = registro.field("mostrar_web").value().toInt();
     this->etiquetas = registro.field("etiquetas").value().toInt();
     this->paquetes = registro.field("paquetes").value().toInt();
@@ -174,11 +219,11 @@ void Articulo::Cargar(QSqlRecord registro)
     this->margen = registro.field("margen").value().toDouble();
     this->margen_min = registro.field("margen_min").value().toDouble();
     this->coste_real = registro.field("coste_real").value().toDouble();
-
+    this->coste_real_anterior = this->coste_real;
     // Recupero proveedor
     QSqlQuery *qryProveedor = new QSqlQuery(Configuracion_global->groupDB);
     qryProveedor->prepare("select id,codigo,proveedor from proveedores where id = :id");
-    qryProveedor->bindValue(":id",this->id_proveedor);
+    qryProveedor->bindValue(":id",this->idProveedor);
     if (!qryProveedor->exec()) {
         QMessageBox::warning(qApp->activeWindow(),tr("Error Datos"),tr("No se encuentra el proveedor asociado \n Deberá comprovar ficha producto"),tr("OK"));
 
@@ -197,62 +242,61 @@ void Articulo::Guardar()
     // --------------------------------------------
     // Si está activada la autogeneración de código
     //---------------------------------------------
-
-    if (this->codigo == "auto_codigo"){
-        QString nuevo_codigo;
-        QSqlQuery querycodigo(Configuracion_global->groupDB);
-
-        // seccion
-        querycodigo.prepare("select codigo from secciones where id = :id");
-        querycodigo.bindValue(":id",this->id_seccion);
-        querycodigo.exec();
-        querycodigo.next();
-        nuevo_codigo.append(querycodigo.record().value("codigo").toString().trimmed());
-
-        // familia
-        querycodigo.prepare("select codigo from familias where id = :id");
-        querycodigo.bindValue(":id",this->id_familia);
-        querycodigo.exec();
-        if(querycodigo.next())
-            nuevo_codigo.append(querycodigo.record().value("codigo").toString().trimmed());
-        else
-            nuevo_codigo.append("000");
-        //subfamilia
-        querycodigo.prepare("select codigo from subfamilias where id = :id");
-        querycodigo.bindValue(":id",this->id_subfamilia);
-        querycodigo.exec();
-        if(querycodigo.next())
-            nuevo_codigo.append(querycodigo.record().value("codigo").toString().trimmed());
-        else
-            nuevo_codigo.append("000");
-
-        //buscamos ultimo número de la serie
-        QString cSQL = "select codigo from articulos where codigo like '";
-                cSQL.append(nuevo_codigo);
-                cSQL.append("%' order by  codigo desc limit 0,1");
-        if(querycodigo.exec(cSQL)){
-            if (querycodigo.next())
-            {
-                QString ultcod;
-                int tamano =  Configuracion_global->tamano_codigo;
-                ultcod = querycodigo.record().value("codigo").toString();
-                int aum = ultcod.right(4).toInt();
-                aum++;
-
-                QString nuev,cnum;
-                cnum = QString::number(aum);
-                nuev = cnum.fill('0',(4-cnum.trimmed().size())).append(QString::number(aum));
-                this->codigo = ultcod.left(9).append(nuev);
-
-            } else{
-                this->codigo = nuevo_codigo+"0001";
-            }
-
-        } else
+    if(this->codigo != this->codigo_anterior)
+    {
+        if (this->codigo == "auto_codigo")
         {
-            this->codigo = nuevo_codigo +"0001";
-        }
+            int tamano =  Configuracion_global->tamano_codigo;
+            QString aux = cod_seccion + cod_familia + cod_subfamilia + cod_SubSubFamilia + cod_GrupoArt;
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_familia + cod_subfamilia + cod_SubSubFamilia + cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_subfamilia + cod_SubSubFamilia + cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_SubSubFamilia + cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux = cod_GrupoArt;
+            }
+            if (aux.length() + 3 > tamano)
+            {
+                aux.chop(3);
+            }
+            QString error;
+            QStringList cods = SqlCalls::SelectList("articulos","codigo",
+                                                    QString("codigo like '%1%' order by codigo desc").arg(aux),
+                                                    Configuracion_global->groupDB,error);
+            QString codigo_nuevo;
+            QString formato = QString("%1.0f").arg(tamano-aux.length());
+            formato.prepend("%0");
+            std::string _x = formato.toStdString();
 
+            if(cods.isEmpty())
+            {
+                codigo_nuevo.sprintf(_x.c_str(),1.0);
+            }
+            else
+            {
+                foreach (QString s, cods) {
+                    QString codigo = s;
+                    codigo.remove(aux);
+                    if(codigo.at(0).isNumber())
+                    {
+                        double d_cod = codigo.toDouble();
+                        d_cod += 1;
+                        codigo_nuevo.sprintf(_x.c_str(),d_cod);
+                        break;
+                    }
+                }
+            }
+            this->codigo = aux+codigo_nuevo;
+        }
     }
     QHash <QString, QVariant> articulo;
     QString error;
@@ -262,7 +306,7 @@ void Articulo::Guardar()
     articulo["codigo_fabricante"] = this->codigo_fabricante;
     articulo["descripcion"] = this->descripcion;
     articulo["descripcion_reducida"] = this->descripcion_reducida;
-    articulo["id_proveedor"] = this->id_proveedor;
+    articulo["id_proveedor"] = this->idProveedor;
     articulo["id_familia"] = this->id_familia;
    // articulo["familia"] = this->familia;
     articulo["id_seccion"] = this->id_seccion;
@@ -312,29 +356,103 @@ void Articulo::Guardar()
                              QObject::tr("No se puede guardar el artículo ERROR: %1 ").arg(error),
                              QObject::tr("Ok"));
 
-    } else {
+    }
+    else
+    {
+        if(coste_real_anterior != coste_real)
+        {
+            QString error = "";
+            QMap<int,QSqlRecord> _kits = SqlCalls::SelectRecord("kits",QString("id_componente = %1").arg(this->id),Configuracion_global->groupDB,error);
+            if(!_kits.isEmpty() || !error.isEmpty())
+            {
+                if(!_kits.isEmpty())
+                {
+                    QMapIterator<int,QSqlRecord> _it(_kits);
+                    QStringList _affected_kits;
+                    while (_it.hasNext())
+                    {
+                        _it.next();
+                        QSqlRecord r = _it.value();
+                        _affected_kits.append(r.value("codigo_kit").toString());
+                        double coste_anterior = r.value("coste_base").toDouble();
+                        if(coste_anterior != coste_real)
+                        {
+                            int row_id = r.value("id").toInt();
+                            double coste_final_anterior = r.value("cantidad").toDouble() * r.value("coste_final").toDouble();
+                            double coste_final = coste_real * (1-(r.value("porc_dto").toDouble()/100));
+                            QHash<QString,QVariant> _data;
+                            _data["coste_base"] = coste_real;
+                            _data["coste_final"] = coste_final;
+
+                            if(SqlCalls::SqlUpdate(_data,"kits",Configuracion_global->groupDB,QString("id = %1").arg(row_id),error))
+                            {
+                                QMap<int,QSqlRecord> _articulo_kit = SqlCalls::SelectRecord("articulos",QString("codigo = '%1'").arg(r.value("codigo_kit").toString()),Configuracion_global->groupDB,error);
+                                if(!_articulo_kit.isEmpty())
+                                {
+                                    QSqlRecord art_r = _articulo_kit.first();
+                                    int art_id = art_r.value("id").toInt();
+                                    double art_coste_real = art_r.value("coste_real").toDouble();
+                                    art_coste_real -= coste_final_anterior;
+                                    art_coste_real += coste_final;
+
+                                    QHash<QString, QVariant> _art_data;
+                                    _art_data["coste_real"] = art_coste_real;
+                                    _art_data["coste"] = art_coste_real;
+
+                                    if(!SqlCalls::SqlUpdate(_art_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(art_id),error))
+                                        QMessageBox::warning(qApp->activeWindow(),tr("Error actualizando conste de kit afectado %1").arg(r.value("codigo_kit").toString()),error);
+                                }
+                            }
+                        }
+                    }
+
+                    QMessageBox::information(qApp->activeWindow(),tr("Kits afectados"),tr("Los cambios en este artículo afectaron a los siguientes kits:\n")
+                                             +_affected_kits.join("\n")+"\nNo olvide revisar las tarífas correspondientes.");
+                }
+                else
+                {
+                    QMessageBox::critical(qApp->activeWindow(),tr("Error"),error);
+                    return;
+                }
+            }
+            coste_real_anterior = coste_real;
+        }
         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
                                                   QObject::tr("Se ha guardado el artículo en la base de datos"));
-
     }
 
 }
 
 void Articulo::Vaciar()
 {
+    id_tipos_iva = 0;
+    id_web = 0;
     this->id = 0;
     this->codigo = "";
     this->codigo_barras="";
     this->codigo_fabricante = "";
     this->descripcion = "";
     this->descripcion_reducida = "";
-    this->id_proveedor = 0;
+    this->kit = false;
+    proveedor= "";
+    cCodProveedor= "";
+    this->idProveedor = 0;
     this->id_familia = 0;
     this->familia = "";
+    cod_familia = "";
     this->id_seccion = 0;
     this->seccion = "";
+    this->cod_seccion = "";
     this->id_subfamilia =0;
     this->subfamilia = "";
+    this->cod_subfamilia = "";
+    id_subSubFamilia=0;
+    cSubSubFamilia="";
+    cod_SubSubFamilia="";
+    id_grupoart=0;
+    cGrupoArt="";
+    cod_GrupoArt="";
+    codigo_iva = "";
     this->tipo_iva = 0;
     this->coste = 0;
     this->porc_dto = 0;
@@ -367,10 +485,12 @@ void Articulo::Vaciar()
     this->nstock_fisico_almacen =0;
     this->coste_real = 0;
     this->mostrar_en_cuadro = false;
-
+    tipo_unidad = "";
+    paquetes = 0;
+    pvp = 0;
 }
 
-void Articulo::Borrar(int nid , bool ask)
+void Articulo::Borrar(int nid , bool isKit, bool ask, QString codigo)
 {
     bool borrar = !ask;
     if(ask)
@@ -379,12 +499,67 @@ void Articulo::Borrar(int nid , bool ask)
                              qApp->tr("No"),qApp->tr("Si")) == QMessageBox::Accepted;
     if(borrar)
     {
-        QString error;
-        if(!SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error))
-            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo"),error,QObject::tr("&Aceptar"));
+        QString error = "";
+        QStringList _kits = SqlCalls::SelectList("kits","codigo_kit",QString("id_componente = %1").arg(nid),Configuracion_global->groupDB,error);
+        if(!_kits.isEmpty() || !error.isEmpty())
+        {
+            if(!_kits.isEmpty())
+                QMessageBox::critical(qApp->activeWindow(),tr("Articulo parte de kit"),tr("Borre primero los siguientes kits:\n")+_kits.join("\n"));
+            else
+                QMessageBox::critical(qApp->activeWindow(),tr("Error"),error);
+            return;
+        }
+        bool allOk = true;
+        bool t = Configuracion_global->groupDB.transaction();
+
+        allOk = SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,QString("id_articulo = %1").arg(nid),error);
+
+        if(!allOk)
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Tarifas)"),error,QObject::tr("&Aceptar"));
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            return;
+        }
+
+        if(isKit)
+        {
+            allOk = SqlCalls::SqlDelete("kits",Configuracion_global->groupDB,QString("codigo_kit = '%1'").arg(codigo),error);
+            if(!allOk)
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Componentes del kit)"),error,QObject::tr("&Aceptar"));
+                if(t)
+                    Configuracion_global->groupDB.rollback();
+                return;
+            }
+        }
+        allOk = SqlCalls::SqlDelete("articulos",Configuracion_global->groupDB,QString("id = %1").arg(nid),error);
+        if(!allOk)
+        {
+            QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Registro de Articulo)"),error,QObject::tr("&Aceptar"));
+            if(t)
+                Configuracion_global->groupDB.rollback();
+            return;
+        }
         else        
-            if(!Next())
-                Prev();
+        {
+            if(t)
+                allOk = Configuracion_global->groupDB.commit();
+
+            if(!allOk)
+            {
+                QMessageBox::critical(qApp->activeWindow(),QObject::tr("Falló el borrado del Artículo (Commit)"),error,QObject::tr("&Aceptar"));
+                if(t)
+                    Configuracion_global->groupDB.rollback();
+                return;
+            }
+            else
+            {
+                TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Articulo borrado con éxito"));
+                if(!Next())
+                    Prev();
+            }
+        }
     }
 }
 
@@ -749,7 +924,7 @@ QHash<QString, QVariant> Articulo::Vender(QString codigo, int cantidad,int tarif
     return h;
 }
 
-bool Articulo::Devolucion(int id, double cantidad, double pvp, int id_cliente)
+bool Articulo::Devolucion(int id, double cantidad, double pvp)
 {
     bool isOk = false;
     QHash <QString, QVariant> h;
@@ -847,10 +1022,10 @@ bool Articulo::Devolucion(int id, double cantidad, double pvp, int id_cliente)
 }
 
 
-void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4)
+void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLabel *label4)
 {
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
-    qryArticulo.prepare("Select imagen,imagen2,imagen3,imagen4 from articulos where id = :id");
+    qryArticulo.prepare("Select imagen1,imagen2,imagen3,imagen4 from articulos_imagenes where id_articulo = :id");
     qryArticulo.bindValue(":id",this->id);
     if (qryArticulo.exec()) {
         if (qryArticulo.next()){
@@ -858,11 +1033,12 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
             // imagen1
             //--------
             QSqlRecord registro =  qryArticulo.record();
-            QByteArray ba1 = registro.field("imagen").value().toByteArray();
-            QPixmap pm1;
-            pm1.loadFromData(QByteArray::fromBase64(ba1));
-            if(!registro.field("imagen").value().isNull());
-                label->setPixmap(pm1);
+            QByteArray ba1 = registro.field("imagen1").value().toByteArray();
+            ba1 = registro.field("imagen1").value().toByteArray();
+            QPixmap pm11;
+            pm11.loadFromData(ba1);
+            if(!registro.field("imagen1").value().isNull())
+                label1->setPixmap(pm11);
             //--------
             // imagen2
             //--------
@@ -887,11 +1063,317 @@ void Articulo::CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabe
             pm14.loadFromData(ba1);
             if(!registro.field("imagen4").value().isNull())
                 label4->setPixmap(pm14);
-        } else
-            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
-                                    QObject::tr("No se pueden recuperar la imagenes asociadas al artículo"),
-                                    QObject::tr("Ok"));
+        } //else
+//            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
+//                                    QObject::tr("No se pueden recuperar la imagenes asociadas al artículo"),
+//                                    QObject::tr("Ok"));
+    } else
+        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
+                                QObject::tr("No se pueden recuperar la imagenes asociadas al artículo: %1").arg(qryArticulo.lastError().text()),
+                                QObject::tr("Ok"));
+}
+
+bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QDate fecha, QString accion)
+{
+    //--------------------------------
+    // ACUMULADOS ARTICULO Y STOCK
+    //--------------------------------
+    bool success = true;
+    QString cSQL;
+    QSqlQuery art(Configuracion_global->groupDB);
+    if(accion == "V"){
+        cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real -%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
+        cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen -%3,").arg(QString::number(cantidad,'f',2)));
+        cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas +%4,").arg(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
+        cSQL.append(QString("unidades_vendidas = unidades_vendidas +%5 where id= %6").arg(QString::number(cantidad,'f',2),
+                                                                                  QString::number(id_articulo)));
+
+    } else
+    {
+        cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real +%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
+        cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen -%3,").arg(QString::number(cantidad,'f',2)));
+        cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas +%4,").arg(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
+        cSQL.append(QString("unidades_vendidas = unidades_vendidas -%5 where id= %6").arg(QString::number(cantidad,'f',2),
+                                                                                  QString::number(id_articulo)));
     }
+
+    if(!art.exec(cSQL)){
+       success = false;
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art.lastError().text()),
+                             tr("Aceptar"));
+    }
+
+    if(accion == "V"){
+        cSQL = QString("update acum_articulos set ");
+        if(fecha.month() == 1){
+             cSQL.append(QString("acum_vent_enero = acum_vent_enero + %1").arg(total));
+             cSQL.append(QString(",unid_vent_enero = unid_vent_enero +%1").arg(cantidad));
+        }
+        if(fecha.month() == 2){
+            cSQL.append(QString("acum_vent_febrero = acum_vent_febrero + %1").arg(total));
+            cSQL.append(QString(",unid_vent_febrero = unid_vent_febrero +%1").arg(cantidad));
+       }
+        if(fecha.month() == 3){
+            cSQL.append(QString("acum_vent_marzo = acum_vent_marzo + %1").arg(total));
+            cSQL.append(QString(",unid_vent_marzo = unid_vent_marzo +%1").arg(cantidad));
+       }
+        if(fecha.month() == 4){
+            cSQL.append(QString("acum_vent_abril = acum_vent_abril + %1").arg(total));
+            cSQL.append(QString(",unid_vent_abril = unid_vent_abril +%1").arg(cantidad));
+       }
+        if(fecha.month() == 5){
+            cSQL.append(QString("acum_vent_mayo = acum_vent_mayo + %1").arg(total));
+            cSQL.append(QString(",unid_vent_mayo = unid_vent_mayo +%1").arg(cantidad));
+       }
+        if(fecha.month() == 6){
+            cSQL.append(QString("acum_vent_junio = acum_vent_junio + %1").arg(total));
+            cSQL.append(QString(",unid_vent_junio = unid_vent_junio +%1").arg(cantidad));
+       }
+        if(fecha.month() == 7){
+            cSQL.append(QString("acum_vent_julio = acum_vent_julio + %1").arg(total));
+            cSQL.append(QString(",unid_vent_julio = unid_vent_julio +%1").arg(cantidad));
+       }
+        if(fecha.month() == 8){
+            cSQL.append(QString("acum_vent_agosto = acum_vent_agosto + %1").arg(total));
+        cSQL.append(QString(",unid_vent_agosto = unid_vent_agosto +%1").arg(cantidad));
+        }
+        if(fecha.month() == 9){
+            cSQL.append(QString("acum_vent_septiembre = acum_vent_septiembre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_septiembre = unid_vent_septiembre +%1").arg(cantidad));
+       }
+        if(fecha.month() == 10){
+            cSQL.append(QString("acum_vent_octubre = acum_vent_octubre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_octubre = unid_vent_octubre +%1").arg(cantidad));
+       }
+        if(fecha.month() == 11){
+            cSQL.append(QString("acum_vent_noviembre = acum_vent_noviembre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_noviembre = unid_vent_noviembre +%1").arg(cantidad));
+       }
+        if(fecha.month() == 12){
+            cSQL.append(QString("acum_vent_diciembre = acum_vent_diciembre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_diciembre = unid_vent_diciembre +%1").arg(cantidad));
+       }
+    } else
+    {
+        cSQL = QString("update acum_articulos set ");
+        if(fecha.month() == 1){
+             cSQL.append(QString("acum_vent_enero = acum_vent_enero - %1").arg(total));
+             cSQL.append(QString(",unid_vent_enero = unid_vent_enero - %1").arg(cantidad));
+        }
+        if(fecha.month() == 2){
+            cSQL.append(QString("acum_vent_febrero = acum_vent_febrero - %1").arg(total));
+            cSQL.append(QString(",unid_vent_febrero = unid_vent_febrero -%1").arg(cantidad));
+       }
+        if(fecha.month() == 3){
+            cSQL.append(QString("acum_vent_marzo = acum_vent_marzo - %1").arg(total));
+            cSQL.append(QString(",unid_vent_marzo = unid_vent_marzo - %1").arg(cantidad));
+       }
+        if(fecha.month() == 4){
+            cSQL.append(QString("acum_vent_abril = acum_vent_abril - %1").arg(total));
+            cSQL.append(QString(",unid_vent_abril = unid_vent_abril -%1").arg(cantidad));
+       }
+        if(fecha.month() == 5){
+            cSQL.append(QString("acum_vent_mayo = acum_vent_mayo - %1").arg(total));
+            cSQL.append(QString(",unid_vent_mayo = unid_vent_mayo -%1").arg(cantidad));
+       }
+        if(fecha.month() == 6){
+            cSQL.append(QString("acum_vent_junio = acum_vent_junio - %1").arg(total));
+            cSQL.append(QString(",unid_vent_junio = unid_vent_junio -%1").arg(cantidad));
+       }
+        if(fecha.month() == 7){
+            cSQL.append(QString("acum_vent_julio = acum_vent_julio - %1").arg(total));
+            cSQL.append(QString(",unid_vent_julio = unid_vent_julio - %1").arg(cantidad));
+       }
+        if(fecha.month() == 8){
+            cSQL.append(QString("acum_vent_agosto = acum_vent_agosto - %1").arg(total));
+        cSQL.append(QString(",unid_vent_agosto = unid_vent_agosto -%1").arg(cantidad));
+        }
+        if(fecha.month() == 9){
+            cSQL.append(QString("acum_vent_septiembre = acum_vent_septiembre . %1").arg(total));
+            cSQL.append(QString(",unid_vent_septiembre = unid_vent_septiembre -%1").arg(cantidad));
+       }
+        if(fecha.month() == 10){
+            cSQL.append(QString("acum_vent_octubre = acum_vent_octubre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_octubre = unid_vent_octubre - %1").arg(cantidad));
+       }
+        if(fecha.month() == 11){
+            cSQL.append(QString("acum_vent_noviembre = acum_vent_noviembre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_noviembre = unid_vent_noviembre - %1").arg(cantidad));
+       }
+        if(fecha.month() == 12){
+            cSQL.append(QString("acum_vent_diciembre = acum_vent_diciembre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_diciembre = unid_vent_diciembre - %1").arg(cantidad));
+       }
+    }
+    cSQL.append(QString(" where id_articulo = %1").arg(id_articulo));
+    QSqlQuery art_ac(Configuracion_global->empresaDB);
+
+    if(!art_ac.exec(cSQL)){
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art_ac.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    if (!success)
+        return false;
+    return true;
+
+
+
+
+}
+
+void Articulo::acumulado_compras(int id_articulo, float cantidad, QDate fecha)
+{
+
+}
+
+bool Articulo::acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion)
+{
+    //---------------------------------------
+    // DESCONTAR ACUMULADOS ARTICULO Y STOCK
+    //---------------------------------------
+    bool success = true;
+    QString cSQL;
+    QSqlQuery art(Configuracion_global->groupDB);
+    if(accion == "V"){
+        cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real +%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
+        cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen +%3,").arg(QString::number(cantidad,'f',2)));
+        cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas -%4,").arg(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
+        cSQL.append(QString("unidades_vendidas = unidades_vendidas -%5 where id= %6").arg(QString::number(cantidad,'f',2),
+                                                                                  QString::number(id_articulo)));
+    } else
+    {
+        cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real -%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
+        cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen +%3,").arg(QString::number(cantidad,'f',2)));
+        cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas -%4,").arg(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
+        cSQL.append(QString("unidades_vendidas = unidades_vendidas +%5 where id= %6").arg(QString::number(cantidad,'f',2),
+                                                                                  QString::number(id_articulo)));
+    }
+
+    if(!art.exec(cSQL)){
+       success = false;
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art.lastError().text()),
+                             tr("Aceptar"));
+    }
+
+    if(accion == "V"){
+        cSQL = QString("update acum_articulos set ");
+        if(fecha.month() == 1){
+             cSQL.append(QString("acum_vent_enero = acum_vent_enero - %1").arg(total));
+             cSQL.append(QString(",unid_vent_enero = unid_vent_enero -%1").arg(cantidad));
+        }
+        if(fecha.month() == 2){
+            cSQL.append(QString("acum_vent_febrero = acum_vent_febrero - %1").arg(total));
+            cSQL.append(QString(",unid_vent_febrero = unid_vent_febrero -%1").arg(cantidad));
+       }
+        if(fecha.month() == 3){
+            cSQL.append(QString("acum_vent_marzo = acum_vent_marzo - %1").arg(total));
+            cSQL.append(QString(",unid_vent_marzo = unid_vent_marzo -%1").arg(cantidad));
+       }
+        if(fecha.month() == 4){
+            cSQL.append(QString("acum_vent_abril = acum_vent_abril - %1").arg(total));
+            cSQL.append(QString(",unid_vent_abril = unid_vent_abril -%1").arg(cantidad));
+       }
+        if(fecha.month() == 5){
+            cSQL.append(QString("acum_vent_mayo = acum_vent_mayo - %1").arg(total));
+            cSQL.append(QString(",unid_vent_mayo = unid_vent_mayo -%1").arg(cantidad));
+       }
+        if(fecha.month() == 6){
+            cSQL.append(QString("acum_vent_junio = acum_vent_junio - %1").arg(total));
+            cSQL.append(QString(",unid_vent_junio = unid_vent_junio -%1").arg(cantidad));
+       }
+        if(fecha.month() == 7){
+            cSQL.append(QString("acum_vent_julio = acum_vent_julio - %1").arg(total));
+            cSQL.append(QString(",unid_vent_julio = unid_vent_julio -%1").arg(cantidad));
+       }
+        if(fecha.month() == 8){
+            cSQL.append(QString("acum_vent_agosto = acum_vent_agosto - %1").arg(total));
+        cSQL.append(QString(",unid_vent_agosto = unid_vent_agosto -%1").arg(cantidad));
+        }
+        if(fecha.month() == 9){
+            cSQL.append(QString("acum_vent_septiembre = acum_vent_septiembre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_septiembre = unid_vent_septiembre -%1").arg(cantidad));
+       }
+        if(fecha.month() == 10){
+            cSQL.append(QString("acum_vent_octubre = acum_vent_octubre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_octubre = unid_vent_octubre -%1").arg(cantidad));
+       }
+        if(fecha.month() == 11){
+            cSQL.append(QString("acum_vent_noviembre = acum_vent_noviembre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_noviembre = unid_vent_noviembre -%1").arg(cantidad));
+       }
+        if(fecha.month() == 12){
+            cSQL.append(QString("acum_vent_diciembre = acum_vent_diciembre - %1").arg(total));
+            cSQL.append(QString(",unid_vent_diciembre = unid_vent_diciembre -%1").arg(cantidad));
+       }
+    } else
+    {
+        cSQL = QString("update acum_articulos set ");
+        if(fecha.month() == 1){
+             cSQL.append(QString("acum_vent_enero = acum_vent_enero + %1").arg(total));
+             cSQL.append(QString(",unid_vent_enero = unid_vent_enero + %1").arg(cantidad));
+        }
+        if(fecha.month() == 2){
+            cSQL.append(QString("acum_vent_febrero = acum_vent_febrero + %1").arg(total));
+            cSQL.append(QString(",unid_vent_febrero = unid_vent_febrero +%1").arg(cantidad));
+       }
+        if(fecha.month() == 3){
+            cSQL.append(QString("acum_vent_marzo = acum_vent_marzo + %1").arg(total));
+            cSQL.append(QString(",unid_vent_marzo = unid_vent_marzo + %1").arg(cantidad));
+       }
+        if(fecha.month() == 4){
+            cSQL.append(QString("acum_vent_abril = acum_vent_abril + %1").arg(total));
+            cSQL.append(QString(",unid_vent_abril = unid_vent_abril +%1").arg(cantidad));
+       }
+        if(fecha.month() == 5){
+            cSQL.append(QString("acum_vent_mayo = acum_vent_mayo + %1").arg(total));
+            cSQL.append(QString(",unid_vent_mayo = unid_vent_mayo +%1").arg(cantidad));
+       }
+        if(fecha.month() == 6){
+            cSQL.append(QString("acum_vent_junio = acum_vent_junio + %1").arg(total));
+            cSQL.append(QString(",unid_vent_junio = unid_vent_junio +%1").arg(cantidad));
+       }
+        if(fecha.month() == 7){
+            cSQL.append(QString("acum_vent_julio = acum_vent_julio + %1").arg(total));
+            cSQL.append(QString(",unid_vent_julio = unid_vent_julio + %1").arg(cantidad));
+       }
+        if(fecha.month() == 8){
+            cSQL.append(QString("acum_vent_agosto = acum_vent_agosto + %1").arg(total));
+        cSQL.append(QString(",unid_vent_agosto = unid_vent_agosto +%1").arg(cantidad));
+        }
+        if(fecha.month() == 9){
+            cSQL.append(QString("acum_vent_septiembre = acum_vent_septiembre . %1").arg(total));
+            cSQL.append(QString(",unid_vent_septiembre = unid_vent_septiembre +%1").arg(cantidad));
+       }
+        if(fecha.month() == 10){
+            cSQL.append(QString("acum_vent_octubre = acum_vent_octubre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_octubre = unid_vent_octubre + %1").arg(cantidad));
+       }
+        if(fecha.month() == 11){
+            cSQL.append(QString("acum_vent_noviembre = acum_vent_noviembre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_noviembre = unid_vent_noviembre + %1").arg(cantidad));
+       }
+        if(fecha.month() == 12){
+            cSQL.append(QString("acum_vent_diciembre = acum_vent_diciembre + %1").arg(total));
+            cSQL.append(QString(",unid_vent_diciembre = unid_vent_diciembre + %1").arg(cantidad));
+       }
+    }
+    cSQL.append(QString(" where id_articulo = %1").arg(id_articulo));
+    QSqlQuery art_ac(Configuracion_global->empresaDB);
+
+    if(!art_ac.exec(cSQL)){
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art_ac.lastError().text()),
+                             tr("Aceptar"));
+        return false;
+    }
+    if (!success)
+        return false;
+    return true;
+
 }
 
 int Articulo::getidSeccion(QString seccion_)
@@ -996,7 +1478,7 @@ QString Articulo::getsubfamilia(int nid)
                              tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
     } else
       Query.next();
-    return Query.record().field("subfamilia").value().toString();
+    return Query.record().field("sub_familia").value().toString();
 
 }
 
@@ -1010,7 +1492,7 @@ QString Articulo::getcSubSubFamilia(int nid)
                              tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
     } else
       Query.next();
-    return Query.record().field("subsubfamilia").value().toString();
+    return Query.record().field("subsub_familia").value().toString();
 }
 
 QString Articulo::getcGrupo(int nid)
@@ -1023,7 +1505,7 @@ QString Articulo::getcGrupo(int nid)
                              tr("Ocurrió un error al localizar: %1").arg(Query.lastError().text()));
     } else
       Query.next();
-    return Query.record().field("grupoart").value().toString();
+    return Query.record().field("grupo_art").value().toString();
 }
 
 bool Articulo::agregar_proveedor_alternativo(int id_art, int id_proveedor, QString codigo, double pvd, QString descoferta, QString oferta,
@@ -1085,7 +1567,7 @@ bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
     }
     else
     {
-        this->id_proveedor = id_proveedor;
+        this->idProveedor = id_proveedor;
         return true;
     }
 }
@@ -1107,7 +1589,7 @@ bool Articulo::cambiar_pvp()
 //                qTarifa.next();
 
 //                QString cMoneda = Configuracion_global->Devolver_moneda(qTarifa.record().field("id_monedas").value().toInt());
-            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->coste,'f',Configuracion_global->decimales));
+            editTarifa.capturar_datos(tarifas.record().value("id").toInt(),QString::number(this->coste,'f',Configuracion_global->decimales),this->id);
 //            if (Configuracion_global->divisa_local != cMoneda)
 //                Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,editTarifa->cod_divisa);
 //            else
@@ -1376,31 +1858,6 @@ bool Articulo::agregarStock(char accion, int id, int cantidad, double importe,QD
     }
 
  return updated;
-
-}
-
-QString Articulo::auto_codigo()
-{
-    QString codigoIni;
-    int tamano_codigoIni;
-    codigoIni = this->seccion+this->familia+this->subfamilia+this->cSubSubFamilia+this->cGrupoArt;
-    tamano_codigoIni = codigoIni.length();
-    QSqlQuery queryArt("select codigo from articulos where codigo like '"+codigoIni+"%' order by codigo desc limit 1",
-                       Configuracion_global->groupDB);
-    if(queryArt.exec()){
-        queryArt.next();
-        QString lastcode = queryArt.record().value("codigo").toString();
-        int Realsize = lastcode.length();
-        QString code = lastcode.mid(tamano_codigoIni,(Realsize-tamano_codigoIni));
-        int icode = code.toInt();
-        icode++;
-        code = QString::number(icode);
-        while (code.length()< ( Realsize - tamano_codigoIni) )
-        {
-            code.prepend("0");
-        }
-        return codigoIni + code;
-    }
 
 }
 

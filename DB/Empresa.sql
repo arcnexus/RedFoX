@@ -1,4 +1,17 @@
 CREATE SCHEMA IF NOT EXISTS `@empresa@` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+CREATE TABLE `@empresa@`.`accesousuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_modulo` int(11) DEFAULT NULL,
+  `id_nivel_acceso` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `@empresa@`.`modulos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `module_zone` int(11) DEFAULT NULL,
+  `module_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@empresa@`.`acum_articulos` (
   `id_articulo` int(11) NOT NULL,
   `unid_comp_enero` int(11) NOT NULL DEFAULT '0',
@@ -297,6 +310,7 @@ CREATE TABLE `@empresa@`.`cab_fac` (
   `serie` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `factura` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_divisa` int(11) DEFAULT NULL,
+  `tarifa_cliente` INT NULL DEFAULT '1', 
   `fecha` date DEFAULT NULL,
   `fecha_cobro` date DEFAULT NULL,
   `id_cliente` int(11) NOT NULL DEFAULT '0',
@@ -756,6 +770,7 @@ CREATE TABLE `@empresa@`.`lin_alb` (
   `rec` double DEFAULT '0',
   `total` double DEFAULT '0',
   `promocion` tinyint(1) DEFAULT '0',
+  `id_lote` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_alb_pro` (
@@ -796,6 +811,7 @@ CREATE TABLE `@empresa@`.`lin_fac` (
   `rec` double DEFAULT '0',
   `total` double DEFAULT '0',
   `promocion` tinyint(1) DEFAULT '0',
+  `id_lote` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_fac_pro` (
@@ -837,6 +853,7 @@ CREATE TABLE `@empresa@`.`lin_ped` (
   `rec` double DEFAULT '0',
   `total` double DEFAULT '0',
   `cantidad_a_servir` float DEFAULT '0',
+  `id_lote` int(11) DEFAULT NULL,
   `promocion` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -880,6 +897,7 @@ CREATE TABLE `@empresa@`.`lin_pre` (
   `rec` double DEFAULT '0',
   `total` double DEFAULT '0',
   `promocion` tinyint(1) DEFAULT '0',
+  `id_lote` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_res` (
@@ -896,6 +914,7 @@ CREATE TABLE `@empresa@`.`lin_res` (
   `reservado_hasta` date DEFAULT NULL,
   `importe_dto` double DEFAULT '0',
   `promocion` tinyint(1) DEFAULT '0',
+  `id_lote` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_tpv` (
@@ -918,6 +937,7 @@ CREATE TABLE `@empresa@`.`lin_tpv` (
   `promocion` tinyint(1) DEFAULT '0',
   `dev_act` float NOT NULL DEFAULT '0',
   `devolucion` float NOT NULL DEFAULT '0',
+  `id_lote` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_Articulo` (`id_articulo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1202,4 +1222,4 @@ CREATE TABLE `@empresa@`.`vales` (
   `ejercicio` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-INSERT INTO `@empresa@`.`series` (`serie`) VALUES ('1');
+INSERT INTO `@empresa@`.`series` (`serie`) VALUES ('A');

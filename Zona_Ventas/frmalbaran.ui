@@ -243,7 +243,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtbase">
+          <widget class="QLineEdit" name="txtbase_total">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -285,7 +285,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txtiva">
+          <widget class="QLineEdit" name="txtiva_total">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -327,7 +327,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txttotal_recargo">
+          <widget class="QLineEdit" name="txtrec">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -363,7 +363,7 @@ color: rgb(0, 0, 0);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="txttotal">
+          <widget class="QLineEdit" name="txttotal_total">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -716,7 +716,7 @@ color: rgb(0, 0, 0);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -1114,7 +1114,7 @@ color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="12" column="0" colspan="2">
-              <widget class="QCheckBox" name="chklporc_rec">
+              <widget class="QCheckBox" name="chkrecargo_equivalencia">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1388,6 +1388,20 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLabel" name="label_52">
                <property name="text">
                 <string>Fecha Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="2">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>% IRPF:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="3">
+              <widget class="QDoubleSpinBox" name="spinporc_irpf">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -1726,7 +1740,7 @@ color: rgb(255, 255, 255);</string>
             </spacer>
            </item>
            <item row="1" column="0" colspan="3">
-            <widget class="QTableWidget" name="Lineas">
+            <widget class="QTableView" name="Lineas">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -1743,7 +1757,7 @@ color: rgb(255, 255, 255);</string>
               <enum>QAbstractItemView::SingleSelection</enum>
              </property>
              <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectItems</enum>
+              <enum>QAbstractItemView::SelectRows</enum>
              </property>
              <property name="gridStyle">
               <enum>Qt::DotLine</enum>
@@ -1751,73 +1765,6 @@ color: rgb(255, 255, 255);</string>
              <property name="cornerButtonEnabled">
               <bool>true</bool>
              </property>
-             <property name="columnCount">
-              <number>10</number>
-             </property>
-             <attribute name="horizontalHeaderCascadingSectionResizes">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>100</number>
-             </attribute>
-             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-             <attribute name="verticalHeaderCascadingSectionResizes">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderStretchLastSection">
-              <bool>false</bool>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Codigo</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Cantidad</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Descripcion</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>P.V.P</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>subtotal</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>DTO</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>DTO%</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>% I.V.A.</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Total</string>
-              </property>
-             </column>
-             <column/>
             </widget>
            </item>
           </layout>
@@ -1881,20 +1828,6 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="1" column="0">
             <layout class="QGridLayout" name="gridLayout">
-             <item row="6" column="5">
-              <widget class="QLabel" name="label_45">
-               <property name="styleSheet">
-                <string notr="true">background-color: #304163;
-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string>RE</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QLineEdit" name="txtbase1">
                <property name="enabled">
@@ -2156,12 +2089,6 @@ color: rgb(0, 64, 64);</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 64, 64);</string>
@@ -2222,78 +2149,8 @@ color: rgb(0, 64, 64);</string>
                  <height>27</height>
                 </size>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>45</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="text">
                 <string>0</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="5">
-              <widget class="QLineEdit" name="txttotal_recargo_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="3">
-              <widget class="QLineEdit" name="txttotal_iva_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 64, 64);</string>
-               </property>
-               <property name="text">
-                <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2346,12 +2203,6 @@ color: rgb(0, 64, 64);</string>
                 <size>
                  <width>0</width>
                  <height>27</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>45</width>
-                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -2550,12 +2401,6 @@ color: rgb(0, 64, 64);</string>
                  <height>27</height>
                 </size>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>45</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="text">
                 <string>0</string>
                </property>
@@ -2661,6 +2506,9 @@ color: rgb(255, 255, 255);</string>
                <property name="text">
                 <string>%R.E.</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item row="0" column="5">
@@ -2678,6 +2526,9 @@ color: rgb(255, 255, 255);</string>
                <property name="text">
                 <string>R.E.</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item row="0" column="6">
@@ -2694,6 +2545,9 @@ color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>TOTAL</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -2846,12 +2700,6 @@ color: rgb(255, 255, 255);</string>
                 <size>
                  <width>0</width>
                  <height>27</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>45</width>
-                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -3168,7 +3016,7 @@ color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="3">
+             <item row="6" column="2">
               <widget class="QLabel" name="label_44">
                <property name="styleSheet">
                 <string notr="true">background-color: #304163;
@@ -3179,6 +3027,112 @@ color: rgb(255, 255, 255);</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QLineEdit" name="txttotal_iva_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="4">
+              <widget class="QLabel" name="label_23">
+               <property name="styleSheet">
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>IRPF</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="4">
+              <widget class="QLineEdit" name="txtimporte_irpf">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="3">
+              <widget class="QLabel" name="label_45">
+               <property name="styleSheet">
+                <string notr="true">background-color: #304163;
+color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string>RE</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="3">
+              <widget class="QLineEdit" name="txtrec_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 64, 64);</string>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -3287,5 +3241,22 @@ background-color: #304163;</string>
  <resources>
   <include location="../maya.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>chkrecargo_equivalencia</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spinporc_irpf</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>520</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

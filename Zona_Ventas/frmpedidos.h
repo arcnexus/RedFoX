@@ -27,6 +27,7 @@ public:
     QString ModuleMenuPath(){return tr("");}
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+    void init_querys();
 signals:
 
 private slots:
@@ -46,13 +47,9 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-    void desglose1Changed(double base, double iva, double re, double total);
-    void desglose2Changed(double base, double iva, double re, double total);
-    void desglose3Changed(double base, double iva, double re, double total);
-    void desglose4Changed(double base, double iva, double re, double total);
-    void lineaReady(lineaDetalle*);
+
     void lineaDeleted(lineaDetalle*);
+    void refrescar_modelo();
 
     void convertir_ealbaran();
     void convertir_enFactura();
@@ -89,6 +86,12 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
     void on_table_row_changed(QModelIndex actual,QModelIndex previous);
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btnAnadirLinea_clicked();
+
+    void on_btn_borrarLinea_clicked();
+
 private:
     Ui::frmPedidos *ui;
 
@@ -112,12 +115,18 @@ private:
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *m;
+    QSqlQueryModel *iva;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
-
+    QSqlQueryModel *modelLineas;
+    void calcular_pedido();
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+    QString moneda;
+    QString texto;
+    QString orden;
+    QString modo;
 };
 
 #endif // FRMPEDidOS_H

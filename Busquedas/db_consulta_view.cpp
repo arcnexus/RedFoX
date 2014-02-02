@@ -61,7 +61,7 @@ void db_consulta_view::set_filtro(QString filtro)
     cSQLFiltered.append(filtro);
     cSQLFiltered.append("%'");
     if(ui->lbltabla->text() == "articulos")
-        cSQLFiltered.append(" and tarifa = "+QString::number(id_tarifa_cliente)+" ");
+        cSQLFiltered.append(" and tarifa = "+QString::number(this->id_tarifa_cliente)+" ");
     cSQLFiltered.append(" order by ");
     cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
     cSQLFiltered.append(" %1").arg(sentido);

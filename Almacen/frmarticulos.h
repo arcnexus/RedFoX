@@ -68,7 +68,6 @@ private slots:
     void editar_proveedor_clicked();
     void borrar_proveedor_clicked();
     void asignar_proveedor_principal_clicked();
-    void calcular_codigo();
     void trazabilidad2(int id);
     void TablaTrazabilidad_clicked(QModelIndex);
     void graficar(QString Tipo);
@@ -107,8 +106,6 @@ private slots:
 
     void on_btnExcepciones_clicked();
 
-    void on_btnKit_2_clicked();
-
     void on_btnAnadir_oferta_clicked();
 
     void on_btnguardar_oferta_clicked();
@@ -128,8 +125,6 @@ private slots:
 
     void on_btnAnadir_clicked();
 
-    void on_btnBorrarKit_clicked();
-
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
@@ -146,20 +141,6 @@ private slots:
     void on_btnActivarOferta_clicked();
 
     void on_btnBorrar_oferta_clicked();
-
-    void on_btnAnadir_volumen_clicked();
-
-    void on_txtPrecio_volumen_editingFinished();
-
-    void on_btnEditar_volumen_clicked();
-
-    void on_btnGuardar_volumen_clicked();
-
-    void on_tabla_volumenes_clicked(const QModelIndex &index);
-
-    void on_btnDeshacer_volumen_clicked();
-
-    void on_btnBorrar_volumen_clicked();
 
     void on_btnBorrarImagen_1_clicked();
 

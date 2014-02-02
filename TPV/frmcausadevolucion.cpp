@@ -7,9 +7,7 @@ frmCausaDevolucion::frmCausaDevolucion(QWidget *parent) :
     ui(new Ui::frmCausaDevolucion)
 {
     ui->setupUi(this);
-    QSqlQueryModel *users = new QSqlQueryModel(this);
-    users->setQuery("select nombre from usuarios",Configuracion_global->groupDB);
-    ui->cmbUsuario->setModel(users);
+    ui->cmbUsuario->setModel(Configuracion_global->usuarios_model);
     ui->dateDevolucion->setDateTime(QDateTime::currentDateTime());
 }
 

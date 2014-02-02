@@ -90,9 +90,7 @@ FrmTPV::FrmTPV(QWidget *parent) :
     QSqlQueryModel * model_cajas = new QSqlQueryModel(this);
     model_cajas->setQuery("select desc_caja from cajas",Configuracion_global->empresaDB);
     ui->cboCajas->setModel(model_cajas);
-    QSqlQueryModel * model_users = new QSqlQueryModel(this);
-    model_users->setQuery("select nombre from usuarios", Configuracion_global->groupDB);
-    ui->cboUsuarioAbertura->setModel(model_users);
+    ui->cboUsuarioAbertura->setModel(Configuracion_global->usuarios_model);
     ui->cboCajas_filtro->setModel(model_cajas);
     ui->txtFecha_fin_filtro->setDate(QDate::currentDate());
     ui->txtFecha_ini_filtro->setDate(QDate::currentDate());
@@ -175,7 +173,7 @@ void FrmTPV::cargar_ticket(int id)
     oTpv->fecha = tpv.value(id).value("fecha").toDate();
     ui->lblHora->setText(tpv.value(id).value("hora").toString());
     this->id = id;
-    QString usuario = SqlCalls::SelectOneField("usuarios","nombre",
+    QString usuario = SqlCalls::SelectOneField("mayaglobal`.`usuarios","nombre",
                                               QString("id=%1").arg(tpv.value(id).value("id_dependiente").toInt()),
                                               Configuracion_global->globalDB,error).toString();
     ui->lblDependiente->setText(usuario);
