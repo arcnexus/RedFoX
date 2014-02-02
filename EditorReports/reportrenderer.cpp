@@ -10,10 +10,10 @@ ReportRenderer::ReportRenderer(QObject *parent) :
 {
 }
 
-QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool& error)
+QDomDocument ReportRenderer::render(QPrinter* printer ,QDomDocument in ,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool& error ,bool isPrev)
 {
     QPainter p;//(printer);
-    m_doc = preRender(&p,in,queryClausules,params,error);
+    m_doc = preRender(&p,in,queryClausules,params,error,isPrev);
 
     for(int i=0;i<2;i++){        
     QDomNode root = m_doc.firstChild();
@@ -122,7 +122,7 @@ void ReportRenderer::Print(QPrinter *printer)
                         QDomElement element = elements.at(e).toElement();
                         drawElement(dpix, &painter, element, printResolution, dpiy);
                     }
-                    int siz = cSec.attribute("size").toDouble();
+                    int siz = cSec.attribute("size").replace(",",".").toDouble();
                     painter.translate(0,siz* dpiy);
                 }
                 else if(id == 2) // Detail Section
@@ -136,7 +136,7 @@ void ReportRenderer::Print(QPrinter *printer)
                             painter.save();
                             painter.setPen(Qt::NoPen);
                             painter.setBrush(ColorFromString(cPart.attribute("color")));
-                            painter.drawRect(0,0,width * dpix ,cPart.attribute("size").toDouble() * dpiy);
+                            painter.drawRect(0,0,width * dpix ,cPart.attribute("size").replace(",",".").toDouble() * dpiy);
                             painter.restore();
                         }
                         QDomNodeList elements = cPart.childNodes();
@@ -145,7 +145,7 @@ void ReportRenderer::Print(QPrinter *printer)
                             QDomElement element = elements.at(e).toElement();
                             drawElement(dpix, &painter, element, printResolution, dpiy);
                         }
-                        int siz = cPart.attribute("size").toDouble();
+                        int siz = cPart.attribute("size").replace(",",".").toDouble();
                         painter.translate(0,siz* dpiy);
                     }
                 }
@@ -153,7 +153,7 @@ void ReportRenderer::Print(QPrinter *printer)
                 {
                     if(s==sections.size()-1) //last section on page
                     {
-                        int siz = cSec.attribute("size").toDouble();
+                        int siz = cSec.attribute("size").replace(",",".").replace(",",".").toDouble();
                         painter.save();
                         painter.resetTransform();
                         painter.translate(margins.width(),margins.height());
@@ -170,8 +170,8 @@ void ReportRenderer::Print(QPrinter *printer)
                     }
                     else
                     {
-                        int siz = cSec.attribute("size").toDouble();
-                        int sizNext = sections.at(s+1).toElement().attribute("size").toDouble();
+                        int siz = cSec.attribute("size").replace(",",".").toDouble();
+                        int sizNext = sections.at(s+1).toElement().attribute("size").replace(",",".").toDouble();
                         painter.save();
                         painter.resetTransform();
                         painter.translate(margins.width(),margins.height());
@@ -262,11 +262,11 @@ void ReportRenderer::PreRender()
 {
     bool error;
     _params[":fecha"] = QDate::currentDate().toString("dd-MM-yyyy");
-    render( printer ,DocIn , queryClausules, _params, error);
+    render( printer ,DocIn , queryClausules, _params, error,_limit);
     emit end();
 }
 
-QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool &error)
+QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<QString,QString> queryClausules,QMap<QString,QString> params, bool &error,bool isPrev)
 {
     QDomElement Inroot = in.documentElement();
     if (Inroot.tagName() != "FoxReports") {
@@ -385,12 +385,12 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                 switch (t) {
                 case Section::ReportHeader:
                     haveRHeader = true;
-                    RHeaderSiz = secEle.attribute("size").toDouble();
+                    RHeaderSiz = secEle.attribute("size").replace(",",".").toDouble();
                     RHeaderElement = sections.cloneNode(true);
                     break;
                 case Section::PageHeader:
                     havePHeader = true;
-                    PHeaderSiz = secEle.attribute("size").toDouble();
+                    PHeaderSiz = secEle.attribute("size").replace(",",".").toDouble();
                     PHeaderOnAll = secEle.attribute("OnFistPage").toDouble();
                     PHeaderElement = sections.cloneNode(true);
                     break;
@@ -399,13 +399,13 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                     break;
                 case Section::PageFooter:
                     havePFooter = true;
-                    PFooterSiz = secEle.attribute("size").toDouble();
+                    PFooterSiz = secEle.attribute("size").replace(",",".").toDouble();
                     PFooterOnAll= secEle.attribute("OnFistPage").toDouble();
                     PFootElement = sections.cloneNode(true);
                     break;
                 case Section::ReportFooter:
                     haveRFooter = true;
-                    RFooterSiz = secEle.attribute("size").toDouble();
+                    RFooterSiz = secEle.attribute("size").replace(",",".").toDouble();
                     RFootElement = sections.cloneNode(true);
                     break;
                 }
@@ -422,7 +422,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     QList<QPair<QString,QString> > finalQuerys;
     QStringListIterator it(querys);
     while (it.hasNext()) {
-        QPair<QString,QString> aux = getSql(it.next(),queryClausules);
+        QPair<QString,QString> aux = getSql(it.next(),queryClausules,isPrev);
         if(!aux.first.isEmpty())
             finalQuerys.append(aux);
     }
@@ -482,7 +482,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         //init acums
 
 
-        QPair<QString,QString> gSql = getSql(ele.attribute("SqlGlobal"),queryClausules);
+        QPair<QString,QString> gSql = getSql(ele.attribute("SqlGlobal"),queryClausules,isPrev);
         QString first = gSql.first;
 
         QSqlDatabase db;
@@ -618,7 +618,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                                     double y = ele.attribute("y").toDouble();
                                                     double h = ele.attribute("h").toDouble();
                                                     double w = ele.attribute("w").toDouble();
-                                                    double siz = sectionPart.toElement().attribute("size").toDouble();
+                                                    double siz = sectionPart.toElement().attribute("size").replace(",",".").toDouble();
                                                     double diff = siz - h - y;
 
                                                     QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
@@ -689,7 +689,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                         double y = ele.attribute("y").toDouble();
                                         double h = ele.attribute("h").toDouble();
                                         double w = ele.attribute("w").toDouble();
-                                        double siz = sectionPart.toElement().attribute("size").toDouble();
+                                        double siz = sectionPart.toElement().attribute("size").replace(",",".").toDouble();
                                         double diff = siz - h - y;
 
                                         QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
@@ -885,14 +885,14 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         {
             haveHead = true;
             sectionHeader = child;
-            headSiz = child.toElement().attribute("size").toDouble();
+            headSiz = child.toElement().attribute("size").replace(",",".").toDouble();
             sec.appendChild(sectionHeader.cloneNode(true));
             pageUsable -= headSiz;
         }
         if(lastChild.toElement().tagName() == "Foot")
         {
             haveFoot = true;
-            footSiz = lastChild.toElement().attribute("size").toDouble();
+            footSiz = lastChild.toElement().attribute("size").replace(",",".").toDouble();
             sectionFoot = lastChild;
         }
 
@@ -915,9 +915,9 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
             {
                 if(parsedIt.hasNext())//no report Foot yet
                 {
-                    if(pageUsable > bEle.attribute("size").toDouble() + footSiz + PFooterSiz)
+                    if(pageUsable > bEle.attribute("size").replace(",",".").toDouble() + footSiz + PFooterSiz)
                     {
-                        pageUsable -= bEle.attribute("size").toDouble();
+                        pageUsable -= bEle.attribute("size").replace(",",".").toDouble();
                         sec.appendChild(body);
 
                         QDomNode child = body.firstChild();
@@ -963,7 +963,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             sec.appendChild(sectionHeader.cloneNode(true));
                             pageUsable -= headSiz;
                         }
-                        pageUsable -= bEle.attribute("size").toDouble();
+                        pageUsable -= bEle.attribute("size").replace(",",".").toDouble();
                         sec.appendChild(body);
 
                         QDomNode child = body.firstChild();
@@ -994,9 +994,9 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                 {
                     if(bodyIt.hasNext()) //No need report footer yet
                     {
-                        if(pageUsable > bEle.attribute("size").toDouble() + footSiz + PFooterSiz)
+                        if(pageUsable > bEle.attribute("size").replace(",",".").toDouble() + footSiz + PFooterSiz)
                         {
-                            pageUsable -= bEle.attribute("size").toDouble();
+                            pageUsable -= bEle.attribute("size").replace(",",".").toDouble();
                             sec.appendChild(body);
 
                             QDomNode child = body.firstChild();
@@ -1033,7 +1033,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 sec.appendChild(sectionHeader.cloneNode(true));
                                 pageUsable -= headSiz;
                             }
-                            pageUsable -= bEle.attribute("size").toDouble();
+                            pageUsable -= bEle.attribute("size").replace(",",".").toDouble();
                             sec.appendChild(body);
 
                             QDomNode child = body.firstChild();
@@ -1053,12 +1053,12 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                     }
                     else
                     {
-                        int needed = bEle.attribute("size").toDouble() + footSiz + RFooterSiz;
+                        int needed = bEle.attribute("size").replace(",",".").toDouble() + footSiz + RFooterSiz;
                         if(PFooterOnAll)
                             needed += PFooterSiz;
                         if(pageUsable > needed)
                         {
-                            pageUsable -= bEle.attribute("size").toDouble();
+                            pageUsable -= bEle.attribute("size").replace(",",".").toDouble();
                             sec.appendChild(body);
 
                             QDomNode child = body.firstChild();
@@ -1104,7 +1104,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 sec.appendChild(sectionHeader.cloneNode(true));
                                 pageUsable -= headSiz;
                             }
-                            pageUsable -= bEle.attribute("size").toDouble();
+                            pageUsable -= bEle.attribute("size").replace(",",".").toDouble();
                             sec.appendChild(body);
 
                             QDomNode child = body.firstChild();
@@ -1182,6 +1182,16 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
     root.setAttribute("pages",ipageCount);
     return doc;
 }
+bool ReportRenderer::limit() const
+{
+    return _limit;
+}
+
+void ReportRenderer::setLimit(bool limit)
+{
+    _limit = limit;
+}
+
 QMap<QString, QString> ReportRenderer::params() const
 {
     return _params;
@@ -1459,7 +1469,7 @@ void ReportRenderer::drawCodeBar(QDomElement e, QPainter *painter, double dpiX, 
     painter->restore();
 }
 
-QPair<QString,QString> ReportRenderer::getSql(QString s, QMap<QString, QString> queryClausules)
+QPair<QString,QString> ReportRenderer::getSql(QString s, QMap<QString, QString> queryClausules, bool prev)
 {
     QStringList l = s.split(".");
     if(l.size()==2)
@@ -1471,6 +1481,8 @@ QPair<QString,QString> ReportRenderer::getSql(QString s, QMap<QString, QString> 
         t << "SELECT * FROM " << second;
         if(!clausula.isEmpty())
             t << " WHERE " << clausula;
+        if(prev)
+            t << " limit 100";
         t<<";";
         QPair<QString,QString> p;
         p.first = s;
@@ -1485,7 +1497,7 @@ QPair<QString,QString> ReportRenderer::getSql(QString s, QMap<QString, QString> 
         {
             QStringList l2 = split.at(0).split(".");
             QString out = QString("%1.%2").arg(l2.at(0)).arg(l2.at(1));
-            return getSql(out , queryClausules);
+            return getSql(out , queryClausules,prev);
         }
     }
     return QPair<QString,QString>(QString(),QString());
@@ -1620,7 +1632,7 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
             child = child.nextSibling();
         }
         toRet.appendChild(rHeaderNode);
-        pageUsable -= rHeaderNode.toElement().attribute("size").toDouble();
+        pageUsable -= rHeaderNode.toElement().attribute("size").replace(",",".").toDouble();
     }
     if(pageHeader)
     {
@@ -1910,9 +1922,10 @@ QString ReportRenderer::applyFormato(QString in, int formato)
     *6 = 999.999.999,9999
     *7 = dd/mm/aa
     *8 = dd/mm/aaaa
+    * 9 = 0:1 -> Si:No
     */
         // TODO - TERMINAR FORMATO FECHA
-        if(formato == 0 || formato > 6 /*8 es el maximo ahora, si metes mas, aumenta esto*/)
+        if(formato == 0 || formato > 9 /*9 es el maximo ahora, si metes mas, aumenta esto*/)
             return in.trimmed();
 
         bool ok;
@@ -2017,6 +2030,12 @@ QString ReportRenderer::applyFormato(QString in, int formato)
     // //aux3 = fecha
     // return fecha_formateada;
     // }
+        else if(formato == 9)
+        {
+            QString out;
+            (in == "1") ? out = tr("Sí") : out = tr("No");
+            return out;
+        }
 }
 
 QString ReportRenderer::ColorString(QColor c)

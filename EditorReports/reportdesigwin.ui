@@ -40,6 +40,7 @@
      <string>Opciones</string>
     </property>
     <addaction name="actionVer_contorno_objetos"/>
+    <addaction name="actionLimitar_vista_previa"/>
    </widget>
    <addaction name="menuMenu"/>
    <addaction name="menuOpciones"/>
@@ -364,6 +365,17 @@
    </property>
    <property name="text">
     <string>Nuevo</string>
+   </property>
+  </action>
+  <action name="actionLimitar_vista_previa">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Limitar vista previa</string>
    </property>
   </action>
  </widget>

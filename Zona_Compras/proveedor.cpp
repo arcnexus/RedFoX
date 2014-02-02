@@ -6,6 +6,9 @@ Proveedor::Proveedor(QObject *parent) :
     QObject(parent)
 {
     this->id = 0;
+    id_pais = 1;
+    pais = "España";
+    id_divisa = 1;
 }
 
 void Proveedor::cargaracumulados(int id_proveedor)
@@ -140,11 +143,11 @@ void Proveedor::Anadir()
 {
     QString error;
     QHash<QString,QVariant> _data;
-    _data["codigo"] = "";
+    _data["codigo"] = Nuevocodigo_proveedor();
     int nid  = SqlCalls::SqlInsert(_data,"proveedores",Configuracion_global->groupDB,error);
     if(nid != -1)
     {
-        this->codigo = Nuevocodigo_proveedor();
+        this->codigo = _data.value("codigo").toString();
         this->cuenta_aplicacion = this->codigo;
         this->id = nid;
     }
@@ -404,7 +407,8 @@ void Proveedor::Vaciar()
     this->cp = "";
     this->poblacion = "";
     this->provincia = "";
-    this->pais = "";
+    this->pais = "España";
+    this->id_pais = 1;
     this->telefono1 = "";
     this->telefono2 = "";
     this->telefono3 = "";
@@ -443,8 +447,9 @@ void Proveedor::Vaciar()
     this->recargo_equivalencia = 0;
     this->texto_para_pedidos = "";
     this->entregado_a_cuenta = 0;
-    this->idFormadePago =0;
-    this->id_pais_almacen =0;
+    this->idFormadePago =1;
+    this->id_pais_almacen =1;
+    id_divisa = 1;
 }
 
 void Proveedor::Borrar(int nid)
@@ -513,30 +518,31 @@ void Proveedor::clear()
 }
 
 QString Proveedor::Nuevocodigo_proveedor()
-{
-    QString codigo;
-    QString cNum;
-    int nCodigo;
-    QSqlQuery qProveedores(Configuracion_global->groupDB);
+{   
+   QString codigo;
+   double nCodigo = 1;
+   QSqlQuery qProveedores(Configuracion_global->groupDB);
 
-    if(qProveedores.exec("select codigo from proveedores  order by codigo desc limit 1"))
-    {
-        if (qProveedores.next()) {
-            QSqlRecord registro = qProveedores.record();
-            codigo = registro.field("codigo").value().toString();
-            nCodigo = codigo.toInt();
-            nCodigo ++;
-            codigo = QString::number(nCodigo);
-        }
-    }
-   if (nCodigo == 0 || nCodigo == 1) {
-        cNum = "1";
-        while (cNum.length()< (Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_proveedores.length()) ) {
-            cNum.prepend("0");
-        }
-        codigo = Configuracion_global->cuenta_proveedores + cNum;
-    }
-   return codigo;
+   if(qProveedores.exec("select codigo from proveedores  order by codigo desc limit 1"))
+   {
+       if (qProveedores.next())
+       {
+           QSqlRecord registro = qProveedores.record();
+           codigo = registro.field("codigo").value().toString();
+           nCodigo = codigo.mid(Configuracion_global->cuenta_clientes.length()).toDouble();
+           nCodigo ++;
+           codigo = QString::number(nCodigo);
+       }
+  }
+
+   QString codigo_nuevo;
+   QString formato = QString("%1.0f").arg(Configuracion_global->digitos_cuentas_contables - Configuracion_global->cuenta_proveedores.length());
+   formato.prepend("%0");
+   std::string _x = formato.toStdString();
+   codigo_nuevo.sprintf(_x.c_str(),nCodigo);
+
+   codigo_nuevo.prepend(Configuracion_global->cuenta_proveedores);
+   return codigo_nuevo;
 }
 
 

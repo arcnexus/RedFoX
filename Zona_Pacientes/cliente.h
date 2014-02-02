@@ -120,7 +120,7 @@ public slots:
     // Funciones de clase
     void Recuperar(QString cSQL);
     void Recuperar(int id);
-    void cargar(QSqlQuery &query);
+    void cargar(QSqlRecord registro);
     void clear();
     void Guardar();
     void GuardarWeb();

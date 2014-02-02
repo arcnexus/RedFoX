@@ -259,6 +259,8 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
 
         QList<QGraphicsItem*>items =this->scene()->items(headerRect);
         QListIterator<QGraphicsItem*> it(items);
+
+        QList<QDomNode> _node_list;
         while (it.hasNext())
         {
             QGraphicsItem* c = it.next();
@@ -267,11 +269,31 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
             {
                 if(!usedItems.contains(cont))
                 {
-                    headerNode.appendChild(cont->xml(doc,marginPoint(),sectionPool));
+                    _node_list.append(cont->xml(doc,marginPoint(),sectionPool));
                     usedItems.append(cont);
                 }
             }
         }
+
+        QListIterator<QDomNode> _it(_node_list);
+        QList<QDomNode> _rect_list;
+        QList<QDomNode> _noRect_list;
+        while(_it.hasNext())
+        {
+            QDomNode n = _it.next();
+            if(n.toElement().attribute("id") == "RoundRect")
+                _rect_list.append(n);
+            else
+               _noRect_list.append(n);
+        }
+
+        for(auto i= 0; i< _rect_list.size();i++)
+            headerNode.appendChild(_rect_list.at(i));
+
+        for(auto i= 0; i< _noRect_list.size();i++)
+            headerNode.appendChild(_noRect_list.at(i));
+
+
         node.appendChild(headerNode);
     }
     QDomElement bodyNode = doc.createElement("Body");
@@ -279,6 +301,7 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
     QRectF bodyRect(mapToScene(QPointF(tl.x(),tl.y()+m_headerSize)),mapToScene(QPointF(br.x(),br.y()-m_footSize)));
     QList<QGraphicsItem*>items =this->scene()->items(bodyRect);
     QListIterator<QGraphicsItem*> it(items);
+    QList<QDomNode> _node_list;
     while (it.hasNext())
     {
         QGraphicsItem* c = it.next();
@@ -287,11 +310,30 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
         {
             if(!usedItems.contains(cont))
             {
-                bodyNode.appendChild(cont->xml(doc,mapToScene(QPointF(tl.x(),tl.y()+m_headerSize)),sectionPool));
+                _node_list.append(cont->xml(doc,mapToScene(QPointF(tl.x(),tl.y()+m_headerSize)),sectionPool));
                 usedItems.append(cont);
             }
         }
     }
+    QListIterator<QDomNode> _it(_node_list);
+    QList<QDomNode> _rect_list;
+    QList<QDomNode> _noRect_list;
+    while(_it.hasNext())
+    {
+        QDomNode n = _it.next();
+        if(n.toElement().attribute("id") == "RoundRect")
+            _rect_list.append(n);
+        else
+           _noRect_list.append(n);
+    }
+
+    for(auto i= 0; i< _rect_list.size();i++)
+        bodyNode.appendChild(_rect_list.at(i));
+
+    for(auto i= 0; i< _noRect_list.size();i++)
+        bodyNode.appendChild(_noRect_list.at(i));
+
+
     node.appendChild(bodyNode);
     if(m_foot)
     {
@@ -300,6 +342,8 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
         QRectF footRect(mapToScene(QPointF(tl.x(),br.y()-m_footSize+1)),mapToScene(QPointF(br)));
         QList<QGraphicsItem*>items =this->scene()->items(footRect);
         QListIterator<QGraphicsItem*> it(items);
+
+        QList<QDomNode> __node_list;
         while (it.hasNext())
         {
             QGraphicsItem* c = it.next();
@@ -308,11 +352,30 @@ QDomElement DetailSection::xml(QDomDocument doc, QList<Container *> &usedItems, 
             {
                 if(!usedItems.contains(cont))
                 {
-                    footNode.appendChild(cont->xml(doc,mapToScene(QPointF(tl.x(),br.y()-m_footSize)),sectionPool));
+                    __node_list.append(cont->xml(doc,mapToScene(QPointF(tl.x(),br.y()-m_footSize)),sectionPool));
                     usedItems.append(cont);
                 }
             }
         }
+        QListIterator<QDomNode> _it(__node_list);
+        QList<QDomNode> _rect_list;
+        QList<QDomNode> _noRect_list;
+        while(_it.hasNext())
+        {
+            QDomNode n = _it.next();
+            if(n.toElement().attribute("id") == "RoundRect")
+                _rect_list.append(n);
+            else
+               _noRect_list.append(n);
+        }
+
+        for(auto i= 0; i< _rect_list.size();i++)
+            footNode.appendChild(_rect_list.at(i));
+
+        for(auto i= 0; i< _noRect_list.size();i++)
+            footNode.appendChild(_noRect_list.at(i));
+
+
         node.appendChild(footNode);
     }
 

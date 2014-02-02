@@ -214,7 +214,8 @@ void frmEditLine::on_txtCodigo_editingFinished()
             QString error;
                this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1'").arg(ui->txtCodigo->text()),
                                                    Configuracion_global->groupDB,error).toInt();
-            if(!error.isEmpty()){
+            if(!error.isEmpty())
+            {
                 QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo recuperar el artículo: %1").arg(error),
                                      tr("Acceptar"));
                 vaciar_campos();
@@ -266,6 +267,7 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
             else
                 ui->txtCodigo->setText(i.value().value("codigo").toString());
         }
+        this->id_lote = 0;
         if (i.value().value("lotes").toBool())
         {
             frmSelectLotes frmlotes(this);
@@ -389,11 +391,13 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
     }
         //--------------------------
         // Control de Execpciones
-        //--------------------------
+    //--------------------------
     // TODO
-                   calcular();
+    calcular();
 
-    }
+    this->codigo_articulo = ui->txtCodigo->text();
+}
+
 
 
 void frmEditLine::vaciar_campos()
@@ -521,7 +525,11 @@ void frmEditLine::on_cboIva_currentIndexChanged(const QString &arg1)
 void frmEditLine::on_btnAceptar_clicked()
 {
     if(ui->txtDescripcion->text().isEmpty())
+    {
+        this->accept();
+        return;
         on_txtCodigo_editingFinished();
+    }
     QHash <QString, QVariant> lin;
     lin["cantidad"] = ui->txtCantidad->text().toFloat();
     lin["codigo"] = ui->txtCodigo->text();
@@ -609,7 +617,7 @@ void frmEditLine::on_btnAceptar_clicked()
                 // ----------------------------
                 // Lotes
                 //-----------------------------
-                if(this->id_lote>0);
+                if(this->id_lote>0)
                 {
                     QString idlote = QString::number(this->id_lote);
                     QSqlQuery lote(Configuracion_global->groupDB);
@@ -652,6 +660,8 @@ void frmEditLine::on_btnAceptar_clicked()
 
 void frmEditLine::on_btnAnadir_mas_nueva_clicked()
 {
+    if(ui->txtDescripcion->text().isEmpty())
+        return;
     QHash <QString, QVariant> lin;
     lin["cantidad"] = ui->txtCantidad->text().toFloat();
     lin["codigo"] = ui->txtCodigo->text();

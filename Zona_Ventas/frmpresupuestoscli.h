@@ -107,7 +107,7 @@ private:
 
     QAction menuButton;
     QPushButton* push;
-    QSqlQueryModel *m;
+    QSqlQueryModel *model_busqueda;
     QSqlQueryModel *modelLineas;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);

@@ -624,7 +624,7 @@ CREATE TABLE `@grupo@`.`proveedor_a_cuenta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`proveedores` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` int(11) DEFAULT '0',
+  `codigo` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `proveedor` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cif` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `direccion1` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,

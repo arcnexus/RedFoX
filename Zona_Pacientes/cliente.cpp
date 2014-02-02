@@ -284,41 +284,42 @@ void Cliente::anadirWeb()
 //    Configuracion_global->CerrarDbWeb();
 }
 
-void Cliente::Recuperar(QString cSQL) {
-    qryCliente = new QSqlQuery(Configuracion_global->groupDB);
-    qryCliente->prepare(cSQL);
-    if( !qryCliente->exec() ) {
-        QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
-    } else
-    {
-       cargar(*qryCliente);
-    }
-    delete qryCliente;
+void Cliente::Recuperar(QString cSQL)
+{
+    QSqlQuery qryCliente(Configuracion_global->groupDB);
 
+    qryCliente.prepare(cSQL);
+    if( !qryCliente.exec() ) {
+        QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente.lastError().text());
+    }
+    else if(qryCliente.next())
+    {
+       cargar(qryCliente.record());
+    }
+    else
+        QMessageBox::information(qApp->activeWindow(),tr("No existe cliente"),tr("No existe cliente que coincida con los parámetros de busqueda"));
 }
 
 
 void Cliente::Recuperar(int id)
 {
-    qryCliente = new QSqlQuery(Configuracion_global->groupDB);
-    qryCliente->prepare("select * from clientes where id ="+QString::number(id));
-    if( !qryCliente->exec() ) {
-        QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente->lastError().text());
-    } else
-    {
-       cargar(*qryCliente);
-    }
-    delete qryCliente;
+    QSqlQuery qryCliente(Configuracion_global->groupDB);
 
+    qryCliente.prepare("select * from clientes where id ="+QString::number(id));
+    if( !qryCliente.exec() ) {
+        QMessageBox::critical(qApp->activeWindow(), "error:", qryCliente.lastError().text());
+    }
+    else if(qryCliente.next())
+    {
+       cargar(qryCliente.record());
+    }
+    else
+        QMessageBox::information(qApp->activeWindow(),tr("No existe cliente"),tr("No existe cliente que coincida con los parámetros de busqueda"));
 }
 
 
-void Cliente::cargar(QSqlQuery &query)
+void Cliente::cargar(QSqlRecord registro)
 {
-
-   if(query.next())
-   {
-        QSqlRecord registro = query.record();
         this->id = registro.field("id").value().toInt();
         this->codigo_cliente= registro.field("codigo_cliente").value().toString();
         this->apellido1 = registro.field("apellido1").value().toString();
@@ -388,16 +389,8 @@ void Cliente::cargar(QSqlQuery &query)
         this->id_agente = registro.field("id_agente").value().toInt();
         this->id_transportista = registro.field("id_transportista").value().toInt();
         int irpf =registro.field("irpf").value().toInt();
-        this->grupo_iva = registro.field("grupo_iva").value().toInt();
-        if (irpf==1)
-            this->lIRPF = true;
-        else
-            this->lIRPF = false;
-
-   } else
-       QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
-                            tr("No hay ningún cliente con estos criterios de búsqueda"),
-                            tr("Aceptar"));
+        this->grupo_iva = registro.field("grupo_iva").value().toInt();        
+        this->lIRPF = irpf==1;
 }
 
 void Cliente::clear()

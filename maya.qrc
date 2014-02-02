@@ -203,4 +203,12 @@
         <file>DB/Paises.sql</file>
         <file>DB/Global.sql</file>
     </qresource>
+    <qresource prefix="/ODS">
+        <file>Auxiliares/QuaZIP/ODS/meta.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/mimetype</file>
+        <file>Auxiliares/QuaZIP/ODS/settings.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/styles.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/META-INF/manifest.xml</file>
+        <file>Auxiliares/QuaZIP/ODS/Thumbnails/thumbnail.png</file>
+    </qresource>
 </RCC>

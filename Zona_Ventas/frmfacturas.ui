@@ -773,6 +773,12 @@ Transportista</string>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="QLabel" name="lblnumfac">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Factura:</string>
                </property>
@@ -810,15 +816,9 @@ Transportista</string>
              </item>
              <item>
               <widget class="QLineEdit" name="txt_tarifa">
-               <property name="minimumSize">
-                <size>
-                 <width>69</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="maximumSize">
                 <size>
-                 <width>37</width>
+                 <width>150</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -826,6 +826,12 @@ Transportista</string>
              </item>
              <item>
               <widget class="QLabel" name="label_37">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Divisa</string>
                </property>
@@ -833,19 +839,6 @@ Transportista</string>
              </item>
              <item>
               <widget class="QComboBox" name="cboDivisa"/>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <widget class="QLabel" name="label">

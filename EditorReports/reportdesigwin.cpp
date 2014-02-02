@@ -164,6 +164,7 @@ void ReportDesigWin::on_actionVista_Previa_triggered()
 
     render->setPrinter(printer);
     render->setDocIn(doc);
+    render->setLimit(ui->actionLimitar_vista_previa->isChecked());
 
     QtConcurrent::run(render, &ReportRenderer::PreRender);
     connect(render,SIGNAL(end()),pDlg,SLOT(deleteLater()));

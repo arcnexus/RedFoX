@@ -377,7 +377,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="label_5">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -390,7 +390,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="4" column="0">
             <widget class="QLabel" name="label_64">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -403,20 +403,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Población:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
+           <item row="6" column="0">
             <widget class="QLabel" name="label_13">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -429,7 +416,7 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="0">
+           <item row="7" column="0">
             <widget class="QLabel" name="label_8">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -442,7 +429,7 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="1" colspan="2">
+           <item row="7" column="1" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
               <number>6</number>
@@ -458,7 +445,7 @@
              </item>
             </layout>
            </item>
-           <item row="7" column="0">
+           <item row="8" column="0">
             <widget class="QLabel" name="label_9">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -471,7 +458,7 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
+           <item row="9" column="0">
             <widget class="QLabel" name="label_15">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -484,7 +471,10 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="0">
+           <item row="4" column="1" colspan="2">
+            <widget class="QLineEdit" name="txtdireccion2"/>
+           </item>
+           <item row="10" column="0">
             <widget class="QLabel" name="label_11">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -497,7 +487,7 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="2">
+           <item row="11" column="2">
             <spacer name="verticalSpacer_4">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -510,37 +500,10 @@
              </property>
             </spacer>
            </item>
-           <item row="2" column="1" colspan="2">
+           <item row="3" column="1" colspan="2">
             <widget class="QLineEdit" name="txtdireccion1"/>
            </item>
-           <item row="3" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtdireccion2"/>
-           </item>
-           <item row="4" column="1" colspan="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QLineEdit" name="txtcp">
-               <property name="maximumSize">
-                <size>
-                 <width>80</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtpoblacion">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="5" column="1" colspan="2">
+           <item row="6" column="1" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="QLineEdit" name="txtprovincia">
@@ -563,11 +526,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="txtpais"/>
+              <widget class="QComboBox" name="cboPais"/>
              </item>
             </layout>
            </item>
-           <item row="7" column="1" colspan="2">
+           <item row="8" column="1" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
               <widget class="QLineEdit" name="txtmovil">
@@ -600,10 +563,10 @@
              </item>
             </layout>
            </item>
-           <item row="8" column="1" colspan="2">
+           <item row="9" column="1" colspan="2">
             <widget class="QLineEdit" name="txtfax"/>
            </item>
-           <item row="9" column="1" colspan="2">
+           <item row="10" column="1" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
               <widget class="QLineEdit" name="txtweb"/>
@@ -622,6 +585,43 @@
                <property name="icon">
                 <iconset resource="../maya.qrc">
                  <normaloff>:/Icons/PNG/internet.png</normaloff>:/Icons/PNG/internet.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Población:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLineEdit" name="txtcp">
+               <property name="maximumSize">
+                <size>
+                 <width>80</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtpoblacion">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -2125,33 +2125,33 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>btnAnadir</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnBuscar</tabstop>
+  <tabstop>btnEditar</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btnDeshacer</tabstop>
+  <tabstop>btnBorrar</tabstop>
+  <tabstop>tabWidget</tabstop>
   <tabstop>txtcodigo</tabstop>
   <tabstop>txtproveedor</tabstop>
-  <tabstop>txtcif</tabstop>
   <tabstop>txtfecha_alta</tabstop>
-  <tabstop>txtdireccion1</tabstop>
-  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcif</tabstop>
   <tabstop>txtcp</tabstop>
   <tabstop>txtpoblacion</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
   <tabstop>txtprovincia</tabstop>
+  <tabstop>cboPais</tabstop>
   <tabstop>txttelefono1</tabstop>
+  <tabstop>txttelefono2</tabstop>
+  <tabstop>txttelefono3</tabstop>
   <tabstop>txtmovil</tabstop>
+  <tabstop>txtemail</tabstop>
   <tabstop>txtfax</tabstop>
   <tabstop>txtweb</tabstop>
-  <tabstop>txtNombre</tabstop>
-  <tabstop>txtCargo</tabstop>
-  <tabstop>txtDescripcionT1</tabstop>
-  <tabstop>txtTelefono1</tabstop>
-  <tabstop>txtDescripcionT2</tabstop>
-  <tabstop>txtTelefono2</tabstop>
-  <tabstop>txtDescripcionT3</tabstop>
-  <tabstop>txtTelefono3</tabstop>
-  <tabstop>txtDescripcionM1</tabstop>
-  <tabstop>txtMovil1</tabstop>
-  <tabstop>txtDescripcionM2</tabstop>
-  <tabstop>txtMovil2</tabstop>
-  <tabstop>txtemail_contacto</tabstop>
-  <tabstop>btnAnadir_persona_contacto</tabstop>
+  <tabstop>btnAbrirWeb</tabstop>
   <tabstop>txtdia_cobro</tabstop>
   <tabstop>txtdto</tabstop>
   <tabstop>txtdeuda_actual</tabstop>
@@ -2175,20 +2175,58 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>tablacolumnasFacturas</tabstop>
   <tabstop>tablaColumnasAlbaran</tabstop>
   <tabstop>tablaColumnasPedidos</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>txtDescripcionT2</tabstop>
   <tabstop>txtcodigoFormaPago</tabstop>
   <tabstop>txtforma_pago</tabstop>
-  <tabstop>btnAnadir</tabstop>
-  <tabstop>btnSiguiente</tabstop>
-  <tabstop>btnAnterior</tabstop>
-  <tabstop>btnBuscar</tabstop>
-  <tabstop>btnEditar</tabstop>
-  <tabstop>btnGuardar</tabstop>
-  <tabstop>btnDeshacer</tabstop>
-  <tabstop>btnBorrar</tabstop>
+  <tabstop>txtDescripcionT3</tabstop>
+  <tabstop>txtMovil1</tabstop>
+  <tabstop>txtemail_contacto</tabstop>
+  <tabstop>txtMovil2</tabstop>
+  <tabstop>txtDescripcionT1</tabstop>
+  <tabstop>txtTelefono1</tabstop>
+  <tabstop>txtNombre</tabstop>
+  <tabstop>txtCargo</tabstop>
   <tabstop>tablaContactos</tabstop>
   <tabstop>tabla_entregas</tabstop>
   <tabstop>btnGuardarContacto</tabstop>
+  <tabstop>txtTelefono3</tabstop>
+  <tabstop>txtDescripcionM1</tabstop>
+  <tabstop>txtTelefono2</tabstop>
+  <tabstop>txtDescripcionM2</tabstop>
+  <tabstop>btnAnadir_persona_contacto</tabstop>
+  <tabstop>txtentidad_bancaria_proveedor</tabstop>
+  <tabstop>txtentidad_pago_proveedor</tabstop>
+  <tabstop>txtoficina_pago_proveedor</tabstop>
+  <tabstop>radUE</tabstop>
+  <tabstop>radGeneral</tabstop>
+  <tabstop>radExcento</tabstop>
+  <tabstop>radExportacion</tabstop>
+  <tabstop>txtdc_pago_proveedor</tabstop>
+  <tabstop>txtcuentaPagoProveedor</tabstop>
+  <tabstop>txtoficina_bancaria_proveedor</tabstop>
+  <tabstop>txtdc_proveedor</tabstop>
+  <tabstop>txtcc_proveedor</tabstop>
+  <tabstop>cboDivisas</tabstop>
+  <tabstop>txtcp_almacen</tabstop>
+  <tabstop>txtpaisAlmacen</tabstop>
+  <tabstop>tablaArticulos</tabstop>
+  <tabstop>txttexto_para_pedidos</tabstop>
+  <tabstop>txtFebrero</tabstop>
+  <tabstop>txtAgosto</tabstop>
+  <tabstop>txtfecha_ultima_compra</tabstop>
+  <tabstop>txtNoviembre</tabstop>
+  <tabstop>txtMayo</tabstop>
+  <tabstop>txtJunio</tabstop>
+  <tabstop>txtOctubre</tabstop>
+  <tabstop>txtEnero</tabstop>
+  <tabstop>txtMarzo</tabstop>
+  <tabstop>txtAbril</tabstop>
+  <tabstop>txtDiciembre</tabstop>
+  <tabstop>txtSeptiembre</tabstop>
+  <tabstop>txtimporte_acumulado_compras</tabstop>
+  <tabstop>txtjulio</tabstop>
+  <tabstop>pestanaHistAlbaranes</tabstop>
+  <tabstop>tabla</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

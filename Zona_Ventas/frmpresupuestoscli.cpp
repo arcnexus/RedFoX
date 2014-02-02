@@ -25,28 +25,26 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 
 {
     ui->setupUi(this);
-
-    ui->cbo_Pais->setModel(Configuracion_global->paises_model);
-    ui->cbo_Pais->setCurrentIndex(-1);
-    ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
-    ui->cboPais_entrega->setCurrentIndex(-1);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de presupuestos a clientes"));
+    ui->stackedWidget->setCurrentIndex(1);
 
-    //------------------------
-    // cargar datos FormaPago
-    //------------------------
-    QSqlQueryModel *fp = new QSqlQueryModel(this);
-    fp->setQuery("select forma_pago from formpago",Configuracion_global->groupDB);
-    ui->cboFormaPago->setModel(fp);
-    ui->cboFormaPago->setCurrentIndex(-1);
+    ui->cbo_Pais->setModel(Configuracion_global->paises_model);
+    ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
+    ui->cboFormaPago->setModel(Configuracion_global->formapago_model);
+    ui->cboDivisa->setModel(Configuracion_global->divisas_model);
 
+
+    model_busqueda = new QSqlQueryModel(this);
+    model_busqueda->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
+                Configuracion_global->empresaDB);
+    ui->tabla->setModel(model_busqueda);
 
     //------------------------
     // Objetos necesarios
     //------------------------
-    oPres = new Presupuesto();
-    oClientePres = new Cliente();
+    oPres = new Presupuesto(this);
+    oClientePres = new Cliente(this);
 
     //helper.set_Tipo(false);
     //helper.help_table(ui->tableWidget);
@@ -112,26 +110,14 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->btnBuscar->setEnabled(true);
     ui->btnImprimir->setEnabled(false);
 
-    //-----------------------
-    // cargo divisas
-    //-----------------------
-    QSqlQueryModel *modelDivisas = new QSqlQueryModel(this);
-    modelDivisas->setQuery("select moneda from monedas order by moneda", Configuracion_global->groupDB);
-    ui->cboDivisa->setModel(modelDivisas);
+
+
 
     //-----------------------
     // tabla
     //-----------------------
-    m = new QSqlQueryModel(this);
-    m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc",
-                Configuracion_global->empresaDB);
-    ui->tabla->setModel(m);
-    formato_tabla();
 
-       //----------------------
-    // Busqueda
-    //----------------------
-    ui->stackedWidget->setCurrentIndex(1);
+    formato_tabla();
 
     //---------------------
     // Eventos
@@ -1718,7 +1704,7 @@ void FrmPresupuestosCli::formato_tabla()
     for(int i = 0; i < headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
-        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        model_busqueda->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
 }
 
@@ -1738,7 +1724,7 @@ void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo
     else
         modo = "Desc";
 
-    m->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+order+
+    model_busqueda->setQuery("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre where "+order+
                 " like '%"+texto+"%' order by "+order+" "+modo, Configuracion_global->empresaDB);
     if(ui->stackedWidget->currentIndex() == 0)
         ui->stackedWidget->setCurrentIndex(1);
