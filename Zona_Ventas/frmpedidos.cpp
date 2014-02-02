@@ -43,8 +43,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     // Modelo y formato tabla lineas
     //-------------------------------
     modelLineas = new QSqlQueryModel(this);
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio_recom,porc_dto,precio ,subtotal,porc_iva,total "
-                          "from lin_ped where id = 0;",Configuracion_global->empresaDB);
+
+//    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+//                          "from lin_ped where id = 0;",Configuracion_global->empresaDB);
+
     ui->Lineas->setModel(modelLineas);
     QStringList header;
     QVariantList sizes;
