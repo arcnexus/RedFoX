@@ -521,26 +521,30 @@ QString Factura::NuevoNumeroFactura(QString serie) {
     QSqlQuery cab_fac(Configuracion_global->empresaDB);
     QString cNum;
     QString cNumFac;
-    int inum;
+    double inum = 0;
 
     cab_fac.prepare("Select factura from cab_fac  where factura <> '"+QObject::tr("BORRADOR")+
                     "' and serie ='"+serie+"' order by factura desc limit 1");
-    if(cab_fac.exec()) {
+    if(cab_fac.exec())
+    {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();
-        cNum = cNumFac.right(Configuracion_global->ndigitos_factura);
-
-        inum = cNum.toInt();
-        inum++;
-        cNum = cNum.number(inum);
-        while (cNum.length()< Configuracion_global->ndigitos_factura) {
-            cNum.prepend("0");
-        }
-    } else {
+        inum = cNumFac.toDouble();
+    }
+    else
+    {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
     }
-    cNumFac = cNum;
-    return cNumFac;
+    inum++;
+
+    QString codigo_nuevo;
+    QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);
+    formato.prepend("%0");
+    std::string _x = formato.toStdString();
+
+    codigo_nuevo.sprintf(_x.c_str(),inum);
+
+    return codigo_nuevo;
 }
 
 bool Factura::BorrarLineasFactura(int id_lin)

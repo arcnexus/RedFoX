@@ -18,7 +18,7 @@ class ReportRenderer : public QObject
     Q_OBJECT
 public:
     explicit ReportRenderer(QObject *parent = 0);
-    QDomDocument render(QPrinter* printer , QDomDocument in , QMap<QString,QString> queryClausules, QMap<QString, QString> params, bool& error);
+    QDomDocument render(QPrinter* printer , QDomDocument in , QMap<QString,QString> queryClausules, QMap<QString, QString> params, bool& error , bool isPrev=false);
     QPrinter *getPrinter() const;
     void setPrinter(QPrinter *value);
 
@@ -32,6 +32,9 @@ public:
     void setParams(const QMap<QString, QString> &params);
 
     void drawElement(qreal dpix, QPainter *painter, QDomElement element, int printResolution, qreal dpiy);
+    bool limit() const;
+    void setLimit(bool limit);
+
 signals:
     void end();
 public slots:
@@ -40,15 +43,17 @@ public slots:
 private:
     QPrinter* printer;
     QPrintPreviewDialog* dlg;
-    QPair<QString, QString> getSql(QString,QMap<QString,QString> queryClausules);
+    QPair<QString, QString> getSql(QString, QMap<QString,QString> queryClausules, bool prev = false);
     QString getRelationField(QString s , QSqlRecord r);
     QDomNode startPage(double pageUsable, int RFooterSiz, int RHSiz, int RFootSiz, QDomDocument doc , bool pageHeader , QDomNode pHeaderNode, QMap<QString,QSqlRecord> selects, bool reporHeader = false, QDomNode rHeaderNode = QDomNode());
     void parseFooters(QDomNode RFooter , bool haveRfooter , QDomNode PFooter , bool havePFooter ,QMap<QString,QSqlRecord> selects );
-    QDomDocument preRender(QPainter *painter, QDomDocument in , QMap<QString,QString> queryClausules, QMap<QString, QString> params, bool& error);
+    QDomDocument preRender(QPainter *painter, QDomDocument in , QMap<QString,QString> queryClausules, QMap<QString, QString> params, bool& error, bool isPrev = false);
     QDomDocument m_doc;
     QDomDocument DocIn;
     QMap<QString,QString> queryClausules;
     QMap<QString,QString> _params;
+
+    bool _limit;
 
     void drawRect(QDomElement e , QPainter * painter , double dpiX , double dpiY, int printResolution);
     void drawLabel(QDomElement e , QPainter * painter , double dpiX , double dpiY);

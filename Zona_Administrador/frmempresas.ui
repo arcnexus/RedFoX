@@ -662,7 +662,7 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLineEdit" name="txtndigitos_factura">
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>50</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2447,7 +2447,7 @@ color: rgb(255, 255, 255);</string>
               <widget class="QLineEdit" name="txtndigitos_factura_3">
                <property name="maximumSize">
                 <size>
-                 <width>30</width>
+                 <width>50</width>
                  <height>16777215</height>
                 </size>
                </property>

@@ -1124,6 +1124,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
     if(!ui->TablaTarifas->currentIndex().isValid())
         return;
     int id_t = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),0),Qt::DisplayRole).toInt();
+
     FrmTarifas editTarifa(this);
     editTarifa.capturar_datos(id_t,ui->txtCoste_real->text(),oArticulo->id);
 
@@ -1139,7 +1140,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
             QMessageBox::warning(this,tr("ATENCIÓN"),
                                  tr("Ocurrió un error al actualizar BD: %1").arg(error),
                                  tr("Aceptar"));
-        if(id_t == 1) //Es tarifa pvp
+        if(ui->TablaTarifas->currentIndex().row() == 0) //Es tarifa pvp
         {
             QHash<QString,QVariant> _dat;
             _dat["pvp"] = editTarifa.pvpDivisa;
