@@ -597,9 +597,13 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/Cryp
 
 unix:!macx: LIBS += -lcryptopp
 
-unix|win32: LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazip
+unix: LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazip
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazipd
 
 INCLUDEPATH += $$PWD/Auxiliares/QuaZIP
 DEPENDPATH += $$PWD/Auxiliares/QuaZIP
 
 !win32: LIBS += -lz
+
+DEFINES += NOMINMAX
