@@ -51,7 +51,7 @@ private slots:
     void lineaDeleted(lineaDetalle*);
     void refrescar_modelo();
 
-    void convertir_ealbaran();
+    void convertir_en_albaran();
     void convertir_enFactura();
     void on_tabWidget_2_currentChanged(int index);
 
