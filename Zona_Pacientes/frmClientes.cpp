@@ -38,8 +38,7 @@ void frmClientes::init_querys()
 void frmClientes::init()
 {
     oCliente = new Cliente(this);
-
-    //ALLOCS MODELS
+     //ALLOCS MODELS
     m_clientes          = new QSqlQueryModel(this);
     qModelTipos         = new QSqlQueryModel(this);
     deudas              = new QSqlQueryModel(this);
@@ -54,6 +53,7 @@ void frmClientes::init()
     queryTransportistas = new QSqlQueryModel(this);
     queryAgentes        = new QSqlQueryModel(this);
     qTarifa             = new QSqlQueryModel(this);
+    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     qmidiomas           = new QSqlQueryModel(this);
     modelHistorial      = new QSqlQueryModel(this);
 
@@ -71,6 +71,12 @@ void frmClientes::init()
     calle_completer->setCompletionColumn(2);
     ui->txtdireccion1->setCompleter(calle_completer);
     ui->txtdireccion2->setCompleter(calle_completer);
+    queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
+    queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
+    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
+    qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
+
+
 
     //DELEGATES
     ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
@@ -140,6 +146,7 @@ void frmClientes::init()
     ui->cboPais         ->setModelColumn(1);
     ui->cbopaisAlternativa->setModelColumn(1);
     ui->cbotarifa_cliente ->setModelColumn(1);
+    ui->cboidiomaDocumentos->setModelColumn(1);
     ui->cboagente->setModelColumn(1);
     ui->lista_direccionesAlternativas->setModelColumn(1);
 
