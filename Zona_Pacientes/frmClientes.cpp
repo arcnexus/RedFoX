@@ -33,6 +33,38 @@ void frmClientes::init_querys()
     qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
     pob_completer_model->setTable("municipios");
+
+    //SET MODELS
+    ui->tablaFacturas                ->setModel(Facturas);
+    ui->tablaPresupuestos            ->setModel(Presupuestos);
+    ui->tablaVales                   ->setModel(Vales);
+    ui->tablaTickets                 ->setModel(Tickets);
+    ui->lista_direccionesAlternativas->setModel(qModeldireccion);
+    ui->tablaAsientos                ->setModel(modelAsientos);
+    ui->TablaAlbaranes               ->setModel(Albaranes);
+    ui->TablaDeudas                  ->setModel(deudas);
+    ui->lista_tipos                  ->setModel(qModelTipos);
+    ui->tabla_busquedas              ->setModel(m_clientes);
+    ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
+    ui->cbotransportista             ->setModel(queryTransportistas);
+    ui->cboagente                    ->setModel(queryAgentes);
+    ui->cboDivisa                    ->setModel(Configuracion_global->divisas_model);
+    ui->cbotarifa_cliente            ->setModel(qTarifa);
+    ui->cboPais                      ->setModel(Configuracion_global->paises_model);
+    ui->cbopaisAlternativa           ->setModel(Configuracion_global->paises_model);
+    ui->cboidiomaDocumentos          ->setModel(qmidiomas);
+    ui->tablahistorial_deudas        ->setModel(modelHistorial);
+    ui->tablaPedidos                 ->setModel(Pedidos);
+
+    //CONFIG COMBOS
+    ui->cbotransportista->setModelColumn(1);
+    ui->cboforma_pago   ->setModelColumn(2);
+    ui->cboDivisa       ->setModelColumn(1);
+    ui->cboPais         ->setModelColumn(1);
+    ui->cbopaisAlternativa->setModelColumn(1);
+    ui->cbotarifa_cliente ->setModelColumn(1);
+    ui->cboagente->setModelColumn(1);
+    ui->lista_direccionesAlternativas->setModelColumn(1);
 }
 
 void frmClientes::init()
@@ -111,37 +143,7 @@ void frmClientes::init()
     ui->tablahistorial_deudas->setItemDelegateForColumn(16, new MonetaryDelegate(this));
     ui->tablahistorial_deudas->setItemDelegateForColumn(17, new MonetaryDelegate(this));
 
-    //SET MODELS
-    ui->tablaFacturas                ->setModel(Facturas);
-    ui->tablaPresupuestos            ->setModel(Presupuestos);
-    ui->tablaVales                   ->setModel(Vales);
-    ui->tablaTickets                 ->setModel(Tickets);
-    ui->lista_direccionesAlternativas->setModel(qModeldireccion);
-    ui->tablaAsientos                ->setModel(modelAsientos);
-    ui->TablaAlbaranes               ->setModel(Albaranes);
-    ui->TablaDeudas                  ->setModel(deudas);
-    ui->lista_tipos                  ->setModel(qModelTipos);
-    ui->tabla_busquedas              ->setModel(m_clientes);
-    ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
-    ui->cbotransportista             ->setModel(queryTransportistas);
-    ui->cboagente                    ->setModel(queryAgentes);
-    ui->cboDivisa                    ->setModel(Configuracion_global->divisas_model);
-    ui->cbotarifa_cliente            ->setModel(qTarifa);
-    ui->cboPais                      ->setModel(Configuracion_global->paises_model);
-    ui->cbopaisAlternativa           ->setModel(Configuracion_global->paises_model);
-    ui->cboidiomaDocumentos          ->setModel(qmidiomas);
-    ui->tablahistorial_deudas        ->setModel(modelHistorial);
-    ui->tablaPedidos                 ->setModel(Pedidos);
 
-    //CONFIG COMBOS
-    ui->cbotransportista->setModelColumn(1);
-    ui->cboforma_pago   ->setModelColumn(2);
-    ui->cboDivisa       ->setModelColumn(1);
-    ui->cboPais         ->setModelColumn(1);
-    ui->cbopaisAlternativa->setModelColumn(1);
-    ui->cbotarifa_cliente ->setModelColumn(1);
-    ui->cboagente->setModelColumn(1);
-    ui->lista_direccionesAlternativas->setModelColumn(1);
 
     //SEARCH HASH
     h_Buscar["Población"]="poblacion";
