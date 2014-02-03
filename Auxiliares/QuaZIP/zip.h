@@ -45,13 +45,18 @@
 
 #ifndef _zip12_H
 #define _zip12_H
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 //#define HAVE_BZIP2
-
+#ifdef Q_WS_WIN
+#ifndef _ZLIB_H
+#include "C:\zlib\zlib-1.2.8/zlib.h"
+#endif
+#else
 #ifndef _ZLIB_H
 #include "zlib.h"
 #endif

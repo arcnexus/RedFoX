@@ -12,8 +12,8 @@
 
 #include "Auxiliares/SMPT/SmtpMime"
 
-#include <quazip.h>
-#include <quazipfile.h>
+#include "Auxiliares/QuaZIP/quazip.h"
+#include "Auxiliares/QuaZIP/quazipfile.h"
 
 byte Configuracion::key[ CryptoPP::AES::DEFAULT_KEYLENGTH ];
 byte Configuracion::iv[ CryptoPP::AES::BLOCKSIZE ];
