@@ -302,6 +302,7 @@ CREATE TABLE `@empresa@`.`cab_alb` (
   `id_transportista` int(11) DEFAULT '0',
   `ejercicio` int(5) DEFAULT NULL,
   `editable` tinyint(1) DEFAULT '1',
+  `id_agente` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_fac` (
@@ -406,6 +407,7 @@ CREATE TABLE `@empresa@`.`cab_fac` (
   `internet` double NOT NULL DEFAULT '0',
   `pagado` double NOT NULL DEFAULT '0',
   `pendiente` double NOT NULL DEFAULT '0',
+  `id_agente` int(11) DEFAULT '0',
   PRIMARY KEY (`id`,`id_cliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_pre` (
@@ -497,6 +499,7 @@ CREATE TABLE `@empresa@`.`cab_pre` (
   `ejercicio` int(5) DEFAULT NULL,
   `editable` tinyint(1) DEFAULT '1',
   `valor_divisa` float NOT NULL DEFAULT '1',
+  `id_agente` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_tpv` (
@@ -1050,6 +1053,7 @@ CREATE TABLE `@empresa@`.`ped_cli` (
   `ejercicio` int(5) DEFAULT NULL,
   `editable` tinyint(1) DEFAULT '1',
   `id_transportista` int(11) DEFAULT NULL,
+  `id_agente` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`ped_pro` (

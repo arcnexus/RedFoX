@@ -443,6 +443,13 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
 
 void MainWindow::loadVentasModules(QSplashScreen *splash)
 {
+    splash->showMessage(tr("Cargando modulos... Agentes")  ,Qt::AlignLeft,Qt::white);
+    frmAgentes * ag = new frmAgentes(this);
+    if(ag->userHaveAcces(Configuracion_global->id_usuario_activo))
+        _ventasModules.append(ag);
+    else
+        delete ag;
+
     splash->showMessage(tr("Cargando modulos... Modulo de presupuestos")  ,Qt::AlignLeft,Qt::white);
 
     FrmPresupuestosCli* Presupcli = new FrmPresupuestosCli(this);

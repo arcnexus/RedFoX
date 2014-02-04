@@ -100,6 +100,8 @@ void ReportDesigWin::element_toggled(bool arg1)
 void ReportDesigWin::on_actionGuardar_triggered()
 {
     QString file = QFileDialog::getSaveFileName(qApp->activeWindow(),tr("Guardar Report"),QString(),"XML (*.xml)");
+    if(!file.endsWith(".xml",Qt::CaseInsensitive))
+        file.append(".xml");
     if(!file.isEmpty())
     {
         int i = paper.save(file);

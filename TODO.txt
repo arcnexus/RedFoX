@@ -132,3 +132,11 @@ ALTER TABLE `GrupoxxTest`.`empresas` DROP COLUMN `password_cuenta`,DROP COLUMN `
 
 30/01/14
 ALTER TABLE `proveedores` CHANGE COLUMN `codigo` `codigo` VARCHAR(15) NULL DEFAULT '0' ;
+
+3/02/14
+ALTER TABLE `Grupo`.`agentes` CHANGE COLUMN `codigo` `codigo` VARCHAR(15) NULL DEFAULT NULL AFTER `id`;
+ALTER TABLE `empTest30.01.14`.`ped_cli` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTER `id_transportista`;
+ALTER TABLE `empTest30.01.14`.`cab_alb` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTER `editable`;
+ALTER TABLE `empTest30.01.14`.`cab_pre` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTER `valor_divisa`;
+ALTER TABLE `empTest30.01.14`.`cab_fac` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTER `pendiente`;
+

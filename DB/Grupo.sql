@@ -22,8 +22,8 @@ CREATE TABLE `@grupo@`.`agenda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@grupo@`.`agentes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) DEFAULT NULL,
   `codigo` varchar(15) DEFAULT NULL,
+  `nombre` varchar(45) DEFAULT NULL,  
   `dni` varchar(15) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `movill` varchar(15) DEFAULT NULL,
@@ -40,6 +40,14 @@ CREATE TABLE `@grupo@`.`agentes` (
   `com_clientes_contado` double DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `@grupo@`.`agentes_comisiones` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_agente` INT NULL,
+  `id_tarifa` INT NULL,
+  `importe_desde` DOUBLE NULL DEFAULT '0',
+  `importe_hasta` DOUBLE NULL,
+  `porc_comision` DOUBLE NULL,
+  PRIMARY KEY (`id`));
 CREATE TABLE `@grupo@`.`articulos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,

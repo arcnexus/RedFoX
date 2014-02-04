@@ -218,7 +218,8 @@ SOURCES += main.cpp\
     Zona_Maestros/frmcajas.cpp \
     Zona_Maestros/cajas.cpp \
     Almacen/frmseccionesalmacen.cpp \
-    Almacen/frmfamiliasalmacen.cpp
+    Almacen/frmfamiliasalmacen.cpp \
+    Zona_Maestros/frmagentes.cpp
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -402,7 +403,8 @@ HEADERS  += mainwindow.h \
     Zona_Maestros/frmcajas.h \
     Zona_Maestros/cajas.h \
     Almacen/frmseccionesalmacen.h \
-    Almacen/frmfamiliasalmacen.h
+    Almacen/frmfamiliasalmacen.h \
+    Zona_Maestros/frmagentes.h
 
 
 
@@ -500,7 +502,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmselectlotes.ui \
     Zona_Maestros/frmcajas.ui \
     Almacen/frmseccionesalmacen.ui \
-    Almacen/frmfamiliasalmacen.ui
+    Almacen/frmfamiliasalmacen.ui \
+    Zona_Maestros/frmagentes.ui
 
 RESOURCES += \
     maya.qrc \

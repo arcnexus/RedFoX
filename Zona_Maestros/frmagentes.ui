@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>frmAgentes</class>
+ <widget class="QDialog" name="frmAgentes">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1287</width>
+    <height>675</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="textoTitulo">
+     <property name="minimumSize">
+      <size>
+       <width>464</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: #304163;
+color: rgb(255,255,255);
+font: 14pt &quot;Sans Serif&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Gestión de Agentes</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QTableView" name="tabla_busqueda">
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QFrame" name="frame_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>135</width>
+           <height>374</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>110</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="btnAnadir">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Nuevo</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="btnSiguiente">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Siguiente</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="btnAnterior">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Anterior</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="btnBuscar">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Buscar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="btnEditar">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Editar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/edit.png</normaloff>:/Icons/PNG/edit.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QPushButton" name="btnGuardar">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Guardar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QPushButton" name="btnDeshacer">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;Deshacer</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QPushButton" name="btnListados">
+            <property name="minimumSize">
+             <size>
+              <width>115</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>118</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Listados</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QPushButton" name="btnBorrar">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>B&amp;orrar</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>18</width>
+              <height>18</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tabwidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab_datos">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <attribute name="title">
+           <string>Datos</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="maximumSize">
+              <size>
+               <width>49</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>Código:                        </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="styleSheet">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Nombre</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="styleSheet">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Cif/Nif:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_19">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>70</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Teléfono1:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_22">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Móvil:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_24">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>70</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Mail:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Observaciones</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="5">
+            <widget class="QLabel" name="label_75">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#ff0000;&quot;&gt;Datos financieros:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_78">
+             <property name="text">
+              <string>Entidad:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1" colspan="3">
+            <widget class="QLineEdit" name="txtentidad_bancaria">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="4">
+            <widget class="QLabel" name="label_79">
+             <property name="text">
+              <string>Oficina:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="5">
+            <widget class="QLineEdit" name="txtoficina_bancaria">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="6">
+            <widget class="QLabel" name="label_80">
+             <property name="text">
+              <string>D.C.:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="7">
+            <widget class="QLineEdit" name="txtdc">
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="8">
+            <widget class="QLabel" name="label_81">
+             <property name="text">
+              <string>Cuenta</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="9">
+            <widget class="QLineEdit" name="txtcuenta_corriente"/>
+           </item>
+           <item row="9" column="9">
+            <widget class="QLabel" name="lblCuentavalida">
+             <property name="text">
+              <string>Cuenta Valida</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="2">
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="3" colspan="6">
+            <widget class="QLineEdit" name="txtnombre">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="echoMode">
+              <enum>QLineEdit::Normal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3" colspan="6">
+            <widget class="QLineEdit" name="txtcif_nif">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3" colspan="6">
+            <widget class="QLineEdit" name="txttelefono1">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3" colspan="6">
+            <widget class="QLineEdit" name="txtmovil">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3" colspan="6">
+            <widget class="QLineEdit" name="txtemail">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3" colspan="6">
+            <widget class="QLineEdit" name="txtcodigo_agente">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3" colspan="7">
+            <widget class="QPlainTextEdit" name="txtObservaciones"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Comisiones</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Tarifas</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" rowspan="4">
+            <widget class="QListView" name="lista_tarifas">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Para ventas desde:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QDoubleSpinBox" name="spin_desde">
+             <property name="maximum">
+              <double>999999.989999999990687</double>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>hasta ventas de:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QDoubleSpinBox" name="spin_hasta">
+             <property name="maximum">
+              <double>999999.989999999990687</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>comision de (%):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QDoubleSpinBox" name="spin_comision">
+             <property name="maximum">
+              <double>999999.989999999990687</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QPushButton" name="btn_addComision">
+             <property name="text">
+              <string>Añadir</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="QPushButton" name="btn_removeComision">
+             <property name="text">
+              <string>Eliminar</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1" colspan="4">
+            <widget class="QTableView" name="tabla_comisiones">
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_estadistica">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <attribute name="title">
+           <string>Estadistica</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_55">
+             <property name="text">
+              <string>Agosto:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_51">
+             <property name="text">
+              <string>Mayo:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="txtOctubre">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLabel" name="label_53">
+             <property name="text">
+              <string>Noviembre:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_47">
+             <property name="text">
+              <string>Enero:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="txtEnero">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_54">
+             <property name="text">
+              <string>Julio:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLineEdit" name="txtjulio">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_48">
+             <property name="text">
+              <string>Febrero:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="txtFebrero">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLineEdit" name="txtAgosto">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_49">
+             <property name="text">
+              <string>Marzo</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="txtMarzo">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLabel" name="label_58">
+             <property name="text">
+              <string>Septiembre:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="txtSeptiembre">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>717</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_50">
+             <property name="text">
+              <string>Abril:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="txtAbril">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLabel" name="label_57">
+             <property name="text">
+              <string>Octubre:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="txtMayo">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_52">
+             <property name="text">
+              <string>Junio:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QLineEdit" name="txtNoviembre">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QLabel" name="label_56">
+             <property name="text">
+              <string>Diciembre:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="txtJunio">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QLineEdit" name="txtDiciembre">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>0,00</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>190</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="8" column="0" colspan="5">
+            <widget class="OpenChart" name="graficaEstadistica" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>192</height>
+              </size>
+             </property>
+             <property name="Title" stdset="0">
+              <string>Ventas por meses.</string>
+             </property>
+             <property name="Etiquetas" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="Valores" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="Leyenda" stdset="0">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <widget class="QComboBox" name="cboEmpresas"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Empresa</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OpenChart</class>
+   <extends>QWidget</extends>
+   <header>openchart.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
+ <connections/>
+</ui>

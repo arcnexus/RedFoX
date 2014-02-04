@@ -40,6 +40,7 @@
 #include "Zona_Ventas/frmfacturas.h"
 #include "TPV/frmtpv.h"
 #include "../Zona_Maestros/frmformas_pago.h"
+#include "Zona_Maestros/frmagentes.h"
 
 
 //#include "openrptLibs/reportmodule.h"
