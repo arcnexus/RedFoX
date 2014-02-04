@@ -2697,3 +2697,18 @@ void FrmArticulos::on_btnResArt_clicked()
     else
         TimedMessageBox *m = new TimedMessageBox(this,tr("El documento se ha creado en la carpeta del programa con el nombre art_1.ods"));
 }
+
+void FrmArticulos::on_btnResArt2_clicked()
+{
+    QStringList hd;
+    hd << tr("codigo") << tr("Descripción") <<tr("PVP") <<tr("%IVA") ;
+    QString error;
+    if(!Configuracion_global->SqlToODS("art_2.ods",QString("select codigo,descripcion_reducida,pvp,iva from articulos right"
+                                                            " join  tiposiva on  articulos.id_tipos_iva = tiposiva.id;"
+                                                       "by stock_fisico_almacen"),Configuracion_global->groupDB,hd,error))
+        QMessageBox::warning(this,tr("Articulos"),tr("Ocurrió un error: %1").arg(error),
+                             tr("Aceptar"));
+    else
+        TimedMessageBox *m = new TimedMessageBox(this,tr("El documento se ha creado en la carpeta del programa con el nombre art_2.ods"));
+
+}

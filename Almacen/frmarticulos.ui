@@ -3420,7 +3420,7 @@ Imagen.</string>
              </layout>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="4" column="0">
             <spacer name="verticalSpacer_4">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -3571,6 +3571,13 @@ Imagen.</string>
             <widget class="QPushButton" name="btnResArt">
              <property name="text">
               <string>resumen articulos /Stock - ODS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="btnResArt2">
+             <property name="text">
+              <string>Referencia-descripcion-pvp-tipo iva - ODS</string>
              </property>
             </widget>
            </item>
