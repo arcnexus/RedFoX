@@ -1,6 +1,8 @@
 #include "frmagentes.h"
 #include "ui_frmagentes.h"
 
+#include "../Auxiliares/monetarydelegate.h"
+
 frmAgentes::frmAgentes(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmAgentes),
@@ -60,6 +62,9 @@ void frmAgentes::init_querys()
     ui->tabla_comisiones->setColumnHidden(0,true);
     ui->tabla_comisiones->setColumnHidden(1,true);
     ui->tabla_comisiones->setColumnHidden(2,true);
+    ui->tabla_comisiones->setItemDelegateForColumn(3,new MonetaryDelegate(this));
+    ui->tabla_comisiones->setItemDelegateForColumn(4,new MonetaryDelegate(this));
+    ui->tabla_comisiones->setItemDelegateForColumn(5,new MonetaryDelegate(this));
 
     model_codTarifa->select();
     ui->lista_tarifas->setModel(model_codTarifa);
@@ -209,6 +214,7 @@ void frmAgentes::on_btnEditar_clicked()
 
 void frmAgentes::on_btnGuardar_clicked()
 {
+   int index = mapper.currentIndex();
    bool b = mapper.submit();
    b &= model_busqueda->submitAll();
 
@@ -216,6 +222,8 @@ void frmAgentes::on_btnGuardar_clicked()
        QMessageBox::critical(this,tr("Error al guardar agente"),model_busqueda->lastError().text());
    else if(!editando)
        mapper.toLast();
+   else
+       mapper.setCurrentIndex(index);
    bloquear_campos(true);
 }
 
@@ -279,6 +287,7 @@ void frmAgentes::bloquear_campos(bool state)
     ui->btnAnterior->setEnabled(state);
     ui->btnSiguiente->setEnabled(state);
     ui->btnEditar->setEnabled(state);
+    ui->btnAnadir->setEnabled(state);
     ui->btnBorrar->setEnabled(state);
     ui->btnListados->setEnabled(state);
 

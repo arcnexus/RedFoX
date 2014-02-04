@@ -10,7 +10,9 @@ MonetaryDelegate::MonetaryDelegate(QObject *parent, bool readonly) :
 
 void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    QLineEdit *lineedit = static_cast<QLineEdit*>(editor);
+    qDebug() << editor;
+    if(QLineEdit *lineedit = qobject_cast<QLineEdit*>(editor))
+    {
     lineedit->text();
     lineedit->setReadOnly(this->readonly);
     double valor_moneda = lineedit->text().toDouble();
@@ -18,6 +20,11 @@ void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
 
     model->setData(index,valor,Qt::EditRole);
     lineedit->setAlignment(Qt::AlignRight);
+    }
+    else if(QDoubleSpinBox *spin = qobject_cast<QDoubleSpinBox*>(editor))
+    {
+        model->setData(index,spin->value());
+    }
 }
 
 void MonetaryDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
