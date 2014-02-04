@@ -120,7 +120,7 @@ void FrmArticulos::init()
     promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
     volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
 
-    QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
+    QString cSQL = "select id,codigo, descripcion_reducida, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
 
@@ -787,14 +787,14 @@ void FrmArticulos::filter_table(QString texto, QString orden, QString modo)
     else
         mode ="DESC";
 
-QString cSQL = "Select id,codigo, descripcion,  codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa where "+
+QString cSQL = "Select id,codigo, descripcion_reducida,  codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa where "+
         campo+" like '%"+texto.trimmed()+"%' and tarifa ="+
         QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
     if(modelBusqueda->rowCount() == 0)
     {
-        QString cSQL2 = "Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos where "+
+        QString cSQL2 = "Select id,codigo, descripcion_reducida, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos where "+
                 campo+" like '%"+texto.trimmed()+"%' order by "+campo +" "+mode;
         modelBusqueda->setQuery(cSQL2, Configuracion_global->groupDB);
     }
@@ -2682,4 +2682,18 @@ void FrmArticulos::on_botBuscarGrupo_clicked()
         oArticulo->cod_GrupoArt = consulta.get_record().value("codigo").toString();
         ui->txtcGupoArt->setText(consulta.get_record().value("grupo_art").toString());
     }
+}
+
+
+void FrmArticulos::on_btnResArt_clicked()
+{
+    QStringList hd;
+    hd << tr("codigo") << tr("Descripción") <<tr("Stock almacen") <<tr("Pend.Recibir") <<tr("stock real");
+    QString error;
+    if(!Configuracion_global->SqlToODS("art_1.ods",QString("select codigo,descripcion_reducida,stock_fisico_almacen,cantidad_pendiente_recibir,stock_real from articulos order "
+                                                       "by stock_fisico_almacen"),Configuracion_global->groupDB,hd,error))
+        QMessageBox::warning(this,tr("Articulos"),tr("Ocurrió un error: %1").arg(error),
+                             tr("Aceptar"));
+    else
+        TimedMessageBox *m = new TimedMessageBox(this,tr("El documento se ha creado en la carpeta del programa con el nombre art_1.ods"));
 }

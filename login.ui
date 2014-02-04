@@ -159,19 +159,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="pixmap">
-           <pixmap resource="maya.qrc">:/Icons/jpg/agroevolution.jpg</pixmap>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QFrame" name="frame">
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>

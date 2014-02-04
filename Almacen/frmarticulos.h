@@ -154,6 +154,8 @@ private slots:
 
     void on_botBuscarGrupo_clicked();
 
+    void on_btnResArt_clicked();
+
 public slots:
     void AnadirSeccion();
     void init();
