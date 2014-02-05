@@ -1,6 +1,9 @@
 #include "archivosgeneralesext.h"
 #include "db_table_view.h"
 #include "../Almacen/frmtipostarifa.h"
+
+#include "Zona_Maestros/frmtipocliente.h"
+
 ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
     ModuleExtension(parent),
     tarifa("Tipos de tarifa",this),
@@ -8,7 +11,8 @@ ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
     paises("Paises",this),
     iva("Tipos de iva",this),
     bancos("Bancos",this),
-    avisos("Avisos",this)
+    avisos("Avisos",this),
+    tipoCli("Tipos de cliente",this)
 {
     int id = -1;
     tryRegisterModule(MayaModule::Mantenimiento,"Tipo de tarifa",id);
@@ -77,6 +81,16 @@ ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
         connect(&avisos,SIGNAL(triggered()),this,SLOT(handle_avisos()));
         QPair<QAction *, MayaModule::accessLevel> p;
         p.first = &avisos;
+        p.second = getUserLvl(id);
+        _actions.append(p);
+    }
+
+    tryRegisterModule(MayaModule::Mantenimiento,"Tipos de cliente",id);
+    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
+    {
+        connect(&tipoCli,SIGNAL(triggered()),this,SLOT(handle_tipoCli()));
+        QPair<QAction *, MayaModule::accessLevel> p;
+        p.first = &tipoCli;
         p.second = getUserLvl(id);
         _actions.append(p);
     }
@@ -200,4 +214,10 @@ void ArchivosGeneralesExt::handle_avisos()
     form.set_relation(7,QSqlRelation("usuarios","id","nombre"));//FIXME usuarios
     form.set_columnHide(0);
     form.exec();
+}
+
+void ArchivosGeneralesExt::handle_tipoCli()
+{
+    frmTipoCliente t(qApp->activeWindow());
+    t.exec();
 }

@@ -24,6 +24,7 @@ private slots:
     void handle_tiposIVA();
     void handle_bancos();
     void handle_avisos();
+    void handle_tipoCli();
 private:
     QAction tarifa;
     QAction moneda;
@@ -32,6 +33,7 @@ private:
     QAction iva;
     QAction bancos;
     QAction avisos;
+    QAction tipoCli;
     QVector<QPair<QAction *, MayaModule::accessLevel> > _actions;
 };
 

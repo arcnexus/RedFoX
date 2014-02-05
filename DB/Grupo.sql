@@ -715,10 +715,22 @@ CREATE TABLE `@grupo@`.`tarifas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@grupo@`.`tipocliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) DEFAULT NULL,
   `id_tipo_cliente` int(11) DEFAULT NULL,
   `id_subtipo_cliente` int(11) DEFAULT NULL,
-  `tipo_cliente` varchar(45) DEFAULT NULL,
-  `id_cliente` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `@grupo@`.`tipocliente_def` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `desc` MEDIUMTEXT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+CREATE TABLE `@grupo@`.`tiposubcliente_def` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_tipocliente` INT NULL,
+  `nombre` VARCHAR(45) NULL,
+  `desc` MEDIUMTEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`tiposaviso` (

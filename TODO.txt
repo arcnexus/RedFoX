@@ -141,3 +141,5 @@ ALTER TABLE `emp`.`cab_alb` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTE
 ALTER TABLE `emp`.`cab_pre` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTER `valor_divisa`;
 ALTER TABLE `emp`.`cab_fac` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTER `pendiente`;
 
+5/02/14
+ALTER TABLE `GrupoTest3001`.`tipocliente` DROP COLUMN `tipo_cliente`,CHANGE COLUMN `id_cliente` `id_cliente` INT(11) NULL DEFAULT NULL AFTER `id`;
