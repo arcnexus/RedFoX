@@ -716,7 +716,7 @@ color: rgb(0, 0, 0);</string>
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -1404,6 +1404,16 @@ color: rgb(255, 255, 255);</string>
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
+             </item>
+             <item row="11" column="2">
+              <widget class="QLabel" name="label_30">
+               <property name="text">
+                <string>Agente:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="3">
+              <widget class="QComboBox" name="cboAgente"/>
              </item>
             </layout>
            </item>
