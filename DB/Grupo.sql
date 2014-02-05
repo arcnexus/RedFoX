@@ -31,13 +31,6 @@ CREATE TABLE `@grupo@`.`agentes` (
   `comentarios` text,
   `facturado` double DEFAULT NULL,
   `pendiente` double DEFAULT NULL,
-  `com1` double DEFAULT '0',
-  `com2` double DEFAULT '0',
-  `com3` double DEFAULT '0',
-  `com4` double DEFAULT '0',
-  `com5` double DEFAULT '0',
-  `com6` double DEFAULT '0',
-  `com_clientes_contado` double DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`agentes_comisiones` (
