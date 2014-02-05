@@ -5,22 +5,81 @@
 #include "QSqlDatabase"
 #include <QMessageBox>
 
-FrmAddTipoCliente::FrmAddTipoCliente(QWidget *parent) :
+void FrmAddTipoCliente::updateListas()
+{
+    ui->list_tipo->blockSignals(true);
+    ui->list_subTipo->blockSignals(true);
+
+    ui->list_tipo->clear();
+
+    model_tipos->select();
+    model_SubTipos->select();
+    model_cliente->select();
+
+    for(auto i=0;i < model_tipos->rowCount();i++)
+    {
+        QListWidgetItem* item = new QListWidgetItem(model_tipos->record(i).value("nombre").toString());
+
+        int id_tipo = model_tipos->record(i).value("id").toInt();
+        bool sel = false;
+        auto sub_count = 0;
+
+        for(auto c = 0; c<model_SubTipos->rowCount(); c++)
+        {
+            if(model_SubTipos->record(c).value("id_tipocliente").toInt() == id_tipo)
+                sub_count++;
+        }
+
+        auto sub_selected = 0;
+        for(auto z = 0; z<model_cliente->rowCount();z++)
+        {
+            if(model_cliente->record(z).value("id_tipo_cliente").toInt() == id_tipo)
+            {
+                sel = true;
+                sub_selected++;
+            }
+        }
+        bool full = sub_count == sub_selected;
+        Qt::CheckState state = sel ?  Qt::PartiallyChecked : Qt::Unchecked;
+        if(full)
+            state = Qt::Checked;
+        item->setCheckState(state);
+        item->setData(Qt::UserRole + 1,id_tipo);
+        item->setToolTip(model_tipos->record(i).value("desc").toString());
+        ui->list_tipo->addItem(item);
+    }
+
+    ui->list_tipo->blockSignals(false);
+    ui->list_subTipo->blockSignals(false);
+}
+
+FrmAddTipoCliente::FrmAddTipoCliente(QWidget *parent, int id_cliente) :
     QDialog(parent),
     ui(new Ui::FrmAddTipoCliente)
 {
+    this->id_cliente = id_cliente;
     ui->setupUi(this);
-    //----------------------
-    // CARGAR LISTA/TABLA
-    //----------------------
-    QSqlQueryModel *m_familia = new QSqlQueryModel(this);
-    m_familia->setQuery("select descripcion, id from maestro_familia_cliente",Configuracion_global->groupDB);
-    ui->list_Familia->setModel(m_familia);
 
-    //-----------------------
-    // Conexiones
-    //-----------------------
-    connect(ui->list_Familia,SIGNAL(clicked(QModelIndex)),this,SLOT(LLenarTablaSubfamilias(QModelIndex)));
+    model_tipos = new QSqlTableModel(this,Configuracion_global->groupDB);
+    model_SubTipos = new QSqlTableModel(this,Configuracion_global->groupDB);
+    model_cliente = new QSqlTableModel(this,Configuracion_global->groupDB);
+
+    model_tipos   ->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model_SubTipos->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model_cliente->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+    model_tipos   ->setTable("tipocliente_def");
+    model_SubTipos->setTable("tiposubcliente_def");
+    model_cliente->setTable("tipocliente");
+
+    model_cliente->setFilter(QString("id_cliente = %1").arg(id_cliente));
+
+    ui->list_tipo   ->setModelColumn(1);
+    ui->list_subTipo->setModelColumn(2);
+
+    updateListas();
+    connect(ui->list_tipo,SIGNAL(itemChanged(QListWidgetItem*)),this,SLOT(itemTipoChanged(QListWidgetItem*)));
+    connect(ui->list_subTipo,SIGNAL(itemChanged(QListWidgetItem*)),this,SLOT(itemSubTipoChanged(QListWidgetItem*)));
 }
 
 FrmAddTipoCliente::~FrmAddTipoCliente()
@@ -28,60 +87,119 @@ FrmAddTipoCliente::~FrmAddTipoCliente()
     delete ui;
 }
 
-void FrmAddTipoCliente::LLenarTablaSubfamilias(QModelIndex index)
+void FrmAddTipoCliente::on_btnAceptar_clicked()
 {
+    this->close();
+}
 
-    QSqlQueryModel* modelo = (QSqlQueryModel*)ui->list_Familia->model();
-    int nid = modelo->record(index.row()).value("id").toInt();
-    familiaRetorno = modelo->record(index.row()).value("descripcion").toString();
-    QSqlQuery qFamilia(Configuracion_global->groupDB);
-    qFamilia.prepare(QString("select * from maestro_subfamilia_cliente where id_maestro_familia_cliente = %1 ").arg(nid));
-    if (qFamilia.exec()) {
-        // Cargo datos en tabla
-        QStringList cabecera;
-        cabecera  <<tr("A")<< tr("Subfamilia");
-        QSqlRecord reg;
-        QString descripcion;
-        QString cValores;
+void FrmAddTipoCliente::on_list_tipo_clicked(const QModelIndex &index)
+{
+    int target_id_tipo = model_tipos->record(index.row()).value("id").toInt();
 
-        ui->table_Subfamilia->setColumnCount(2);
-        ui->table_Subfamilia->setRowCount(0);
-        ui->table_Subfamilia->setHorizontalHeaderLabels(cabecera);
-        ui->table_Subfamilia->setColumnWidth(0,0);
-        ui->table_Subfamilia->setColumnWidth(1,180);
-
-        int pos = 0;
-        while (qFamilia.next()) {
-            // Datos subfamilia
-            reg = qFamilia.record();
-            ui->table_Subfamilia->setRowCount(pos+1);
-            QTableWidgetItem *newItem = new QTableWidgetItem();
-            newItem->setCheckState(Qt::Checked);
-            newItem->setTextColor(Qt::black); // color texto
-            ui->table_Subfamilia->setItem(pos,0,newItem);
-
-            // Sub-familia
-            descripcion = reg.field("descripcion").value().toString();
-            QTableWidgetItem *newItem1 = new QTableWidgetItem(descripcion);
-            // para que los elementos no sean editables
-            newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
-            newItem1->setTextColor(Qt::black); // color de los items
-            ui->table_Subfamilia->setItem(pos,1,newItem1);
-            pos++;
+    ui->list_subTipo->clear();
+    for(auto i=0;i < model_SubTipos->rowCount();i++)
+    {
+        int id_tipo = model_SubTipos->record(i).value("id_tipocliente").toInt();
+        if(id_tipo == target_id_tipo)
+        {
+            QListWidgetItem* item = new QListWidgetItem(model_SubTipos->record(i).value("nombre").toString());
+            int id_sub = model_SubTipos->record(i).value("id").toInt();
+            bool sel = false;
+            int id_row = 0;
+            for(auto z = 0; z<model_cliente->rowCount();z++)
+            {
+                if(model_cliente->record(z).value("id_subtipo_cliente").toInt() == id_sub)
+                {
+                    sel = true;
+                    id_row = model_cliente->record(z).value("id").toInt();
+                    break;
+                }
+            }
+            item->setCheckState(sel ? Qt::Checked : Qt::Unchecked);
+            item->setToolTip(model_SubTipos->record(i).value("desc").toString());
+            item->setData(Qt::UserRole +1 , target_id_tipo);
+            item->setData(Qt::UserRole +2 , id_sub);
+            item->setData(Qt::UserRole +3 , id_row);
+            ui->list_subTipo->addItem(item);
         }
-    } else {
-        qDebug() <<"omg an error:"<< qFamilia.lastError() << "||" << qFamilia.executedQuery();
-
     }
 }
 
-void FrmAddTipoCliente::on_btnAceptar_clicked()
+void FrmAddTipoCliente::itemTipoChanged(QListWidgetItem * item)
 {
-    QAbstractItemModel* model = ui->table_Subfamilia->model() ;
-    QString valorSubfamilia =  model->index( ui->table_Subfamilia->currentRow(), 1 ).data( Qt::DisplayRole ).toString();
-    if(ui->table_Subfamilia->currentRow()>-1){
-        familiaRetorno += " - "+ valorSubfamilia;
+    if(item->checkState() == Qt::PartiallyChecked)
+        return;
+    int id_tipo = item->data(Qt::UserRole+1).toInt();
 
+    bool used = item->checkState() == Qt::Checked;
+    QString error;
+    if(used)
+    {
+        QList<int> needed;
+        for(auto i= 0; i< model_SubTipos->rowCount();i++)
+        {
+            if(model_SubTipos->record(i).value("id_tipocliente").toInt() == id_tipo)
+            {
+                int id_subtipo = model_SubTipos->record(i).value("id").toInt();
+                bool already = false;
+                for(auto z = 0; z < model_cliente->rowCount(); z++)
+                {
+                    if(model_cliente->record(z).value("id_subtipo_cliente").toInt() == id_subtipo)
+                    {
+                        already = true;
+                        break;
+                    }
+                }
+                if(!already)
+                    needed.append(id_subtipo);
+            }
+        }
+        QHash<QString,QVariant> _data;
+        _data["id_cliente"] = id_cliente;
+        _data["id_tipo_cliente"] = id_tipo;
+
+        QListIterator<int> _it(needed);
+        while(_it.hasNext())
+        {
+            _data["id_subtipo_cliente"] = _it.next();
+            if(!SqlCalls::SqlInsert(_data,"tipocliente",Configuracion_global->groupDB,error))
+                QMessageBox::critical(this,tr("Error al asignar tipo cliente"),error);
+        }
+        updateListas();
     }
-    accept();
+    else
+    {
+        if(SqlCalls::SqlDelete("tipocliente",Configuracion_global->groupDB,QString("id_tipo_cliente = %1").arg(id_tipo),error))
+            updateListas();
+        else
+            QMessageBox::critical(this,tr("Error al asignar tipo cliente"),error);
+    }
+}
+
+void FrmAddTipoCliente::itemSubTipoChanged(QListWidgetItem *item)
+{
+    if(item->checkState() == Qt::PartiallyChecked)
+        return;
+
+    bool used = item->checkState() == Qt::Checked;
+    QString error;
+    if(used)
+    {
+        QHash<QString,QVariant> _data;
+        _data["id_cliente"] = id_cliente;
+        _data["id_tipo_cliente"] = item->data(Qt::UserRole +1);
+        _data["id_subtipo_cliente"] = item->data(Qt::UserRole +2);
+
+        if(SqlCalls::SqlInsert(_data,"tipocliente",Configuracion_global->groupDB,error))
+            updateListas();
+        else
+            QMessageBox::critical(this,tr("Error al asignar tipo cliente"),error);
+    }
+    else
+    {
+        if(SqlCalls::SqlDelete("tipocliente",Configuracion_global->groupDB,QString("id = %1").arg(item->data(Qt::UserRole +3).toInt()),error))
+            updateListas();
+        else
+            QMessageBox::critical(this,tr("Error al asignar tipo cliente"),error);
+    }
 }

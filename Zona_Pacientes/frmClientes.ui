@@ -939,13 +939,6 @@ color: rgb(0, 0, 241);</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_5">
-                  <item row="1" column="0" rowspan="2">
-                   <widget class="QListView" name="lista_tipos">
-                    <property name="styleSheet">
-                     <string/>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_46">
                     <property name="maximumSize">
@@ -965,68 +958,19 @@ color: rgb(0, 0, 241);</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="1" rowspan="2">
-                   <layout class="QVBoxLayout" name="verticalLayout_2">
-                    <item>
-                     <widget class="QPushButton" name="btnAdd_TipoCliente">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="styleSheet">
-                       <string/>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset resource="../maya.qrc">
-                        <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>15</width>
-                        <height>15</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="verticalSpacer_3">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="btndel_TipoCliente">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="styleSheet">
-                       <string/>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="icon">
-                       <iconset resource="../maya.qrc">
-                        <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>15</width>
-                        <height>15</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
+                  <item row="3" column="0">
+                   <widget class="QPushButton" name="btnEdita_tipoCliente">
+                    <property name="text">
+                     <string>Editar tipo de cliente</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0" rowspan="2">
+                   <widget class="QTreeView" name="lista_tipos">
+                    <property name="styleSheet">
+                     <string/>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -2979,15 +2923,15 @@ font: 14pt &quot;Sans Serif&quot;;</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>OpenChart</class>
+   <extends>QWidget</extends>
+   <header>openchart.h</header>
+  </customwidget>
+  <customwidget>
    <class>Blinkink</class>
    <extends>QFrame</extends>
    <header>blinkink.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>OpenChart</class>
-   <extends>QWidget</extends>
-   <header>openchart.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

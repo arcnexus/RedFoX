@@ -195,8 +195,6 @@ void frmClientes::init()
     connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
-    connect(ui->btnAdd_TipoCliente,SIGNAL(clicked()),this,SLOT(AddCustomerType()));
-    connect(ui->btndel_TipoCliente,SIGNAL(clicked()),this,SLOT(DelCustomerType()));
     connect(ui->btnBorrardireccion,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
     ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
@@ -1006,8 +1004,7 @@ void frmClientes::bloquearCampos(bool state) {
     ui->btnSiguiente->setEnabled(state);
     ui->btnAnadirdireccion->setEnabled(!state);
     ui->btnBorrardireccion->setEnabled(!state);
-    ui->btnAdd_TipoCliente->setEnabled(!state);
-    ui->btndel_TipoCliente->setEnabled(!state);
+    ui->btnEdita_tipoCliente->setEnabled(!state);
     ui->btnVer_OtrosContactos->setEnabled(state);
     ui->btnEditardireccionAlternativa->setEnabled(!state);
     m_busqueda->block(!state);
@@ -1165,46 +1162,6 @@ void frmClientes::on_btnFichaPaciente_clicked()
     frmPaciente.setWindowState(Qt::WindowMaximized);
     frmPaciente.exec();
 }
-
-void frmClientes::AddCustomerType()
-{
-   FrmAddTipoCliente AddTipoCliente(this);
-   if(AddTipoCliente.exec() == QDialog::Accepted)
-   {
-       QString valor = AddTipoCliente.familiaRetorno;
-       QSqlQuery qTipo(Configuracion_global->groupDB);
-       qTipo.prepare("INSERT INTO tipocliente (tipo_cliente,id_cliente) VALUES (:tipo,:id_cliente)");
-       qTipo.bindValue(":tipo",valor);
-       qTipo.bindValue(":id_cliente",oCliente->id);
-
-       if (!qTipo.exec())
-           QMessageBox::warning(this,tr("Añadir tipo cliente"),
-                                tr("No se pudo añadir el tipo de cliente :%1").arg(qTipo.lastError().text()),tr("Aceptar"));
-
-       qModelTipos->setQuery("select tipocliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
-                             Configuracion_global->groupDB);
-   }
-}
-
-void frmClientes::DelCustomerType()
-{
-    QModelIndex indice = ui->lista_tipos->currentIndex();
-    if (indice.isValid())
-    {
-        QSqlQuery qTipo(Configuracion_global->groupDB);
-        qTipo.prepare("DELETE FROM tipocliente WHERE id_cliente = :id_cliente AND tipo_cliente LIKE :tipo");
-        qTipo.bindValue(":id_cliente",oCliente->id);
-        qTipo.bindValue(":tipo",ui->lista_tipos->model()->data(indice,Qt::DisplayRole).toString());
-
-        if (!qTipo.exec())
-            QMessageBox::warning(this,tr("Borrar tipo cliente"),
-                                 tr("No se pudo borrar el tipo de cliente :%1").arg(qTipo.lastError().text()),tr("Aceptar"));
-
-        qModelTipos->setQuery("select tipocliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
-                              Configuracion_global->groupDB);
-    }
-}
-
 
 void frmClientes::DeshacerdireccionAlternativa()
 {
@@ -1808,4 +1765,10 @@ void frmClientes::on_txtdireccion2_editingFinished()
 {
     if(!ui->txtprovincia->text().isEmpty())
         ui->txttelefono1->setFocus();
+}
+
+void frmClientes::on_btnEdita_tipoCliente_clicked()
+{
+    FrmAddTipoCliente f(this,oCliente->id);
+    f.exec();
 }

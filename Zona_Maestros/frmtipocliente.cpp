@@ -159,7 +159,7 @@ void frmTipoCliente::on_btnEditarSubTipo_clicked()
     }
     int row = ui->lista_subtipos->currentIndex().row();
 
-    model_Subtipos->setData(model_Subtipos->index(row,3),ui->txtNombre->text());
+    model_Subtipos->setData(model_Subtipos->index(row,2),ui->txtNombre->text());
     model_Subtipos->setData(model_Subtipos->index(row,3),ui->txtDesc->text());
     if(model_Subtipos->submitAll())
         TimedMessageBox * t = new TimedMessageBox(this,tr("Tipo cliente actualizado con éxito"));

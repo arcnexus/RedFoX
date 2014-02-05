@@ -70,8 +70,7 @@ private slots:
     void txtrRiesgoPermitido_editingFinished();
 
     void on_btnFichaPaciente_clicked();
-    void AddCustomerType();
-    void DelCustomerType();
+
     void DeshacerdireccionAlternativa();
     void BorrardireccionAlternativa();
     void EditardireccionAlternativa();
@@ -108,6 +107,8 @@ private slots:
     void on_txtcp_editingFinished();
 
     void on_txtdireccion2_editingFinished();
+
+    void on_btnEdita_tipoCliente_clicked();
 
 private:
     Ui::frmClientes *ui;
