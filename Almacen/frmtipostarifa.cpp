@@ -14,7 +14,7 @@ FrmTiposTarifa::FrmTiposTarifa(QWidget *parent) :
 
 
     ui->cboPais->setModel(Configuracion_global->paises_model);
-    //ui->cboPais->setModelColumn(Configuracion_global->paises_model->fieldIndex("pais"));
+    ui->cboPais->setModelColumn(1);
     llenar_lista();
     QSqlQueryModel *monedas = new QSqlQueryModel(this);
     monedas->setQuery("Select moneda from monedas",Configuracion_global->groupDB);

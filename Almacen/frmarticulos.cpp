@@ -464,6 +464,7 @@ void FrmArticulos::LLenarCampos(int index)
 
     if(index == 0 /*ui->Pestanas->currentWidget() == ui->tab_articulo*/)
     {
+        ui->txtCoste_real->blockSignals(true);
         //IVA desde config
         for(auto i=0; i< Configuracion_global->iva_model->rowCount(); i++){
             if(Configuracion_global->iva_model->record(i).value("id") == oArticulo->id_tipos_iva)
@@ -498,6 +499,7 @@ void FrmArticulos::LLenarCampos(int index)
         // Tarifas
         //---------------------
         llenar_tabla_tarifas();
+        ui->txtCoste_real->blockSignals(false);
     }
 
     else if(index == 1 /*ui->Pestanas->currentWidget()==ui->tab_proveedores*/)
@@ -2681,5 +2683,31 @@ void FrmArticulos::on_botBuscarGrupo_clicked()
         oArticulo->cGrupoArt = consulta.get_record().value("grupo_art").toString();
         oArticulo->cod_GrupoArt = consulta.get_record().value("codigo").toString();
         ui->txtcGupoArt->setText(consulta.get_record().value("grupo_art").toString());
+    }
+}
+
+void FrmArticulos::on_txtCoste_real_textChanged(const QString &arg1)
+{
+    if((oArticulo->coste_real != arg1.toDouble()) && (QMessageBox::question(this,tr("Recalcular tarifas")
+                          ,tr("¿Desea recalcular tarifas en base al nuevo coste?")
+                          ,tr("No"),
+                          tr("Sí")) == QMessageBox::Accepted))
+    {
+        for(auto i = 0; i< modelTarifa->rowCount(); i++)
+        {
+            int id_t = modelTarifa->record(i).value("id").toInt();
+            double margen = modelTarifa->record(i).value("margen").toDouble();
+            QHash<QString,QVariant> _tar;
+            double pvp =(arg1.toDouble())/(1-(margen/100));
+            _tar["pvp"]= pvp;
+            QString error;
+            if(SqlCalls::SqlUpdate(_tar,"tarifas",Configuracion_global->groupDB,QString("id = %1").arg(id_t),error) < 0)
+            {
+                QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
+                                     tr("Falló la actualización de la tarifa: %1").arg(error),
+                                     tr("Aceptar"));
+            }
+        }
+        llenar_tabla_tarifas();
     }
 }

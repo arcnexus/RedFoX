@@ -154,6 +154,8 @@ private slots:
 
     void on_botBuscarGrupo_clicked();
 
+    void on_txtCoste_real_textChanged(const QString &arg1);
+
 public slots:
     void AnadirSeccion();
     void init();

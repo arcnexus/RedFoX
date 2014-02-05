@@ -56,8 +56,8 @@ void Articulo::Anadir()
                     _tar["id_articulo"]= this->id;
                     _tar["id_pais"]=  r.value("id_pais");
                     _tar["id_monedas"]= r.value("id_monedas");
-                    _tar["margen"]= Configuracion_global->margen;
-                    _tar["margen_minimo"]= Configuracion_global->margen_minimo;
+                    _tar["margen"]= r.value("margen");
+                    _tar["margen_minimo"]= r.value("margen_min");
                     _tar["id_codigo_tarifa"]= r.value("id");
 
                     if(SqlCalls::SqlInsert(_tar,"tarifas",Configuracion_global->groupDB,error) < 0)
