@@ -966,10 +966,27 @@ color: rgb(0, 0, 241);</string>
                    </widget>
                   </item>
                   <item row="1" column="0" rowspan="2">
-                   <widget class="QTreeView" name="lista_tipos">
+                   <widget class="QTreeWidget" name="lista_tipos">
                     <property name="styleSheet">
                      <string/>
                     </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="showDropIndicator" stdset="0">
+                     <bool>true</bool>
+                    </property>
+                    <property name="rootIsDecorated">
+                     <bool>true</bool>
+                    </property>
+                    <attribute name="headerVisible">
+                     <bool>false</bool>
+                    </attribute>
+                    <column>
+                     <property name="text">
+                      <string>Tipo</string>
+                     </property>
+                    </column>
                    </widget>
                   </item>
                  </layout>

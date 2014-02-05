@@ -129,7 +129,6 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
 
     //SQL MODELS
-    QSqlQueryModel *qModelTipos;
     QSqlQueryModel *qModeldireccion;
     QSqlQueryModel *Pedidos;
     QSqlQueryModel *Albaranes;
@@ -153,5 +152,7 @@ private:
 
     QCompleter * calle_completer;
     QSqlTableModel * calle_completer_model;
+
+    void llenar_tipoCliente();
 };
 #endif

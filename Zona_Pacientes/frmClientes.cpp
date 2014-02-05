@@ -41,7 +41,6 @@ void frmClientes::init()
 
     //ALLOCS MODELS
     m_clientes          = new QSqlQueryModel(this);
-    qModelTipos         = new QSqlQueryModel(this);
     deudas              = new QSqlQueryModel(this);
     qModeldireccion     = new QSqlQueryModel(this);
     Pedidos             = new QSqlQueryModel(this);
@@ -120,7 +119,6 @@ void frmClientes::init()
     ui->tablaAsientos                ->setModel(modelAsientos);
     ui->TablaAlbaranes               ->setModel(Albaranes);
     ui->TablaDeudas                  ->setModel(deudas);
-    ui->lista_tipos                  ->setModel(qModelTipos);
     ui->tabla_busquedas              ->setModel(m_clientes);
     ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
     ui->cbotransportista             ->setModel(queryTransportistas);
@@ -251,10 +249,9 @@ void frmClientes::LLenarCampos()
     ui->txtemail->setText(oCliente->email);
     ui->txtweb->setText(oCliente->web);
     ui->txtObservaciones->setText(oCliente->observaciones);
-    qModelTipos->setQuery("select tipo_cliente from tipocliente where id_cliente = "+QString::number(oCliente->id),
-                          Configuracion_global->groupDB);
 
     set_blink();
+    llenar_tipoCliente();
 
     /*  tab direcciones  */
     qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
@@ -641,8 +638,7 @@ void frmClientes::VaciarCampos()
 
 
     // Tipos de clientes
-    qModelTipos->setQuery("select tipocliente from tipocliente where id_cliente = -1",
-                          Configuracion_global->groupDB);
+    ui->lista_tipos->clear();
     oCliente->codigo_cliente= "";
 
     for(auto i=0; i< qTarifa->rowCount();i++)
@@ -1548,6 +1544,45 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
     return MayaModule::eventFilter(obj,event);
 }
 
+void frmClientes::llenar_tipoCliente()
+{
+    ui->lista_tipos->clear();
+    QString query = QString("SELECT id_tipo_cliente as id,tipocliente_def.nombre as tipo, tiposubcliente_def.nombre as subtipo "
+                    "FROM `tipocliente` "
+                    "INNER JOIN `tipocliente_def` on tipocliente.id_tipo_cliente = tipocliente_def.id "
+                    "INNER JOIN `tiposubcliente_def` on tipocliente.id_subtipo_cliente = tiposubcliente_def.id "
+                    "where id_cliente = %1 ;").arg(oCliente->id);
+    QSqlQuery q(Configuracion_global->groupDB);
+    if(q.exec(query))
+    {
+        QMap<int,QString> tipos;
+        QMap<int,QStringList> subtipos;
+        while(q.next())
+        {
+            QSqlRecord r = q.record();
+            tipos[r.value("id").toInt()] = r.value("tipo").toString();
+            subtipos[r.value("id").toInt()].append(r.value("subtipo").toString());
+        }
+        QMapIterator<int,QStringList> _it(subtipos);
+        while(_it.hasNext())
+        {
+            _it.next();
+            int id = _it.key();
+            QTreeWidgetItem * root = new QTreeWidgetItem(ui->lista_tipos);
+            root->setText(0,tipos.value(id));
+            QStringListIterator _list_it(_it.value());
+            while(_list_it.hasNext())
+            {
+                QTreeWidgetItem * child = new QTreeWidgetItem(root);
+                child->setText(0,_list_it.next());
+                root->addChild(child);
+            }
+            ui->lista_tipos->addTopLevelItem(root);
+        }
+    }
+    ui->lista_tipos->expandAll();
+}
+
 void frmClientes::on_btnGuardardireccionAlternativa_clicked()
 {
     if(ui->cbopaisAlternativa->currentText().isEmpty())
@@ -1771,4 +1806,5 @@ void frmClientes::on_btnEdita_tipoCliente_clicked()
 {
     FrmAddTipoCliente f(this,oCliente->id);
     f.exec();
+    llenar_tipoCliente();
 }
