@@ -28,6 +28,7 @@ public:
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void init_querys();
+    void formatLineas();
 signals:
 
 private slots:
@@ -92,6 +93,8 @@ private slots:
 
     void on_btn_borrarLinea_clicked();
 
+    void on_chkrecargo_equivalencia_toggled(bool checked);
+
 private:
     Ui::frmPedidos *ui;
 
@@ -114,8 +117,7 @@ private:
     QString _moneda;
     QAction menuButton;
     QPushButton* push;
-    QSqlQueryModel *m;
-    QSqlQueryModel *iva;
+    QSqlQueryModel *model_busqueda;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
     QSqlQueryModel *modelLineas;

@@ -15,6 +15,20 @@
 #include "../vencimientos.h"
 #include "../Auxiliares/frmeditline.h"
 
+void FrmPedidos::formatLineas()
+{
+    QStringList header;
+    QVariantList sizes;
+    header << tr("id") << "id_articulo"<< tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("% DTO") << tr("pvp.") << tr("Subtotal");
+    header  << tr("% I.V.A.") << tr("Total");
+    sizes << 0<< 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
+    for(int i = 0; i <header.size();i++)
+    {
+        ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
+        modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
+    }
+}
+
 FrmPedidos::FrmPedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::frmPedidos),
@@ -44,20 +58,9 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //-------------------------------
     modelLineas = new QSqlQueryModel(this);
 
-//    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-//                          "from lin_ped where id = 0;",Configuracion_global->empresaDB);
-
     ui->Lineas->setModel(modelLineas);
-    QStringList header;
-    QVariantList sizes;
-    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto") << tr("pvp.") << tr("Subtotal");
-    header  << tr("porc_iva") << tr("Total");
-    sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
-    for(int i = 0; i <header.size();i++)
-    {
-        ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
-        modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
-    }
+    formatLineas();
+
     ui->Lineas->setItemDelegateForColumn(3,new NumericDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(4,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(5,new MonetaryDelegate(this,true));
@@ -94,29 +97,25 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //--------------
     // LLenar tabla
     //--------------
-    m = new QSqlQueryModel(this);
-//    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
-//                Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
-    ui->tabla->setModel(m);
+    model_busqueda = new QSqlQueryModel(this);
+
+    ui->tabla->setModel(model_busqueda);
     formato_tabla();
     connect(ui->tabla->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this,SLOT(on_table_row_changed(QModelIndex,QModelIndex)));
-    //ui->tabla->selectRow(0);
 
-    //--------------------
-    // %Iva combos gastos
-    //--------------------
-    iva = new QSqlQueryModel(this);
-    //iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
-    ui->cboporc_iva_gasto1->setModel(iva);
-    int index = ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
-    ui->cboporc_iva_gasto2->setModel(iva);
-    index = ui->cboporc_iva_gasto2->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
-    ui->cboporc_iva_gasto3->setModel(iva);
-    index = ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+
+    ui->cboporc_iva_gasto1->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto1->setModelColumn(4);
+    ui->cboporc_iva_gasto1->setCurrentIndex(ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0)));
+
+    ui->cboporc_iva_gasto2->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto2->setModelColumn(4);
+    ui->cboporc_iva_gasto2->setCurrentIndex(ui->cboporc_iva_gasto2->findText(Configuracion_global->ivaList.at(0)));
+
+    ui->cboporc_iva_gasto3->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto3->setModelColumn(4);
+    ui->cboporc_iva_gasto3->setCurrentIndex(ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0)));
 
     //-------------------
     // Modo Busqueda
@@ -178,20 +177,21 @@ FrmPedidos::~FrmPedidos()
 void FrmPedidos::init_querys()
 {
 
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_ped where id = 0;",Configuracion_global->empresaDB);
-    m->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
+    formatLineas();
+    model_busqueda->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
                 Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
-    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
+    formato_tabla();
 }
 
 
 void FrmPedidos::LLenarCampos()
 {
     ui->lblTopcliente->setText(oPedido->cliente);
-    ui->lblToppedido->setText(QString::number(oPedido->pedido));
+    ui->lblToppedido->setText(oPedido->pedido);
     ui->txtalbaran->setText(QString::number(oPedido->albaran));
-    ui->txtpedido->setText(QString::number(oPedido->pedido));
+    ui->txtpedido->setText(oPedido->pedido);
     ui->txtfecha->setDate(oPedido->fecha);
     //oPedido->pedido;
     //oPedido->id_cliente;
@@ -272,6 +272,7 @@ void FrmPedidos::LLenarCampos()
     ui->lblfacturado->setVisible(oPedido->facturado);
     ui->txtcNumFra->setText(oPedido->factura);
     ui->txtfecha_factura->setDate(oPedido->fecha_factura);
+
     for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
     {
         if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oPedido->id_forma_pago)
@@ -314,7 +315,7 @@ void FrmPedidos::LLenarCampos()
     ui->chkentregado->setChecked(oPedido->entregado==1);
     ui->txtfecha_limite_entrega->setDate(oPedido->fecha_limite_entrega);
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda( QString::number(oPedido->total_pedido)));
-    oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
+    oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente),false);
 
     //----------------
     // Transportista
@@ -343,10 +344,8 @@ void FrmPedidos::LLenarCampos()
         }
     }
 
-
-
-    if(oPedido->traspasado_factura)
-        ui->btn_convertir->setEnabled(false);
+    ui->btn_convertir->setEnabled(!oPedido->traspasado_factura);
+    ui->txtpedido_cliente->setText(QString::number(oPedido->pedido_cliente));
 
 }
 
@@ -381,7 +380,7 @@ void FrmPedidos::LLenarCamposCliente()
 
     if (oCliente3->recargo_equivalencia==1) {
         ui->chkrecargo_equivalencia->setChecked(true);
-        oPedido->recargo_equivalencia = (1);
+        oPedido->recargo_equivalencia = 1;
         ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
         ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
         ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
@@ -392,7 +391,7 @@ void FrmPedidos::LLenarCamposCliente()
         oPedido->porc_rec4 = ui->txtporc_rec4->text().toFloat();
     } else {
         ui->chkrecargo_equivalencia->setChecked(false);
-        oPedido->recargo_equivalencia = (0);
+        oPedido->recargo_equivalencia = 0;
         ui->txtporc_rec1->setText("0.00");
         ui->txtporc_rec2->setText("0.00");
         ui->txtporc_rec3->setText("0.00");
@@ -408,7 +407,7 @@ void FrmPedidos::LLenarCamposCliente()
                                                             Configuracion_global->groupDB,error).toString());
     oPedido->id_tarifa = oCliente3->idTarifa;
 
-    oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente));
+    oCliente3->Recuperar("Select * from clientes where id ="+QString::number(oPedido->id_cliente),false);
 
 
     //---------------------------------
@@ -479,7 +478,19 @@ void FrmPedidos::LLenarCamposCliente()
             ui->cboDivisa->setCurrentIndex(-1);
         }
     }
-
+    for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
+    {
+        if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oCliente3->id_forma_pago)
+        {
+            int ind_fp = ui->cboFormapago->findText(Configuracion_global->formapago_model->record(i).value("forma_pago").toString());
+            ui->cboFormapago->setCurrentIndex(ind_fp);
+            break;
+        }
+        else
+        {
+            ui->cboFormapago->setCurrentIndex(-1);
+        }
+    }
 }
 
 void FrmPedidos::VaciarCampos()
@@ -537,7 +548,7 @@ void FrmPedidos::VaciarCampos()
     ui->txttotal_recargo_2->setText(0);
     ui->txtrec->setText("0,00");
     ui->txtentregado_a_cuenta->setText("0,00");
-    ui->txtpedido_cliente->setText("");
+    ui->txtpedido_cliente->setText("-1");
     ui->txttotal_iva_2->setText("0,00");
     ui->txtbase_total_2->setText("0,00");
     ui->txttotal_recargo_2->setText("0,00");
@@ -556,8 +567,9 @@ void FrmPedidos::VaciarCampos()
     ui->spiniva_gasto3->clear();
     this->LLenarPedido();
 
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                               "from lin_ped where id_cab = 0 limit 0;"),Configuracion_global->empresaDB);
+    formatLineas();
 
  }
 
@@ -565,7 +577,7 @@ void FrmPedidos::VaciarCampos()
 void FrmPedidos::LLenarPedido()
 {
     oPedido->albaran= ui->txtalbaran->text().toInt();
-    oPedido->pedido=ui->txtpedido->text().toInt();
+    oPedido->pedido=ui->txtpedido->text();
     oPedido->fecha=ui->txtfecha->date();
     oPedido->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
     oPedido->codigo_cliente=ui->txtcodigo_cliente->text();
@@ -644,6 +656,8 @@ void FrmPedidos::LLenarPedido()
     oPedido->iva_gasto2 = ui->spiniva_gasto2->value();
     oPedido->iva_gasto3 = ui->spiniva_gasto3->value();
     oPedido->id_forma_pago = Configuracion_global->Devolver_id_forma_pago(ui->cboFormapago->currentText());
+
+    oPedido->pedido_cliente = ui->txtpedido_cliente->text().toInt();
 }
 
 void FrmPedidos::formato_tabla()
@@ -651,12 +665,12 @@ void FrmPedidos::formato_tabla()
     // id, pedido, fecha, cliente
     QStringList headers;
     QVariantList size;
-    headers << "id" <<tr("Pedido") << tr("fecha") <<tr("Total") <<tr("cliente");
+    headers << "id" <<tr("Pedido") << tr("Fecha") <<tr("Total") <<tr("Cliente");
     size <<0 <<120 <<120 <<120 <<300;
     for(int i = 0;i<headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,size.at(i).toInt());
-        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        model_busqueda->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
     ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate(this));
@@ -684,8 +698,8 @@ void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
     QString cSQL = "select id, pedido, fecha,total_pedido, cliente from ped_cli where "+order+" like '%" + texto.trimmed() +
             "%' and ejercicio ="+
             Configuracion_global->cEjercicio +" order by "+order+" "+modo;
-    m->setQuery(cSQL,Configuracion_global->empresaDB);
-
+    model_busqueda->setQuery(cSQL,Configuracion_global->empresaDB);
+    formato_tabla();
     ui->tabla->selectRow(0);
 }
 
@@ -804,13 +818,14 @@ void FrmPedidos::calcular_pedido()
     while(li.hasNext())
     {
         li.next();
+        qDebug() << li.value();
         subtotal += li.value().value("subtotal").toDouble();
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva1->text().toFloat())
         {
             // base1
             base1 += li.value().value("total").toDouble();
             iva1 = base1*(li.value().value("porc_iva").toFloat()/100);
-            re1 = base1*(li.value().value("porc_re").toFloat()/100);
+            re1 = base1*(li.value().value("porc_rec").toFloat()/100);
             total1 = base1 + iva1 + re1;
         }
         // base2
@@ -818,7 +833,7 @@ void FrmPedidos::calcular_pedido()
         {
             base2 += li.value().value("total").toDouble();
             iva2 = base2*(li.value().value("porc_iva").toFloat()/100);
-            re2 = base2*(li.value().value("porc_re").toFloat()/100);
+            re2 = base2*(li.value().value("porc_rec").toFloat()/100);
             total2 = base2 + iva2 + re2;
 
         }
@@ -827,7 +842,7 @@ void FrmPedidos::calcular_pedido()
         {
             base3 += li.value().value("total").toDouble();
             iva3 = base3*(li.value().value("porc_iva").toFloat()/100);
-            re3 = base3*(li.value().value("porc_re").toFloat()/100);
+            re3 = base3*(li.value().value("porc_rec").toFloat()/100);
             total3 = base3 + iva3 + re3;
 
         }
@@ -836,7 +851,7 @@ void FrmPedidos::calcular_pedido()
         {
             base4 += li.value().value("total").toDouble();
             iva4 = base4*(li.value().value("porc_iva").toFloat()/100);
-            re4 = base4*(li.value().value("porc_re").toFloat()/100);
+            re4 = base4*(li.value().value("porc_rec").toFloat()/100);
             total4 = base4 + iva4 + re4;
         }
 
@@ -849,8 +864,9 @@ void FrmPedidos::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
     iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
+
     if(ui->chkrecargo_equivalencia->isChecked())
-        re1 = base1 * (ui->txtrec1->text().toFloat()/100);
+        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
@@ -860,7 +876,7 @@ void FrmPedidos::calcular_pedido()
         base2 += ui->SpinGastoDist3->value();
     iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia->isChecked())
-        re2 = base2 * (ui->txtrec1->text().toFloat()/100);
+        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
@@ -870,7 +886,7 @@ void FrmPedidos::calcular_pedido()
         base3 += ui->SpinGastoDist3->value();
     iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia->isChecked())
-        re3 = base3 * (ui->txtrec3->text().toFloat()/100);
+        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
@@ -880,7 +896,7 @@ void FrmPedidos::calcular_pedido()
         base4 += ui->SpinGastoDist3->value();
     iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
     if(ui->chkrecargo_equivalencia->isChecked())
-        re4 = base4 * (ui->txtrec4->text().toFloat()/100);
+        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
 
     // TOTALES GENERALES
 
@@ -961,8 +977,6 @@ void FrmPedidos::calcular_pedido()
     ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
-
-
 }
 
 void FrmPedidos::setUpBusqueda()
@@ -1012,7 +1026,6 @@ void FrmPedidos::setUpBusqueda()
 
 void FrmPedidos::BloquearCampos(bool state)
 {
-    //helper.blockTable(state);
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
@@ -1062,13 +1075,15 @@ void FrmPedidos::BloquearCampos(bool state)
     ui->txtpedido->setReadOnly(true);
     ui->btn_borrar->setEnabled(state);
 
-    ui->chkrecargo_equivalencia->setEnabled(false);
+    ui->chkrecargo_equivalencia->setEnabled(!state);
     ui->spiniva_gasto1->setEnabled(false);
     ui->spiniva_gasto2->setEnabled(false);
     ui->spiniva_gasto3->setEnabled(false);
     ui->btn_convertir->setEnabled(state);
 
     m_busqueda->block(!state);
+
+    ui->tabWidget_2->setCurrentIndex(0);
 }
 void FrmPedidos::on_btnSiguiente_clicked()
 {
@@ -1127,46 +1142,71 @@ void FrmPedidos::on_btnAnterior_clicked()
 
 void FrmPedidos::on_btnAnadir_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
-    VaciarCampos();
-    BloquearCampos(false);
-    ui->txtpedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
-    ui->lblToppedido->setText(QString::number(oPedido->NuevoNumeroPedido()));
+    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->groupDB.transaction();
+    if(Configuracion_global->contabilidad)
+        Configuracion_global->contaDB.transaction();
+
     int new_id = oPedido->AnadirPedido();
     if (new_id >0)
     {
+        ui->stackedWidget->setCurrentIndex(0);
+        VaciarCampos();
         oPedido->RecuperarPedido(QString("select * from ped_cli where id =%1").arg(new_id));
-
+        oPedido->pedido_cliente = -1;
         ui->txtcodigo_cliente->setFocus();
         editando = false;
+        BloquearCampos(false);
+
+        ui->txtpedido->setReadOnly(true);
+        ui->txtpedido->setText(tr("Nuevo pedido"));
+        ui->lblToppedido->setText(tr("Nuevo pedido"));
         LLenarCampos();
+        emit block();
+        ocultarBusqueda();
     } else
     {
+        Configuracion_global->empresaDB.rollback();
+        Configuracion_global->groupDB.rollback();
+        if(Configuracion_global->contabilidad)
+            Configuracion_global->contaDB.rollback();
         QMessageBox::warning(this,tr("Gestión de pedidos"), tr("Atención: No se pudo crear el pedido"),tr("Aceptar"));
-    }
-    emit block();
-    ocultarBusqueda();
-
+    }    
 }
 
 
 
 void FrmPedidos::on_btnEditar_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
-    ocultarBusqueda();
+    if(ui->stackedWidget->currentIndex()==1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        int id_ped = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        if(!oPedido->RecuperarPedido(QString("Select * from ped_cli where id = %1 limit 1 ").arg(id_ped)))
+        {
+            QMessageBox::critical(this,tr("Error al recuperar pedido"),Configuracion_global->empresaDB.lastError().text());
+            return;
+        }
+    }
+
     if (oPedido->editable)
     {
         BloquearCampos(false);
+        ui->txtpedido->setReadOnly(true);
         editando = true;
         emit block();
         Configuracion_global->empresaDB.transaction();
         Configuracion_global->groupDB.transaction();
+        if(Configuracion_global->contabilidad)
+            Configuracion_global->contaDB.transaction();
 
+        ocultarBusqueda();
+        ui->stackedWidget->setCurrentIndex(0);
     }
     else
     {
-        QMessageBox::warning(qApp->activeWindow(),tr("Editar Pedido"),tr("No se puede editar un pedido que ha sido facturado, solo los NO facturados se pueden editar")+
+        QMessageBox::warning(this,tr("Editar Pedido"),tr("No se puede editar un pedido que ha sido facturado, solo los NO facturados se pueden editar")+
                              tr("<p><b> Si necesita modificar algo genere una factura nueva y realice el abono correspondiente</b>")+
                                 tr("y luego si es preciso realice un nuevo pedido y facture de nuevo "),tr("OK"));
     }
@@ -1174,17 +1214,19 @@ void FrmPedidos::on_btnEditar_clicked()
 
 void FrmPedidos::on_btnGuardar_clicked()
 {
+    if(!editando){
+        ui->txtpedido->setText(oPedido->NuevoNumeroPedido());
+        ui->lblToppedido->setText( ui->txtpedido->text());
+    }
     LLenarPedido();
-    bool succes = true;
 
-    succes &= oPedido->GuardarPedido(oPedido->id);
-
-    if(succes)
+    if(oPedido->GuardarPedido(oPedido->id))
     {
-       Configuracion_global->empresaDB.commit();
-       Configuracion_global->groupDB.commit();
+        Configuracion_global->empresaDB.commit();
+        Configuracion_global->groupDB.commit();
 
         TimedMessageBox * t = new TimedMessageBox(this,tr("Pedido guardado con éxito"));
+        LLenarCampos();
         BloquearCampos(true);
         emit unblock();
     }
@@ -1219,7 +1261,7 @@ void FrmPedidos::on_botBuscarCliente_clicked()
     if(consulta.exec())
     {
         int id = consulta.get_id();
-        oCliente3->Recuperar("select * from clientes where id="+QString::number(id));
+        oCliente3->Recuperar("select * from clientes where id="+QString::number(id),false);
         LLenarCamposCliente();
     }
 }
@@ -1229,30 +1271,51 @@ void FrmPedidos::on_btnDeshacer_clicked()
     BloquearCampos(true);
     Configuracion_global->empresaDB.rollback();
     Configuracion_global->groupDB.rollback();
-    QString cid = (ui->txtpedido->text());
-    oPedido->RecuperarPedido("Select * from ped_cli where id ="+cid+" order by id limit 1 ");
+    if(Configuracion_global->contabilidad)
+        Configuracion_global->contaDB.rollback();
+
+    if(editando){
+        QString cid = ui->txtpedido->text();
+        oPedido->RecuperarPedido("Select * from ped_cli where id ="+cid+" order by id limit 1");
+    }
+    else
+        oPedido->RecuperarPedido("Select * from ped_cli where id > 0 order by id desc limit 1");
+
     LLenarCampos();
     emit unblock();
 }
 
 void FrmPedidos::on_btn_borrar_clicked()
 {
+    int id_ped = oPedido->id;
+    if(ui->stackedWidget->currentIndex()==1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+         id_ped =  model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+    }
+
     if (QMessageBox::question(this,tr("Borrar"),
                               tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
                               tr("Cancelar"),
-                               tr("Borrar"))== QMessageBox::Accepted)
+                              tr("Borrar"))== QMessageBox::Accepted)
     {
         bool succes = true;
         Configuracion_global->empresaDB.transaction();
+        Configuracion_global->groupDB.transaction();
+        Configuracion_global->contaDB.transaction();
 
-        QSqlQuery q(Configuracion_global->empresaDB);
-        succes = oPedido->BorrarLineas(oPedido->id);
+        succes = oPedido->BorrarTodasLineas(id_ped);
         QString error;
         succes = SqlCalls::SqlDelete("ped_cli",Configuracion_global->empresaDB,
-                                     QString("id=%1").arg(oPedido->id),error);
+                                     QString("id=%1").arg(id_ped),error);
 
         if(succes)
+        {
             succes &= Configuracion_global->empresaDB.commit();
+            succes &= Configuracion_global->groupDB.commit();
+            succes &= Configuracion_global->contaDB.commit();
+        }
 
         if(succes)
         {
@@ -1262,7 +1325,12 @@ void FrmPedidos::on_btn_borrar_clicked()
             on_btnSiguiente_clicked();
         }
         else
+        {
             Configuracion_global->empresaDB.rollback();
+            Configuracion_global->groupDB.rollback();
+            Configuracion_global->contaDB.rollback();
+
+        }
     }
     filter_table(this->texto,this->orden,this->modo);
 }
@@ -1297,8 +1365,9 @@ void FrmPedidos::lineaDeleted(lineaDetalle * ld)
 
 void FrmPedidos::refrescar_modelo()
 {
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
                               "from lin_ped where id_cab = %1;").arg(oPedido->id),Configuracion_global->empresaDB);
+    formatLineas();
 }
 
 void FrmPedidos::convertir_ealbaran()
@@ -1836,7 +1905,7 @@ void FrmPedidos::on_txtcodigo_cliente_editingFinished()
         }
         if(!ui->txtcodigo_cliente->text().isEmpty())
         {
-            oCliente3->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'");
+            oCliente3->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'",false);
             oPedido->id_cliente = oCliente3->id;
             LLenarCamposCliente();
         }
@@ -2049,16 +2118,50 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
 
 void FrmPedidos::on_btn_borrarLinea_clicked()
 {
+    if(!ui->Lineas->currentIndex().isValid())
+        return;
     if(QMessageBox::question(this,tr("Lineas de pedidos"), tr("¿Borrar la linea?"),
                              tr("No"),tr("Borrar")) == QMessageBox::Accepted)
     {
         QModelIndex index = ui->Lineas->currentIndex();
-        int id_lin = ui->Lineas->model()->index(index.row(),0).data().toInt();
-        oPedido->BorrarLineas(id_lin);
-        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                                      "from lin_ped where id_cab = %1;").arg(oPedido->id),Configuracion_global->empresaDB);
-        calcular_pedido();
+        int id_lin = modelLineas->record(index.row()).value("id").toInt();
+        int id_art = modelLineas->record(index.row()).value("id_articulo").toInt();
+        double cantidad = modelLineas->record(index.row()).value("cantidad").toDouble();
+        if(oPedido->BorrarLinea(id_lin,id_art,cantidad))
+        {
+            modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                                          "from lin_ped where id_cab = %1;").arg(oPedido->id),Configuracion_global->empresaDB);
+            formatLineas();
+            calcular_pedido();
+        }
         ui->Lineas->setFocus();
-
     }
+}
+
+void FrmPedidos::on_chkrecargo_equivalencia_toggled(bool checked)
+{
+    if (checked) {
+        ui->chkrecargo_equivalencia->setChecked(true);
+        oPedido->recargo_equivalencia = 1;
+        ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
+        ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
+        ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
+        ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
+        oPedido->porc_rec1 = ui->txtporc_rec1->text().toFloat();
+        oPedido->porc_rec2 = ui->txtporc_rec2->text().toFloat();
+        oPedido->porc_rec3 = ui->txtporc_rec3->text().toFloat();
+        oPedido->porc_rec4 = ui->txtporc_rec4->text().toFloat();
+    } else {
+        ui->chkrecargo_equivalencia->setChecked(false);
+        oPedido->recargo_equivalencia = 0;
+        ui->txtporc_rec1->setText("0.00");
+        ui->txtporc_rec2->setText("0.00");
+        ui->txtporc_rec3->setText("0.00");
+        ui->txtporc_rec4->setText("0.00");
+        oPedido->porc_rec1 = 0;
+        oPedido->porc_rec2 = 0;
+        oPedido->porc_rec3 = 0;
+        oPedido->porc_rec4 = 0;
+    }
+    calcular_pedido();
 }

@@ -284,7 +284,7 @@ void Cliente::anadirWeb()
 //    Configuracion_global->CerrarDbWeb();
 }
 
-void Cliente::Recuperar(QString cSQL)
+void Cliente::Recuperar(QString cSQL, bool showWarning)
 {
     QSqlQuery qryCliente(Configuracion_global->groupDB);
 
@@ -296,12 +296,12 @@ void Cliente::Recuperar(QString cSQL)
     {
        cargar(qryCliente.record());
     }
-    else
+    else if(showWarning)
         QMessageBox::information(qApp->activeWindow(),tr("No existe cliente"),tr("No existe cliente que coincida con los parámetros de busqueda"));
 }
 
 
-void Cliente::Recuperar(int id)
+void Cliente::Recuperar(int id, bool showWarning)
 {
     QSqlQuery qryCliente(Configuracion_global->groupDB);
 
@@ -313,7 +313,7 @@ void Cliente::Recuperar(int id)
     {
        cargar(qryCliente.record());
     }
-    else
+    else if(showWarning)
         QMessageBox::information(qApp->activeWindow(),tr("No existe cliente"),tr("No existe cliente que coincida con los parámetros de busqueda"));
 }
 

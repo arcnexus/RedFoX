@@ -55,6 +55,7 @@ bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
         }
         if(keyEvent->key() == Qt::Key_End)
         {
+            on_txtCantidad_editingFinished();
             on_btnAceptar_clicked();
             return true;
         }
@@ -528,7 +529,6 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         this->accept();
         return;
-        on_txtCodigo_editingFinished();
     }
     QHash <QString, QVariant> lin;
     lin["cantidad"] = ui->txtCantidad->text().toFloat();
@@ -540,7 +540,7 @@ void frmEditLine::on_btnAceptar_clicked()
     lin["id_articulo"]  =this->id_articulo;
     lin["id_cab"] = this->id_cab;
     lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
-    lin["porc_iva"] = ui->cboIva->currentText().toFloat();
+    lin["porc_iva"] = ui->cboIva->currentText().toFloat();   
     lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
     lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
@@ -581,9 +581,9 @@ void frmEditLine::on_btnAceptar_clicked()
                 // Si no acumula añade a unidades reservadas
                 //--------------------------------------------
                 QSqlQuery queryart(Configuracion_global->groupDB);
-                if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
-                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
-                                  this->id_articulo)))
+                if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
+                                  .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat())
+                                  .arg(this->id_articulo)))
                     QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al acumular pendientes, %1").arg(
                                              queryart.lastError().text()));
 

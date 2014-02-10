@@ -106,6 +106,7 @@ void BarraBusqueda::block(bool state)
     foreach (btn, btnList) {
         btn->setEnabled(!state);
     }
+    this->blockSignals(state);
 }
 
 void BarraBusqueda::doFocustoText()

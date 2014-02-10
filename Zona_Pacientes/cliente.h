@@ -118,8 +118,8 @@ signals:
     
 public slots:
     // Funciones de clase
-    void Recuperar(QString cSQL);
-    void Recuperar(int id);
+    void Recuperar(QString cSQL, bool showWarning = true);
+    void Recuperar(int id, bool showWarning = true);
     void cargar(QSqlRecord registro);
     void clear();
     void Guardar();

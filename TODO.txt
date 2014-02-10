@@ -143,3 +143,4 @@ ALTER TABLE `emp`.`cab_fac` ADD COLUMN `id_agente` INT(11) NULL DEFAULT '0' AFTE
 
 5/02/14
 ALTER TABLE `GrupoTest3001`.`tipocliente` DROP COLUMN `tipo_cliente`,CHANGE COLUMN `id_cliente` `id_cliente` INT(11) NULL DEFAULT NULL AFTER `id`;
+ALTER TABLE `empLibrery`.`ped_cli` CHANGE COLUMN `albaran` `albaran` VARCHAR(45) NULL DEFAULT '0' ,CHANGE COLUMN `pedido` `pedido` VARCHAR(45) NULL DEFAULT '0' ;

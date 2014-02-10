@@ -10,12 +10,13 @@ public:
 
     int id;
     int albaran;
-    int pedido;
+    QString pedido;
     QDate fecha;
     int id_cliente;
     int id_divisa;
     int id_tarifa;
     int id_transportista;
+    int pedido_cliente;
     QString codigo_cliente;
     QString cliente;
     QString direccion1;
@@ -91,13 +92,14 @@ public:
     double iva_gasto1,iva_gasto2,iva_gasto3;
 
 public slots:
-    bool BorrarLineas(int Iped);
+    bool BorrarTodasLineas(int id_pedido);
+    bool BorrarLinea(int Iped, int id_art, double cantidad);
     // Metodos de trabajo Clase Pedido
     int AnadirPedido();
     bool RecuperarPedido(QString cSQL);
     bool GuardarPedido(int nid_Pedido);
-    int NuevoNumeroPedido();
-
+    QString NuevoNumeroPedido();
+    int numPedidoCliente();
 
 };
 
