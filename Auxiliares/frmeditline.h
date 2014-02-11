@@ -25,6 +25,7 @@ public:
     void set_tabla(QString t);
     void set_editando();
     void set_acumula(bool acum);
+    void set_reserva(bool reserv);
 
 
 
@@ -63,6 +64,7 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
     QHash <QString,QVariant> anterior;
     bool realiza_acumulados;
+    bool reserva_unidades ;
 
 signals:
     void refrescar_lineas();

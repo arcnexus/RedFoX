@@ -54,6 +54,7 @@ private slots:
     void imprimir();
     void borrar_pedido();
     void llenar_campos();
+    void refrescar_modelo();
     void guardar_campos_en_objeto();
     void clear();
     void resizeTable(int x);
@@ -70,6 +71,25 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
+    void on_btnAnadirLinea_clicked();
+
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+    void calcular_pedido();
+
+    void on_btnAnadir_costes_clicked();
+
+    void on_SpinGastoDist1_valueChanged(double arg1);
+
+    void on_SpinGastoDist2_valueChanged(double arg1);
+
+    void on_SpinGastoDist3_valueChanged(double arg1);
+
+    void on_cboporc_iva_gasto1_currentIndexChanged(int index);
+
+    void on_cboporc_iva_gasto2_currentIndexChanged(int index);
+
+    void on_cboporc_iva_gasto3_currentIndexChanged(int index);
+
 private:
 
     void formatotabla();
@@ -95,6 +115,9 @@ private:
     QAction menuButton;
     QPushButton* shortCut;
     QSqlQueryModel *model;
+    QSqlQueryModel *modelLineas;
+    QSqlQueryModel *iva;
+    QSqlQueryModel *modelgastos;
 };
 
 #endif // FRMPEDidOSPROVEEDOR_H

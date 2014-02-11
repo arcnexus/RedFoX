@@ -58,6 +58,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     //-------------------------------
     modelLineas = new QSqlQueryModel(this);
 
+
     ui->Lineas->setModel(modelLineas);
     formatLineas();
 
@@ -69,6 +70,7 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
     //-------------------------------------------------------
+
 
 
     aAlbaran_action = new QAction(tr("En albaran"),this);
@@ -177,12 +179,53 @@ FrmPedidos::~FrmPedidos()
 void FrmPedidos::init_querys()
 {
 
+
     modelLineas->setQuery("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+
                           "from lin_ped where id = 0;",Configuracion_global->empresaDB);
     formatLineas();
     model_busqueda->setQuery("select id, pedido, fecha,total_pedido, cliente from ped_cli where ejercicio ="+
                 Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+
     formato_tabla();
+
+
+    ui->Lineas->setModel(modelLineas);
+    QStringList header;
+    QVariantList sizes;
+    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto") << tr("pvp.") << tr("Subtotal");
+    header  << tr("porc_iva") << tr("Total");
+    sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
+    for(int i = 0; i <header.size();i++)
+    {
+        ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
+        modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
+    }
+    ui->Lineas->setItemDelegateForColumn(3,new NumericDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(4,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(5,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(6,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(7,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
+    //-------------------------------------------------------
+    //------------------------------
+    // tabla busquedas
+    // id, pedido, fecha, cliente
+    //------------------------------
+    QStringList headers;
+    QVariantList size;
+    headers << "id" <<tr("Pedido") << tr("fecha") <<tr("Total") <<tr("cliente");
+    size <<0 <<120 <<120 <<120 <<300;
+    for(int i = 0;i<headers.length();i++)
+    {
+        ui->tabla->setColumnWidth(i,size.at(i).toInt());
+        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+    }
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate(this));
+    ui->tabla->setColumnHidden(0,true);
+
 }
 
 
@@ -347,6 +390,7 @@ void FrmPedidos::LLenarCampos()
     ui->btn_convertir->setEnabled(!oPedido->traspasado_factura);
     ui->txtpedido_cliente->setText(QString::number(oPedido->pedido_cliente));
 
+
 }
 
 void FrmPedidos::LLenarCamposCliente()
@@ -478,6 +522,7 @@ void FrmPedidos::LLenarCamposCliente()
             ui->cboDivisa->setCurrentIndex(-1);
         }
     }
+
     for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
     {
         if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oCliente3->id_forma_pago)
@@ -491,6 +536,7 @@ void FrmPedidos::LLenarCamposCliente()
             ui->cboFormapago->setCurrentIndex(-1);
         }
     }
+
 }
 
 void FrmPedidos::VaciarCampos()
@@ -1352,7 +1398,7 @@ void FrmPedidos::refrescar_modelo()
     formatLineas();
 }
 
-void FrmPedidos::convertir_ealbaran()
+void FrmPedidos::convertir_en_albaran()
 {
     if(oPedido->albaran ==0)
     {
@@ -1497,14 +1543,18 @@ void FrmPedidos::convertir_ealbaran()
               h_l["id_cab"] = added;
               h_l.remove("cantidad_a_servir");
              new_id = SqlCalls::SqlInsert(h_l,"lin_alb",Configuracion_global->empresaDB,error);
+             //--------------------
              // Unidades reservadas
+             //--------------------
              QString cSQL = QString("update articulos set unidades_reservadas = unidades_reservadas - %1").arg(
              QString::number(h_l.value("cantidad").toFloat(),'f',Configuracion_global->decimales_campos_totales));
-             cSQL.append(" where id = %1").arg(QString::number(r_l.value("id_articulo").toInt()));
+             cSQL.append(QString(" where id = %1").arg(QString::number(r_l.value("id_articulo").toInt())));
             QSqlQuery q(Configuracion_global->groupDB);
-             if(!q.exec())
+             if(!q.exec(cSQL))
                  new_id = -2;
+             //-------------------
              // Stock y acumulados
+             //-------------------
              Articulo oArt;
              oArt.acumulado_ventas(h_l.value("id_articulo").toInt(),h_l.value("cantidad").toFloat(),h_l.value("total").toDouble(),
                                    QDate::currentDate(),"V");
@@ -1580,7 +1630,7 @@ void FrmPedidos::convertir_enFactura()
         {
             LLenarPedido();
             if(ui->txtalbaran->text()=="0")
-                convertir_ealbaran();
+                convertir_en_albaran();
 
             QString serie;
             if(Configuracion_global->serie.isEmpty())
@@ -2038,6 +2088,7 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
+            frmeditar.set_reserva(true);
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
@@ -2066,11 +2117,13 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
+            frmeditar.set_reserva(true);
             frmeditar.set_linea(0,"lin_ped");
             frmeditar.set_tabla("lin_ped");
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
+
             frmeditar.set_tipo("V");
             if(!frmeditar.exec() == QDialog::Accepted)
                 refrescar_modelo();

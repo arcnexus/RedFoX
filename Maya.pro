@@ -220,7 +220,9 @@ SOURCES += main.cpp\
     Almacen/frmseccionesalmacen.cpp \
     Almacen/frmfamiliasalmacen.cpp \
     Zona_Maestros/frmagentes.cpp \
-    Zona_Maestros/frmtipocliente.cpp
+    Zona_Maestros/frmtipocliente.cpp\
+    Auxiliares/frmgastos_ped_pro.cpp
+
 
 HEADERS  += mainwindow.h \
     Zona_Pacientes/analitica.h \
@@ -406,7 +408,8 @@ HEADERS  += mainwindow.h \
     Almacen/frmseccionesalmacen.h \
     Almacen/frmfamiliasalmacen.h \
     Zona_Maestros/frmagentes.h \
-    Zona_Maestros/frmtipocliente.h
+    Zona_Maestros/frmtipocliente.h \
+    Auxiliares/frmgastos_ped_pro.h
 
 
 
@@ -506,7 +509,8 @@ FORMS    += mainwindow.ui \
     Almacen/frmseccionesalmacen.ui \
     Almacen/frmfamiliasalmacen.ui \
     Zona_Maestros/frmagentes.ui \
-    Zona_Maestros/frmtipocliente.ui
+    Zona_Maestros/frmtipocliente.ui \
+    Auxiliares/frmgastos_ped_pro.ui
 
 RESOURCES += \
     maya.qrc \
