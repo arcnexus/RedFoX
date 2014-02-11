@@ -69,10 +69,6 @@ private slots:
 
     void on_btnImprimir_2_clicked();
 
-    void on_spin_porc_dto_pp_editingFinished();
-
-    void on_spin_porc_dto_especial_editingFinished();
-
     void cboporc_iva_gasto1_currentIndexChanged(int index);
 
     void cboporc_iva_gasto2_currentIndexChanged(int index);
@@ -94,6 +90,12 @@ private slots:
     void on_btn_borrarLinea_clicked();
 
     void on_chkrecargo_equivalencia_toggled(bool checked);
+
+    void on_spinPorc_dto_pp_valueChanged(double arg1);
+
+    void on_spin_porc_dto_especial_valueChanged(double arg1);
+
+    void on_spinPorc_irpf_valueChanged(double);
 
 private:
     Ui::frmPedidos *ui;

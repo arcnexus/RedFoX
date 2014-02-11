@@ -545,7 +545,7 @@ void frmEditLine::on_btnAceptar_clicked()
     lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
     lin["promocion"] = ui->lblpromocionado->isVisible();
-    lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+    lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
     lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
     lin["id_lote"] = this->id_lote;
     QString error;
