@@ -2022,6 +2022,7 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
+            frmeditar.set_reserva(true);
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
@@ -2050,11 +2051,13 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
+            frmeditar.set_reserva(true);
             frmeditar.set_linea(0,"lin_ped");
             frmeditar.set_tabla("lin_ped");
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
+
             frmeditar.set_tipo("V");
             if(!frmeditar.exec() == QDialog::Accepted)
                 refrescar_modelo();

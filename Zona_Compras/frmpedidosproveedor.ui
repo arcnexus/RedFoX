@@ -24,7 +24,7 @@
    <item row="1" column="0" colspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
@@ -80,7 +80,7 @@
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -96,21 +96,55 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="2" colspan="2">
-               <widget class="QPushButton" name="botBuscarCliente">
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_32">
                 <property name="text">
-                 <string>Buscar Proveedor</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                 <string>C.P</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Código Proveedor:</string>
+              <item row="0" column="4">
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>251</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="txtcp">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QLineEdit" name="txtcif">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
                </widget>
               </item>
@@ -148,35 +182,10 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
-               <widget class="QLineEdit" name="txtcp">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="6">
-               <widget class="QLineEdit" name="txtcif">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="text">
+                 <string>Pais:</string>
                 </property>
                </widget>
               </item>
@@ -203,10 +212,17 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_14">
+              <item row="0" column="5">
+               <widget class="QLabel" name="label_15">
                 <property name="text">
-                 <string>Pais:</string>
+                 <string>Cif/Nif/Nie:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="7">
+               <widget class="QCheckBox" name="chkrecargo_equivalencia">
+                <property name="text">
+                 <string>Recargo de equivalencia</string>
                 </property>
                </widget>
               </item>
@@ -226,20 +242,6 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="5">
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Cif/Nif/Nie:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="7">
-               <widget class="QCheckBox" name="chklporc_rec">
-                <property name="text">
-                 <string>Recargo de equivalencia</string>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="1" colspan="7">
                <widget class="QLineEdit" name="txtdireccion1">
                 <property name="minimumSize">
@@ -250,13 +252,6 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="2">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>Población:</string>
-                </property>
-               </widget>
-              </item>
               <item row="3" column="1" colspan="7">
                <widget class="QLineEdit" name="txtdireccion2">
                 <property name="minimumSize">
@@ -264,6 +259,31 @@
                   <width>0</width>
                   <height>25</height>
                  </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2" colspan="2">
+               <widget class="QPushButton" name="botBuscarCliente">
+                <property name="text">
+                 <string>Buscar Proveedor</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Código Proveedor:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Población:</string>
                 </property>
                </widget>
               </item>
@@ -279,19 +299,6 @@
                  </size>
                 </property>
                </widget>
-              </item>
-              <item row="0" column="4">
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>251</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
               <item row="5" column="1" colspan="3">
                <widget class="QLineEdit" name="txtprovincia">
@@ -309,12 +316,32 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_32">
+              <item row="5" column="4" colspan="4">
+               <widget class="QLabel" name="label_34">
+                <property name="styleSheet">
+                 <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
+                </property>
                 <property name="text">
-                 <string>C.P</string>
+                 <string>Datos extras calculo pedido</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
+              </item>
+              <item row="6" column="4">
+               <widget class="QLabel" name="label_33">
+                <property name="text">
+                 <string>%Dto P.P.:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="5">
+               <widget class="QDoubleSpinBox" name="spinPorc_dto_pp"/>
               </item>
              </layout>
             </widget>
@@ -394,37 +421,6 @@
            <string>Líneas pedido</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="2" column="0" colspan="5">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_17">
-               <property name="text">
-                <string>Total:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lbl_total">
-               <property name="text">
-                <string>0€</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
            <item row="0" column="0">
             <widget class="QPushButton" name="btnAnadirLinea">
              <property name="enabled">
@@ -492,7 +488,7 @@
             </widget>
            </item>
            <item row="1" column="0" colspan="5">
-            <widget class="QTableWidget" name="Lineas">
+            <widget class="QTableView" name="Lineas">
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAsNeeded</enum>
              </property>
@@ -511,72 +507,6 @@
              <property name="cornerButtonEnabled">
               <bool>true</bool>
              </property>
-             <property name="columnCount">
-              <number>10</number>
-             </property>
-             <attribute name="horizontalHeaderCascadingSectionResizes">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderDefaultSectionSize">
-              <number>80</number>
-             </attribute>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>80</number>
-             </attribute>
-             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-             <attribute name="verticalHeaderCascadingSectionResizes">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderStretchLastSection">
-              <bool>false</bool>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Codigo</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Cantidad</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Descripcion</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>COSTE</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>subtotal</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>DTO</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>DTO%</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>% I.V.A.</string>
-              </property>
-             </column>
-             <column/>
-             <column/>
             </widget>
            </item>
           </layout>
@@ -924,7 +854,221 @@ color: rgb(0, 0, 0);</string>
            <string>Desglose</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_10">
-           <item row="0" column="0">
+           <item row="1" column="0">
+            <widget class="QGroupBox" name="groupBox">
+             <property name="title">
+              <string>Gastos factura</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="2" column="0">
+               <widget class="QLineEdit" name="txtGastoDist3">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QDoubleSpinBox" name="spiniva_gasto3">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QDoubleSpinBox" name="spiniva_gasto1">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="SpinGastoDist2">
+                <property name="minimum">
+                 <double>-999999999.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>999999999.990000009536743</double>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto3"/>
+              </item>
+              <item row="0" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto1"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLineEdit" name="txtGastoDist1">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="SpinGastoDist1">
+                <property name="minimum">
+                 <double>-999999999.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>999999999.990000009536743</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto2"/>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="SpinGastoDist3">
+                <property name="minimum">
+                 <double>-999999999.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>999999999.990000009536743</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLineEdit" name="txtGastoDist2">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QDoubleSpinBox" name="spiniva_gasto2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QCheckBox" name="chkcoste1">
+                <property name="text">
+                 <string>a líneas</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="4">
+               <widget class="QCheckBox" name="chkcoste2">
+                <property name="text">
+                 <string>a líneas</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4">
+               <widget class="QCheckBox" name="chkcoste3">
+                <property name="text">
+                 <string>a líneas</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QGroupBox" name="groupBox_7">
+             <property name="title">
+              <string>Gastos distribuidos líneas</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_13">
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btnBorrarCostes">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btnAnadir_costes">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" rowspan="3" colspan="2">
+               <widget class="QTableView" name="tablagastos">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_17">
+                <property name="text">
+                 <string>Total gastos distribuidos líneas:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="txtTotal_gastos_linea">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>0,00</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="5">
               <widget class="QLabel" name="label_58">
@@ -1596,134 +1740,6 @@ color: rgb(0, 0, 0);</string>
              </item>
             </layout>
            </item>
-           <item row="1" column="0">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="0">
-            <widget class="QGroupBox" name="groupBox">
-             <property name="title">
-              <string>Gastos distribuidos</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="1" column="1">
-               <widget class="QDoubleSpinBox" name="SpinGastoDist2">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QRadioButton" name="GastoDist_toLineas">
-                <property name="text">
-                 <string>Aplicar a líneas</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QDoubleSpinBox" name="SpinGastoDist3">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLineEdit" name="txtGastoDist1">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLineEdit" name="txtGastoDist3">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="4">
-               <widget class="QPushButton" name="btn_AplyGastoDist">
-                <property name="text">
-                 <string>Aplicar</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="3">
-               <widget class="QRadioButton" name="GastoDist_toTotal">
-                <property name="text">
-                 <string>Sumar al total</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QDoubleSpinBox" name="SpinGastoDist1">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLineEdit" name="txtGastoDist2">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="5">
-               <spacer name="horizontalSpacer_8">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
-           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_8">
@@ -1815,6 +1831,16 @@ color: rgb(0, 0, 0);</string>
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>Dto PP:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="txtDto_pp"/>
           </item>
           <item>
            <widget class="QLabel" name="label_16">
@@ -2293,8 +2319,8 @@ font: 14pt &quot;Sans Serif&quot;;</string>
    <slot>buscar_proveeedor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>325</x>
-     <y>113</y>
+     <x>403</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
      <x>555</x>
@@ -2309,8 +2335,8 @@ font: 14pt &quot;Sans Serif&quot;;</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1032</x>
-     <y>549</y>
+     <x>1034</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>1031</x>

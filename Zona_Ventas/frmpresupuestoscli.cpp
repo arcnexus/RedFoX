@@ -33,6 +33,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
     ui->cboFormaPago->setModel(Configuracion_global->formapago_model);
     ui->cboDivisa->setModel(Configuracion_global->divisas_model);
+    ui->cboDivisa->setModelColumn(1);
 
 
     model_busqueda = new QSqlQueryModel(this);
@@ -45,38 +46,6 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     //------------------------
     oPres = new Presupuesto(this);
     oClientePres = new Cliente(this);
-
-    //helper.set_Tipo(false);
-    //helper.help_table(ui->tableWidget);
-
-//    //---------------------
-//    // Conexiones
-//    //---------------------
-
-//    connect(ui->btnAnadirLinea,SIGNAL(clicked()),&helper,SLOT(addRow()));
-//    connect(ui->btn_borrarLinea,SIGNAL(clicked()),&helper,SLOT(removeRow()));
-
-//    connect(&helper,SIGNAL(totalChanged(double,double,double,double,double,double,QString)),
-//            this,SLOT(totalChanged(double,double,double,double,double,double,QString)));
-
-//    connect(&helper,SIGNAL(desglose1Changed(double,double,double,double)),
-//            this,SLOT(desglose1Changed(double,double,double,double)));
-
-//    connect(&helper,SIGNAL(desglose2Changed(double,double,double,double)),
-//            this,SLOT(desglose2Changed(double,double,double,double)));
-
-//    connect(&helper,SIGNAL(desglose3Changed(double,double,double,double)),
-//            this,SLOT(desglose3Changed(double,double,double,double)));
-
-//    connect(&helper,SIGNAL(desglose4Changed(double,double,double,double)),
-//            this,SLOT(desglose4Changed(double,double,double,double)));
-
-//    connect(&helper,SIGNAL(lineaReady(lineaDetalle*)),this,SLOT(lineaReady(lineaDetalle*)));
-//    connect(&helper,SIGNAL(lineaDeleted(lineaDetalle*)),this,SLOT(lineaDeleted(lineaDetalle*)));
-
-//    connect(ui->chklporc_rec,SIGNAL(toggled(bool)),&helper,SLOT(set_UsarRE(bool)));
-
-//    helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
 
     aPedido_action = new QAction(tr("En pedido"),this);
     aAlbaran_action = new QAction(tr("En albaran"),this);
@@ -144,7 +113,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->Lineas->setModel(modelLineas);
     QStringList header;
     QVariantList sizes;
-    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto")  << tr("pvp.") << tr("Subtotal");
+    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto")  << tr("pvp cli.") << tr("Subtotal");
     header << tr("porc_iva") << tr("Total");
     sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
     for(int i = 0; i <header.size();i++)
@@ -160,6 +129,23 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
     //-------------------------------------------------------
+
+
+
+    //--------------------
+    // %Iva combos gastos
+    //--------------------
+    iva = new QSqlQueryModel(this);
+    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
+    ui->cboporc_iva_gasto1->setModel(iva);
+    int index = ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    ui->cboporc_iva_gasto2->setModel(iva);
+    index = ui->cboporc_iva_gasto2->findText(Configuracion_global->ivaList.at(0));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    ui->cboporc_iva_gasto3->setModel(iva);
+    index = ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
 
 
 }
@@ -283,6 +269,7 @@ void FrmPresupuestosCli::LLenarCampos()
     QString divisa = Configuracion_global->Devolver_moneda(oPres->id_divisa);
     index = ui->cboDivisa->findText(divisa);
     ui->cboDivisa->setCurrentIndex(index);
+    refrescar_modelo();
 }
 
 void FrmPresupuestosCli::LLenarCamposCliente()
@@ -306,6 +293,7 @@ void FrmPresupuestosCli::LLenarCamposCliente()
     ui->txtmovil->setText(oClientePres->movil);
     ui->txtemail->setText(oClientePres->email);
 
+
     if (oClientePres->lIRPF==1) {
         ui->chkrecargo_equivalencia->setChecked(true);
         oPres->recargo_equivalencia = 1;
@@ -328,12 +316,6 @@ void FrmPresupuestosCli::LLenarCamposCliente()
         ui->txtporc_rec3->setText("0.00");
         ui->txtporc_rec4->setText("0.00");
     }
-
-    //helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    //helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    //helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    //helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
-
     //---------------------------------
     // Comprobar direccion alternativa
     //---------------------------------
@@ -2160,4 +2142,65 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
     if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
     return MayaModule::eventFilter(obj,event);
+}
+
+void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
+{
+    if(ui->btnGuardar->isEnabled())
+    {
+            frmEditLine frmeditar(this);
+            connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_acumula(false);
+            frmeditar.set_linea(0,"lin_pre");
+            frmeditar.set_tabla("lin_pre");
+            frmeditar.set_id_cliente(oClientePres->id);
+            frmeditar.set_id_tarifa(oClientePres->idTarifa);
+            frmeditar.set_id_cab(oPres->id);
+            frmeditar.set_tipo("V");
+            if(!frmeditar.exec() == QDialog::Accepted)
+                refrescar_modelo();
+                calcular_presupuesto();
+
+    } else{
+        QMessageBox::warning(this,tr("Gestión de Pedidos"),tr("Debe editar el pedido para añadir líneas"),
+                             tr("Aceptar"));
+    }
+}
+
+void FrmPresupuestosCli::refrescar_modelo()
+{
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
+                              "from lin_pre where id_cab = %1;").arg(oPres->id),Configuracion_global->empresaDB);
+}
+
+void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
+{
+    if(ui->btnGuardar->isEnabled())
+    {
+        int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
+        if(id_lin >0)
+        {
+
+            frmEditLine frmeditar(this);
+            connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.set_acumula(false);
+            frmeditar.set_id_cliente(oClientePres->id);
+            frmeditar.set_id_tarifa(oClientePres->idTarifa);
+            frmeditar.set_id_cab(oPres->id);
+            frmeditar.set_tipo("V");
+            frmeditar.set_linea(id_lin,"lin_pre");
+            frmeditar.set_tabla("lin_pre");
+            frmeditar.set_editando();
+            frmeditar.exec();
+
+            calcular_presupuesto();
+            ui->Lineas->setFocus();
+
+        } else
+        {
+            QMessageBox::warning(this, tr("Gestión de Pedidos"),tr("Debe editar el pedido para poder modificar las líneas"),
+                                 tr("Aceptar"));
+
+        }
+    }
 }
