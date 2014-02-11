@@ -95,6 +95,20 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
     void calcular_presupuesto();
+    void on_btnAnadirLinea_clicked();
+    void refrescar_modelo();
+
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btnPrforma_clicked();
+
+    void on_SpinGastoDist1_valueChanged(double arg1);
+    void on_SpinGastoDist2_valueChanged(double arg1);
+    void on_SpinGastoDist3_valueChanged(double arg1);
+
+    void on_cboporc_iva_gasto1_currentIndexChanged(int index);
+    void on_cboporc_iva_gasto2_currentIndexChanged(int index);
+    void on_cboporc_iva_gasto3_currentIndexChanged(int index);
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;
@@ -109,6 +123,7 @@ private:
     QPushButton* push;
     QSqlQueryModel *model_busqueda;
     QSqlQueryModel *modelLineas;
+    QSqlQueryModel *iva;
     TimedMessageBox *t;
     bool eventFilter(QObject *obj, QEvent *event);
 

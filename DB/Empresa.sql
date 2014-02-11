@@ -740,6 +740,18 @@ CREATE TABLE `@empresa@`.`fac_pro` (
   PRIMARY KEY (`id`),
   KEY `id_tipo_gasto` (`id_tipo_gasto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE `empagupuntsl2013`.`gastos_ped_pro` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_cab` INT NULL DEFAULT '0',
+  `descripcion` VARCHAR(45) NULL,
+  `importe` DOUBLE NULL,
+  `ident` INT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;;
+
+
 CREATE TABLE `@empresa@`.`histovales` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_vale` int(11) DEFAULT '0',
@@ -877,6 +889,7 @@ CREATE TABLE `@empresa@`.`lin_ped_pro` (
   `etiquetas` int(11) DEFAULT '0',
   `cantidad_pendiente` int(11) DEFAULT '0',
   `cerrado` tinyint(1) DEFAULT '0',
+  `coste_real_unidad` DOUBLE  NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_pre` (

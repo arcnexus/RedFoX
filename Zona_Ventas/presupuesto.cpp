@@ -69,6 +69,7 @@ bool Presupuesto::AnadirPresupuesto()
      else
      {         
          this->id = new_id;
+         RecuperarPresupuesto(QString("select * from cab_pre where id =%1").arg(new_id));
          return true;
      }
 }

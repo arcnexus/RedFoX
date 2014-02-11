@@ -355,7 +355,10 @@ color: rgb(0, 85, 0);</string>
       <string>Datos Línea.</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="3" column="0" colspan="13">
+      <item row="1" column="12">
+       <widget class="QComboBox" name="cboIva"/>
+      </item>
+      <item row="2" column="0" colspan="13">
        <widget class="QLabel" name="label_2">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -370,10 +373,10 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="13">
+      <item row="3" column="0" colspan="13">
        <widget class="QLineEdit" name="txtDescripcion"/>
       </item>
-      <item row="6" column="10">
+      <item row="5" column="10">
        <widget class="QLabel" name="label_7">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -412,7 +415,7 @@ Recom.</string>
        </widget>
       </item>
       <item row="0" column="10">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="lbl_pvp_cliente">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
 font: 14pt &quot;Sans Serif&quot;;
@@ -427,7 +430,7 @@ Cliente</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="12">
+      <item row="4" column="12">
        <widget class="QLineEdit" name="txt_total_linea">
         <property name="minimumSize">
          <size>
@@ -462,10 +465,7 @@ Cliente</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="12">
-       <widget class="QComboBox" name="cboIva"/>
-      </item>
-      <item row="6" column="9">
+      <item row="5" column="9">
        <widget class="QLineEdit" name="txtImporte_iva">
         <property name="enabled">
          <bool>false</bool>
@@ -497,7 +497,7 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="12">
+      <item row="5" column="12">
        <widget class="QLineEdit" name="txtTotal_con_iva">
         <property name="enabled">
          <bool>false</bool>
@@ -529,7 +529,7 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="7">
+      <item row="5" column="7">
        <widget class="QLabel" name="label_9">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -582,7 +582,7 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="10">
+      <item row="4" column="10">
        <widget class="QLabel" name="label_10">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
@@ -641,6 +641,13 @@ color: rgb(0, 192, 0);</string>
         </property>
        </widget>
       </item>
+      <item row="1" column="8">
+       <widget class="QLineEdit" name="txtTarifa">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="6">
        <widget class="QLabel" name="label_3">
         <property name="maximumSize">
@@ -674,13 +681,6 @@ color: rgb(255,255,255);</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="8">
-       <widget class="QLineEdit" name="txtTarifa">
-        <property name="enabled">
-         <bool>false</bool>
         </property>
        </widget>
       </item>

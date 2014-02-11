@@ -10,6 +10,7 @@ frmEditLine::frmEditLine(QWidget *parent) :
     ui->setupUi(this);
 
     this->editando = false;
+    this->reserva_unidades = false;
     this->dto_tarifa =0;
     ui->lblpromocionado->setVisible(false);
     ui->chk3_2->setVisible(false);
@@ -142,6 +143,13 @@ void frmEditLine::set_id_tarifa(int id)
 void frmEditLine::set_tipo(QString tipo)
 {
     this->tipo = tipo;
+    if(this->tipo == "V")
+    {
+        ui->lbl_pvp_cliente->setText(tr("PVP\nCliente"));
+    } else
+    {
+        ui->lbl_pvp_cliente->setText(tr("Coste"));
+    }
 }
 
 
@@ -165,6 +173,11 @@ void frmEditLine::set_editando()
 void frmEditLine::set_acumula(bool acum)
 {
     this->realiza_acumulados = acum;
+}
+
+void frmEditLine::set_reserva(bool reserv)
+{
+    this->reserva_unidades = reserv;
 }
 
 
@@ -211,9 +224,14 @@ void frmEditLine::on_txtCodigo_editingFinished()
 
         } else
         {
+
             QString error;
-               this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1'").arg(ui->txtCodigo->text()),
+            this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1'").arg(ui->txtCodigo->text()),
                                                    Configuracion_global->groupDB,error).toInt();
+            if(this->id_articulo <1)
+                this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo_fabricante = '%1'").arg(ui->txtCodigo->text()),
+                                                       Configuracion_global->groupDB,error).toInt();
+
             if(!error.isEmpty())
             {
                 QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo recuperar el artículo: %1").arg(error),
@@ -281,14 +299,24 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
             }
 
         }
-        ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_cliente").toDouble(),'f',
-                                                                                  Configuracion_global->decimales_campos_totales)));
+        if(this->tipo == "V")
+        {
+            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_cliente").toDouble(),'f',
+                                                                                      Configuracion_global->decimales_campos_totales)));
 
-        ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                             i.value().value("pvp_con_iva").toDouble(),'f',
-                                                                             Configuracion_global->decimales_campos_totales)));
-        ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
-                                                                                              Configuracion_global->decimales)));
+            ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
+                                                                                 i.value().value("pvp_con_iva").toDouble(),'f',
+                                                                                 Configuracion_global->decimales_campos_totales)));
+            ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
+                                                                                                  Configuracion_global->decimales)));
+        } else
+        {
+            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("coste").toDouble(),'f',
+                                                                                      Configuracion_global->decimales_campos_totales)));
+            ui->txtPvp_conIva->setText("0,00");
+            ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("coste").toDouble(),'f',
+                                                                                                  Configuracion_global->decimales)));
+        }
         //-------------------------
         // Calculamos %dto tarifa
         //-------------------------
@@ -577,15 +605,18 @@ void frmEditLine::on_btnAceptar_clicked()
                 }
             } else
             {
-                // -------------------------------------------
-                // Si no acumula añade a unidades reservadas
-                //--------------------------------------------
-                QSqlQuery queryart(Configuracion_global->groupDB);
-                if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
-                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
-                                  this->id_articulo)))
-                    QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al acumular pendientes, %1").arg(
-                                             queryart.lastError().text()));
+                if(this->reserva_unidades)
+                {
+                    // -------------------------------------------
+                    // Si no acumula añade a unidades reservadas
+                    //--------------------------------------------
+                    QSqlQuery queryart(Configuracion_global->groupDB);
+                    if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
+                                      QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),'f',
+                                                      2),QString::number(this->id_articulo))))
+                        QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al reservar unidades, %1").arg(
+                                                 queryart.lastError().text()));
+                }
 
                 emit refrescar_lineas();
             }

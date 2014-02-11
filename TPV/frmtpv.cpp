@@ -1986,7 +1986,7 @@ void FrmTPV::imprimir()
         if(oTpv->id_cliente >0)
             report = "ticket_";/*+QString::number(->ididioma);*/
         else
-            report ="ticket_0";
+            report ="ticket_1";
 
         QMap <QString,QString> parametros;
         //TODO parametros
