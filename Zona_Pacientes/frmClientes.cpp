@@ -43,7 +43,6 @@ void frmClientes::init_querys()
     ui->tablaAsientos                ->setModel(modelAsientos);
     ui->TablaAlbaranes               ->setModel(Albaranes);
     ui->TablaDeudas                  ->setModel(deudas);
-    ui->lista_tipos                  ->setModel(qModelTipos);
     ui->tabla_busquedas              ->setModel(m_clientes);
     ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
     ui->cbotransportista             ->setModel(queryTransportistas);

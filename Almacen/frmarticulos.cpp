@@ -2711,6 +2711,7 @@ void FrmArticulos::on_txtCoste_real_textChanged(const QString &arg1)
         }
         llenar_tabla_tarifas();
     }
+}
 
 
 void FrmArticulos::on_btnResArt_clicked()

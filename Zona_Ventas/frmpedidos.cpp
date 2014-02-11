@@ -220,7 +220,7 @@ void FrmPedidos::init_querys()
     for(int i = 0;i<headers.length();i++)
     {
         ui->tabla->setColumnWidth(i,size.at(i).toInt());
-        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        model_busqueda->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
     ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
     ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate(this));
