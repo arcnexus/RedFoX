@@ -169,57 +169,76 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
                         dia_pago2 = SqlCalls::SelectOneField("clientes","dia_pago2",QString("id=%1").arg(id_cliente),
                                                              Configuracion_global->groupDB,error).toInt();
                     }
-                    if(dias_entre_plazos >0)
+                    int dia_calc = dia;
+                    if(dia_calc < dia_pago4-1)
+                        dia = dia_pago4;
+                    if(dia_calc < dia_pago3-1)
+                        dia = dia_pago3;
+                    if(dia_calc < dia_pago2-1)
+                        dia = dia_pago2;
+                    if(dia_calc < dia_pago1-1)
+                        dia = dia_pago1;
+                    if(dia > dia_pago1 && dia > dia_pago2 &&dia > dia_pago3 && dia > dia_pago4)
                     {
-                        if(dia < dia_pago1)
-                            dia = dia_pago1;
-                        else if(dia < dia_pago2)
-                            dia = dia_pago2;
-                        else if(dia < dia_pago3)
-                            dia = dia_pago3;
-                        else if(dia < dia_pago4)
-                            dia = dia_pago4;
-                        else if(dia > dia_pago1 && dia > dia_pago2 &&dia > dia_pago3 && dia > dia_pago4)
+                        dia = dia_pago1;
+                        if(dia == 0)
+                            dia = QDate().currentDate().day();
+                        if (mes <=11)
+                            mes++;
+                        else
                         {
-                            dia = dia_pago1;
-                            if(dia == 0)
-                                dia = QDate().currentDate().day();
-                            if (mes <=11)
-                                mes++;
-                            else
-                            {
-                                mes = 1;
-                                ano++;
-                            }
-
-
-
+                            mes = 1;
+                            ano++;
                         }
                     }
-                    vencimiento = QDate(ano,mes,dia);
-                   //---------------------
-                   // insertar vencimiento
-                   //---------------------
-                   QHash <QString,QVariant> h;
-                   h["fecha"] =fecha;
-                   h["vencimiento"] = vencimiento;
-                   h["documento"]= documento;
-                   if(id_ticket > -1)
-                       h["id_ticket"] =id_ticket;
-                   if(id_factura > -1)
-                       h["id_factura"] = id_factura;
 
-                   h["tipo"] = tipo;
-                   h["importe"] =importe;
-                   h["pendiente_cobro"] = importe;
-                   h["entidad"] = entidad;
-                   h["oficina"] = oficina;
-                   h["dc"] = dc;
-                   h["cuenta"] = cuenta;
-                   h["id_cliente"] = id_cliente;
+                    if(mes ==2 && dia>28)
+                        dia =28;
 
-                   int new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
+                   vencimiento = QDate(ano,mes,dia);
+                   int new_id;
+                   if(compra_venta == "c")
+                   {
+                       //------------------------------
+                       // insertar vencimiento cliente
+                       //------------------------------
+                       QHash <QString,QVariant> h;
+                       h["fecha"] =fecha;
+                       h["vencimiento"] = vencimiento;
+                       h["documento"]= documento;
+                       if(id_ticket > -1)
+                           h["id_ticket"] =id_ticket;
+                       if(id_factura > -1)
+                           h["id_factura"] = id_factura;
 
+                       h["tipo"] = tipo;
+                       h["importe"] =importe;
+                       h["pendiente_cobro"] = importe;
+                       h["entidad"] = entidad;
+                       h["oficina"] = oficina;
+                       h["dc"] = dc;
+                       h["cuenta"] = cuenta;
+                       h["id_cliente"] = id_cliente;
+                       new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
+                   }
+                   else
+                   {
+                       //--------------------------------
+                       // insertar vencimiento proveedor
+                       //--------------------------------
+                       QHash <QString,QVariant> h;
+                       //`asiento_numero`,
+                       h["documento"] = documento;
+                       h["fecha_deuda"]= fecha;
+                       //`id_asiento`
+                       h["id_documento"] =documento;
+                       h["id_proveedor"]= id_cliente;
+                       h["importe_deuda"] = importe;
+                       h["pendiente"] = importe;
+                       h["vencimiento"] = vencimiento;
+
+                       new_id = SqlCalls::SqlInsert(h,"deudas_proveedores",Configuracion_global->groupDB,error);
+                   }
                    if(new_id ==-1)
                    {
                        t_error = true;
