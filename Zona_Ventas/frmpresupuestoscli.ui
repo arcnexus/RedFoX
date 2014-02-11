@@ -485,6 +485,29 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btnPrforma">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Proforma</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../maya.qrc">
+              <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnEditar">
             <property name="minimumSize">
              <size>
@@ -592,7 +615,7 @@ background-color: rgb(255, 255, 255);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="title">
@@ -2332,8 +2355,14 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="1" column="3">
                  <widget class="QDoubleSpinBox" name="spinIva_gasto1">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -2373,15 +2402,27 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item row="2" column="3">
                  <widget class="QDoubleSpinBox" name="spinIva_gasto2">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item row="3" column="3">
                  <widget class="QDoubleSpinBox" name="spinIva_gasto3">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>

@@ -136,16 +136,19 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     // %Iva combos gastos
     //--------------------
     iva = new QSqlQueryModel(this);
-    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
-    ui->cboporc_iva_gasto1->setModel(iva);
+    //iva->setQuery("select iva from tiposiva order by iva desc",Configuracion_global->groupDB);
+    ui->cboporc_iva_gasto1->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto1->setModelColumn(4);
     int index = ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0));
     ui->cboporc_iva_gasto1->setCurrentIndex(index);
-    ui->cboporc_iva_gasto2->setModel(iva);
+    ui->cboporc_iva_gasto2->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto2->setModelColumn(4);
     index = ui->cboporc_iva_gasto2->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
-    ui->cboporc_iva_gasto3->setModel(iva);
+    ui->cboporc_iva_gasto2->setCurrentIndex(index);
+    ui->cboporc_iva_gasto3->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto3->setModelColumn(4);
     index = ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    ui->cboporc_iva_gasto3->setCurrentIndex(index);
 
 
 }
@@ -207,9 +210,12 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->SpinGastoDist1->setValue(oPres->importe_gasto1);
     ui->SpinGastoDist2->setValue(oPres->importe_gasto2);
     ui->SpinGastoDist3->setValue(oPres->importe_gasto3);
-    ui->cboporc_iva_gasto1->setCurrentIndex(1);
-    ui->cboporc_iva_gasto2->setCurrentIndex(1);
-    ui->cboporc_iva_gasto3->setCurrentIndex(1);
+    index = ui->cboporc_iva_gasto1->findText(QString::number(oPres->porc_iva_gasto1));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    index = ui->cboporc_iva_gasto2->findText(QString::number(oPres->porc_iva_gasto2));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    index = ui->cboporc_iva_gasto3->findText(QString::number(oPres->porc_iva_gasto3));
+    ui->cboporc_iva_gasto1->setCurrentIndex(index);
     ui->spinIva_gasto1->setValue(oPres->iva_gasto1);
     ui->spinIva_gasto2->setValue(oPres->iva_gasto2);
     ui->spinIva_gasto3->setValue(oPres->iva_gasto3);
@@ -254,15 +260,6 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtemail->setText(oPres->email);
     ui->chkrecargo_equivalencia->setChecked(oPres->recargo_equivalencia);
     oClientePres->Recuperar("Select * from clientes where id ="+QString::number(oPres->id_cliente));
-    //helper.s(oClientePres->tarifa_cliente);
-    //helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    //helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    //helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    //helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
-    QString filter = QString("id_Cab = '%1'").arg(oPres->id);
-    //helper.fillTable("empresa","lin_pre",filter);
-    //helper.setId_cliente(oClientePres->id);
-    //helper.set_tipo_dto_tarifa(oClientePres->tipo_dto_tarifa);
     //----------------------
     // asigno divisa
     //----------------------
@@ -524,6 +521,19 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txttotal4->setText("0,00");
     ui->txtemail->setText("");
     ui->txtcliente->setText("");
+    ui->txtGastoDist1->setText("");
+    ui->txtGastoDist2->setText("");
+    ui->txtGastoDist3->setText("");
+    ui->spinIva_gasto1->setValue(0);
+    ui->spinIva_gasto2->setValue(0);
+    ui->spinIva_gasto3->setValue(0);
+    ui->cboporc_iva_gasto1->setCurrentIndex(0);
+    ui->cboporc_iva_gasto2->setCurrentIndex(0);
+    ui->cboporc_iva_gasto3->setCurrentIndex(0);
+    ui->SpinGastoDist1->setValue(0);
+    ui->SpinGastoDist2->setValue(0);
+    ui->SpinGastoDist3->setValue(0);
+
 
     //helper.fillTable("empresa","lin_pre","id_Cab = -1");
 }
@@ -655,6 +665,7 @@ void FrmPresupuestosCli::on_btnAnadir_clicked()
     //helper.fillTable("empresa","lin_pre",filter);
     //helper.set_tarifa(Configuracion_global->id_tarifa_predeterminada);
     BloquearCampos(false);
+
     oPres->AnadirPresupuesto();
     LLenarCampos();
     ui->txtcodigo_cliente->setFocus();
@@ -2203,4 +2214,76 @@ void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
 
         }
     }
+}
+
+void FrmPresupuestosCli::on_btnPrforma_clicked()
+{
+    FrmDialogoImprimir dlg_print(this);
+    dlg_print.set_email(oClientePres->email);
+    dlg_print.set_preview(false);
+    if(dlg_print.exec() == dlg_print.Accepted)
+    {
+        bool ok  /* = oFactura->set_impresa(true)*/;
+        if(ok)
+        {
+            ui->lbimpreso->setVisible(true);
+            int valor = dlg_print.get_option();
+            QMap <QString,QString> parametros_sql;
+            parametros_sql["Empresa.cab_pre"] = QString("id = %1").arg(oPres->id);
+            parametros_sql["Empresa.lin_pre"] = QString("id_cab = %1").arg(oPres->id);
+            QString report = "proforma_"+QString::number(oClientePres->ididioma);
+
+            QMap <QString,QString> parametros;
+            //TODO add parametros
+            switch (valor) {
+            case 1: // Impresora
+                Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+                break;
+            case 2: // email
+                // TODO - enviar pdf por mail
+                break;
+            case 3: // PDF
+                Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+                break;
+            case 4: //preview
+                Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+                break;
+            default:
+                break;
+            }
+
+        }
+    }
+}
+
+void FrmPresupuestosCli::on_SpinGastoDist1_valueChanged(double arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_presupuesto();
+}
+void FrmPresupuestosCli::on_SpinGastoDist2_valueChanged(double arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_presupuesto();
+}
+void FrmPresupuestosCli::on_SpinGastoDist3_valueChanged(double arg1)
+{
+    Q_UNUSED(arg1);
+    calcular_presupuesto();
+}
+
+void FrmPresupuestosCli::on_cboporc_iva_gasto1_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    calcular_presupuesto();
+}
+void FrmPresupuestosCli::on_cboporc_iva_gasto2_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    calcular_presupuesto();
+}
+void FrmPresupuestosCli::on_cboporc_iva_gasto3_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    calcular_presupuesto();
 }
