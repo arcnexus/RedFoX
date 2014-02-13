@@ -598,9 +598,9 @@ void frmEditLine::on_btnAceptar_clicked()
                 if(this->id_lote>0);
                 {
                     QSqlQuery lote(Configuracion_global->groupDB);
-                    lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
-                                  Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,
-                                  this->id_lote));
+                    lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2")
+                              .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant)
+                              .arg(this->id_lote));
 
                 }
             } else
@@ -611,11 +611,12 @@ void frmEditLine::on_btnAceptar_clicked()
                     // Si no acumula añade a unidades reservadas
                     //--------------------------------------------
                     QSqlQuery queryart(Configuracion_global->groupDB);
-                    if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
-                                      QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),'f',
-                                                      2),QString::number(this->id_articulo))))
-                        QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al reservar unidades, %1").arg(
-                                                 queryart.lastError().text()));
+                    if(!queryart.exec(
+                                QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
+                                .arg(QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),'f',2))
+                                .arg(QString::number(this->id_articulo))
+                                ))
+                                QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al reservar unidades, %1").arg(queryart.lastError().text()));
                 }
 
                 emit refrescar_lineas();
@@ -652,9 +653,9 @@ void frmEditLine::on_btnAceptar_clicked()
                 {
                     QString idlote = QString::number(this->id_lote);
                     QSqlQuery lote(Configuracion_global->groupDB);
-                    if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2").arg(
-                                  QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),'f',2),
-                                      idlote)))
+                    if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2")
+                                  .arg(QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),'f',2))
+                                  .arg(idlote)))
                         QMessageBox::warning(this,tr("Edición de líneas"),
                                              tr("No se pudo actualizar el stock del lote: %1").arg(lote.lastError().text()));
 
@@ -669,7 +670,7 @@ void frmEditLine::on_btnAceptar_clicked()
                                      tr("Aceptar"));
                 close();
             }
-        } else
+        } else if(this->reserva_unidades)
         {
             // -------------------------------------------
             // Si no acumula añade a unidades reservadas
@@ -727,9 +728,9 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
             if(this->id_lote>0);
             {
                 QSqlQuery lote(Configuracion_global->groupDB);
-                lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2").arg(
-                              Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
-                              this->id_lote));
+                lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2")
+                          .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat())
+                          .arg(this->id_lote));
             }
         } else
 
@@ -739,15 +740,15 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
                                  tr("Aceptar"));
 
         }
-    } else
+    } else if(this->reserva_unidades)
     {
         // -------------------------------------------
         // Si no acumula añade a unidades reservadas
         //--------------------------------------------
         QSqlQuery queryart(Configuracion_global->groupDB);
-        queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
-                          Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),
-                          this->id_articulo));
+        queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
+                      .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat())
+                      .arg(this->id_articulo));
         emit refrescar_lineas();
     }
    vaciar_campos();

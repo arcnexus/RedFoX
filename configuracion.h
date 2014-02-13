@@ -147,10 +147,12 @@ public:
     QSqlQueryModel *paises_model;
     QSqlQueryModel *divisas_model;
     QSqlQueryModel *formapago_model;
+    QSqlQueryModel *agentes_model;
 
     void Cargar_paises();
     void Cargar_divisas();
     void Cargar_formas_pago();
+    void Cargar_agentes();
 
     int Devolver_id_pais(QString pais);
     static QString Devolver_pais(int id);

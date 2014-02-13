@@ -223,6 +223,6 @@ bool cargarEmpresa(QSqlRecord record)
     Configuracion_global->Cargar_formas_pago();
     Configuracion_global->CargarClientes();
     Configuracion_global->CargarUsuarios();
-
+    Configuracion_global->Cargar_agentes();
     return true;
 }

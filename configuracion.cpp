@@ -29,6 +29,7 @@ Configuracion::Configuracion(QObject* parent) :
     paises_model = new QSqlQueryModel(this);
     formapago_model = new QSqlQueryModel(this);
     divisas_model = new QSqlQueryModel(this);
+    agentes_model = new QSqlQueryModel(this);
     client_model = 0;
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
@@ -296,7 +297,6 @@ QString Configuracion::setTipoIva(int idIva)
 
 void Configuracion::Cargar_paises()
 {
-
     paises_model->setQuery("select id,pais from paises order by pais",Configuracion_global->groupDB);
 }
 
@@ -308,6 +308,11 @@ void Configuracion::Cargar_divisas()
 void Configuracion::Cargar_formas_pago()
 {
     formapago_model->setQuery("select * from formpago order by forma_pago",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_agentes()
+{
+    agentes_model->setQuery("SELECT * FROM agentes;",Configuracion_global->groupDB);
 }
 
 int Configuracion::Devolver_id_pais(QString pais)
@@ -679,7 +684,7 @@ QString Configuracion::toRound(double dnumber, int decimals)
             dblNumber += 0.001;
             break;
         case 4:
-            dblNumber += 0,0001;
+            dblNumber += 0.0001;
         default:
             break;
         }

@@ -7,6 +7,7 @@ Pedidos::Pedidos()
     iva_gasto1 = 0;
     iva_gasto2 = 0;
     iva_gasto3 = 0;
+    pedido_cliente = -1;
 }
 
 Pedidos::~Pedidos()

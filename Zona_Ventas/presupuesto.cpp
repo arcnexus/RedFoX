@@ -142,13 +142,14 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
 
             this->id_forma_pago = registro.field("id_forma_pago").value().toInt();
 
-            QSqlQuery q(Configuracion_global->groupDB);
-            if(q.exec("SELECT * FROM formpago WHERE id = "+QString::number(id_forma_pago)))
-                if(q.next())
+            for(auto fp = 0; fp< Configuracion_global->formapago_model->rowCount();fp++)
+            {
+                if(Configuracion_global->formapago_model->record(fp).value("id").toInt() == this->id_forma_pago)
                 {
-                    this->codigoFormaPago = q.record().value("codigo").toString();
-                    this->descripcionFormaPago = q.record().value("forma_pago").toString();
+                    this->codigoFormaPago      = Configuracion_global->formapago_model->record(fp).value("codigo").toString();
+                    this->descripcionFormaPago = Configuracion_global->formapago_model->record(fp).value("forma_pago").toString();
                 }
+            }
 
             this->lugar_entrega = registro.field("lugar_entrega").value().toString();
             this->atencion_de = registro.field("atencion_de").value().toString();
@@ -156,7 +157,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->base2 = registro.field("base2").value().toDouble();
             this->base3 = registro.field("base3").value().toDouble();
             this->base4 = registro.field("base4").value().toDouble();
-            qDebug() << registro.field("porc_iva1").value();
+
             this->porc_iva1 = registro.field("porc_iva1").value().toDouble();
             this->porc_iva2 = registro.field("porc_iva2").value().toDouble();
             this->porc_iva3 = registro.field("porc_iva3").value().toDouble();
@@ -181,6 +182,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->total4 = registro.field("total4").value().toDouble();
             this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
             this->editable = registro.field("editable").value().toBool();
+            this->id_agente = registro.value("id_agente").toInt();
             return true;
         }
      }
@@ -294,6 +296,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
 
     cab_pre["presupuesto"] = this->presupuesto;
     cab_pre["editable"] = editable;
+    cab_pre["id_agente"] = id_agente;
 
     bool updated = SqlCalls::SqlUpdate(cab_pre,"cab_pre",Configuracion_global->empresaDB,QString("id=%1").arg(nid_Presupuesto),error);
 
