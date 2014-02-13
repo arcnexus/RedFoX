@@ -337,7 +337,7 @@ CREATE TABLE `@grupo@`.`empresas` (
   `codigo` varchar(10) DEFAULT NULL,
   `nombre` varchar(75) DEFAULT NULL,
   `digitos_factura` int(11) DEFAULT NULL,
-  `serie` varchar(11) DEFAULT NULL,
+  `serie` varchar(11) DEFAULT 'A',
   `decimales_campos_totales` int(2) DEFAULT '2',
   `decimales` int(2) DEFAULT '2',
   `mostrarsiempre` tinyint(1) DEFAULT '0',
