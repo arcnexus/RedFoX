@@ -69,14 +69,14 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->tabla->selectRow(0);
 
     setUpBusqueda();
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
-                              "from lin_ped where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
+                              "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     ui->Lineas->setModel(modelLineas);
     QStringList header;
     QVariantList sizes;
-    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto") << tr("pvp.") << tr("Subtotal");
-    header  << tr("porc_iva") << tr("Total");
-    sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
+    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("coste") << tr("Subtotal") << tr("%Dto")  << tr("Total");
+    header  << tr("porc_iva") << tr("C.Real/u.") ;
+    sizes << 0 << 100 << 400 << 100 << 100 <<100 <<100 << 100 <<100 << 100 <<110;
     for(int i = 0; i <header.size();i++)
     {
         ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
@@ -88,7 +88,8 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->Lineas->setItemDelegateForColumn(6,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(7,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
+    ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate(this,true));
+    ui->Lineas->setItemDelegateForColumn(10,new MonetaryDelegate_totals(this,true));
     //-------------------------------------------------------
 
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
@@ -640,22 +641,14 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total2,'f',Configuracion_global->decimales)));
     ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total3,'f',Configuracion_global->decimales)));
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->total4,'f',Configuracion_global->decimales)));
-    //QString filter = QString("id_cab = '%1'").arg(oPedido_proveedor->id);
-    //helper.porc_iva1 = ui->txtporc_iva1->text().toDouble();
-    //helper.porc_iva2 = ui->txtporc_iva2->text().toDouble();
-    //helper.porc_iva3 = ui->txtporc_iva3->text().toDouble();
-    //helper.porc_iva4 = ui->txtporc_iva4->text().toDouble();
-    //helper.fillTable("empresa","lin_ped_pro",filter);
-//    helper.resizeTable();
-//    cargar_tabla_entregas();
     refrescar_modelo();
-
+    calcular_pedido();
 }
 
 void FrmPedidosProveedor::refrescar_modelo()
 {
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
-                              "from lin_ped where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad  "
+                              "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
                           Configuracion_global->empresaDB);
 }
@@ -1039,7 +1032,7 @@ void FrmPedidosProveedor::calcular_pedido()
 
     QMap <int,QSqlRecord> l;
     QString error;
-    l = SqlCalls::SelectRecord("lin_ped",QString("id_cab=%1").arg(oPedido_proveedor->id),Configuracion_global->empresaDB,error);
+    l = SqlCalls::SelectRecord("lin_ped_pro",QString("id_cab=%1").arg(oPedido_proveedor->id),Configuracion_global->empresaDB,error);
     QMapIterator <int,QSqlRecord> li(l);
     while(li.hasNext())
     {
@@ -1231,6 +1224,7 @@ void FrmPedidosProveedor::on_btnAnadir_costes_clicked()
     frmgastos.exec();
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
                           Configuracion_global->empresaDB);
+    calcular_pedido();
 }
 
 void FrmPedidosProveedor::on_SpinGastoDist1_valueChanged(double arg1)
