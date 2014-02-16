@@ -92,6 +92,8 @@ public:
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
     static bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
 
+    void set_pendiente_recibir(int id_articulo, float cantidad);
+
     void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
 
     bool acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion);

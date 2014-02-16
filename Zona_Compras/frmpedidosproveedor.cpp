@@ -964,10 +964,10 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
     {
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
-            frmeditar.set_acumula(false);
+            frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
-//            frmeditar.set_id_cliente(oCliente3->id);
+//           frmeditar.set_id_cliente(oPedido_proveedor->id_proveedor);
 //            frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido_proveedor->id);
             frmeditar.set_tipo("C");
@@ -991,7 +991,7 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
 
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
-            frmeditar.set_acumula(false);
+            frmeditar.set_acumula(true);
 //            frmeditar.set_id_cliente(oCliente3->id);
 //            frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido_proveedor->id);

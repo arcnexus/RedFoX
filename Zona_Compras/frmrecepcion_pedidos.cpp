@@ -263,7 +263,7 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 queryLineas.exec("select * from lin_ped_pro where id = "+QString::number(linid));
                 queryLineas.next();
                 double subtotal,dto,base,total,iva;
-                subtotal = queryLineas.record().value("coste_bruto").toDouble() * rec_act;
+                subtotal = queryLineas.record().value("precio").toDouble() * rec_act;
                 dto = subtotal * (queryLineas.record().value("porc_dto").toDouble()/100);
                 base = subtotal -dto;
                 iva = base * (queryLineas.record().value("porc_iva").toDouble()/100);
@@ -307,32 +307,23 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 //  Si factura = true  añado Linea factura
                 // ----------------------------------------
                 if(factura){
-                    QSqlQuery query_lin_fac_pro(Configuracion_global->empresaDB);
-                    query_lin_fac_pro.prepare("INSERT INTO lin_fac_pro "
-                                              "( id_cab,codigo,descripcion,coste,porc_dto,"
-                                              "porc_iva,iva,cantidad,total,"
-                                              "dto,subtotal,id_articulo) VALUES "
-                                              "(:id_cab,:codigo,:descripcion,:coste,:dto,"
-                                              ":iva,:iva,:cantidad,:total,"
-                                              ":dto,:subtotal,:id_articulo);");
-
-                    query_lin_fac_pro.bindValue(":id_cab",this->id_factura);
-                    query_lin_fac_pro.bindValue(":codigo",queryLineas.record().value("codigo_articulo_proveedor").toString());
-                    query_lin_fac_pro.bindValue(":descripcion",queryLineas.record().value("descripcion").toString());
-                    query_lin_fac_pro.bindValue(":coste",queryLineas.record().value("coste_bruto").toDouble());
-                    query_lin_fac_pro.bindValue(":dto",queryLineas.record().value("porc_dto").toDouble());
-                    query_lin_fac_pro.bindValue(":iva",queryLineas.record().value("porc_iva").toDouble());
-                    query_lin_fac_pro.bindValue(":iva",iva);
-                    query_lin_fac_pro.bindValue(":cantidad",rec_act);
-                    query_lin_fac_pro.bindValue(":total",total);
-                    query_lin_fac_pro.bindValue(":dto",dto);
-                    query_lin_fac_pro.bindValue(":subtotal",subtotal);
-                    query_lin_fac_pro.bindValue(":id_articulo",queryLineas.record().value("id_articulo").toDouble());
-
-                    if(!query_lin_fac_pro.exec())
+                    QHash<QString,QVariant> lin;
+                    lin["id_cab"] = this->id_factura;
+                    lin["codigo"] =queryLineas.record().value("codigo").toString();
+                    lin["descripcion"] = queryLineas.record().value("descripcion").toString();
+                    lin["precio"] = queryLineas.record().value("precio").toDouble();
+                    lin["porc_dto"] =queryLineas.record().value("porc_dto").toDouble();
+                    lin["porc_iva"] = queryLineas.record().value("porc_iva").toDouble();
+                    lin["cantidad"]= rec_act;
+                    lin["total"] =total;
+                    lin["subtotal"] = subtotal;
+                    lin["id_articulo"] = queryLineas.record().value("id_articulo").toInt();
+                    QString error;
+                    int new_id = SqlCalls::SqlInsert(lin,"lin_fac_pro",Configuracion_global->empresaDB,error);
+                    if(new_id <=0)
                     {
                         QMessageBox::warning(this,tr("Recepción de Pedidos"),tr("Falló la inserción de líneas de Factura :%1").arg(
-                                                 query_lin_fac_pro.lastError().text()));
+                                                error));
                     }
 
                     // TODO - Terminar entrada lineas alabarán

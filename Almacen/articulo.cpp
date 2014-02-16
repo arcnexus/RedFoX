@@ -1224,6 +1224,17 @@ bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QD
 
 }
 
+void Articulo::set_pendiente_recibir(int id_articulo, float cantidad)
+{
+ QSqlQuery art(Configuracion_global->groupDB);
+ QString cSQL;
+ cSQL = QString("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1 where id = %2").arg(
+             cantidad).arg(id_articulo);
+ if(!art.exec(cSQL))
+     QMessageBox::warning(qApp->activeWindow(),tr("Compras"),tr("fallo al insertar unidades pendientes de recibir: %1").arg(
+                              art.lastError().text(),tr("Aceptar")));
+}
+
 void Articulo::acumulado_compras(int id_articulo, float cantidad, QDate fecha)
 {
 
