@@ -10,7 +10,7 @@ public:
     Presupuesto(QObject* parent);
     ~Presupuesto();
     int id;
-    int presupuesto;
+    QString presupuesto;
     int id_divisa;
     QDate fecha;
     int ejercicio;
@@ -54,8 +54,8 @@ public:
     double importe_factura;
     double importe_pendiente;
     QString factura;
-    int albaran;
-    int pedido;
+    QString albaran;
+    QString pedido;
     int id_forma_pago;
     QString codigoFormaPago;
     QString descripcionFormaPago;
@@ -104,6 +104,8 @@ public:
     int id_transportista;
     bool editable;
     int id_agente;
+    double porc_irpf;
+    double irpf;
 
 public slots:
     // Metodos de trabajo Clase Presupuesto
@@ -113,7 +115,7 @@ public slots:
     bool anterior();
     bool GuardarPres(int nid_Presupuesto);
     bool BorrarLineas(int nid_Presupuesto);
-    int NuevoNumeroPresupuesto();
+    QString NuevoNumeroPresupuesto();
 };
 
 #endif // PRESUPUESTO_H

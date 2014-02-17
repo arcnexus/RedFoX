@@ -576,6 +576,8 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             else if(iSql.startsWith("Emp"))
                                 db = Configuracion_global->empresaDB;
                             QString query = QString("SELECT * FROM %1 WHERE %2").arg(iSql.split(".").at(1)).arg(clausulaInterna);
+                            if(queryClausules.contains(iSql))
+                                query.append(QString(" %1").arg(queryClausules.value(iSql)));
                             QSqlQuery iQuery(db);
                             iQuery.prepare(query);
                             iQuery.bindValue(bindKey,record.value(columna));
@@ -1909,6 +1911,11 @@ float ReportRenderer::getNumber(QString in, int formato)
         f= 0;
     }
     return f;
+}
+
+QString ReportRenderer::getInnerSqlLimits()
+{
+
 }
 
 QString ReportRenderer::applyFormato(QString in, int formato)

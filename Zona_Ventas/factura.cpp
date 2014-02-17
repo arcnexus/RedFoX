@@ -635,158 +635,157 @@ bool Factura::GuardarApunte(int nasiento, int nid)
 
 bool Factura::Apunte()
 {
-    {
-        apuntes oApunte;
-        Cliente oCliente;
-        int apunte;
-        bool ok = true;
-        bool nuevo;
-        int pos = 1;
-        oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
 
-        oApunte.cuenta_d = oCliente.codigo_cliente;
-        oApunte.cuenta_relacion = oCliente.codigo_cliente;
-        oApunte.cuenta_h = Configuracion_global->cuenta_venta_mercaderias;
-        oApunte.descripcion_d = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_d);
-        oApunte.id_cuenta_d = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_d);
+    apuntes oApunte;
+    Cliente oCliente;
+    int apunte;
+    bool ok = true;
+    bool nuevo;
+    int pos = 1;
+    oCliente.Recuperar("select * from clientes where id = " + QString::number(this->id_cliente));
+
+    oApunte.cuenta_d = oCliente.codigo_cliente;
+    oApunte.cuenta_relacion = oCliente.codigo_cliente;
+    oApunte.cuenta_h = Configuracion_global->cuenta_venta_mercaderias;
+    oApunte.descripcion_d = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_d);
+    oApunte.id_cuenta_d = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_d);
+    oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+    oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+    oApunte.comentario_d = tr("Nuestra factura num: ")+this->factura;
+    oApunte.comentario_h = tr("Ventas mercaderias factura num: ")+this->factura;
+    oApunte.fecha_asiento = this->fecha;
+    oApunte.id_documento = this->id;
+    oApunte.importe_d = this->total;
+    oApunte.importe_h = this->base;
+    oApunte.pos_en_asiento = pos;
+    oApunte.asiento = oApunte.nuevo_numero_apunte();
+    apunte = oApunte.asiento;
+    nuevo = oApunte.nuevalinea();
+    if(!nuevo)
+        ok = false;
+    pos++;
+    if(this->iva1 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado1;
+        oApunte.importe_h = this->iva1;
         oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
         oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-        oApunte.comentario_d = tr("Nuestra factura num: ")+this->factura;
-        oApunte.comentario_h = tr("Ventas mercaderias factura num: ")+this->factura;
-        oApunte.fecha_asiento = this->fecha;
-        oApunte.id_documento = this->id;
-        oApunte.importe_d = this->total;
-        oApunte.importe_h = this->base;
+        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(0)+tr("% - factura num: ")+this->factura;
         oApunte.pos_en_asiento = pos;
-        oApunte.asiento = oApunte.nuevo_numero_apunte();
-        apunte = oApunte.asiento;
+        pos ++;
         nuevo = oApunte.nuevalinea();
         if(!nuevo)
             ok = false;
-        pos++;
-        if(this->iva1 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado1;
-            oApunte.importe_h = this->iva1;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(0)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->rec1 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re1;
-            oApunte.importe_h = this->porc_rec1;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(0)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->iva2 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado2;
-            oApunte.importe_h = this->iva2;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(1)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo =oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->rec2 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re2;
-            oApunte.importe_h = this->porc_rec2;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(1)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->iva3 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado3;
-            oApunte.importe_h = this->iva3;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(2)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->rec3 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re3;
-            oApunte.importe_h = this->porc_rec3;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(2)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->iva4 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado4;
-            oApunte.importe_h = this->iva4;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(3)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        if(this->rec4 !=0)
-        {
-            oApunte.clear();
-            oApunte.asiento = apunte;
-            oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re4;
-            oApunte.importe_h = this->porc_rec4;
-            oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
-            oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
-            oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(3)+tr("% - factura num: ")+this->factura;
-            oApunte.pos_en_asiento = pos;
-            pos ++;
-            nuevo = oApunte.nuevalinea();
-            if(!nuevo)
-                ok = false;
-        }
-        ok = this->GuardarApunte(apunte,this->id);
-        return ok;
     }
+    if(this->rec1 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re1;
+        oApunte.importe_h = this->porc_rec1;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(0)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo = oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    if(this->iva2 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado2;
+        oApunte.importe_h = this->iva2;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(1)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo =oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    if(this->rec2 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re2;
+        oApunte.importe_h = this->porc_rec2;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(1)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo = oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    if(this->iva3 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado3;
+        oApunte.importe_h = this->iva3;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(2)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo = oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    if(this->rec3 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re3;
+        oApunte.importe_h = this->porc_rec3;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(2)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo = oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    if(this->iva4 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado4;
+        oApunte.importe_h = this->iva4;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("IVA ")+Configuracion_global->ivaList.at(3)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo = oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    if(this->rec4 !=0)
+    {
+        oApunte.clear();
+        oApunte.asiento = apunte;
+        oApunte.cuenta_h = Configuracion_global->cuenta_iva_soportado_re4;
+        oApunte.importe_h = this->porc_rec4;
+        oApunte.descripcion_h = Configuracion_global->Devolver_descripcion_cuenta_contable(oApunte.cuenta_h);
+        oApunte.id_cuenta_h = Configuracion_global->Devolver_id_cuenta_contable(oApunte.cuenta_h);
+        oApunte.comentario_h = tr("RE ")+Configuracion_global->reList.at(3)+tr("% - factura num: ")+this->factura;
+        oApunte.pos_en_asiento = pos;
+        pos ++;
+        nuevo = oApunte.nuevalinea();
+        if(!nuevo)
+            ok = false;
+    }
+    ok = this->GuardarApunte(apunte,this->id);
+    return ok;
 }
 
 bool Factura::EditApunte(int num_apunte)

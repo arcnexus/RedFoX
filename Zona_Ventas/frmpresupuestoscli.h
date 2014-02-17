@@ -68,8 +68,6 @@ private slots:
 
     void on_btnDesbloquear_clicked();
 
-    void on_btnImprimir_2_clicked();
-
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
@@ -98,6 +96,7 @@ private slots:
 
     void on_chklAprovado_toggled(bool checked);
 
+    void listados();
 private:
     Ui::FrmPresupuestosCli *ui;
     QAction * aPedido_action;

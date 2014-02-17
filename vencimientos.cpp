@@ -104,10 +104,9 @@ void vencimientos::clear()
 
 }
 
-void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticket,int id_factura, QString documento,
+bool vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticket,int id_factura, QString documento,
                                         int tipo,QString compra_venta,double importe)
 {
-    Configuracion_global->groupDB.transaction();
     QMap <int,QSqlRecord> m;
     QString condiciones  = QString("id=%1").arg(id_cliente);
     QString error,error2,entidad,oficina,dc,cuenta;
@@ -127,7 +126,6 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
             dc = cli.value().value("dc").toString();
             cuenta = cli.value().value("cuenta_corriente").toString();
         }
-
 
         QMap <int,QSqlRecord> f;
         condiciones  = QString("id=%1").arg(id_forma_pago);
@@ -195,74 +193,75 @@ void vencimientos::calcular_vencimiento(QDate fecha, int id_cliente,int id_ticke
                     if(mes ==2 && dia>28)
                         dia =28;
 
-                   vencimiento = QDate(ano,mes,dia);
-                   int new_id;
-                   if(compra_venta == "c")
-                   {
-                       //------------------------------
-                       // insertar vencimiento cliente
-                       //------------------------------
-                       QHash <QString,QVariant> h;
-                       h["fecha"] =fecha;
-                       h["vencimiento"] = vencimiento;
-                       h["documento"]= documento;
-                       if(id_ticket > -1)
-                           h["id_ticket"] =id_ticket;
-                       if(id_factura > -1)
-                           h["id_factura"] = id_factura;
+                    vencimiento = QDate(ano,mes,dia);
+                    int new_id;
+                    if(compra_venta == "c")
+                    {
+                        //------------------------------
+                        // insertar vencimiento cliente
+                        //------------------------------
+                        QHash <QString,QVariant> h;
+                        h["fecha"] =fecha;
+                        h["vencimiento"] = vencimiento;
+                        h["documento"]= documento;
+                        if(id_ticket > -1)
+                            h["id_ticket"] =id_ticket;
+                        if(id_factura > -1)
+                            h["id_factura"] = id_factura;
 
-                       h["tipo"] = tipo;
-                       h["importe"] =importe;
-                       h["pendiente_cobro"] = importe;
-                       h["entidad"] = entidad;
-                       h["oficina"] = oficina;
-                       h["dc"] = dc;
-                       h["cuenta"] = cuenta;
-                       h["id_cliente"] = id_cliente;
-                       new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
-                   }
-                   else
-                   {
-                       //--------------------------------
-                       // insertar vencimiento proveedor
-                       //--------------------------------
-                       QHash <QString,QVariant> h;
-                       //`asiento_numero`,
-                       h["documento"] = documento;
-                       h["fecha_deuda"]= fecha;
-                       //`id_asiento`
-                       h["id_documento"] =documento;
-                       h["id_proveedor"]= id_cliente;
-                       h["importe_deuda"] = importe;
-                       h["pendiente"] = importe;
-                       h["vencimiento"] = vencimiento;
+                        h["tipo"] = tipo;
+                        h["importe"] =importe;
+                        h["pendiente_cobro"] = importe;
+                        h["entidad"] = entidad;
+                        h["oficina"] = oficina;
+                        h["dc"] = dc;
+                        h["cuenta"] = cuenta;
+                        h["id_cliente"] = id_cliente;
+                        new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
+                    }
+                    else
+                    {
+                        //--------------------------------
+                        // insertar vencimiento proveedor
+                        //--------------------------------
+                        QHash <QString,QVariant> h;
+                        //`asiento_numero`,
+                        h["documento"] = documento;
+                        h["fecha_deuda"]= fecha;
+                        //`id_asiento`
+                        h["id_documento"] =documento;
+                        h["id_proveedor"]= id_cliente;
+                        h["importe_deuda"] = importe;
+                        h["pendiente"] = importe;
+                        h["vencimiento"] = vencimiento;
 
-                       new_id = SqlCalls::SqlInsert(h,"deudas_proveedores",Configuracion_global->groupDB,error);
-                   }
-                   if(new_id ==-1)
-                   {
-                       t_error = true;
-                       QMessageBox::warning(qApp->activeWindow(),tr("Gestión de vencimientos"),
-                                            tr("Ocurrió un error:")+error,tr("Aceptar"));
-                   }
+                        new_id = SqlCalls::SqlInsert(h,"deudas_proveedores",Configuracion_global->groupDB,error);
+                    }
+                    if(new_id ==-1)
+                    {
+                        t_error = true;
+                        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de vencimientos"),
+                                             tr("Ocurrió un error:")+error,tr("Aceptar"));
+                    }
 
                 }
                 if(!t_error)
                 {
-                    Configuracion_global->groupDB.commit();
                     QString mensaje;
                     if (plazo2 ==1)
                         mensaje = tr("Se ha creado el vencimiento");
                     else if(plazo2 >1)
                         mensaje = tr("Se han creado los vencimientos");
                     t = new TimedMessageBox(qApp->activeWindow(),mensaje);
-                 } else
+                    return true;
+                }
+                else
                 {
-                    Configuracion_global->groupDB.rollback();
                     QMessageBox::warning(qApp->activeWindow(),tr("Vencimientos"),tr("No se ha podido realizar la transacción"),
                                          tr("Aceptar"));
                 }
             }
         }
     }
+    return false;
 }

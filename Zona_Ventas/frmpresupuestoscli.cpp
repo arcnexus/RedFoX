@@ -15,6 +15,7 @@
 #include "../vencimientos.h"
 #include "../Auxiliares/frmeditline.h"
 
+#include "frmlistadospre.h"
 void FrmPresupuestosCli::setConvertirMenu()
 {
     aPedido_action = new QAction(tr("En pedido"),this);
@@ -137,8 +138,10 @@ FrmPresupuestosCli::~FrmPresupuestosCli()
 
 void FrmPresupuestosCli::LLenarCampos()
 {
-    ui->txtpresupuesto->setText(QString::number(oPres->presupuesto));
-    ui->lblTopNpres->setText(QString::number(oPres->presupuesto));
+    ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->irpf ,'f',Configuracion_global->decimales_campos_totales)));
+    ui->spinPorc_irpf->setValue(oPres->porc_irpf);
+    ui->txtpresupuesto->setText(oPres->presupuesto);
+    ui->lblTopNpres->setText(oPres->presupuesto);
     ui->lblTopcliente->setText(oPres->cliente);
     ui->txtfecha->setDate(oPres->fecha);
     ui->txtvalido_hasta->setDate(oPres->valido_hasta);
@@ -195,8 +198,8 @@ void FrmPresupuestosCli::LLenarCampos()
     ui->txtfechaAprovacion->setDate(oPres->fecha_aprobacion);
     ui->txtimporte_factura->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->importe_factura,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtfactura->setText(oPres->factura);
-    ui->txtalbaran->setText(QString::number(oPres->albaran));
-    ui->txtpedido->setText(QString::number(oPres->pedido));
+    ui->txtalbaran->setText(oPres->albaran);
+    ui->txtpedido->setText(oPres->pedido);
     ui->txtGastoDist1->setText(oPres->desc_gasto1);
     ui->txtGastoDist2->setText(oPres->desc_gasto2);
     ui->txtGastoDist3->setText(oPres->desc_gasto3);
@@ -380,7 +383,7 @@ void FrmPresupuestosCli::LLenarCamposCliente()
 void FrmPresupuestosCli::LLenarPresupuesto()
 {
     oPres->ejercicio = ui->txtfecha->date().year();
-    oPres->presupuesto = (ui->txtpresupuesto->text().toInt());
+    oPres->presupuesto = ui->txtpresupuesto->text();
     oPres->id_divisa = Configuracion_global->divisas_model->record(ui->cboDivisa->currentIndex()).value("id").toInt();
 
     oPres->fecha = (ui->txtfecha->date());
@@ -419,13 +422,9 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->fecha_aprobacion = (ui->txtfechaAprovacion->date());
     oPres->importe_factura = (ui->txtimporte_factura->text().replace(".","").replace(moneda,"").replace(".","").replace(",",".").toDouble());
 
-    if(ui->txtfactura->text()=="")
-        oPres->factura = "0";
-    else
-        oPres->factura = (ui->txtfactura->text());
-
-    oPres->albaran = (ui->txtalbaran->text().toInt());
-    oPres->pedido = (ui->txtpedido->text().toInt());
+    oPres->factura = ui->txtfactura->text();
+    oPres->albaran = ui->txtalbaran->text();
+    oPres->pedido = ui->txtpedido->text();
 
 
     oPres->descripcionFormaPago = ui->cboFormaPago->currentText();
@@ -480,6 +479,8 @@ void FrmPresupuestosCli::LLenarPresupuesto()
     oPres->iva_gasto3 = ui->spinIva_gasto3->value();
 
     oPres->id_agente = Configuracion_global->agentes_model->record(ui->cboAgente->currentIndex()).value("id").toInt();
+    oPres->porc_irpf = ui->spinPorc_irpf->value();
+    oPres->irpf = oPres->base *(ui->spinPorc_irpf->value()/100.0);
 
 }
 void FrmPresupuestosCli::VaciarCampos()
@@ -622,6 +623,12 @@ void FrmPresupuestosCli::on_chklAprovado_toggled(bool checked)
 {
     ui->lblFechaAprovacin->setVisible(checked);
     ui->txtfechaAprovacion->setVisible(checked);
+}
+
+void FrmPresupuestosCli::listados()
+{
+    frmListadosPre f(this);
+    f.exec();
 }
 
 void FrmPresupuestosCli::on_btnSiguiente_clicked()
@@ -806,23 +813,26 @@ void FrmPresupuestosCli::on_btnBorrar_clicked()
         if(Configuracion_global->contabilidad)
             Configuracion_global->contaDB.transaction();
 
-        QSqlQuery q(Configuracion_global->empresaDB);
+        QString error;
 
         succes &= oPres->BorrarLineas(oPres->id);
-        q.prepare("DELETE FROM cab_pre WHERE presupuesto = "+ui->txtpresupuesto->text());
-        succes &= q.exec();
+        succes &= SqlCalls::SqlDelete("cab_pre",Configuracion_global->empresaDB,QString("id = %1").arg(oPres->id),error);
 
         if(succes)
         {
             succes &= Configuracion_global->empresaDB.commit();
-        }
+            succes &= Configuracion_global->groupDB.commit();
+            if(Configuracion_global->contabilidad)
+                succes &= Configuracion_global->contaDB.commit();
 
-        if(succes)
-        {
-            TimedMessageBox * t = new TimedMessageBox(this,tr("Borrado con exito"));
             VaciarCampos();
             oPres->id = -1;
-            on_btnSiguiente_clicked();
+            if(ui->stackedWidget->currentIndex() == 0)
+                on_btnSiguiente_clicked();
+            else
+                init_querys();
+
+            TimedMessageBox * t = new TimedMessageBox(this,tr("Borrado con exito"));
         }
         else
         {
@@ -830,6 +840,7 @@ void FrmPresupuestosCli::on_btnBorrar_clicked()
             Configuracion_global->groupDB.rollback();
             if(Configuracion_global->contabilidad)
                 Configuracion_global->contaDB.rollback();
+            QMessageBox::critical(this,tr("Error al borrar presupuesto"),error);
         }
     }
 }
@@ -961,6 +972,8 @@ void FrmPresupuestosCli::convertir_epedido()
         h["id_transportista"] = oPres->id_transportista;
         h["id_agente"] = oPres->id_agente;
 
+        h["porc_irpf"] = oPres->porc_irpf;
+        h["irpf"] = oPres->irpf;
 
         int added = SqlCalls::SqlInsert(h,"ped_cli",Configuracion_global->empresaDB,error);
 
@@ -1024,6 +1037,7 @@ void FrmPresupuestosCli::convertir_epedido()
                 p["fecha_aprobacion"] = QDate::currentDate();
             }
             p["pedido"] = h["pedido"];
+            p["editable"] = false;
             QString c = QString("id = %1").arg(oPres->id);
             bool updated = SqlCalls::SqlUpdate(p,"cab_pre",Configuracion_global->empresaDB,c,error);
 
@@ -1056,9 +1070,9 @@ void FrmPresupuestosCli::convertir_epedido()
         if(ui->txtfactura->text() != "0")
             TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a factura: %1").arg(oPres->factura));
         else if(ui->txtalbaran->text() !="0")
-            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a albarán: %1").arg(QString::number(oPres->albaran)));
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a albarán: %1").arg(oPres->albaran));
         else
-            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a pedido: %1").arg(QString::number(oPres->pedido)));
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a pedido: %1").arg(oPres->pedido));
     }
 }
 
@@ -1152,6 +1166,8 @@ void FrmPresupuestosCli::convertir_ealbaran()
         h["ejercicio"] = Configuracion_global->cEjercicio;
         h["editable"] = true;
 
+        h["porc_irpf"] = oPres->porc_irpf;
+        h["irpf"] = oPres->irpf;
 
         Albaran oAlbaran;
 
@@ -1251,7 +1267,13 @@ void FrmPresupuestosCli::convertir_ealbaran()
         else
         {
             QHash <QString, QVariant> p;
+            if(!oPres->aprobado)
+            {
+                p["aprobado"] = true;
+                p["fecha_aprobacion"] = QDate::currentDate();
+            }
             p["albaran"] = num;
+            p["editable"] = false;
             c = "id="+QString::number(oPres->id);
             bool updated = SqlCalls::SqlUpdate(p,"cab_pre",Configuracion_global->empresaDB,c,error);
 
@@ -1285,60 +1307,68 @@ void FrmPresupuestosCli::convertir_ealbaran()
         if(ui->txtfactura->text() != "0")
             TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a factura: %1").arg(oPres->factura));
         else if(ui->txtalbaran->text() !="0")
-            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a albarán: %1").arg(QString::number(oPres->albaran)));
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a albarán: %1").arg(oPres->albaran));
         else
-            QMessageBox::information(this,tr("Traspaso anterior"),tr("Este presupuesto ya ha sido pasado a pedido: %1.\nTraspase dicho pedido a albarán.").arg(QString::number(oPres->pedido)));
+            QMessageBox::information(this,tr("Traspaso anterior"),tr("Este presupuesto ya ha sido pasado a pedido: %1.\nTraspase dicho pedido a albarán.").arg(oPres->pedido));
     }
 }
 
 void FrmPresupuestosCli::convertir_enFactura()
 {
-    if(oPres->editable && (ui->txtfactura->text() == "0" || ui->txtfactura->text().isEmpty()))
+    if(ui->txtpedido->text() =="0" && ui->txtalbaran->text() =="0" && ui->txtfactura->text() =="0")
     {
         if(QMessageBox::question(this,tr("Presupuestos a clientes"),tr("¿Desea realmente facturar este presupuesto?"),
                                  tr("No"),tr("Sí"))==QMessageBox::Accepted)
         {
-            LLenarPresupuesto();
-            if(ui->txtpedido->text().isEmpty() || ui->txtpedido->text().trimmed() =="0")
-                convertir_epedido();
-            if(ui->txtalbaran->text().isEmpty() || ui->txtalbaran->text().trimmed() =="0")
-                convertir_ealbaran();
+            Configuracion_global->empresaDB.transaction();
+            Configuracion_global->groupDB.transaction();
+            if(Configuracion_global->contabilidad)
+                Configuracion_global->contaDB.transaction();
 
+            bool transaccion = true;
+
+            Factura oFactura(this);
             QString serie;
             if(Configuracion_global->serie.isEmpty())
             {
-                //--------------------
-                // Preguntamos serie
-                //--------------------
-                QDialog* dlg = new QDialog(this);
-                dlg->setWindowTitle(tr("Seleccione serie factura"));
-                dlg->resize(270,150);
-                QComboBox* box = new QComboBox(dlg);
-                QPushButton*  btn = new QPushButton("Aceptar",dlg);
-                QVBoxLayout lay(dlg);
+                //-----------------------
+                // Elección de serie
+                //-----------------------
+                QDialog dlg(this);
+                dlg.setWindowTitle(tr("Seleccione serie albarán"));
+                dlg.resize(170,150);
+                QComboBox box(&dlg);
+                QPushButton  btn("Aceptar",&dlg);
+                QPushButton  cancel("Cancelar",&dlg);
+                QGridLayout lay(&dlg);
 
-                lay.addWidget(box);
-                lay.addWidget(btn);
+                lay.addWidget(&box,0,0,2,1);
+                lay.addWidget(&btn,1,0,1,1);
+                lay.addWidget(&cancel,1,1,1,1);
 
-                dlg->setLayout(&lay);
+                dlg.setLayout(&lay);
 
                 QSqlQueryModel *l = new QSqlQueryModel(this);
                 l->setQuery("select serie from series",Configuracion_global->empresaDB);
-                box->setModel(l);
+                box.setModel(l);
 
-                connect(btn,SIGNAL(clicked()),dlg,SLOT(accept()));
-                dlg->exec();//aki se podria poner otro boton y cancelar todo?
+                connect(&btn,SIGNAL(clicked()),&dlg,SLOT(accept()));
+                connect(&cancel,SIGNAL(clicked()),&dlg,SLOT(reject()));
+                if(dlg.exec() == QDialog::Rejected)
+                {
+                    Configuracion_global->empresaDB.rollback();
+                    Configuracion_global->groupDB.rollback();
+                    if(Configuracion_global->contabilidad)
+                        Configuracion_global->contaDB.rollback();
+                    return;
+                }
 
-                serie = box->currentText();
-                dlg->deleteLater();
-            } else
+                serie = box.currentText();
+            }
+            else
                 serie = Configuracion_global->serie;
-            Factura oFactura(this);
-            Configuracion_global->empresaDB.transaction();
-            bool transaccion = true;
-            //-----------------------
+
             // LLENAR CABECERA
-            //-----------------------
             QHash <QString, QVariant > cab_fac;
 
             cab_fac["codigo_cliente"] = oPres->codigo_cliente;
@@ -1373,8 +1403,8 @@ void FrmPresupuestosCli::convertir_enFactura()
             cab_fac["dto"] = oPres->dto;
             cab_fac["dto_pp"] = oPres->dto_pp;
             cab_fac["base"] = oPres->base;
-            //cab_fac["porc_irpf"] = oPres->porc_irpf;
-            //cab_fac["irpf"] = oPres->irpf;
+            cab_fac["porc_irpf"] = oPres->porc_irpf;
+            cab_fac["irpf"] = oPres->irpf;
             cab_fac["iva"] = oPres->total_iva;
             cab_fac["total"] = oPres->total;
             cab_fac["impreso"]= oPres->impreso;
@@ -1420,6 +1450,8 @@ void FrmPresupuestosCli::convertir_enFactura()
             cab_fac["imp_gasto2"] = oPres->importe_gasto2;
             cab_fac["imp_gasto3"] = oPres->importe_gasto3;
             cab_fac["porc_iva_gasto1"] = oPres->porc_iva_gasto1;
+            cab_fac["porc_iva_gasto2"] = oPres->porc_iva_gasto2;
+            cab_fac["porc_iva_gasto3"] = oPres->porc_iva_gasto3;
             cab_fac["iva_gasto1"] = oPres->iva_gasto1;
             cab_fac["iva_gasto2"] = oPres->iva_gasto2;
             cab_fac["iva_gasto3"] = oPres->iva_gasto3;
@@ -1427,24 +1459,26 @@ void FrmPresupuestosCli::convertir_enFactura()
             cab_fac["ejercicio"] = Configuracion_global->cEjercicio.toInt();
             cab_fac["editable"] = true;
             cab_fac["pendiente"] = oPres->total;
+
+            cab_fac["id_divisa"] = oPres->id_divisa;
+            cab_fac["id_agente"] = oPres->id_agente;
             QString error;
+
             int new_id = SqlCalls::SqlInsert(cab_fac,"cab_fac",Configuracion_global->empresaDB,error);
 
             if(new_id > -1)
             {
-                //------------------
                 // CARGAR FACTURA
-                //------------------
                 oFactura.RecuperarFactura(new_id);
-                //-------------------
+
                 //  INSERTAR LÍNEAS
-                //-------------------
                 QSqlQuery lineas_pre(Configuracion_global->empresaDB);
 
                 if(lineas_pre.exec("Select * from lin_pre where id_cab ="+QString::number(oPres->id)))
                 {
                     QHash <QString, QVariant> h_lineas_fac;
-                    while (lineas_pre.next()) {
+                    while (lineas_pre.next())
+                    {
 
                         h_lineas_fac["id_cab"] = new_id;
                         h_lineas_fac["id_articulo"] = lineas_pre.record().value("id_articulo").toInt();
@@ -1457,92 +1491,115 @@ void FrmPresupuestosCli::convertir_enFactura()
                         h_lineas_fac["dto"] = lineas_pre.record().value("dto").toDouble();
                         h_lineas_fac["porc_iva"] = lineas_pre.record().value("porc_iva").toDouble();
                         h_lineas_fac["total"] = lineas_pre.record().value("total").toDouble();
+
                         int new_id = SqlCalls::SqlInsert(h_lineas_fac,"lin_fac",Configuracion_global->empresaDB,error);
 
                         if(new_id == -1)
                         {
                             QMessageBox::warning(this,tr("Pedidos cliente"),
-                                                 tr("Ocurrió un error al crear las líneas de factura: %1").arg(error));
+                                                 tr("Ocurrió un error al crear las líneas de factura:\n%1").arg(error));
 
                             transaccion = false;
+                        }
+                        else
+                        {
+                            //UPDATE ART
+                            int id_art = h_lineas_fac.value("id_articulo").toInt();
+                            double cant = h_lineas_fac.value("cantidad").toDouble();
+                            double total = h_lineas_fac.value("total").toDouble();
+                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),"V"))
+                            {
+                                QMessageBox::warning(this,tr("Pedidos cliente"),
+                                                     tr("Ocurrió un error al crear las líneas de factura:\n%1").arg(Configuracion_global->groupDB.lastError().text()));
+
+                                transaccion = false;
+                                break;
+                            }
+                            //TODO ACUMULADOS CLIENTE
                         }
                     }
                 }
 
-                if(transaccion) {
+                if(transaccion)
+                {
                     ui->btn_convertir->setEnabled(false);
-                    QString texto;
-                    texto = tr("Se ha creado una nueva factura.\ncon el número ")+ cab_fac.value("factura").toString()+
-                            tr("\n y de importe: ")+QString::number(cab_fac.value("total").toDouble(),'f',Configuracion_global->decimales);
-                    TimedMessageBox * t = new TimedMessageBox(this,texto);
-                    //-----------------------------------------
+
                     // Insertamos datos factura en presupuesto
-                    //-----------------------------------------
                     oPres->factura =oFactura.factura;
                     oPres->editable = false;
+                    oPres->aprobado = true;
                     oPres->GuardarPres(oPres->id);
-                    ui->txtfactura->setText(oPres->factura);
-                    Configuracion_global->empresaDB.commit();
-                    //------------------------------------
-                    // Actualizamos factura en albarán
-                    //------------------------------------
-                    QString error;
-                    int albaran = SqlCalls::SelectOneField("cab_pre","albaran",QString("albaran=%1").arg(oPres->albaran),
-                                                           Configuracion_global->empresaDB,error).toInt();
-                    if(albaran >0)
-                    {
-                        QHash <QString, QVariant> a;
-                        a["factura"] = oFactura.factura;
-                        bool updated = SqlCalls::SqlUpdate(a,"cab_alb",Configuracion_global->empresaDB,
-                                                           QString("albaran =%1").arg(oPres->albaran),
-                                                           error);
-                        if(!updated)
-                            TimedMessageBox *t = new TimedMessageBox(this,tr("No se pudo guardar el numero de factura en el albarán: %1").arg(error));
-                    }
-
-
+                    ui->txtfactura->setText(oPres->factura);                                        
 
                     vencimientos vto(this);
-                    //-----------------
+
                     // Asiento contable
-                    //-----------------
+                    bool creado = true;
                     if(Configuracion_global->contabilidad)
                     {
 
-                        bool creado;
                         oClientePres->Recuperar("select * from clientes where id = "+QString::number(oFactura.id_cliente));
                         if(oFactura.apunte == 0)
                             creado = oFactura.Apunte();
                         else
                             creado = oFactura.EditApunte(oFactura.apunte);
-                        if(!creado)
-                            Configuracion_global->empresaDB.rollback();
                     }
-                    //------------------
+
                     // Vencimiento
-                    //------------------
-                    vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
-                                             "V",oFactura.total);
-                    oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(oPres->id));
-                    LLenarCampos();
+                    if(creado && vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
+                                             "V",oFactura.total))
+                    {
+                        QString texto;
+                        texto = tr("Se ha creado una nueva factura.\ncon el número ")+ cab_fac.value("factura").toString()+
+                                tr("\n y de importe: ")+QString::number(cab_fac.value("total").toDouble(),'f',Configuracion_global->decimales);
+                        TimedMessageBox * t = new TimedMessageBox(this,texto);
 
-                } else
+                        bool commited = Configuracion_global->empresaDB.commit();
+                        commited &= Configuracion_global->groupDB.commit();
+                        if(Configuracion_global->contabilidad)
+                            commited &= Configuracion_global->contaDB.commit();
+                        oPres->RecuperarPresupuesto("select * from cab_pre where id ="+QString::number(oPres->id));
+                        LLenarCampos();
+                    }
+                    else
+                    {
+                        Configuracion_global->empresaDB.rollback();
+                        Configuracion_global->groupDB.rollback();
+                        if(Configuracion_global->contabilidad)
+                            Configuracion_global->contaDB.rollback();
+                        QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura "),tr("Aceptar"));
+                    }
+
+                }
+                else
                 {
-
-                    QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura "),tr("Aceptar"));
-
                     Configuracion_global->empresaDB.rollback();
+                    Configuracion_global->groupDB.rollback();
+                    if(Configuracion_global->contabilidad)
+                        Configuracion_global->contaDB.rollback();
+                    QMessageBox::warning(this,tr("Traspaso a factura"),tr("No se pudo crear la factura "),tr("Aceptar"));                    
                 }
             }
             else
             {
                 Configuracion_global->empresaDB.rollback();
+                Configuracion_global->groupDB.rollback();
+                if(Configuracion_global->contabilidad)
+                    Configuracion_global->contaDB.rollback();
                 QMessageBox::warning(this,tr("Presupuestos"),
                                      tr("No se ha podido crear la factura"),tr("Aceptar"));
             }
         }
-    } else
-        QMessageBox::warning(this,tr("Presupuestos"),tr("Este presupuesto ya ha sido facturado"),tr("Aceptar"));
+    }
+    else
+    {
+        if(ui->txtfactura->text() != "0")
+            TimedMessageBox *t = new TimedMessageBox(this,tr("Este presupuesto ya ha sido pasado a factura: %1").arg(oPres->factura));
+        else if(ui->txtalbaran->text() !="0")
+            QMessageBox::information(this,tr("Traspaso anterior"),tr("Este presupuesto ya ha sido pasado a albarán: %1.\nFacture dicho albarán.").arg(oPres->albaran));
+        else
+            QMessageBox::information(this,tr("Traspaso anterior"),tr("Este presupuesto ya ha sido pasado a pedido: %1.\nFacture dicho pedido.").arg(oPres->pedido));
+    }
 }
 
 void FrmPresupuestosCli::on_txtcodigo_cliente_editingFinished()
@@ -1556,6 +1613,14 @@ void FrmPresupuestosCli::on_txtcodigo_cliente_editingFinished()
 
 void FrmPresupuestosCli::on_btnImprimir_clicked()
 {
+    if(ui->stackedWidget->currentIndex() == 1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        oPres->RecuperarPresupuesto(QString("select * from cab_pre where id =%1")
+                                    .arg(model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt()));
+    }
+
     FrmDialogoImprimir dlg_print(this);
     dlg_print.set_email(oClientePres->email);
     dlg_print.set_preview(false);
@@ -1571,6 +1636,11 @@ void FrmPresupuestosCli::on_btnImprimir_clicked()
             parametros_sql["Empresa.lin_pre"] = QString("id_cab = %1").arg(oPres->id);
             QString report = "presupuesto_"+QString::number(oClientePres->ididioma);
 
+            QString pdfname = QString("Presupuesto-%1").arg(oPres->presupuesto);
+            QString asunto = tr("Envio de presupuesto %1").arg(oPres->presupuesto);
+            QString texto = tr("Estimado/a %1:\n"
+                             "Le adjunto el presupuesto nº %2.\n\n"
+                             "Un saludo.").arg(oClientePres->nombre_fiscal).arg(oPres->presupuesto);
             QMap <QString,QString> parametros;
             //TODO add parametros
             switch (valor) {
@@ -1578,7 +1648,7 @@ void FrmPresupuestosCli::on_btnImprimir_clicked()
                 Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                 break;
             case 2: // email
-                // TODO - enviar pdf por mail
+                Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,oClientePres->email,oClientePres->nombre_fiscal,asunto,texto);
                 break;
             case 3: // PDF
                 Configuracion::ImprimirPDF(report,parametros_sql,parametros);
@@ -1816,12 +1886,17 @@ void FrmPresupuestosCli::setUpBusqueda()
     m_busqueda->addWidget(edit);
 
     QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
-    // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    connect(print,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
     m_busqueda->addWidget(print);
 
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
     m_busqueda->addWidget(del);
+
+    m_busqueda->addSpacer();
+    QPushButton* list = new QPushButton(QIcon(":/Icons/PNG/reports.png"),tr("Listados"),this);
+    connect(list,SIGNAL(clicked()),this,SLOT(listados()));
+    m_busqueda->addWidget(list);
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
     connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
@@ -1853,12 +1928,6 @@ void FrmPresupuestosCli::on_btnDesbloquear_clicked()
     LLenarCampos();
     ui->stackedWidget->setCurrentIndex(0);
     BloquearCampos(true);
-}
-
-
-void FrmPresupuestosCli::on_btnImprimir_2_clicked()
-{
-    // TODO -  Imprimir
 }
 
 void FrmPresupuestosCli::mostrarBusqueda()
@@ -1920,7 +1989,7 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
         frmeditar.set_id_tarifa(oClientePres->idTarifa);
         frmeditar.set_id_cab(oPres->id);
         frmeditar.set_tipo("V");
-        if(!frmeditar.exec() == QDialog::Accepted)
+        if(frmeditar.exec() == QDialog::Accepted)
             refrescar_modelo();
         calcular_presupuesto();
 
@@ -1987,6 +2056,12 @@ void FrmPresupuestosCli::on_btnPrforma_clicked()
             parametros_sql["Empresa.lin_pre"] = QString("id_cab = %1").arg(oPres->id);
             QString report = "proforma_"+QString::number(oClientePres->ididioma);
 
+            QString pdfname = QString("Proforma-%1").arg(oPres->presupuesto);
+            QString asunto = tr("Envio de proforma %1").arg(oPres->presupuesto);
+            QString texto = tr("Estimado/a %1:\n"
+                             "Le adjunto el presupuesto nº %2.\n\n"
+                             "Un saludo.").arg(oClientePres->nombre_fiscal).arg(oPres->presupuesto);
+
             QMap <QString,QString> parametros;
             //TODO add parametros
             switch (valor) {
@@ -1994,7 +2069,7 @@ void FrmPresupuestosCli::on_btnPrforma_clicked()
                 Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                 break;
             case 2: // email
-                // TODO - enviar pdf por mail
+                Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,oClientePres->email,oClientePres->nombre_fiscal,asunto,texto);
                 break;
             case 3: // PDF
                 Configuracion::ImprimirPDF(report,parametros_sql,parametros);

@@ -11,13 +11,16 @@ CREATE TABLE `mayaglobal`.`grupos` (
   `bd_port` varchar(45) DEFAULT '3306',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `mayaglobal`.`usuarios` (
+CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
+  `nombre_completo` varchar(45) DEFAULT NULL,
   `contrasena` varchar(45) DEFAULT NULL,
   `cuenta_smtp` varchar(100) DEFAULT NULL,
   `usuario_mail` varchar(100) DEFAULT NULL,
   `password_mail` varchar(100) DEFAULT NULL,
+  `port_mail` int(11) DEFAULT NULL,
+  `super_user` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

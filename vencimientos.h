@@ -32,7 +32,7 @@ public:
     //id_documento = idfactura o id_tpv
     //tipo= 1 - factura 2 - tiquet
     // compra_venta = c - compras v - ventas.
-    void calcular_vencimiento(QDate fecha, int id_cliente, int id_ticket, int id_factura, QString documento, int tipo, QString compra_venta, double importe);
+    bool calcular_vencimiento(QDate fecha, int id_cliente, int id_ticket, int id_factura, QString documento, int tipo, QString compra_venta, double importe);
 private:
     TimedMessageBox *t;
 signals:

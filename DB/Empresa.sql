@@ -303,8 +303,10 @@ CREATE TABLE `@empresa@`.`cab_alb` (
   `ejercicio` int(5) DEFAULT NULL,
   `editable` tinyint(1) DEFAULT '1',
   `id_agente` int(11) DEFAULT '0',
+  `porc_irpf` double DEFAULT '0',
+  `irpf` double DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_fac` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo_cliente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -412,7 +414,7 @@ CREATE TABLE `@empresa@`.`cab_fac` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_pre` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `presupuesto` int(11) DEFAULT '0',
+  `presupuesto` varchar(25) COLLATE utf8_unicode_ci DEFAULT '0',
   `id_divisa` int(11) NOT NULL DEFAULT '1',
   `fecha` date DEFAULT NULL,
   `valido_hasta` date DEFAULT NULL,
@@ -449,8 +451,8 @@ CREATE TABLE `@empresa@`.`cab_pre` (
   `importe_factura` double DEFAULT '0',
   `importe_pendiente` double DEFAULT '0',
   `factura` varchar(25) COLLATE utf8_unicode_ci DEFAULT '0',
-  `albaran` int(11) DEFAULT '0',
-  `pedido` int(11) DEFAULT '0',
+  `albaran` varchar(25) COLLATE utf8_unicode_ci DEFAULT '0',
+  `pedido` varchar(25) COLLATE utf8_unicode_ci DEFAULT '0',
   `id_forma_pago` int(11) DEFAULT '0',
   `lugar_entrega` text COLLATE utf8_unicode_ci,
   `atencion_de` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -500,6 +502,8 @@ CREATE TABLE `@empresa@`.`cab_pre` (
   `editable` tinyint(1) DEFAULT '1',
   `valor_divisa` float NOT NULL DEFAULT '1',
   `id_agente` int(11) DEFAULT '0',
+  `porc_irpf` double DEFAULT '0',
+  `irpf` double DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_tpv` (
@@ -975,8 +979,8 @@ CREATE TABLE `@empresa@`.`moneda_caja` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`ped_cli` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `albaran` int(11) DEFAULT '0',
-  `pedido` int(11) DEFAULT '0',
+  `albaran` varchar(45) COLLATE utf8_unicode_ci DEFAULT '0',
+  `pedido` varchar(45) COLLATE utf8_unicode_ci DEFAULT '0',
   `id_divisa` int(11) NOT NULL DEFAULT '1',
   `fecha` date DEFAULT NULL,
   `pedido_cliente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1067,8 +1071,10 @@ CREATE TABLE `@empresa@`.`ped_cli` (
   `editable` tinyint(1) DEFAULT '1',
   `id_transportista` int(11) DEFAULT NULL,
   `id_agente` int(11) DEFAULT '0',
+  `porc_irpf` double DEFAULT '0',
+  `irpf` double DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`ped_pro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pedido` int(11) DEFAULT '0',

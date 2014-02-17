@@ -23,7 +23,7 @@ bool Presupuesto::AnadirPresupuesto()
     this->porc_rec2 = 0;
     this->porc_rec3 = 0;
     this->porc_rec4 = 0;
-    this->presupuesto = NuevoNumeroPresupuesto();
+    this->presupuesto = "-1";
     this->fecha = QDate::currentDate();
     this->valido_hasta = QDate::currentDate();
 
@@ -84,7 +84,7 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
         {
             QSqlRecord registro = qCab_pre.record();
             this->id = registro.field("id").value().toInt();
-            this->presupuesto = registro.field("presupuesto").value().toInt();
+            this->presupuesto = registro.field("presupuesto").value().toString();
             this->id_divisa = registro.field("id_divisa").value().toInt();
             this->fecha = registro.field("fecha").value().toDate();
             this->ejercicio = registro.field("ejercicio").value().toInt();
@@ -124,8 +124,8 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->fecha_aprobacion = registro.field("fecha_aprobacion").value().toDate();
             this->importe_factura = registro.field("importe_factura").value().toDouble();
             this->factura = registro.field("factura").value().toString();
-            this->albaran = registro.field("albaran").value().toInt();
-            this->pedido = registro.field("pedido").value().toInt();
+            this->albaran = registro.field("albaran").value().toString();
+            this->pedido = registro.field("pedido").value().toString();
             this->desc_gasto1 = registro.field("gastos_distribuidos1").value().toString();
             this->desc_gasto2 = registro.field("gastos_distribuidos2").value().toString();
             this->desc_gasto3 = registro.field("gastos_distribuidos3").value().toString();
@@ -183,6 +183,9 @@ bool Presupuesto::RecuperarPresupuesto(QString cSQL)
             this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
             this->editable = registro.field("editable").value().toBool();
             this->id_agente = registro.value("id_agente").toInt();
+
+            this->porc_irpf = registro.value("porc_irpf").toDouble();
+            this->irpf = registro.value("irpf").toDouble();
             return true;
         }
      }
@@ -203,8 +206,7 @@ bool Presupuesto::anterior()
 
 bool Presupuesto::GuardarPres(int nid_Presupuesto)
 {
-
-    if (this->presupuesto == 0)
+    if (this->presupuesto == "-1")
         this->presupuesto = NuevoNumeroPresupuesto();
     QHash <QString,QVariant> cab_pre;
     QString error;
@@ -298,6 +300,9 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
     cab_pre["editable"] = editable;
     cab_pre["id_agente"] = id_agente;
 
+    cab_pre["porc_irpf"] =this->porc_irpf;
+    cab_pre["irpf"] =this->irpf;
+
     bool updated = SqlCalls::SqlUpdate(cab_pre,"cab_pre",Configuracion_global->empresaDB,QString("id=%1").arg(nid_Presupuesto),error);
 
     if(!updated)
@@ -322,18 +327,30 @@ bool Presupuesto::BorrarLineas(int nid_Presupuesto)
     }
 }
 
-int Presupuesto::NuevoNumeroPresupuesto()
+QString Presupuesto::NuevoNumeroPresupuesto()
 {
     QSqlQuery cab_pre(Configuracion_global->empresaDB);
-    int presupuesto;
+    double presupuesto = 1;
     cab_pre.prepare("Select presupuesto from cab_pre order by presupuesto desc limit 1");
-    if(cab_pre.exec()) {
+    if(cab_pre.exec())
+    {
         cab_pre.next();
-        presupuesto= cab_pre.value(0).toInt();
+        presupuesto= cab_pre.value(0).toDouble();
         presupuesto ++;
-    } else {
+        presupuesto = qMax(1.0,presupuesto);
+    }
+    else
+    {
          QMessageBox::critical(qApp->activeWindow(), "Error:", cab_pre.lastError().text());
     }
-    return presupuesto;
+
+    QString codigo_nuevo;
+    QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);
+    formato.prepend("%0");
+    std::string _x = formato.toStdString();
+
+    codigo_nuevo.sprintf(_x.c_str(),presupuesto);
+
+    return codigo_nuevo;
 }
 
