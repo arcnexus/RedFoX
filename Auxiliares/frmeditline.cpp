@@ -591,7 +591,7 @@ void frmEditLine::on_btnAceptar_clicked()
             {
                 oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,
                                                 Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
-                                                         anterior.value("total").toDouble(),QDate::currentDate(),"V");
+                                                         anterior.value("total").toDouble(),QDate::currentDate(),"V",false);
                 // ----------------------------
                 // Lotes
                 //-----------------------------

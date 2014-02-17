@@ -378,6 +378,14 @@ void FrmPresupuestosCli::LLenarCamposCliente()
             break;
         }
     }
+    for (auto a=0; a< Configuracion_global->agentes_model->rowCount();a++)
+    {
+        if(oClientePres->id_agente == Configuracion_global->agentes_model->record(a).value("id").toInt())
+        {
+            ui->cboAgente->setCurrentIndex(a);
+            break;
+        }
+    }
 }
 
 void FrmPresupuestosCli::LLenarPresupuesto()

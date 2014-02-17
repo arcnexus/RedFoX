@@ -1073,7 +1073,7 @@ void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLab
                                 QObject::tr("Ok"));
 }
 
-bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QDate fecha, QString accion)
+bool Articulo::acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion, bool removeReservas)
 {
     //--------------------------------
     // ACUMULADOS ARTICULO Y STOCK
@@ -1085,10 +1085,14 @@ bool Articulo::acumulado_ventas(int id_articulo, float cantidad,double total, QD
         cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real -%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
         cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen -%3,").arg(QString::number(cantidad,'f',2)));
         cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas +%4,").arg(QString::number(total,'f',Configuracion_global->decimales_campos_totales)));
+        if(removeReservas)
+            cSQL.append(QString("unidades_reservadas = unidades_reservadas - %1,").arg(QString::number(cantidad,'f',2)));
         cSQL.append(QString("unidades_vendidas = unidades_vendidas +%5 where id= %6").arg(QString::number(cantidad,'f',2),
                                                                                   QString::number(id_articulo)));
 
-    } else
+
+    }
+    else
     {
         cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real +%2,").arg(fecha.toString("yyyyMMdd"),QString::number(cantidad,'f',2));
         cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen -%3,").arg(QString::number(cantidad,'f',2)));

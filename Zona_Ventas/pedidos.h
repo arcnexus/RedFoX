@@ -91,6 +91,14 @@ public:
     float porc_iva_gasto1,porc_iva_gasto2,porc_iva_gasto3;
     double iva_gasto1,iva_gasto2,iva_gasto3;
 
+    int id_agente;
+    double porc_irpf;
+    double irpf;
+    QString telefono;
+    QString movil;
+    QString fax;
+    QString email;
+
 public slots:
     bool BorrarTodasLineas(int id_pedido);
     bool BorrarLinea(int Iped, int id_art, double cantidad);

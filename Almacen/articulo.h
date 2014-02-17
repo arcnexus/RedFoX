@@ -90,7 +90,7 @@ public:
                                    int id_cliente);
     bool Devolucion(int id, double cantidad, double pvp);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
-    static bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
+    static bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion , bool removeReservas = false);
 
     void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
 

@@ -180,8 +180,18 @@ GuardarPedido(int nid_Pedido)
     ped_cli["iva_gasto2"] = iva_gasto2;
     ped_cli["iva_gasto3"] = iva_gasto3;
     ped_cli["id"] = nid_Pedido;
+    ped_cli["id_agente"] = id_agente;
+
+    ped_cli["porc_irpf"] =this->porc_irpf;
+    ped_cli["irpf"] =this->irpf;
 
     ped_cli["pedido_cliente"] = numPedidoCliente();
+
+    ped_cli["telefono"] =telefono;
+    ped_cli["fax"] =movil;
+    ped_cli["movil"] =fax;
+    ped_cli["email"] =email;
+
     pedido_cliente = ped_cli.value("pedido_cliente").toInt();
 
     QString error;
@@ -305,6 +315,16 @@ bool Pedidos::RecuperarPedido(QString cSQL)
             pedido_cliente = r.value("pedido_cliente").toInt();
             this->id_pais = r.field("id_pais").value().toInt();
             pais = Configuracion_global->Devolver_pais(id_pais);
+            this->id_agente = r.value("id_agente").toInt();
+
+            this->porc_irpf = r.value("porc_irpf").toDouble();
+            this->irpf = r.value("irpf").toDouble();
+
+            telefono= r.value("telefono").toString();
+            movil= r.value("fax").toString();
+            fax= r.value("movil").toString();
+            email= r.value("email").toString();
+
             QSqlQuery queryCliente(Configuracion_global->groupDB);
             if(queryCliente.exec("select tarifa_cliente from clientes where id = "+QString::number(this->id_cliente)));
                 if (queryCliente.next())
