@@ -32,6 +32,8 @@ public:
 signals:
 
 private slots:
+    void listados();
+
     void on_btnSiguiente_clicked();
 
     void on_btnAnadir_clicked();

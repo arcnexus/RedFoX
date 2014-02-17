@@ -223,7 +223,8 @@ SOURCES += main.cpp\
     Zona_Maestros/frmtipocliente.cpp\
     Auxiliares/frmgastos_ped_pro.cpp \
     Zona_Ventas/frmlistadospre.cpp \
-    Auxiliares/dlgsetupmail.cpp
+    Auxiliares/dlgsetupmail.cpp \
+    Zona_Ventas/frmlistadoped.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -413,7 +414,8 @@ HEADERS  += mainwindow.h \
     Zona_Maestros/frmtipocliente.h \
     Auxiliares/frmgastos_ped_pro.h \
     Zona_Ventas/frmlistadospre.h \
-    Auxiliares/dlgsetupmail.h
+    Auxiliares/dlgsetupmail.h \
+    Zona_Ventas/frmlistadoped.h
 
 
 
@@ -516,7 +518,8 @@ FORMS    += mainwindow.ui \
     Zona_Maestros/frmtipocliente.ui \
     Auxiliares/frmgastos_ped_pro.ui \
     Zona_Ventas/frmlistadospre.ui \
-    Auxiliares/dlgsetupmail.ui
+    Auxiliares/dlgsetupmail.ui \
+    Zona_Ventas/frmlistadoped.ui
 
 RESOURCES += \
     maya.qrc \

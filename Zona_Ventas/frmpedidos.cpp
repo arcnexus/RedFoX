@@ -14,7 +14,7 @@
 #include"../Zona_Maestros/transportistas.h"
 #include "../vencimientos.h"
 #include "../Auxiliares/frmeditline.h"
-
+#include "frmlistadoped.h"
 void FrmPedidos::formatLineas()
 {
     QStringList header;
@@ -27,6 +27,12 @@ void FrmPedidos::formatLineas()
         ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
         modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
     }
+}
+
+void FrmPedidos::listados()
+{
+    frmListadoPed d(this);
+    d.exec();
 }
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
@@ -1077,6 +1083,11 @@ void FrmPedidos::setUpBusqueda()
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));
     m_busqueda->addWidget(del);
+
+    m_busqueda->addSpacer();
+    QPushButton* list = new QPushButton(QIcon(":/Icons/PNG/reports.png"),tr("Listados"),this);
+    connect(list,SIGNAL(clicked()),this,SLOT(listados()));
+    m_busqueda->addWidget(list);
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
     connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
