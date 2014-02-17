@@ -274,19 +274,19 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 if(albaran){
                     QSqlQuery query_lin_alb_pro(Configuracion_global->empresaDB);
                     query_lin_alb_pro.prepare("INSERT INTO lin_alb_pro "
-                                              "(id_cab,codigo,descripcion,coste,dto,"
-                                              "iva,iva,cantidad,total,"
+                                              "(id_cab,codigo,descripcion,precio,porc_dto,"
+                                              "porc_iva,iva,cantidad,total,"
                                               "dto,subtotal,id_articulo) VALUES "
-                                              "(:id_cab,:codigo,:descripcion,:coste,:dto,"
-                                              ":iva,:iva,:cantidad,:total,"
+                                              "(:id_cab,:codigo,:descripcion,:precio,:porc_dto,"
+                                              ":porc_iva,:iva,:cantidad,:total,"
                                               ":dto,:subtotal,:id_articulo);");
 
                     query_lin_alb_pro.bindValue(":id_cab",this->id_albaran);
-                    query_lin_alb_pro.bindValue(":codigo",queryLineas.record().value("codigo_articulo_proveedor").toString());
+                    query_lin_alb_pro.bindValue(":codigo",queryLineas.record().value("codigo").toString());
                     query_lin_alb_pro.bindValue(":descripcion",queryLineas.record().value("descripcion").toString());
-                    query_lin_alb_pro.bindValue(":coste",queryLineas.record().value("coste_bruto").toDouble());
-                    query_lin_alb_pro.bindValue(":dto",queryLineas.record().value("porc_dto").toDouble());
-                    query_lin_alb_pro.bindValue(":iva",queryLineas.record().value("porc_iva").toDouble());
+                    query_lin_alb_pro.bindValue(":precio",queryLineas.record().value("precio").toDouble());
+                    query_lin_alb_pro.bindValue(":porc_dto",queryLineas.record().value("porc_dto").toDouble());
+                    query_lin_alb_pro.bindValue(":porc_iva",queryLineas.record().value("porc_iva").toDouble());
                     query_lin_alb_pro.bindValue(":cantidad",rec_act);
                     query_lin_alb_pro.bindValue(":total",total);
                     query_lin_alb_pro.bindValue(":dto",dto);
@@ -514,10 +514,10 @@ void Frmrecepcion_pedidos::abrir_albaran()
                                   "base1 =:base1,base2 =:base2,base3 =:base3, base4 =:base4, "
                                   "iva1 =:iva1,iva2 =:iva2, iva3 =:iva3, iva4 =:iva4, "
                                   "total1 =:total1,total2 =:total2,total3 =:total3,total4 =:total4,"
-                                  "porc_rec1=:porc_rec1,porcentaje_rec2=:porcentaje_rec2,"
-                                  "porcentaje_rec3=:porcentaje_rec3,porcentaje_rec4=:porcentaje_rec4,"
-                                  "importe_rec1=:importe_rec1,importe_rec2= :importe_rec2,importe_rec3=:importe_rec3,"
-                                  "importe_rec4=:importe_rec4,importe_rec_total =:importe_rec_total,"
+                                  "porc_rec1=:porc_rec1,porc_rec2=:porc_rec2,"
+                                  "porc_rec3=:porc_rec3,porc_rec4=:porc_rec4,"
+                                  "rec1=:rec1,rec2= :rec2,rec3=:rec3,"
+                                  "rec4=:rec4,importe_rec_total =:importe_rec_total,"
                                   "base_total =:base,iva_total =:iva,total= :total "
                                   "where id =:id");
             query_albaran.bindValue(":albaran",ui->txtAlbaran->text());
@@ -606,24 +606,27 @@ void Frmrecepcion_pedidos::abrir_albaran()
             query_albaran.bindValue(":total3",total3);
             query_albaran.bindValue(":total4",total4);
             query_albaran.bindValue(":porc_rec1",Configuracion_global->reList.at(0));
-            query_albaran.bindValue(":porcentaje_rec2",Configuracion_global->reList.at(1));
-            query_albaran.bindValue(":porcentaje_rec3",Configuracion_global->reList.at(2));
-            query_albaran.bindValue(":porcentaje_rec4",Configuracion_global->reList.at(3));
-            query_albaran.bindValue(":importe_rec1",rec1);
-            query_albaran.bindValue(":importe_rec2",rec2);
-            query_albaran.bindValue(":importe_rec3",rec3);
-            query_albaran.bindValue(":importe_rec4",rec4);
+            query_albaran.bindValue(":porc_rec2",Configuracion_global->reList.at(1));
+            query_albaran.bindValue(":porc_rec3",Configuracion_global->reList.at(2));
+            query_albaran.bindValue(":porc_rec4",Configuracion_global->reList.at(3));
+            query_albaran.bindValue(":rec1",rec1);
+            query_albaran.bindValue(":rec2",rec2);
+            query_albaran.bindValue(":rec3",rec3);
+            query_albaran.bindValue(":rec4",rec4);
             query_albaran.bindValue(":importe_rec_total",rec_total);
             query_albaran.bindValue(":total",total);
             query_albaran.bindValue(":iva",iva);
             query_albaran.bindValue(":base",base);
 
 
-            if(!query_albaran.exec())
+            if(!query_albaran.exec()){
                 QMessageBox::warning(this,tr("Recepción Pedidos"),
                                      tr("No se pudo crear el albarán, Error:")+query_albaran.lastError().text(),
                                      tr("Aceptar"));
-            else {
+                QString error;
+                SqlCalls::SqlDelete("alb_pro",Configuracion_global->empresaDB,QString("id=%1").arg(id_albaran),error);
+                SqlCalls::SqlDelete("lin_alb_pro",Configuracion_global->empresaDB,QString("id_cab = %1").arg(id_albaran),error);
+            } else {
                 QString cadena = tr("Se ha creado el albarán: ");
                 cadena.append(ui->txtAlbaran->text());
                 cadena.append("\nde : ");
@@ -686,10 +689,15 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         if(query_factura.exec())
 
             id_factura = query_factura.lastInsertId().toInt();
-        else
+        else{
             QMessageBox::warning(this,tr("Recepción Pedidos"),
                                  tr("No se pudo crear la factura, Error:")+query_factura.lastError().text(),
                                  tr("Aceptar"));
+            QString error;
+
+            SqlCalls::SqlDelete("fac_pro",Configuracion_global->empresaDB,QString("id=%1").arg(id_factura),error);
+            SqlCalls::SqlDelete("lin_fac_pro",Configuracion_global->empresaDB,QString("id_cab = %1").arg(id_factura),error);
+        }
     } else
     {
         QSqlQuery query_pedido(Configuracion_global->empresaDB);
@@ -837,7 +845,9 @@ void Frmrecepcion_pedidos::on_btnFactura_clicked()
         ui->txtFecha_factura->setVisible(false);
         ui->btnFactura->setText("Abrir Factura");
         ui->lblFecha_factura->setVisible(false);
+
         // TODO - CONTABILIZAR FACTURA COMPRAS
+
         factura = false;
         ui->BtnCancelar->setEnabled(false);
         emit unblock();

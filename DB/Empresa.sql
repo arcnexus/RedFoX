@@ -804,7 +804,6 @@ CREATE TABLE `@empresa@`.`lin_alb_pro` (
   `dto` double DEFAULT '0',
   `subtotal` double DEFAULT '0',
   `iva` double DEFAULT '0',
-  `codigo_articulo_proveedor` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `coste_real` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
