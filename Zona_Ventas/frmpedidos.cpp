@@ -1634,7 +1634,7 @@ void FrmPedidos::convertir_en_albaran()
         {
             QHash <QString, QVariant> p;
 
-            p["albaran"] = num;
+            p["albaran"] = QString("%1/%2").arg(serie).arg(num);
             p["editable"] = false;
             c = "id="+QString::number(oPedido->id);
             bool updated = SqlCalls::SqlUpdate(p,"ped_cli",Configuracion_global->empresaDB,c,error);
@@ -1882,7 +1882,7 @@ void FrmPedidos::convertir_enFactura()
                 if(transaccion)
                 {
                     // Insertamos datos factura en pedido
-                    oPedido->factura =oFactura.factura;
+                    oPedido->factura = QString("%1/%2").arg(oFactura.serie).arg(oFactura.factura);
                     oPedido->editable = false;
                     oPedido->GuardarPedido(oPedido->id);
                     ui->txtcNumFra->setText(oPedido->factura);

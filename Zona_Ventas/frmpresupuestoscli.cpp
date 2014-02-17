@@ -1280,7 +1280,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
                 p["aprobado"] = true;
                 p["fecha_aprobacion"] = QDate::currentDate();
             }
-            p["albaran"] = num;
+            p["albaran"] = QString("%1/%2").arg(serie).arg(num);
             p["editable"] = false;
             c = "id="+QString::number(oPres->id);
             bool updated = SqlCalls::SqlUpdate(p,"cab_pre",Configuracion_global->empresaDB,c,error);
@@ -1533,7 +1533,7 @@ void FrmPresupuestosCli::convertir_enFactura()
                     ui->btn_convertir->setEnabled(false);
 
                     // Insertamos datos factura en presupuesto
-                    oPres->factura =oFactura.factura;
+                    oPres->factura = QString("%1/%2").arg(oFactura.serie).arg(oFactura.factura);
                     oPres->editable = false;
                     oPres->aprobado = true;
                     oPres->GuardarPres(oPres->id);
