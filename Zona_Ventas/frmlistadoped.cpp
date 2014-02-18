@@ -2,6 +2,7 @@
 #include "ui_frmlistadoped.h"
 #include "../configuracion.h"
 #include "../Auxiliares/dlgsetupmail.h"
+
 frmListadoPed::frmListadoPed(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmListadoPed)
@@ -109,7 +110,7 @@ QMap<QString, QString> frmListadoPed::getParametros()
 }
 QString frmListadoPed::getClientesSql()
 {
-    QString ret = "codigo_cliente > 0 ";
+    QString ret = "codigo_cliente >0 ";
     if(ui->rdb1Cliente->isChecked())
         ret = QString("codigo_cliente = %1 ").arg(ui->txt1Cliente->text());
     else if(ui->rdbRGClientes->isChecked())
@@ -122,10 +123,14 @@ QString frmListadoPed::getCaPreSql()
 {
     QString ret = "";
     if(ui->rdbRGFechas->isChecked())
-        ret.append(QString("and fecha >= '%1' and fecha <= '%2' ").arg(ui->dateDesde->date().toString("yyyy-MM-dd")).arg(ui->deteHasta->date().toString("yyyy-MM-dd")));
+        ret.append(QString(" fecha >= '%1' and fecha <= '%2' ").arg(ui->dateDesde->date().toString("yyyy-MM-dd")).arg(ui->deteHasta->date().toString("yyyy-MM-dd")));
 
     if(ui->rdbRGImportes->isChecked())
-        ret.append(QString("and total_pedido >= %1 and total_pedido <= %2 ").arg(ui->spinDesde->value()).arg(ui->spinHasta->value()));
+    {
+        if(!ret.isEmpty())
+            ret.append("and");
+        ret.append(QString(" total_pedido >= %1 and total_pedido <= %2 ").arg(ui->spinDesde->value()).arg(ui->spinHasta->value()));
+    }
 
     return ret;
 }

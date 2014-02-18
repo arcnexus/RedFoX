@@ -2,7 +2,6 @@
 #include "ui_frmlistadospre.h"
 #include "../configuracion.h"
 #include "../Auxiliares/dlgsetupmail.h"
-
 frmListadosPre::frmListadosPre(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frmListadosPre)
@@ -76,6 +75,7 @@ void frmListadosPre::on_btnPrint_clicked()
 
 void frmListadosPre::on_btnPrew_clicked()
 {
+    QApplication::processEvents();
     QMap <QString,QString> parametros_sql;
     QString report = "lista_presupuestos_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_pre"] = getCaPreSql();
@@ -96,20 +96,28 @@ QString frmListadosPre::getCaPreSql()
 {
     QString ret = "";
     if(ui->rdbRGFechas->isChecked())
-        ret.append(QString("and fecha >= '%1' and fecha <= '%2' ").arg(ui->dateDesde->date().toString("yyyy-MM-dd")).arg(ui->deteHasta->date().toString("yyyy-MM-dd")));
+        ret.append(QString(" fecha >= '%1' and fecha <= '%2' ").arg(ui->dateDesde->date().toString("yyyy-MM-dd")).arg(ui->deteHasta->date().toString("yyyy-MM-dd")));
 
     if(ui->rdbRGImportes->isChecked())
-        ret.append(QString("and total >= %1 and total <= %2 ").arg(ui->spinDesde->value()).arg(ui->spinHasta->value()));
+    {
+        if(!ret.isEmpty())
+            ret.append("and");
+        ret.append(QString(" total >= %1 and total <= %2 ").arg(ui->spinDesde->value()).arg(ui->spinHasta->value()));
+    }
 
     if(ui->rdbAprovados->isChecked() || ui->rdbNoAprovados->isChecked())
-        ret.append(QString("and aprobado = %1").arg(ui->rdbAprovados->isChecked()));
+    {
+        if(!ret.isEmpty())
+            ret.append("and");
+        ret.append(QString(" aprobado = %1").arg(ui->rdbAprovados->isChecked()));
+    }
 
     return ret;
 }
 
 QString frmListadosPre::getClientesSql()
 {
-    QString ret = "codigo_cliente > 0 ";
+    QString ret = "codigo_cliente >0 ";
     if(ui->rdb1Cliente->isChecked())
         ret = QString("codigo_cliente = %1 ").arg(ui->txt1Cliente->text());
     else if(ui->rdbRGClientes->isChecked())
