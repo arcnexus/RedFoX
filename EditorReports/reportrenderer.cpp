@@ -611,18 +611,6 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             bool colored = ele.attribute("colored").toDouble();
                             bool altern = ele.attribute("alternative").toDouble();
                             bool toogle = true;
-                            QString iSqlAttribute = ele.attribute("SqlInterno");
-                            QSqlDatabase db;
-                            if(iSqlAttribute.startsWith("Gen"))
-                                db = Configuracion_global->groupDB;
-                            else if(iSqlAttribute.startsWith("Emp"))
-                                db = Configuracion_global->empresaDB;
-                            QString query = QString("SELECT * FROM %1 WHERE %2").arg(iSqlAttribute.split(".").at(1)).arg(clausulaInterna);
-                            if(queryClausules.contains(iSqlAttribute))
-                                query.append(QString(" %1").arg(queryClausules.value(iSqlAttribute)));
-                            QSqlQuery iQuery(db);
-                            iQuery.prepare(query);
-                            iQuery.bindValue(bindKey,record.value(columna));
                             QString current_key = record.value(columna).toString();
                             QList<QSqlRecord> current_records = inner_affected.value(current_key);
                             if(!current_records.isEmpty())
@@ -1951,11 +1939,6 @@ float ReportRenderer::getNumber(QString in, int formato)
         f= 0;
     }
     return f;
-}
-
-QString ReportRenderer::getInnerSqlLimits()
-{
-
 }
 
 QString ReportRenderer::applyFormato(QString in, int formato)

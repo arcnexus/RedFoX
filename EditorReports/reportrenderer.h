@@ -69,8 +69,6 @@ private:
     enum _Aling { Left , Center , Rigth };
     QDomNode endPage(QDomNode pageNode, QDomNode footerNode, QMap<QString, float> _Acums);
     float getNumber(QString in, int formato);
-
-    QString getInnerSqlLimits();
 };
 
 #endif // REPORTRENDERER_H
