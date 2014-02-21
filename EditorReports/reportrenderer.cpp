@@ -476,7 +476,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         if(lCla.size()==2)
         {
             columna = lCla.at(1);
-            clausulaInterna = QString("%1=:%2").arg(lCla.at(0)).arg(lCla.at(1));
+            clausulaInterna = QString("%1").arg(lCla.at(0));//.arg(lCla.at(1));
             bindKey = QString(":%1").arg(lCla.at(1));
         }
         //init acums
@@ -494,6 +494,48 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
         QSqlQuery gQuery(db);
         if(gQuery.exec(gSql.second))
         {
+            QMap<QString , QList<QSqlRecord> > inner_affected;
+            if(iSql)
+            {
+                QMap<QString,bool> _ids;
+                while(gQuery.next())
+                {
+                    _ids.insert(gQuery.record().value(columna).toString(),true);
+                }
+                QList<QString> id_list = _ids.uniqueKeys();
+
+                if(!id_list.isEmpty())
+                {
+                    QString iSqlAttribute = ele.attribute("SqlInterno");
+
+                    QString select;
+                    if(queryClausules.value(ele.attribute("SqlGlobal")).contains(">0")) //TODAS
+                        select = QString("Select * from %1 where %2>0").arg(iSqlAttribute.split(".").at(1)).arg(clausulaInterna);
+                    else //ES UN RANGO
+                    {
+                        select = QString("Select * from %1 where %2=%3").arg(iSqlAttribute.split(".").at(1)).arg(clausulaInterna).arg(id_list.first());
+                        for (int i=1; i< id_list.size();i++)
+                            select.append(QString(" or %1=%2").arg(clausulaInterna).arg(id_list.at(i)));
+                    }
+
+                    QString limits = queryClausules.value(iSqlAttribute);
+                    if(!limits.isEmpty())
+                        select.append(QString(" and %1").arg(limits));
+
+                    QSqlDatabase inner_db;
+                    if(iSqlAttribute.startsWith("Gen"))
+                        inner_db = Configuracion_global->groupDB;
+                    else if(iSqlAttribute.startsWith("Emp"))
+                        inner_db = Configuracion_global->empresaDB;
+
+                    QSqlQuery inner_query(inner_db);
+                    if(inner_query.exec(select))
+                        while(inner_query.next())
+                            inner_affected[inner_query.record().value(clausulaInterna).toString()].append(inner_query.record());
+                }
+                gQuery.first();
+                gQuery.previous();
+            }
             while(gQuery.next())
             {
                 QStringList i_acums_list = ele.attribute("acum").split(",");
@@ -569,106 +611,92 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             bool colored = ele.attribute("colored").toDouble();
                             bool altern = ele.attribute("alternative").toDouble();
                             bool toogle = true;
-                            QString iSql = ele.attribute("SqlInterno");
-                            QSqlDatabase db;
-                            if(iSql.startsWith("Gen"))
-                                db = Configuracion_global->groupDB;
-                            else if(iSql.startsWith("Emp"))
-                                db = Configuracion_global->empresaDB;
-                            QString query = QString("SELECT * FROM %1 WHERE %2").arg(iSql.split(".").at(1)).arg(clausulaInterna);
-                            if(queryClausules.contains(iSql))
-                                query.append(QString(" %1").arg(queryClausules.value(iSql)));
-                            QSqlQuery iQuery(db);
-                            iQuery.prepare(query);
-                            iQuery.bindValue(bindKey,record.value(columna));
-                            if(iQuery.exec())
+                            QString current_key = record.value(columna).toString();
+                            QList<QSqlRecord> current_records = inner_affected.value(current_key);
+                            if(!current_records.isEmpty())
                             {
-                                if(iQuery.next())
+                                foreach (QSqlRecord iRecord , current_records)
                                 {
-                                    do
-                                    {                                        
-                                        QSqlRecord iRecord = iQuery.record();
-                                        QDomNode iCopy = sectionPart.cloneNode(true);
-                                        QDomElement iCopyEle = iCopy.toElement();
-                                        iCopyEle.setAttribute("colored",colored);
-                                        if(toogle)
+                                    QDomNode iCopy = sectionPart.cloneNode(true);
+                                    QDomElement iCopyEle = iCopy.toElement();
+                                    iCopyEle.setAttribute("colored",colored);
+                                    if(toogle)
+                                    {
+                                        iCopyEle.setAttribute("color",c1);
+                                        if(altern)
+                                            toogle = false;
+                                    }
+                                    else
+                                    {
+                                        iCopyEle.setAttribute("color",c2);
+                                        toogle = true;
+                                    }
+                                    QDomNode child = iCopy.firstChild();
+                                    while(!child.isNull())
+                                    {
+                                        QDomElement ele = child.toElement();
+                                        if(ele.attribute("id")=="Field")
                                         {
-                                             iCopyEle.setAttribute("color",c1);
-                                             if(altern)
-                                                 toogle = false;
+                                            ele.setAttribute("id","Label");
+                                            QString text = "";
+                                            int formato = ele.attribute("formato").toDouble();
+                                            QStringList value = ele.attribute("Sql").split(".");
+                                            if(value.size()== 3)
+                                                text = applyFormato(iRecord.value(value.at(2)).toString(),formato);
+                                            ele.setAttribute("Text",text);
+                                            if(ele.attribute("Expandable") == "1")
+                                            {
+                                                double y = ele.attribute("y").toDouble();
+                                                double h = ele.attribute("h").toDouble();
+                                                double w = ele.attribute("w").toDouble();
+                                                double siz = sectionPart.toElement().attribute("size").replace(",",".").toDouble();
+                                                double diff = siz - h - y;
+
+                                                QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
+                                                QFontMetricsF metrics(f);
+                                                QRectF r(metrics.boundingRect(QRect(0,0,w,h),Qt::TextWordWrap,text));
+
+                                                double newH = r.height();
+
+                                                siz = qMax(newH + diff, siz);
+                                                sectionPart.toElement().setAttribute("size",siz);
+                                                ele.setAttribute("h",newH);
+                                            }
+                                            if(_i_acums.contains(ele.attribute("name")))
+                                                _i_acums[ele.attribute("name")]+= iRecord.value(value.at(2)).toDouble();
                                         }
-                                        else
+                                        else if(ele.attribute("id")=="RelationalField")
                                         {
-                                             iCopyEle.setAttribute("color",c2);
-                                             toogle = true;
+                                            ele.setAttribute("id","Label");
+                                            QString text = "";
+                                            int formato = ele.attribute("formato").toDouble();
+                                            text = applyFormato(getRelationField(ele.attribute("Sql"),record),formato);
+                                            ele.setAttribute("Text",text);
                                         }
-                                        QDomNode child = iCopy.firstChild();
-                                        while(!child.isNull())
+                                        else if(ele.attribute("id")=="CodeBar")
                                         {
-                                            QDomElement ele = child.toElement();
-                                            if(ele.attribute("id")=="Field")
-                                            {
-                                                ele.setAttribute("id","Label");
-                                                QString text = "";
-                                                int formato = ele.attribute("formato").toDouble();
-                                                QStringList value = ele.attribute("Sql").split(".");
-                                                if(value.size()== 3)
-                                                        text = applyFormato(iRecord.value(value.at(2)).toString(),formato);                                                
-                                                ele.setAttribute("Text",text);
-                                                if(ele.attribute("Expandable") == "1")
-                                                {
-                                                    double y = ele.attribute("y").toDouble();
-                                                    double h = ele.attribute("h").toDouble();
-                                                    double w = ele.attribute("w").toDouble();
-                                                    double siz = sectionPart.toElement().attribute("size").replace(",",".").toDouble();
-                                                    double diff = siz - h - y;
-
-                                                    QFont f(ele.attribute("fontFamily"),ele.attribute("fontSize").toInt(),ele.attribute("fontWeigth").toInt(),ele.attribute("italicFont").toInt());
-                                                    QFontMetricsF metrics(f);
-                                                    QRectF r(metrics.boundingRect(QRect(0,0,w,h),Qt::TextWordWrap,text));
-
-                                                    double newH = r.height();
-
-                                                    siz = qMax(newH + diff, siz);
-                                                    sectionPart.toElement().setAttribute("size",siz);
-                                                    ele.setAttribute("h",newH);
-                                                }
-                                                if(_i_acums.contains(ele.attribute("name")))
-                                                    _i_acums[ele.attribute("name")]+= iRecord.value(value.at(2)).toDouble();
-                                            }
-                                            else if(ele.attribute("id")=="RelationalField")
-                                            {
-                                                ele.setAttribute("id","Label");
-                                                QString text = "";
-                                                int formato = ele.attribute("formato").toDouble();
-                                                text = applyFormato(getRelationField(ele.attribute("Sql"),record),formato);
-                                                ele.setAttribute("Text",text);
-                                            }
-                                            else if(ele.attribute("id")=="CodeBar")
-                                            {
-                                                QString text = "";
-                                                QStringList value = ele.attribute("Sql").split(".");
-                                                if(value.size()== 3)
-                                                    text = record.value(value.at(2)).toString();
-                                                ele.setAttribute("value",text);
-                                            }
-                                            else if(ele.attribute("id")=="Image")
-                                            {
-                                                QByteArray b;
-                                                QStringList value = ele.attribute("Path").split(".");
-                                                if(value.size()== 3)
-                                                    b = record.value(value.at(2)).toByteArray();
-                                               ele.setAttribute("img-data",QString(b));
-                                            }
-                                            child = child.nextSibling();
-                                        }                                        
-                                        exit.appendChild(iCopy);
-                                    }while(iQuery.next());
+                                            QString text = "";
+                                            QStringList value = ele.attribute("Sql").split(".");
+                                            if(value.size()== 3)
+                                                text = record.value(value.at(2)).toString();
+                                            ele.setAttribute("value",text);
+                                        }
+                                        else if(ele.attribute("id")=="Image")
+                                        {
+                                            QByteArray b;
+                                            QStringList value = ele.attribute("Path").split(".");
+                                            if(value.size()== 3)
+                                                b = record.value(value.at(2)).toByteArray();
+                                            ele.setAttribute("img-data",QString(b));
+                                        }
+                                        child = child.nextSibling();
+                                    }
+                                    exit.appendChild(iCopy);
                                 }
-                                else
-                                {
-                                    appenExit = false;
-                                }
+                            }
+                            else
+                            {
+                                appenExit = false;
                             }
                         }
                         else
@@ -1911,11 +1939,6 @@ float ReportRenderer::getNumber(QString in, int formato)
         f= 0;
     }
     return f;
-}
-
-QString ReportRenderer::getInnerSqlLimits()
-{
-
 }
 
 QString ReportRenderer::applyFormato(QString in, int formato)
