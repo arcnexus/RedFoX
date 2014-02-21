@@ -2202,7 +2202,8 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             Articulo.bindValue(":id_art",oArticulo->id);
             if (!Articulo.exec())
             {
-                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:%1").arg(
+                                         Articulo.lastError().text()),tr("Ok"));
                 qDebug() << Articulo.lastError();
             }
         } else
@@ -2214,7 +2215,8 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             Articulo.bindValue(":id_art",oArticulo->id);
             if (!Articulo.exec())
             {
-                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos"),tr("Ok"));
+                QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos%1").arg(
+                                         Articulo.lastError().text()),tr("Ok"));
                 qDebug() << Articulo.lastError();
             }
         }
@@ -2608,8 +2610,8 @@ void FrmArticulos::on_btnBorrarImagen_1_clicked()
 {
     QHash <QString, QVariant> h;
     QString error;
-    h["imagen"] = "NULL";
-    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    h["imagen1"] = "";
+    bool succes = SqlCalls::SqlUpdate(h,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error);
     if(!succes)
         QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
     else
@@ -2621,7 +2623,7 @@ void FrmArticulos::on_btnBorrarimagen_2_clicked()
     QHash <QString, QVariant> h;
     QString error;
     h["imagen2"] = "";
-    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    bool succes = SqlCalls::SqlUpdate(h,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error);
     if(!succes)
         QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
     else
@@ -2633,7 +2635,7 @@ void FrmArticulos::on_btnBorrarImagen_3_clicked()
     QHash <QString, QVariant> h;
     QString error;
     h["imagen3"] = "";
-    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    bool succes = SqlCalls::SqlUpdate(h,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error);
     if(!succes)
         QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
     else
@@ -2645,7 +2647,7 @@ void FrmArticulos::on_btnBorrarimagen_4_clicked()
     QHash <QString, QVariant> h;
     QString error;
     h["imagen4"] = "";
-    bool succes = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(oArticulo->id),error);
+    bool succes = SqlCalls::SqlUpdate(h,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error);
     if(!succes)
         QMessageBox::warning(this,tr("Gestión de Artículos"),tr("No se pudo borrar la imagen: %1").arg(error));
     else

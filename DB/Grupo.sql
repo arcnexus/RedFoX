@@ -100,10 +100,10 @@ CREATE TABLE `@grupo@`.`articulos` (
 
 CREATE TABLE `@grupo@`.`articulos_imagenes` (
   `id_articulo` INT NOT NULL,
-  `imagen1` BLOB NULL,
-  `imagen2` BLOB NULL,
-  `imagen3` BLOB NULL,
-  `imagen4` BLOB NULL,
+  `imagen1` LONGBLOB NULL,
+  `imagen2` LONGBLOB NULL,
+  `imagen3` LONGBLOB NULL,
+  `imagen4` LONGBLOB NULL,
   PRIMARY KEY (`id_articulo`));
 
 
