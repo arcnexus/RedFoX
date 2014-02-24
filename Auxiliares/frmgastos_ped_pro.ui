@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Gasto pedido proveedor que imputa a coste real.</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../maya.qrc">
+    <normaloff>:/Icons/PNG/redfox.png</normaloff>:/Icons/PNG/redfox.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="3">
@@ -80,7 +84,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btnCancelar</sender>

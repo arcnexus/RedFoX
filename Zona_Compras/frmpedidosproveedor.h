@@ -89,6 +89,10 @@ private slots:
     void on_cboporc_iva_gasto2_currentIndexChanged(int index);
 
     void on_cboporc_iva_gasto3_currentIndexChanged(int index);
+    void calcular_coste_real_linea(int id_linea);
+    void calcular_coste_real_todas_lineas();
+
+    void on_btnRefrescar__clicked();
 
 private:
 

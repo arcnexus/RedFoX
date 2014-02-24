@@ -33,7 +33,11 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
 
     ui->combo_pais->setModel(Configuracion_global->paises_model);
-     connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(anadir_pedido()));
+    ui->combo_pais->setModelColumn(1);
+    ui->combo_pais_entrega->setModel(Configuracion_global->paises_model);
+    ui->combo_pais_entrega->setModelColumn(1);
+
+    connect(ui->btnAnadir,SIGNAL(clicked()),this,SLOT(anadir_pedido()));
     connect(ui->btnEditar,SIGNAL(clicked()),this,SLOT(editar_pedido()));
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardar_pedido()));
     connect(ui->btnDeshacer,SIGNAL(clicked()),this,SLOT(deshacer()));
@@ -158,7 +162,19 @@ void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
     ui->txtprovincia->setText(prov.provincia);
     ui->txtcp->setText(prov.cp);
     ui->txtcif->setText(prov.cif);
-    ui->combo_pais->setCurrentText(Configuracion::Devolver_pais(prov.id_pais));
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido_proveedor->id_pais)
+        {
+            int ind_pais = ui->combo_pais->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+            ui->combo_pais->setCurrentIndex(ind_pais);
+            break;
+        }
+        else
+        {
+            ui->combo_pais->setCurrentIndex(-1);
+        }
+    }
     ui->lblnombreProveedor->setText(prov.proveedor);
     ui->chkrecargo_equivalencia->setChecked(prov.recargo_equivalencia);
 }
@@ -597,6 +613,19 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtcp->setText(oPedido_proveedor->cp);
     ui->txtpoblacion->setText(oPedido_proveedor->poblacion);
     ui->txtprovincia->setText(oPedido_proveedor->provincia);
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido_proveedor->id_pais)
+        {
+            int ind_pais = ui->combo_pais->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+            ui->combo_pais->setCurrentIndex(ind_pais);
+            break;
+        }
+        else
+        {
+            ui->combo_pais->setCurrentIndex(-1);
+        }
+    }
     ui->txtcif->setText(oPedido_proveedor->cif_nif);
     ui->txtbase->setText(QString::number(oPedido_proveedor->base_total));
     ui->txtsubtotal->setText(QString::number(oPedido_proveedor->subtotal));
@@ -616,6 +645,19 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtcp_entrega->setText(oPedido_proveedor->cp_entrega);
     ui->txtpoblacion_entrega->setText(oPedido_proveedor->poblacion_entrega);
     ui->txtprovincia_entrega->setText(oPedido_proveedor->provincia_entrega);
+    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
+    {
+        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido_proveedor->id_pais_entrega)
+        {
+            int ind_pais = ui->combo_pais_entrega->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
+            ui->combo_pais_entrega->setCurrentIndex(ind_pais);
+            break;
+        }
+        else
+        {
+            ui->combo_pais_entrega->setCurrentIndex(-1);
+        }
+    }
     ui->txtHorarioEntrega->setText(oPedido_proveedor->horario_activo);
     ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base1,'f',Configuracion_global->decimales)));
     ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->base2,'f',Configuracion_global->decimales)));
@@ -667,6 +709,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->cp = ui->txtcp->text();
     oPedido_proveedor->poblacion = ui->txtpoblacion->text();
     oPedido_proveedor->provincia = ui->txtprovincia->text();
+    oPedido_proveedor->id_pais = Configuracion_global->paises_model->record(ui->combo_pais->currentIndex()).value("id").toInt();
     oPedido_proveedor->cif_nif = ui->txtcif->text();
     oPedido_proveedor->base_total = ui->txtbase_total_2->text().toDouble();
     oPedido_proveedor->subtotal = ui->txtsubtotal->text().toDouble();
@@ -685,6 +728,7 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->cp_entrega = ui->txtcp_entrega->text();
     oPedido_proveedor->poblacion_entrega = ui->txtpoblacion_entrega->text();
     oPedido_proveedor->provincia_entrega = ui->txtprovincia_entrega->text();
+    oPedido_proveedor->id_pais_entrega = Configuracion_global->paises_model->record(ui->combo_pais_entrega->currentIndex()).value("id").toInt();
     oPedido_proveedor->horario_activo = ui->txtHorarioEntrega->text();
     oPedido_proveedor->base1 = ui->txtbase1->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
     oPedido_proveedor->base2 = ui->txtbase2->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
@@ -1207,12 +1251,7 @@ void FrmPedidosProveedor::calcular_pedido()
     }
     ui->txtTotal_gastos_linea->setText(Configuracion_global->toFormatoMoneda(QString::number(total_gastos,'f',
                                                                              Configuracion_global->decimales_campos_totales)));
-    // Repartir entre líneas
-    //-----------------------
-    for(int lin= 0;lin<=modelLineas->rowCount();lin++)
-    {
 
-    }
     //--------------------------------------------------------------------------------------
 
 }
@@ -1262,4 +1301,54 @@ void FrmPedidosProveedor::on_cboporc_iva_gasto3_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     calcular_pedido();
+}
+
+void FrmPedidosProveedor::calcular_coste_real_linea(int id_linea)
+{
+    //----------------------
+    // Calcular coste real
+    //----------------------
+    float porcentaje;
+    double tot_lin,coste,c_real;
+    QMap<int,QSqlRecord>  lin;
+    QString error;
+    lin = SqlCalls::SelectRecord("lin_ped_pro",QString("id=%1").arg(id_linea),Configuracion_global->empresaDB,error);
+    tot_lin = lin.value(id_linea).value("total").toDouble();
+    coste = lin.value(id_linea).value("precio").toDouble();
+    porcentaje = (tot_lin *100)/Configuracion_global->MonedatoDouble(ui->txttotal->text());
+    c_real = coste + ((coste*(porcentaje/100))/lin.value(id_linea).value("cantidad").toFloat());
+    QHash <QString,QVariant> h;
+    h["coste_real_unidad"] =c_real;
+    bool success = SqlCalls::SqlUpdate(h,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(id_linea),error);
+    if(!success)
+        QMessageBox::warning(this,tr("Pedidos a proveedores"),tr("Ocurrió un error al actualizar el coste_real: %1").arg(error),
+                             tr("Aceptar"));
+    else
+    {
+        h.clear();
+        h["coste_real"] = c_real;
+        int id_art = lin.value(id_linea).value("id_articulo").toInt();
+        bool success = SqlCalls::SqlUpdate(h,"articulos",Configuracion_global->groupDB,QString("id=%1").arg(id_art),error);
+        if(!success)
+            QMessageBox::warning(this,tr("Pedidos a proveedores"),tr("Ocurrió un error al actualizar el coste_real: %1").arg(error),
+                                 tr("Aceptar"));
+
+    }
+    refrescar_modelo();
+}
+
+void FrmPedidosProveedor::calcular_coste_real_todas_lineas()
+{
+    // Repartir entre líneas
+    //-----------------------
+    for(int lin= 0;lin<=modelLineas->rowCount();lin++)
+    {
+        calcular_coste_real_linea(modelLineas->record(lin).field("id").value().toInt());
+    }
+    TimedMessageBox *t = new TimedMessageBox(this,tr("Proceso realizado"));
+}
+
+void FrmPedidosProveedor::on_btnRefrescar__clicked()
+{
+    calcular_coste_real_todas_lineas();
 }
