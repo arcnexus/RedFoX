@@ -12,7 +12,7 @@ public:
     ~Albaran();
 
     int id;
-    int albaran;
+    QString albaran;
     int id_divisa;
     QDate fecha;
     QString pedido_cliente;
@@ -84,6 +84,7 @@ public:
     int ejercicio;
     int id_transportista;
     int id_forma_pago;
+    int id_agente;
 
 signals:
 
@@ -92,7 +93,7 @@ public slots:
     int AnadirAlbaran(QString serie);
     bool RecuperarAlbaran(QString cSQL);
     bool GuardarAlbaran(int nid_Albaran);
-    int NuevoNumeroAlbaran(QString serie);
+    QString NuevoNumeroAlbaran(QString serie);
     bool borrar_linea(int id_lin);
 private:
     Articulo *oArticulo;

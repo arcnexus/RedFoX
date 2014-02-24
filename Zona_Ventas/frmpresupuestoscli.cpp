@@ -1219,7 +1219,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
         else
             serie = Configuracion_global->serie;
 
-        int num = oAlbaran.NuevoNumeroAlbaran(serie);
+        QString num = oAlbaran.NuevoNumeroAlbaran(serie);
         h["albaran"] =num;
         h["serie"] = serie;
         h["fecha"] = QDate::currentDate();
@@ -1287,7 +1287,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
 
             if(updated)
             {               
-                ui->txtalbaran->setText(QString::number(num));
+                ui->txtalbaran->setText(QString("%1/%2").arg(serie).arg(num));
 
                 bool commited = Configuracion_global->empresaDB.commit();
                 commited &= Configuracion_global->groupDB.commit();
@@ -1295,7 +1295,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
                     commited &= Configuracion_global->contaDB.commit();
 
                 if(commited)
-                    TimedMessageBox* t = new TimedMessageBox(this,tr("Se ha creado el albarán num: ")+QString::number(num));
+                    TimedMessageBox* t = new TimedMessageBox(this,tr("Se ha creado el albarán num: ")+QString("%1/%2").arg(serie).arg(num));
                 else
                     QMessageBox::warning(this,tr("Gestión de presupuestos"),tr("Error en la transacción"),tr("Aceptar"));
 

@@ -302,6 +302,7 @@ bool Presupuesto::GuardarPres(int nid_Presupuesto)
 
     cab_pre["porc_irpf"] =this->porc_irpf;
     cab_pre["irpf"] =this->irpf;
+    cab_pre["ejercicio"] = Configuracion_global->cEjercicio;
 
     bool updated = SqlCalls::SqlUpdate(cab_pre,"cab_pre",Configuracion_global->empresaDB,QString("id=%1").arg(nid_Presupuesto),error);
 

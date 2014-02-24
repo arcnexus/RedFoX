@@ -16,11 +16,11 @@ Albaran::~Albaran()
 // Metodos utilidad Clase
 int Albaran::AnadirAlbaran(QString serie)
 {
-    int x = NuevoNumeroAlbaran(serie);
+
     QHash <QString,QVariant> h_cab_alb;
     QString error;
 
-    h_cab_alb["albaran"] = x;
+    h_cab_alb["albaran"] = "-1";
     h_cab_alb["fecha"] = fecha;
     h_cab_alb["ejercicio"] = Configuracion_global->cEjercicio;
     h_cab_alb["pedido_cliente"] = pedido_cliente;
@@ -84,7 +84,7 @@ int Albaran::AnadirAlbaran(QString serie)
 
     int new_id = SqlCalls::SqlInsert(h_cab_alb,"cab_alb",Configuracion_global->empresaDB,error);
 
-    if(new_id = -1)
+    if(new_id == -1)
     {
         QMessageBox::critical(qApp->activeWindow(),"Error al guardar datos Albaran:",
                               QString(tr("Ocurrió un error al insertar :")+"%1").arg(error));
@@ -104,7 +104,15 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     QString condiciones =QString("id =%1").arg(nid_Albaran);
     QString error;
 
-    h_cab_alb["albaran"] = albaran;
+    if(albaran == "-1")
+    {
+        QString x = NuevoNumeroAlbaran(serie);
+        h_cab_alb["albaran"] = x;
+    }
+    else
+    {
+        h_cab_alb["albaran"] = albaran;
+    }
     h_cab_alb["id_divisa"] = id_divisa;
     h_cab_alb["fecha"] = fecha;
     h_cab_alb["ejercicio"] = ejercicio;
@@ -196,6 +204,7 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
 
     h_cab_alb["entregado_a_cuenta"] = entregado_a_cuenta;
     h_cab_alb["serie"] = serie;
+    h_cab_alb["id_agente"] = id_agente;
 
     bool updated = SqlCalls::SqlUpdate(h_cab_alb,"cab_alb",Configuracion_global->empresaDB,condiciones,error);
 
@@ -226,7 +235,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 QSqlRecord r = cab_alb.record();
                 id = r.value("id").toInt();
                 serie = r.value("serie").toString();
-                albaran= r.value("albaran").toInt();
+                albaran= r.value("albaran").toString();
                 id_divisa = r.value("id_divisa").toInt();
                 ejercicio = r.value("ejercicio").toInt();
                 fecha= r.value("fecha").toDate();
@@ -305,7 +314,7 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 iva_gasto2 = r.value("iva_gasto2").toDouble();
                 iva_gasto3 = r.value("iva_gasto3").toDouble();
                 editable = r.value("editable").toBool();
-
+                id_agente = r.value("id_agente").toInt();
                 return true;
                }
             else //if not next
@@ -313,25 +322,34 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
         }
 }
 
-int Albaran::NuevoNumeroAlbaran(QString serie)
+QString Albaran::NuevoNumeroAlbaran(QString serie)
 {
-    QSqlQuery cab_alb(Configuracion_global->empresaDB);
-    int albaran = 1;
+    QSqlQuery cab_alb(Configuracion_global->empresaDB);    
+    QString cNumped;
+    double inum = 0;
+
     QString cSQL = QString("Select albaran from cab_alb  where serie = '%1' order by albaran desc limit 1").arg(serie);
     cab_alb.prepare(cSQL);
     if(cab_alb.exec())
     {
-        if(cab_alb.next()) {
-            albaran= cab_alb.value(0).toInt();
-            albaran ++;
-        } else
-            albaran = 1;
+        cab_alb.next();
+        cNumped= cab_alb.value(0).toString();
+        inum = cNumped.toDouble();
     }
     else
     {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
     }
-    return albaran;
+    inum++;
+
+    QString codigo_nuevo;
+    QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);
+    formato.prepend("%0");
+    std::string _x = formato.toStdString();
+
+    codigo_nuevo.sprintf(_x.c_str(),inum);
+
+    return codigo_nuevo;
 }
 
 bool Albaran::borrar_linea(int id_lin)

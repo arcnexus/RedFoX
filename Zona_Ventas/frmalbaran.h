@@ -53,15 +53,7 @@ private slots:
 
     void on_btndeshacer_clicked();
 
-    void on_tabWidget_2_currentChanged(int index);
-
     void on_btnImprimir_clicked();
-
-    void on_radBusqueda_toggled(bool checked);
-
-    void on_cboOrden_currentIndexChanged(const QString &arg1);
-
-    void on_table2_clicked(const QModelIndex &index);
 
     void on_table2_doubleClicked(const QModelIndex &index);
 
@@ -71,15 +63,11 @@ private slots:
 
     void on_btnFacturar_clicked();
 
-    void on_spinporc_Dto_editingFinished();
-
-    void on_spinPorc_dto_pp_editingFinished();
-
     void mostrarBusqueda();
     void ocultarBusqueda();
 
-    void on_table2_row_moved(QModelIndex actual,QModelIndex previous);
     void on_cboseries_currentIndexChanged(const QString &arg1);
+
     void refrescar_modelo();
     void calcular_albaran();
 
@@ -102,6 +90,14 @@ private slots:
     void on_cboporc_iva_gasto3_currentIndexChanged(int index);
 
     void filter_table(QString texto, QString orden, QString modo);
+    void on_spinporc_Dto_valueChanged(double arg1);
+
+    void on_spinPorc_dto_pp_valueChanged(double arg1);
+
+    void on_spinporc_irpf_valueChanged(double arg1);
+
+    void on_chkrecargo_equivalencia_toggled(bool checked);
+
 private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;

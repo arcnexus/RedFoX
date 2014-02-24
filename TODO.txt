@@ -150,3 +150,6 @@ ALTER TABLE `empLibrery`.`cab_pre` ADD COLUMN `porc_irpf` DOUBLE NULL DEFAULT '0
 ALTER TABLE `empLibrery`.`ped_cli` ADD COLUMN `porc_irpf` DOUBLE NULL DEFAULT '0' AFTER `id_agente`,ADD COLUMN `irpf` DOUBLE NULL DEFAULT '0' AFTER `porc_irpf`;
 ALTER TABLE `empLibrery`.`cab_alb` ADD COLUMN `porc_irpf` DOUBLE NULL DEFAULT '0' AFTER `id_agente`,ADD COLUMN `irpf` DOUBLE NULL DEFAULT '0' AFTER `porc_irpf`;
 ALTER TABLE `empLibrery`.`cab_pre` CHANGE COLUMN `presupuesto` `presupuesto` VARCHAR(25) NULL DEFAULT '0' ,CHANGE COLUMN `albaran` `albaran` VARCHAR(25) NULL DEFAULT '0' ,CHANGE COLUMN `pedido` `pedido` VARCHAR(25) NULL DEFAULT '0' ;
+
+24/02/14
+ALTER TABLE `empLibrery`.`cab_alb` CHANGE COLUMN `albaran` `albaran` VARCHAR(45) NULL DEFAULT '0' ;

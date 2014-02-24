@@ -513,23 +513,20 @@ void FrmPedidos::LLenarCamposCliente()
         ui->txtcomentarios_alternativo->setPlainText(i.value().value("comentarios").toString());
 
     }
-    if(Configuracion_global->formapago_model->rowCount() >0)
+    for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
     {
-        for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
+        if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oCliente3->id_forma_pago)
         {
-            if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oCliente3->id_forma_pago)
-            {
-                int ind_fp = ui->cboFormapago->findText(Configuracion_global->formapago_model->record(i).value(
-                                                             "forma_pago").toString());
-                ui->cboFormapago->setCurrentIndex(ind_fp);
-                break;
-            }
-            else
-            {
-                ui->cboFormapago->setCurrentIndex(-1);
-            }
-
+            int ind_fp = ui->cboFormapago->findText(Configuracion_global->formapago_model->record(i).value(
+                                                        "forma_pago").toString());
+            ui->cboFormapago->setCurrentIndex(ind_fp);
+            break;
         }
+        else
+        {
+            ui->cboFormapago->setCurrentIndex(-1);
+        }
+
     }
     //-------------------
     // divisas
@@ -548,19 +545,6 @@ void FrmPedidos::LLenarCamposCliente()
         }
     }
 
-    for(int i =0;i<Configuracion_global->formapago_model->rowCount();i++)
-    {
-        if(Configuracion_global->formapago_model->record(i).value("id").toInt() == oCliente3->id_forma_pago)
-        {
-            int ind_fp = ui->cboFormapago->findText(Configuracion_global->formapago_model->record(i).value("forma_pago").toString());
-            ui->cboFormapago->setCurrentIndex(ind_fp);
-            break;
-        }
-        else
-        {
-            ui->cboFormapago->setCurrentIndex(-1);
-        }
-    }
     for (auto a=0; a< Configuracion_global->agentes_model->rowCount();a++)
     {
         if(oCliente3->id_agente == Configuracion_global->agentes_model->record(a).value("id").toInt())
@@ -739,7 +723,8 @@ void FrmPedidos::LLenarPedido()
     oPedido->iva_gasto1 = ui->spiniva_gasto1->value();
     oPedido->iva_gasto2 = ui->spiniva_gasto2->value();
     oPedido->iva_gasto3 = ui->spiniva_gasto3->value();
-    oPedido->id_forma_pago = Configuracion_global->Devolver_id_forma_pago(ui->cboFormapago->currentText());
+
+    oPedido->id_forma_pago = Configuracion_global->formapago_model->record(ui->cboFormapago->currentIndex()).value("id").toInt();
 
     oPedido->pedido_cliente = ui->txtpedido_cliente->text().toInt();
     oPedido->id_agente = Configuracion_global->agentes_model->record(ui->cboAgente->currentIndex()).value("id").toInt();
@@ -1577,7 +1562,7 @@ void FrmPedidos::convertir_en_albaran()
         else
             serie = Configuracion_global->serie;
 
-        int num = oAlbaran.NuevoNumeroAlbaran(serie);
+        QString num = oAlbaran.NuevoNumeroAlbaran(serie);
         h["albaran"] =num;
         h["serie"] = serie;
         h["fecha"] = QDate::currentDate();
@@ -1641,7 +1626,7 @@ void FrmPedidos::convertir_en_albaran()
 
             if(updated)
             {
-                ui->txtalbaran->setText(QString::number(num));
+                ui->txtalbaran->setText(QString("%1/%2").arg(serie).arg(num));
 
                 bool commited = Configuracion_global->empresaDB.commit();
                 commited &= Configuracion_global->groupDB.commit();
@@ -1649,7 +1634,7 @@ void FrmPedidos::convertir_en_albaran()
                     commited &= Configuracion_global->contaDB.commit();
 
                 if(commited)
-                    TimedMessageBox* t = new TimedMessageBox(this,tr("Se ha creado el albarán num: ")+QString::number(num));
+                    TimedMessageBox* t = new TimedMessageBox(this,tr("Se ha creado el albarán num: ")+QString("%1/%2").arg(serie).arg(num));
                 else
                     QMessageBox::warning(this,tr("Gestión de pedidos"),tr("Error en la transacción"),tr("Aceptar"));
 
