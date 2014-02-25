@@ -117,8 +117,6 @@ private:
     bool eventFilter(QObject *obj, QEvent *event);
 
     BarraBusqueda* m_busqueda;
-    QLabel* lblimpreso;
-    QLabel* lblfacturado;
     QComboBox* cboseries;
     QString texto;
     QString orden;

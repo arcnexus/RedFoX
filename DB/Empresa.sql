@@ -220,7 +220,7 @@ CREATE TABLE `@empresa@`.`articulos_ofertas` (
 CREATE TABLE `@empresa@`.`cab_alb` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `serie` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `albaran` int(11) DEFAULT '0',
+  `albaran` VARCHAR(45) NULL DEFAULT '0',
   `id_divisa` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `pedido_cliente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,

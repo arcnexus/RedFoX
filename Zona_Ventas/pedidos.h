@@ -9,7 +9,7 @@ public:
     ~Pedidos();
 
     int id;
-    int albaran;
+    QString albaran;
     QString pedido;
     QDate fecha;
     int id_cliente;

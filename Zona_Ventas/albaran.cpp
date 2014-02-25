@@ -74,7 +74,7 @@ int Albaran::AnadirAlbaran(QString serie)
     h_cab_alb["total_albaran"] = 0;
     h_cab_alb["impreso"] = 0;
     h_cab_alb["facturado"] = 0;
-    h_cab_alb["factura"] = factura;
+    h_cab_alb["factura"] = "0";
     h_cab_alb["fecha_factura"] = fecha_factura;
     h_cab_alb["comentario"] = comentario;
 
@@ -205,6 +205,12 @@ bool Albaran::GuardarAlbaran(int nid_Albaran)
     h_cab_alb["entregado_a_cuenta"] = entregado_a_cuenta;
     h_cab_alb["serie"] = serie;
     h_cab_alb["id_agente"] = id_agente;
+    h_cab_alb["telefono"] = telefono;
+    h_cab_alb["fax"] = fax;
+    h_cab_alb["movil"] = movil;
+    h_cab_alb["email"] = email;
+    h_cab_alb["porc_irpf"] =porc_irpf;
+    h_cab_alb["irpf"] =irpf;
 
     bool updated = SqlCalls::SqlUpdate(h_cab_alb,"cab_alb",Configuracion_global->empresaDB,condiciones,error);
 
@@ -315,6 +321,14 @@ bool Albaran::RecuperarAlbaran(QString cSQL)
                 iva_gasto3 = r.value("iva_gasto3").toDouble();
                 editable = r.value("editable").toBool();
                 id_agente = r.value("id_agente").toInt();
+
+                telefono = r.value("telefono").toString();
+                fax      = r.value("fax").toString();
+                movil    = r.value("movil").toString();
+                email    = r.value("email").toString();
+
+                porc_irpf = r.value("porc_irpf").toDouble();
+                irpf = r.value("irpf").toDouble();
                 return true;
                }
             else //if not next
@@ -326,7 +340,7 @@ QString Albaran::NuevoNumeroAlbaran(QString serie)
 {
     QSqlQuery cab_alb(Configuracion_global->empresaDB);    
     QString cNumped;
-    double inum = 0;
+    double inum = 1;
 
     QString cSQL = QString("Select albaran from cab_alb  where serie = '%1' order by albaran desc limit 1").arg(serie);
     cab_alb.prepare(cSQL);
@@ -335,12 +349,14 @@ QString Albaran::NuevoNumeroAlbaran(QString serie)
         cab_alb.next();
         cNumped= cab_alb.value(0).toString();
         inum = cNumped.toDouble();
+        inum ++;
+        inum = qMax(1.0,inum);
     }
     else
     {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_alb.lastError().text());
     }
-    inum++;
+
 
     QString codigo_nuevo;
     QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);

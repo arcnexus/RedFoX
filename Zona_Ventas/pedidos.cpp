@@ -224,7 +224,7 @@ bool Pedidos::RecuperarPedido(QString cSQL)
         {
             QSqlRecord r = ped_cli.record();
             id = r.value("id").toInt();
-            albaran = r.value("albaran").toInt();
+            albaran = r.value("albaran").toString();
             pedido = r.value("pedido").toString();
             id_divisa = r.value("id_divisa").toInt();
             id_tarifa = SqlCalls::SelectOneField("clientes","id_tarifa",QString("id=%1").arg(r.value("id_cliente").toInt()),
@@ -342,7 +342,7 @@ QString Pedidos::NuevoNumeroPedido()
 {
     QSqlQuery ped_cli(Configuracion_global->empresaDB);
     QString cNumped;
-    double inum = 0;
+    double inum = 1;
 
     ped_cli.prepare("Select pedido from ped_cli order by pedido desc limit 1");
     if(ped_cli.exec())
@@ -350,12 +350,14 @@ QString Pedidos::NuevoNumeroPedido()
         ped_cli.next();
         cNumped = ped_cli.value(0).toString();
         inum = cNumped.toDouble();
+        inum ++;
+        inum = qMax(1.0,inum);
     }
     else
     {
          QMessageBox::critical(qApp->activeWindow(), "error:", ped_cli.lastError().text());
     }
-    inum++;
+
 
     QString codigo_nuevo;
     QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);

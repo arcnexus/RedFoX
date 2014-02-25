@@ -86,6 +86,13 @@ public:
     int id_forma_pago;
     int id_agente;
 
+    QString telefono;
+    QString fax;
+    QString movil;
+    QString email;
+
+    double porc_irpf;
+    double irpf;
 signals:
 
 public slots:

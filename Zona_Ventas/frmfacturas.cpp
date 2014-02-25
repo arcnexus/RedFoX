@@ -68,11 +68,11 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(1);
     this->Altas = false;
 
-    // Escondo/muestro campos según configuración
-    ui->txtimporte_irpf->setVisible(Configuracion_global->lProfesional);
-    ui->txtimporte_irpf_2->setVisible(Configuracion_global->lProfesional);
-    ui->lblIRPF_2->setVisible(Configuracion_global->lProfesional);
-    ui->lblIRPF_3->setVisible(Configuracion_global->lProfesional);
+    // Escondo/muestro campos según configuración //FIXME ocultar IRPF??
+    //ui->txtimporte_irpf->setVisible(Configuracion_global->lProfesional);
+    //ui->txtimporte_irpf_2->setVisible(Configuracion_global->lProfesional);
+    //ui->lblIRPF_2->setVisible(Configuracion_global->lProfesional);
+    //ui->lblIRPF_3->setVisible(Configuracion_global->lProfesional);
     ui->lbcontabilizada->setVisible(false);
     ui->lblFacturaCobrada->setVisible(false);
     ui->lblFacturaImpresa->setVisible(false);
@@ -253,7 +253,7 @@ void frmFacturas::LLenarCampos()
     ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->rec3,'f',Configuracion_global->decimales)));
     ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->rec4,'f',Configuracion_global->decimales)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->total_recargo,'f',Configuracion_global->decimales)));
-    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->entregado_a_cuenta,'f',Configuracion_global->decimales)));
+    //ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->entregado_a_cuenta,'f',Configuracion_global->decimales)));
     ui->txtimporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->importe_pendiente,'f',Configuracion_global->decimales)));
     ui->txtcodigo_entidad->setText(oFactura->codigo_entidad);
     ui->txtoficina_entidad->setText(oFactura->oficina_entidad);
@@ -278,7 +278,7 @@ void frmFacturas::LLenarCampos()
 
 
     oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
-    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
+    //ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
 
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
     ui->txtAsiento->setText(QString::number(oFactura->apunte));
@@ -398,7 +398,7 @@ void frmFacturas::LLenarCamposCliente()
     }
 
     QString error;
-    ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
+    //ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
     ui->txt_tarifa->setText(SqlCalls::SelectOneField("codigotarifa","descripcion",QString("id=%1").arg(oCliente1->idTarifa),
                                                      Configuracion_global->groupDB,error).toString());
 
@@ -495,7 +495,7 @@ void frmFacturas::VaciarCampos()
     ui->txtporc_rec3->setText(0);
     ui->txtporc_rec4->setText(0);
     ui->txttotal_recargo->setText(0);
-    ui->txtentregado_a_cuenta->setText("0,00");
+    //ui->txtentregado_a_cuenta->setText("0,00");
     ui->txtimporte_pendiente->setText("0,00");
     ui->txtcodigo_entidad->setText("");
     ui->txtoficina_entidad->setText("");
@@ -649,7 +649,7 @@ void frmFacturas::LLenarFactura()
     oFactura->rec3 = (ui->txtrec3->text().replace(".","").replace(",",".").toDouble());
     oFactura->rec4 = (ui->txtrec4->text().replace(".","").replace(",",".").toDouble());
     oFactura->total_recargo = (ui->txttotal_recargo->text().replace(".","").replace(",",".").toDouble());
-    oFactura->entregado_a_cuenta = (ui->txtentregado_a_cuenta->text().replace(".","").replace(",",".").toDouble());
+    //oFactura->entregado_a_cuenta = (ui->txtentregado_a_cuenta->text().replace(".","").replace(",",".").toDouble());
     oFactura->importe_pendiente = (ui->txtimporte_pendiente->text().replace(".","").replace(",",".").toDouble());
     oFactura->codigo_entidad = (ui->txtcodigo_entidad->text());
     oFactura->oficina_entidad = (ui->txtoficina_entidad->text());
@@ -1108,7 +1108,7 @@ void frmFacturas::on_anadirEntrega_clicked()
     if(entregas.exec() ==QDialog::Accepted)
     {
         oCliente1->Recuperar("select * from clientes where codigo_cliente='"+ui->txtcodigo_cliente->text()+"'");
-        ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta)));
+        //ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta)));
     }
 
 }

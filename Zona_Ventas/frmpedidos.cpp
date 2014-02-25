@@ -248,7 +248,7 @@ void FrmPedidos::LLenarCampos()
 
     ui->lblTopcliente->setText(oPedido->cliente);
     ui->lblToppedido->setText(oPedido->pedido);
-    ui->txtalbaran->setText(QString::number(oPedido->albaran));
+    ui->txtalbaran->setText(oPedido->albaran);
     ui->txtpedido->setText(oPedido->pedido);
     ui->txtfecha->setDate(oPedido->fecha);
     //oPedido->pedido;
@@ -347,7 +347,7 @@ void FrmPedidos::LLenarCampos()
 
 
     ui->txtcomentario->setText(oPedido->comentario);
-    ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
+    //ui->txtentregado_a_cuenta->setText(QString::number(oPedido->entregado_a_cuenta));
     ui->txtdireccion1_entrega->setText(oPedido->direccion_entrega1);
     ui->txtdireccion2_entrega->setText(oPedido->direccion_entrega2);
     ui->txtcp_entrega->setText(oPedido->cp_entrega);
@@ -416,6 +416,15 @@ void FrmPedidos::LLenarCampos()
     }
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido->irpf ,'f',Configuracion_global->decimales_campos_totales)));
     ui->spinPorc_irpf->setValue(oPedido->porc_irpf);
+
+    ui->lblAlbaran->setVisible(ui->txtalbaran->text() != "0");
+    ui->txtalbaran->setVisible(ui->txtalbaran->text() != "0");
+
+    ui->lbl_fac->setVisible(ui->txtcNumFra->text() != "0");
+    ui->txtcNumFra->setVisible(ui->txtcNumFra->text() != "0");
+    ui->lbl_fecha_fac->setVisible(ui->txtcNumFra->text() != "0");
+    ui->txtfecha_factura->setVisible(ui->txtcNumFra->text() != "0");
+
 }
 
 void FrmPedidos::LLenarCamposCliente()
@@ -610,7 +619,7 @@ void FrmPedidos::VaciarCampos()
     ui->txtporc_rec4->setText(0);
     ui->txttotal_recargo_2->setText(0);
     ui->txtrec->setText("0,00");
-    ui->txtentregado_a_cuenta->setText("0,00");
+    //ui->txtentregado_a_cuenta->setText("0,00");
     ui->txtpedido_cliente->setText("-1");
     ui->txttotal_iva_2->setText("0,00");
     ui->txtbase_total_2->setText("0,00");
@@ -644,7 +653,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->fax=  ui->txtFax->text();
     oPedido->email= ui->txtEmail->text();
 
-    oPedido->albaran= ui->txtalbaran->text().toInt();
+    oPedido->albaran= ui->txtalbaran->text();
     oPedido->pedido=ui->txtpedido->text();
     oPedido->fecha=ui->txtfecha->date();
     oPedido->id_divisa = Configuracion_global->Devolver_id_moneda(ui->cboDivisa->currentText());
@@ -697,7 +706,7 @@ void FrmPedidos::LLenarPedido()
     oPedido->fecha_factura=ui->txtfecha_factura->date();
 
     oPedido->comentario=ui->txtcomentario->toPlainText();
-    oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    //oPedido->entregado_a_cuenta=ui->txtentregado_a_cuenta->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     oPedido->direccion_entrega1 = ui->txtdireccion1_entrega->text();
     oPedido->direccion_entrega2 = ui->txtdireccion2_entrega->text();
     oPedido->cp_entrega=ui->txtcp_entrega->text();
@@ -1869,6 +1878,7 @@ void FrmPedidos::convertir_enFactura()
                     // Insertamos datos factura en pedido
                     oPedido->factura = QString("%1/%2").arg(oFactura.serie).arg(oFactura.factura);
                     oPedido->editable = false;
+                    oPedido->fecha_factura=QDate::currentDate();
                     oPedido->GuardarPedido(oPedido->id);
                     ui->txtcNumFra->setText(oPedido->factura);
 

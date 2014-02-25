@@ -519,9 +519,8 @@ void Factura::cargar(QSqlRecord *registro)
 
 QString Factura::NuevoNumeroFactura(QString serie) {
     QSqlQuery cab_fac(Configuracion_global->empresaDB);
-    QString cNum;
     QString cNumFac;
-    double inum = 0;
+    double inum = 1;
 
     cab_fac.prepare("Select factura from cab_fac  where factura <> '"+QObject::tr("BORRADOR")+
                     "' and serie ='"+serie+"' order by factura desc limit 1");
@@ -530,12 +529,13 @@ QString Factura::NuevoNumeroFactura(QString serie) {
         cab_fac.next();
         cNumFac = cab_fac.value(0).toString();
         inum = cNumFac.toDouble();
+        inum ++;
+        inum = qMax(1.0,inum);
     }
     else
     {
          QMessageBox::critical(qApp->activeWindow(), "error:", cab_fac.lastError().text());
     }
-    inum++;
 
     QString codigo_nuevo;
     QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);

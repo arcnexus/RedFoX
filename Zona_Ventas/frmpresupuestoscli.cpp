@@ -270,6 +270,17 @@ void FrmPresupuestosCli::LLenarCampos()
         }
     }
     refrescar_modelo();
+
+    ui->lbl_ped  ->setVisible(ui->txtpedido->text() != "0");
+    ui->txtpedido->setVisible(ui->txtpedido->text() != "0");
+
+    ui->lbl_alb   ->setVisible(ui->txtalbaran->text() != "0");
+    ui->txtalbaran->setVisible(ui->txtalbaran->text() != "0");
+
+    ui->lblNumFactura_2   ->setVisible(ui->txtfactura->text() != "0");
+    ui->txtfactura        ->setVisible(ui->txtfactura->text() != "0");
+    ui->lbl_impFac        ->setVisible(false);
+    ui->txtimporte_factura->setVisible(false);
 }
 
 void FrmPresupuestosCli::LLenarCamposCliente()

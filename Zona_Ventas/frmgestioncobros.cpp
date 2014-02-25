@@ -106,7 +106,6 @@ void frmGestionCobros::buscar_deuda(int id_cli, int id_doc)
 {
     this->id_cliente = id_cli;
     this->varios = false;
-    deudas = new QSqlQueryModel(this);
     if(this->id_factura > -1)
         seleccionar_factura();
     else
@@ -165,7 +164,7 @@ void frmGestionCobros::seleccionar_factura()
     QString cSQL;
     if(ui->radTodos->isChecked())
     {
-        if(this->id_factura = -1)
+        if(this->id_factura == -1)
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda where id_cliente = %1").arg(this->id_cliente);
         else
@@ -174,7 +173,7 @@ void frmGestionCobros::seleccionar_factura()
                            "where id_cliente = %1 and documento = %2").arg(this->id_cliente,this->id_factura);
     } else if(ui->radPendientes->isChecked())
     {
-        if(this->id_factura = -1)
+        if(this->id_factura == -1)
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda where id_cliente = %1 and pendiente_cobro >0" ).arg(this->id_cliente);
         else
@@ -183,7 +182,7 @@ void frmGestionCobros::seleccionar_factura()
                            "where id_cliente = %1 and documento = %2 and pendiente_cobro >0").arg(this->id_cliente,this->id_factura);
     } else if(ui->radPagados->isChecked())
     {
-        if(this->id_factura = -1)
+        if(this->id_factura == -1)
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda where id_cliente = %1 and pendiente_cobro =0" ).arg(this->id_cliente);
         else
@@ -225,7 +224,7 @@ void frmGestionCobros::seleccionar_varios()
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
-                           "where id_cliente = %1  and vencimiento between %2 and %3"
+                           "where id_cliente = %1  and vencimiento between %2 and %3 "
                            "and pendiente_cobro >0").arg(QString::number(this->id_cliente),
                                                                                      ui->txtfecha_ini->date().toString("yyyyMMdd"),
                                                                                      ui->txtfecha_fin->date().toString("yyyyMMdd"));
@@ -233,7 +232,7 @@ void frmGestionCobros::seleccionar_varios()
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                            "pendiente_cobro from clientes_deuda "
-                           "where vencimiento between %1 and %3"
+                           "where vencimiento between %1 and %3 "
                            "and pendiente_cobro >0").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
                                                                 ui->txtfecha_fin->date().toString("yyyyMMdd"));
         }
@@ -243,7 +242,7 @@ void frmGestionCobros::seleccionar_varios()
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
-                           "where id_cliente = %1  and vencimiento between %2 and %3"
+                           "where id_cliente = %1  and vencimiento between %2 and %3 "
                            "and pendiente_cobro =0").arg(QString::number(this->id_cliente),
                                                                                      ui->txtfecha_ini->date().toString("yyyyMMdd"),
                                                                                      ui->txtfecha_fin->date().toString("yyyyMMdd"));
@@ -251,7 +250,7 @@ void frmGestionCobros::seleccionar_varios()
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                            "pendiente_cobro from clientes_deuda "
-                           "where vencimiento between %1 and %3"
+                           "where vencimiento between %1 and %3 "
                            "and pendiente_cobro =0").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
                                                                 ui->txtfecha_fin->date().toString("yyyyMMdd"));
         }
