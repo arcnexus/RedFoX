@@ -277,7 +277,7 @@ void frmFacturas::LLenarCampos()
     ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFactura->irpf,'f',Configuracion_global->decimales)));
 
 
-    oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente));
+    oCliente1->Recuperar("Select * from clientes where id ="+QString::number(oFactura->id_cliente),false);
     //ui->txtentregado_a_cuenta->setText(Configuracion_global->toFormatoMoneda(QString::number(oCliente1->importe_a_cuenta,'f',Configuracion_global->decimales)));
 
     ui->txtTransportista->setText( Configuracion_global->devolver_transportista(oFactura->id_transportista));
@@ -672,6 +672,7 @@ void frmFacturas::LLenarFactura()
 
     oFactura->id_divisa  = Configuracion_global->divisas_model->record(ui->cboDivisa->currentIndex()).value("id").toInt();
     oFactura->tarifa_cliente = oCliente1->idTarifa;
+    oFactura->id_forma_pago = Configuracion_global->formapago_model->record(ui->cboforma_pago->currentIndex()).value("id").toInt();
 }
 
 void frmFacturas::on_btnSiguiente_clicked()
@@ -1699,8 +1700,8 @@ void frmFacturas::on_btnGuardar_clicked()
             // Crear vencimientos
             //----------------------
             vencimientos oVto(this);
-            oVto.calcular_vencimiento(oFactura->fecha,oFactura->id_cliente,0,oFactura->id,oFactura->serie+"/"+oFactura->factura,1,
-                                      "c",oFactura->total);
+            oVto.calcular_vencimiento(oFactura->fecha,oFactura->id_forma_pago,oFactura->id_cliente,0,oFactura->id,oFactura->serie+"/"+oFactura->factura,1,
+                                      true,oFactura->total);
             BloquearCampos(true);
             emit unblock();
             if(Configuracion_global->contabilidad)

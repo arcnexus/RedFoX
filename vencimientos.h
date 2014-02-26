@@ -15,12 +15,13 @@ public:
     int dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos;
     QString desc_cuenta_cont;
     int numero_plazos;
-
+    int dias_hasta_pago;
+    bool al_contado;
 
 
     explicit vencimientos(QObject *parent = 0);
 
-    void recuperar(QStringList condiciones, QStringList extras);
+    void recuperar(QStringList condiciones);
     void anadir();
     void guardar();
     void borrar();
@@ -32,7 +33,7 @@ public:
     //id_documento = idfactura o id_tpv
     //tipo= 1 - factura 2 - tiquet
     // compra_venta = c - compras v - ventas.
-    bool calcular_vencimiento(QDate fecha, int id_cliente, int id_ticket, int id_factura, QString documento, int tipo, QString compra_venta, double importe);
+    bool calcular_vencimiento(QDate fecha, int id_forma_pago, int id_cliente, int id_ticket, int id_factura, QString documento, int tipo, bool is_venta, double importe);
 private:
     TimedMessageBox *t;
 signals:

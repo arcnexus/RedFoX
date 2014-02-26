@@ -437,6 +437,8 @@ CREATE TABLE `@grupo@`.`formpago` (
   `dias_entre_plazos` int(11) DEFAULT '0',
   `cuenta_cont_pago` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `numero_plazos` int(11) DEFAULT '1',
+  `dias_hasta_pago` INT(5) NULL DEFAULT '0',
+  `al_contado` TINYINT(4) NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@grupo@`.`grupos_gasto` (

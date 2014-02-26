@@ -9,6 +9,8 @@ FrmFormas_pago::FrmFormas_pago(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/fpagos.png"),tr("Formas de Pago"),this)
 {
     ui->setupUi(this);
+    ui->txtcod_cuenta_contable->setVisible(false);
+    ui->txtCuenta_contable->setVisible(false);
     //-------------------
     // iniciar variables
     //-------------------
@@ -51,22 +53,11 @@ FrmFormas_pago::~FrmFormas_pago()
 void FrmFormas_pago::on_tabla_buscar_doubleClicked(const QModelIndex &index)
 {
     int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones,extras;
+    QStringList opciones;
     opciones << QString("id= %1").arg(id);
-    extras << "";
-    oVtos->recuperar(opciones,extras);
+    oVtos->recuperar(opciones);
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(1);
-}
-
-void FrmFormas_pago::on_tabla_buscar_clicked(const QModelIndex &index)
-{
-    int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones,extras;
-    opciones << QString("id= %1").arg(id);
-    extras << "";
-    oVtos->recuperar(opciones,extras);
-    llenar_campos();
 }
 
 void FrmFormas_pago::llenar_campos()
@@ -74,13 +65,15 @@ void FrmFormas_pago::llenar_campos()
     ui->txtcod_forma_pago->setText(oVtos->codigo);
     ui->txtForma_pago->setText(oVtos->forma_pago);
     ui->txtcod_cuenta_contable->setText(oVtos->codigo_cuenta_contable);
-    ui->txtCuenta_contable->setText(oVtos->desc_cuenta_cont);
+    //ui->txtCuenta_contable->setText(oVtos->desc_cuenta_cont);
     ui->spinDia_pago1->setValue(oVtos->dia_pago1);
     ui->spinDia_pago2->setValue(oVtos->dia_pago2);
     ui->spinDia_pago3->setValue(oVtos->dia_pago3);
     ui->spinDia_pago4->setValue(oVtos->dia_pago4);
     ui->spinDias_entre_plazos->setValue(oVtos->dias_entre_plazos);
     ui->spinNumero_plazos->setValue(oVtos->numero_plazos);
+    ui->dias_hasta_pago->setValue(oVtos->dias_hasta_pago);
+    ui->rdbContado->setChecked(oVtos->al_contado);
 }
 
 void FrmFormas_pago::llenar_objeto()
@@ -93,9 +86,10 @@ void FrmFormas_pago::llenar_objeto()
     oVtos->dia_pago2 = ui->spinDia_pago2->value();
     oVtos->dia_pago3 = ui->spinDia_pago3->value();
     oVtos->dia_pago4 = ui->spinDia_pago4->value();
-    oVtos->dias_entre_plazos = ui->spinDia_pago1->value();
+    oVtos->dias_entre_plazos = ui->spinDias_entre_plazos->value();
     oVtos->numero_plazos = ui->spinNumero_plazos->value();
-
+    oVtos->dias_hasta_pago = ui->dias_hasta_pago->value();
+    oVtos->al_contado = ui->rdbContado->isChecked();
 }
 
 void FrmFormas_pago::filter_table(QString texto, QString orden, QString modo)
@@ -213,18 +207,16 @@ void FrmFormas_pago::setUpBusqueda()
 void FrmFormas_pago::on_btnSiguiente_2_clicked()
 {
     QStringList opciones, extras;
-    opciones << QString("codigo > '%1'").arg(oVtos->codigo);
-    extras << "order by codigo " << "limit 0,1";
-    oVtos->recuperar(opciones,extras);
+    opciones << QString("codigo > '%1' order by codigo limit 0,1").arg(oVtos->codigo);
+    oVtos->recuperar(opciones);
     llenar_campos();
 }
 
 void FrmFormas_pago::on_btnAnterior_2_clicked()
 {
     QStringList opciones, extras;
-    opciones << QString("codigo < '%1'").arg(oVtos->codigo);
-    extras << "order by id desc" << "limit 0,1";
-    oVtos->recuperar(opciones,extras);
+    opciones << QString("codigo < '%1' order by id desc limit 0,1").arg(oVtos->codigo);
+    oVtos->recuperar(opciones);
     llenar_campos();
 }
 
@@ -300,10 +292,9 @@ void FrmFormas_pago::on_btndeshacer_2_clicked()
 {
     anadiendo = false;
     Configuracion_global->groupDB.rollback();
-    QStringList condiciones, extras;
-    condiciones << QString("id=%1").arg(oVtos->id);
-    extras << "limit 0,1";
-    oVtos->recuperar(condiciones,extras);
+    QStringList condiciones;
+    condiciones << QString("id=%1 limit 0,1").arg(oVtos->id);
+    oVtos->recuperar(condiciones);
     llenar_campos();
     bloquear_campos(true);
 }
@@ -312,10 +303,9 @@ void FrmFormas_pago::on_btnEditar_2_clicked()
 {
     QModelIndex  index = ui->tabla_buscar->currentIndex();
     int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones,extras;
+    QStringList opciones;
     opciones << QString("id= %1").arg(id);
-    extras << "";
-    oVtos->recuperar(opciones,extras);
+    oVtos->recuperar(opciones);
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(1);
     on_btnEditar_3_clicked();
@@ -339,10 +329,9 @@ void FrmFormas_pago::on_btnborrar_2_clicked()
 {
     QModelIndex  index = ui->tabla_buscar->currentIndex();
     int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones,extras;
+    QStringList opciones;
     opciones << QString("id= %1").arg(id);
-    extras << "";
-    oVtos->recuperar(opciones,extras);
+    oVtos->recuperar(opciones);
     llenar_campos();
     on_btn_borrar_clicked();
 

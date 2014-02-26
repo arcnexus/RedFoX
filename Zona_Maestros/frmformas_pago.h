@@ -27,8 +27,6 @@ public:
 private slots:
     void on_tabla_buscar_doubleClicked(const QModelIndex &index);
 
-    void on_tabla_buscar_clicked(const QModelIndex &index);
-
     void on_btnSiguiente_2_clicked();
 
     void on_btnAnterior_2_clicked();

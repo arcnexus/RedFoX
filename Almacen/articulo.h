@@ -96,7 +96,7 @@ public:
 
     void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
 
-    bool acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
+    static bool acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);

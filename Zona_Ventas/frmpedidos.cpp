@@ -1897,8 +1897,8 @@ void FrmPedidos::convertir_enFactura()
                     }
 
                     // Vencimiento
-                    if(creado && vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
-                                             "V",oFactura.total))
+                    if(creado && vto.calcular_vencimiento(oFactura.fecha,oFactura.id_forma_pago,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
+                                             true,oFactura.total))
                     {
                         QString texto;
                         texto = tr("Se ha creado una nueva factura.\ncon el número ")+ cab_fac.value("factura").toString()+

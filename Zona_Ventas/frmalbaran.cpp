@@ -785,9 +785,27 @@ void FrmAlbaran::on_btn_borrar_clicked()
         Configuracion_global->empresaDB.transaction();
         QSqlQuery q(Configuracion_global->empresaDB);
 
-        //TODO control de stock
-        q.prepare("DELETE FROM lin_alb WHERE id_Cab = "+QString::number(id));
+        if (QMessageBox::question(this,tr("Borrar"),
+                                  tr("¿Desea devolver el stock al almacén?"),
+                                  tr("No"),
+                                  tr("&Sí"))== QMessageBox::Accepted)
+        {
+            QString error;
+            QMap<int, QSqlRecord> lines = SqlCalls::SelectRecord("lin_alb",QString("id_cab = %1").arg(id),Configuracion_global->empresaDB,error);
+            QMapIterator<int, QSqlRecord> _it(lines);
+            while(_it.hasNext() && succes)
+            {
+                _it.next();
+                QSqlRecord _it_r = _it.value();
+                succes = Articulo::acumulado_devoluciones(_it_r.value("id_articulo").toInt(),
+                                                            _it_r.value("cantidad").toFloat(),
+                                                            _it_r.value("total").toDouble(),
+                                                            QDate::currentDate(),"V");
+            }
+        }
+        q.prepare("DELETE FROM lin_alb WHERE id_cab = "+QString::number(id));
         succes &= q.exec();
+
 
         q.prepare("DELETE FROM cab_alb WHERE id = "+QString::number(id));
         succes &= q.exec();
@@ -1418,8 +1436,8 @@ void FrmAlbaran::on_btnFacturar_clicked()
                     }
 
                     // Vencimiento
-                    if(creado && vto.calcular_vencimiento(oFactura.fecha,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
-                                             "V",oFactura.total))
+                    if(creado && vto.calcular_vencimiento(oFactura.fecha,oFactura.id_forma_pago,oFactura.id_cliente,0,oFactura.id,(oFactura.serie+"/"+oFactura.factura),1,
+                                             true,oFactura.total))
                     {
                         QString texto;
                         texto = tr("Se ha creado una nueva factura.\ncon el número ")+ cab_fac.value("factura").toString()+

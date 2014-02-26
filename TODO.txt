@@ -153,3 +153,8 @@ ALTER TABLE `empLibrery`.`cab_pre` CHANGE COLUMN `presupuesto` `presupuesto` VAR
 
 24/02/14
 ALTER TABLE `empLibrery`.`cab_alb` CHANGE COLUMN `albaran` `albaran` VARCHAR(45) NULL DEFAULT '0' ;
+ALTER TABLE `GrupoFebrero`.`formpago` ADD COLUMN `dias_hasta_pago` INT(5) NULL DEFAULT '0'  AFTER `numero_plazos`;
+ALTER TABLE `GrupoFebrero`.`formpago` CHANGE COLUMN `dia_pago1` `dia_pago1` INT(11) NULL DEFAULT '1' ;
+ALTER TABLE `GrupoFebrero`.`formpago` ADD COLUMN `al_contado` TINYINT NULL DEFAULT '0' AFTER `dias_hasta_pago`;
+
+

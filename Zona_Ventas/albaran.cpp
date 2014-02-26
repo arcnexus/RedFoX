@@ -371,7 +371,6 @@ QString Albaran::NuevoNumeroAlbaran(QString serie)
 bool Albaran::borrar_linea(int id_lin)
 {
     QMap <int,QSqlRecord> lin;
-    QHash <QString,QVariant> h;
     QString error;
     lin = SqlCalls::SelectRecord("lin_alb",QString("id=%1").arg(id_lin),Configuracion_global->empresaDB,error);
     if(!error.isEmpty())

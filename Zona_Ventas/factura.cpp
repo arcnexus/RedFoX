@@ -118,9 +118,7 @@ void Factura::clear()
 }
 
 bool Factura::borrar(int id)
-{
-    QString error;
-    // TODO - REPONER -  STOCKS
+{   
     if(QMessageBox::question(qApp->activeWindow(),tr("Gestión de Facturas"),
                    tr("¿Borrar la factura seleccionada?\nTenga presente que esa opción no se puede deshacer"),
                              tr("No"),tr("Borrar"))== QMessageBox::Accepted)
@@ -153,7 +151,7 @@ bool Factura::borrar(int id)
                                  tr("Ocurrió un error al borrar: %1").arg(error),tr("Aceptar"));
         return deleted;
     }
-
+    return false;
 }
 
 // Metodos utilidad Clase
