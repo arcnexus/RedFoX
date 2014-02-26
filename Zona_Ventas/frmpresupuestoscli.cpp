@@ -1651,6 +1651,7 @@ void FrmPresupuestosCli::on_btnImprimir_clicked()
             ui->lbimpreso->setVisible(true);
             int valor = dlg_print.get_option();
             QMap <QString,QString> parametros_sql;
+            parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
             parametros_sql["Empresa.cab_pre"] = QString("id = %1").arg(oPres->id);
             parametros_sql["Empresa.lin_pre"] = QString("id_cab = %1").arg(oPres->id);
             QString report = "presupuesto_"+QString::number(oClientePres->ididioma);

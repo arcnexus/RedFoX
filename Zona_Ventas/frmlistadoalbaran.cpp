@@ -1,7 +1,7 @@
 #include "frmlistadoalbaran.h"
 #include "ui_frmlistadoalbaran.h"
 
-#include "../configuracion.h"
+#include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/dlgsetupmail.h"
 
 frmListadoAlbaran::frmListadoAlbaran(QWidget *parent) :
@@ -52,6 +52,7 @@ void frmListadoAlbaran::on_btnPrew_clicked()
     QString report = "lista_albaran_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_alb"] = getCaPreSql();
     parametros_sql["General.clientes"] = getClientesSql();
+    parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
     Configuracion::ImprimirPreview(report,parametros_sql,getParametros());
 }
 
@@ -61,6 +62,7 @@ void frmListadoAlbaran::on_btnPrint_clicked()
     QString report = "lista_albaran_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_alb"] = getCaPreSql();
     parametros_sql["General.clientes"] = getClientesSql();
+    parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
     Configuracion::ImprimirDirecto(report,parametros_sql,getParametros());
 }
 
@@ -70,6 +72,7 @@ void frmListadoAlbaran::on_btnPdf_clicked()
     QString report = "lista_albaran_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_alb"] = getCaPreSql();
     parametros_sql["General.clientes"] = getClientesSql();
+    parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
     Configuracion::ImprimirPDF(report,parametros_sql,getParametros());
 }
 
@@ -89,6 +92,7 @@ void frmListadoAlbaran::on_btnMail_clicked()
 
         parametros_sql["Empresa.cab_alb"] = getCaPreSql();
         parametros_sql["General.clientes"] = getClientesSql();
+        parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
         Configuracion::EviarMail(report,parametros_sql,getParametros(),pdfname,mail,nombre,asunto,texto);
     }
 }

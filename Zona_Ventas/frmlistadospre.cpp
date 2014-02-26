@@ -1,6 +1,6 @@
 #include "frmlistadospre.h"
 #include "ui_frmlistadospre.h"
-#include "../configuracion.h"
+#include "../Auxiliares/Globlal_Include.h"
 #include "../Auxiliares/dlgsetupmail.h"
 frmListadosPre::frmListadosPre(QWidget *parent) :
     QDialog(parent),
@@ -60,6 +60,7 @@ void frmListadosPre::on_btnMail_clicked()
 
         parametros_sql["Empresa.cab_pre"] = getCaPreSql();
         parametros_sql["General.clientes"] = getClientesSql();
+        parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
         Configuracion::EviarMail(report,parametros_sql,getParametros(),pdfname,mail,nombre,asunto,texto);
     }
 }
@@ -70,6 +71,7 @@ void frmListadosPre::on_btnPrint_clicked()
     QString report = "lista_presupuestos_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_pre"] = getCaPreSql();
     parametros_sql["General.clientes"] = getClientesSql();
+    parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
     Configuracion::ImprimirDirecto(report,parametros_sql,getParametros());
 }
 
@@ -80,6 +82,7 @@ void frmListadosPre::on_btnPrew_clicked()
     QString report = "lista_presupuestos_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_pre"] = getCaPreSql();
     parametros_sql["General.clientes"] = getClientesSql();
+    parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
     Configuracion::ImprimirPreview(report,parametros_sql,getParametros());
 }
 
@@ -89,6 +92,7 @@ void frmListadosPre::on_btnPdf_clicked()
     QString report = "lista_presupuestos_"+QString::number(1);//TODO idioma documento
     parametros_sql["Empresa.cab_pre"] = getCaPreSql();
     parametros_sql["General.clientes"] = getClientesSql();
+    parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
     Configuracion::ImprimirPDF(report,parametros_sql,getParametros());
 }
 

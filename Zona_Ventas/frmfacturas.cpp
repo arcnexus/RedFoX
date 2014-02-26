@@ -803,6 +803,7 @@ void frmFacturas::on_btnImprimir_clicked()
             ui->lblFacturaImpresa->setVisible(true);
             int valor = dlg_print.get_option();
             QMap <QString,QString> parametros_sql;
+            parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
             parametros_sql["Empresa.cab_fac"] = QString("id = %1").arg(oFactura->id);
             parametros_sql["Empresa.lin_fac"] = QString("id_cab = %1").arg(oFactura->id);
             QString report = "factura_"+QString::number(oCliente1->ididioma);

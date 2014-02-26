@@ -2007,6 +2007,7 @@ void FrmPedidos::on_btnImprimir_clicked()
         }
         int valor = dlg_print.get_option();
         QMap <QString,QString> parametros_sql;
+        parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
         parametros_sql["Empresa.ped_cli"] = QString("id = %1").arg(oPedido->id);
         parametros_sql["Empresa.lin_ped"] = QString("id_cab = %1").arg(oPedido->id);
         QString report = "pedido_"+QString::number(oCliente3->ididioma);
