@@ -14,7 +14,7 @@
 
 
 #include "../Almacen/articulo.h"
-
+#include "frmlistadofac.h"
 void frmFacturas::formato_tabla_lineas()
 {
     QStringList header;
@@ -1499,6 +1499,11 @@ void frmFacturas::setUpBusqueda()
     connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
     m_busqueda->addWidget(del);
 
+    m_busqueda->addSpacer();
+    QPushButton* list = new QPushButton(QIcon(":/Icons/PNG/reports.png"),tr("Listados"),this);
+    connect(list,SIGNAL(clicked()),this,SLOT(listados()));
+    m_busqueda->addWidget(list);
+
     connect(m_busqueda,SIGNAL(key_Down_Pressed()), ui->tabla_facturas,SLOT(setFocus()));
     connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
 }
@@ -1865,4 +1870,10 @@ void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(int index)
         }
     }
 
+}
+
+void frmFacturas::listados()
+{
+    frmListadoFac d(this);
+    d.exec();
 }

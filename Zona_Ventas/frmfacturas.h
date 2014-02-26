@@ -116,6 +116,7 @@ private slots:
 
     void on_cboDireccionesEntrega_currentIndexChanged(int index);
 
+    void listados();
 private:
     Ui::frmFacturas *ui;
     QAction * actionGuardaBorrador;

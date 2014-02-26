@@ -1,19 +1,19 @@
-#ifndef FRMLISTADOALBARAN_H
-#define FRMLISTADOALBARAN_H
+#ifndef FRMLISTADOFAC_H
+#define FRMLISTADOFAC_H
 
 #include <QDialog>
 
 namespace Ui {
-class frmListadoAlbaran;
+class frmListadoFac;
 }
 
-class frmListadoAlbaran : public QDialog
+class frmListadoFac : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit frmListadoAlbaran(QWidget *parent = 0);
-    ~frmListadoAlbaran();
+    explicit frmListadoFac(QWidget *parent = 0);
+    ~frmListadoFac();
 
 private slots:
     void on_rdbRGClientes_toggled(bool checked);
@@ -25,11 +25,10 @@ private slots:
     void on_btnMail_clicked();
     void on_rdb1Cliente_toggled(bool checked);
 private:
-    Ui::frmListadoAlbaran *ui;
-
+    Ui::frmListadoFac *ui;
     QMap<QString, QString> getParametros();
     QString getClientesSql();
     QString getCaPreSql();
 };
 
-#endif // FRMLISTADOALBARAN_H
+#endif // FRMLISTADOFAC_H
