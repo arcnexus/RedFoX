@@ -98,6 +98,7 @@ private slots:
 
     void on_chkrecargo_equivalencia_toggled(bool checked);
 
+    void listados();
 private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;

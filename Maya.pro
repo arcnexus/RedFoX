@@ -226,7 +226,8 @@ SOURCES += main.cpp\
     Auxiliares/frmgastos_ped_pro.cpp \
     Zona_Ventas/frmlistadospre.cpp \
     Auxiliares/dlgsetupmail.cpp \
-    Zona_Ventas/frmlistadoped.cpp
+    Zona_Ventas/frmlistadoped.cpp \
+    Zona_Ventas/frmlistadoalbaran.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -417,7 +418,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/frmgastos_ped_pro.h \
     Zona_Ventas/frmlistadospre.h \
     Auxiliares/dlgsetupmail.h \
-    Zona_Ventas/frmlistadoped.h
+    Zona_Ventas/frmlistadoped.h \
+    Zona_Ventas/frmlistadoalbaran.h
 
 
 
@@ -521,7 +523,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/frmgastos_ped_pro.ui \
     Zona_Ventas/frmlistadospre.ui \
     Auxiliares/dlgsetupmail.ui \
-    Zona_Ventas/frmlistadoped.ui
+    Zona_Ventas/frmlistadoped.ui \
+    Zona_Ventas/frmlistadoalbaran.ui
 
 RESOURCES += \
     maya.qrc \

@@ -27,7 +27,7 @@
    <item row="0" column="0" colspan="6">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_6">
@@ -946,7 +946,6 @@ color: rgb(255, 255, 255);</string>
            </item>
           </layout>
           <zorder>frame</zorder>
-          <zorder></zorder>
           <zorder>frame_2</zorder>
          </widget>
          <widget class="QWidget" name="tab_2">
@@ -2562,10 +2561,22 @@ color: rgb(0, 0, 0);</string>
       </layout>
      </widget>
      <widget class="QWidget" name="page_6">
-      <layout class="QGridLayout" name="gridLayout_15">
-       <property name="rightMargin">
-        <number>20</number>
-       </property>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_39">
+         <property name="styleSheet">
+          <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255, 255, 255);
+background-color: #304163;</string>
+         </property>
+         <property name="text">
+          <string>FACTURAS A CLIENTES</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QTableView" name="tabla_facturas">
          <property name="styleSheet">

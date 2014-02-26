@@ -24,7 +24,7 @@
    <item row="0" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout">
@@ -2813,11 +2813,23 @@ color: rgb(255, 255, 255);</string>
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
-      <layout class="QGridLayout" name="gridLayout_10">
-       <property name="rightMargin">
-        <number>20</number>
-       </property>
-       <item row="0" column="0" rowspan="2">
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_36">
+         <property name="styleSheet">
+          <string notr="true">font: 14pt &quot;Sans Serif&quot;;
+background-color: #304163;
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>GESTIÓN DE PEDIDOS</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
         <widget class="QTableView" name="tabla">
          <property name="styleSheet">
           <string notr="true">alternate-background-color: rgb(255, 255, 255);

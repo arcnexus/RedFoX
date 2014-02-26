@@ -14,7 +14,7 @@
 #include<math.h>
 #include "../Auxiliares/frmeditline.h"
 
-
+#include "frmlistadoalbaran.h"
 
 FrmAlbaran::FrmAlbaran(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -854,7 +854,7 @@ void FrmAlbaran::on_btnImprimir_clicked()
         QString report = "albaran_"+QString::number(oCliente2->ididioma);
 
         QString pdfname = QString("Albaran-%1-%2").arg(oAlbaran->serie).arg(oAlbaran->albaran);
-        QString asunto = tr("Envio de presupuesto %1").arg(oAlbaran->albaran);
+        QString asunto = tr("Envio de albarán %1").arg(oAlbaran->albaran);
         QString texto = tr("Estimado/a %1:\n"
                          "Le adjunto el albarán nº %2/%3.\n\n"
                          "Un saludo.").arg(oCliente2->nombre_fiscal).arg(oAlbaran->serie).arg(oAlbaran->albaran);
@@ -984,6 +984,11 @@ void FrmAlbaran::setUpBusqueda()
         connect(Forzar_edicion,SIGNAL(clicked()),this,SLOT(on_btnForzar_edicion_clicked()));
         m_busqueda->addWidget(Forzar_edicion);
     }
+
+    m_busqueda->addSpacer();
+    QPushButton* list = new QPushButton(QIcon(":/Icons/PNG/reports.png"),tr("Listados"),this);
+    connect(list,SIGNAL(clicked()),this,SLOT(listados()));
+    m_busqueda->addWidget(list);
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->table2,SLOT(setFocus()));   
 }
@@ -1633,5 +1638,11 @@ void FrmAlbaran::on_chkrecargo_equivalencia_toggled(bool checked)
         oAlbaran->porc_rec3 = 0;
         oAlbaran->porc_rec4 = 0;
     }
-     calcular_albaran();
+    calcular_albaran();
+}
+
+void FrmAlbaran::listados()
+{
+    frmListadoAlbaran d(this);
+    d.exec();
 }
