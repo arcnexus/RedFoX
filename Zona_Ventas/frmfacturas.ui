@@ -27,7 +27,7 @@
    <item row="0" column="0" colspan="6">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_5">
       <layout class="QGridLayout" name="gridLayout_6">
@@ -250,6 +250,9 @@ color: rgb(255,255,255);</string>
                   <width>152</width>
                   <height>16777215</height>
                  </size>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
                 </property>
                </widget>
               </item>
@@ -483,6 +486,9 @@ color: rgb(255,255,255);</string>
                     <height>16777215</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
                  </widget>
                 </item>
                </layout>
@@ -688,6 +694,9 @@ color: rgb(255, 255, 255);</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="text">
                  <string>0,00</string>
                 </property>
@@ -814,6 +823,9 @@ color: rgb(255, 255, 255);</string>
                <widget class="QLineEdit" name="txtAsiento">
                 <property name="enabled">
                  <bool>false</bool>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
                 </property>
                 <property name="text">
                  <string>0</string>
@@ -1204,6 +1216,9 @@ color: rgb(255, 255, 255);</string>
           <layout class="QGridLayout" name="gridLayout">
            <item row="4" column="10">
             <widget class="QLineEdit" name="txttotal3">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1217,6 +1232,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="2" column="10">
             <widget class="QLineEdit" name="txttotal1">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1259,6 +1277,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="2" column="2">
             <widget class="QLineEdit" name="txtbase1">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1278,6 +1299,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1291,6 +1315,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="2" column="5">
             <widget class="QLineEdit" name="txtiva1">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1310,6 +1337,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1323,6 +1353,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="5" column="5">
             <widget class="QLineEdit" name="txtiva4">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1342,6 +1375,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1355,6 +1391,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="5" column="8">
             <widget class="QLineEdit" name="txtrec4">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1409,6 +1448,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="3" column="8">
             <widget class="QLineEdit" name="txtrec2">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1441,6 +1483,9 @@ color: rgb(255, 255, 255);</string>
              <property name="enabled">
               <bool>true</bool>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1454,6 +1499,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="4" column="2">
             <widget class="QLineEdit" name="txtbase3">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1473,6 +1521,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1486,6 +1537,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="4" column="5">
             <widget class="QLineEdit" name="txtiva3">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1505,6 +1559,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1518,6 +1575,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="4" column="8">
             <widget class="QLineEdit" name="txtrec3">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1547,6 +1607,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="5" column="2">
             <widget class="QLineEdit" name="txtbase4">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1566,6 +1629,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1579,6 +1645,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="2" column="8">
             <widget class="QLineEdit" name="txtrec1">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1608,6 +1677,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="3" column="2">
             <widget class="QLineEdit" name="txtbase2">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1627,6 +1699,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1640,6 +1715,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="3" column="5">
             <widget class="QLineEdit" name="txtiva2">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1658,6 +1736,9 @@ color: rgb(255, 255, 255);</string>
                <width>45</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0</string>
@@ -1700,6 +1781,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="8" column="10">
             <widget class="QLineEdit" name="txttotal_total">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1771,10 +1855,16 @@ color: rgb(255, 255, 255);</string>
               <item row="2" column="3">
                <widget class="QDoubleSpinBox" name="spin_iva_gasto2">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                 <property name="minimum">
                  <double>-999999999.000000000000000</double>
@@ -1787,10 +1877,16 @@ color: rgb(255, 255, 255);</string>
               <item row="1" column="3">
                <widget class="QDoubleSpinBox" name="spin_iva_gasto1">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                 <property name="minimum">
                  <double>-999999999.000000000000000</double>
@@ -1803,10 +1899,16 @@ color: rgb(255, 255, 255);</string>
               <item row="3" column="3">
                <widget class="QDoubleSpinBox" name="spin_iva_gasto3">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                 <property name="minimum">
                  <double>-999999999.000000000000000</double>
@@ -1886,6 +1988,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="5" column="10">
             <widget class="QLineEdit" name="txttotal4">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -1969,6 +2074,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="3" column="10">
             <widget class="QLineEdit" name="txttotal2">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2009,6 +2117,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="8" column="5">
             <widget class="QLineEdit" name="txtiva_total">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2036,6 +2147,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="8" column="2">
             <widget class="QLineEdit" name="txtbase_total">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2065,6 +2179,9 @@ color: rgb(255, 255, 255);</string>
            </item>
            <item row="8" column="8">
             <widget class="QLineEdit" name="txttotal_recargo">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2104,6 +2221,9 @@ color: rgb(255, 255, 255);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtsubtotal">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2131,6 +2251,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtimporte_descuento">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2152,6 +2275,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtDtoPP">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2182,6 +2308,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtbase">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2206,6 +2335,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtimporte_irpf_2">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2230,6 +2362,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtiva">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2251,6 +2386,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txtrec">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2275,6 +2413,9 @@ color: rgb(0, 0, 0);</string>
          </item>
          <item>
           <widget class="QLineEdit" name="txttotal">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -2607,79 +2748,53 @@ background-color: rgb(248, 245, 194);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>cbo_serie</tabstop>
   <tabstop>txtfactura</tabstop>
+  <tabstop>txtfecha</tabstop>
   <tabstop>txtcodigo_cliente</tabstop>
   <tabstop>botBuscarCliente</tabstop>
   <tabstop>txtcliente</tabstop>
-  <tabstop>txtdireccion1</tabstop>
-  <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtcif</tabstop>
   <tabstop>txtcp</tabstop>
   <tabstop>txtpoblacion</tabstop>
+  <tabstop>txtdireccion1</tabstop>
+  <tabstop>txtdireccion2</tabstop>
   <tabstop>txtprovincia</tabstop>
   <tabstop>comboPais</tabstop>
-  <tabstop>cboforma_pago</tabstop>
-  <tabstop>chkrecargo_equivalencia</tabstop>
-  <tabstop>spinporc_irpf</tabstop>
   <tabstop>txtcodigo_entidad</tabstop>
   <tabstop>txtdc_cuenta</tabstop>
   <tabstop>txtoficina_entidad</tabstop>
   <tabstop>txtnumero_cuenta</tabstop>
-  <tabstop>txtfecha</tabstop>
-  <tabstop>txtpedido_cliente</tabstop>
-  <tabstop>txtimporte_pendiente</tabstop>
-  <tabstop>txtAsiento</tabstop>
+  <tabstop>spinPorc_dto</tabstop>
+  <tabstop>spinPorc_dto_pp</tabstop>
+  <tabstop>spinporc_irpf</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>cboforma_pago</tabstop>
+  <tabstop>cboDivisa</tabstop>
+  <tabstop>txtfecha_cobro</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>cboDireccionesEntrega</tabstop>
   <tabstop>txtDireccion1_entrega</tabstop>
   <tabstop>txtDireccion2_entrega</tabstop>
   <tabstop>txtCp_entrega</tabstop>
   <tabstop>txtPoblacion_entrega</tabstop>
   <tabstop>txtProvincia_entrega</tabstop>
   <tabstop>cboPais_entrega</tabstop>
+  <tabstop>btnAsignarTransportista</tabstop>
+  <tabstop>txtTransportista</tabstop>
   <tabstop>btnAnadirLinea</tabstop>
   <tabstop>btn_borrarLinea</tabstop>
-  <tabstop>txtbase1</tabstop>
-  <tabstop>txtporc_iva1</tabstop>
-  <tabstop>txtiva1</tabstop>
-  <tabstop>txtporc_rec1</tabstop>
-  <tabstop>txtrec1</tabstop>
-  <tabstop>txtbase2</tabstop>
-  <tabstop>txtporc_iva2</tabstop>
-  <tabstop>txtiva2</tabstop>
-  <tabstop>txtporc_rec2</tabstop>
-  <tabstop>txtrec2</tabstop>
-  <tabstop>txtbase3</tabstop>
-  <tabstop>txtporc_iva3</tabstop>
-  <tabstop>txtiva3</tabstop>
-  <tabstop>txtporc_rec3</tabstop>
-  <tabstop>txtrec3</tabstop>
-  <tabstop>txtbase4</tabstop>
-  <tabstop>txtporc_iva4</tabstop>
-  <tabstop>txtiva4</tabstop>
-  <tabstop>txtporc_rec4</tabstop>
-  <tabstop>txtrec4</tabstop>
-  <tabstop>txtbase_total</tabstop>
-  <tabstop>txtiva_total</tabstop>
-  <tabstop>txttotal_recargo</tabstop>
-  <tabstop>txttotal_total</tabstop>
-  <tabstop>txtimporte_irpf</tabstop>
+  <tabstop>Lineas</tabstop>
   <tabstop>txtGastoDist1</tabstop>
   <tabstop>SpinGastoDist1</tabstop>
-  <tabstop>spin_iva_gasto1</tabstop>
+  <tabstop>cbo_porc_gasto_iva1</tabstop>
   <tabstop>txtGastoDist2</tabstop>
   <tabstop>SpinGastoDist2</tabstop>
-  <tabstop>spin_iva_gasto2</tabstop>
+  <tabstop>cbo_porc_gasto_iva2</tabstop>
   <tabstop>txtGastoDist3</tabstop>
   <tabstop>SpinGastoDist3</tabstop>
-  <tabstop>spin_iva_gasto3</tabstop>
+  <tabstop>cbo_porc_gasto_iva3</tabstop>
   <tabstop>txtcomentario</tabstop>
-  <tabstop>tabWidget_2</tabstop>
-  <tabstop>txtsubtotal</tabstop>
-  <tabstop>txtimporte_descuento</tabstop>
-  <tabstop>txtDtoPP</tabstop>
-  <tabstop>txtbase</tabstop>
-  <tabstop>txtimporte_irpf_2</tabstop>
-  <tabstop>txtiva</tabstop>
-  <tabstop>txtrec</tabstop>
-  <tabstop>txttotal</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
   <tabstop>btnSiguiente</tabstop>
@@ -2690,7 +2805,6 @@ background-color: rgb(248, 245, 194);</string>
   <tabstop>btndeshacer</tabstop>
   <tabstop>btnBorrar</tabstop>
   <tabstop>btnCobrar</tabstop>
-  <tabstop>cbo_serie</tabstop>
   <tabstop>tabla_facturas</tabstop>
  </tabstops>
  <resources>

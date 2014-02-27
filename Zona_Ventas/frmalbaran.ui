@@ -27,7 +27,7 @@
    <item row="0" column="0" colspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
@@ -82,6 +82,9 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -127,6 +130,9 @@ color: rgb(0, 0, 0);</string>
              <height>16777215</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -153,6 +159,9 @@ color: rgb(0, 0, 0);</string>
              <width>120</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
@@ -196,6 +205,9 @@ color: rgb(0, 0, 0);</string>
              <height>16777215</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -238,6 +250,9 @@ color: rgb(0, 0, 0);</string>
              <height>16777215</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -273,6 +288,9 @@ color: rgb(0, 0, 0);</string>
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
@@ -315,6 +333,9 @@ color: rgb(0, 0, 0);</string>
              <width>120</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(255, 255, 255);
@@ -1520,6 +1541,9 @@ color: rgb(255, 255, 255);</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
               </widget>
              </item>
             </layout>
@@ -1906,6 +1930,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -1927,6 +1954,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);
@@ -1954,6 +1984,9 @@ color: rgb(0, 64, 64);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 64, 64);</string>
@@ -1980,6 +2013,9 @@ color: rgb(0, 64, 64);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 64, 64);</string>
@@ -2003,6 +2039,9 @@ color: rgb(0, 64, 64);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 64, 64);</string>
@@ -2025,6 +2064,9 @@ color: rgb(0, 64, 64);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);
@@ -2080,6 +2122,9 @@ color: rgb(0, 64, 64);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -2101,6 +2146,9 @@ color: rgb(0, 64, 64);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0</string>
@@ -2210,6 +2258,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2238,6 +2289,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -2259,6 +2313,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2282,6 +2339,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -2303,6 +2363,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2348,6 +2411,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2370,6 +2436,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2391,6 +2460,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2427,6 +2499,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -2448,6 +2523,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2528,6 +2606,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -2556,6 +2637,9 @@ color: rgb(255, 255, 255);</string>
                <height>16777215</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -2577,6 +2661,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2600,6 +2687,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0</string>
              </property>
@@ -2621,6 +2711,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2657,6 +2750,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2735,6 +2831,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -2826,8 +2925,14 @@ color: rgb(255, 255, 255);</string>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                 <property name="minimum">
                  <double>-100000000.000000000000000</double>
@@ -2876,8 +2981,14 @@ color: rgb(255, 255, 255);</string>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                 <property name="minimum">
                  <double>-100000000.000000000000000</double>
@@ -2942,8 +3053,14 @@ color: rgb(255, 255, 255);</string>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                 <property name="minimum">
                  <double>-100000000.000000000000000</double>
@@ -3028,6 +3145,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -3049,6 +3169,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -3072,6 +3195,9 @@ color: rgb(255, 255, 255);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string>0,00</string>
              </property>
@@ -3093,6 +3219,9 @@ color: rgb(255, 255, 255);</string>
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string>0,00</string>
@@ -3202,18 +3331,66 @@ background-color: rgb(248, 245, 194);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>cboSerie</tabstop>
+  <tabstop>txtalbaran</tabstop>
+  <tabstop>txtfecha</tabstop>
   <tabstop>txtcodigo_cliente</tabstop>
+  <tabstop>botBuscarCliente</tabstop>
+  <tabstop>txtcliente</tabstop>
+  <tabstop>txtcif</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
   <tabstop>txtdireccion1</tabstop>
   <tabstop>txtdireccion2</tabstop>
-  <tabstop>btnSiguiente</tabstop>
-  <tabstop>btnFacturar</tabstop>
-  <tabstop>btnAnterior</tabstop>
-  <tabstop>btnImprimir</tabstop>
-  <tabstop>btnGuardar</tabstop>
+  <tabstop>txtprovincia</tabstop>
+  <tabstop>comboPais</tabstop>
+  <tabstop>txtTelefonoCli</tabstop>
+  <tabstop>txtFaxCli</tabstop>
+  <tabstop>txtMovilCli</tabstop>
+  <tabstop>txtEmailCli</tabstop>
+  <tabstop>cbo_forma_pago</tabstop>
+  <tabstop>cboDivisa</tabstop>
+  <tabstop>cboAgente</tabstop>
+  <tabstop>txtcNumFra</tabstop>
+  <tabstop>txtfecha_factura</tabstop>
+  <tabstop>spinporc_Dto</tabstop>
+  <tabstop>spinPorc_dto_pp</tabstop>
+  <tabstop>spinporc_irpf</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>btnAnadirLinea</tabstop>
+  <tabstop>btn_borrarLinea</tabstop>
+  <tabstop>Lineas</tabstop>
+  <tabstop>txtDireccion1_entrega</tabstop>
+  <tabstop>txtDireccion2_entrega</tabstop>
+  <tabstop>txtCp_entrega</tabstop>
+  <tabstop>txtPoblacion_entrega</tabstop>
+  <tabstop>txtProvincia_entrega</tabstop>
+  <tabstop>cboPais_entrega</tabstop>
+  <tabstop>txtemail_alternativa</tabstop>
+  <tabstop>txtcomentarios_alternativa</tabstop>
+  <tabstop>txtGastoDist1</tabstop>
+  <tabstop>SpinGastoDist1</tabstop>
+  <tabstop>cboporc_iva_gasto1</tabstop>
+  <tabstop>txtGastoDist2</tabstop>
+  <tabstop>SpinGastoDist2</tabstop>
+  <tabstop>cboporc_iva_gasto2</tabstop>
+  <tabstop>txtGastoDist3</tabstop>
+  <tabstop>SpinGastoDist3</tabstop>
+  <tabstop>cboporc_iva_gasto3</tabstop>
+  <tabstop>txtcomentario</tabstop>
   <tabstop>btnAnadir</tabstop>
+  <tabstop>btnAnterior</tabstop>
+  <tabstop>btnSiguiente</tabstop>
   <tabstop>btnBuscar</tabstop>
+  <tabstop>btnImprimir</tabstop>
   <tabstop>btnEditar</tabstop>
-  <tabstop>txtfecha</tabstop>
+  <tabstop>btnGuardar</tabstop>
+  <tabstop>btndeshacer</tabstop>
+  <tabstop>btn_borrar</tabstop>
+  <tabstop>btnFacturar</tabstop>
+  <tabstop>txtentregado_a_cuenta</tabstop>
+  <tabstop>table2</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>
