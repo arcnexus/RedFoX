@@ -29,13 +29,27 @@ void frmFacturas::formato_tabla_lineas()
     }
 }
 
-frmFacturas::frmFacturas( QWidget *parent) :
-    MayaModule(module_zone(),module_name(),parent),
-    ui(new Ui::frmFacturas),
-    //helper(this),
-    menuButton(QIcon(":/Icons/PNG/Factura.png"),tr("Facturas"),this),
-    push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
+void frmFacturas::init_querys()
+{
+    model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
 
+    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                          "from lin_fac where id = 0;",Configuracion_global->empresaDB);
+    formato_tabla_lineas();
+
+    m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
+                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+
+                         " order by fecha+serie+factura desc limit 0,500",Configuracion_global->empresaDB);
+    series2_l.clear();
+    series2_l.append(tr("TODAS"));
+    for(auto i=0;i< model_series->rowCount();i++)
+        series2_l.append(model_series->record(i).value("serie").toString());
+    cboSeries->addItems(series2_l);
+
+    formato_tabla_facturas();
+}
+
+void frmFacturas::init()
 {
     ui->setupUi(this);
     oFactura  = new Factura(this);
@@ -86,25 +100,13 @@ frmFacturas::frmFacturas( QWidget *parent) :
     ui->cboDireccionesEntrega->setModel(model_dir_entrega);
 
     ui->comboPais->setModelColumn(1);
-    ui->cboPais_entrega->setModelColumn(1);            
+    ui->cboPais_entrega->setModelColumn(1);
     ui->cboforma_pago->setModelColumn(2);
     ui->cboDivisa->setModelColumn(1);
     ui->cboDireccionesEntrega->setModelColumn(1);
 
     ui->tabla_facturas->setModel(m_facturas);
     ui->Lineas->setModel(modelLineas);
-
-    model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
-
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                          "from lin_fac where id = 0;",Configuracion_global->empresaDB);
-    formato_tabla_lineas();
-
-    m_facturas->setQuery("select id,serie,factura,fecha,fecha_cobro,cif,total,cliente from cab_fac "
-                         " where factura <> 'BORRADOR'  and ejercicio = "+Configuracion_global->cEjercicio+
-                         " order by fecha+serie+factura desc limit 0,500",Configuracion_global->empresaDB);
-    formato_tabla_facturas();
-
 
     ui->cbo_porc_gasto_iva1->addItems(Configuracion_global->ivaList);
     ui->cbo_porc_gasto_iva2->addItems(Configuracion_global->ivaList);
@@ -120,14 +122,6 @@ frmFacturas::frmFacturas( QWidget *parent) :
     h_Buscar["Fecha Factura"] = "fecha";
     h_Buscar["CIF / NIF"] = "cif";
     h_Buscar["Total"] = "total";
-
-    //----------------
-    // Cargar Series
-    //----------------
-    series2_l.append(tr("TODAS"));    
-    for(auto i=0;i< model_series->rowCount();i++)
-        series2_l.append(model_series->record(i).value("serie").toString());
-    cboSeries->addItems(series2_l);
 
     ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
     ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
@@ -151,6 +145,16 @@ frmFacturas::frmFacturas( QWidget *parent) :
     VaciarCampos();
     BloquearCampos(true);
     ui->tabla_facturas->selectRow(0);
+}
+
+frmFacturas::frmFacturas( QWidget *parent) :
+    MayaModule(module_zone(),module_name(),parent),
+    ui(new Ui::frmFacturas),
+    //helper(this),
+    menuButton(QIcon(":/Icons/PNG/Factura.png"),tr("Facturas"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
+
+{
 }
 
 frmFacturas::~frmFacturas()
@@ -1174,6 +1178,11 @@ void frmFacturas::filter_table(QString texto, QString orden, QString modo)
 bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
 {
 
+    if(event->type() == QEvent::Show && obj == this)
+    {
+        init_querys();
+    }
+
     if (event->type() == QEvent::KeyPress) {
 
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
@@ -1506,8 +1515,7 @@ void frmFacturas::setUpBusqueda()
     connect(list,SIGNAL(clicked()),this,SLOT(listados()));
     m_busqueda->addWidget(list);
 
-    connect(m_busqueda,SIGNAL(key_Down_Pressed()), ui->tabla_facturas,SLOT(setFocus()));
-    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
+    connect(m_busqueda,SIGNAL(key_Down_Pressed()), ui->tabla_facturas,SLOT(setFocus()));   
 }
 
 void frmFacturas::on_btnAsignarTransportista_clicked()

@@ -33,9 +33,13 @@ public:
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void setUpBusqueda();
+    void init_querys();
+
 signals:
 
 private slots:
+    void init();
+
     void on_btnSiguiente_clicked();
 
     void on_btnAnadir_clicked();

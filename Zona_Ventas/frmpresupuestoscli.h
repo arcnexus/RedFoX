@@ -37,7 +37,9 @@ public:
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
     void setConvertirMenu();
     void init_querys();
+
 private slots:
+    void init();
 
     void on_btnSiguiente_clicked();
 

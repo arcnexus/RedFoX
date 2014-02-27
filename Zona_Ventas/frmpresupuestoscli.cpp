@@ -16,32 +16,6 @@
 #include "../Auxiliares/frmeditline.h"
 
 #include "frmlistadospre.h"
-void FrmPresupuestosCli::setConvertirMenu()
-{
-    aPedido_action = new QAction(tr("En pedido"),this);
-    aAlbaran_action = new QAction(tr("En albaran"),this);
-    aFactura_action = new QAction(tr("En factura"),this);
-
-    connect(aPedido_action,SIGNAL(triggered()),this,SLOT(convertir_epedido()));
-    connect(aAlbaran_action,SIGNAL(triggered()),this,SLOT(convertir_ealbaran()));
-    connect(aFactura_action,SIGNAL(triggered()),this,SLOT(convertir_enFactura()));
-
-    convertir_menu = new QMenu(this);
-    convertir_menu->addAction(aPedido_action);
-    convertir_menu->addAction(aAlbaran_action);
-    convertir_menu->addAction(aFactura_action);
-
-    ui->btn_convertir->setMenu(convertir_menu);
-}
-
-void FrmPresupuestosCli::init_querys()
-{
-    model_busqueda->setQuery(QString("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc"),Configuracion_global->empresaDB);
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio_recom,porc_dto,precio,subtotal,porc_iva,total "
-                          "from lin_pre where id = 0;",Configuracion_global->empresaDB);
-
-    formato_tablas();
-}
 
 FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -49,6 +23,15 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/presupuestos.png"),tr("Presupuestos"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/presupuestos.png"),"",this))
 
+{
+}
+
+FrmPresupuestosCli::~FrmPresupuestosCli()
+{
+    delete ui;
+}
+
+void FrmPresupuestosCli::init()
 {
     ui->setupUi(this);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
@@ -72,6 +55,7 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     oClientePres = new Cliente(this);
     model_busqueda = new QSqlQueryModel(this);
     modelLineas    = new QSqlQueryModel(this);
+
     setConvertirMenu();
     setUpBusqueda();
 
@@ -130,12 +114,32 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
 
     BloquearCampos(true);
 }
-
-FrmPresupuestosCli::~FrmPresupuestosCli()
+void FrmPresupuestosCli::setConvertirMenu()
 {
-    delete ui;
+    aPedido_action = new QAction(tr("En pedido"),this);
+    aAlbaran_action = new QAction(tr("En albaran"),this);
+    aFactura_action = new QAction(tr("En factura"),this);
+
+    connect(aPedido_action,SIGNAL(triggered()),this,SLOT(convertir_epedido()));
+    connect(aAlbaran_action,SIGNAL(triggered()),this,SLOT(convertir_ealbaran()));
+    connect(aFactura_action,SIGNAL(triggered()),this,SLOT(convertir_enFactura()));
+
+    convertir_menu = new QMenu(this);
+    convertir_menu->addAction(aPedido_action);
+    convertir_menu->addAction(aAlbaran_action);
+    convertir_menu->addAction(aFactura_action);
+
+    ui->btn_convertir->setMenu(convertir_menu);
 }
 
+void FrmPresupuestosCli::init_querys()
+{
+    model_busqueda->setQuery(QString("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc"),Configuracion_global->empresaDB);
+    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio_recom,porc_dto,precio,subtotal,porc_iva,total "
+                          "from lin_pre where id = 0;",Configuracion_global->empresaDB);
+
+    formato_tablas();
+}
 void FrmPresupuestosCli::LLenarCampos()
 {
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->irpf ,'f',Configuracion_global->decimales_campos_totales)));
@@ -1694,6 +1698,7 @@ void FrmPresupuestosCli::formato_tablas()
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         model_busqueda->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
+    ui->tabla->setColumnHidden(0,true);
     QStringList header2;
     QVariantList sizes2;
     header2 << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp recom")<< tr("porc_dto")  << tr("pvp cli.") << tr("Subtotal");
@@ -1919,8 +1924,6 @@ void FrmPresupuestosCli::setUpBusqueda()
     m_busqueda->addWidget(list);
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
-    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
-
 }
 
 void FrmPresupuestosCli::on_tabla_doubleClicked(const QModelIndex &index)

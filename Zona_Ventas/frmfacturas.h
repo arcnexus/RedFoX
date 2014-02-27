@@ -40,7 +40,11 @@ public:
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 
     void formato_tabla_lineas();
+    void init_querys();
+
 private slots:
+    void init();
+
     void on_btnSiguiente_clicked();
 
     void on_btnAnadir_clicked();

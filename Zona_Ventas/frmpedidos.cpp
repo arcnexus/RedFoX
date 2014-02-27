@@ -35,11 +35,7 @@ void FrmPedidos::listados()
     d.exec();
 }
 
-FrmPedidos::FrmPedidos(QWidget *parent) :
-    MayaModule(module_zone(),module_name(),parent),
-    ui(new Ui::frmPedidos),
-    menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this),
-    push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
+void FrmPedidos::init()
 {
     ui->setupUi(this);
     ui->tabWidget_2->setCurrentIndex(0);
@@ -80,7 +76,6 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
     //-------------------------------------------------------
-
 
 
     aAlbaran_action = new QAction(tr("En albaran"),this);
@@ -177,6 +172,14 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
 
     BloquearCampos(true);
     ui->tabla->selectRow(0);
+}
+
+FrmPedidos::FrmPedidos(QWidget *parent) :
+    MayaModule(module_zone(),module_name(),parent),
+    ui(new Ui::frmPedidos),
+    menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this),
+    push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
+{
 }
 
 FrmPedidos::~FrmPedidos()

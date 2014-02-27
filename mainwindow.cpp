@@ -454,7 +454,10 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
 
     FrmPresupuestosCli* Presupcli = new FrmPresupuestosCli(this);
     if(Presupcli->userHaveAcces(Configuracion_global->id_usuario_activo))
+    {
         _ventasModules.append(Presupcli);
+        QTimer::singleShot(0,Presupcli,SLOT(init()));
+    }
     else
         delete Presupcli;
 
@@ -464,6 +467,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Pedidos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Pedidos);
+        QTimer::singleShot(0,Pedidos,SLOT(init()));
     }
     else
         delete Pedidos;
@@ -474,6 +478,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Albaran->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Albaran);
+        QTimer::singleShot(0,Albaran,SLOT(init()));
     }
     else
         delete Albaran;
@@ -494,6 +499,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Facturas->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Facturas);
+        QTimer::singleShot(0,Facturas,SLOT(init()));
     }
     else
         delete Facturas;

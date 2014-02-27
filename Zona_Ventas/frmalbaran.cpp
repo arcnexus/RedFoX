@@ -21,6 +21,24 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui(new Ui::FrmAlbaran),
     menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
+{    
+}
+
+FrmAlbaran::~FrmAlbaran()
+{
+    delete ui;
+}
+void FrmAlbaran::init_querys()
+{
+    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                          "from lin_alb where id = 0;",Configuracion_global->empresaDB);
+    m->setQuery(QString("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb where ejercicio =%1 order by albaran desc").arg(
+                    Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
+    series->setQuery("select serie from series", Configuracion_global->empresaDB);
+    formato_tabla();
+}
+
+void FrmAlbaran::init()
 {
     ui->setupUi(this);
 
@@ -66,12 +84,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     ui->Lineas->setModel(modelLineas);
     ui->table2->setModel(m);
 
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                          "from lin_alb where id = 0;",Configuracion_global->empresaDB);
-    m->setQuery(QString("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb where ejercicio =%1 order by albaran desc").arg(
-                    Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
-    series->setQuery("select serie from series", Configuracion_global->empresaDB);
-
     cboseries->setCurrentIndex(0);
 
     ui->Lineas->setItemDelegateForColumn(3,new NumericDelegate(this,true));
@@ -116,11 +128,6 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
         (*it)->installEventFilter(this);
 
     BloquearCampos(true);
-}
-
-FrmAlbaran::~FrmAlbaran()
-{
-    delete ui;
 }
 
 void FrmAlbaran::LLenarCampos()
@@ -910,6 +917,7 @@ void FrmAlbaran::formato_tabla()
         ui->table2->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
+    ui->table2->setColumnHidden(0,true);
     QStringList header2;
     QVariantList sizes2;
     header2 << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
@@ -1173,7 +1181,12 @@ void FrmAlbaran::calcular_iva_gastos()
 
 bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::KeyPress) {
+    if(event->type() == QEvent::Show && obj == this)
+    {
+        init_querys();
+    }
+    else if (event->type() == QEvent::KeyPress)
+    {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if(obj == ui->Lineas){
             if (keyEvent->key() == Qt::Key_Plus)
