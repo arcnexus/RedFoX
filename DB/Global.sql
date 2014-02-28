@@ -11,7 +11,7 @@ CREATE TABLE `mayaglobal`.`grupos` (
   `bd_port` varchar(45) DEFAULT '3306',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `usuarios` (
+CREATE TABLE `mayaglobal`.`usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `nombre_completo` varchar(45) DEFAULT NULL,
@@ -24,15 +24,15 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `nivelacceso` (
+CREATE TABLE `mayaglobal`.`nivelacceso` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');
-INSERT INTO `nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');
+INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');

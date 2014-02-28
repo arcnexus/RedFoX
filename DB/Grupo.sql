@@ -830,3 +830,4 @@ CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURIT
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`vistaempresa` AS select concat_ws(' ',`@grupo@`.`empresas`.`nombre`,`@grupo@`.`empresas`.`ejercicio`) AS `empresa`,`@grupo@`.`empresas`.`id` AS `id` from `@grupo@`.`empresas`;
 INSERT INTO `@grupo@`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');
 INSERT INTO `@grupo@`.`secciones` (`seccion`, `codigo`) VALUES ('Sin sección', 'SS');
+INSERT INTO `@grupo@`.`formpago` (`codigo`, `forma_pago`, `dia_pago1`, `dia_pago2`, `dia_pago3`, `dia_pago4`, `dias_entre_plazos`, `cuenta_cont_pago`, `numero_plazos`, `dias_hasta_pago`, `al_contado`) VALUES ('CON', 'Contado', '0', '0', '0', '0', '0', '0', '1', '0', '1');
