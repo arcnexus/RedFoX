@@ -131,65 +131,16 @@
       <item row="0" column="1">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="label_5">
-          <property name="minimumSize">
-           <size>
-            <width>234</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>421</width>
-            <height>204</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-radius: 5px;</string>
-          </property>
+         <widget class="QLabel" name="label_6">
           <property name="text">
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap resource="maya.qrc">:/Icons/PNG/NeuX.png</pixmap>
+           <pixmap resource="maya.qrc">:/Icons/PNG/logo.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QFrame" name="frame">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_4">
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="maximumSize">
-              <size>
-               <width>133</width>
-               <height>57</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="maya.qrc">:/Icons/PNG/logoagupunt.png</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
        </layout>
@@ -789,19 +740,6 @@ border-color: rgb(192, 192, 255);
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="pixmap">
-           <pixmap resource="maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_8">
           <property name="styleSheet">
@@ -832,6 +770,32 @@ border-color: rgb(192, 192, 255);
             <width>0</width>
             <height>27</height>
            </size>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="maya.qrc">:/Icons/PNG/usuarios.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="2">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="maya.qrc">:/Icons/PNG/redfox.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
