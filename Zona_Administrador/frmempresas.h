@@ -96,6 +96,8 @@ private:
 
     QSqlQueryModel * tarifaEditModel;
     QSqlQueryModel * monedaEditModel;
+    QSqlQueryModel * seriesEditModel;
+    QSqlQueryModel * paisesEditModel;
 };
 
 #endif // FRMEMPRESAS_H

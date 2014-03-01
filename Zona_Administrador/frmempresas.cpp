@@ -10,11 +10,8 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/empresa.png"),tr("Empresa"),this)
 {
     ui->setupUi(this);
-    QStyle *style = this ? this->style() : QApplication::style();
-    QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
-    ui->blinkink->seticon(tmpIcon.pixmap(32,32));
     on_btn_inicio_clicked();
-
+    ui->cboSerie->addItem("A");
     getEmpresas();
 }
 
@@ -39,14 +36,14 @@ void FrmEmpresas:: CargarCamposEnEmpresa()
 
 
 
-    oEmpresa.setserie(ui->txtserieFactura->text());
+    oEmpresa.setserie(ui->cboSerie->currentText());
     oEmpresa.setdireccion1(ui->txtdireccion1->text());
     oEmpresa.setcp(ui->txtcp->text());
     oEmpresa.setpoblacion(ui->txtpoblacion->text());
     oEmpresa.setprovincia(ui->txtprovincia->text());
-    oEmpresa.setpais(ui->txtpais->text());
+   // oEmpresa.setpais(ui->txtpais->text());
     oEmpresa.settelefono1(ui->txttelefono1->text());
-    oEmpresa.settelefono2(ui->txtpais->text());
+   // oEmpresa.settelefono2(ui->txtpais->text());
     oEmpresa.setfax(ui->txtfax->text());
     oEmpresa.setcMail(ui->txtcMail->text());
     oEmpresa.setweb(ui->txtweb->text());
@@ -343,122 +340,92 @@ void FrmEmpresas::_addEmpresa()
 
         if(!error)
         {
-            QString query = QString(
-                        "INSERT INTO `@grupo@`.`empresas` "
-                        "(`codigo`, `nombre`, `digitos_factura`,`decimales_campos_totales`, `serie`, `nombre_bd`, `nombre_db_conta`,"
-                        "`nombre_bd_medica`, `direccion`, `cp`, `poblacion`, `provincia`, `pais`,"
-                        "`telefono1`, `telefono2`, `fax`, `mail`, `web`, `cif`, `inscripcion`,"
-                        "`comentario_albaran`, `comentario_factura`, `comentario_ticket`,"
-                        "`ejercicio`, `usar_irpf`, `codigo_cuenta_clientes`,"
-                        "`codigo_cuenta_proveedores`, `codigo_cuenta_acreedores`,"
-                        "`digitos_cuenta`, `clave1`, `clave2`, `medica`, `internacional`,"
-                        "`auto_codigo`, `tamano_codigo`, `cuenta_cobros`, `cuenta_pagos`,"
-                        "`id_divisa`, `enlace_web`, `contabilidad`, `consultas`, `primer_dia_laborable`,"
-                        "`ultimo_dia_laborable`, `horario_primer_dia`, `horario_dia_normal`,"
-                        "`horario_ultimo_dia`, `ticket_factura`, `margen`, `margen_minimo`, `seguimiento`,"
-                        "`id_tarifa_predeterminada`, `actualizar_divisas`, `cuenta_ventas_mercaderias`,"
-                        "`cuenta_ventas_servicios`, `cuenta_iva_soportado1`, `cuenta_iva_soportado2`,"
-                        "`cuenta_iva_soportado3`, `cuenta_iva_soportado4`, `cuenta_iva_repercutido1`,"
-                        "`cuenta_iva_repercutido2`, `cuenta_iva_repercutido3`, `cuenta_iva_repercutido4`,"
-                        "`cuenta_iva_repercutido1_re`, `cuenta_iva_repercutido2_re`, `cuenta_iva_repercutido3_re`,"
-                        "`cuenta_iva_repercutido4_re`, `cuenta_iva_soportado1_re`, `cuenta_iva_soportado2_re`,"
-                        "`cuenta_iva_soportado3_re`, `cuenta_iva_soportado4_re`, `caducidad_vales`)"
-                        "VALUES "
-                        "(:codigo, :nombre, :digitos_factura,:decimales_campos_totales, :serie, :nombre_bd, :nombre_db_conta,"
-                        ":nombre_bd_medica, :direccion, :cp, :poblacion, :provincia, :pais,"
-                        ":telefono1, :telefono2, :fax, :mail, :web, :cif, :inscripcion,"
-                        ":comentario_albaran, :comentario_factura, :comentario_ticket,"
-                        ":ejercicio, :usar_irpf, :codigo_cuenta_clientes,"
-                        ":codigo_cuenta_proveedores, :codigo_cuenta_acreedores,"
-                        ":digitos_cuenta, :clave1, :clave2, :medica, :internacional,"
-                        ":auto_codigo, :tamanocodigo, :cuenta_cobros, :cuenta_pagos,"
-                        ":id_divisa, :enlaceweb, :contabilidad, :consultas, :primer_dia_laborable,"
-                        ":ultimo_dia_laborable, :horario_primer_dia, :horario_dia_normal,"
-                        ":horario_ultimo_dia, :ticket_factura, :margen, :margen_minimo, :seguimiento,"
-                        ":id_tarifa_predeterminada, :actualizardivisas, :cuenta_ventas_mercaderias,"
-                        ":cuenta_ventas_servicios, :cuenta_iva_soportado1, :cuenta_iva_soportado2,"
-                        ":cuenta_iva_soportado3, :cuenta_iva_soportado4, :cuenta_iva_repercutido1,"
-                        ":cuenta_iva_repercutido2, :cuenta_iva_repercutido3, :cuenta_iva_repercutido4,"
-                        ":cuenta_iva_repercutido1_re, :cuenta_iva_repercutido2_re, :cuenta_iva_repercutido3_re,"
-                        ":cuenta_iva_repercutido4_re, :cuenta_iva_soportado1_re, :cuenta_iva_soportado2_re,"
-                        ":cuenta_iva_soportado3_re, :cuenta_iva_soportado4_re,:caducidad_vales);"
-                        );
-            query.replace("@grupo@",r.value("bd_name").toString());
-            q.prepare(query);
-            q.bindValue(":codigo",ui->txtcodigo->text());
-            q.bindValue(":nombre",ui->txtEmpresa->text());
-            q.bindValue(":digitos_factura",ui->txtndigitos_factura->text().toInt());
-            q.bindValue(":decimales_campos_totales",ui->spinDecimales->value());
-            q.bindValue(":serie",ui->txtserieFactura->text().toInt());
-            q.bindValue(":nombre_bd",nEmpresa);
-            q.bindValue(":nombre_db_conta",nConta);
-            q.bindValue(":nombre_bd_medica",nMedic);
-            q.bindValue(":direccion",ui->txtdireccion1->text());
-            q.bindValue(":cp",ui->txtcp->text());
-            q.bindValue(":poblacion",ui->txtpoblacion->text());
-            q.bindValue(":provincia",ui->txtprovincia->text());
-            q.bindValue(":pais",ui->txtpais->text());//TODO cambiar esto
-            q.bindValue(":telefono1",ui->txttelefono1->text());
-            q.bindValue(":telefono2",ui->txttelefono2->text());
-            q.bindValue(":fax",ui->txtfax->text());
-            q.bindValue(":mail",ui->txtcMail->text());
-            q.bindValue(":web",ui->txtweb->text());
-            q.bindValue(":cif",ui->txtcif->text());
-            q.bindValue(":inscripcion",ui->txtcInscripcion->text());
-            q.bindValue(":comentario_albaran",ui->txtcCometarioAlbaran->toPlainText());
-            q.bindValue(":comentario_factura",ui->txtccomentario_factura->toPlainText());
-            q.bindValue(":comentario_ticket",ui->txtccomentario_ticket->toPlainText());
-            q.bindValue(":ejercicio",ui->txtejercicio->value());
-            q.bindValue(":usar_irpf",0);//TODO irpf empresa
-            q.bindValue(":codigo_cuenta_clientes",ui->txtcuentaCliente->text());
-            q.bindValue(":codigo_cuenta_proveedores",ui->txtcuenta_proveedores->text());
-            q.bindValue(":codigo_cuenta_acreedores",ui->txtcuenta_acreedores->text());
-            q.bindValue(":digitos_cuenta",ui->txtdigitos_cuentas->value());
-            q.bindValue(":clave1","");//TODO claves
-            q.bindValue(":clave2","");
-            q.bindValue(":medica",ui->chkMedica->isChecked());
-            q.bindValue(":internacional",0);
-            q.bindValue(":auto_codigo",ui->chkAutocodificiar->isChecked());
-            q.bindValue(":tamanocodigo",ui->txttamano_codigoart->value());
-            q.bindValue(":cuenta_cobros","");//TODO c cobros
-            q.bindValue(":cuenta_pagos","");//TODO c pagos
-            q.bindValue(":id_divisa",monedaEditModel->record(ui->cboDivisas->currentIndex()).value("id"));
-            q.bindValue(":enlaceweb",0);//TODO Grrr
-            q.bindValue(":contabilidad",0);
-            q.bindValue(":consultas",ui->txtConsultas->value());
-            q.bindValue(":primer_dia_laborable",ui->cboPrimer_dia_laborable->currentIndex());
-            q.bindValue(":ultimo_dia_laborable",ui->cbo_ultimo_dia_semana->currentIndex());
-            q.bindValue(":horario_primer_dia",ui->txt_horario_primer_dia->text());
-            q.bindValue(":horario_dia_normal",ui->txt_horario_dia_normal->text());
-            q.bindValue(":horario_ultimo_dia",ui->txt_horario_ultimo_dia->text());
-            q.bindValue(":ticket_factura",ui->chk_ticket_factura->isChecked());
-            q.bindValue(":margen",0);
-            q.bindValue(":margen_minimo",0);
-            q.bindValue(":seguimiento",0);
-            q.bindValue(":id_tarifa_predeterminada",tarifaEditModel->record(ui->cboTarifa->currentIndex()).value("id"));
-            q.bindValue(":actualizardivisas",ui->chk_upate_divisas->isChecked());
-            q.bindValue(":cuenta_ventas_mercaderias",ui->txtCuenta_venta_mercaderias->text());
-            q.bindValue(":cuenta_ventas_servicios",ui->txtCuenta_venta_servicios->text());
-            q.bindValue(":cuenta_iva_soportado1",ui->ivasoportado1->text());
-            q.bindValue(":cuenta_iva_soportado2",ui->ivasoportado2->text());
-            q.bindValue(":cuenta_iva_soportado3",ui->ivasoportado3->text());
-            q.bindValue(":cuenta_iva_soportado4",ui->ivasoportado4->text());
-            q.bindValue(":cuenta_iva_repercutido1",ui->ivarepercutido1->text());
-            q.bindValue(":cuenta_iva_repercutido2",ui->ivarepercutido2->text());
-            q.bindValue(":cuenta_iva_repercutido3",ui->ivarepercutido3->text());
-            q.bindValue(":cuenta_iva_repercutido4",ui->ivarepercutido4->text());
-            q.bindValue(":cuenta_iva_repercutido1_re",ui->ivarepercutidore1->text());
-            q.bindValue(":cuenta_iva_repercutido2_re",ui->ivarepercutidore2->text());
-            q.bindValue(":cuenta_iva_repercutido3_re",ui->ivarepercutidore3->text());
-            q.bindValue(":cuenta_iva_repercutido4_re",ui->ivarepercutidore4->text());
-            q.bindValue(":cuenta_iva_soportado1_re",ui->ivasoportadore1->text());
-            q.bindValue(":cuenta_iva_soportado2_re",ui->ivasoportadore2->text());
-            q.bindValue(":cuenta_iva_soportado3_re",ui->ivasoportadore3->text());
-            q.bindValue(":cuenta_iva_soportado4_re",ui->ivasoportadore4->text());
-            q.bindValue(":caducidad_vales",ui->txtCaducidadvales->value());
+            QHash<QString,QVariant> data;
 
-            if(!q.exec())
-                qDebug() << q.lastError().text();
+            data["codigo"]= ui->txtcodigo->text();
+            data["nombre"]= ui->txtEmpresa->text();
+            data["digitos_factura"]= ui->spinDigitos->value();
+            data["serie"]= ui->cboSerie->currentText();
+            data["decimales_campos_totales"] = ui->spinDecimales_create->value();
+            data["decimales"]=   ui->spinDecimales_precios_create->value();
+            //data["mostrarsiempre"]=  ??????????
+            //data["ruta_bd_sqlite"]=  //TODO reactivar en soporte SQLITE??
+            //data["ruta_db_conta"]=  ;
+            //data["ruta_bd_medica_sqlite"]=  ;
+            data["nombre_bd"]=  nEmpresa;
+            data["nombre_db_conta"]=  nConta;
+            data["nombre_bd_medica"]=  nMedic;
+            data["direccion"]=  ui->txtdireccion1->text();
+            data["cp"]=  ui->txtcp->text();
+            data["poblacion"]=  ui->txtpoblacion->text();
+            data["provincia"]=  ui->txtprovincia->text();
+            data["pais"]=  ui->cboPais_create->currentText();
+            data["telefono1"]=  ui->txttelefono1->text();
+            data["telefono2"]=  ui->txttelefono2->text();
+            data["fax"]=  ui->txtfax->text();
+            data["mail"]=  ui->txtcMail->text();
+            data["web"]=  ui->txtweb->text();
+            data["cif"]=  ui->txtcif->text();
+            data["inscripcion"]=  ui->txtcInscripcion->text();
+            data["comentario_albaran"]=  ui->txtcCometarioAlbaran->toPlainText();
+            data["comentario_factura"]=  ui->txtcCometarioAlbaran->toPlainText();
+            data["comentario_ticket"]=  ui->txtccomentario_ticket->toPlainText();
+            data["ejercicio"]=  ui->txtejercicio->value();
+            data["usar_irpf"]=  ui->chkIRPF->isChecked();
+            data["porc_irpf"]=  ui->spinPorc_irpf->value();
+            data["codigo_cuenta_clientes"]=  ui->txtcuentaCliente->text();
+            data["codigo_cuenta_proveedores"]=  ui->txtcuenta_proveedores->text();
+            data["codigo_cuenta_acreedores"]=  ui->txtcuenta_acreedores->text();
+            data["digitos_cuenta"]=  ui->txtdigitos_cuentas->text();
+            data["clave1"]=  ui->txtclave1->text();
+            data["clave2"]=  ui->txtclave2->text();
+            data["medica"]=  ui->chkMedica->isChecked();
+            data["internacional"]=  ui->chkInternacional->isChecked();
+            data["auto_codigo"]=  ui->chkAutocodificiar->isChecked();
+            data["tamano_codigo"]=  ui->txttamano_codigoart->value();
+            data["cuenta_cobros"]=  ui->txtcuenta_cobros->text();
+            data["cuenta_pagos"]=  ui->txtcuenta_pagos->text();
+            data["id_divisa"]=  monedaEditModel->record(ui->cboDivisas->currentIndex()).value("id");
+            data["enlace_web"]=  ui->chkEnlace_web->isChecked();
+            data["contabilidad"]=  ui->chkContabilidad->isChecked();
+            data["consultas"]=  ui->txtConsultas->value();
+            data["primer_dia_laborable"]=  ui->cboPrimer_dia_laborable->currentText();
+            data["ultimo_dia_laborable"]=  ui->cbo_ultimo_dia_semana->currentText();
+            data["horario_primer_dia"]=  ui->txt_horario_primer_dia->text();
+            data["horario_dia_normal"]=  ui->txt_horario_dia_normal->text();
+            data["horario_ultimo_dia"]=  ui->txt_horario_ultimo_dia->text();
+            data["ticket_factura"]=  ui->chk_ticket_factura->isChecked();
+            data["margen"]=  ui->spinMargen->value();
+            data["margen_minimo"]=  ui->spinMargen_minimo->value();
+            data["seguimiento"]=  ui->chkSeguimiento->isChecked();
+            data["id_tarifa_predeterminada"]=  tarifaEditModel->record(ui->cboTarifa->currentIndex()).value("id");
+            data["actualizar_divisas"]=  ui->chk_upate_divisas->isChecked();
+            data["cuenta_ventas_mercaderias"]=  ui->txtCuenta_venta_mercaderias->text();
+            data["cuenta_ventas_servicios"]=  ui->txtCuenta_venta_servicios->text();
+            data["cuenta_iva_soportado1"]=  ui->ivasoportado1->text();
+            data["cuenta_iva_soportado2"]=  ui->ivasoportado2->text();
+            data["cuenta_iva_soportado3"]=  ui->ivasoportado3->text();
+            data["cuenta_iva_soportado4"]=  ui->ivasoportado4->text();
+            data["cuenta_iva_repercutido1"]=  ui->ivarepercutido1->text();
+            data["cuenta_iva_repercutido2"]=  ui->ivarepercutido2->text();
+            data["cuenta_iva_repercutido3"]=  ui->ivarepercutido3->text();
+            data["cuenta_iva_repercutido4"]=  ui->ivarepercutido4->text();
+            data["cuenta_iva_repercutido1_re"]=  ui->ivarepercutidore1->text();
+            data["cuenta_iva_repercutido2_re"]=  ui->ivarepercutidore2->text();
+            data["cuenta_iva_repercutido3_re"]=  ui->ivarepercutidore3->text();
+            data["cuenta_iva_repercutido4_re"]=  ui->ivarepercutidore4->text();
+            data["cuenta_iva_soportado1_re"]=  ui->ivasoportadore1->text();
+            data["cuenta_iva_soportado2_re"]=  ui->ivasoportadore2->text();
+            data["cuenta_iva_soportado3_re"]=  ui->ivasoportadore3->text();
+            data["cuenta_iva_soportado4_re"]=  ui->ivasoportadore4->text();
+            data["importe_cierre"]= ui->spinImporte_abertura_create->value();
+            data["facturas_en_cierre"]= ui->checkMostrarfacturascierrecaja_create->isChecked();
+            data["tpv_forzar_cantidad"]= ui->checktpv_forzar_cantidad_create->isChecked();
+            data["caducidad_vales"]= ui->txtCaducidadvales->value();
+            QString error;
+
+            if(SqlCalls::SqlInsert(data,QString("`%1`.`empresas`").arg(r.value("bd_name").toString()),db,error) == -1)
+                qDebug() << error;
         }
     }
     else
@@ -500,8 +467,8 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->spinDecimales_2->setValue(r.value("decimales_campos_totales").toInt());
     ui->txtcodigo_2->setText(r.value("codigo").toString());
     ui->txtEmpresa_2->setText(r.value("nombre").toString());//
-    ui->txtndigitos_factura_3->setText(r.value("digitos_factura").toString());//->text().toInt());
-    ui->txtserieFactura_3->setText(r.value("serie").toString());//text().toInt());
+    ui->spinDigitos_edit->setValue(r.value("digitos_factura").toInt());//->text().toInt());
+    ui->cboSerie_Edit->setCurrentText(r.value("serie").toString());//text().toInt());
     ui->txtnombre_bd_3->setText(r.value("nombre_bd").toString());//nEmpresa);
     ui->txtNombre_BDConta_3->setText(r.value("nombre_db_conta").toString());//nConta);
     ui->txtnombre_bdMedic_3->setText(r.value("nombre_bd_medica").toString());//nMedic);
@@ -509,7 +476,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->txtcp_3->setText(r.value("cp").toString());
     ui->txtpoblacion_3->setText(r.value("poblacion").toString());
     ui->txtprovincia_3->setText(r.value("provincia").toString());
-    ui->txtpais_3->setText(r.value("pais").toString());
+    ui->cboPais_edit->setCurrentText(r.value("pais").toString());
     ui->txttelefono1_3->setText(r.value("telefono1").toString());
     ui->txttelefono2_3->setText(r.value("telefono2").toString());
     ui->txtfax_3->setText(r.value("fax").toString());
@@ -532,13 +499,13 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->chkMedica_3->setChecked(r.value("medica").toBool());
     ui->chkInternacional_3->setChecked(r.value("internacional").toBool());
     ui->chkAutocodificiar_3->setChecked(r.value("auto_codigo").toBool());
-    ui->txttamano_codigoart_3->setValue(r.value("tamanocodigo").toBool());
+    ui->txttamano_codigoart_3->setValue(r.value("tamano_codigo").toBool());
     ui->txtcuenta_cobros_3->setText(r.value("cuenta_cobros").toString());
     ui->txtcuenta_pagos_3->setText(r.value("cuenta_pagos").toString());
 
     ui->chkEnlace_web_3->setChecked(r.value("enlaceweb").toBool());
     ui->chkContabilidad_3->setChecked(r.value("contabilidad").toBool());
-    //r.value("consultas"));//0) TODO - N.P.I de para que puse ese campo GRRRRR;
+    ui->txtConsultas_3->setValue(r.value("consultas").toInt());
     ui->cboPrimer_dia_laborable_3->setCurrentIndex(r.value("primer_dia_laborable").toInt());
     ui->cbo_ultimo_dia_semana_3->setCurrentIndex(r.value("ultimo_dia_laborable").toInt());
     ui->txt_horario_primer_dia_3->setText(r.value("horario_primer_dia").toString());
@@ -549,7 +516,7 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->spinMargen_minimo_3->setValue(r.value("margen_minimo").toDouble());
     ui->chkSeguimiento_3->setChecked(r.value("seguimiento").toDouble());
 
-    ui->chk_upate_divisas_3->setChecked(r.value("actualizardivisas").toBool());
+    ui->chk_upate_divisas_3->setChecked(r.value("actualizar_divisas").toBool());
     ui->txtCuenta_venta_mercaderias_3->setText(r.value("cuenta_ventas_mercaderias").toString());
     ui->txtCuenta_venta_servicios_3->setText(r.value("cuenta_ventas_servicios").toString());
     ui->ivasoportado1_3->setText(r.value("cuenta_iva_soportado1").toString());
@@ -570,6 +537,12 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->ivasoportadore4_3->setText(r.value("cuenta_iva_soportado4_re").toString());
 
     ui->txtCaducidadvales_3->setValue(r.value("caducidad_vales").toInt());
+    ui->cboSerie_Edit->setCurrentText(r.value("serie").toString());
+
+    ui->spinDecimales_precios_2->setValue(r.value("decimales").toInt());
+    ui->spinImporte_abertura->setValue(r.value("importe_cierre").toDouble());
+    ui->checkMostrarfacturascierrecaja->setChecked(r.value("facturas_en_cierre").toBool());
+    ui->checktpv_forzar_cantidad->setChecked(r.value("tpv_forzar_cantidad").toBool());
 }
 
 void FrmEmpresas::on_btnConfigTerminal_clicked()
@@ -617,6 +590,7 @@ void FrmEmpresas::on_btn_guardar_nuevo_clicked()
     QSqlDatabase::removeDatabase("save_empresa");
     tarifaEditModel->deleteLater();
     monedaEditModel->deleteLater();
+    paisesEditModel->deleteLater();
 
     ui->stackedWidget->setCurrentWidget(ui->main_page);
 }
@@ -640,17 +614,19 @@ void FrmEmpresas::on_btn_crearGrupo_clicked()
     _targetGroupDb.setPort(_targetGroupDbRecord.value("bd_port").toInt());
     _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
 
-    qDebug() << _targetGroupDbRecord.value("bd_pass").toString();
     if(_targetGroupDb.open())
     {
         tarifaEditModel = new QSqlQueryModel(this);
         monedaEditModel = new QSqlQueryModel(this);
+        paisesEditModel = new QSqlQueryModel(this);
 
         tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
         monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
+        paisesEditModel->setQuery("Select pais from paises",_targetGroupDb);
 
         ui->cboTarifa->setModel(tarifaEditModel);
         ui->cboTarifa->setModelColumn(1);
+        ui->cboPais_create->setModel(paisesEditModel);
 
         ui->cboDivisas->setModel(monedaEditModel);
         ui->cboDivisas->setModelColumn(1);
@@ -701,7 +677,7 @@ void FrmEmpresas::createGroup()
         if(!error)
             error = _insertPaises(db, sError);
 
-        //TODO Poblaciones y Reports por defecto al crear grupo
+        //TODO Reports por defecto al crear grupo
     }
 
     if(!error)
@@ -731,7 +707,6 @@ bool FrmEmpresas::_createTables(QSqlDatabase db)
     s.replace("@grupo@",grupo);
     s.replace("\r\n"," ");
     QStringList querys = s.split(";",QString::SkipEmptyParts);
-    ui->frame->show();
     int i;
     QSqlQuery q(db);
     for(i = 0; i< querys.size();i++)
@@ -806,7 +781,6 @@ bool FrmEmpresas::_insertPaises(QSqlDatabase db, QString& error)
     s.replace("@grupo@",grupo);
     s.replace("\r\n"," ");
     QStringList querys = s.split(";",QString::SkipEmptyParts);
-    ui->frame->show();
     int i;
     QSqlQuery q(db);
     for(i = 0; i< querys.size();i++)
@@ -869,12 +843,15 @@ void FrmEmpresas::on_btn_add_empresaGrupo_clicked()
     {
         tarifaEditModel = new QSqlQueryModel(this);
         monedaEditModel = new QSqlQueryModel(this);
+        paisesEditModel = new QSqlQueryModel(this);
 
         tarifaEditModel->setQuery("Select `id`,`descripcion` from codigotarifa",_targetGroupDb);
-        monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);
+        monedaEditModel->setQuery("Select `id`,`moneda` from monedas",_targetGroupDb);                
+        paisesEditModel->setQuery("Select pais from paises",_targetGroupDb);
 
         ui->cboTarifa->setModel(tarifaEditModel);
         ui->cboTarifa->setModelColumn(1);
+        ui->cboPais_create->setModel(paisesEditModel);
 
         ui->cboDivisas->setModel(monedaEditModel);
         ui->cboDivisas->setModelColumn(1);
@@ -933,6 +910,20 @@ void FrmEmpresas::on_btnEditaEmpresa_clicked()
             _targetGroupDb.setDatabaseName(_targetGroupDbRecord.value("bd_name").toString());
             if(_targetGroupDb.open())
             {
+                seriesEditModel = new QSqlQueryModel(this);
+                paisesEditModel = new QSqlQueryModel(this);
+
+                paisesEditModel->setQuery("Select pais from paises",_targetGroupDb);
+
+                QSqlDatabase d = _targetGroupDb.cloneDatabase(_targetGroupDb,"series_db");
+                d.setDatabaseName(e.record.value("nombre_bd").toString());
+                d.open();
+
+                seriesEditModel->setQuery("Select `serie` from series",d);
+
+                ui->cboSerie_Edit->setModel(seriesEditModel);
+                ui->cboPais_edit->setModel(paisesEditModel);
+
                 _idEmpresa = e.record.value("id").toInt();
                 _llenarCampos(e.record);
                 break;
@@ -948,12 +939,12 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
 
     data["codigo"]= ui->txtcodigo_2->text();
     data["nombre"]= ui->txtEmpresa_2->text();
-    data["digitos_factura"]= ui->txtndigitos_factura_3->text();
-    data["serie"]= ui->txtserieFactura_3->text();
+    data["digitos_factura"]= ui->spinDigitos_edit->value();
+    data["serie"]= ui->cboSerie_Edit->currentText();
     data["decimales_campos_totales"] = ui->spinDecimales_2->value();
     data["decimales"]=   ui->spinDecimales_precios_2->value();
-    //data["mostrarsiempre"]=  ui->ch
-    //data["ruta_bd_sqlite"]=  ;
+    //data["mostrarsiempre"]=  ??????????
+    //data["ruta_bd_sqlite"]=  //TODO reactivar en soporte SQLITE??
     //data["ruta_db_conta"]=  ;
     //data["ruta_bd_medica_sqlite"]=  ;
     data["nombre_bd"]=  ui->txtnombre_bd_3->text();
@@ -963,7 +954,7 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["cp"]=  ui->txtcp_3->text();
     data["poblacion"]=  ui->txtpoblacion_3->text();
     data["provincia"]=  ui->txtprovincia_3->text();
-    data["pais"]=  ui->txtpais_3->text();
+    data["pais"]=  ui->cboPais_edit->currentText();
     data["telefono1"]=  ui->txttelefono1_3->text();
     data["telefono2"]=  ui->txttelefono2_3->text();
     data["fax"]=  ui->txtfax_3->text();
@@ -993,7 +984,7 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["enlace_web"]=  ui->chkEnlace_web_3->isChecked();
     data["contabilidad"]=  ui->chkContabilidad_3->isChecked();
     data["consultas"]=  ui->txtConsultas_3->value();
-    data["primer_dia_laborable"]=  ui->cboPrimer_dia_laborable->currentText();
+    data["primer_dia_laborable"]=  ui->cboPrimer_dia_laborable_3->currentText();
     data["ultimo_dia_laborable"]=  ui->cbo_ultimo_dia_semana_3->currentText();
     data["horario_primer_dia"]=  ui->txt_horario_primer_dia_3->text();
     data["horario_dia_normal"]=  ui->txt_horario_dia_normal_3->text();
@@ -1021,16 +1012,11 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["cuenta_iva_soportado1_re"]=  ui->ivasoportadore1_3->text();
     data["cuenta_iva_soportado2_re"]=  ui->ivasoportadore2_3->text();
     data["cuenta_iva_soportado3_re"]=  ui->ivasoportadore3_3->text();
-    data["cuenta_iva_soportado4_re"]=  ui->ivasoportadore4_3->text();
-
-    //data["importada_sp"]=  ; esto debe ser true si ha sido importada (se debería hacer desde el programa de importación.
-
+    data["cuenta_iva_soportado4_re"]=  ui->ivasoportadore4_3->text();    
     data["importe_cierre"]= ui->spinImporte_abertura->value();
     data["facturas_en_cierre"]= ui->checkMostrarfacturascierrecaja->isChecked();
-
     data["tpv_forzar_cantidad"]= ui->checktpv_forzar_cantidad->isChecked();
     data["caducidad_vales"]= ui->txtCaducidadvales_3->value();
-
     QString error;
 
     if(_targetGroupDb.isOpen())
@@ -1043,8 +1029,12 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     }
     _targetGroupDb.close();
     QSqlDatabase::removeDatabase("save_empresa");
+    QSqlDatabase::database("series_db").close();
+    QSqlDatabase::removeDatabase("series_db");
     tarifaEditModel->deleteLater();
     monedaEditModel->deleteLater();
+    seriesEditModel->deleteLater();
+    paisesEditModel->deleteLater();
 
     ui->stackedWidget->setCurrentWidget(ui->main_page);    
 }
