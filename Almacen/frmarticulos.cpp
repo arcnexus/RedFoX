@@ -2701,7 +2701,7 @@ void FrmArticulos::on_txtCoste_real_textChanged(const QString &arg1)
             int id_t = modelTarifa->record(i).value("id").toInt();
             double margen = modelTarifa->record(i).value("margen").toDouble();
             QHash<QString,QVariant> _tar;
-            double pvp =(arg1.toDouble())/(1-(margen/100));
+            double pvp =(Configuracion_global->MonedatoDouble(arg1))/(1-(margen/100));
             _tar["pvp"]= pvp;
             QString error;
             if(SqlCalls::SqlUpdate(_tar,"tarifas",Configuracion_global->groupDB,QString("id = %1").arg(id_t),error) < 0)
