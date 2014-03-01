@@ -415,6 +415,7 @@ CREATE TABLE `@grupo@`.`empresas` (
   `facturas_en_cierre` tinyint(1) DEFAULT NULL,
   `tpv_forzar_cantidad` tinyint(1) DEFAULT '0',
   `caducidad_vales` int(11) NOT NULL DEFAULT '0',
+  `logo` longblob,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`familias` (

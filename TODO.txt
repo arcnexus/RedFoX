@@ -156,5 +156,6 @@ ALTER TABLE `empLibrery`.`cab_alb` CHANGE COLUMN `albaran` `albaran` VARCHAR(45)
 ALTER TABLE `GrupoFebrero`.`formpago` ADD COLUMN `dias_hasta_pago` INT(5) NULL DEFAULT '0'  AFTER `numero_plazos`;
 ALTER TABLE `GrupoFebrero`.`formpago` CHANGE COLUMN `dia_pago1` `dia_pago1` INT(11) NULL DEFAULT '1' ;
 ALTER TABLE `GrupoFebrero`.`formpago` ADD COLUMN `al_contado` TINYINT NULL DEFAULT '0' AFTER `dias_hasta_pago`;
+ALTER TABLE `GrupoFebrero`.`empresas` ADD COLUMN `logo` LONGBLOB NULL DEFAULT NULL AFTER `caducidad_vales`;
 
 
