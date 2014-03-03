@@ -4,6 +4,7 @@
 #include "../Zona_Administrador/frmconfigurar_terminal.h"
 #include "../sqlcalls.h"
 
+#include <QFileDialog>
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEmpresas),
@@ -422,6 +423,13 @@ void FrmEmpresas::_addEmpresa()
             data["facturas_en_cierre"]= ui->checkMostrarfacturascierrecaja_create->isChecked();
             data["tpv_forzar_cantidad"]= ui->checktpv_forzar_cantidad_create->isChecked();
             data["caducidad_vales"]= ui->txtCaducidadvales->value();
+
+            QByteArray bArray;
+            QBuffer buffer( &bArray );
+            buffer.open( QIODevice::WriteOnly );
+            ui->label_logo_create->pixmap()->save( &buffer, "JPG" );
+            QByteArray b_64 = bArray.toBase64();
+            data["logo"] = b_64;
             QString error;
 
             if(SqlCalls::SqlInsert(data,QString("`%1`.`empresas`").arg(r.value("bd_name").toString()),db,error) == -1)
@@ -543,6 +551,13 @@ void FrmEmpresas::_llenarCampos(QSqlRecord r)
     ui->spinImporte_abertura->setValue(r.value("importe_cierre").toDouble());
     ui->checkMostrarfacturascierrecaja->setChecked(r.value("facturas_en_cierre").toBool());
     ui->checktpv_forzar_cantidad->setChecked(r.value("tpv_forzar_cantidad").toBool());
+
+    QByteArray bArray = r.value("logo").toByteArray();
+    QByteArray b_64 = QByteArray::fromBase64(bArray);
+    QImage im = QImage::fromData(b_64);
+    QPixmap p = QPixmap::fromImage(im);
+    ui->label_logo_edit->setMaximumSize(p.size());
+    ui->label_logo_edit->setPixmap(p);
 }
 
 void FrmEmpresas::on_btnConfigTerminal_clicked()
@@ -1017,6 +1032,14 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     data["facturas_en_cierre"]= ui->checkMostrarfacturascierrecaja->isChecked();
     data["tpv_forzar_cantidad"]= ui->checktpv_forzar_cantidad->isChecked();
     data["caducidad_vales"]= ui->txtCaducidadvales_3->value();
+
+    QByteArray bArray;
+    QBuffer buffer( &bArray );
+    buffer.open( QIODevice::WriteOnly );
+    ui->label_logo_edit->pixmap()->save( &buffer, "JPG" );
+    QByteArray b_64 = bArray.toBase64();
+    data["logo"] = b_64;
+
     QString error;
 
     if(_targetGroupDb.isOpen())
@@ -1037,4 +1060,26 @@ void FrmEmpresas::on_btn_guardar_edit_clicked()
     paisesEditModel->deleteLater();
 
     ui->stackedWidget->setCurrentWidget(ui->main_page);    
+}
+
+void FrmEmpresas::on_btnCambiarLogo_create_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,tr("Imagen de logotipo"),QString(),tr("Imagen (*.jpg)"));
+    if(!filename.isEmpty())
+    {
+        QPixmap p(filename);
+        ui->label_logo_create->setMaximumSize(p.size());
+        ui->label_logo_create->setPixmap(p);
+    }
+}
+
+void FrmEmpresas::on_btnCambiarLogo_edit_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,tr("Imagen de logotipo"),QString(),tr("Imagen (*.jpg)"));
+    if(!filename.isEmpty())
+    {
+        QPixmap p(filename);
+        ui->label_logo_edit->setMaximumSize(p.size());
+        ui->label_logo_edit->setPixmap(p);
+    }
 }

@@ -1425,8 +1425,7 @@ void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, do
         QByteArray r = s.toUtf8();
         QPixmap pm1;
         pm1.loadFromData(QByteArray::fromBase64(r));
-        qDebug() << pm1;
-        m_image = pm1.toImage();
+        m_image = pm1.toImage();        
     }
     else
     {
@@ -1436,7 +1435,7 @@ void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, do
     }
 
     painter->save();
-
+    m_image = m_image.scaled(siz.toSize(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     painter->translate(pos);
     QRectF r(QPointF(0,0),siz);
 

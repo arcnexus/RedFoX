@@ -65,6 +65,10 @@ private slots:
 
     void on_btn_guardar_edit_clicked();
 
+    void on_btnCambiarLogo_create_clicked();
+
+    void on_btnCambiarLogo_edit_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
