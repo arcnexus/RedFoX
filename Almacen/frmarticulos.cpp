@@ -2189,6 +2189,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             ba = f.readAll();
             f.close();
         }
+        QByteArray ba_64 = ba.toBase64();
         // Si existe actualizamos, si no existe añadimos.
         QString error;
         int id_art = SqlCalls::SelectOneField("articulos_imagenes","id_articulo",QString("id_articulo =%1").arg(oArticulo->id),
@@ -2197,7 +2198,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             QSqlQuery Articulo(Configuracion_global->groupDB);
 
             Articulo.prepare("update articulos_imagenes set "+campo+" =:imagen,id_articulo =:id_art where id_articulo = :nid");
-            Articulo.bindValue(":imagen",ba/*.toBase64()*/);
+            Articulo.bindValue(":imagen",ba_64);
             Articulo.bindValue(":nid",oArticulo->id);
             Articulo.bindValue(":id_art",oArticulo->id);
             if (!Articulo.exec())
@@ -2211,7 +2212,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
             QSqlQuery Articulo(Configuracion_global->groupDB);
 
             Articulo.prepare("insert into articulos_imagenes ("+campo+",id_articulo)  values(:imagen,:id_art) ");
-            Articulo.bindValue(":imagen",ba/*.toBase64()*/);
+            Articulo.bindValue(":imagen",ba_64);
             Articulo.bindValue(":id_art",oArticulo->id);
             if (!Articulo.exec())
             {

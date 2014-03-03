@@ -1034,33 +1034,36 @@ void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLab
             //--------
             QSqlRecord registro =  qryArticulo.record();
             QByteArray ba1 = registro.field("imagen1").value().toByteArray();
-            ba1 = registro.field("imagen1").value().toByteArray();
+            QByteArray ba_64 = QByteArray::fromBase64(ba1);
             QPixmap pm11;
-            pm11.loadFromData(ba1);
+            pm11.loadFromData(ba_64);
             if(!registro.field("imagen1").value().isNull())
                 label1->setPixmap(pm11);
             //--------
             // imagen2
             //--------
             ba1 = registro.field("imagen2").value().toByteArray();
+            ba_64 = QByteArray::fromBase64(ba1);
             QPixmap pm12;
-            pm12.loadFromData(ba1);
+            pm12.loadFromData(ba_64);
             if(!registro.field("imagen2").value().isNull())
                 label2->setPixmap(pm12);
             //--------
             // imagen3
             //--------
             ba1 = registro.field("imagen3").value().toByteArray();
+            ba_64 = QByteArray::fromBase64(ba1);
             QPixmap pm13;
-            pm13.loadFromData(ba1);
+            pm13.loadFromData(ba_64);
             if(!registro.field("imagen3").value().isNull())
                 label3->setPixmap(pm13);
             //--------
             // imagen4
             //--------
             ba1 = registro.field("imagen4").value().toByteArray();
+            ba_64 = QByteArray::fromBase64(ba1);
             QPixmap pm14;
-            pm14.loadFromData(ba1);
+            pm14.loadFromData(ba_64);
             if(!registro.field("imagen4").value().isNull())
                 label4->setPixmap(pm14);
         } //else

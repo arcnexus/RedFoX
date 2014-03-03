@@ -670,7 +670,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                             ele.setAttribute("id","Label");
                                             QString text = "";
                                             int formato = ele.attribute("formato").toDouble();
-                                            text = applyFormato(getRelationField(ele.attribute("Sql"),record),formato);
+                                            text = applyFormato(getRelationField(ele.attribute("Sql"),iRecord),formato);
                                             ele.setAttribute("Text",text);
                                         }
                                         else if(ele.attribute("id")=="CodeBar")
@@ -678,7 +678,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                             QString text = "";
                                             QStringList value = ele.attribute("Sql").split(".");
                                             if(value.size()== 3)
-                                                text = record.value(value.at(2)).toString();
+                                                text = iRecord.value(value.at(2)).toString();
                                             ele.setAttribute("value",text);
                                         }
                                         else if(ele.attribute("id")=="Image")
@@ -686,7 +686,7 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                             QByteArray b;
                                             QStringList value = ele.attribute("Path").split(".");
                                             if(value.size()== 3)
-                                                b = record.value(value.at(2)).toByteArray();
+                                                b = iRecord.value(value.at(2)).toByteArray();
                                             ele.setAttribute("img-data",QString(b));
                                         }
                                         child = child.nextSibling();
