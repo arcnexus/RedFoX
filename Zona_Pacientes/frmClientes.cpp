@@ -27,42 +27,15 @@ frmClientes::frmClientes(QWidget *parent) :
 
 void frmClientes::init_querys()
 {
+    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",Configuracion_global->groupDB);
     queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
     queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
     qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
-    pob_completer_model->setTable("municipios");
+    pob_completer_model->setTable("municipios");    
 
-    //SET MODELS
-    ui->tablaFacturas                ->setModel(Facturas);
-    ui->tablaPresupuestos            ->setModel(Presupuestos);
-    ui->tablaVales                   ->setModel(Vales);
-    ui->tablaTickets                 ->setModel(Tickets);
-    ui->lista_direccionesAlternativas->setModel(qModeldireccion);
-    ui->tablaAsientos                ->setModel(modelAsientos);
-    ui->TablaAlbaranes               ->setModel(Albaranes);
-    ui->TablaDeudas                  ->setModel(deudas);
-    ui->tabla_busquedas              ->setModel(m_clientes);
-    ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
-    ui->cbotransportista             ->setModel(queryTransportistas);
-    ui->cboagente                    ->setModel(queryAgentes);
-    ui->cboDivisa                    ->setModel(Configuracion_global->divisas_model);
-    ui->cbotarifa_cliente            ->setModel(qTarifa);
-    ui->cboPais                      ->setModel(Configuracion_global->paises_model);
-    ui->cbopaisAlternativa           ->setModel(Configuracion_global->paises_model);
-    ui->cboidiomaDocumentos          ->setModel(qmidiomas);
-    ui->tablahistorial_deudas        ->setModel(modelHistorial);
-    ui->tablaPedidos                 ->setModel(Pedidos);
-
-    //CONFIG COMBOS
-    ui->cbotransportista->setModelColumn(1);
-    ui->cboforma_pago   ->setModelColumn(2);
-    ui->cboDivisa       ->setModelColumn(1);
-    ui->cboPais         ->setModelColumn(1);
-    ui->cbopaisAlternativa->setModelColumn(1);
-    ui->cbotarifa_cliente ->setModelColumn(1);
-    ui->cboagente->setModelColumn(1);
+    qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),Configuracion_global->groupDB);
     ui->lista_direccionesAlternativas->setModelColumn(1);
 }
 
@@ -82,8 +55,7 @@ void frmClientes::init()
     modelAsientos       = new QSqlQueryModel(this);
     queryTransportistas = new QSqlQueryModel(this);
     queryAgentes        = new QSqlQueryModel(this);
-    qTarifa             = new QSqlQueryModel(this);
-    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
+    qTarifa             = new QSqlQueryModel(this);    
     qmidiomas           = new QSqlQueryModel(this);
     modelHistorial      = new QSqlQueryModel(this);
 
@@ -101,12 +73,6 @@ void frmClientes::init()
     calle_completer->setCompletionColumn(2);
     ui->txtdireccion1->setCompleter(calle_completer);
     ui->txtdireccion2->setCompleter(calle_completer);
-    queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
-    queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
-    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
-    qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
-
-
 
     //DELEGATES
     ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
@@ -177,7 +143,7 @@ void frmClientes::init()
     ui->cbopaisAlternativa->setModelColumn(1);
     ui->cbotarifa_cliente ->setModelColumn(1);
     ui->cboagente->setModelColumn(1);
-    ui->lista_direccionesAlternativas->setModelColumn(1);
+
 
 
     //SEARCH HASH
@@ -1072,95 +1038,6 @@ void frmClientes::on_btnBuscar_clicked()
     mostrarBusqueda();
 }
 
-
-//void frmClientes::txtcpAlternativa_editingFinished()
-//{
-    //TODO - BUSCAR POBLACION
-//    if (!ui->txtcpPoblacionAlternativa->text().isEmpty() && ui->txtpoblacionAlternativa->text().isEmpty())
-//    {
-//        FrmBuscarPoblacion BuscarPoblacion;
-//        BuscarPoblacion.setpoblacion(ui->txtcpPoblacionAlternativa->text(),0);
-//        if(BuscarPoblacion.exec())
-//        {
-//            //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-//            int nid = BuscarPoblacion.Devolverid();
-//            //qDebug() <<nid;
-//            if(nid > 0)
-//            {
-//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//                QString cid;
-//                cid = QString::number(nid);
-//                qPoblacion.prepare("select poblacion, cp,provincia from poblaciones where id = :cid");
-//                qPoblacion.bindValue(":cid",cid);
-//                if(!qPoblacion.exec())
-//                {
-//                    // qDebug() << qPoblacion.lastQuery();
-//                    // qDebug() << qPoblacion.value(0).toString();
-//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//                }
-//                else
-//                {
-//                    //qDebug() << qPoblacion.lastQuery();
-//                    if (qPoblacion.next())
-//                    {
-//                        qDebug() << qPoblacion.value(0).toString();
-//                        ui->txtpoblacionAlternativa->setText(qPoblacion.value(0).toString());
-//                        ui->txtprovinciaAlternativa->setText(qPoblacion.value(2).toString());
-//                        //TODO - poner pais configuración
-//                       // ui->txtpaisAlternativa->setText("ESPAÑA");
-//                    }
-//                }
-//            }
-//        }
-//        // BuscarPoblacion.close();
-//    }
-//}
-
-//void frmClientes::txtpoblacionAlternativa_editingFinished()
-//{
-//    if (ui->txtcpPoblacionAlternativa->text().isEmpty() && !ui->txtpoblacionAlternativa->text().isEmpty())
-//    {
-//        ui->txtpoblacionAlternativa->setText(ui->txtpoblacionAlternativa->text().toUpper());
-//        FrmBuscarPoblacion BuscarPoblacion;
-//        BuscarPoblacion.setpoblacion(ui->txtpoblacionAlternativa->text(),1);
-//        if(BuscarPoblacion.exec() == QDialog::Accepted)
-//        {
-//            //  BuscarPoblacion.setpoblacion(ui->txtcp->text(),0);
-//            int nid = BuscarPoblacion.Devolverid();
-//            //qDebug() <<nid;
-//            if(nid > 0)
-//            {
-//                QSqlQuery qPoblacion(Configuracion_global->groupDB);
-//                QString cid;
-//                cid = QString::number(nid);
-//                qPoblacion.prepare("select poblacion,cp,provincia from poblaciones where id = :cid");
-//                qPoblacion.bindValue(":cid",cid);
-//                if(!qPoblacion.exec())
-//                {
-//                    // qDebug() << qPoblacion.lastQuery();
-//                    //qDebug() << qPoblacion.value(0).toString();
-//                    QMessageBox::critical(qApp->activeWindow(),tr("Asociar Población"),tr("Ha fallado la busqueda de población"),tr("&Aceptar"));
-//                }
-//                else
-//                {
-//                    // qDebug() << qPoblacion.lastQuery();
-//                    if (qPoblacion.next())
-//                    {
-//                        ui->txtpoblacionAlternativa->setText(qPoblacion.record().value("poblacion").toString());
-//                        ui->txtcpPoblacionAlternativa->setText(qPoblacion.record().value("cp").toString());
-//                        ui->txtprovinciaAlternativa->setText(qPoblacion.record().value("provincia").toString());
-//                        int indice;
-//                        indice = ui->cbopaisAlternativa->findText(Configuracion_global->pais);
-//                        ui->cbopaisAlternativa->setCurrentIndex(indice);
-//                   }
-//                }
-//            }
-//        }
-//      // BuscarPoblacion.close();
-//    }
-//}
-
-
 void frmClientes::txtrRiesgoPermitido_editingFinished()
 {
     ui->txtrRiesgoPermitido->setText(Configuracion_global->toFormatoMoneda(ui->txtrRiesgoPermitido->text()));
@@ -1340,12 +1217,12 @@ void frmClientes::cobrar_deuda()
 
 void frmClientes::cobrar_fraccion()
 {
-
+// TODO COBRAR fraccion
 }
 
 void frmClientes::ver_asiento()
 {
-
+// TODO ver_asiento
 }
 
 void frmClientes::refrescar_grafica()

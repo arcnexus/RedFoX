@@ -315,7 +315,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_datos">
           <property name="styleSheet">
@@ -1053,6 +1053,12 @@ color: rgb(0, 0, 241);</string>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
+             <property name="viewMode">
+              <enum>QListView::ListMode</enum>
+             </property>
+             <property name="modelColumn">
+              <number>0</number>
+             </property>
             </widget>
            </item>
            <item row="3" column="1">
@@ -1116,123 +1122,7 @@ color: rgb(0, 0, 241);</string>
            </item>
            <item row="0" column="2" rowspan="2">
             <layout class="QGridLayout" name="gridLayout_4">
-             <item row="5" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtemail_alternativa"/>
-             </item>
-             <item row="2" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1Alternativa2"/>
-             </item>
-             <item row="1" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1Alternativa1"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_27">
-               <property name="text">
-                <string>Dirección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1" colspan="4">
-              <layout class="QHBoxLayout" name="horizontalLayout_13">
-               <item>
-                <widget class="QLineEdit" name="txtcpPoblacionAlternativa">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="txtpoblacionAlternativa"/>
-               </item>
-              </layout>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>email:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="label_31">
-               <property name="text">
-                <string>Pais:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_30">
-               <property name="text">
-                <string>Provincia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_28">
-               <property name="text">
-                <string>Dirección 2:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="txtprovinciaAlternativa"/>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>Descripción:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_29">
-               <property name="text">
-                <string>Población:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="3" colspan="2">
-              <widget class="QComboBox" name="cbopaisAlternativa">
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1">
-              <widget class="QPushButton" name="btnGuardardireccionAlternativa">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Guardar</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../maya.qrc">
-                 <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="2" colspan="3">
-              <widget class="QPushButton" name="btnDeshacerdireccionAlternativa">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Deshacer</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../maya.qrc">
-                 <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
+             <item row="8" column="0">
               <widget class="QPushButton" name="btnEditardireccionAlternativa">
                <property name="enabled">
                 <bool>false</bool>
@@ -1246,18 +1136,141 @@ color: rgb(0, 0, 241);</string>
                </property>
               </widget>
              </item>
+             <item row="8" column="1">
+              <widget class="QPushButton" name="btnGuardardireccionAlternativa">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Guardar</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtdireccion1Alternativa2"/>
+             </item>
+             <item row="8" column="2" colspan="3">
+              <widget class="QPushButton" name="btnDeshacerdireccionAlternativa">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Deshacer</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtemail_alternativa"/>
+             </item>
              <item row="6" column="0">
+              <widget class="QLabel" name="label_64">
+               <property name="text">
+                <string>email:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtdescripcion_direccion"/>
+             </item>
+             <item row="7" column="1" colspan="4">
+              <widget class="QTextEdit" name="txtcomentarios_alternativa"/>
+             </item>
+             <item row="7" column="0">
               <widget class="QLabel" name="label_86">
                <property name="text">
                 <string>Comentarios:</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1" colspan="4">
-              <widget class="QTextEdit" name="txtcomentarios_alternativa"/>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>Dirección 2:</string>
+               </property>
+              </widget>
              </item>
-             <item row="0" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdescripcion_direccion"/>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Descripción:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="4">
+              <widget class="QLineEdit" name="txtdireccion1Alternativa1"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>Dirección:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_29">
+               <property name="text">
+                <string>C.P.:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_30">
+               <property name="text">
+                <string>Provincia:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="txtprovinciaAlternativa"/>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="label_31">
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3" colspan="2">
+              <widget class="QComboBox" name="cbopaisAlternativa">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1" colspan="4">
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <item>
+                <widget class="QLineEdit" name="txtcpPoblacionAlternativa">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_66">
+                 <property name="text">
+                  <string>Población</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="txtpoblacionAlternativa"/>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -2975,8 +2988,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>txtdireccion1Alternativa2</tabstop>
   <tabstop>txtcpPoblacionAlternativa</tabstop>
   <tabstop>txtpoblacionAlternativa</tabstop>
-  <tabstop>txtprovinciaAlternativa</tabstop>
-  <tabstop>cbopaisAlternativa</tabstop>
   <tabstop>txtemail_alternativa</tabstop>
   <tabstop>txtcomentarios_alternativa</tabstop>
   <tabstop>btnEditardireccionAlternativa</tabstop>
