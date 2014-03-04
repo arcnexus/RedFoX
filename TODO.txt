@@ -158,4 +158,6 @@ ALTER TABLE `GrupoFebrero`.`formpago` CHANGE COLUMN `dia_pago1` `dia_pago1` INT(
 ALTER TABLE `GrupoFebrero`.`formpago` ADD COLUMN `al_contado` TINYINT NULL DEFAULT '0' AFTER `dias_hasta_pago`;
 ALTER TABLE `GrupoFebrero`.`empresas` ADD COLUMN `logo` LONGBLOB NULL DEFAULT NULL AFTER `caducidad_vales`;
 
+04/03/14
+ALTER TABLE `GrupoMarzo`.`clientes` CHANGE COLUMN `id_idioma_documentos` `id_idioma_documentos` INT(11) NULL DEFAULT 1 ;
 

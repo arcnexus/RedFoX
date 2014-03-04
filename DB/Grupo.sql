@@ -238,7 +238,7 @@ CREATE TABLE `@grupo@`.`clientes` (
   `password_web` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `irpf` int(11) DEFAULT '0',
   `id_empresa` int(11) DEFAULT NULL,
-  `id_idioma_documentos` int(11) DEFAULT NULL,
+  `id_idioma_documentos` int(11) DEFAULT '1',
   `cif_vies` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_web` int(11) DEFAULT NULL,
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -832,3 +832,4 @@ CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DE
 INSERT INTO `@grupo@`.`codigotarifa` (`id`, `descripcion`, `codigo_tarifa`, `id_pais`, `id_monedas`) VALUES ('1', 'Precio venta público', 'PVP', '1', '1');
 INSERT INTO `@grupo@`.`secciones` (`seccion`, `codigo`) VALUES ('Sin sección', 'SS');
 INSERT INTO `@grupo@`.`formpago` (`codigo`, `forma_pago`, `dia_pago1`, `dia_pago2`, `dia_pago3`, `dia_pago4`, `dias_entre_plazos`, `cuenta_cont_pago`, `numero_plazos`, `dias_hasta_pago`, `al_contado`) VALUES ('CON', 'Contado', '0', '0', '0', '0', '0', '0', '1', '0', '1');
+INSERT INTO `@grupo@`.`idiomas` (`id`, `idioma`) VALUES ('1', 'Castellano');
