@@ -432,7 +432,7 @@ void FrmEmpresas::_addEmpresa()
             data["logo"] = b_64;
             QString error;
 
-            if(SqlCalls::SqlInsert(data,QString("`%1`.`empresas`").arg(r.value("bd_name").toString()),db,error) == -1)
+            if(SqlCalls::SqlInsert(data,QString("%1`.`empresas").arg(r.value("bd_name").toString()),db,error) == -1)
                 qDebug() << error;
         }
     }

@@ -197,7 +197,7 @@ void frmEditLine::on_txtCodigo_editingFinished()
             consulta.set_texto_tabla("articulos");
             consulta.set_db("Maya");
             consulta.setId_tarifa_cliente(this->id_tarifa);
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion,coste,pvp, pvp_cliente as pvp_recom,stock_fisico_almacen"
+            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,pvp, pvp_cliente as pvp_recom,stock_fisico_almacen"
                                  " from vistaart_tarifa");
 
             QStringList cabecera;
@@ -275,9 +275,10 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
         if(this->tipo == "V")
         {
             ui->txtCodigo->setText(i.value().value("codigo").toString());
-            if(!Configuracion_global->descripcion_resumida_lineas)
-                ui->txtDescripcion->setText(i.value().value("descripcion").toString());
-            else
+            //TODO MARC REVISA ESTO!!!
+//            if(!Configuracion_global->descripcion_resumida_lineas)
+//                ui->txtDescripcion->setText(i.value().value("descripcion").toString());
+//            else
                 ui->txtDescripcion->setText(i.value().value("descripcion_reducida").toString());
         } else
         {
@@ -285,9 +286,11 @@ void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
                 ui->txtCodigo->setText(i.value().value("codigo_fabricante").toString());
             else
                 ui->txtCodigo->setText(i.value().value("codigo").toString());
-            if(!Configuracion_global->descripcion_resumida_lineas)
-                ui->txtDescripcion->setText(i.value().value("descripcion").toString());
-            else
+
+//TODO      MARC REVISA ESTO!!!
+//            if(!Configuracion_global->descripcion_resumida_lineas)
+//                ui->txtDescripcion->setText(i.value().value("descripcion").toString());
+//            else
                 ui->txtDescripcion->setText(i.value().value("descripcion_reducida").toString());
         }
         this->id_lote = 0;
