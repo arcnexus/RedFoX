@@ -1039,7 +1039,37 @@ color: rgb(0, 0, 241);</string>
            <string>Direcciones alternativas</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="1" column="0" rowspan="2" colspan="2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+             </property>
+             <property name="text">
+              <string>DIRECCIONES</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Descripción:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLineEdit" name="txtdescripcion_direccion"/>
+           </item>
+           <item row="1" column="0" rowspan="8">
             <widget class="QListView" name="lista_direccionesAlternativas">
              <property name="maximumSize">
               <size>
@@ -1061,68 +1091,134 @@ color: rgb(0, 0, 241);</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QPushButton" name="btnBorrardireccion">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Borrar una dirección alternativa</string>
-             </property>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_29">
              <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>16</width>
-               <height>16</height>
-              </size>
+              <string>C.P.:</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="btnAnadirdireccion">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="toolTip">
-              <string>Añadir nueva dirección alternativa</string>
-             </property>
+           <item row="1" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_13">
+             <item>
+              <widget class="QLineEdit" name="txtcpPoblacionAlternativa">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_66">
+               <property name="text">
+                <string>Población</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtpoblacionAlternativa"/>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_27">
              <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>16</width>
-               <height>16</height>
-              </size>
+              <string>Dirección:</string>
              </property>
             </widget>
            </item>
            <item row="2" column="2">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
+            <widget class="QLineEdit" name="txtdireccion1Alternativa1"/>
            </item>
-           <item row="0" column="2" rowspan="2">
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="8" column="0">
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_28">
+             <property name="text">
+              <string>Dirección 2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="txtdireccion1Alternativa2"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_30">
+             <property name="text">
+              <string>Provincia:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLineEdit" name="txtprovinciaAlternativa"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_31">
+               <property name="text">
+                <string>Pais:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cbopaisAlternativa">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_64">
+             <property name="text">
+              <string>email:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLineEdit" name="txtemail_alternativa"/>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_86">
+             <property name="text">
+              <string>Comentarios:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QTextEdit" name="txtcomentarios_alternativa"/>
+           </item>
+           <item row="7" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="btnAnadirdireccion">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Añadir nueva dirección alternativa</string>
+               </property>
+               <property name="text">
+                <string>Añadir</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="btnEditardireccionAlternativa">
                <property name="enabled">
                 <bool>false</bool>
@@ -1136,7 +1232,34 @@ color: rgb(0, 0, 241);</string>
                </property>
               </widget>
              </item>
-             <item row="8" column="1">
+             <item>
+              <widget class="QPushButton" name="btnBorrardireccion">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Borrar una dirección alternativa</string>
+               </property>
+               <property name="text">
+                <string>Borrar</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="8" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
               <widget class="QPushButton" name="btnGuardardireccionAlternativa">
                <property name="enabled">
                 <bool>false</bool>
@@ -1150,10 +1273,20 @@ color: rgb(0, 0, 241);</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1Alternativa2"/>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
-             <item row="8" column="2" colspan="3">
+             <item>
               <widget class="QPushButton" name="btnDeshacerdireccionAlternativa">
                <property name="enabled">
                 <bool>false</bool>
@@ -1167,132 +1300,7 @@ color: rgb(0, 0, 241);</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtemail_alternativa"/>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>email:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdescripcion_direccion"/>
-             </item>
-             <item row="7" column="1" colspan="4">
-              <widget class="QTextEdit" name="txtcomentarios_alternativa"/>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_86">
-               <property name="text">
-                <string>Comentarios:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_28">
-               <property name="text">
-                <string>Dirección 2:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>Descripción:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="4">
-              <widget class="QLineEdit" name="txtdireccion1Alternativa1"/>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_27">
-               <property name="text">
-                <string>Dirección:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_29">
-               <property name="text">
-                <string>C.P.:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_30">
-               <property name="text">
-                <string>Provincia:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="txtprovinciaAlternativa"/>
-             </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="label_31">
-               <property name="text">
-                <string>Pais:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="3" colspan="2">
-              <widget class="QComboBox" name="cbopaisAlternativa">
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1" colspan="4">
-              <layout class="QHBoxLayout" name="horizontalLayout_13">
-               <item>
-                <widget class="QLineEdit" name="txtcpPoblacionAlternativa">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_66">
-                 <property name="text">
-                  <string>Población</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="txtpoblacionAlternativa"/>
-               </item>
-              </layout>
-             </item>
             </layout>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_7">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background: #304163;
-color: rgb(255,255,255);</string>
-             </property>
-             <property name="text">
-              <string>DIRECCIONES</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -1839,7 +1847,7 @@ color: rgb(255,255,255);</string>
              <item row="4" column="3">
               <widget class="QLineEdit" name="txtNoviembre">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1847,11 +1855,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -1868,7 +1882,7 @@ color: rgb(255,255,255);</string>
              <item row="2" column="1">
               <widget class="QLineEdit" name="txtMarzo">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1876,18 +1890,24 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
               <widget class="QLineEdit" name="txtFebrero">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1895,18 +1915,24 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="txtEnero">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1914,11 +1940,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -1945,7 +1977,7 @@ color: rgb(255,255,255);</string>
              <item row="0" column="3">
               <widget class="QLineEdit" name="txtjulio">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1953,18 +1985,24 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item row="5" column="3">
               <widget class="QLineEdit" name="txtDiciembre">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1972,18 +2010,24 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item row="5" column="1">
               <widget class="QLineEdit" name="txtJunio">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1991,11 +2035,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2022,7 +2072,7 @@ color: rgb(255,255,255);</string>
              <item row="1" column="3">
               <widget class="QLineEdit" name="txtAgosto">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2030,11 +2080,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2061,7 +2117,7 @@ color: rgb(255,255,255);</string>
              <item row="2" column="3">
               <widget class="QLineEdit" name="txtSeptiembre">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2069,11 +2125,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2100,7 +2162,7 @@ color: rgb(255,255,255);</string>
              <item row="3" column="1">
               <widget class="QLineEdit" name="txtAbril">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2108,18 +2170,24 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item row="3" column="3">
               <widget class="QLineEdit" name="txtOctubre">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2127,11 +2195,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2148,7 +2222,7 @@ color: rgb(255,255,255);</string>
              <item row="4" column="1">
               <widget class="QLineEdit" name="txtMayo">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2156,11 +2230,17 @@ color: rgb(255,255,255);</string>
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>0,00</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2180,6 +2260,9 @@ color: rgb(255,255,255);</string>
              </item>
              <item row="2" column="1">
               <widget class="QLineEdit" name="txtdeuda_actual">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>100</width>
@@ -2195,15 +2278,24 @@ color: rgb(255,255,255);</string>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item row="1" column="1">
               <widget class="QDateEdit" name="txtfecha_ultima_compra">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>100</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2218,6 +2310,9 @@ color: rgb(255,255,255);</string>
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="txtimporteAcumulado">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>100</width>
@@ -2232,6 +2327,9 @@ color: rgb(255,255,255);</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2258,7 +2356,7 @@ color: rgb(255,255,255);</string>
              <item row="3" column="1">
               <widget class="QLineEdit" name="txtventas_ejercicio">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2274,6 +2372,9 @@ color: rgb(255,255,255);</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -2974,34 +3075,69 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnDeshacer</tabstop>
   <tabstop>botListados</tabstop>
   <tabstop>btnBorrar</tabstop>
-  <tabstop>tabwidget</tabstop>
   <tabstop>btnFichaPaciente</tabstop>
+  <tabstop>txtcodigo_cliente</tabstop>
+  <tabstop>txtCifIntracomunitario</tabstop>
+  <tabstop>btnValidarVIES</tabstop>
+  <tabstop>txtcif_nif</tabstop>
+  <tabstop>txtnombre</tabstop>
+  <tabstop>txtPrimerApellido</tabstop>
+  <tabstop>txtSegundoApellido</tabstop>
   <tabstop>txtnombre_fiscal</tabstop>
   <tabstop>txtnombre_comercial</tabstop>
+  <tabstop>txtcp</tabstop>
+  <tabstop>txtpoblacion</tabstop>
   <tabstop>txtdireccion1</tabstop>
   <tabstop>txtdireccion2</tabstop>
+  <tabstop>txtprovincia</tabstop>
+  <tabstop>cboPais</tabstop>
+  <tabstop>txttelefono1</tabstop>
+  <tabstop>txttelefono2</tabstop>
+  <tabstop>txtmovil</tabstop>
+  <tabstop>txtfax</tabstop>
+  <tabstop>txtemail</tabstop>
   <tabstop>txtweb</tabstop>
+  <tabstop>txtObservaciones</tabstop>
+  <tabstop>btnVer_OtrosContactos</tabstop>
   <tabstop>lista_tipos</tabstop>
+  <tabstop>btnEdita_tipoCliente</tabstop>
+  <tabstop>tabwidget</tabstop>
   <tabstop>lista_direccionesAlternativas</tabstop>
   <tabstop>txtdescripcion_direccion</tabstop>
-  <tabstop>txtdireccion1Alternativa1</tabstop>
-  <tabstop>txtdireccion1Alternativa2</tabstop>
   <tabstop>txtcpPoblacionAlternativa</tabstop>
   <tabstop>txtpoblacionAlternativa</tabstop>
+  <tabstop>txtdireccion1Alternativa1</tabstop>
+  <tabstop>txtdireccion1Alternativa2</tabstop>
+  <tabstop>txtprovinciaAlternativa</tabstop>
+  <tabstop>cbopaisAlternativa</tabstop>
   <tabstop>txtemail_alternativa</tabstop>
   <tabstop>txtcomentarios_alternativa</tabstop>
+  <tabstop>btnAnadirdireccion</tabstop>
   <tabstop>btnEditardireccionAlternativa</tabstop>
+  <tabstop>btnBorrardireccion</tabstop>
   <tabstop>btnGuardardireccionAlternativa</tabstop>
   <tabstop>btnDeshacerdireccionAlternativa</tabstop>
-  <tabstop>radGeneral</tabstop>
-  <tabstop>radUE</tabstop>
-  <tabstop>radExcento</tabstop>
-  <tabstop>radExportacion</tabstop>
+  <tabstop>cbotarifa_cliente</tabstop>
+  <tabstop>cboDivisa</tabstop>
+  <tabstop>cboforma_pago</tabstop>
+  <tabstop>txtdia_pago1</tabstop>
+  <tabstop>txtdia_pago2</tabstop>
+  <tabstop>txtporc_dto_cliente</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>txtcuenta_contable</tabstop>
   <tabstop>txtcuenta_iva_repercutido</tabstop>
   <tabstop>txtcuenta_deudas</tabstop>
+  <tabstop>txtcuenta_cobros</tabstop>
   <tabstop>chkClienteEmpresa</tabstop>
+  <tabstop>chkrecargo_equivalencia</tabstop>
+  <tabstop>txtentidad_bancaria</tabstop>
+  <tabstop>txtoficina_bancaria</tabstop>
+  <tabstop>txtdc</tabstop>
+  <tabstop>txtcuenta_corriente</tabstop>
+  <tabstop>radGeneral</tabstop>
+  <tabstop>radUE</tabstop>
+  <tabstop>radExcento</tabstop>
+  <tabstop>radExportacion</tabstop>
   <tabstop>txtvisa_distancia1</tabstop>
   <tabstop>txtvisa1_caduca_mes</tabstop>
   <tabstop>txtvisa1_caduca_ano</tabstop>
@@ -3010,43 +3146,31 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>txtvisa2_caduca_mes</tabstop>
   <tabstop>txtvisa2_caduca_ano</tabstop>
   <tabstop>txtvisa2_cod_valid</tabstop>
+  <tabstop>TablaDeudas</tabstop>
+  <tabstop>radPendientes</tabstop>
+  <tabstop>radPagadas</tabstop>
+  <tabstop>btnCobroTotal</tabstop>
+  <tabstop>tablahistorial_deudas</tabstop>
   <tabstop>chklBloqueoCliente</tabstop>
   <tabstop>txtcomentario_bloqueo</tabstop>
-  <tabstop>txtcomentarios</tabstop>
   <tabstop>txtacceso_web</tabstop>
   <tabstop>txtpassword_web</tabstop>
-  <tabstop>txtfecha_nacimiento</tabstop>
-  <tabstop>cboidiomaDocumentos</tabstop>
   <tabstop>txtfecha_alta</tabstop>
   <tabstop>cboagente</tabstop>
   <tabstop>txtrRiesgoPermitido</tabstop>
   <tabstop>cbotransportista</tabstop>
+  <tabstop>txtcomentarios</tabstop>
+  <tabstop>txtfecha_nacimiento</tabstop>
+  <tabstop>cboidiomaDocumentos</tabstop>
   <tabstop>tabWidget_2</tabstop>
   <tabstop>tablaPresupuestos</tabstop>
   <tabstop>tablaAsientos</tabstop>
-  <tabstop>txtcuenta_cobros</tabstop>
-  <tabstop>txtNoviembre</tabstop>
-  <tabstop>txtFebrero</tabstop>
-  <tabstop>txtEnero</tabstop>
-  <tabstop>txtDiciembre</tabstop>
-  <tabstop>txtjulio</tabstop>
-  <tabstop>txtJunio</tabstop>
-  <tabstop>txtAgosto</tabstop>
-  <tabstop>txtSeptiembre</tabstop>
   <tabstop>tablaPedidos</tabstop>
   <tabstop>TablaAlbaranes</tabstop>
   <tabstop>tablaFacturas</tabstop>
   <tabstop>tablaTickets</tabstop>
   <tabstop>tablaVales</tabstop>
-  <tabstop>txtMarzo</tabstop>
-  <tabstop>txtAbril</tabstop>
-  <tabstop>txtOctubre</tabstop>
-  <tabstop>txtMayo</tabstop>
-  <tabstop>txtfecha_ultima_compra</tabstop>
-  <tabstop>TablaDeudas</tabstop>
-  <tabstop>btnAnadirdireccion</tabstop>
   <tabstop>tabla_busquedas</tabstop>
-  <tabstop>btnBorrardireccion</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>

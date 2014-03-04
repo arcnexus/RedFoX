@@ -110,6 +110,12 @@ private slots:
 
     void on_btnEdita_tipoCliente_clicked();
 
+    void on_txtcpPoblacionAlternativa_editingFinished();
+
+    void on_txtdireccion1Alternativa2_editingFinished();
+
+    void on_btnDeshacerdireccionAlternativa_clicked();
+
 private:
     Ui::frmClientes *ui;
 
@@ -141,7 +147,6 @@ private:
     QSqlQueryModel *queryAgentes;
     QSqlQueryModel *qTarifa;
     QSqlQueryModel *qmidiomas;
-    QSqlQueryModel *modelFacturas;
     QSqlQueryModel *modelPoblaciones;
     QSqlQueryModel *deudas ;
     QSqlQueryModel *modelHistorial;

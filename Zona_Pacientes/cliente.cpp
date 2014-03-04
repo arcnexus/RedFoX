@@ -671,7 +671,6 @@ bool Cliente::BorrarPersona_contacto(int id_persona)
 void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direccion1, QString direccion2, QString CP, QString Poblacion,
                                QString Provincia, QString Pais,int id_cliente, QString email, QString comentarios,int id)
 {
-    QSqlQuery qdirecciones(Configuracion_global->groupDB);
     QHash <QString, QVariant> d;
     QString error;
     int id_alternativa;
@@ -701,15 +700,15 @@ void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direcci
     if(Anadir){
         id_alternativa = SqlCalls::SqlInsert(d,"cliente_direcciones",Configuracion_global->groupDB,error);
 
-    } else {
-    if(!Anadir) // Guardar
+    } else // Guardar
+    {
         id_alternativa = SqlCalls::SqlUpdate(d,"cliente_direcciones",Configuracion_global->groupDB,
                                              QString("id=").append(QString::number(id)),error);
 
-    if(id_alternativa == -1)
-        QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
-                             tr("Ocurrió un error al guardar los datos de dirección: %1").arg(error),
-                             tr("Aceptar"));
+        if(id_alternativa == -1)
+            QMessageBox::warning(qApp->activeWindow(),tr("Añadir/Guardar dirección"),
+                                 tr("Ocurrió un error al guardar los datos de dirección: %1").arg(error),
+                                 tr("Aceptar"));
     }
 }
 void Cliente::DescontarDeuda(int id_deuda, double pagado){

@@ -37,6 +37,16 @@ void frmClientes::init_querys()
 
     qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),Configuracion_global->groupDB);
     ui->lista_direccionesAlternativas->setModelColumn(1);
+
+    ui->cbotransportista   ->setModel(queryTransportistas);
+    ui->cboagente          ->setModel(queryAgentes);
+    ui->cbotarifa_cliente  ->setModel(qTarifa);
+    ui->cboidiomaDocumentos->setModel(qmidiomas);
+
+    ui->cbotransportista->setModelColumn(1);
+    ui->cboagente->setModelColumn(1);
+    ui->cbotarifa_cliente ->setModelColumn(1);
+    ui->cboidiomaDocumentos->setModelColumn(1);
 }
 
 void frmClientes::init()
@@ -65,6 +75,7 @@ void frmClientes::init()
     pob_completer->setCaseSensitivity(Qt::CaseInsensitive);
     pob_completer->setCompletionColumn(3);
     ui->txtpoblacion->setCompleter(pob_completer);
+    ui->txtpoblacionAlternativa->setCompleter(pob_completer);
 
     calle_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
     calle_completer_model->setTable("calles");
@@ -73,6 +84,8 @@ void frmClientes::init()
     calle_completer->setCompletionColumn(2);
     ui->txtdireccion1->setCompleter(calle_completer);
     ui->txtdireccion2->setCompleter(calle_completer);
+    ui->txtdireccion1Alternativa1->setCompleter(calle_completer);
+    ui->txtdireccion1Alternativa2->setCompleter(calle_completer);
 
     //DELEGATES
     ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
@@ -123,27 +136,22 @@ void frmClientes::init()
     ui->tablaAsientos                ->setModel(modelAsientos);
     ui->TablaAlbaranes               ->setModel(Albaranes);
     ui->TablaDeudas                  ->setModel(deudas);
-    ui->tabla_busquedas              ->setModel(m_clientes);
-    ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
-    ui->cbotransportista             ->setModel(queryTransportistas);
-    ui->cboagente                    ->setModel(queryAgentes);
-    ui->cboDivisa                    ->setModel(Configuracion_global->divisas_model);
-    ui->cbotarifa_cliente            ->setModel(qTarifa);
-    ui->cboPais                      ->setModel(Configuracion_global->paises_model);
-    ui->cbopaisAlternativa           ->setModel(Configuracion_global->paises_model);
-    ui->cboidiomaDocumentos          ->setModel(qmidiomas);
+    ui->tabla_busquedas              ->setModel(m_clientes);    
+
     ui->tablahistorial_deudas        ->setModel(modelHistorial);
     ui->tablaPedidos                 ->setModel(Pedidos);
 
-    //CONFIG COMBOS
-    ui->cbotransportista->setModelColumn(1);
+    ui->cboforma_pago                ->setModel(Configuracion_global->formapago_model);
+    ui->cboDivisa                    ->setModel(Configuracion_global->divisas_model);    
+    ui->cboPais                      ->setModel(Configuracion_global->paises_model);
+    ui->cbopaisAlternativa           ->setModel(Configuracion_global->paises_model);
+
+
+    //CONFIG COMBOS    
     ui->cboforma_pago   ->setModelColumn(2);
     ui->cboDivisa       ->setModelColumn(1);
     ui->cboPais         ->setModelColumn(1);
     ui->cbopaisAlternativa->setModelColumn(1);
-    ui->cbotarifa_cliente ->setModelColumn(1);
-    ui->cboagente->setModelColumn(1);
-
 
 
     //SEARCH HASH
@@ -184,8 +192,6 @@ void frmClientes::init()
     connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(txtrRiesgoPermitido_editingFinished()));
     connect(ui->lista_direccionesAlternativas,SIGNAL(clicked(QModelIndex)),this,SLOT(CargardireccionAlternativa(QModelIndex)));
     connect(ui->btnVer_OtrosContactos,SIGNAL(clicked()),this,SLOT(Contactos()));
-    //connect(ui->txtcpPoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtcpAlternativa_editingFinished()));
-    //connect(ui->txtpoblacionAlternativa,SIGNAL(editingFinished()),this,SLOT(txtpoblacionAlternativa_editingFinished()));
     connect(ui->btnEditardireccionAlternativa,SIGNAL(clicked()),this,SLOT(EditardireccionAlternativa()));
     connect(ui->txtentidad_bancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->txtoficina_bancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
@@ -198,9 +204,10 @@ void frmClientes::init()
     connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(set_blink()));
-    connect(ui->btnBorrardireccion,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));
-    ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->btnBorrardireccion,SIGNAL(clicked()),this,SLOT(BorrardireccionAlternativa()));    
     connect(ui->TablaDeudas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(menu_deudas(QPoint)));
+
+    ui->TablaDeudas->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Busquedas
     setUpBusqueda();
@@ -876,6 +883,7 @@ void frmClientes::on_btnAnadir_clicked()
         ui->cboidiomaDocumentos->setCurrentIndex(1);
         ui->cboforma_pago->setCurrentIndex(-1);
         oCliente->Anadir();
+        LLenarCampos();
         ui->txtcif_nif->setText(linea.text());
         oCliente->cif_nif = linea.text();
         set_blink();
@@ -937,6 +945,9 @@ void frmClientes::on_btnEditar_clicked()
             return;
         on_tabla_busquedas_doubleClicked(ui->tabla_busquedas->currentIndex());
     }
+
+    Configuracion_global->groupDB.transaction();
+
     emit block();
     bloquearCampos(false);
     ui->txtcodigo_cliente->setEnabled(false);
@@ -1045,7 +1056,6 @@ void frmClientes::txtrRiesgoPermitido_editingFinished()
 
 void frmClientes::on_btnFichaPaciente_clicked()
 {
-    //NOTE - no mostar subform si no hay ningun cliente select
     if(ui->txtcodigo_cliente->text().isEmpty()) {
         QMessageBox::warning(this,tr("Ficha Paciente"),tr("Debe tener un cliente seleccionado para poder acceder a la ficha de paciente"),
                              tr("Aceptar"));
@@ -1129,6 +1139,8 @@ void frmClientes::EditardireccionAlternativa()
 
 void frmClientes::CargardireccionAlternativa(QModelIndex index)
 {
+    if(!index.isValid())
+        return;
     QSqlRecord r = qModeldireccion->record(index.row());
 
     iddireccionAlternativa = r.value("id").toInt();
@@ -1150,7 +1162,7 @@ void frmClientes::CargardireccionAlternativa(QModelIndex index)
         }
     }
 
-    if(ui->btnEditar->isEnabled())
+    if(!ui->btnEditar->isEnabled())
         ui->btnEditardireccionAlternativa->setEnabled(true);
 }
 
@@ -1527,7 +1539,7 @@ void frmClientes::on_btnGuardardireccionAlternativa_clicked()
             oCliente->Guardardireccion(false,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
                                    ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
                                    ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
-                                   ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail->text(),
+                                   ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail_alternativa->text(),
                                    ui->txtcomentarios_alternativa->toPlainText(),iddireccionAlternativa);
         Anadirdireccion = false;
         //-----------------
@@ -1723,4 +1735,46 @@ void frmClientes::on_btnEdita_tipoCliente_clicked()
     FrmAddTipoCliente f(this,oCliente->id);
     f.exec();
     llenar_tipoCliente();
+}
+
+void frmClientes::on_txtcpPoblacionAlternativa_editingFinished()
+{
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcpPoblacionAlternativa->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacionAlternativa->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovinciaAlternativa->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->cbopaisAlternativa->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1){
+            ui->txtpoblacionAlternativa->setText("");
+            ui->txtpoblacionAlternativa->setFocus();
+        }
+        else
+            ui->txtdireccion1Alternativa1->setFocus();
+    }
+}
+
+void frmClientes::on_txtdireccion1Alternativa2_editingFinished()
+{
+    if(!ui->txtprovinciaAlternativa->text().isEmpty())
+        ui->txtemail_alternativa->setFocus();
+}
+
+void frmClientes::on_btnDeshacerdireccionAlternativa_clicked()
+{
+    ui->btnAnadirdireccion->setEnabled(true);
+    ui->btnEditardireccionAlternativa->setEnabled(true);
+    ui->btnBorrardireccion->setEnabled(true);
+    ui->btnGuardardireccionAlternativa->setEnabled(false);
+    ui->btnDeshacerdireccionAlternativa->setEnabled(false);
+    CargardireccionAlternativa(ui->lista_direccionesAlternativas->currentIndex());
 }
