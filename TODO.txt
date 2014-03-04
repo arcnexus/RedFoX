@@ -160,4 +160,7 @@ ALTER TABLE `GrupoFebrero`.`empresas` ADD COLUMN `logo` LONGBLOB NULL DEFAULT NU
 
 04/03/14
 ALTER TABLE `GrupoMarzo`.`clientes` CHANGE COLUMN `id_idioma_documentos` `id_idioma_documentos` INT(11) NULL DEFAULT 1 ;
+ALTER TABLE `GrupoMarzo`.`transportista` ADD COLUMN `fecha_alta` DATE NULL AFTER `id_proveedor`;
+ALTER TABLE `GrupoMarzo`.`personascontactotransportista` CHANGE COLUMN `id_cliente` `id_transportista` INT(11) NULL DEFAULT NULL ;
+
 

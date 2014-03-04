@@ -250,9 +250,12 @@ void Cliente::Anadir() {
      cliente["id_tarifa"] = this->idTarifa;
      QString error;
      int new_id = SqlCalls::SqlInsert(cliente,"clientes",Configuracion_global->groupDB,error);
-     if(new_id <=0){
+     if(new_id <=0)
+     {
          QMessageBox::critical(qApp->activeWindow(),"error al insertar:", error);
-     } else{
+     }
+     else
+     {
          QHash <QString, QVariant> h;
          h["id_cliente"] = new_id;
          SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->empresaDB,error);
@@ -846,49 +849,30 @@ void Cliente::Borrar(int id_cliente)
                           tr("Está apunto de borrar la ficha de un cliente\n¿Desea continuar?"),
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
     {
-        bool borrado_ok = true;
         Configuracion_global->groupDB.transaction();
 
-        QSqlQuery qTipos(Configuracion_global->groupDB);
-        qTipos.prepare("delete from tipocliente where id_cliente =:id_cliente");
-        qTipos.bindValue(":id_cliente",id_cliente);
-        if (!qTipos.exec()) {
-            QMessageBox::warning(qApp->activeWindow(),tr("Borrar Cliente"),tr("Falló el borrado de tipos de cliente"),
-                                 tr("Aceptar"));
-            borrado_ok = false;
-        }
+        QString cli = QString("id = %1").arg(id_cliente);
+        QString aux = QString("id_cliente = %1").arg(id_cliente);
+        QString error;
+        bool borrado_ok = SqlCalls::SqlDelete("tipocliente"        ,Configuracion_global->groupDB,aux,error);
+        borrado_ok     &= SqlCalls::SqlDelete("cliente_direcciones",Configuracion_global->groupDB,aux,error);
+        borrado_ok     &= SqlCalls::SqlDelete("clientes"           ,Configuracion_global->groupDB,cli,error);
+
         if (Configuracion_global->enlace_web)
             BorrarWeb(this->id_web);
 
-
-        QSqlQuery qdirecciones(Configuracion_global->groupDB);
-        qdirecciones.prepare("Delete from cliente_direcciones where id_cliente =:id_cliente");
-        qdirecciones.bindValue(":id_cliente",id_cliente);
-        if(!qdirecciones.exec()) {
-            QMessageBox::warning(qApp->activeWindow(),tr("Borrar cliente"),tr("Falló el borrado de direcciones alternativas"),
-                                 tr("Aceptar"));
-            borrado_ok = false;
-        }
-
-
-        QSqlQuery qryCliente(Configuracion_global->groupDB);
-        qryCliente.prepare("Delete from clientes where id = :id_cliente");
-        qryCliente.bindValue(":id_cliente",id_cliente);
-        if(!qryCliente.exec()) {
-            QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
-                                  tr("Falló el borrado de la deuda del cliente"),tr("&Aceptar"));
-            borrado_ok = false;
-        }
-        if (borrado_ok ==true) {
+        if (borrado_ok)
+        {
             Configuracion_global->groupDB.commit();
             TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Borrado corectamente"));
             this->clear();
-        } else {
+        }
+        else
+        {
             Configuracion_global->groupDB.rollback();
             QMessageBox::critical(qApp->activeWindow(),tr("Borrar cliente"),
                                   tr("Falló el borrado del cliente \ndeberá contactar con el administrador para su borrado manual"),tr("&Aceptar"));
         }
-
     }
 }
 

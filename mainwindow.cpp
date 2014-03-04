@@ -386,6 +386,7 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Transportistas->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Transportistas);
+        QTimer::singleShot(0,Transportistas,SLOT(init()));
     }
     else
         delete Transportistas;

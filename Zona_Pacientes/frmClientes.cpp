@@ -1039,6 +1039,12 @@ void frmClientes::on_btnDeshacer_clicked()
 
 void frmClientes::on_btnBorrar_clicked()
 {
+    if(ui->stackedWidget->currentIndex() == 1 )
+    {
+        if(!ui->tabla_busquedas->currentIndex().isValid())
+            return;
+        on_tabla_busquedas_doubleClicked(ui->tabla_busquedas->currentIndex());
+    }
     oCliente->Borrar(oCliente->id);
     VaciarCampos();
 }
@@ -1423,7 +1429,7 @@ void frmClientes::setUpBusqueda()
     m_busqueda->addWidget(print);
 
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
-    //connect(del,SIGNAL(clicked()),this,SLOT(on_btn_borrar_clicked()));//TODO
+    connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));
     m_busqueda->addWidget(del);
 
     m_busqueda->addSpacer();
@@ -1534,7 +1540,7 @@ void frmClientes::on_btnGuardardireccionAlternativa_clicked()
                                    ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
                                    ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
                                    ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail_alternativa->text(),
-                                   ui->txtcomentarios_alternativa->toPlainText(),NULL);
+                                   ui->txtcomentarios_alternativa->toPlainText(),0);
         else
             oCliente->Guardardireccion(false,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
                                    ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),

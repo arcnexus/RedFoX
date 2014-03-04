@@ -595,7 +595,7 @@ CREATE TABLE `@grupo@`.`personascontactotransportista` (
   `telefono3` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `movil` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `movil2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL,
+  `id_transportista` int(11) DEFAULT NULL,
   `desc_telefono1` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `desc_telefono2` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `desc_telefono3` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -768,6 +768,7 @@ CREATE TABLE `@grupo@`.`transportista` (
   `email` varchar(100) DEFAULT NULL,
   `web` varchar(100) DEFAULT NULL,
   `id_proveedor` int(11) NOT NULL DEFAULT '0',
+  `fecha_alta` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE `@grupo@`.`trazabilidad1` (

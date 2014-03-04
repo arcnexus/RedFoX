@@ -3,14 +3,9 @@
 transportistas::transportistas(QObject *parent) :
     QObject(parent)
 {
-    //------------------------
-    // Inicio transportista
-    //------------------------
     h_transportista["id"] = 0;
     h_transportista["codigo"] = "";
     h_transportista["transportista"] = "";
-    //h_transportista["id_proveedor"] =0;
-
 }
 
 int transportistas::anadir()
@@ -33,19 +28,17 @@ int transportistas::anadir()
 
 bool transportistas::guardar()
 {
-
     QString error;
     QString condicion;
     condicion = QString("id = %1").arg(h_transportista.value("id").toInt());
-    bool succes = SqlCalls::SqlUpdate(h_transportista,"transportista",Configuracion_global->groupDB,condicion,error);
-    if (succes)
+    if(SqlCalls::SqlUpdate(h_transportista,"transportista",Configuracion_global->groupDB,condicion,error))
     {
         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Los datos han sido actualizados");
         return true;
     }
     else
     {
-        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de transportistas"),tr("Ocurrió un error al actualizar:")+error,
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de transportistas"),tr("Ocurrió un error al actualizar:\n")+error,
                              tr("Aceptar"));
         return false;
     }
@@ -55,12 +48,11 @@ bool transportistas::guardar()
 bool transportistas::recuperar(QStringList filtro,QStringList extras)
 {
     QString error;
-    QMap <int,QSqlRecord> r;
-    r = SqlCalls::SelectRecord("transportista",filtro,extras,Configuracion_global->groupDB,error);
+    QMap <int,QSqlRecord> r = SqlCalls::SelectRecord("transportista",filtro,extras,Configuracion_global->groupDB,error);
     QMapIterator <int,QSqlRecord> i(r);
     if(error.isEmpty())
     {
-        while(i.hasNext())
+        if(!r.isEmpty())
         {
             i.next();
             h_transportista["id"] = i.value().value("id").toInt();
@@ -80,42 +72,16 @@ bool transportistas::recuperar(QStringList filtro,QStringList extras)
             h_transportista["movil"] = i.value().value("movil").toString();
             h_transportista["email"] = i.value().value("email").toString();
             h_transportista["web"] = i.value().value("web").toString();
-            h_transportista["contacto"] = i.value().value("contacto").toString();
-
-
-            //h_transportista["id_proveedor"] = i.value().value("id_proveedor").toInt();
-//            if(h_transportista.value("id_proveedor").toInt() >-1){
-//                //--------------------------
-//                // Recupero datos proveedor
-//                //--------------------------
-//                oProveedor.Recuperar(QString("select * from proveedores where id = %1").arg(h_transportista.value("id_proveedor").toInt()));
-//            }
-
-
         }
         return true;
-    } else {
+    }
+    else
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Transportistas"),
                          tr("No se pudo recuperar el transportista: ")+error,
                          tr("Aceptar"));
         return false;
     }
-}
-
-QString transportistas::RecuperarPais(int nid)
-{
-    QSqlQuery qPais(Configuracion_global->groupDB);
-    qPais.prepare("select pais from paises where id =:id");
-    qPais.bindValue(":id",nid);
-    if(qPais.exec()) {
-        qPais.next();
-        QSqlRecord rPais = qPais.record();
-        return rPais.field("pais").value().toString();
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Pacientes"),
-                             tr("No se pudo enconontrar el Pais: %1 ").arg(QString::number(nid)),tr("Aceptar"));
-    }
-    return "";
 }
 
 void transportistas::BorrarTransportista (int id)
@@ -124,13 +90,14 @@ void transportistas::BorrarTransportista (int id)
                           tr("Está apunto de borrar un transportista\n¿Desea continuar?"),
                           tr("No"),tr("Si")) == QMessageBox::Accepted)
     {
-        QSqlQuery qTransportista(Configuracion_global->groupDB);
-        qTransportista.prepare("DELETE FROM transportista WHERE id =:id");
-        qTransportista.bindValue(":id",id);
-        if (!qTransportista.exec()) {
+        QString error;
+        bool ok = SqlCalls::SqlDelete("transportista",Configuracion_global->groupDB,QString("id = %1").arg(id),error);
+        ok &= SqlCalls::SqlDelete("personascontactotransportista",Configuracion_global->groupDB,QString("id_transportista = %1").arg(id),error);
+        if (!ok)
+        {
             QMessageBox::warning(qApp->activeWindow(),tr("Borrar Cliente"),tr("Falló el borrado de tipos de cliente"),
                                  tr("Aceptar"));
         }
-}
+    }
 }
 
