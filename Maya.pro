@@ -34,7 +34,7 @@ LIBS += -L/usr/local/Qxt/lib
 greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreator/lib/qtcreator/ -lQt5WebKitWidgets
 
 
-TARGET = Maya
+TARGET = RedFoX
 TEMPLATE = app
 
 # CONFIG  += qxt
