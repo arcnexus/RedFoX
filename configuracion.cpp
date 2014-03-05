@@ -75,6 +75,30 @@ Configuracion::Configuracion(QObject* parent) :
     Pass = "RedFox";
 }
 
+void Configuracion::transaction()
+{
+    this->empresaDB.transaction();
+    this->groupDB.transaction();
+    if(this->contabilidad)
+        this->contaDB.transaction();
+}
+
+void Configuracion::rollback()
+{
+    this->empresaDB.rollback();
+    this->groupDB.rollback();
+    if(this->contabilidad)
+        this->contaDB.rollback();
+}
+
+void Configuracion::commit()
+{
+    this->empresaDB.commit();
+    this->groupDB.commit();
+    if(this->contabilidad)
+        this->contaDB.commit();
+}
+
 
 QString Configuracion::toFormatoMoneda(QString cTexto)
 {
@@ -774,7 +798,7 @@ void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)
         usuarios_model = new QSqlQueryModel(this);
-    usuarios_model->setQuery("SELECT * from mayaglobal.usuarios",Configuracion_global->globalDB);
+    usuarios_model->setQuery("SELECT * from redfoxglobal.usuarios",Configuracion_global->globalDB);
     qDebug() << usuarios_model->rowCount() << usuarios_model->lastError();
 }
 
@@ -822,7 +846,7 @@ bool Configuracion::CargarDatosBD()
     if(this->globalDB.isOpen())
     {
         QSqlQuery q(globalDB);
-        if(q.exec("SHOW DATABASES like 'mayaglobal'"))
+        if(q.exec("SHOW DATABASES like 'redfoxglobal'"))
             _mayaglobal = q.next();
     }
 

@@ -57,7 +57,6 @@ private slots:
 
     void on_botBuscarSubfamilia_clicked();
 
-    void on_botBuscarSubSubFamilia_clicked();
     void on_btnBuscarProveedor_clicked();
     void on_btnAnadirTarifa_clicked();
 
@@ -151,9 +150,6 @@ private slots:
     void on_btnBorrarimagen_4_clicked();
 
     void on_Pestanas_currentChanged(int index);
-
-    void on_botBuscarGrupo_clicked();
-
 
     void on_txtCoste_real_textChanged(const QString &arg1);
 

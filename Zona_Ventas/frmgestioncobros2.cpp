@@ -55,7 +55,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
     e["pendiente_cobro"] = Configuracion_global->MonedatoDouble(ui->txtPendiente->text());
 
     QString error;
-    bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
+    bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1 and id_empresa=%2").arg(this->id).arg(Configuracion_global->idEmpresa),error);
     if(!updated)
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
     else {
@@ -74,7 +74,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 QString error;
                 QString cliente,documento,fecha;
                 QMap <int,QSqlRecord> c;
-                c = SqlCalls::SelectRecord("clientes_deuda",QString("id=%1").arg(this->id),Configuracion_global->empresaDB,error);
+                c = SqlCalls::SelectRecord("clientes_deuda",QString("id=%1 and id_empresa=%2").arg(this->id).arg(Configuracion_global->idEmpresa),Configuracion_global->empresaDB,error);
                 cliente = SqlCalls::SelectOneField("clientes","nombre_fiscal",QString("id=%1").arg(c.value(this->id).value(
                                                                                                        "id_cliente").toInt()),
                                                    Configuracion_global->groupDB,error).toString();
@@ -153,7 +153,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 {
                     QMessageBox::warning(this,tr("Ocurrió un error al localizar la cuenta :%1").arg(error),tr("Aceptar"));
                 }
-                bool updated = SqlCalls::SqlUpdate(deuda,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1").arg(this->id),error);
+                bool updated = SqlCalls::SqlUpdate(deuda,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1 id_empresa=%2").arg(this->id).arg(Configuracion_global->idEmpresa),error);
                 if(!updated)
                     QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos de la deuda:%1").arg(error),
                                          tr("Aceptar"));
@@ -186,7 +186,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
         historial["importe_internet"] = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
         historial["importe_vale"] = Configuracion_global->MonedatoDouble(ui->txtVale->text());
         historial["importe_cambio"] =Configuracion_global->MonedatoDouble(ui->txtCambio->text());
-
+        historial["id_empresa"] = Configuracion_global->idEmpresa;
         int new_id = SqlCalls::SqlInsert(historial,"histo_clientes_deuda",Configuracion_global->groupDB,error);
         if(new_id == -1)
             QMessageBox::warning(this,tr("Gestión de deudas"),

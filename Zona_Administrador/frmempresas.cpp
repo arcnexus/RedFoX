@@ -147,7 +147,7 @@ void FrmEmpresas::getEmpresas()
     _empresas.clear();
     QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
-    QryEmpresas.prepare("Select * from mayaglobal.grupos");
+    QryEmpresas.prepare("Select * from redfoxglobal.grupos");
 
     if(QryEmpresas.exec())
     {
@@ -818,7 +818,7 @@ void FrmEmpresas::_insertNewGroup(QString grupo)
 {
     QSqlQuery q2(Configuracion_global->groupDB);
 
-    q2.prepare("INSERT INTO `mayaglobal`.`grupos` "
+    q2.prepare("INSERT INTO `redfoxglobal`.`grupos` "
                "(`nombre`, `bd_name`, `bd_driver`, "
                "`bd_host`, `bd_user`, `bd_pass`, `bd_port`) "
                "VALUES "

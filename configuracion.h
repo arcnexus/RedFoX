@@ -39,6 +39,9 @@ public:
     Configuracion(QObject * parent = 0);
     bool importado_sp;
 
+    void transaction();
+    void rollback();
+    void commit();
     QSqlDatabase globalDB;
     QString global_driver;
     QString global_host;

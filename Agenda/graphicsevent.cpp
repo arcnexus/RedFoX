@@ -561,8 +561,8 @@ void GraphicsEvent::shareThis()
     if(ok)
     {
         int iUser;
-        QSqlQuery user(Configuracion_global->groupDB);
-        QString sql = QString("SELECT id FROM mayaglobal.usuarios WHERE nombre = '%1'").arg(sUser);
+        QSqlQuery user(Configuracion_global->globalDB);
+        QString sql = QString("SELECT id FROM redfoxglobal.usuarios WHERE nombre = '%1'").arg(sUser);
         if(user.exec(sql))
         {
             if(user.next())

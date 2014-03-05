@@ -351,8 +351,8 @@ void frmClientes::LLenarCampos()
 
     QMap <int,QSqlRecord> acum;
     QString error;
-    acum = SqlCalls::SelectRecord("acum_clientes",QString("id_cliente =%1").arg(oCliente->id),
-                                  Configuracion_global->empresaDB,error);
+    acum = SqlCalls::SelectRecord("acum_clientes",QString("id_cliente =%1 and id_empresa=%2").arg(oCliente->id).arg(Configuracion_global->idEmpresa),
+                                  Configuracion_global->groupDB,error);
     QMapIterator <int,QSqlRecord> i(acum);
     while(i.hasNext())
     {
@@ -403,11 +403,15 @@ void frmClientes::LLenarCampos()
 
     QString cSQL;
     if(ui->radPendientes->isChecked())
+    {
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-                + QString::number(oCliente->id)+ " and pendiente_cobro >0";
+                + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) +" and pendiente_cobro >0";
+    }
     else
+    {
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-                + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
+                + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) + " and pendiente_cobro <=0";
+    }
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
 
     ui->tablahistorial_deudas->setColumnHidden(0,true);
@@ -1638,7 +1642,7 @@ void frmClientes::on_btnCobroTotal_clicked()
 
     QMap <int,QSqlRecord> d;
     QString error;
-    d = SqlCalls::SelectRecord("clientes_deuda",QString("id= %1").arg(id),Configuracion_global->groupDB,error);
+    d = SqlCalls::SelectRecord("clientes_deuda",QString("id= %1 and id_empresa=%2").arg(id).arg(Configuracion_global->idEmpresa),Configuracion_global->groupDB,error);
     if(d.count()>0)
     {
         id_ticket = d.value(id).value("id_ticket").toInt();
@@ -1654,10 +1658,10 @@ void frmClientes::on_btnCobroTotal_clicked()
     QString cSQL;
     if(ui->radPendientes->isChecked())
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-                + QString::number(oCliente->id)+ " and pendiente_cobro >0";
+                + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) + " and pendiente_cobro >0";
     else
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-                + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
+                + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) + " and pendiente_cobro <=0";
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
     on_TablaDeudas_clicked(index);
 
@@ -1669,11 +1673,11 @@ void frmClientes::on_radPendientes_toggled(bool checked)
     if(checked)
     {
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-                + QString::number(oCliente->id)+ " and pendiente_cobro >0";
+                + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) + " and pendiente_cobro >0";
     }else
     {
         cSQL= "Select id,documento,importe,pagado,pendiente_cobro,fecha,vencimiento from clientes_deuda where id_cliente = "
-                + QString::number(oCliente->id)+ " and pendiente_cobro <=0";
+                + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) + " and pendiente_cobro <=0";
 
     }
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
@@ -1688,7 +1692,7 @@ void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
     //-------------------------
     // Refresco modelo hijo
     //-------------------------
-    modelHistorial->setQuery(QString("select * from histo_clientes_deuda where id_cab = %1").arg(id),
+    modelHistorial->setQuery(QString("select * from histo_clientes_deuda where id_cab = %1 and id_empresa = %").arg(id).arg(Configuracion_global->idEmpresa),
                              Configuracion_global->groupDB);
     QStringList headers;
     headers << "id" <<"id_cab" <<tr("Fecha Movim.") << tr("Imp.Ant.") <<tr("pagado") <<tr("cambio") <<tr("Pendiente");

@@ -19,8 +19,9 @@ void frmExtrasCaja::on_btnAceptar_clicked()
     QHash <QString, QVariant> h;
     QString error;
     h["concepto"] = ui->txtExtras->toPlainText();
-    int id_usuario = SqlCalls::SelectOneField("mayaglobal`.`usuarios","id",QString("nombre = '%1'").arg(ui->cboUsuario->currentText()),
-                                              Configuracion_global->groupDB,error).toInt();
+    //TODO revisar este id
+    int id_usuario = SqlCalls::SelectOneField("redfoxglobal`.`usuarios","id",QString("nombre = '%1'").arg(ui->cboUsuario->currentText()),
+                                              Configuracion_global->globalDB,error).toInt();
     h["id_usuario"] = id_usuario;
     h["importe"] = Configuracion_global->MonedatoDouble(ui->txtImporte->text());
     h["fecha"]= QDate::currentDate().toString("yyyyMMdd");

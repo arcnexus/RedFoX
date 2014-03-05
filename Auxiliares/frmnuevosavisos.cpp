@@ -84,9 +84,10 @@ int frmNuevosAvisos::get_id_Empresa()
 
 int frmNuevosAvisos::get_id_usuario_destino()
 {
+    //TODO revisar este id
     QString error;
-    int id = SqlCalls::SelectOneField("mayaglobal`.`usuarios","id",QString("nombre ='%1'").arg(ui->cboUsuarios->currentText()),
-                                      Configuracion_global->groupDB,error).toInt();
+    int id = SqlCalls::SelectOneField("redfoxglobal`.`usuarios","id",QString("nombre ='%1'").arg(ui->cboUsuarios->currentText()),
+                                      Configuracion_global->globalDB,error).toInt();
     return id;
 }
 

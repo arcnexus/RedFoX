@@ -14,7 +14,7 @@ Proveedor::Proveedor(QObject *parent) :
 void Proveedor::cargaracumulados(int id_proveedor)
 {
     QSqlQuery query_acumulados(Configuracion_global->empresaDB);
-    if(query_acumulados.exec("select * from acum_proveedores where id_proveedor = "+QString::number(id_proveedor)))
+    if(query_acumulados.exec(QString("select * from acum_proveedores where id_proveedor =%1 and id_empresa=%2").arg(id_proveedor).arg(Configuracion_global->idEmpresa)))
     {
         query_acumulados.next();
         this->enero = query_acumulados.record().value("acum_enero").toDouble();

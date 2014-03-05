@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `mayaglobal`;
-CREATE TABLE `mayaglobal`.`grupos` (
+CREATE DATABASE  IF NOT EXISTS `redfoxglobal`;
+CREATE TABLE `redfoxglobal`.`grupos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `bd_name` varchar(45) DEFAULT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `mayaglobal`.`grupos` (
   `bd_port` varchar(45) DEFAULT '3306',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `mayaglobal`.`usuarios` (
+CREATE TABLE `redfoxglobal`.`usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `nombre_completo` varchar(45) DEFAULT NULL,
@@ -24,15 +24,23 @@ CREATE TABLE `mayaglobal`.`usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `mayaglobal`.`nivelacceso` (
+CREATE TABLE `redfoxglobal`.`nivelacceso` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');
-INSERT INTO `mayaglobal`.`nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');
+CREATE TABLE `redfoxglobal`.`seguimiento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
+  `accion` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comentarios` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (1,'Sin Acceso');
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (2,'Lectura parcial');
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (3,'Lectura total');
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (4,'Escritura parcial (editar)');
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (5,'Escritura parcial (añadir)');
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (6,'Escritural total');
+INSERT INTO `redfoxglobal`.`nivelacceso` (`id`,`nombre`) VALUES (7,'Administrador');

@@ -25,8 +25,10 @@ int PedidoProveedor::nuevo_pedido_proveedor()
         QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
                              tr("No se puede insertar un nuevo pedido: %1").arg(queryPedido.lastError().text()),
                              tr("aceptar"));
+        return -1;
 
-    } else
+    }
+    else
         return queryPedido.lastInsertId().toInt();
 }
 

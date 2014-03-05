@@ -6,9 +6,7 @@ DivisionAlmacenExt::DivisionAlmacenExt(QObject *parent) :
     ModuleExtension(parent),
     Seccion("Secciones",this),
     familias("Familias",this),
-    subFam("SubFamilias",this),
-    subsubFam("SubSubFamilias",this),
-    grupos("Grupos",this)
+    subFam("SubFamilias",this)
 {
     int id = -1;
     tryRegisterModule(MayaModule::Almacen,"Secciones",id);
@@ -38,29 +36,9 @@ DivisionAlmacenExt::DivisionAlmacenExt(QObject *parent) :
         _actions.append(p);
     }
 
-    tryRegisterModule(MayaModule::Almacen,"SubSubFamilias",id);
-    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
-    {
-        QPair<QAction *, MayaModule::accessLevel> p;
-        p.first = &subsubFam;
-        p.second = getUserLvl(id);
-        _actions.append(p);
-    }
-
-    tryRegisterModule(MayaModule::Almacen,"Grupos",id);
-    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
-    {
-        QPair<QAction *, MayaModule::accessLevel> p;
-        p.first = &grupos;
-        p.second = getUserLvl(id);
-        _actions.append(p);
-    }
-
     connect(&Seccion,SIGNAL(triggered()),this,SLOT(handle_actions()));
     connect(&familias,SIGNAL(triggered()),this,SLOT(handle_actions()));
     connect(&subFam,SIGNAL(triggered()),this,SLOT(handle_actions()));
-    connect(&subsubFam,SIGNAL(triggered()),this,SLOT(handle_actions()));
-    connect(&grupos,SIGNAL(triggered()),this,SLOT(handle_actions()));
 }
 
 QList<QAction *> DivisionAlmacenExt::Extensions()
@@ -103,38 +81,4 @@ void DivisionAlmacenExt::handle_actions()
           form.set_columnHide(0);
           form.exec();
       }
-      else if (sender() == &subsubFam)
-      {
-          Db_table_View form(qApp->activeWindow());
-          form.set_db("Maya");
-          form.set_table("subsubfamilias");
-
-          form.setWindowTitle(tr("SubSubfamilias"));
-
-          QStringList headers;
-          headers << tr("SubSubFamilia") << tr("Pertenece a");
-          form.set_table_headers(headers);
-
-          form.set_relation(2,QSqlRelation("subfamilias","id","subfamilia"));
-
-          form.set_columnHide(0);
-          form.exec();
-      }
-      else if (sender() == &grupos)
-      {
-          Db_table_View form(qApp->activeWindow());
-          form.set_db("Maya");
-          form.set_table("grupoart");
-
-          form.setWindowTitle(tr("Grupo de Articulos"));
-
-          QStringList headers;
-          headers << tr("Grupo") << tr("Pertenece a");
-          form.set_table_headers(headers);
-
-          form.set_relation(2,QSqlRelation("subsubfamilias","id","subsubfamilia"));
-
-          form.set_columnHide(0);
-          form.exec();
-    }
 }

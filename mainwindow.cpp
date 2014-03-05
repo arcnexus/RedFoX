@@ -545,6 +545,7 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     if(FrmPedidos_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(FrmPedidos_pro);
+        QTimer::singleShot(0,FrmPedidos_pro,SLOT(init()));
     }
     else
         delete FrmPedidos_pro;

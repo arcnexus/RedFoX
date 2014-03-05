@@ -54,8 +54,9 @@ void FrmCierreCaja::cargar_datos_caja(int id)
         ui->lblimporte_abertura->setText(Configuracion_global->toFormatoMoneda(
                                              QString::number(caja.value(id).value("importe_abertura_dia").toDouble(),
                                                      'f',Configuracion_global->decimales_campos_totales)));
-        QString user = SqlCalls::SelectOneField("mayaglobal`.`usuarios","nombre",QString("id = %1").arg(
-                                                    caja.value(id).value("id_usuario").toInt()),Configuracion_global->groupDB,
+        //TODO revisar este id
+        QString user = SqlCalls::SelectOneField("redfoxglobal`.`usuarios","nombre",QString("id = %1").arg(
+                                                    caja.value(id).value("id_usuario").toInt()),Configuracion_global->globalDB,
                                                 error).toString();
         if(error.isEmpty())
             ui->lblUsuario_abertura->setText(user);

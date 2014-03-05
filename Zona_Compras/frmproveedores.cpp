@@ -228,7 +228,7 @@ void frmProveedores::llenar_tabPagos()
 {
     modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
                            "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
-                           QString::number(oProveedor->id)+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
+                           QString::number(oProveedor->id)+" and id_empresa= "+Configuracion_global->idEmpresa+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
 
     ui->tablaPagos->setColumnHidden(0,true);
     ui->tablaPagos->setColumnWidth(1,80);

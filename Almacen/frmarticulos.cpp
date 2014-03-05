@@ -274,6 +274,7 @@ FrmArticulos::~FrmArticulos()
 
 void FrmArticulos::on_botAnadir_clicked()
 {    
+    Configuracion_global->transaction();
     QSqlQuery querySecciones(Configuracion_global->groupDB);
     querySecciones.prepare("select id from secciones order by id desc limit 1 ");
     if (querySecciones.exec())
@@ -316,6 +317,7 @@ void FrmArticulos::on_botGuardar_clicked()
         bloquearCampos(true);
         CargarCamposEnArticulo();
         oArticulo->Guardar();
+        Configuracion_global->commit();
         actualizar();
     } else
     {
@@ -402,7 +404,6 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->botBuscarSeccion->setEnabled(!state);
     ui->botBuscarFamilia->setEnabled(!state);
     ui->botBuscarSubfamilia->setEnabled(!state);
-    ui->botBuscarSubSubFamilia->setEnabled(!state);
     ui->botCambiarImagen->setEnabled(!state);
     ui->botCambiarImagen_2->setEnabled(!state);
     ui->botCambiarImagen_3->setEnabled(!state);
@@ -411,7 +412,6 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->btnBorrarimagen_2->setEnabled(!state);
     ui->btnBorrarImagen_3->setEnabled(!state);
     ui->btnBorrarimagen_4->setEnabled(!state);
-    ui->botBuscarGrupo->setEnabled(!state);
     ui->btnBuscarProveedor->setEnabled(!state);
     ui->btnAnadirProveedores->setEnabled(!state);
     ui->btnBorrarProveedores->setEnabled(!state);
@@ -486,8 +486,6 @@ void FrmArticulos::LLenarCampos(int index)
         ui->txtseccion->setText(oArticulo->getseccion(oArticulo->id_seccion));
         ui->txtfamilia->setText(oArticulo->getfamilia(oArticulo->id_familia));
         ui->txtsubfamilia->setText(oArticulo->getsubfamilia(oArticulo->id_subfamilia));
-        ui->txtcSubSubFamilia->setText((oArticulo->getcSubSubFamilia(oArticulo->id_subSubFamilia)));
-        ui->txtcGupoArt->setText(oArticulo->getcGrupo(oArticulo->id_grupoart));
         ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste_real,'f',Configuracion_global->decimales)));
         ui->txtdto->setText(QString::number(oArticulo->porc_dto,'f',Configuracion_global->decimales));
         ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->coste,'f',Configuracion_global->decimales)));
@@ -696,8 +694,6 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->id_seccion = oArticulo->getidSeccion(ui->txtseccion->text());
     oArticulo->id_familia  = oArticulo->getidFamilia(ui->txtfamilia->text());
     oArticulo->id_subfamilia = oArticulo->getidSubFamilia(ui->txtsubfamilia->text());
-    oArticulo->id_subSubFamilia = oArticulo->getidSubSufFamilia(ui->txtcSubSubFamilia->text());
-    oArticulo->id_grupoart = oArticulo->getidGrupo(ui->txtcGupoArt->text());
     oArticulo->cCodProveedor = ui->txtcodigo_proveedor->text();
     oArticulo->proveedor = ui->txtproveedor->text();
 
@@ -889,6 +885,7 @@ void FrmArticulos::on_botBorrar_clicked()
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
+    Configuracion_global->rollback();
     if(this->anadir)
     {
         oArticulo->Borrar(oArticulo->id,false,false);
@@ -1030,34 +1027,6 @@ void FrmArticulos::on_botBuscarSubfamilia_clicked()
         oArticulo->subfamilia = consulta.get_record().value("sub_familia").toString();
         oArticulo->cod_subfamilia = consulta.get_record().value("codigo").toString();
         ui->txtsubfamilia->setText(consulta.get_record().value("sub_familia").toString());
-    }
-}
-
-void FrmArticulos::on_botBuscarSubSubFamilia_clicked()
-{
-    db_consulta_view consulta(this);
-    QStringList campos;
-    QString error;
-    campos <<"id" << "codigo" <<"subsub_familia";
-    consulta.set_campoBusqueda(campos);
-    consulta.set_texto_tabla("Sub-Sub-Familias");
-    consulta.set_db("Maya");
-    consulta.set_SQL(QString("select id,codigo, subsub_familia from subsubfamilias where id_subfamilia = %1").arg(oArticulo->id_subfamilia));
-    QStringList cabecera;
-    QVariantList tamanos;
-
-    cabecera  << tr("Id") <<tr("código") << tr("Sub-Sub-Familia");
-    tamanos <<"0" << "100"  <<"500";
-    consulta.set_headers(cabecera);
-    consulta.set_tamano_columnas(tamanos);
-    consulta.set_titulo("Busqueda de Sub-Sub-Familias");
-    consulta.setFocus();
-    if(consulta.exec())
-    {
-        oArticulo->id_subSubFamilia = consulta.get_id();
-        oArticulo->cSubSubFamilia = consulta.get_record().value("subsub_familia").toString();
-        oArticulo->cod_SubSubFamilia = consulta.get_record().value("codigo").toString();
-        ui->txtcSubSubFamilia->setText(consulta.get_record().value("subsub_familia").toString());
     }
 }
 
@@ -1681,8 +1650,8 @@ void FrmArticulos::MostrarGrafica_comparativa(bool grafica_unidades)
 
 void FrmArticulos::LLenarGraficas()
 {
-    QSqlQuery queryAcumulados(Configuracion_global->empresaDB);
-    if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id)))
+    QSqlQuery queryAcumulados(Configuracion_global->groupDB);
+    if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id)+ " AND id_empresa= "+QString::number(Configuracion_global->idEmpresa)))
     {
         QMessageBox::warning(this,tr("Acumulados ejercicio"),
                              tr("Ocurrió un error al recuperar ficha de acumulados: %1").arg(queryAcumulados.lastError().text()),
@@ -1839,82 +1808,46 @@ void FrmArticulos::LLenarGraficas()
 }
 
 void FrmArticulos::LLenarGrafica_comparativa(int index)
-{
-    // Conecto a la BD de la otra empresa
-    QSqlQuery queryEmpresa_2(Configuracion_global->groupDB);
-    queryEmpresa_2.prepare("Select * from vistaEmpresa where empresa =:empresa");
-    queryEmpresa_2.bindValue(":empresa",ui->cboEmpresa2->currentText().trimmed());
-    if (queryEmpresa_2.exec()){
-        if(queryEmpresa_2.next()){
-            QSqlQuery queryEmpresa(Configuracion_global->groupDB);
-            queryEmpresa.exec("select * from empresas where id="+ queryEmpresa_2.record().value("id").toString());
-            queryEmpresa.next();
-            QString cDriver;
-            cDriver =queryEmpresa.record().value("driverBD").toString();
-            QSqlDatabase dbEmpresa2  = QSqlDatabase::addDatabase(cDriver,"empresa2");
+{    
+    QSqlQuery acum2(Configuracion_global->groupDB);
+    if(acum2.exec("select * from acum_articulos where id_articulo ="+QString::number(oArticulo->id)+ " AND id_empresa= "+QString::number(Configuracion_global->idEmpresa)))
+    {
+        acum2.next();
+        //-----------------------------------------
+        // Undidades vendidas (Grafica comparativa)
+        //-----------------------------------------
+        ui->txtUnid_ventas_enero_3->setText(acum2.record().value("unid_vent_enero").toString());
+        ui->txtUnid_ventas_febrero_3->setText(acum2.record().value("unid_vent_febrero").toString());
+        ui->txtUnid_ventas_marzo_3->setText(acum2.record().value("unid_vent_marzo").toString());
+        ui->txtUnid_ventas_abril_3->setText(acum2.record().value("unid_vent_abril").toString());
+        ui->txtUnid_ventas_mayo_3->setText(acum2.record().value("unid_vent_mayo").toString());
+        ui->txtUnid_ventas_junio_3->setText(acum2.record().value("unid_vent_junio").toString());
+        ui->txtUnid_ventas_julio_3->setText(acum2.record().value("unid_vent_julio").toString());
+        ui->txtUnid_ventas_agosto_3->setText(acum2.record().value("unid_vent_agosto").toString());
+        ui->txtUnid_ventas_septiembre_3->setText(acum2.record().value("unid_vent_septiembre").toString());
+        ui->txtUnid_ventas_octubre_3->setText(acum2.record().value("unid_vent_octubre").toString());
+        ui->txtUnid_ventas_noviembre_3->setText(acum2.record().value("unid_vent_noviembre").toString());
+        ui->txtUnid_ventas_diciembre_3->setText(acum2.record().value("unid_vent_diciembre").toString());
 
-            if (queryEmpresa.record().value("driverBD").toString() == "QSQLITE")
-                {
-                dbEmpresa2.setDatabaseName(queryEmpresa.record().value("ruta_bd_sqlite").toString());
-                    dbEmpresa2.open();
-            } else  {
-
-                dbEmpresa2.setDatabaseName(queryEmpresa.record().value("nombre_bd").toString());
-                dbEmpresa2.setHostName(queryEmpresa.record().value("host").toString());
-                dbEmpresa2.open(queryEmpresa.record().value("user").toString(),
-                                    queryEmpresa.record().value("contrasena").toString());
-            }
-            if (dbEmpresa2.lastError().isValid()) {
-                QMessageBox::critical(0, "error:", dbEmpresa2.lastError().text());
-            }
-            if(dbEmpresa2.isOpen()) {
-                QSqlQuery acum2(QSqlDatabase::database("empresa2"));
-                if(acum2.exec("select * from acum_articulos where id_articulo ="+QString::number(oArticulo->id))){
-                    acum2.next();
-                    //-----------------------------------------
-                    // Undidades vendidas (Grafica comparativa)
-                    //-----------------------------------------
-                    ui->txtUnid_ventas_enero_3->setText(acum2.record().value("unid_vent_enero").toString());
-                    ui->txtUnid_ventas_febrero_3->setText(acum2.record().value("unid_vent_febrero").toString());
-                    ui->txtUnid_ventas_marzo_3->setText(acum2.record().value("unid_vent_marzo").toString());
-                    ui->txtUnid_ventas_abril_3->setText(acum2.record().value("unid_vent_abril").toString());
-                    ui->txtUnid_ventas_mayo_3->setText(acum2.record().value("unid_vent_mayo").toString());
-                    ui->txtUnid_ventas_junio_3->setText(acum2.record().value("unid_vent_junio").toString());
-                    ui->txtUnid_ventas_julio_3->setText(acum2.record().value("unid_vent_julio").toString());
-                    ui->txtUnid_ventas_agosto_3->setText(acum2.record().value("unid_vent_agosto").toString());
-                    ui->txtUnid_ventas_septiembre_3->setText(acum2.record().value("unid_vent_septiembre").toString());
-                    ui->txtUnid_ventas_octubre_3->setText(acum2.record().value("unid_vent_octubre").toString());
-                    ui->txtUnid_ventas_noviembre_3->setText(acum2.record().value("unid_vent_noviembre").toString());
-                    ui->txtUnid_ventas_diciembre_3->setText(acum2.record().value("unid_vent_diciembre").toString());
-
-                    //--------------------
-                    // Importe Ventas
-                    //--------------------
-                    ui->txtImporte_ventas_enero_3->setText(acum2.record().value("acum_vent_enero").toString());
-                    ui->txtImporte_ventas_febrero_3->setText(acum2.record().value("acum_vent_febrero").toString());
-                    ui->txtImporte_ventas_marzo_3->setText(acum2.record().value("acum_vent_marzo").toString());
-                    ui->txtImporte_ventas_abril_3->setText(acum2.record().value("acum_vent_abril").toString());
-                    ui->txtImporte_ventas_mayo_3->setText(acum2.record().value("acum_vent_mayo").toString());
-                    ui->txtImporte_ventas_junio_3->setText(acum2.record().value("acum_vent_junio").toString());
-                    ui->txtImporte_ventas_julio_3->setText(acum2.record().value("acum_vent_julio").toString());
-                    ui->txtImporte_ventas_agosto_3->setText(acum2.record().value("acum_vent_agosto").toString());
-                    ui->txtImporte_ventas_septiembre_3->setText(acum2.record().value("acum_vent_septiembre").toString());
-                    ui->txtImporte_ventas_octubre_3->setText(acum2.record().value("acum_vent_octubre").toString());
-                    ui->txtImporte_ventas_noviembre_3->setText(acum2.record().value("acum_vent_noviembre").toString());
-                    ui->txtImporte_ventas_diciembre_3->setText(acum2.record().value("acum_vent_diciembre").toString());
-                    if(ui->radGrafica_importes_2->isChecked())
-                        GraficaImportes_comparativa();
-                    else
-                        GraficaUnidades_comparativa();
-
-                }
-            } else {
-                QMessageBox::warning(this,tr("ERROR:"),
-                                     tr("No se encontró el registro de la empresa"),
-                                     tr("Aceptar"));
-            }
-            dbEmpresa2.close();
-        }
+        //--------------------
+        // Importe Ventas
+        //--------------------
+        ui->txtImporte_ventas_enero_3->setText(acum2.record().value("acum_vent_enero").toString());
+        ui->txtImporte_ventas_febrero_3->setText(acum2.record().value("acum_vent_febrero").toString());
+        ui->txtImporte_ventas_marzo_3->setText(acum2.record().value("acum_vent_marzo").toString());
+        ui->txtImporte_ventas_abril_3->setText(acum2.record().value("acum_vent_abril").toString());
+        ui->txtImporte_ventas_mayo_3->setText(acum2.record().value("acum_vent_mayo").toString());
+        ui->txtImporte_ventas_junio_3->setText(acum2.record().value("acum_vent_junio").toString());
+        ui->txtImporte_ventas_julio_3->setText(acum2.record().value("acum_vent_julio").toString());
+        ui->txtImporte_ventas_agosto_3->setText(acum2.record().value("acum_vent_agosto").toString());
+        ui->txtImporte_ventas_septiembre_3->setText(acum2.record().value("acum_vent_septiembre").toString());
+        ui->txtImporte_ventas_octubre_3->setText(acum2.record().value("acum_vent_octubre").toString());
+        ui->txtImporte_ventas_noviembre_3->setText(acum2.record().value("acum_vent_noviembre").toString());
+        ui->txtImporte_ventas_diciembre_3->setText(acum2.record().value("acum_vent_diciembre").toString());
+        if(ui->radGrafica_importes_2->isChecked())
+            GraficaImportes_comparativa();
+        else
+            GraficaUnidades_comparativa();
     }
 }
 
@@ -2661,34 +2594,6 @@ void FrmArticulos::on_Pestanas_currentChanged(int index)
 {
     LLenarCampos(index);
 }
-
-void FrmArticulos::on_botBuscarGrupo_clicked()
-{
-    db_consulta_view consulta(this);
-    QStringList campos;
-    campos <<"id" << "codigo" <<"grupo_art";
-    consulta.set_campoBusqueda(campos);
-    consulta.set_texto_tabla("Grupos");
-    consulta.set_db("Maya");
-    consulta.set_SQL(QString("select id,codigo, grupo_art from gruposart where id_subsubfamilia = %1").arg(oArticulo->id_subSubFamilia));
-    QStringList cabecera;
-    QVariantList tamanos;
-
-    cabecera  << tr("Id") <<tr("código") << tr("Grupo");
-    tamanos <<"0" << "100"  <<"500";
-    consulta.set_headers(cabecera);
-    consulta.set_tamano_columnas(tamanos);
-    consulta.set_titulo("Busqueda de Grupos");
-    consulta.setFocus();
-    if(consulta.exec())
-    {
-        oArticulo->id_grupoart = consulta.get_id();
-        oArticulo->cGrupoArt = consulta.get_record().value("grupo_art").toString();
-        oArticulo->cod_GrupoArt = consulta.get_record().value("codigo").toString();
-        ui->txtcGupoArt->setText(consulta.get_record().value("grupo_art").toString());
-    }
-}
-
 
 void FrmArticulos::on_txtCoste_real_textChanged(const QString &arg1)
 {

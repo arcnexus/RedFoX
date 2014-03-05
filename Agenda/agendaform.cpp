@@ -89,7 +89,7 @@ void AgendaForm::on_btn_buscaUser_clicked()
     QString s = QInputDialog::getText(this,"Nombre","Nombre de usuario");
     Db_table_View form(this);
     form.set_db("Global");
-    form.set_table("mayaglobal.usuarios");
+    form.set_table("redfoxglobal.usuarios");
 
     form.setWindowTitle(tr("Usuarios"));
 

@@ -12,99 +12,6 @@ CREATE TABLE `@empresa@`.`modulos` (
   `module_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `@empresa@`.`acum_articulos` (
-  `id_articulo` int(11) NOT NULL,
-  `unid_comp_enero` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_febrero` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_marzo` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_abril` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_mayo` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_junio` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_julio` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_agosto` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_septiembre` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_octubre` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_noviembre` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_diciembre` int(11) NOT NULL DEFAULT '0',
-  `unid_comp_ejercicio` int(11) NOT NULL DEFAULT '0',
-  `acum_comp_enero` double NOT NULL DEFAULT '0',
-  `acum_comp_febrero` double NOT NULL DEFAULT '0',
-  `acum_comp_marzo` double NOT NULL DEFAULT '0',
-  `acum_comp_abril` double NOT NULL DEFAULT '0',
-  `acum_comp_mayo` double NOT NULL DEFAULT '0',
-  `acum_comp_junio` double NOT NULL DEFAULT '0',
-  `acum_comp_julio` double NOT NULL DEFAULT '0',
-  `acum_comp_agosto` double NOT NULL DEFAULT '0',
-  `acum_comp_septiembre` double NOT NULL DEFAULT '0',
-  `acum_comp_octubre` double NOT NULL DEFAULT '0',
-  `acum_comp_noviembre` double NOT NULL DEFAULT '0',
-  `acum_comp_diciembre` double NOT NULL DEFAULT '0',
-  `acum_comp_ejercicio` double NOT NULL DEFAULT '0',
-  `unid_vent_enero` double NOT NULL DEFAULT '0',
-  `unid_vent_febrero` double NOT NULL DEFAULT '0',
-  `unid_vent_marzo` double NOT NULL DEFAULT '0',
-  `unid_vent_abril` double NOT NULL DEFAULT '0',
-  `unid_vent_mayo` double NOT NULL DEFAULT '0',
-  `unid_vent_junio` double NOT NULL DEFAULT '0',
-  `unid_vent_julio` double NOT NULL DEFAULT '0',
-  `unid_vent_agosto` double NOT NULL DEFAULT '0',
-  `unid_vent_septiembre` double NOT NULL DEFAULT '0',
-  `unid_vent_octubre` double NOT NULL DEFAULT '0',
-  `unid_vent_noviembre` double NOT NULL DEFAULT '0',
-  `unid_vent_diciembre` double NOT NULL DEFAULT '0',
-  `unid_vent_acumulado` double NOT NULL DEFAULT '0',
-  `acum_vent_enero` double NOT NULL DEFAULT '0',
-  `acum_vent_febrero` double NOT NULL DEFAULT '0',
-  `acum_vent_marzo` double NOT NULL DEFAULT '0',
-  `acum_vent_abril` double NOT NULL DEFAULT '0',
-  `acum_vent_mayo` double NOT NULL DEFAULT '0',
-  `acum_vent_junio` double NOT NULL DEFAULT '0',
-  `acum_vent_julio` double NOT NULL DEFAULT '0',
-  `acum_vent_agosto` double NOT NULL DEFAULT '0',
-  `acum_vent_septiembre` double NOT NULL DEFAULT '0',
-  `acum_vent_octubre` double NOT NULL DEFAULT '0',
-  `acum_vent_noviembre` double NOT NULL DEFAULT '0',
-  `acum_vent_diciembre` double NOT NULL DEFAULT '0',
-  `acum_vent_ejercicio` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_articulo`),
-  UNIQUE KEY `id_Articulo_UNIQUE` (`id_articulo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`acum_clientes` (
-  `id_cliente` int(11) NOT NULL DEFAULT '0',
-  `acum_enero` double NOT NULL DEFAULT '0',
-  `acum_febrero` double NOT NULL DEFAULT '0',
-  `acum_marzo` double NOT NULL DEFAULT '0',
-  `acum_abril` double NOT NULL DEFAULT '0',
-  `acum_mayo` double NOT NULL DEFAULT '0',
-  `acum_junio` double NOT NULL DEFAULT '0',
-  `acum_julio` double NOT NULL DEFAULT '0',
-  `acum_agosto` double NOT NULL DEFAULT '0',
-  `acum_septiembre` double NOT NULL DEFAULT '0',
-  `acum_octubre` double NOT NULL DEFAULT '0',
-  `acum_noviembre` double NOT NULL DEFAULT '0',
-  `acum_diciembre` double NOT NULL DEFAULT '0',
-  `acum_ejercicio` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_cliente`),
-  UNIQUE KEY `Id_Cliente_UNIQUE` (`id_cliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`acum_proveedores` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_proveedor` int(11) DEFAULT NULL,
-  `acum_enero` double DEFAULT NULL,
-  `acum_febrero` double DEFAULT NULL,
-  `acum_marzo` double DEFAULT NULL,
-  `acum_abril` double DEFAULT NULL,
-  `acum_mayo` double DEFAULT NULL,
-  `acum_junio` double DEFAULT NULL,
-  `acum_julio` double DEFAULT NULL,
-  `acum_agosto` double DEFAULT NULL,
-  `acum_septiembre` double DEFAULT NULL,
-  `acum_octubre` double DEFAULT NULL,
-  `acum_noviembre` double DEFAULT NULL,
-  `acum_diciembre` double DEFAULT NULL,
-  `acum_total` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`alb_pro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `albaran` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -593,30 +500,6 @@ CREATE TABLE `@empresa@`.`cierrecaja` (
   `ejercicio` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`clientes_deuda` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_cliente` int(11) DEFAULT '0',
-  `fecha` date DEFAULT NULL,
-  `vencimiento` date DEFAULT NULL,
-  `documento` int(11) DEFAULT '0',
-  `id_ticket` int(11) DEFAULT '0',
-  `id_factura` int(11) DEFAULT '0',
-  `tipo` int(11) DEFAULT '0',
-  `importe` double DEFAULT '0',
-  `pagado` double DEFAULT '0',
-  `pendiente_cobro` double DEFAULT '0',
-  `entidad` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `oficina_entidad` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `dc_cuenta` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cuenta_corriente` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `importe_efectivo` double DEFAULT NULL,
-  `importe_tarjeta` double DEFAULT NULL,
-  `importe_cheque` double DEFAULT NULL,
-  `importe_transferencia` double DEFAULT NULL,
-  `importe_internet` double DEFAULT NULL,
-  `importe_vale` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`desglose_caja` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_cierre` int(11) DEFAULT NULL,
@@ -624,22 +507,6 @@ CREATE TABLE `@empresa@`.`desglose_caja` (
   `cantidad` int(11) DEFAULT NULL,
   `importe` double DEFAULT NULL,
   `id_moneda` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`deudas_proveedores` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '	',
-  `id_documento` int(11) DEFAULT NULL,
-  `documento` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fecha_deuda` date DEFAULT NULL,
-  `vencimiento` date DEFAULT NULL,
-  `importe_deuda` double DEFAULT NULL,
-  `pago_por` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `numero_tarjeta_cuenta` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_proveedor` int(11) DEFAULT NULL,
-  `pendiente` double DEFAULT NULL,
-  `id_asiento` int(11) DEFAULT NULL,
-  `asiento_numero` int(11) DEFAULT NULL,
-  `pagado` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`devoluciones` (
@@ -1209,14 +1076,6 @@ CREATE TABLE `@empresa@`.`reservas` (
   `pendiente` double DEFAULT '0',
   `entregado` double DEFAULT '0',
   `ejercicio` int(5) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`seguimiento` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fecha` datetime DEFAULT NULL,
-  `accion` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comentarios` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`series` (

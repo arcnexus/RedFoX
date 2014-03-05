@@ -1701,7 +1701,7 @@ void frmFacturas::on_btnGuardar_clicked()
             // -------------------------------------------------
             // Borrar vencimientos si existen para no duplicar
             //--------------------------------------------------
-            QString clausula = QString("id_factura = %1").arg(oFactura->id);
+            QString clausula = QString("id_factura = %1 and id_empresa=%2").arg(oFactura->id).arg(Configuracion_global->idEmpresa);
             QString error;
             SqlCalls::SqlDelete("clientes_deuda",Configuracion_global->groupDB,clausula,error);
             //----------------------

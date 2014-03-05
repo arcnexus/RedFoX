@@ -27,12 +27,6 @@ public:
     int id_subfamilia;
     QString subfamilia;
     QString cod_subfamilia;
-    int id_subSubFamilia;
-    QString cSubSubFamilia;
-    QString cod_SubSubFamilia;
-    int id_grupoart;
-    QString cGrupoArt;
-    QString cod_GrupoArt;
     QString codigo_iva;
     double tipo_iva;
     float porc_dto;
@@ -100,8 +94,6 @@ public:
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);
-    int getidSubSufFamilia(QString cSubSubFamilia_);
-    int getidGrupo(QString cGrupo_);
     QString getseccion(int nid);
     QString getfamilia(int nid);
     QString getsubfamilia(int nid);

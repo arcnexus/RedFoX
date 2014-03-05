@@ -22,8 +22,6 @@ private:
     QAction Seccion;
     QAction familias;
     QAction subFam;
-    QAction subsubFam;
-    QAction grupos;
     QVector<QPair<QAction *, MayaModule::accessLevel> > _actions;
 };
 

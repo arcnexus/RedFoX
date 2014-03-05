@@ -12,7 +12,6 @@
 #include "../Auxiliares/numericdelegate.h"
 #include "../Auxiliares/frmgastos_ped_pro.h"
 
-
 FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmPedidosProveedor),
@@ -21,6 +20,26 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     shortCut(new QPushButton(QIcon(":/Icons/PNG/pedido_pro.png"),"",this))
 {
     ui->setupUi(this);
+    ui->btn_cerrar->setVisible(showCerrar);
+}
+
+FrmPedidosProveedor::~FrmPedidosProveedor()
+{
+    delete ui;
+}
+
+void FrmPedidosProveedor::init_querys()
+{
+    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
+                              "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
+    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+                    Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+    modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
+                          Configuracion_global->empresaDB);
+}
+
+void FrmPedidosProveedor::init()
+{
     ui->stackedWidget->setCurrentIndex(1);
     ui->tabWidget_2->setCurrentIndex(0);
 
@@ -57,7 +76,7 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
 
 
-    ui->btn_cerrar->setVisible(showCerrar);
+
 
     //--------------
     // LLenar tablas
@@ -66,15 +85,13 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     model = new QSqlQueryModel(this);
     modelLineas = new QSqlQueryModel(this);
     modelgastos = new QSqlQueryModel(this);
-    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
-                    Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
+
     ui->tabla->setModel(model);
-    formatotabla();    
+    formatotabla();
     ui->tabla->selectRow(0);
 
     setUpBusqueda();
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
-                              "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
+
     ui->Lineas->setModel(modelLineas);
     QStringList header;
     QVariantList sizes;
@@ -96,8 +113,6 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     ui->Lineas->setItemDelegateForColumn(10,new MonetaryDelegate_totals(this,true));
     //-------------------------------------------------------
 
-    modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
-                          Configuracion_global->empresaDB);
     ui->tablagastos->setModel(modelgastos);
     header.clear();
     header <<tr("id") << tr("Descripción") <<tr("Importe");
@@ -121,28 +136,17 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
 
-    //--------------------
-    // %Iva combos gastos
-    //--------------------
-    iva = new QSqlQueryModel(this);
-    iva->setQuery("select iva from tiposiva",Configuracion_global->groupDB);
-    ui->cboporc_iva_gasto1->setModel(iva);
-    int index = ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
-    ui->cboporc_iva_gasto2->setModel(iva);
-    index = ui->cboporc_iva_gasto2->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
-    ui->cboporc_iva_gasto3->setModel(iva);
-    index = ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0));
-    ui->cboporc_iva_gasto1->setCurrentIndex(index);
+    ui->cboporc_iva_gasto1->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto1->setModelColumn(4);
+    ui->cboporc_iva_gasto1->setCurrentIndex(ui->cboporc_iva_gasto1->findText(Configuracion_global->ivaList.at(0)));
 
+    ui->cboporc_iva_gasto2->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto2->setModelColumn(4);
+    ui->cboporc_iva_gasto2->setCurrentIndex(ui->cboporc_iva_gasto2->findText(Configuracion_global->ivaList.at(0)));
 
-
-}
-
-FrmPedidosProveedor::~FrmPedidosProveedor()
-{
-    delete ui;
+    ui->cboporc_iva_gasto3->setModel(Configuracion_global->iva_model);
+    ui->cboporc_iva_gasto3->setModelColumn(4);
+    ui->cboporc_iva_gasto3->setCurrentIndex(ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0)));
 }
 
 void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
@@ -523,15 +527,20 @@ void FrmPedidosProveedor::buscar_proveeedor()
 
 void FrmPedidosProveedor::anadir_pedido()
 {
+    Configuracion_global->transaction();
     int id = oPedido_proveedor->nuevo_pedido_proveedor();
-    clear();
-    oPedido_proveedor->recuperar(id);
-    this->id = id;
-    emit block();
-    ui->stackedWidget->setCurrentIndex(0);
-    llenar_campos();
-    bloquearcampos(false);
+    if(id>=0)
+    {
+        clear();
+        oPedido_proveedor->recuperar(id);
+        this->id = id;
+        ui->stackedWidget->setCurrentIndex(0);
+        llenar_campos();
+        bloquearcampos(false);
+        ocultarBusqueda();
+        emit block();
     }
+}
 
 void FrmPedidosProveedor::guardar_pedido()
 {
@@ -539,8 +548,8 @@ void FrmPedidosProveedor::guardar_pedido()
     oPedido_proveedor->id =this->id;
     oPedido_proveedor->guardar();
 
+    Configuracion_global->commit();
 
-   // helper.saveTable(oPedido_proveedor->id,"empresa","lin_ped_pro");
     oPedido_proveedor->recuperar(oPedido_proveedor->id);
     llenar_campos();
     bloquearcampos(true);
@@ -549,6 +558,7 @@ void FrmPedidosProveedor::guardar_pedido()
 
 void FrmPedidosProveedor::editar_pedido()
 {
+    Configuracion_global->transaction();
     if(ui->stackedWidget->currentIndex() == 1)
         llenar_campos();
     ui->stackedWidget->setCurrentIndex(0);
@@ -558,6 +568,7 @@ void FrmPedidosProveedor::editar_pedido()
 }
 void FrmPedidosProveedor::deshacer()
 {
+    Configuracion_global->rollback();
     llenar_campos();
     bloquearcampos(true);
     emit unblock();
@@ -985,9 +996,13 @@ void FrmPedidosProveedor::ocultarBusqueda()
 }
 bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type() == QEvent::Resize)
+    if(event->type() == QEvent::Show && obj == this)
+    {
+        init_querys();
+    }
+    else if(event->type() == QEvent::Resize)
         _resizeBarraBusqueda(m_busqueda);
-    if(event->type() == QEvent::KeyPress)
+    else if(event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if(keyEvent->key() == Qt::Key_Return)

@@ -166,7 +166,7 @@ void frmGestionCobros::seleccionar_factura()
     {
         if(this->id_factura == -1)
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
-                               "pendiente_cobro from clientes_deuda where id_cliente = %1").arg(this->id_cliente);
+                               "pendiente_cobro from clientes_deuda where id_cliente = %1 and id_empresa=%2").arg(this->id_cliente).arg(Configuracion_global->idEmpresa);
         else
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
@@ -175,20 +175,20 @@ void frmGestionCobros::seleccionar_factura()
     {
         if(this->id_factura == -1)
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
-                               "pendiente_cobro from clientes_deuda where id_cliente = %1 and pendiente_cobro >0" ).arg(this->id_cliente);
+                               "pendiente_cobro from clientes_deuda where id_cliente = %1 and id_empresa=%2 and pendiente_cobro >0" ).arg(this->id_cliente).arg(Configuracion_global->idEmpresa);
         else
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
-                           "where id_cliente = %1 and documento = %2 and pendiente_cobro >0").arg(this->id_cliente,this->id_factura);
+                           "where id_cliente = %1 and documento = %2 and id_empresa=%3 and pendiente_cobro >0").arg(this->id_cliente).arg(this->id_factura).arg(Configuracion_global->idEmpresa);
     } else if(ui->radPagados->isChecked())
     {
         if(this->id_factura == -1)
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
-                               "pendiente_cobro from clientes_deuda where id_cliente = %1 and pendiente_cobro =0" ).arg(this->id_cliente);
+                               "pendiente_cobro from clientes_deuda where id_cliente = %1 and id_empresa=%2 and pendiente_cobro =0" ).arg(this->id_cliente).arg(Configuracion_global->idEmpresa);
         else
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
-                           "where id_cliente = %1 and documento = %2 and pendiente_cobro =0").arg(this->id_cliente,this->id_factura);
+                           "where id_cliente = %1 and documento = %2 and id_empresa=%23and pendiente_cobro =0").arg(this->id_cliente).arg(this->id_factura).arg(Configuracion_global->idEmpresa);
     }
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
 
@@ -208,15 +208,17 @@ void frmGestionCobros::seleccionar_varios()
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
-                           "where id_cliente = %1  and vencimiento between %2 and %3").arg(QString::number(this->id_cliente),
-                                                                                     ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                                     ui->txtfecha_fin->date().toString("yyyyMMdd"));
+                           "where id_cliente = %1  and vencimiento between %2 and %3 and id_empresa=%4").arg(this->id_cliente)
+                                                                                     .arg(ui->txtfecha_ini->date().toString("yyyyMMdd"))
+                                                                                     .arg(ui->txtfecha_fin->date().toString("yyyyMMdd"))
+                                                                                                             .arg(Configuracion_global->idEmpresa);
         } else
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                            "pendiente_cobro from clientes_deuda "
-                           "where vencimiento between %1 and %3").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                ui->txtfecha_fin->date().toString("yyyyMMdd"));
+                           "where vencimiento between %1 and %2 and id_empresa=%3").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"))
+                                                                                   .arg(ui->txtfecha_fin->date().toString("yyyyMMdd"))
+                                                                                   .arg(Configuracion_global->idEmpresa);
         }
     } else if(ui->radPendientes->isChecked())
     {
@@ -225,16 +227,14 @@ void frmGestionCobros::seleccionar_varios()
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
                            "where id_cliente = %1  and vencimiento between %2 and %3 "
-                           "and pendiente_cobro >0").arg(QString::number(this->id_cliente),
-                                                                                     ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                                     ui->txtfecha_fin->date().toString("yyyyMMdd"));
+                           "and pendiente_cobro >0 and id_empresa=%4").arg(this->id_cliente).arg(ui->txtfecha_ini->date().toString("yyyyMMdd"))
+                                                                  .arg(ui->txtfecha_fin->date().toString("yyyyMMdd")).arg(Configuracion_global->idEmpresa);
         } else
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                            "pendiente_cobro from clientes_deuda "
-                           "where vencimiento between %1 and %3 "
-                           "and pendiente_cobro >0").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                ui->txtfecha_fin->date().toString("yyyyMMdd"));
+                           "where vencimiento between %1 and %2 "
+                           "and pendiente_cobro >0 and id_empresa=%3").arg(ui->txtfecha_ini->date().toString("yyyyMMdd")).arg(ui->txtfecha_fin->date().toString("yyyyMMdd")).arg(Configuracion_global->idEmpresa);
         }
     } else if(ui->radPagados->isChecked())
     {
@@ -243,16 +243,16 @@ void frmGestionCobros::seleccionar_varios()
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                                "pendiente_cobro from clientes_deuda "
                            "where id_cliente = %1  and vencimiento between %2 and %3 "
-                           "and pendiente_cobro =0").arg(QString::number(this->id_cliente),
-                                                                                     ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                                     ui->txtfecha_fin->date().toString("yyyyMMdd"));
+                           "and pendiente_cobro =0 and id_empresa=%4").arg(this->id_cliente).arg(ui->txtfecha_ini->date().toString("yyyyMMdd"))
+                                                                      .arg(ui->txtfecha_fin->date().toString("yyyyMMdd")).arg(Configuracion_global->idEmpresa);
         } else
         {
             cSQL = QString("select id,fecha, vencimiento,documento,importe,pagado,"
                            "pendiente_cobro from clientes_deuda "
-                           "where vencimiento between %1 and %3 "
-                           "and pendiente_cobro =0").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"),
-                                                                ui->txtfecha_fin->date().toString("yyyyMMdd"));
+                           "where vencimiento between %1 and %2 "
+                           "and pendiente_cobro =0 and id_empresa=%2").arg(ui->txtfecha_ini->date().toString("yyyyMMdd"))
+                                                                      .arg(ui->txtfecha_fin->date().toString("yyyyMMdd"))
+                                                                      .arg(Configuracion_global->idEmpresa);
         }
 
     }

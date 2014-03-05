@@ -258,7 +258,8 @@ void Cliente::Anadir() {
      {
          QHash <QString, QVariant> h;
          h["id_cliente"] = new_id;
-         SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->empresaDB,error);
+         h["id_empresa"] = Configuracion_global->idEmpresa;
+         SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->groupDB,error);
          TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Corectamente");
          int nid = new_id;
          this->id = nid;
@@ -498,13 +499,14 @@ void Cliente::AnadirDeuda(int id_cliente, QDate fechaDeuda, QDate fechaVto, QStr
     if(!qCliente.exec()) {
         QMessageBox::critical(qApp->activeWindow(),tr("Añadir deuda cliente"),tr("Ha fallado la inserción de la deuda en la ficha del paciente"),tr("&Aceptar"));
     }
-
+    //TODO cambiar a SQLCalls
     QSqlQuery qClientes_Deuda(Configuracion_global->groupDB);
-    qClientes_Deuda.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
-                            "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta Values (:id_cliente,:fecha,:vencimiento,"
+    qClientes_Deuda.prepare("Insert into clientes_deuda (id_cliente,id_empresa,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
+                            "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta Values (:id_cliente,:id_empresa,:fecha,:vencimiento,"
                             ":documento,:id_ticket,:id_factura,:tipo,:importe,:pagado,:pendiente_cobro,:entidad,:oficina,"
                             ":dc,:cuenta)" );
     qClientes_Deuda.bindValue(":id_cliente",id_cliente);
+    qClientes_Deuda.bindValue(":id_empresa",Configuracion_global->idEmpresa);
     qClientes_Deuda.bindValue(":fecha",fechaDeuda);
     qClientes_Deuda.bindValue(":vencimiento",fechaVto);
     qClientes_Deuda.bindValue(":documento",documento);
@@ -716,14 +718,15 @@ void Cliente::Guardardireccion(bool Anadir, QString Descripcion, QString direcci
 }
 void Cliente::DescontarDeuda(int id_deuda, double pagado){
     QSqlQuery qClientes_deuda(Configuracion_global->groupDB);
-    qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda");
+    qClientes_deuda.prepare("Select * from clientes_deuda where id =:id_deuda and id_empresa=:id_empresa");
+    qClientes_deuda.bindValue(":id_empresa",Configuracion_global->idEmpresa);
     qClientes_deuda.bindValue(":id_deuda",id_deuda);
     if (!qClientes_deuda.exec()) {
         QMessageBox::critical(qApp->activeWindow(),tr("Modificar deuda Cliente"),tr("Falló la lectura de la deuda del cliente"),tr("&Aceptar"));
     }
     qClientes_deuda.prepare("update clientes_deuda ");
     qClientes_deuda.clear();
-
+    //TODO revisar descontar deuda O.o
 }
 
 bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
@@ -745,7 +748,7 @@ bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
                              tr("Aceptar"));
     }
 
-    QSqlQuery cli_acum(Configuracion_global->empresaDB);
+    QSqlQuery cli_acum(Configuracion_global->groupDB);
     cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio + %1").arg(total);
     if(fecha.month() ==1)
         cSQL.append(QString(",acum_enero = acum_enero + %1").arg(total));
@@ -772,7 +775,7 @@ bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
     if(fecha.month() ==12)
         cSQL.append(QString(",acum_diciembre = acum_diciembre + %1").arg(total));
 
-    cSQL.append(QString(" where id_cliente = %1").arg(id_cliente));
+    cSQL.append(QString(" where id_cliente = %1 and id_empresa=%2").arg(id_cliente).arg(Configuracion_global->idEmpresa));
     if(!cli_acum.exec(cSQL)){
         QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
                              tr("No se ha podido guardar los acumulados en acumulados de cliente: %1").arg(cli_acum.lastError().text()),
@@ -804,7 +807,7 @@ bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)
         success = false;
     }
 
-    QSqlQuery cli_acum(Configuracion_global->empresaDB);
+    QSqlQuery cli_acum(Configuracion_global->groupDB);
     cSQL = QString("update acum_clientes set acum_ejercicio = acum_ejercicio - %1").arg(total);
     if(fecha.month() ==1)
         cSQL.append(QString(",acum_enero = acum_enero - %1").arg(total));
@@ -831,7 +834,7 @@ bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)
     if(fecha.month() ==12)
         cSQL.append(QString(",acum_diciembre = acum_diciembre - %1").arg(total));
 
-    cSQL.append(QString(" where id_cliente = %1").arg(id_cliente));
+    cSQL.append(QString(" where id_cliente = %1 and id_empresa=%2").arg(id_cliente).arg(Configuracion_global->idEmpresa));
     if(!cli_acum.exec(cSQL)){
         QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
                              tr("No se ha podido restar por edición los acumulados en  acumulados de cliente: %1").arg(cli_acum.lastError().text()),

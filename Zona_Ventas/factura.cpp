@@ -316,10 +316,11 @@ bool Factura::GuardarFactura(int nid_factura, bool FacturaLegal)
                 // Genero deuda cliente
 
                 QSqlQuery Deudacliente(Configuracion_global->empresaDB);
-                Deudacliente.prepare("Insert into clientes_deuda (id_cliente,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
+                Deudacliente.prepare("Insert into clientes_deuda (id_cliente,id_empresa,fecha,vencimiento,documento,id_ticket,id_factura,tipo,"
                                      "importe,pagado,pendiente_cobro,entidad,oficina,dc,cuenta)"
-                                     " values (:id_cliente,:fecha,:vencimiento,:documento,:id_tiquet,:id_factura,:tipo,"
+                                     " values (:id_cliente,:id_empresa,:fecha,:vencimiento,:documento,:id_tiquet,:id_factura,:tipo,"
                                      ":importe,:pagado,:pendiente_cobro,:entidad,:oficina,:dc,:cuenta)");
+                Deudacliente.bindValue(":id_empresa",Configuracion_global->idEmpresa);
                 Deudacliente.bindValue(":id_cliente",record.field("id").value().toInt());
                 Deudacliente.bindValue(":fecha",QDate::currentDate());
                 Deudacliente.bindValue(":vencimiento",QDate::currentDate());

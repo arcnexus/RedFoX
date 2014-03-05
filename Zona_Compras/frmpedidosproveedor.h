@@ -29,6 +29,10 @@ public:
     QString ModuleMenuPath(){return tr("");}
     
     QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
+    void init_querys();
+
+public slots:
+    void init();
 signals:
 
 
@@ -120,7 +124,7 @@ private:
     QPushButton* shortCut;
     QSqlQueryModel *model;
     QSqlQueryModel *modelLineas;
-    QSqlQueryModel *iva;
+
     QSqlQueryModel *modelgastos;
 };
 

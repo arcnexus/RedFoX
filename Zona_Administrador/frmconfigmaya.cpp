@@ -51,7 +51,7 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->chk_vademecum_fitoterapia->setChecked(settings.value("vad_fito").toBool());
 
     model_grupos = new QSqlQueryModel(this);
-    model_grupos->setQuery("SELECT * from mayaglobal.grupos",Configuracion_global->globalDB);
+    model_grupos->setQuery("SELECT * from redfoxglobal.grupos",Configuracion_global->globalDB);
 
     model_empresa= new QSqlQueryModel(this);
 
@@ -235,7 +235,7 @@ bool frmConfigmaya::createSuperUser()
     _data["super_user"] = ui->chk_createSuper->isChecked();
 
     QString error;
-    int id = SqlCalls::SqlInsert(_data,"mayaglobal`.`usuarios",Configuracion_global->globalDB,error);
+    int id = SqlCalls::SqlInsert(_data,"redfoxglobal`.`usuarios",Configuracion_global->globalDB,error);
     if(id < 0)
     {
         QMessageBox::critical(this,tr("Error al insertar Super Usuario"),error);
@@ -281,7 +281,7 @@ bool frmConfigmaya::createSuperUser()
 
         }
     }
-    Configuracion_global->usuarios_model->setQuery("SELECT * from mayaglobal.usuarios",Configuracion_global->globalDB);
+    Configuracion_global->usuarios_model->setQuery("SELECT * from redfoxglobal.usuarios",Configuracion_global->globalDB);
     return true;
 }
 
@@ -755,7 +755,7 @@ void frmConfigmaya::on_chkSuperUser_permiso_toggled(bool checked)
     QHash<QString,QVariant> _data;
     _data["super_user"] = checked;
     QString error;
-    if(!SqlCalls::SqlUpdate(_data,"mayaglobal`.`usuarios",Configuracion_global->globalDB,QString("id = %1").arg(id_user),error))
+    if(!SqlCalls::SqlUpdate(_data,"redfoxglobal`.`usuarios",Configuracion_global->globalDB,QString("id = %1").arg(id_user),error))
         QMessageBox::critical(this,tr("Error"),error);
 }
 
@@ -803,7 +803,7 @@ void frmConfigmaya::on_btnGuardarEdit_clicked()
     if(r.value("super_user").toInt() != ui->chk_Super_edit->isChecked())
         _data["super_user"] = ui->chk_Super_edit->isChecked();
 
-    if(!SqlCalls::SqlUpdate(_data,"mayaglobal`.`usuarios",Configuracion_global->globalDB,QString("id = %1").arg(id),error))
+    if(!SqlCalls::SqlUpdate(_data,"redfoxglobal`.`usuarios",Configuracion_global->globalDB,QString("id = %1").arg(id),error))
         QMessageBox::critical(this,tr("Error al actualizar datos de usuario"),error);
     else
         TimedMessageBox * t = new TimedMessageBox(this,tr("Datos actualizados con éxito."));

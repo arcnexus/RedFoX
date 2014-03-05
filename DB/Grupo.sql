@@ -1,4 +1,100 @@
 CREATE SCHEMA IF NOT EXISTS `@grupo@` DEFAULT CHARACTER SET utf8 ;
+CREATE TABLE `@grupo@`.`acum_articulos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa` int(11) NOT NULL DEFAULT '0',
+  `id_articulo` int(11) NOT NULL,
+  `unid_comp_enero` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_febrero` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_marzo` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_abril` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_mayo` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_junio` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_julio` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_agosto` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_septiembre` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_octubre` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_noviembre` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_diciembre` int(11) NOT NULL DEFAULT '0',
+  `unid_comp_ejercicio` int(11) NOT NULL DEFAULT '0',
+  `acum_comp_enero` double NOT NULL DEFAULT '0',
+  `acum_comp_febrero` double NOT NULL DEFAULT '0',
+  `acum_comp_marzo` double NOT NULL DEFAULT '0',
+  `acum_comp_abril` double NOT NULL DEFAULT '0',
+  `acum_comp_mayo` double NOT NULL DEFAULT '0',
+  `acum_comp_junio` double NOT NULL DEFAULT '0',
+  `acum_comp_julio` double NOT NULL DEFAULT '0',
+  `acum_comp_agosto` double NOT NULL DEFAULT '0',
+  `acum_comp_septiembre` double NOT NULL DEFAULT '0',
+  `acum_comp_octubre` double NOT NULL DEFAULT '0',
+  `acum_comp_noviembre` double NOT NULL DEFAULT '0',
+  `acum_comp_diciembre` double NOT NULL DEFAULT '0',
+  `acum_comp_ejercicio` double NOT NULL DEFAULT '0',
+  `unid_vent_enero` double NOT NULL DEFAULT '0',
+  `unid_vent_febrero` double NOT NULL DEFAULT '0',
+  `unid_vent_marzo` double NOT NULL DEFAULT '0',
+  `unid_vent_abril` double NOT NULL DEFAULT '0',
+  `unid_vent_mayo` double NOT NULL DEFAULT '0',
+  `unid_vent_junio` double NOT NULL DEFAULT '0',
+  `unid_vent_julio` double NOT NULL DEFAULT '0',
+  `unid_vent_agosto` double NOT NULL DEFAULT '0',
+  `unid_vent_septiembre` double NOT NULL DEFAULT '0',
+  `unid_vent_octubre` double NOT NULL DEFAULT '0',
+  `unid_vent_noviembre` double NOT NULL DEFAULT '0',
+  `unid_vent_diciembre` double NOT NULL DEFAULT '0',
+  `unid_vent_acumulado` double NOT NULL DEFAULT '0',
+  `acum_vent_enero` double NOT NULL DEFAULT '0',
+  `acum_vent_febrero` double NOT NULL DEFAULT '0',
+  `acum_vent_marzo` double NOT NULL DEFAULT '0',
+  `acum_vent_abril` double NOT NULL DEFAULT '0',
+  `acum_vent_mayo` double NOT NULL DEFAULT '0',
+  `acum_vent_junio` double NOT NULL DEFAULT '0',
+  `acum_vent_julio` double NOT NULL DEFAULT '0',
+  `acum_vent_agosto` double NOT NULL DEFAULT '0',
+  `acum_vent_septiembre` double NOT NULL DEFAULT '0',
+  `acum_vent_octubre` double NOT NULL DEFAULT '0',
+  `acum_vent_noviembre` double NOT NULL DEFAULT '0',
+  `acum_vent_diciembre` double NOT NULL DEFAULT '0',
+  `acum_vent_ejercicio` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `@grupo@`.`acum_clientes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa` int(11) NOT NULL DEFAULT '0',
+  `id_cliente` int(11) NOT NULL DEFAULT '0',
+  `acum_enero` double NOT NULL DEFAULT '0',
+  `acum_febrero` double NOT NULL DEFAULT '0',
+  `acum_marzo` double NOT NULL DEFAULT '0',
+  `acum_abril` double NOT NULL DEFAULT '0',
+  `acum_mayo` double NOT NULL DEFAULT '0',
+  `acum_junio` double NOT NULL DEFAULT '0',
+  `acum_julio` double NOT NULL DEFAULT '0',
+  `acum_agosto` double NOT NULL DEFAULT '0',
+  `acum_septiembre` double NOT NULL DEFAULT '0',
+  `acum_octubre` double NOT NULL DEFAULT '0',
+  `acum_noviembre` double NOT NULL DEFAULT '0',
+  `acum_diciembre` double NOT NULL DEFAULT '0',
+  `acum_ejercicio` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `@grupo@`.`acum_proveedores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa` int(11) NOT NULL DEFAULT '0',
+  `id_proveedor` int(11) DEFAULT NULL,
+  `acum_enero` double DEFAULT NULL,
+  `acum_febrero` double DEFAULT NULL,
+  `acum_marzo` double DEFAULT NULL,
+  `acum_abril` double DEFAULT NULL,
+  `acum_mayo` double DEFAULT NULL,
+  `acum_junio` double DEFAULT NULL,
+  `acum_julio` double DEFAULT NULL,
+  `acum_agosto` double DEFAULT NULL,
+  `acum_septiembre` double DEFAULT NULL,
+  `acum_octubre` double DEFAULT NULL,
+  `acum_noviembre` double DEFAULT NULL,
+  `acum_diciembre` double DEFAULT NULL,
+  `acum_total` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@grupo@`.`agenda` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
@@ -79,8 +175,6 @@ CREATE TABLE `@grupo@`.`articulos` (
   `paquetes` int(11) DEFAULT '0',
   `localizacion_en_almacen` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_tipos_iva` int(11) DEFAULT NULL,
-  `id_subsub_familia` int(11) DEFAULT NULL,
-  `id_grupo_art` int(11) DEFAULT NULL,
   `id_web` int(11) DEFAULT '0',
   `stock_fisico_almacen` float DEFAULT NULL,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
@@ -156,18 +250,6 @@ CREATE TABLE `@grupo@`.`bancos` (
   `saldo` decimal(9,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@grupo@`.`calles` (
-  `nombre_calle` varchar(60) DEFAULT NULL,
-  `inp_inf` varchar(60) DEFAULT NULL,
-  `inp_sup` varchar(60) DEFAULT NULL,
-  `par_inf` varchar(60) DEFAULT NULL,
-  `par_sup` varchar(60) DEFAULT NULL,
-  `cp` varchar(60) DEFAULT NULL,
-  `poblacion` varchar(60) DEFAULT NULL,
-  `provincia` varchar(60) DEFAULT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`cliente_direcciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
@@ -318,6 +400,7 @@ CREATE TABLE `@grupo@`.`departamento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`deudas_proveedores` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '	',
+  `id_empresa` int(11) NOT NULL DEFAULT '0',
   `id_documento` int(11) DEFAULT NULL,
   `documento` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fecha_deuda` date DEFAULT NULL,
@@ -459,17 +542,9 @@ CREATE TABLE `@grupo@`.`grupos_gasto` (
   `diciembre` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE `@grupo@`.`gruposart` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_subsubfamilia` int(11) DEFAULT NULL,
-  `grupo_art` varchar(45) DEFAULT NULL,
-  `image` blob,
-  `type` varchar(4) DEFAULT NULL,
-  `codigo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`histo_clientes_deuda` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa` int(11) NOT NULL DEFAULT '0',
   `id_cab` int(11) NOT NULL DEFAULT '0',
   `fecha_movimiento` date DEFAULT NULL,
   `importe_anterior` double DEFAULT '0',
@@ -507,17 +582,6 @@ CREATE TABLE `@grupo@`.`kits` (
   `id_componente` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@grupo@`.`maestro_familia_cliente` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-CREATE TABLE `@grupo@`.`maestro_subfamilia_cliente` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(45) DEFAULT NULL,
-  `id_maestro_familia_cliente` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`monedas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `moneda` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -606,17 +670,6 @@ CREATE TABLE `@grupo@`.`personascontactotransportista` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
-CREATE TABLE `@grupo@`.`poblaciones` (
-  `cod_pais` int(11) DEFAULT NULL,
-  `poblacion` varchar(60) DEFAULT NULL,
-  `cp` varchar(60) DEFAULT NULL,
-  `cod_pro` varchar(60) DEFAULT NULL,
-  `provincia` varchar(60) DEFAULT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pais` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`proveedor_a_cuenta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `importe` double DEFAULT NULL,
@@ -696,15 +749,6 @@ CREATE TABLE `@grupo@`.`subfamilias` (
   `codigo` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@grupo@`.`subsubfamilias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_subfamilia` int(11) DEFAULT NULL,
-  `subsub_familia` varchar(45) DEFAULT NULL,
-  `im` blob,
-  `type` varchar(4) DEFAULT NULL,
-  `codigo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`tarifas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_articulo` int(11) DEFAULT NULL,
@@ -798,18 +842,6 @@ CREATE TABLE `@grupo@`.`trazabilidad2` (
   `cliente` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE TABLE `@grupo@`.`usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) DEFAULT NULL,
-  `contrasena` varchar(45) DEFAULT NULL,
-  `nivel_acceso` int(4) DEFAULT NULL,
-  `categoria` varchar(45) DEFAULT NULL,
-  `cuenta_smtp` varchar(100) DEFAULT NULL,
-  `usuario_mail` varchar(100) DEFAULT NULL,
-  `password_mail` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`proveedores_frecuentes` AS select `@grupo@`.`articulos_prov_frec`.`id_articulo` AS `id_art`,`@grupo@`.`proveedores`.`codigo` AS `cod_pro`,`@grupo@`.`proveedores`.`proveedor` AS `proveedor`,`@grupo@`.`proveedores`.`id` AS `id_prov`,`@grupo@`.`articulos_prov_frec`.`pvd` AS `pvd`,`@grupo@`.`articulos_prov_frec`.`oferta` AS `oferta`,`@grupo@`.`articulos_prov_frec`.`codigo` AS `codigo`,`@grupo@`.`articulos_prov_frec`.`descoferta` AS `descoferta`,`@grupo@`.`articulos_prov_frec`.`pvd_real` AS `pvd_real`,`@grupo@`.`monedas`.`moneda` AS `moneda`,`@grupo@`.`articulos_prov_frec`.`id` AS `id` from ((`@grupo@`.`articulos_prov_frec` join `@grupo@`.`proveedores` on((`@grupo@`.`articulos_prov_frec`.`id_proveedor` = `@grupo@`.`proveedores`.`id`))) left join `@grupo@`.`monedas` on((`@grupo@`.`articulos_prov_frec`.`id_divisa` = `@grupo@`.`monedas`.`id`)));
 CREATE OR REPLACE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `@grupo@`.`viewtarifa` AS select `@grupo@`.`tarifas`.`id` AS `id`,
 `@grupo@`.`paises`.`pais` AS `pais`,`@grupo@`.`monedas`.`moneda` AS `moneda`,`@grupo@`.`monedas`.`simbolo` AS `simbolo`,`@grupo@`.`codigotarifa`.`codigo_tarifa` AS `codigo_tarifa`, `@grupo@`.`codigotarifa`.`descripcion` AS `descripcion`,`@grupo@`.`tarifas`.`margen` AS `margen`,`@grupo@`.`tarifas`.`margen_minimo` AS `margen_minimo`,`@grupo@`.`tarifas`.`pvp` AS `pvp`,`@grupo@`.`tarifas`.`pvp` + (`@grupo@`.`tarifas`.`pvp` *(`@grupo@`.`articulos`.`tipo_iva`/100)) AS `pvp_con_iva`,

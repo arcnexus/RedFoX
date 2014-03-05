@@ -173,7 +173,8 @@ void FrmTPV::cargar_ticket(int id)
     oTpv->fecha = tpv.value(id).value("fecha").toDate();
     ui->lblHora->setText(tpv.value(id).value("hora").toString());
     this->id = id;
-    QString usuario = SqlCalls::SelectOneField("mayaglobal`.`usuarios","nombre",
+    //TODO revisar este id
+    QString usuario = SqlCalls::SelectOneField("redfoxglobal`.`usuarios","nombre",
                                               QString("id=%1").arg(tpv.value(id).value("id_dependiente").toInt()),
                                               Configuracion_global->globalDB,error).toString();
     ui->lblDependiente->setText(usuario);

@@ -25,7 +25,7 @@ void AreaRestringida_form::login()
 {
     QSqlQuery qryUsers(Configuracion_global->globalDB);
 
-    if( !qryUsers.exec("SELECT id,nombre,contrasena FROM `mayaglobal`.`usuarios` where super_user = 1") )
+    if( !qryUsers.exec("SELECT id,nombre,contrasena FROM `redfoxglobal`.`usuarios` where super_user = 1") )
     {
         QMessageBox::critical(this, "error:", qryUsers.lastError().text());
     }

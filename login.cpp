@@ -113,7 +113,7 @@ void Login::on_btnAcceder_clicked()
     Configuracion_global->porc_irpf = rEmpresa.value("porc_irpf").toFloat();
 
     QSqlQuery q(Configuracion_global->globalDB);
-    q.prepare( "SELECT * FROM mayaglobal.usuarios where nombre =:Nombre" );
+    q.prepare( "SELECT * FROM redfoxglobal.usuarios where nombre =:Nombre" );
     q.bindValue(":Nombre",ui->cboUsers->currentText());//NOTE cambiar esto para que busque en el model
     if( !q.exec() )
     {
@@ -185,7 +185,7 @@ bool Login::init()
 
     QSqlQuery QryEmpresas(QSqlDatabase::database("Global"));
 
-    QryEmpresas.prepare("Select * from mayaglobal.grupos");
+    QryEmpresas.prepare("Select * from redfoxglobal.grupos");
 
     if(QryEmpresas.exec())
 	{

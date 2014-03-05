@@ -168,6 +168,7 @@ bool vencimientos::calcular_vencimiento(QDate fecha,int id_forma_pago, int id_cl
                             h["dc"] = dc;
                             h["cuenta"] = cuenta;
                             h["id_cliente"] = id_cliente;
+                            h["id_empresa"] = Configuracion_global->idEmpresa;
                             new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
                         }
                         else
@@ -183,6 +184,7 @@ bool vencimientos::calcular_vencimiento(QDate fecha,int id_forma_pago, int id_cl
                             h["importe_deuda"] = importe;
                             h["pendiente"] = importe;
                             h["vencimiento"] = vencimiento;
+                            h["id_empresa"]=Configuracion_global->idEmpresa;
                             new_id = SqlCalls::SqlInsert(h,"deudas_proveedores",Configuracion_global->groupDB,error);
                         }
                         if(new_id ==-1)
@@ -260,6 +262,7 @@ bool vencimientos::calcular_vencimiento(QDate fecha,int id_forma_pago, int id_cl
                             h["dc"] = dc;
                             h["cuenta"] = cuenta;
                             h["id_cliente"] = id_cliente;
+                            h["id_empresa"] = Configuracion_global->idEmpresa;
                             if(SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error)==-1)
                             {
                                 QMessageBox::warning(qApp->activeWindow(),tr("Gestión de vencimientos"),
@@ -282,7 +285,7 @@ bool vencimientos::calcular_vencimiento(QDate fecha,int id_forma_pago, int id_cl
                             h["importe_deuda"] = importe_plazo;
                             h["pendiente"] = importe_plazo;
                             h["vencimiento"] = vencimiento;
-
+                            h["id_empresa"] = Configuracion_global->idEmpresa;
                             if(SqlCalls::SqlInsert(h,"deudas_proveedores",Configuracion_global->groupDB,error) ==-1)
                             {
                                 QMessageBox::warning(qApp->activeWindow(),tr("Gestión de vencimientos"),
@@ -351,6 +354,7 @@ bool vencimientos::calcular_vencimiento(QDate fecha,int id_forma_pago, int id_cl
                                 h["dc"] = dc;
                                 h["cuenta"] = cuenta;
                                 h["id_cliente"] = id_cliente;
+                                h["id_empresa"] = Configuracion_global->idEmpresa;
                                 new_id = SqlCalls::SqlInsert(h,"clientes_deuda",Configuracion_global->groupDB,error);
                             }
                             else
@@ -368,7 +372,7 @@ bool vencimientos::calcular_vencimiento(QDate fecha,int id_forma_pago, int id_cl
                                 h["importe_deuda"] = importe_plazo;
                                 h["pendiente"] = importe_plazo;
                                 h["vencimiento"] = vencimiento;
-
+                                h["id_empresa"] = Configuracion_global->idEmpresa;
                                 new_id = SqlCalls::SqlInsert(h,"deudas_proveedores",Configuracion_global->groupDB,error);
                             }
                             if(new_id ==-1)
