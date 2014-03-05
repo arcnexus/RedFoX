@@ -191,7 +191,6 @@ CREATE TABLE `@grupo@`.`articulos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `@grupo@`.`articulos_imagenes` (
   `id_articulo` INT NOT NULL,
   `imagen1` LONGBLOB NULL,
@@ -199,15 +198,12 @@ CREATE TABLE `@grupo@`.`articulos_imagenes` (
   `imagen3` LONGBLOB NULL,
   `imagen4` LONGBLOB NULL,
   PRIMARY KEY (`id_articulo`));
-
-
 CREATE TABLE `@grupo@`.`articulos_lotes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_articulo` INT NULL,
   `lote` VARCHAR(45) NULL,
   `caducidad` DATE NULL,
   PRIMARY KEY (`id`));
-
 CREATE TABLE `@grupo@`.`articulos_prov_frec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_articulo` int(11) DEFAULT NULL,
@@ -592,11 +588,6 @@ CREATE TABLE `@grupo@`.`monedas` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombreCorto_UNIQUE` (`nombre_corto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@grupo@`.`nivelacceso` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`paises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pais` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,

@@ -72,7 +72,6 @@ void Articulo::Anadir()
 
 }
 
-
 bool Articulo::Recuperar(QString cSQL)
 {
     QSqlQuery qryArticulo(Configuracion_global->groupDB);
