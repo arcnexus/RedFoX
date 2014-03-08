@@ -390,6 +390,12 @@ color: rgb(255,255,255);</string>
       </item>
       <item row="1" column="9">
        <widget class="QLineEdit" name="txtPorc_dto">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>0,00</string>
         </property>
@@ -457,6 +463,12 @@ Cliente</string>
       </item>
       <item row="1" column="10">
        <widget class="QLineEdit" name="txtPVP">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>0,00</string>
         </property>
@@ -544,35 +556,13 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="5">
-       <widget class="QLineEdit" name="txtCodigo">
-        <property name="minimumSize">
-         <size>
-          <width>131</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="placeholderText">
-         <string>* = buscar</string>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="6">
        <widget class="QLineEdit" name="txtCantidad">
-        <property name="maximumSize">
-         <size>
-          <width>59</width>
-          <height>16777215</height>
-         </size>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="text">
          <string>0,00</string>
@@ -597,37 +587,16 @@ color: rgb(255,255,255);</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" colspan="5">
-       <widget class="QLabel" name="label">
-        <property name="minimumSize">
-         <size>
-          <width>131</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: #304163;	
-font: 14pt &quot;Sans Serif&quot;;
-color: rgb(255,255,255);</string>
-        </property>
-        <property name="text">
-         <string>Código</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="7">
        <widget class="QLineEdit" name="txtPvp_recomendado">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(236, 236, 236);
@@ -650,12 +619,6 @@ color: rgb(0, 192, 0);</string>
       </item>
       <item row="0" column="6">
        <widget class="QLabel" name="label_3">
-        <property name="maximumSize">
-         <size>
-          <width>59</width>
-          <height>16777215</height>
-         </size>
-        </property>
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
 font: 14pt &quot;Sans Serif&quot;;
@@ -670,7 +633,7 @@ color: rgb(255,255,255);</string>
        </widget>
       </item>
       <item row="0" column="8">
-       <widget class="QLabel" name="label_18">
+       <widget class="QLabel" name="label_tarifa">
         <property name="styleSheet">
          <string notr="true">background-color: #304163;	
 font: 14pt &quot;Sans Serif&quot;;
@@ -678,6 +641,49 @@ color: rgb(255,255,255);</string>
         </property>
         <property name="text">
          <string>Tarifa</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="6">
+       <widget class="QLineEdit" name="txtCodigo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>131</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="placeholderText">
+         <string>Ctrl+B(Buscar)</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="6">
+       <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>131</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #304163;	
+font: 14pt &quot;Sans Serif&quot;;
+color: rgb(255,255,255);</string>
+        </property>
+        <property name="text">
+         <string>Código</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

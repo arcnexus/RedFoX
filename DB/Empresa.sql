@@ -127,7 +127,7 @@ CREATE TABLE `@empresa@`.`articulos_ofertas` (
 CREATE TABLE `@empresa@`.`cab_alb` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `serie` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `albaran` VARCHAR(45) NULL DEFAULT '0',
+  `albaran` varchar(45) COLLATE utf8_unicode_ci DEFAULT '0',
   `id_divisa` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `pedido_cliente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -210,17 +210,22 @@ CREATE TABLE `@empresa@`.`cab_alb` (
   `ejercicio` int(5) DEFAULT NULL,
   `editable` tinyint(1) DEFAULT '1',
   `id_agente` int(11) DEFAULT '0',
+  `es_simplificada` tinyint(4) DEFAULT '0',
+  `id_usuario` int(11) DEFAULT '0',
+  `id_caja` int(11) DEFAULT '0',
+  `hora` time DEFAULT '00:00:00',
+  `en_espera` tinyint(4) DEFAULT '0',
   `porc_irpf` double DEFAULT '0',
   `irpf` double DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_fac` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo_cliente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `serie` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `factura` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_divisa` int(11) DEFAULT NULL,
-  `tarifa_cliente` INT NULL DEFAULT '1', 
+  `tarifa_cliente` int(11) DEFAULT '1',
   `fecha` date DEFAULT NULL,
   `fecha_cobro` date DEFAULT NULL,
   `id_cliente` int(11) NOT NULL DEFAULT '0',
@@ -317,8 +322,13 @@ CREATE TABLE `@empresa@`.`cab_fac` (
   `pagado` double NOT NULL DEFAULT '0',
   `pendiente` double NOT NULL DEFAULT '0',
   `id_agente` int(11) DEFAULT '0',
+  `es_simplificada` tinyint(4) DEFAULT '0',
+  `id_usuario` int(11) DEFAULT '0',
+  `id_caja` int(11) DEFAULT '0',
+  `hora` time DEFAULT '00:00:00',
+  `en_espera` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`,`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cab_pre` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `presupuesto` varchar(25) COLLATE utf8_unicode_ci DEFAULT '0',
@@ -411,61 +421,6 @@ CREATE TABLE `@empresa@`.`cab_pre` (
   `id_agente` int(11) DEFAULT '0',
   `porc_irpf` double DEFAULT '0',
   `irpf` double DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`cab_tpv` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `caja` int(11) DEFAULT '0',
-  `serie` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ticket` int(11) DEFAULT '0',
-  `fecha` date NOT NULL,
-  `hora` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `id_usuario` int(11) DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT '0',
-  `codigo_` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nombre_cliente` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ticket_en_espera` tinyint(1) DEFAULT '0',
-  `pendiente_cobro` tinyint(1) DEFAULT '0',
-  `id_forma_pago` int(11) DEFAULT '0',
-  `tipo_targeta` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `impreso` tinyint(1) DEFAULT '0',
-  `importe` double DEFAULT '0',
-  `base1` double DEFAULT '0',
-  `base2` double DEFAULT '0',
-  `base3` double DEFAULT '0',
-  `base4` double DEFAULT '0',
-  `porc_iva1` float DEFAULT '0',
-  `porc_iva2` float DEFAULT '0',
-  `porc_iva3` float DEFAULT '0',
-  `porc_iva4` float DEFAULT '0',
-  `iva1` double DEFAULT '0',
-  `iva2` double DEFAULT '0',
-  `iva3` double DEFAULT '0',
-  `iva4` double DEFAULT '0',
-  `total1` double DEFAULT '0',
-  `total2` double DEFAULT '0',
-  `total3` double DEFAULT '0',
-  `total4` double DEFAULT '0',
-  `subtotal` double DEFAULT '0',
-  `dto` double DEFAULT '0',
-  `total_iva` double DEFAULT '0' COMMENT '	',
-  `cobrado` double DEFAULT '0',
-  `importe_pendiente_cobro` double DEFAULT '0',
-  `importe_efectivo` double DEFAULT '0',
-  `importe_tarjeta` double DEFAULT '0',
-  `importe_cheque` double DEFAULT '0',
-  `importe_domiciliacion` double DEFAULT '0',
-  `importe_vale` double DEFAULT NULL,
-  `importe_dto_redondeo` double DEFAULT '0',
-  `importe_cambio` double DEFAULT '0',
-  `entregado_a_cuenta` double DEFAULT '0',
-  `numero_pedido` int(11) NOT NULL DEFAULT '0',
-  `numero_albaran` int(11) DEFAULT '0',
-  `numero_factura` int(11) DEFAULT '0',
-  `id_cierre` int(11) DEFAULT NULL,
-  `ejercicio` int(5) DEFAULT NULL,
-  `editable` tinyint(1) DEFAULT '1',
-  `importe_transferencia` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`cajas` (
@@ -799,38 +754,6 @@ CREATE TABLE `@empresa@`.`lin_res` (
   `id_lote` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`lin_tpv` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_cab` int(11) DEFAULT NULL,
-  `id_articulo` int(11) DEFAULT '0',
-  `codigo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `descripcion` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `precio` double DEFAULT '0',
-  `cantidad` float DEFAULT '0',
-  `importe` double DEFAULT '0',
-  `porc_iva` float DEFAULT '0',
-  `iva` double DEFAULT '0',
-  `porc_rec` float DEFAULT '0',
-  `rec` double DEFAULT '0',
-  `porc_dto` float DEFAULT '0',
-  `total` double DEFAULT '0',
-  `subtotal` double DEFAULT '0',
-  `fecha_linea` date DEFAULT NULL,
-  `promocion` tinyint(1) DEFAULT '0',
-  `dev_act` float NOT NULL DEFAULT '0',
-  `devolucion` float NOT NULL DEFAULT '0',
-  `id_lote` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_Articulo` (`id_articulo`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-CREATE TABLE `@empresa@`.`lin_tpv_2` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_cab` int(11) DEFAULT NULL,
-  `descripcion` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tipo` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `valor` double DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`moneda_caja` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_moneda` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -939,7 +862,7 @@ CREATE TABLE `@empresa@`.`ped_cli` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`ped_pro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pedido` int(11) DEFAULT '0',
+  `pedido` VARCHAR(45) NULL DEFAULT '0',
   `ejercicio` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `recepcion` date DEFAULT NULL,

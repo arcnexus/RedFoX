@@ -238,7 +238,8 @@ void Cliente::GuardarWeb()
        t = new TimedMessageBox(qApp->activeWindow(),tr("Los datos se han guardado corectamente:"));
    }
        ;
-   Configuracion_global->CerrarDbWeb();
+   QSqlDatabase::database("dbweb").close();
+   QSqlDatabase::removeDatabase("dbweb");
 }
 void Cliente::Anadir() {
      QHash <QString, QVariant > cliente;
@@ -895,7 +896,8 @@ void Cliente::BorrarWeb(int id_web)
                                  tr("Ocurrió un error al borrar: %1").arg(queryClienteWeb.lastError().text()),
                                  tr("Aceptar"));
         }
-        Configuracion_global->CerrarDbWeb();
+        QSqlDatabase::database("dbweb").close();
+        QSqlDatabase::removeDatabase("dbweb");
     }
 }
 
@@ -916,8 +918,8 @@ void Cliente::Actualizar_de_web()
         QMessageBox::warning(qApp->activeWindow(),tr("Insertar desde web"),
                              tr("ERROR: %1").arg(queryClienteWeb.lastError().text()));
     }
-
-    Configuracion_global->CerrarDbWeb();
+    QSqlDatabase::database("dbweb").close();
+    QSqlDatabase::removeDatabase("dbweb");
 }
 
 QString Cliente::Nuevocodigo_cliente()

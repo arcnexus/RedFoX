@@ -6,246 +6,186 @@
 PedidoProveedor::PedidoProveedor(QObject *parent) :
     QObject(parent)
 {
-    this->pedido = 0;
+    this->pedido = "0";
+}
+
+QString PedidoProveedor::nuevoNumPedido()
+{
+    QSqlQuery cab_pre(Configuracion_global->empresaDB);
+    double presupuesto = 1;
+    cab_pre.prepare("Select pedido from ped_pro order by pedido desc limit 1");
+    if(cab_pre.exec())
+    {
+        cab_pre.next();
+        presupuesto= cab_pre.value(0).toDouble();
+        presupuesto ++;
+        presupuesto = qMax(1.0,presupuesto);
+    }
+    else
+    {
+         QMessageBox::critical(qApp->activeWindow(), "Error:", cab_pre.lastError().text());
+    }
+
+    QString codigo_nuevo;
+    QString formato = QString("%1.0f").arg(Configuracion_global->ndigitos_factura);
+    formato.prepend("%0");
+    std::string _x = formato.toStdString();
+
+    codigo_nuevo.sprintf(_x.c_str(),presupuesto);
+
+    return codigo_nuevo;
 }
 
 int PedidoProveedor::nuevo_pedido_proveedor()
 {
-    QSqlQuery queryPedido(Configuracion_global->empresaDB);
-    queryPedido.prepare("INSERT INTO ped_pro (`fecha`,`ejercicio`,`porc_iva1`,`porc_iva2`,`porc_iva3`,`porc_iva4`) "
-                        "VALUES(:fecha,:ejercicio,:porc_iva1,:porc_iva2,:porc_iva3,:porc_iva4);");
-    queryPedido.bindValue(":fecha",QDate::currentDate());
-    queryPedido.bindValue(":ejercicio",Configuracion_global->cEjercicio.toInt());
-    queryPedido.bindValue(":porc_iva1",Configuracion_global->ivaList.at(0));
-    queryPedido.bindValue(":porc_iva2",Configuracion_global->ivaList.at(1));
-    queryPedido.bindValue(":porc_iva3",Configuracion_global->ivaList.at(2));
-    queryPedido.bindValue(":porc_iva4",Configuracion_global->ivaList.at(3));
-    if(!queryPedido.exec())
-    {
-        QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
-                             tr("No se puede insertar un nuevo pedido: %1").arg(queryPedido.lastError().text()),
-                             tr("aceptar"));
-        return -1;
+    QHash<QString,QVariant> _data;
+    _data["fecha"] = QDate::currentDate();
+    _data["ejercicio"] = Configuracion_global->cEjercicio.toInt();
+    _data["porc_iva1"] = Configuracion_global->ivaList.at(0);
+    _data["porc_iva2"] = Configuracion_global->ivaList.at(1);
+    _data["porc_iva3"] = Configuracion_global->ivaList.at(2);
+    _data["porc_iva4"] = Configuracion_global->ivaList.at(3);
 
-    }
-    else
-        return queryPedido.lastInsertId().toInt();
+    QString error;
+    int new_id = SqlCalls::SqlInsert(_data,"ped_pro",Configuracion_global->empresaDB,error);
+
+    if(new_id == -1)
+        QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),tr("No se puede insertar un nuevo pedido:\n%1").arg(error),tr("aceptar"));
+
+    return new_id;
 }
 
-void PedidoProveedor::guardar()
+bool PedidoProveedor::guardar()
 {
-    //-------------------------------------------------------------
     // Si se trata de un nuevo pedido se le asigna numero de pedido
-    //-------------------------------------------------------------
-    QString cSql;
-    int pedido =0;
-    QSqlQuery queryPedido(Configuracion_global->empresaDB);
+    if(this->pedido == "0")
+        this->pedido = nuevoNumPedido();
 
-    if(this->pedido == 0)
-    {
-
-        if(queryPedido.exec("select pedido from ped_pro order by pedido desc limit 0,1"))
-        {
-            queryPedido.next();
-            pedido = queryPedido.record().value("pedido").toInt();
-            pedido++;
-            this->pedido = pedido;
-        }
-
-    }
     QSqlQuery queryGuardarPedido(Configuracion_global->empresaDB);
-    queryGuardarPedido.prepare("UPDATE ped_pro SET pedido =  :pedido,"
-    "ejercicio =:serie,"
-    "fecha =:fecha,"
-    "recepcion =:recepcion,"
-    "id_proveedor =:id_proveedor,"
-    "codigo_proveedor =:codigo_proveedor,"
-    "proveedor =:proveedor,"
-    "direccion1 =:direccion1,"
-    "direccion2 =:direccion2,"
-    "cp =:cp,"
-    "poblacion =:poblacion,"
-    "provincia =:provincia,"
-    "id_pais =:id_pais,"
-    "cif_nif =:cif_nif,"
-    "base_total =:base_total,"
-    "subtotal =:subtotal,"
-    "dto =:dto,"
-     "rec_total =:rec_total,"
-     "total =:total,"
-     "enviado =:enviado,"
-     "recibido =:recibido,"
-     "recibido_completo =:recibido_completo,"
-     "genero_pendiente =:genero_pendiente,"
-     "recargo_equivalencia =:recargo_equivalencia,"
-     "traspasado =:traspasado,"
-     "pedido_cliente =:pedido_cliente,"
-     "id_forma_pago =:id_forma_pago,"
-     "comentario =:comentario,"
-     "fecha_entrega =:fecha_entrega,"
-     "direccion_entrega1 =:direccion_entrega1,"
-     "direccion_entrega2 =:direccion_entrega2,"
-     "cp_entrega =:cp_entrega,"
-     "poblacion_entrega =:poblacion_entrega,"
-     "provincia_entrega =:provincia_entrega,"
-     "id_pais_entrega =:id_pais_entrega,"
-     "nombre_cliente =:nombre_cliente,"
-     "horario_activo =:horario_activo,"
-     "base1 =:base1,"
-     "base2 =:base2,"
-     "base3 =:base3,"
-     "base4 =:base4,"
-     "iva1 =:iva1,"
-     "iva2 =:iva2,"
-     "iva3 =:iva3,"
-     "iva4 =:iva4,"
-     "iva1 =:iva1,"
-     "iva2 =:iva2,"
-     "iva3 =:iva3,"
-     "iva4 =:iva4,"
-     "porc_rec1 =:porc_rec1,"
-     "porc_rec2 =:porc_rec2,"
-     "porc_rec3 =:porc_rec3,"
-     "porc_rec4 =:porc_rec4,"
-     "rec1 =:rec1,"
-     "rec2 =:rec2,"
-     "rec3 =:rec3,"
-     "rec4 =:rec4,"
-     "total1 =:total1,"
-     "total2 =:total2,"
-     "total3 =:total3,"
-     "total4 =:total4 "
-    " WHERE id = :id;");
+    QHash<QString,QVariant> _data;
+   // queryGuardarPedido.prepare("UPDATE ped_pro SET pedido =  :pedido,"
+    _data["pedido"] = pedido;
+    _data["ejercicio"]= ejercicio;
+    _data["fecha"]= fecha;
+    _data["recepcion"]= recepcion;
+    _data["id_proveedor"]= id_proveedor;
+    _data["codigo_proveedor"]= codigo_proveedor;
+    _data["proveedor"]= proveedor;
+    _data["direccion1"]= direccion1;
+    _data["direccion2"]= direccion2;
+    _data["cp"]= cp;
+    _data["poblacion"]= poblacion;
+    _data["provincia"]= provincia;
+    _data["id_pais"]= id_pais;
+    _data["cif_nif"]= cif_nif;
+    _data["base_total"]= base_total;
+    _data["subtotal"]= subtotal;
+    _data["dto"]= dto;
+    _data["rec_total"]= rec_total;
+    _data["total"]= total;
+    _data["enviado"]= enviado;
+    _data["recibido"]= recibido;
+    _data["recibido_completo"]= recibido_completo;
+    _data["genero_pendiente"]= genero_pendiente;
+    _data["recargo_equivalencia"]= recargo_equivalencia;
+    _data["traspasado"]= traspasado;
+    _data["pedido_cliente"]= pedido_cliente;
+    _data["id_forma_pago"]= id_forma_pago;
+    _data["comentario"]= comentario;
+    _data["fecha_entrega"]= fecha_entrega;
+    _data["direccion_entrega1"]= direccion_entrega1;
+    _data["direccion_entrega2"]= direccion_entrega2;
+    _data["cp_entrega"]= cp_entrega;
+    _data["poblacion_entrega"]= poblacion_entrega;
+    _data["provincia_entrega"]= provincia_entrega;
+    _data["id_pais_entrega"]= id_pais_entrega;
+    _data["nombre_cliente"]= nombre_cliente;
+    _data["horario_activo"]= horario_activo;
+    _data["base1"]= base1;
+    _data["base2"]= base2;
+    _data["base3"]= base3;
+    _data["base4"]= base4;
+    _data["iva1"]= iva1;
+    _data["iva2"]= iva2;
+    _data["iva3"]= iva3;
+    _data["iva4"]= iva4;
+    _data["porc_rec1"]= porc_rec1;
+    _data["porc_rec2"]= porc_rec2;
+    _data["porc_rec3"]= porc_rec3;
+    _data["porc_rec4"]= porc_rec4;
+    _data["rec1"]= rec1;
+    _data["rec2"]= rec2;
+    _data["rec3"]= rec3;
+    _data["rec4"]= rec4;
+    _data["total1"]= total1;
+    _data["total2"]= total2;
+    _data["total3"]= total3;
+    _data["total4"]= total4;
+    _data["porc_iva1"]= porc_iva1;
+    _data["porc_iva2"]= porc_iva2;
+    _data["porc_iva3"]= porc_iva3;
+    _data["porc_iva4"]= porc_iva4;
 
-    queryGuardarPedido.bindValue(":serie",this->ejercicio);
-    queryGuardarPedido.bindValue(":pedido",this->pedido);
-    queryGuardarPedido.bindValue(":fecha",this->fecha);
-    queryGuardarPedido.bindValue(":recepcion",this->recepcion);
-    queryGuardarPedido.bindValue(":id_proveedor",this->id_proveedor);
-    queryGuardarPedido.bindValue(":codigo_proveedor",this->codigo_proveedor);
-    queryGuardarPedido.bindValue(":proveedor",this->proveedor);
-    queryGuardarPedido.bindValue(":direccion1",this->direccion1);
-    queryGuardarPedido.bindValue(":direccion2",this->direccion2);
-    queryGuardarPedido.bindValue(":cp",this->cp);
-    queryGuardarPedido.bindValue(":poblacion",this->poblacion);
-    queryGuardarPedido.bindValue(":provincia",this->provincia);
-    queryGuardarPedido.bindValue(":id_pais",this->id_pais);
-    queryGuardarPedido.bindValue(":cif_nif",this->cif_nif);
-    queryGuardarPedido.bindValue(":base_total",this->base_total);
-    queryGuardarPedido.bindValue(":subtotal",this->subtotal);
-    queryGuardarPedido.bindValue(":dto",this->dto);
-    queryGuardarPedido.bindValue(":rec_total",this->rec_total);
-    queryGuardarPedido.bindValue(":total",this->total);
-    queryGuardarPedido.bindValue(":enviado",this->enviado);
-    queryGuardarPedido.bindValue(":recibido",this->recibido);
-    queryGuardarPedido.bindValue(":recibido_completo",this->recibido_completo);
-    queryGuardarPedido.bindValue(":genero_pendiente",this->genero_pendiente);
-    queryGuardarPedido.bindValue(":recargo_equivalencia",this->recargo_equivalencia);
-    queryGuardarPedido.bindValue(":traspasado",this->traspasado);
-    queryGuardarPedido.bindValue(":pedido_cliente",this->pedido_cliente);
-    queryGuardarPedido.bindValue(":id_forma_pago",this->id_forma_pago);
-    queryGuardarPedido.bindValue(":comentario",this->comentario);
-    queryGuardarPedido.bindValue(":fecha_entrega",this->fecha_entrega);
-    queryGuardarPedido.bindValue(":direccion_entrega1",this->direccion_entrega1);
-    queryGuardarPedido.bindValue(":direccion_entrega2",this->direccion_entrega2);
-    queryGuardarPedido.bindValue(":cp_entrega",this->cp_entrega);
-    queryGuardarPedido.bindValue(":poblacion_entrega",this->poblacion_entrega);
-    queryGuardarPedido.bindValue(":provincia_entrega",this->provincia_entrega);
-    queryGuardarPedido.bindValue(":id_pais_entrega",this->id_pais_entrega);
-    queryGuardarPedido.bindValue(":nombre_cliente",this->nombre_cliente);
-    queryGuardarPedido.bindValue(":horario_activo",this->horario_activo);
-    queryGuardarPedido.bindValue(":base1",this->base1);
-    queryGuardarPedido.bindValue(":base2",this->base2);
-    queryGuardarPedido.bindValue(":base3",this->base3);
-    queryGuardarPedido.bindValue(":base4",this->base4);
-    queryGuardarPedido.bindValue(":iva1",this->iva1);
-    queryGuardarPedido.bindValue(":iva2",this->iva2);
-    queryGuardarPedido.bindValue(":iva3",this->iva3);
-    queryGuardarPedido.bindValue(":iva4",this->iva4);
-    queryGuardarPedido.bindValue(":iva1",this->iva1);
-    queryGuardarPedido.bindValue(":iva2",this->iva2);
-    queryGuardarPedido.bindValue(":iva3",this->iva3);
-    queryGuardarPedido.bindValue(":iva4",this->iva4);
-    queryGuardarPedido.bindValue(":porc_rec1",this->porc_rec1);
-    queryGuardarPedido.bindValue(":porc_rec2",this->porc_rec2);
-    queryGuardarPedido.bindValue(":porc_rec3",this->porc_rec3);
-    queryGuardarPedido.bindValue(":porc_rec4",this->porc_rec4);
-    queryGuardarPedido.bindValue(":rec1",this->rec1);
-    queryGuardarPedido.bindValue(":rec2",this->rec2);
-    queryGuardarPedido.bindValue(":rec3",this->rec3);
-    queryGuardarPedido.bindValue(":rec4",this->rec4);
-    queryGuardarPedido.bindValue(":total1",this->total1);
-    queryGuardarPedido.bindValue(":total2",this->total2);
-    queryGuardarPedido.bindValue(":total3",this->total3);
-    queryGuardarPedido.bindValue(":total4",this->total4);
-    queryGuardarPedido.bindValue(":id",this->id);
+    /*
+    _data["telefono"]= ;
+    _data["fax"]= ;
+    _data["movil"]= ;
+    _data["impreso"]= ;
+    _data["desc_gasto1"]= ;
+    _data["desc_gasto2"]= ;
+    _data["desc_gasto3"]= ;
+    _data["imp_gasto1"]= ;
+    _data["imp_gasto2"]= ;
+    _data["imp_gasto3"]= ;
+    _data["gasto_to_coste"]= ;
+    _data["porc_iva_gasto1"]= ;
+    _data["porc_iva_gasto2"]= ;
+    _data["porc_iva_gasto3"]= ;
+    _data["iva_gasto1"]= ;
+    _data["iva_gasto2"]= ;
+    _data["iva_gasto3"]= ;
+    _data["editable"]= ;*/
 
-    if(!queryGuardarPedido.exec())
+    QString error;
+    bool b = SqlCalls::SqlUpdate(_data,"ped_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id),error);
+    if(!b)
+    {
         QMessageBox::warning(qApp->activeWindow(),tr("ATENCIÓN:"),
                              tr("Ha ocurrido un error al guardar el pedido: %1").arg(queryGuardarPedido.lastError().text()),
                              tr("Aceptar"));
-
-//    qDebug() << queryGuardarPedido.lastQuery();
-//    qDebug() << "id: " << this->id;
-//    qDebug() << "P: " << this->proveedor;
-
+    }
+    return b;
 }
 
-void PedidoProveedor::recuperar(int id)
+bool PedidoProveedor::recuperar(int id)
 {
-    QSqlQuery *queryPedido = new QSqlQuery(Configuracion_global->empresaDB);
-    queryPedido->prepare("select * from ped_pro where id = :id");
-    queryPedido->bindValue(":id",id);
-    if(queryPedido->exec())
-    {
-        cargar(queryPedido,0);
-  }else
-    {
-        QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
-                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido->lastError().text()),
-                             tr("Aceptar"));
-    }
-    delete queryPedido;
-
+    return recuperar(QString("select * from ped_pro where id = %1").arg(id),0);
 }
 
-
-void PedidoProveedor::recuperar(QString cadenaSQL)
+bool PedidoProveedor::recuperar(QString cadenaSQL)
 {
-    QSqlQuery *queryPedido = new QSqlQuery(Configuracion_global->empresaDB);
-
-    if(queryPedido->exec(cadenaSQL))
-    {
-        cargar(queryPedido,0);
-    }else
-    {
-        QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
-                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido->lastError().text()),
-                             tr("Aceptar"));
-    }
-    delete queryPedido;
+    return recuperar(cadenaSQL,0);
 }
 
-void PedidoProveedor::recuperar(QString cadenaSQL, int accion)
+bool PedidoProveedor::recuperar(QString cadenaSQL, int accion)
 {
-    QSqlQuery *queryPedido = new QSqlQuery(Configuracion_global->empresaDB);
+    QSqlQuery queryPedido(Configuracion_global->empresaDB);
 
-    if(queryPedido->exec(cadenaSQL))
-    {
-        cargar(queryPedido,accion);
-    } else
+    if(queryPedido.exec(cadenaSQL))
+        return cargar(&queryPedido,accion);
+    else
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
-                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido->lastError().text()),
+                             tr("Se produjo un error al recuperar los datos: %1").arg(queryPedido.lastError().text()),
                              tr("Aceptar"));
+        return false;
     }
-    delete queryPedido;
 }
 
 void PedidoProveedor::clear()
 {
     this->id = 0;
-    this->pedido = 0;
+    this->pedido = "0";
     this->ejercicio = 0;
     this->fecha = QDate::currentDate();
     this->recepcion = QDate::currentDate();
@@ -314,11 +254,12 @@ void PedidoProveedor::clear()
     this->total4 = 0;
 }
 
-void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
+bool PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
 {
-    if(queryPedido->next()){
+    if(queryPedido->next())
+    {
         this->id = queryPedido->record().value("id").toInt();
-        this->pedido = queryPedido->record().value("pedido").toInt();
+        this->pedido = queryPedido->record().value("pedido").toString();
         this->ejercicio = queryPedido->record().value("ejercicio").toInt();
         this->fecha = queryPedido->record().value("fecha").toDate();
         this->recepcion = queryPedido->record().value("recepcion").toDate();
@@ -384,7 +325,9 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->total2 = queryPedido->record().value("total2").toDouble();
         this->total3 = queryPedido->record().value("total3").toDouble();
         this->total4 = queryPedido->record().value("total4").toDouble();
-    } else
+        return true;
+    }
+    else
     {
         switch (accion) {
         case 0:
@@ -396,9 +339,8 @@ void PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         case 2:
             QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("Se ha llegado al inicio del fichero."),tr("Aceptar"));
             break;
-
         }
-
+        return false;
     }
 }
 void PedidoProveedor::convertir_en_albaran()
@@ -418,158 +360,45 @@ void PedidoProveedor::convertir_en_factura()
 
 bool PedidoProveedor::borrar(int id)
 {
-    QSqlQuery queryPedido(Configuracion_global->empresaDB);
     Configuracion_global->empresaDB.transaction();
-    bool error = false;
-    queryPedido.prepare("delete from lin_ped_pro where id_cab = :id");
-    queryPedido.bindValue(":id",id);
-    if(!queryPedido.exec())
-        error = true;
-    queryPedido.prepare("delete from ped_pro where id = :id");
-    queryPedido.bindValue(":id",id);
-    if(!queryPedido.exec())
-        error = true;
-    if(error == true) {
-        Configuracion_global->empresaDB.rollback();
-        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de pedidos a proveedores"),
-                             tr("Ocurrió un error al borrar: %1").arg(queryPedido.lastError().text()),
-                             tr("Aceptar"));
-        return false;
-    } else{
-        Configuracion_global->empresaDB.commit();
-        return true;
-    }
-}
 
-void PedidoProveedor::imprimir(int id)
-{
-    FrmDialogoImprimir imprimir(qApp->activeWindow());
-    if(imprimir.exec() == QDialog::Accepted)
+    QSqlQuery queryPedido(Configuracion_global->empresaDB);
+
+    bool ok  = queryPedido.exec(QString("delete from lin_ped_pro where id_cab = %1").arg(id));
+         ok &= queryPedido.exec(QString("delete from ped_pro where id = %1").arg(id));
+    if(!ok)
     {
-        QPrintDialog print;
-        print.exec();
-//        QSqlQuery query_ped_pro(Configuracion_global->empresaDB);
-//        query_ped_pro.prepare("update ped_pro set ");
+        Configuracion_global->empresaDB.rollback();
+        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de pedidos a proveedores"),tr("Ocurrió un error al borrar: %1").arg(queryPedido.lastError().text()),
+                             tr("Aceptar"));
     }
-
+    else
+    {
+        Configuracion_global->empresaDB.commit();
+    }
+    return ok;
 }
-
 
 bool PedidoProveedor::get(int id)
 {
     QSqlQuery q(Configuracion_global->empresaDB);
-    q.prepare("SELECT * FROM ped_pro WHERE id = :id");
-    q.bindValue(":id",id);
-    if(q.exec())
-    {
-        if(q.next())
-        {
-            fillPedido(q.record());
-            return true;
-        }
-    }
+    if(q.exec(QString("SELECT * FROM ped_pro WHERE id = %1").arg(id)))
+        return cargar(&q,0);
     return false;
 }
 
 bool PedidoProveedor::next()
 {
     QSqlQuery q(Configuracion_global->empresaDB);
-    q.prepare("SELECT * FROM ped_pro WHERE id = :id");
-    int idplus = id+1;
-    q.bindValue(":id",idplus);
-    if(q.exec())
-    {
-        if(q.next())
-        {
-            fillPedido(q.record());
-            return true;
-        }
-    }
+    if(q.exec(QString("SELECT * FROM ped_pro WHERE pedido > %1 limit 0,1").arg(pedido)))
+        return cargar(&q,1);
     return false;
 }
 
 bool PedidoProveedor::prev()
 {
     QSqlQuery q(Configuracion_global->empresaDB);
-    q.prepare("SELECT * FROM ped_pro WHERE id = :id");
-    int idminus = id-1;
-    q.bindValue(":id",idminus);
-    if(q.exec())
-    {
-        if(q.next())
-        {
-            fillPedido(q.record());
-            return true;
-        }
-    }
+    if(q.exec(QString("SELECT * FROM ped_pro WHERE pedido < %1 order by pedido desc  limit 0,1").arg(pedido)))
+        return cargar(&q,2);
     return false;
 }
-
-long PedidoProveedor::save()
-{
-    QSqlQuery q(Configuracion_global->empresaDB);
-    q.prepare("INSERT INTO ped_pro"
-              "( pedido ,  serie ,  fecha ,  recepcion ,  id_proveedor ,  codigo_proveedor ,"
-              " proveedor ,  direccion1 ,  direccion2 ,  cp ,  poblacion ,  provincia ,  id_pais ,"
-              " cif_nif ,  base ,  subtotal ,  dto ,  iva ,  rec_total ,  total ,  enviado ,  recibido ,"
-              " recibido_completo ,  genero_pendiente ,  base1 ,  base2 ,  base3 ,  base4 ,  porc_iva1 ,"
-              " porc_iva2 ,  porc_iva3 ,  porc_iva4 ,  iva1 ,  iva2 ,  iva3 ,  iva4 ,  total1 ,  total2 ,"
-              " total3 ,  total4 ,  nMargeporc_rec1 ,  nMargeporc_rec2 ,  nMargeporc_rec3 ,  nMargeporc_rec4 ,  rec1 ,  rec2 ,"
-              " rec3 ,  rec4 ,  traspasado ,  pedido_cliente ,  id_forma_pago ,  vencimiento1 ,  vencimiento2 ,"
-              " vencimiento3 ,  vencimiento4 ,  pagado1 ,  pagado2 ,  pagado3 ,  pagado4 ,  comentario ,"
-              " fecha_entrega ,  direccion_entrega1 ,  direccion_entrega2 ,  cp_entrega ,  poblacion_entrega ,"
-              " provincia_entrega ,  id_pais_entrega ,  nombre_cliente ,  horario_activo )"
-              " VALUES "
-              "( :pedido ,  :serie ,  :fecha ,  :recepcion ,  :id_proveedor ,  :codigo_proveedor ,"
-              " :proveedor ,  :direccion1 ,  :direccion2 ,  :cp ,  :poblacion ,  :provincia ,  :id_pais ,"
-              " :cif_nif ,  :base ,  :subtotal ,  :dto ,  :iva ,  :rec_total ,  :total ,  :enviado ,  :recibido ,"
-              " :recibido_completo ,  :genero_pendiente ,  :base1 ,  :base2 ,  :base3 ,  :base4 ,  :porc_iva1 ,"
-              " :porc_iva2 ,  :porc_iva3 ,  :porc_iva4 ,  :iva1 ,  :iva2 ,  :iva3 ,  :iva4 ,  :total1 ,  :total2 ,"
-              " :total3 ,  :total4 ,  :nMargeporc_rec1 ,  :nMargeporc_rec2 ,  :nMargeporc_rec3 ,  :nMargeporc_rec4 ,  :rec1 ,  :rec2 ,"
-              " :rec3 ,  :rec4 ,  :traspasado ,  :pedido_cliente ,  :id_forma_pago ,  :vencimiento1 ,  :vencimiento2 ,"
-              " :vencimiento3 ,  :vencimiento4 ,  :pagado1 ,  :pagado2 ,  :pagado3 ,  :pagado4 ,  :comentario ,"
-              " :fecha_entrega ,  :direccion_entrega1 ,  :direccion_entrega2 ,  :cp_entrega ,  :poblacion_entrega ,"
-              " :provincia_entrega ,  :id_pais_entrega ,  :nombre_cliente ,  :horario_activo ");
-            return -1;
-}
-
-bool PedidoProveedor::update()
-{
-    return false;
-}
-
-void PedidoProveedor::fillPedido(QSqlRecord r)
-{
-    id = r.value("id").toInt();
-    pedido = r.value("pedido").toULongLong();
-    //serie = r.value("serie").toString();
-    fecha = r.value("fecha").toDate();
-    recepcion = r.value("recepcion").toDate();
-    id_proveedor = r.value("id_proveedor").toULongLong();
-    codigo_proveedor = r.value("codigo_proveedor").toString();
-    proveedor = r.value("proveedor").toString();
-    direccion1 = r.value("direccion1").toString();
-    direccion2 = r.value("direccion2").toString();
-    cp = r.value("cp").toString();
-    poblacion= r.value("poblacion").toString();
-    provincia= r.value("provincia").toString();
-    id_pais= r.value("id_pais").toInt();
-    cif_nif= r.value("cif_nif").toString();
-    //base= r.value("base").toDouble();
-    subtotal= r.value("subtotal").toDouble();
-    dto= r.value("dto").toDouble();
-    iva= r.value("iva").toDouble();
-    rec_total= r.value("rec_total").toDouble();
-    total= r.value("total").toDouble();
-    enviado= r.value("enviado").toULongLong();
-    recibido= r.value("recibido").toULongLong();
-    recibido_completo= r.value("recibido_completo").toULongLong();
-    genero_pendiente= r.value("genero_pendiente").toULongLong();
-    recargo_equivalencia = r.value("recargo_equivalencia").toBool();
-    base1= r.value("base1").toDouble();
-    base2= r.value("base2").toDouble();
-    base3= r.value("base3").toDouble();
-    base4= r.value("base4").toDouble();
-    porc_iva1= r.value("porc_iva1").toDouble();
-}
-

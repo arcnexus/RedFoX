@@ -5,7 +5,7 @@
 #include "presupuesto.h"
 #include "../Zona_Pacientes/cliente.h"
 
-#include "../Auxiliares/table_helper.h"
+
 #include <QTimer>
 #include "../mayamodule.h"
 namespace Ui {

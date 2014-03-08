@@ -1198,8 +1198,8 @@ void FrmFichaPaciente::anadirDiagnostico()
             }
 
         }
-        Configuracion_global->CerrarBDMediTec();
-
+        QSqlDatabase::database("db_meditec").close();
+        QSqlDatabase::removeDatabase("db_meditec");
     }
 
 }

@@ -32,7 +32,7 @@ void FrmPedidosProveedor::init_querys()
 {
     modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
-    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+    model_busqueda->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
                           Configuracion_global->empresaDB);
@@ -60,8 +60,6 @@ void FrmPedidosProveedor::init()
     connect(ui->btnEditar,SIGNAL(clicked()),this,SLOT(editar_pedido()));
     connect(ui->btnGuardar,SIGNAL(clicked()),this,SLOT(guardar_pedido()));
     connect(ui->btnDeshacer,SIGNAL(clicked()),this,SLOT(deshacer()));
-    connect(ui->btnSiguiente,SIGNAL(clicked()),this,SLOT(siguiente()));
-    connect(ui->btnAnterior,SIGNAL(clicked()),this,SLOT(anterior()));
     connect(ui->btnImprimir,SIGNAL(clicked()),this,SLOT(imprimir()));
     connect(ui->btn_borrar,SIGNAL(clicked()),this,SLOT(borrar_pedido()));
 
@@ -75,18 +73,16 @@ void FrmPedidosProveedor::init()
     ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
     ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
 
-
-
-
     //--------------
     // LLenar tablas
     //--------------
 
-    model = new QSqlQueryModel(this);
+    model_busqueda = new QSqlQueryModel(this);
     modelLineas = new QSqlQueryModel(this);
     modelgastos = new QSqlQueryModel(this);
+    modelEntregas = new  QSqlQueryModel(this);
 
-    ui->tabla->setModel(model);
+    ui->tabla->setModel(model_busqueda);
     formatotabla();
     ui->tabla->selectRow(0);
 
@@ -149,14 +145,8 @@ void FrmPedidosProveedor::init()
     ui->cboporc_iva_gasto3->setCurrentIndex(ui->cboporc_iva_gasto3->findText(Configuracion_global->ivaList.at(0)));
 }
 
-void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
+void FrmPedidosProveedor::llenarProveedor(int id)
 {
-    if(isNew)
-    {
-        ui->btnAnadir->clicked();
-        ui->tabWidget_2->setCurrentIndex(1);
-        ui->btnAnadirLinea->clicked();
-    }
     prov.Recuperar(id);
     ui->txtcodigo_proveedor->setText(prov.codigo);
     ui->txtproveedor->setText(prov.proveedor);
@@ -166,272 +156,13 @@ void FrmPedidosProveedor::llenarProveedor(int id, bool isNew)
     ui->txtprovincia->setText(prov.provincia);
     ui->txtcp->setText(prov.cp);
     ui->txtcif->setText(prov.cif);
-    for(int i =0;i<Configuracion_global->paises_model->rowCount();i++)
-    {
-        if(Configuracion_global->paises_model->record(i).value("id").toInt() == oPedido_proveedor->id_pais)
-        {
-            int ind_pais = ui->combo_pais->findText(Configuracion_global->paises_model->record(i).value("pais").toString());
-            ui->combo_pais->setCurrentIndex(ind_pais);
-            break;
-        }
-        else
-        {
-            ui->combo_pais->setCurrentIndex(-1);
-        }
-    }
+    ui->combo_pais->setCurrentText(Configuracion_global->Devolver_pais(prov.id_pais));
     ui->lblnombreProveedor->setText(prov.proveedor);
     ui->chkrecargo_equivalencia->setChecked(prov.recargo_equivalencia);
 }
 
-void FrmPedidosProveedor::lineaReady(lineaDetalle * ld)
-{
-    //-----------------------------------------------------
-    // Insertamos línea de pedido y controlamos acumulados
-    //-----------------------------------------------------
-
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-    if (ld->idLinea == -1)
-    {
-        //qDebug()<< ld->idLinea;
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("select id from articulos where codigo =:codigo");
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec())
-            queryArticulos.next();
-        else
-            ok_Maya = false;
-
-        QSqlQuery query_lin_ped_pro(Configuracion_global->empresaDB);
-        query_lin_ped_pro.prepare("INSERT INTO lin_ped_pro (id_cab,id_articulo,codigo,"
-                                  "descripcion, cantidad, precio,subtotal,porc_dto,dto,porc_iva,"
-                                  "iva,total,cantidad_pendiente) VALUES (:id_cab,:id_articulo,:codigo,"
-                                  ":descripcion,:cantidad,:precio,:subtotal,:porc_dto,:dto,"
-                                  ":porc_iva,:iva,:total,:cantidad_pendiente);");
-        query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
-        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
-        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
-        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
-        query_lin_ped_pro.bindValue(":preio",ld->precio);
-        query_lin_ped_pro.bindValue(":subtotal",ld->subtotal);
-        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
-        query_lin_ped_pro.bindValue(":dto",ld->dto);
-        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
-        query_lin_ped_pro.bindValue(":total",ld->total);
-        if (!query_lin_ped_pro.exec()){
-            ok_empresa = false;
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(query_lin_ped_pro.lastError().text()),
-                                 tr("Aceptar"));
-        }
-        // ---------------------------------
-        // Actualización stock y acumulados
-        //----------------------------------
-
-        queryArticulos.prepare("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir+:cant_recibir, "
-                               " stock_real = stock_real + :cant_recibir2 where codigo=:codigo");
-        queryArticulos.bindValue(":cant_recibir",ld->cantidad);
-        queryArticulos.bindValue(":cant_recibir2",ld->cantidad);
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec() && ok_empresa){
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-
-        ld->idLinea = query_lin_ped_pro.lastInsertId().toInt();
-
-    } else
-    {
-        // --------------------------
-        // Descuento unidades pedidas
-        //---------------------------
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir-:cant_recibir,"
-                               "stock_real = stock_real - :cant_recibir2 where codigo=:codigo");
-        queryArticulos.bindValue(":cant_recibir",ld->cantidad_old);
-        queryArticulos.bindValue(":cant_recibir2",ld->cantidad_old);
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if (!queryArticulos.exec())
-        {
-            ok_Maya = false;
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Se produjo un error al actualizar stock : %1").arg(queryArticulos.lastError().text()));
-
-        }
-
-        queryArticulos.prepare("select id from articulos where codigo =:codigo");
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec())
-            queryArticulos.next();
-        else
-            ok_Maya = false;
-        QSqlQuery query_lin_ped_pro(Configuracion_global->empresaDB);
-        query_lin_ped_pro.prepare("UPDATE lin_ped_pro SET "
-                                  "id_articulo =:id_articulo,"
-                                  "codigo=:codigo,"
-                                  "descripcion =:descripcion,"
-                                  "cantidad =:cantidad,"
-                                  "cantidad_pendiente =:cantidad_pendiente,"
-                                  "precio =:precio,"
-                                  "subtotal =:subtotal,"
-                                  "porc_dto =:porc_dto,"
-                                  "dto =:dto,"
-                                  "porc_iva =:porc_iva,"
-                                  "iva =:iva,"
-                                  "total =:total "
-                                  "WHERE id = :id;");
-
-        query_lin_ped_pro.bindValue(":id_cab", oPedido_proveedor->id);
-        query_lin_ped_pro.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        query_lin_ped_pro.bindValue(":codigo",ld->codigo);
-        query_lin_ped_pro.bindValue(":descripcion",ld->descripcion);
-        query_lin_ped_pro.bindValue(":cantidad",ld->cantidad);
-        query_lin_ped_pro.bindValue(":cantidad_pendiente",ld->cantidad);
-        query_lin_ped_pro.bindValue(":precio",ld->precio);
-        query_lin_ped_pro.bindValue(":subtotal",ld->subtotal);
-        query_lin_ped_pro.bindValue(":porc_dto",ld->dto_perc);
-        query_lin_ped_pro.bindValue(":dto",ld->dto);
-        query_lin_ped_pro.bindValue(":porc_iva",ld->iva_perc);
-        query_lin_ped_pro.bindValue(":iva",0); // importe iva hay que calcularlo
-        query_lin_ped_pro.bindValue(":total",ld->total);
-        query_lin_ped_pro.bindValue(":id",ld->idLinea);
-
-        if (!query_lin_ped_pro.exec()) {
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Ocurrió un error al guardar la línea: %1").arg(query_lin_ped_pro.lastError().text()),
-                                 tr("Aceptar"));
-            ok_empresa = false;
-        }
-        // ---------------------------------
-        // Actualización stock y acumulados
-        //----------------------------------
-        queryArticulos.prepare("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir + :cant_recibir, "
-                               "stock_real = stock_real + :cant_recibir2 where codigo=:codigo");
-        queryArticulos.bindValue(":cant_recibir",ld->cantidad);
-        queryArticulos.bindValue(":cant_recibir2",ld->cantidad);
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec() && ok_empresa && ok_Maya){
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    ld->cantidad_old = ld->cantidad;
-}
-
-void FrmPedidosProveedor::lineaDeleted(lineaDetalle * ld)
-{
-    //todo borrar de la bd y stock y demas
-    //if id = -1 pasando olimpicamente
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-    if(ld->idLinea >-1)
-    {
-        // --------------------------
-        // Descuento unidades pedidas
-        //---------------------------
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir-:cant_recibir,"
-                               "stock_real = stock_real + :cant_recibir2 where codigo=:codigo");
-        queryArticulos.bindValue(":cant_recibir",ld->cantidad_old);
-        queryArticulos.bindValue(":cant_recibir2",ld->cantidad_old);
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if (!queryArticulos.exec())
-        {
-            ok_Maya = false;
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Se produjo un error al actualizar stock : %1").arg(queryArticulos.lastError().text()));
-
-        }
-        //----------------------
-        // Borrar línea pedido
-        //----------------------
-        QSqlQuery querylin_ped_pro(Configuracion_global->empresaDB);
-        querylin_ped_pro.prepare("delete from lin_ped_pro where id =:id");
-        querylin_ped_pro.bindValue(":id",ld->idLinea);
-        if(querylin_ped_pro.exec() && ok_Maya)
-        {
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    //qDebug() << "borra" << id;
-    delete ld;
-}
-
-void FrmPedidosProveedor::totalChanged(double base, double dto, double subtotal, double iva, double re, double total, QString moneda)
-{
-    total += iva;
-    ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)+moneda));
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales)+moneda));
-    ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales)+moneda));
-    ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)+moneda));
-    ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)+moneda));
-    ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)+moneda));
-
-    ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)+moneda));
-    ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)+moneda));
-    ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)+moneda));
-    ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)+moneda));
-    this->moneda = moneda;
-}
-
-void FrmPedidosProveedor::desglose1Changed(double base, double iva, double re, double total)
-{
-    ui->txtbase1->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva1->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
-    ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
-}
-
-void FrmPedidosProveedor::desglose2Changed(double base, double iva, double re, double total)
-{
-    ui->txtbase2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
-    ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
-}
-
-void FrmPedidosProveedor::desglose3Changed(double base, double iva, double re, double total)
-{
-    ui->txtbase3->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda( QString::number(re,'f',Configuracion_global->decimales)));
-    ui->txttotal3->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
-}
-
-void FrmPedidosProveedor::desglose4Changed(double base, double iva, double re, double total)
-{
-    ui->txtbase4->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales)));
-    ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales)));
-    ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
-}
-
-
 void FrmPedidosProveedor::bloquearcampos(bool state)
 {
-
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
     QLineEdit *lineEdit;
     foreach (lineEdit, lineEditList) {
@@ -444,14 +175,8 @@ void FrmPedidosProveedor::bloquearcampos(bool state)
         ComboBox->setEnabled(!state);
         //qDebug() << lineEdit->objectName();
     }
-    // SpinBox
-//    QList<QSpinBox *> SpinBoxList = this->findChildren<QSpinBox *>();
-//    QSpinBox *SpinBox;
-//    foreach (SpinBox, SpinBoxList) {
-//        SpinBox->setReadOnly(!state);
-//        //qDebug() << lineEdit->objectName();
-//   }
-//DoubleSpinBox
+
+    //DoubleSpinBox
     QList<QDoubleSpinBox *> DSpinBoxList = this->findChildren<QDoubleSpinBox *>();
     QDoubleSpinBox *DSpinBox;
     foreach (DSpinBox, DSpinBoxList) {
@@ -481,6 +206,7 @@ void FrmPedidosProveedor::bloquearcampos(bool state)
     }
 
     ui->btnAnadir->setEnabled(state);
+    ui->btnBuscar->setEnabled(state);
     ui->btnAnterior->setEnabled(state);
     ui->btn_borrar->setEnabled(state);
     ui->btnDeshacer->setEnabled(!state);
@@ -488,21 +214,13 @@ void FrmPedidosProveedor::bloquearcampos(bool state)
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->btnAnadirLinea->setEnabled(!state);
-
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
-    //helper.blockTable(state);
-    // activo controles que deben estar activos.
     m_busqueda->block(!state);
-
-
-
 }
 
 void FrmPedidosProveedor::buscar_proveeedor()
 {
-//    FrmBuscarProveedor buscar(this);
-//    if(buscar.exec() == QDialog::Accepted)
     db_consulta_view consulta;
     QStringList campos;
     campos  << "codigo" << "proveedor";
@@ -533,11 +251,12 @@ void FrmPedidosProveedor::anadir_pedido()
     {
         clear();
         oPedido_proveedor->recuperar(id);
-        this->id = id;
-        ui->stackedWidget->setCurrentIndex(0);
+        this->id = id;        
         llenar_campos();
         bloquearcampos(false);
         ocultarBusqueda();
+        ui->lblnumero_pedido->setText("0");
+        ui->stackedWidget->setCurrentIndex(0);
         emit block();
     }
 }
@@ -546,21 +265,27 @@ void FrmPedidosProveedor::guardar_pedido()
 {
     guardar_campos_en_objeto();
     oPedido_proveedor->id =this->id;
-    oPedido_proveedor->guardar();
-
-    Configuracion_global->commit();
-
-    oPedido_proveedor->recuperar(oPedido_proveedor->id);
-    llenar_campos();
-    bloquearcampos(true);
-    emit unblock();
+    if(oPedido_proveedor->guardar())
+    {
+        Configuracion_global->commit();
+        oPedido_proveedor->recuperar(oPedido_proveedor->id);
+        llenar_campos();
+        bloquearcampos(true);
+        emit unblock();
+    }
 }
 
 void FrmPedidosProveedor::editar_pedido()
 {
     Configuracion_global->transaction();
     if(ui->stackedWidget->currentIndex() == 1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        int _id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        oPedido_proveedor->recuperar(_id);
         llenar_campos();
+    }
     ui->stackedWidget->setCurrentIndex(0);
     bloquearcampos(false);
     emit block();
@@ -574,46 +299,34 @@ void FrmPedidosProveedor::deshacer()
     emit unblock();
 }
 
-void FrmPedidosProveedor::siguiente()
-{
-    oPedido_proveedor->recuperar("select * from ped_pro where pedido > "+
-                                 QString::number(oPedido_proveedor->pedido)+ " order by pedido limit 0,1",1);
-    llenar_campos();
-}
-
-void FrmPedidosProveedor::anterior()
-{
-    oPedido_proveedor->recuperar("select * from ped_pro where pedido < "
-                                 +QString::number(oPedido_proveedor->pedido)+ " order by pedido desc  limit 0,1 ",2);
-    llenar_campos();
-}
-
 void FrmPedidosProveedor::imprimir()
 {
-    oPedido_proveedor->imprimir(oPedido_proveedor->id);
+    //TODO imprimir
 }
 
 void FrmPedidosProveedor::borrar_pedido()
 {
+    int _id = oPedido_proveedor->id;
+    if(ui->stackedWidget->currentIndex() == 1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        _id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+    }
     if(QMessageBox::question(this,tr("Gestión de Pedidos a proveedores"),
                              tr("¿Desea eliminar este pedido?\nEsta opción no se podrá deshacer"),
                              tr("Cancelar"),tr("Aceptar")) == QMessageBox::Accepted)
     {
-        bool exito = oPedido_proveedor->borrar(oPedido_proveedor->id);
-        if (exito == true)
+        if (oPedido_proveedor->borrar(_id))
             clear();
-
-
     }
 }
 
 void FrmPedidosProveedor::llenar_campos()
 {
     this->id =oPedido_proveedor->id;
-  //  helper.set_id_cabecera(oPedido_proveedor->id);
-    ui->txtpedido->setText(QString::number(oPedido_proveedor->pedido));
-  //  ui->lblSerie->setText(QString::number(oPedido_proveedor->ejercicio));
-    ui->lblnumero_pedido->setText(QString::number(oPedido_proveedor->pedido));
+    ui->txtpedido->setText(oPedido_proveedor->pedido);
+    ui->lblnumero_pedido->setText(oPedido_proveedor->pedido);
     ui->lblnombreProveedor->setText(oPedido_proveedor->proveedor);
     ui->txtfecha->setDate(oPedido_proveedor->fecha);
     ui->txtFechaLimite->setDate(oPedido_proveedor->recepcion);
@@ -709,8 +422,7 @@ void FrmPedidosProveedor::refrescar_modelo()
 void FrmPedidosProveedor::guardar_campos_en_objeto()
 {
     oPedido_proveedor->id = this->id;
-    oPedido_proveedor->pedido = ui->lblnumero_pedido->text().toInt();
-   // oPedido_proveedor->ejercicio = ui->lblSerie->text().toInt();
+    oPedido_proveedor->pedido = ui->lblnumero_pedido->text();
     oPedido_proveedor->proveedor = ui->txtproveedor->text();
     oPedido_proveedor->fecha = ui->txtfecha->date();
     oPedido_proveedor->recepcion =ui->txtfechaRecepcion->date();
@@ -767,12 +479,9 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->total4 = ui->txttotal4->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
 }
 
-
-
 void FrmPedidosProveedor::clear()
 {
     ui->txtpedido->clear();
-   // ui->lblSerie->clear();
     ui->txtfecha->clear();
     ui->txtFechaLimite->clear();
     ui->txtcodigo_proveedor->clear();
@@ -827,25 +536,18 @@ void FrmPedidosProveedor::clear()
     ui->txttotal4->clear();
     ui->lblnombreProveedor->clear();
     ui->lblnumalb->clear();
-  //  ui->lblSerie->clear();
     ui->lblnumero_pedido->clear();
-}
-
-void FrmPedidosProveedor::resizeTable(int x)
-{
-    Q_UNUSED(x);
-    //helper.resizeTable();
 }
 
 void FrmPedidosProveedor::on_btnSiguiente_clicked()
 {
-    if(!pedido.next())
+    if(!oPedido_proveedor->next())
         TimedMessageBox * t = new TimedMessageBox(this,tr("Final de archivo alcanzado"));
 }
 
 void FrmPedidosProveedor::on_btnAnterior_clicked()
 {
-    if(!pedido.prev())
+    if(!oPedido_proveedor->prev())
         TimedMessageBox * t = new TimedMessageBox(this,tr("Principio de archivo alcanzado"));
 }
 
@@ -865,7 +567,6 @@ void FrmPedidosProveedor::setUpBusqueda()
     m_busqueda->setModeCombo(modo);
 
     connect(m_busqueda,SIGNAL(showMe()),this,SLOT(mostrarBusqueda()));
-    //connect(this,&MayaModule::hideBusqueda,this,&FrmPedidosProveedor::ocultarBusqueda);
     connect(m_busqueda,SIGNAL(doSearch(QString,QString,QString)),this,SLOT(filter_table(QString,QString,QString)));
 
     QPushButton *btnAdd = new QPushButton(QIcon(":/Icons/PNG/add.png"),tr("Añadir"),this);
@@ -884,31 +585,29 @@ void FrmPedidosProveedor::setUpBusqueda()
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
     connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
-
 }
 
 void FrmPedidosProveedor::on_btnAnadirEntregas_clicked()
 {
     frmAddEntregasCuenta frmEntregas(this);
-    if(frmEntregas.exec() == QDialog::Accepted){
+    if(frmEntregas.exec() == QDialog::Accepted)
+    {
         EntregasCuenta oEntrega(this);
         if(!oEntrega.Anadir(2,oPedido_proveedor->id_proveedor,frmEntregas.importe,frmEntregas.fecha,frmEntregas.concepto))
+        {
             QMessageBox::warning(this,tr("Gestión de pedidos a proveedor"),
                                  tr("Falló el insertar una nueva entrega a cuenta"),
                                  tr("Aceptar"));
+        }
         else
         {
             cargar_tabla_entregas();
-
         }
-
     }
-
 }
 
 void FrmPedidosProveedor::cargar_tabla_entregas()
-{
-    QSqlQueryModel *modelEntregas = new  QSqlQueryModel(this);
+{    
     modelEntregas->setQuery("select * from proveedor_a_cuenta where id_proveedor = "+
                             QString::number(oPedido_proveedor->id_proveedor)+" and disponible >0",Configuracion_global->groupDB);
     ui->tabla_entregas->setModel(modelEntregas);
@@ -928,7 +627,7 @@ void FrmPedidosProveedor::formatotabla()
     sizes <<0 << 120 << 100 <<100 << 120 <<120 <<300;
     for(int cnt =0;cnt<columnas.length();cnt++)
     {
-        model->setHeaderData(cnt,Qt::Horizontal,columnas.at(cnt));
+        model_busqueda->setHeaderData(cnt,Qt::Horizontal,columnas.at(cnt));
         ui->tabla->setColumnWidth(cnt,sizes.at(cnt).toInt());
 
     }
@@ -953,13 +652,11 @@ void FrmPedidosProveedor::filter_table(QString texto, QString orden, QString mod
     else
         modo = "DESC";
 
-    model->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
+    model_busqueda->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" and "+order+ " like '%"+texto.trimmed()+ "%' order by "+orden +" "+modo,
                     Configuracion_global->empresaDB);
     ui->tabla->selectRow(0);
-
 }
-
 
 void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
 {
@@ -968,20 +665,12 @@ void FrmPedidosProveedor::on_tabla_doubleClicked(const QModelIndex &index)
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(0);
     ocultarBusqueda();
-
-}
-
-void FrmPedidosProveedor::on_tabla_clicked(const QModelIndex &index)
-{
-    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oPedido_proveedor->recuperar("select * from ped_pro where id =" +QString::number(id));
-    //llenar_campos();
-
 }
 
 void FrmPedidosProveedor::on_btnBuscar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+    mostrarBusqueda();
 }
 
 void FrmPedidosProveedor::mostrarBusqueda()
@@ -994,6 +683,7 @@ void FrmPedidosProveedor::ocultarBusqueda()
 {
     _hideBarraBusqueda(m_busqueda);
 }
+
 bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Show && obj == this)
@@ -1026,17 +716,17 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
             frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
-//           frmeditar.set_id_cliente(oPedido_proveedor->id_proveedor);
-//            frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido_proveedor->id);
-            frmeditar.set_tipo("C");
+            frmeditar.set_tipo(false);
             if(!frmeditar.exec() == QDialog::Accepted)
+            {
                 refrescar_modelo();
                 calcular_pedido();
-
-    } else{
-        QMessageBox::warning(this,tr("Gestión de Pedidos"),tr("Debe editar el pedido para añadir líneas"),
-                             tr("Aceptar"));
+            }
+    }
+    else
+    {
+        QMessageBox::warning(this,tr("Gestión de Pedidos"),tr("Debe editar el pedido para añadir líneas"),tr("Aceptar"));
     }
 }
 
@@ -1051,10 +741,8 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(true);
-//            frmeditar.set_id_cliente(oCliente3->id);
-//            frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido_proveedor->id);
-            frmeditar.set_tipo("C");
+            frmeditar.set_tipo(false);
             frmeditar.set_linea(id_lin,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
             frmeditar.set_editando();
@@ -1062,12 +750,11 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
 
             calcular_pedido();
             ui->Lineas->setFocus();
-
-        } else
+        }
+        else
         {
             QMessageBox::warning(this, tr("Gestión de Pedidos"),tr("Debe editar el pedido para poder modificar las líneas"),
                                  tr("Aceptar"));
-
         }
     }
 }
@@ -1281,48 +968,40 @@ void FrmPedidosProveedor::on_btnAnadir_costes_clicked()
     calcular_pedido();
 }
 
-void FrmPedidosProveedor::on_SpinGastoDist1_valueChanged(double arg1)
+void FrmPedidosProveedor::on_SpinGastoDist1_valueChanged(double /*arg1*/)
 {
-    Q_UNUSED(arg1);
     calcular_pedido();
 }
 
-void FrmPedidosProveedor::on_SpinGastoDist2_valueChanged(double arg1)
+void FrmPedidosProveedor::on_SpinGastoDist2_valueChanged(double /*arg1*/)
 {
-    Q_UNUSED(arg1);
     calcular_pedido();
 }
 
-void FrmPedidosProveedor::on_SpinGastoDist3_valueChanged(double arg1)
+void FrmPedidosProveedor::on_SpinGastoDist3_valueChanged(double /*arg1*/)
 {
-    Q_UNUSED(arg1);
     calcular_pedido();
 }
 
 
-void FrmPedidosProveedor::on_cboporc_iva_gasto1_currentIndexChanged(int index)
+void FrmPedidosProveedor::on_cboporc_iva_gasto1_currentIndexChanged(int /*index*/)
 {
-    Q_UNUSED(index);
     calcular_pedido();
 }
 
-void FrmPedidosProveedor::on_cboporc_iva_gasto2_currentIndexChanged(int index)
+void FrmPedidosProveedor::on_cboporc_iva_gasto2_currentIndexChanged(int /*index*/)
 {
-    Q_UNUSED(index);
     calcular_pedido();
 }
 
-void FrmPedidosProveedor::on_cboporc_iva_gasto3_currentIndexChanged(int index)
+void FrmPedidosProveedor::on_cboporc_iva_gasto3_currentIndexChanged(int /*index*/)
 {
-    Q_UNUSED(index);
     calcular_pedido();
 }
 
 void FrmPedidosProveedor::calcular_coste_real_linea(int id_linea)
 {
-    //----------------------
     // Calcular coste real
-    //----------------------
     float porcentaje;
     double tot_lin,coste,c_real;
     QMap<int,QSqlRecord>  lin;
@@ -1334,10 +1013,12 @@ void FrmPedidosProveedor::calcular_coste_real_linea(int id_linea)
     c_real = coste + ((coste*(porcentaje/100))/lin.value(id_linea).value("cantidad").toFloat());
     QHash <QString,QVariant> h;
     h["coste_real_unidad"] =c_real;
-    bool success = SqlCalls::SqlUpdate(h,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(id_linea),error);
-    if(!success)
+
+    if(!SqlCalls::SqlUpdate(h,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(id_linea),error))
+    {
         QMessageBox::warning(this,tr("Pedidos a proveedores"),tr("Ocurrió un error al actualizar el coste_real: %1").arg(error),
                              tr("Aceptar"));
+    }
     else
     {
         h.clear();
@@ -1355,10 +1036,9 @@ void FrmPedidosProveedor::calcular_coste_real_linea(int id_linea)
 void FrmPedidosProveedor::calcular_coste_real_todas_lineas()
 {
     // Repartir entre líneas
-    //-----------------------
     for(int lin= 0;lin<=modelLineas->rowCount();lin++)
     {
-        calcular_coste_real_linea(modelLineas->record(lin).field("id").value().toInt());
+        calcular_coste_real_linea(modelLineas->record(lin).value("id").toInt());
     }
     TimedMessageBox *t = new TimedMessageBox(this,tr("Proceso realizado"));
 }

@@ -1524,7 +1524,7 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
             frmeditar.set_id_cab(oAlbaran->id);
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             if(!frmeditar.exec() == QDialog::Accepted)
                 modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
@@ -1551,7 +1551,7 @@ void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
             frmeditar.set_id_cab(oAlbaran->id);
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             frmeditar.set_linea(id_lin,"lin_alb");
             frmeditar.set_tabla("lin_alb");
             frmeditar.set_editando();

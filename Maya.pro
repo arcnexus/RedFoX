@@ -74,7 +74,6 @@ SOURCES += main.cpp\
     Zona_Administrador/auxmodule.cpp \
     db_table_view.cpp \
     Auxiliares/search_lineedit.cpp \
-    Auxiliares/table_helper.cpp \
     Auxiliares/readonlydelegate.cpp \
     Auxiliares/spinboxdelegate.cpp \
     Auxiliares/searchdelegate.cpp \
@@ -263,7 +262,6 @@ HEADERS  += mainwindow.h \
     Zona_Administrador/copy_db_progressfrm.h \
     db_table_view.h \
     Auxiliares/search_lineedit.h \
-    Auxiliares/table_helper.h \
     Auxiliares/readonlydelegate.h \
     Auxiliares/spinboxdelegate.h \
     Auxiliares/searchdelegate.h \

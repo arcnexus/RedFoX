@@ -163,4 +163,7 @@ ALTER TABLE `GrupoMarzo`.`clientes` CHANGE COLUMN `id_idioma_documentos` `id_idi
 ALTER TABLE `GrupoMarzo`.`transportista` ADD COLUMN `fecha_alta` DATE NULL AFTER `id_proveedor`;
 ALTER TABLE `GrupoMarzo`.`personascontactotransportista` CHANGE COLUMN `id_cliente` `id_transportista` INT(11) NULL DEFAULT NULL ;
 
-
+06/03/14
+ALTER TABLE `empNeuxSoftware`.`ped_pro` CHANGE COLUMN `pedido` `pedido` VARCHAR(45) NULL DEFAULT '0' ;
+ALTER TABLE `empNeuxSoftware`.`cab_fac` ADD COLUMN `es_simplificada` TINYINT NULL DEFAULT '0' AFTER `id_agente`,ADD COLUMN `id_usuario` INT NULL DEFAULT '0' AFTER `es_simplificada`,ADD COLUMN `id_caja` INT NULL DEFAULT '0' AFTER `id_usuario`,ADD COLUMN `hora` TIME NULL DEFAULT '0' AFTER `id_caja`,ADD COLUMN `en_espera` TINYINT NULL DEFAULT '0' AFTER `hora`;
+ALTER TABLE `empNeuxSoftware`.`cab_alb` ADD COLUMN `es_simplificada` TINYINT NULL DEFAULT '0' AFTER `id_agente`,ADD COLUMN `id_usuario` INT NULL DEFAULT '0' AFTER `es_simplificada`,ADD COLUMN `id_caja` INT NULL DEFAULT '0' AFTER `id_usuario`,ADD COLUMN `hora` TIME NULL DEFAULT '0' AFTER `id_caja`,ADD COLUMN `en_espera` TINYINT NULL DEFAULT '0' AFTER `hora`;

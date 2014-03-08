@@ -5,7 +5,7 @@
 
 #include "factura.h"
 #include "../Zona_Pacientes/cliente.h"
-#include "../Auxiliares/table_helper.h"
+
 #include "../mayamodule.h"
 #include "../Almacen/articulo.h"
 namespace Ui {
@@ -59,15 +59,8 @@ private slots:
     void mostrar_factura();
     void refrescar_modelo();
 
-//    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-//    void desglose1Changed(double base, double iva, double re, double total);
-//    void desglose2Changed(double base, double iva, double re, double total);
-//    void desglose3Changed(double base, double iva, double re, double total);
-//    void desglose4Changed(double base, double iva, double re, double total);
     void on_btnEditar_clicked();
     void desbloquear_factura();
-    void lineaReady(lineaDetalle* ld);
-    void lineaDeleted(lineaDetalle*);
 
     bool crear_asiento();
     
@@ -127,7 +120,6 @@ private:
     QAction * actionGuardaFactura;
     QMenu* menu_guardar;
     bool Altas;
-    Table_Helper helper;
     bool in_edit;
 
     QAction menuButton;

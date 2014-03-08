@@ -99,8 +99,7 @@ void FrmArticulos::init()
     connect(ui->btnAsignarProveedor,SIGNAL(clicked()),this,SLOT(asignar_proveedor_principal_clicked()));
     connect(ui->btnBorrarProveedores,SIGNAL(clicked()),this,SLOT(borrar_proveedor_clicked()));
     connect(ui->btnEditartarifa,SIGNAL(clicked()),this,SLOT(btnEditarTarifa_clicked()));
-    connect(ui->btnBorrarTarifa,SIGNAL(clicked()),this,SLOT(btnBorrarTarifa_clicked()));
-    connect(ui->cboEmpresa2,SIGNAL(currentIndexChanged(int)),this,SLOT(LLenarGrafica_comparativa(int)));
+       connect(ui->cboEmpresa2,SIGNAL(currentIndexChanged(int)),this,SLOT(LLenarGrafica_comparativa(int)));
     connect(ui->radGrafica_importes_2,SIGNAL(toggled(bool)),this,SLOT(MostrarGrafica_comparativa(bool)));
     connect(ui->cboTipoGrafica,SIGNAL(currentIndexChanged(QString)),this,SLOT(graficar(QString)));
 
@@ -120,7 +119,7 @@ void FrmArticulos::init()
     promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
     volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
 
-    QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
+    QString cSQL = "select id,codigo, descripcion_reducida, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
 
@@ -423,9 +422,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->radGrafica_importes_2->setEnabled(state);
     ui->radGrafica_unidades_2->setEnabled(state);
     ui->chkmostrarvalores_comparativa->setEnabled(state);
-    ui->btnAnadirTarifa->setEnabled(true);
-    ui->btnEditartarifa->setEnabled(true);
-    ui->btnBorrarTarifa->setEnabled(true);
+    ui->btnEditartarifa->setEnabled(!state);
     ui->btnActivarOferta->setEnabled(!state);
     ui->btnBorrar_oferta->setEnabled(!state);
 
@@ -1059,36 +1056,6 @@ void FrmArticulos::on_btnBuscarProveedor_clicked()
     }
 }
 
-void FrmArticulos::on_btnAnadirTarifa_clicked()
-{
-    FrmTarifas addTarifa(this);
-    addTarifa.capturar_coste(ui->txtCoste_real->text().replace(".","").replace(",",".").toFloat());
-
-    if(addTarifa.exec() ==QDialog::Accepted)
-    {
-        QHash<QString,QVariant> _data;
-        _data["id_articulo"]= oArticulo->id;
-        _data["id_pais"]= addTarifa.id_pais;
-        _data["id_monedas"]= addTarifa.id_moneda;
-        _data["margen"]= addTarifa.margen;
-        _data["margen_minimo"]= addTarifa.margen_min;
-        _data["pvp"]= addTarifa.pvpDivisa;
-        _data["id_codigo_tarifa"]= addTarifa.codigoTarifa;
-
-        QString error;
-        if(SqlCalls::SqlInsert(_data,"tarifas",Configuracion_global->groupDB,error) < 0)
-        {
-            QMessageBox::information(this,tr("Gestión de Productos/Servicios"),
-                                      tr("Ocurrió un error al insertar una tarifa en el artículo: %1").arg(error),
-                                     tr("Acceptar"));
-        }
-        else
-        {
-            llenar_tabla_tarifas();
-        }
-    }
-}
-
 
 void FrmArticulos::btnEditarTarifa_clicked()
 {
@@ -1122,33 +1089,6 @@ void FrmArticulos::btnEditarTarifa_clicked()
         }
         llenar_tabla_tarifas();
     }
-}
-
-void FrmArticulos::btnBorrarTarifa_clicked()
-{
-    if(!ui->TablaTarifas->currentIndex().isValid())
-        return;
-
-    QString s = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),1),Qt::DisplayRole).toString();
-    if(s == "PVP")
-        return; //Prohibido borrar tarifa 1 (PVP)
-
-    int id_t = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),0),Qt::DisplayRole).toInt();
-
-    if(QMessageBox::question(this,tr("Borrar Tarifa"),
-                             tr("¿Desea realmente borrar esta tarifa para este artículo?"),
-                             tr("No"),
-                             tr("Borrar"))==QMessageBox::Accepted)
-    {
-        QString error;
-        if(!SqlCalls::SqlDelete("tarifas",Configuracion_global->groupDB,
-                                QString("id = %1").arg(id_t),
-                                error))
-            QMessageBox::warning(this,tr("Ocurrió un error al borrar"),
-                                 error);
-        llenar_tabla_tarifas();
-    }
-
 }
 
 void FrmArticulos::anadir_proveedor_clicked()

@@ -26,7 +26,8 @@ void frmAnadirHierb::llenar_tabla_producto_nombre()
     ui->tabla_producto->setColumnWidth(1,400);
     modelProducto->setHeaderData(1,Qt::Horizontal,tr("DENOMINACIÓN PRODUCTO"),Qt::EditRole);
     modelProducto->setHeaderData(2,Qt::Horizontal,tr("LABORATORIO"),Qt::EditRole);
-    Configuracion_global->CerrarBDMediTec();
+    QSqlDatabase::database("db_meditec").close();
+    QSqlDatabase::removeDatabase("db_meditec");
 }
 
 void frmAnadirHierb::ver_vademecum()

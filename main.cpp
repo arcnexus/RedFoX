@@ -79,9 +79,6 @@ bool cargarEmpresa(QSqlRecord record)
 
     Configuracion_global->ruta_bd_empresa = record.field("ruta_bd_sqlite").value().toString();
 
-    Configuracion_global->divisa_local = Configuracion_global->Devolver_moneda(record.field("id_divisa").value().toInt());
-    Configuracion_global->cod_divisa_local = Configuracion_global->Devolver_codDivisa(record.field("id_divisa").value().toInt());
-    Configuracion_global->divisa_local_reducida = "";
     Configuracion_global->contabilidad = record.field("contabilidad").value().toBool();
     Configuracion_global->ticket_factura = record.field("ticket_factura").value().toBool(); // el tiquet y la factura son correlativos
     Configuracion_global->id_tarifa_predeterminada = record.field("id_tarifa_predeterminada").value().toInt();
@@ -90,38 +87,18 @@ bool cargarEmpresa(QSqlRecord record)
     Configuracion_global->tpv_forzar_cantidad = record.field("tpv_forzar_cantidad").value().toBool();
     Configuracion_global->idEmpresa = record.value("id").toInt();
 
-    if(record.field("medica").value().toInt()==1)
-        Configuracion_global->medic = true;
-    else
-        Configuracion_global->medic = false;
-
-    if(record.field("internacional").value().toInt()==1)
-        Configuracion_global->internacional = true;
-    else
-        Configuracion_global->internacional = false;
-
+    Configuracion_global->medic = record.value("medica").toBool();
+    Configuracion_global->internacional = record.value("internacional").toBool();
     Configuracion_global->enlace_web = record.field("enlace_web").value().toBool();
     Configuracion_global->CargarDatos(record);
 
-    QApplication::processEvents();
-
-    //DBMedica
-    //splash.showMessage(tr("Cargando configuración médica"),Qt::AlignBottom);
-
     Configuracion_global->ruta_bd_medica = record.field("ruta_bd_medica_sqlite").value().toString();
 
-
-    QApplication::processEvents();
-
-    // Varios
-    //splash.showMessage(tr("Cargando configuración financiera"),Qt::AlignBottom);
     Configuracion_global->serie = record.field("serie").value().toString();
     Configuracion_global->digitos_cuentas_contables = record.value("digitos_cuenta").toInt();
     Configuracion_global->cuenta_acreedores = record.field("codigo_cuenta_acreedores").value().toString();
     Configuracion_global->cuenta_clientes = record.field("codigo_cuenta_clientes").value().toString();
     Configuracion_global->cuenta_proveedores = record.field("codigo_cuenta_proveedores").value().toString();
-
-    QApplication::processEvents();
 
     // Guardo preferencias
     QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
@@ -132,8 +109,6 @@ bool cargarEmpresa(QSqlRecord record)
     settings.setValue("cuenta_acreedores",Configuracion_global->cuenta_acreedores);
     settings.setValue("Clave1",record.field("clave1").value().toString());
     settings.setValue("Clave2",record.field("clave2").value().toString());
-
-    QApplication::processEvents();
 
     // Abro empresa activa
     //splash.showMessage(tr("Cargando datos de la empresa activa"),Qt::AlignBottom);
@@ -150,12 +125,6 @@ bool cargarEmpresa(QSqlRecord record)
         Configuracion_global->empresaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
     }
 
-    QApplication::processEvents();
-    //----------------------
-    // Abro bdmedica activa
-    //----------------------
-
-    //splash.showMessage(tr("Abriendo base de datos médica"),Qt::AlignBottom);
     if(Configuracion_global->medic)
     {
         Configuracion_global->medicaDB = QSqlDatabase::addDatabase(Configuracion_global->group_Driver,"dbmedica");
@@ -217,12 +186,18 @@ bool cargarEmpresa(QSqlRecord record)
     if(!calles.open())
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
 
-	Configuracion_global->Cargar_iva();
-    Configuracion_global->Cargar_paises();
-    Configuracion_global->Cargar_divisas();
-    Configuracion_global->Cargar_formas_pago();
-    Configuracion_global->CargarClientes();
-    Configuracion_global->CargarUsuarios();
-    Configuracion_global->Cargar_agentes();
+    Configuracion_global->CargarDatosMaestros();
+
+    Configuracion_global->id_divisa_local = record.value("id_divisa").toInt();
+    for(auto i= 0; i< Configuracion_global->divisas_model->rowCount(); ++i)
+    {
+        if(record.value("id_divisa").toInt() == Configuracion_global->divisas_model->record(i).value("id").toInt())
+        {
+            Configuracion_global->divisa_local = Configuracion_global->divisas_model->record(i).value("moneda").toString();
+            Configuracion_global->cod_divisa_local = Configuracion_global->divisas_model->record(i).value("nombre_corto").toString();
+            Configuracion_global->divisa_local_reducida = "";
+            break;
+        }
+    }
     return true;
 }

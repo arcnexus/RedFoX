@@ -896,167 +896,6 @@ void frmFacturas::desbloquear_factura()
     }
 }
 
-void frmFacturas::lineaReady(lineaDetalle * ld)
-{
-    //-----------------------------------------------------
-    // Insertamos línea de pedido y controlamos acumulados
-    //-----------------------------------------------------
-
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-    //------------
-    //Nueva linea
-    //------------
-    if (ld->idLinea == -1)
-    {
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("select id from articulos where codigo =:codigo");
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec())
-            queryArticulos.next();
-        else
-            ok_Maya = false;
-        QHash <QString, QVariant> lin_fac;
-        QString error;
-        lin_fac["id_cab"] =  oFactura->id;
-        lin_fac["id_articulo"] =  queryArticulos.record().value("id").toInt();
-        lin_fac["codigo"] = ld->codigo;
-        lin_fac["descripcion"] = ld->descripcion;
-        lin_fac["cantidad"] = ld->cantidad;
-        lin_fac["precio"] = ld->precio;
-        lin_fac["subtotal"] = ld->subtotal;
-        lin_fac["porc_dto"] = ld->dto_perc;
-        lin_fac["porc_iva"] = ld->iva_perc;
-        double base = ld->subtotal - (ld->subtotal*ld->dto);
-        lin_fac["iva"] = base * ld->iva_perc/100;
-        lin_fac["porc_rec"] = ld->rec_perc;
-        lin_fac["rec"] = base *ld->rec_perc/100;
-        lin_fac["dto"] = ld->dto;
-        lin_fac["total"] = ld->total;
-        lin_fac["promocion"] = SqlCalls::SelectOneField("articulos","articulo_promocionado",
-                                                        QString("id = %1").arg(lin_fac.value("id_articulo").toInt()),
-                                                        Configuracion_global->groupDB,error);
-        int new_id = SqlCalls::SqlInsert(lin_fac,"lin_fac",Configuracion_global->empresaDB,error);
-
-        if (new_id ==-1){
-            ok_empresa = false;
-            QMessageBox::warning(this,tr("Gestión de albaranes"),
-                                 tr("Ocurrió un error al insertar la nueva línea: %1").arg(error),
-                                 tr("Aceptar"));
-        } else{
-            double pendiente = ui->txtimporte_pendiente->text().replace(".","").replace(",",".").toDouble();
-            pendiente += ld->total;
-            ui->txtimporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(pendiente,'f',Configuracion_global->decimales)));
-        }
-
-        //TODO control de stock alb clientes
-
-        if(queryArticulos.exec() && ok_empresa){
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-
-        ld->idLinea = new_id;
-
-    } else // Editando linea
-    {
-        //TODO control de stock editando en alb clientes
-        QSqlQuery queryArticulos(Configuracion_global->groupDB);
-        queryArticulos.prepare("select id from articulos where codigo =:codigo");
-        queryArticulos.bindValue(":codigo",ld->codigo);
-        if(queryArticulos.exec())
-            queryArticulos.next();
-        else
-            ok_Maya = false;
-
-        QSqlQuery q_lin_fac(Configuracion_global->empresaDB);
-        q_lin_fac.prepare("UPDATE lin_fac SET "
-                                  "id_articulo =:id_articulo,"
-                                  "codigo =:codigo,"
-                                  "descripcion =:descripcion,"
-                                  "cantidad =:cantidad,"
-                                  "precio =:precio,"
-                                  "subtotal =:subtotal,"
-                                  "porc_dto =:porc_dto,"
-                                  "dto =:dto,"
-                                  "porc_iva =:porc_iva,"
-                                  "iva=:iva,"
-                                  "porc_rec =:porc_rec,"
-                                  "rec =:rec,"
-                                  "total =:total "
-                                  "WHERE id = :id;");
-
-        q_lin_fac.bindValue(":id_cab", oFactura->id);
-        q_lin_fac.bindValue(":id_articulo", queryArticulos.record().value("id").toInt());
-        q_lin_fac.bindValue(":codigo",ld->codigo);
-        q_lin_fac.bindValue(":descripcion",ld->descripcion);
-        q_lin_fac.bindValue(":cantidad",ld->cantidad);
-        q_lin_fac.bindValue(":precio",ld->precio);
-        q_lin_fac.bindValue(":subtotal",ld->subtotal);
-        q_lin_fac.bindValue(":porc_dto",ld->dto_perc);
-        q_lin_fac.bindValue(":dto",ld->dto);
-        q_lin_fac.bindValue(":porc_iva",ld->iva_perc);
-        double base = ld->subtotal - (ld->subtotal*ld->dto);
-        q_lin_fac.bindValue(":iva",base * ld->iva_perc/100);
-        q_lin_fac.bindValue(":porc_rec",ld->rec_perc);
-        q_lin_fac.bindValue(":rec",base *ld->rec_perc/100);
-        q_lin_fac.bindValue(":total",ld->total);
-        q_lin_fac.bindValue(":id",ld->idLinea);
-
-        if (!q_lin_fac.exec()) {
-            QMessageBox::warning(this,tr("Gestión de pedidos"),
-                                 tr("Ocurrió un error al guardar la línea: %1").arg(q_lin_fac.lastError().text()),
-                                 tr("Aceptar"));
-            ok_empresa = false;
-        }
-        //TODO control stock editando linea alb
-        if(queryArticulos.exec() && ok_empresa && ok_Maya){
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    ld->cantidad_old = ld->cantidad;
-}
-
-void frmFacturas::lineaDeleted(lineaDetalle * ld)
-{
-    //todo borrar de la bd y stock y demas
-    //if id = -1 pasando olimpicamente
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-    if(ld->idLinea >-1)
-    {
-        //TODO control de stock
-        QSqlQuery q(Configuracion_global->empresaDB);
-        q.prepare("delete from lin_fac where id =:id");
-        q.bindValue(":id",ld->idLinea);
-        if(q.exec() && ok_Maya)
-        {
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    delete ld;
-}
-
 bool frmFacturas::crear_asiento()
 {
     bool creado;
@@ -1800,7 +1639,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmeditar.set_id_cliente(oCliente1->id);
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             if(!frmeditar.exec() == QDialog::Accepted)
                 modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
@@ -1826,7 +1665,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_cliente(oCliente1->id);
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             frmeditar.set_linea(id_lin,"lin_fac");
             frmeditar.set_tabla("lin_fac");
             frmeditar.set_editando();

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
-#include "../Auxiliares/table_helper.h"
+
 
 #include "proveedor.h"
 #include "pedidoproveedor.h"
@@ -20,7 +20,7 @@ public:
     explicit FrmPedidosProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmPedidosProveedor();
     // = new Proveedor(this);
-    void llenarProveedor(int id,bool isNew = false);
+    void llenarProveedor(int id);
     PedidoProveedor *oPedido_proveedor;// = new PedidoProveedor(this);
     int id;
     module_zone module_zone(){return Compras;}
@@ -39,36 +39,23 @@ signals:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private slots:
-    void lineaReady(lineaDetalle*);
-    void lineaDeleted(lineaDetalle *ld);
-    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-    void desglose1Changed(double base, double iva, double re, double total);
-    void desglose2Changed(double base, double iva, double re, double total);
-    void desglose3Changed(double base, double iva, double re, double total);
-    void desglose4Changed(double base, double iva, double re, double total);
-
     void bloquearcampos(bool state);
     void buscar_proveeedor();
     void anadir_pedido();
     void guardar_pedido();
     void editar_pedido();
     void deshacer();
-    void siguiente();
-    void anterior();
     void imprimir();
     void borrar_pedido();
     void llenar_campos();
     void refrescar_modelo();
     void guardar_campos_en_objeto();
     void clear();
-    void resizeTable(int x);
     void on_btnAnadirEntregas_clicked();
     void cargar_tabla_entregas();
     void on_btnImprimir_clicked();
 
     void on_tabla_doubleClicked(const QModelIndex &index);
-
-    void on_tabla_clicked(const QModelIndex &index);
 
     void on_btnBuscar_clicked();
 
@@ -111,10 +98,7 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
 
-    PedidoProveedor pedido;
-
     Ui::FrmPedidosProveedor *ui;
-    Table_Helper helper;
     QAction * aAlbaran_action;
     QAction * aFactura_action;
     QMenu * convertir_menu;
@@ -122,10 +106,11 @@ private:
     QString moneda;
     QAction menuButton;
     QPushButton* shortCut;
-    QSqlQueryModel *model;
+    QSqlQueryModel *model_busqueda;
     QSqlQueryModel *modelLineas;
 
     QSqlQueryModel *modelgastos;
+    QSqlQueryModel *modelEntregas;
 };
 
 #endif // FRMPEDidOSPROVEEDOR_H

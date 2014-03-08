@@ -2,7 +2,7 @@
 #define FRMALBARAN_H
 
 #include "../Auxiliares/Globlal_Include.h"
-#include "../Auxiliares/table_helper.h"
+
 #include "../mayamodule.h"
 #include "../Auxiliares/timedmessagebox.h"
 #include "albaran.h"
@@ -107,7 +107,6 @@ private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;
     QSqlQueryModel *modelLineas;
-    Table_Helper helper;
     bool in_edit;
     QString moneda;
 

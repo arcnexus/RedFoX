@@ -10,7 +10,8 @@ public:
     explicit PedidoProveedor(QObject *parent = 0);
     
     int	id;
-    int 	pedido;
+    QString pedido;
+    QString nuevoNumPedido();
     int     ejercicio;
     QDate	fecha;
     QDate	recepcion;
@@ -84,29 +85,24 @@ signals:
     
 public slots:
     int nuevo_pedido_proveedor();
-    void guardar();
-    void recuperar(int id);
-    void recuperar(QString cadenaSQL);
-    void recuperar(QString cadenaSQL,int accion);
-    void cargar(QSqlQuery *queryPedido, int accion);
+    bool guardar();
+    bool recuperar(int id);
+    bool recuperar(QString cadenaSQL);
+    bool recuperar(QString cadenaSQL,int accion);
+    bool cargar(QSqlQuery *queryPedido, int accion);
     void clear();
     void convertir_en_albaran();
     void convertir_en_factura();
-    bool borrar(int id);
-    void imprimir(int id);
-
-    
+    bool borrar(int id); 
 
     bool get(int id);
     bool next();
     bool prev();
-    long save();
-    bool update();
 signals:
     
 public slots:
 private:
-    void fillPedido(QSqlRecord r);
+
 
 };
 

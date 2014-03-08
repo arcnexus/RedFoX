@@ -181,7 +181,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->id_subfamilia = registro.field("id_subfamilia").value().toInt();
     this->subfamilia = registro.field("subfamilia").value().toString();
     this->tipo_iva =registro.field("tipo_iva").value().toDouble();
-    this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->tipo_iva);
+    this->codigo_iva = Configuracion_global->Devolver_descripcion_tipo_iva(this->id_tipos_iva);
     this->coste = registro.field("coste").value().toDouble();
     this->porc_dto = registro.field("porc_dto").value().toFloat();
     this->fecha_ultima_compra = registro.field("fecha_ultima_compra").value().toDate();

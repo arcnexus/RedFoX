@@ -58,10 +58,8 @@ private slots:
     void on_botBuscarSubfamilia_clicked();
 
     void on_btnBuscarProveedor_clicked();
-    void on_btnAnadirTarifa_clicked();
 
     void btnEditarTarifa_clicked();
-    void btnBorrarTarifa_clicked();
 
     void anadir_proveedor_clicked();
     void editar_proveedor_clicked();

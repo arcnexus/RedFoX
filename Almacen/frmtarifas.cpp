@@ -68,18 +68,24 @@ void FrmTarifas::capturar_coste(float Coste)
 void FrmTarifas::capturar_datos(int id, QString costeLocal, int id_prod){
     ui->listaTarifa->hide();
     QSqlQuery queryTarifas(Configuracion_global->groupDB);
-    if(!queryTarifas.exec("select * from tarifas where id="+QString::number(id))){
+    if(!queryTarifas.exec("select * from tarifas where id="+QString::number(id)))
+    {
         QMessageBox::warning(this,tr("Editar"),
                              tr("Ocurrió un error al recuperar los datos: %1").arg(queryTarifas.lastError().text()));
-    }else {
+    }
+    else
+    {
         if (queryTarifas.next())
         {
             QSqlQuery queryGrupotarifa(Configuracion_global->groupDB);
             int nId = queryTarifas.record().value("id_codigo_tarifa").toInt();
+            int id_div = queryTarifas.record().value("id_monedas").toInt();
+
             QString cSQL1 = "select * from codigotarifa where id=";
             cSQL1.append(QString::number(nId));
             qDebug() << cSQL1;
-            if(queryGrupotarifa.exec(cSQL1)){
+            if(queryGrupotarifa.exec(cSQL1))
+            {
                 queryGrupotarifa.next();
                 ui->txtCodTarifa->setText(queryGrupotarifa.record().field("codigo_tarifa").value().toString());
                 ui->txtDescTarifa->setText(queryGrupotarifa.record().field("descripcion").value().toString());
@@ -108,16 +114,14 @@ void FrmTarifas::capturar_datos(int id, QString costeLocal, int id_prod){
             this->pvpDivisa =ui->txtPVPDivisa->text().toDouble();
             this->cod_divisa = Configuracion_global->Devolver_codDivisa(queryTarifas.record().field("id_monedas").value().toInt());
             // Cargamos valor divisa desde la web
-            if (Configuracion_global->divisa_local != ui->txtMoneda->text())
-                Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
-            else
+            if(id_div == Configuracion_global->id_divisa_local)
                 asignarcambiodivisa(1);
+            else
+                Configuracion_global->getCambio(Configuracion_global->cod_divisa_local,this->cod_divisa);
 
             modelVolumenes->setQuery(QString("select id,desde,hasta,precio from articulos_volumen where id_tarifa = %1").arg(this->id_tarifa),
                                      Configuracion_global->groupDB);
         }
-
-
     }
 }
 
@@ -156,34 +160,33 @@ void FrmTarifas::cargarDatosTarifa(QModelIndex indice)
 
 void FrmTarifas::asignarcambiodivisa(float valor)
 {
-    ui->txtValorDivisa->setText(QString::number(valor,'f',3));
+    ui->txtValorDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valor,'f',3)));
     double valorLocal;
     valorLocal = (1/valor);
-    ui->txtvalorLocal->setText(QString::number(valorLocal,'f',3));
+    ui->txtvalorLocal->setText(Configuracion_global->toFormatoMoneda(QString::number(valorLocal,'f',3)));
     int pvpd;
     pvpd = this->pvpDivisa * ui->txtValorDivisa->text().toDouble();
-    ui->txtPVPLocal->setText( QString::number(pvpd,'f',3));
+    ui->txtPVPLocal->setText(Configuracion_global->toFormatoMoneda( QString::number(pvpd,'f',3)));
     calcular_precio(ui->spinMargen->value());
-
 }
 
 
 
 void FrmTarifas::calcular_precio(double margen)
 {
-        //TODO - CALCULO DIVISA LOCAL FALLA.
-        blockSignals(true);
-        //NOTE 70% /0.30 - 40 /0.60
-        double pvp =((ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble())/(1-(margen/100)));
-        QString cPvp = Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',Configuracion_global->decimales));
-        this->pvpDivisa = cPvp.toDouble();
-        ui->txtPVPLocal->setText(cPvp);
-        double cambio_divisa =  ui->txtValorDivisa->text().toDouble();
-        double valordivisa = ui->txtPVPLocal->text().replace(".","").replace(",",".").toDouble() * cambio_divisa;
+    //TODO - CALCULO DIVISA LOCAL FALLA.
+    blockSignals(true);
+    //NOTE 70% /0.30 - 40 /0.60
+    double pvp = Configuracion_global->MonedatoDouble(ui->txtCosteLocal->text())/(1-(margen/100));
 
-        ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',Configuracion_global->decimales)));
-        this->pvpDivisa = valordivisa;
-        blockSignals(false);
+    double cambio_divisa =  Configuracion_global->MonedatoDouble(ui->txtValorDivisa->text());
+    double valordivisa =    pvp * cambio_divisa;
+
+    ui->txtPVPLocal->setText(Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',Configuracion_global->decimales)));
+    ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',Configuracion_global->decimales)));
+    this->pvpDivisa = valordivisa;
+    this->pvpDivisa = pvp;
+    blockSignals(false);
 }
 
 
@@ -199,7 +202,7 @@ void FrmTarifas::aceptar()
 void FrmTarifas::on_txtPVPLocal_editingFinished()
 {
     blockSignals(true);
-    double Margen=100-((ui->txtCosteLocal->text().replace(".","").replace(",",".").toDouble()*100)/ui->txtPVPLocal->text().replace(".","").replace(",",".").toDouble());
+    double Margen = 100 - (Configuracion_global->MonedatoDouble(ui->txtCosteLocal->text()) * 100 / Configuracion_global->MonedatoDouble(ui->txtPVPLocal->text()));
     ui->spinMargen->setValue(Margen);
     calcular_precio(Margen);
     blockSignals(false);

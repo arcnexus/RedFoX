@@ -30,6 +30,9 @@ Configuracion::Configuracion(QObject* parent) :
     formapago_model = new QSqlQueryModel(this);
     divisas_model = new QSqlQueryModel(this);
     agentes_model = new QSqlQueryModel(this);
+    idiomas_model = new QSqlQueryModel(this);
+    tarifas_model = new QSqlQueryModel(this);
+    grupos_gasto_model = new QSqlQueryModel(this);
     client_model = 0;
     usuarios_model = 0;
     validator_cantidad = new QDoubleValidator(-99999999999999999.00,99999999999999999.00,2,this);
@@ -37,7 +40,6 @@ Configuracion::Configuracion(QObject* parent) :
     grupo_iva << tr("Nacional") << tr("Europeo") << tr("canarias") << tr("Internacional");
 
     //AES keys
-    //TODO generar una ¿mejor?
     key[0] = 0x10;
     key[1] = 0x10;
     key[2] = 0x10;
@@ -99,6 +101,10 @@ void Configuracion::commit()
         this->contaDB.commit();
 }
 
+QString Configuracion::Devolver_idioma(int id)
+{
+    return search_string(idiomas_model,id,"idioma");
+}
 
 QString Configuracion::toFormatoMoneda(QString cTexto)
 {
@@ -290,33 +296,23 @@ void Configuracion::Cargar_iva()
 
 int Configuracion::getidIva(QString cIva)
 {
-    QSqlQuery qIVA(Configuracion_global->groupDB);
-    qIVA.prepare("select id from tiposiva where tipo = :cIva");
-    qIVA.bindValue(":cIva",cIva);
-    if(!qIVA.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR id IVA"),
-                             tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
-        return 0;
-    } else {
-        qIVA.next();
-        return qIVA.record().field("id").value().toDouble();
-    }
-
+    return _search(iva_model,cIva,"tipo","id").toInt();
 }
 
 QString Configuracion::setTipoIva(int idIva)
 {
-    QSqlQuery qIVA(Configuracion_global->groupDB);
-    qIVA.prepare("select tipo from tiposiva where id = :id");
-    qIVA.bindValue(":id",idIva);
-    if(!qIVA.exec()) {
-        QMessageBox::warning(qApp->activeWindow(),tr("RECUPERAR id IVA"),
-                             tr("Falló la recuperación del identificador del IVA : %1").arg(qIVA.lastError().text()));
-        return 0;
-    } else {
-        qIVA.next();
-        return qIVA.record().field("tipo").value().toString();
-    }
+    return search_string(iva_model,idIva,"tipo");
+}
+
+void Configuracion::CargarDatosMaestros()
+{
+    Cargar_paises();
+    Cargar_divisas();
+    Cargar_formas_pago();
+    Cargar_agentes();
+    Cargar_idiomas();
+    Cargar_tarifas();
+    Cargar_gastos();
 }
 
 void Configuracion::Cargar_paises()
@@ -326,7 +322,7 @@ void Configuracion::Cargar_paises()
 
 void Configuracion::Cargar_divisas()
 {
-    divisas_model->setQuery("select id,moneda from monedas order by moneda",Configuracion_global->groupDB);
+    divisas_model->setQuery("select * from monedas order by moneda",Configuracion_global->groupDB);
 }
 
 void Configuracion::Cargar_formas_pago()
@@ -339,222 +335,74 @@ void Configuracion::Cargar_agentes()
     agentes_model->setQuery("SELECT * FROM agentes;",Configuracion_global->groupDB);
 }
 
-int Configuracion::Devolver_id_pais(QString pais)
+void Configuracion::Cargar_idiomas()
 {
-    QSqlQuery qPais(Configuracion_global->groupDB);
-    qPais.prepare("select id from paises where pais = :pais");
-    qPais.bindValue(":pais",pais);
-    if(qPais.exec())
-    {
-        qPais.next();
-        int id = qPais.record().field("id").value().toInt();
-        return id;
-    }
-    return 0;
+    idiomas_model->setQuery("select * from idiomas",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_tarifas()
+{
+    tarifas_model->setQuery("Selet * from codigotarifa",Configuracion_global->groupDB);
+}
+
+void Configuracion::Cargar_gastos()
+{
+    grupos_gasto_model->setQuery("Select * from grupos_gasto",Configuracion_global->groupDB);
+}
+
+int Configuracion::Devolver_id_tarifa(QString nombre)
+{
+    return _search(tarifas_model,nombre,"descripcion","id").toInt();
+}
+
+int Configuracion::Devolver_id_moneda(QString nombre)
+{
+    return _search(divisas_model,nombre,"moneda","id").toInt();
 }
 
 QString Configuracion::Devolver_pais(int id)
 {
-    QSqlQuery qPais(Configuracion_global->groupDB);
-    qPais.prepare("select pais from paises where id = :nid");
-    qPais.bindValue(":nid",id);
-    if(qPais.exec())
-    {
-        qPais.next();
-        return qPais.record().field("pais").value().toString();
-    }
-    return "";
-}
-
-QString Configuracion::Devolver_moneda(int id)
-{
-    QSqlQuery qMoneda(Configuracion_global->groupDB);
-    qMoneda.prepare("select moneda from monedas where id = :nid");
-    qMoneda.bindValue(":nid",id);
-    if(qMoneda.exec())
-    {
-        qMoneda.next();
-        return qMoneda.record().field("moneda").value().toString();
-    }
-    return "";
-}
-
-QString Configuracion::Devolver_codDivisa(int id)
-{
-    QSqlQuery qMoneda(Configuracion_global->groupDB);
-    qMoneda.prepare("select nombre_corto from monedas where id = :nid");
-    qMoneda.bindValue(":nid",id);
-    if(qMoneda.exec())
-    {
-        qMoneda.next();
-        return qMoneda.record().field("nombre_corto").value().toString();
-    }
-    return "";
-}
-
-int Configuracion::Devolver_id_moneda(QString cDivisa)
-{
-    QSqlQuery queryMoneda(Configuracion_global->groupDB);
-    queryMoneda.prepare("select id from monedas where moneda = :cDivisa");
-    queryMoneda.bindValue(":cDivisa",cDivisa);
-    if(queryMoneda.exec())
-    {
-        queryMoneda.next();
-        return queryMoneda.record().value("id").toInt();
-    }
-}
-
-QString Configuracion::Devolver_idioma(int id)
-{
-    QSqlQuery qidioma(Configuracion_global->groupDB);
-    if(qidioma.exec("select idioma from idiomas where id = "+QString::number(id))) {
-        qidioma.next();
-        return qidioma.record().value("idioma").toString();
-    }
-    else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar idioma"),
-                             tr("Fallo la recuperación del idioma: ")+qidioma.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return "";
-}
-
-int Configuracion::Devolver_id_idioma(QString idioma)
-{
-    QSqlQuery qidioma(Configuracion_global->groupDB);
-    if(qidioma.exec("select id from idiomas where idioma = '"+idioma+"'")){
-        qidioma.next();
-        return qidioma.record().value("id").toInt();
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar idioma"),
-                             tr("Fallo la recuperación del idioma: ")+qidioma.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return 0;
-
-}
-
-int Configuracion::Devolver_id_forma_pago(QString forma_pago)
-{
-    QSqlQuery queryFP(Configuracion_global->groupDB);
-    if(queryFP.exec("select id from formpago where forma_pago = '"+forma_pago+"'")){
-        queryFP.next();
-        int id = queryFP.record().value("id").toInt();
-        return id;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperación del identificador de la forma de pago: ")+queryFP.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return 0;
-}
-
-int Configuracion::Devolver_id_codigo_forma_pago(QString codigo)
-{
-    QSqlQuery queryFP(Configuracion_global->groupDB);
-    if(queryFP.exec("select id from formpago where codigo = '"+codigo+"'")){
-        queryFP.next();
-        int id = queryFP.record().value("id").toInt();
-        return id;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperación del identificador de la forma de pago: ")+queryFP.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return 0;
-}
-
-QString Configuracion::Devolver_forma_pago(int id)
-{
-    QSqlQuery queryFP(Configuracion_global->groupDB);
-    if(queryFP.exec("select forma_pago from formpago where id = "+QString::number(id))){
-        queryFP.next();
-        QString cFP = queryFP.record().value("forma_pago").toString();
-        return cFP;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperación de la forma de pago: ")+queryFP.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return "";
+    return search_string(paises_model,id,"pais");
 }
 
 QString Configuracion::Devolver_codigo_forma_pago(int id)
 {
-    QSqlQuery queryFP(Configuracion_global->groupDB);
-    if(queryFP.exec("select codigo from formpago where id = "+QString::number(id))){
-        queryFP.next();
-        QString cFP = queryFP.record().value("codigo").toString();
-        return cFP;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Formas de pago"),
-                             tr("Fallo la recuperación de la forma de pago: ")+queryFP.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return "";
-
+    return search_string(formapago_model,id,"codigo");
 }
 
-int Configuracion::Devolver_id_tarifa(QString cTarifa)
+QString Configuracion::Devolver_moneda(int id)
 {
-    QSqlQuery queryTarifa(Configuracion_global->groupDB);
-    if(queryTarifa.exec("select id from codigotarifa where descripcion = '"+cTarifa+"'")){
-        queryTarifa.next();
-        int id = queryTarifa.record().value("id").toInt();
-        return id;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tarifas"),
-                             tr("Fallo la recuperación del identificador de la tarifa: ")+queryTarifa.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return 0;
-
+    return search_string(divisas_model,id,"moneda");
 }
 
-QString Configuracion::Devolver_tarifa(int id_tarifa)
+QString Configuracion::Devolver_codDivisa(int id)
 {
-    QSqlQuery queryTarifa(Configuracion_global->groupDB);
-    if(queryTarifa.exec("select descripcion from codigotarifa where id = "+QString::number(id_tarifa))){
-        queryTarifa.next();
-        QString cTarifa = queryTarifa.record().value("descripcion").toString();
-        return cTarifa;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tarifas"),
-                             tr("Fallo la recuperación de la tarifa: ")+queryTarifa.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return "";
+    return search_string(divisas_model,id,"nombre_corto");
+}
+
+QString Configuracion::Devolver_descripcion_tipo_iva(int id)
+{
+    return search_string(iva_model,id,"tipo");
+}
+
+int Configuracion::Devolver_id_pais(QString nombre)
+{
+    return _search(paises_model,nombre,"pais","id").toInt();
+}
+
+QString Configuracion::Devolver_tarifa(int id)
+{
+    return search_string(tarifas_model,id,"descripcion");
 }
 
 QString Configuracion::Devolver_tipo_gasto(int id_gasto)
 {
-    QSqlQuery queryGasto(Configuracion_global->groupDB);
-    if(queryGasto.exec("select descripcion from grupos_gasto where id = "+QString::number(id_gasto))){
-        queryGasto.next();
-        QString cGasto = queryGasto.record().value("descripcion").toString();
-        return cGasto;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tarifas"),
-                             tr("Fallo la recuperación del tipo de gasto: ")+queryGasto.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return "";
+    return search_string(grupos_gasto_model,id_gasto,"descripcion");
 }
 
 int Configuracion::Devolver_id_tipo_gasto(QString desc)
 {
-
-    QSqlQuery queryGasto(Configuracion_global->groupDB);
-    if(queryGasto.exec("select id from grupos_gasto where descripcion = '"+desc+"'")){
-        queryGasto.next();
-        int id = queryGasto.record().value("id").toInt();
-        return id;
-    } else {
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar Tipos de Gasto"),
-                             tr("Fallo la recuperación del identificador del gasto: ")+queryGasto.lastError().text(),
-                             tr("Aceptar"));
-    }
-    return 0;
+    return _search(grupos_gasto_model,desc,"descripcion","id").toInt();
 }
 
 int Configuracion::Devolver_id_cuenta_contable(QString codigo_cta)
@@ -571,19 +419,6 @@ int Configuracion::Devolver_id_cuenta_contable(QString codigo_cta)
                              tr("Aceptar"));
 }
 
-QString Configuracion::Devolver_descripcion_tipo_iva(double tipo)
-{
-    QSqlQuery query_iva(Configuracion_global->groupDB);
-    if(query_iva.exec("select tipo from tiposiva where iva = "+QString::number(tipo)))
-    {
-        query_iva.next();
-        return query_iva.record().value("tipo").toString();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar tipo de iva"),
-                             tr("Fallo la recuperación del tipo de iva: ")+query_iva.lastError().text(),
-                             tr("Aceptar"));
-}
 
 QString Configuracion::Devolver_descripcion_cuenta_contable(QString codigo_cta)
 {
@@ -610,83 +445,6 @@ QString Configuracion::Devolver_codigo_cta_contable(int id)
     } else
         QMessageBox::warning(qApp->activeWindow(),tr("Buscar cuenta contable"),
                              tr("Fallo al recuperar el código de la cuenta: ")+queryCuenta.lastError().text(),
-                             tr("Aceptar"));
-}
-
-QString Configuracion::devolver_codigo_articulo(int id)
-{
-    QSqlQuery query_art(Configuracion_global->groupDB);
-    if(query_art.exec("select codigo from articulos where id = "+QString::number(id)))
-    {
-        query_art.next();
-        return query_art.record().value("codigo").toString();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
-                             tr("Fallo al recuperar el código de artículo: ")+query_art.lastError().text(),
-                             tr("Aceptar"));
-
-}
-
-QString Configuracion::devolver_codigo_barras(int id)
-{
-    QSqlQuery query_art(Configuracion_global->groupDB);
-    if(query_art.exec("select codigo_barras from articulos where id = "+QString::number(id)))
-    {
-        query_art.next();
-        return query_art.record().value("codigo_barras").toString();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
-                             tr("Fallo al recuperar el código de barras del artículo: ")+query_art.lastError().text(),
-                             tr("Aceptar"));
-}
-
-QString Configuracion::devolver_referencia_articulo(int id)
-{
-    QSqlQuery query_art(Configuracion_global->groupDB);
-    if(query_art.exec("select codigo,codigo_fabricante from articulos where id = "+QString::number(id)))
-    {
-        query_art.next();
-        QString ref = query_art.record().value("codigo_fabricante").toString();
-        QString cod = query_art.record().value("codigo").toString();
-        if(!ref.trimmed().isEmpty())
-            return ref;
-        else
-            return cod;
-
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar artículo"),
-                             tr("Fallo al recuperar la referencia de artículo: ")+query_art.lastError().text(),
-                             tr("Aceptar"));
-}
-
-float Configuracion::Devolver_iva(int id)
-{
-    QSqlQuery query(Configuracion_global->groupDB);
-    if(query.exec("select iva from tiposiva where id = "+QString::number(id)))
-    {
-        query.next();
-        return query.record().value("iva").toFloat();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar IVA"),
-                             tr("Fallo al recuperar el IVA")+query.lastError().text(),
-                             tr("Aceptar"));
-}
-
-float Configuracion::devolver_rec_iva(float porc_iva)
-{
-    QSqlQuery query(Configuracion_global->groupDB);
-    if(query.exec("select recargo_equivalencia from tiposiva where iva = "+QString::number(porc_iva)))
-    {
-        query.next();
-        return query.record().value("recargo_equivalencia").toFloat();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar R.E."),
-                             tr("Fallo al recuperar el R.E")+query.lastError().text(),
                              tr("Aceptar"));
 }
 
@@ -718,34 +476,6 @@ QString Configuracion::toRound(double dnumber, int decimals)
     return toFormatoMoneda(StrNumber);
 }
 
-QString Configuracion::devolver_agente(int id)
-{
-    QSqlQuery query(Configuracion_global->groupDB);
-    if(query.exec("select nombre from agentes where id = "+QString::number(id)))
-    {
-        query.next();
-        return query.record().value("nombre").toString();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar agente"),
-                             tr("Fallo al recuperar el agente")+query.lastError().text(),
-                             tr("Aceptar"));
-}
-
-int Configuracion::devolver_id_agente(QString agente)
-{
-    QSqlQuery query(Configuracion_global->groupDB);
-    if(query.exec("select id from agentes where nombre = '"+agente+"'"))
-    {
-        query.next();
-        return query.record().value("id").toInt();
-
-    } else
-        QMessageBox::warning(qApp->activeWindow(),tr("Buscar identificador agente"),
-                             tr("Fallo la recuperación del identificador: ")+query.lastError().text(),
-                             tr("Aceptar"));
-
-}
 
 QString Configuracion::devolver_transportista(int id)
 {
@@ -781,7 +511,6 @@ int Configuracion::devolver_id_tabla(QSqlQueryModel *model, QModelIndex index)
 {
     int id = model->data(model->index(index.row(),0),Qt::EditRole).toInt();
     return id;
-
 }
 
 void Configuracion::CargarClientes()
@@ -792,14 +521,11 @@ void Configuracion::CargarClientes()
     client_model->select();
 }
 
-
-
 void Configuracion::CargarUsuarios()
 {
     if(usuarios_model == 0)
         usuarios_model = new QSqlQueryModel(this);
     usuarios_model->setQuery("SELECT * from redfoxglobal.usuarios",Configuracion_global->globalDB);
-    qDebug() << usuarios_model->rowCount() << usuarios_model->lastError();
 }
 
 bool Configuracion::CargarDatosBD()
@@ -873,11 +599,6 @@ void Configuracion::AbrirDbWeb()
 
 }
 
-void Configuracion::CerrarDbWeb()
-{
-    dbWeb.close();
-}
-
 void Configuracion::AbridBDMediTec()
 {
     // Abro bdInformación técnica de medicina
@@ -893,10 +614,6 @@ void Configuracion::AbridBDMediTec()
     }
 }
 
-void Configuracion::CerrarBDMediTec()
-{
-    db_meditec.close();
-}
 void Configuracion::CargarDatos(QSqlRecord r)
 {
     this->pais = r.field("pais").value().toString();
@@ -1154,6 +871,27 @@ void Configuracion::setUpKeys()
     iv[14] = 0x10;
     iv[15] = 0xa3;
 }
+
+QString Configuracion::search_string(QSqlQueryModel *model, int id, QString column)
+{
+    for(auto i=0; i<model->rowCount(); ++i)
+    {
+        if(model->record(i).value("id").toInt() == id)
+            return model->record(i).value(column).toString();
+    }
+    return "";
+}
+
+QVariant Configuracion::_search(QSqlQueryModel *model, QVariant search, QString column, QString output_column)
+{
+    for (auto i=0; i< model->rowCount(); ++i)
+    {
+        if(model->record(i).value(column).toString() == search)
+            return model->record(i).value(output_column);
+    }
+    return QVariant();
+}
+
 QString Configuracion::Crypt(QString plaintext)
 {
     setUpKeys();

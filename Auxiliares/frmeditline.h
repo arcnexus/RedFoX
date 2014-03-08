@@ -20,7 +20,7 @@ public:
     void set_linea(int id, QString fichero);
     void set_id_cliente(int id);
     void set_id_tarifa(int id);
-    void set_tipo(QString tipo);
+    void set_tipo(bool tipo);
     void set_id_cab(int id_cabecera);
     void set_tabla(QString t);
     void set_editando();
@@ -51,11 +51,10 @@ private slots:
 private:
     Ui::frmEditLine *ui;
     int id,id_cliente,id_tarifa,id_articulo,id_cab;
-    QString tipo; // ("C" compras - "V" - Ventas)
+    bool tipo; // ("C" compras - "V" - Ventas) //TODO cambiar a bool Y.Y
     QString tabla,codigo_articulo;
-    void cargar_articulo(int id_art, int tarifa, int tipo_dto);
+    void cargar_articulo(int id_art, int tarifa);
     void vaciar_campos();
-    int dto_tarifa;
     int id_lote;
     float unidades_regalo;
     Articulo *oArticulo;
@@ -66,6 +65,7 @@ private:
     bool realiza_acumulados;
     bool reserva_unidades ;
 
+    void buscar_art();
 signals:
     void refrescar_lineas();
 };

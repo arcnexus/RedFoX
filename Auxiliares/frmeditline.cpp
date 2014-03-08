@@ -11,7 +11,6 @@ frmEditLine::frmEditLine(QWidget *parent) :
 
     this->editando = false;
     this->reserva_unidades = false;
-    this->dto_tarifa =0;
     ui->lblpromocionado->setVisible(false);
     ui->chk3_2->setVisible(false);
     ui->chkdto->setVisible(false);
@@ -47,8 +46,11 @@ bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
 
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
-       //&&  keyEvent->modifiers() == Qt::ControlModifier
-
+        if(keyEvent->key() == Qt::Key_B &&  keyEvent->modifiers() == Qt::ControlModifier)
+        {
+            buscar_art();
+            return true;
+        }
         if(keyEvent->key() == Qt::Key_Plus)
         {
             on_btnAnadir_mas_nueva_clicked();
@@ -64,6 +66,57 @@ bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
             return true;
     }
     return QDialog::eventFilter(obj,event);
+}
+
+void frmEditLine::buscar_art()
+{
+    db_consulta_view consulta(qApp->activeWindow());
+    QStringList campos;
+    campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante"  << "coste";
+    consulta.set_campoBusqueda(campos);
+    consulta.set_texto_tabla("articulos");
+    consulta.set_db("Maya");
+    consulta.setId_tarifa_cliente(this->id_tarifa);
+    if(tipo)
+    {
+        consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,pvp, pvp_cliente as pvp_recom,stock_fisico_almacen"
+                         " from vistaart_tarifa");
+        QStringList cabecera;
+        QVariantList tamanos;
+        QVariantList moneda;
+        cabecera  <<tr("id")<< tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
+        cabecera <<tr("P.RECOM.") <<tr("S.Alm.");
+        tamanos <<"0" << "80" << "80" << "80" << "250" <<"100" <<"100" <<"100" <<"80";
+        moneda <<"5" <<"6" <<"7" <<"8";
+        consulta.set_headers(cabecera);
+        consulta.set_tamano_columnas(tamanos);
+        consulta.set_delegate_monetary(moneda);
+        consulta.set_filtro("");
+    }
+    else
+    {
+        consulta.set_SQL("Select id,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,stock_fisico_almacen from articulos");
+        QStringList cabecera;
+        QVariantList tamanos;
+        QVariantList moneda;
+        cabecera  <<tr("id")<< tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("Stock");
+        tamanos <<"0" << "120" << "120" << "120" << "380" <<"80" <<"100";
+        moneda <<"5" <<"6" <<"7" <<"8";
+        consulta.set_headers(cabecera);
+        consulta.set_tamano_columnas(tamanos);
+        consulta.set_delegate_monetary(moneda);
+    }
+
+    consulta.set_titulo("Busqueda de Artículos");    
+    if(consulta.exec() == QDialog::Accepted)
+    {
+        this->id_articulo = consulta.get_id();
+        if(id_articulo>0)
+        {
+            cargar_articulo(this->id_articulo,this->id_tarifa);
+            ui->txtCantidad->setFocus();
+        }
+    }
 }
 
 int frmEditLine::get_id()
@@ -141,15 +194,16 @@ void frmEditLine::set_id_tarifa(int id)
         QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al localizar la tarifa: %1").arg(error));
 }
 
-void frmEditLine::set_tipo(QString tipo)
+void frmEditLine::set_tipo(bool tipo)
 {
     this->tipo = tipo;
-    if(this->tipo == "V")
-    {
+    if(tipo)
         ui->lbl_pvp_cliente->setText(tr("PVP\nCliente"));
-    } else
+    else
     {
         ui->lbl_pvp_cliente->setText(tr("Coste"));
+        ui->label_tarifa->hide();
+        ui->txtTarifa->hide();
     }
 }
 
@@ -188,36 +242,7 @@ void frmEditLine::on_txtCodigo_editingFinished()
     ui->txtCodigo->blockSignals(true);
     if(ui->txtCodigo->text() != this->codigo_articulo )
     {
-        if(ui->txtCodigo->text() == "*")
-        {
-            db_consulta_view consulta(qApp->activeWindow());
-            QStringList campos;
-            campos << "descripcion" <<"codigo" <<"codigo_barras" << "codigo_fabricante"  << "coste";
-            consulta.set_campoBusqueda(campos);
-            consulta.set_texto_tabla("articulos");
-            consulta.set_db("Maya");
-            consulta.setId_tarifa_cliente(this->id_tarifa);
-            consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,pvp, pvp_cliente as pvp_recom,stock_fisico_almacen"
-                                 " from vistaart_tarifa");
-
-            QStringList cabecera;
-            QVariantList tamanos;
-            QVariantList moneda;
-            cabecera  <<tr("id")<< tr("Código") << tr("Código Barras") << tr("Referencia") << tr("Descripción") << tr("Coste") <<tr("pvp");
-            cabecera <<tr("P.RECOM.") <<tr("S.Alm.");
-            tamanos <<"0" << "80" << "80" << "80" << "250" <<"100" <<"100" <<"100" <<"80";
-            moneda <<"5" <<"6" <<"7" <<"8";
-            consulta.set_headers(cabecera);
-            consulta.set_tamano_columnas(tamanos);
-            consulta.set_delegate_monetary(moneda);
-            consulta.set_titulo("Busqueda de Artículos");
-            consulta.set_filtro("");
-            if(consulta.exec())
-            {
-                this->id_articulo = consulta.get_id();
-
-           }
-        } else if(ui->txtCodigo->text().isEmpty())
+        if(ui->txtCodigo->text().isEmpty())
         {
             QMessageBox::information(this,tr("Edición de líneas de detalle"),
                                      tr("Ha dejado el código en blanco, si es correcto deberá introducir el resto de datos necesarios a mano,"
@@ -240,197 +265,190 @@ void frmEditLine::on_txtCodigo_editingFinished()
                 vaciar_campos();
                 ui->txtCodigo->setFocus();
             }
-        }
-        if(this->id_articulo >0)
-            cargar_articulo(this->id_articulo,this->id_tarifa,this->dto_tarifa);
+            else
+                cargar_articulo(this->id_articulo,this->id_tarifa);
+        }          
     }
     ui->txtCodigo->blockSignals(false);
 }
 
-void frmEditLine::cargar_articulo(int id_art,int tarifa,int tipo_dto)
+void frmEditLine::cargar_articulo(int id_art, int tarifa)
 {
-    //---------------------
     // BUSCAR ARTICULO
-    //---------------------
-    QMap <int,QSqlRecord> m;
-    QString error;
-    float dto;
-    this->dto_tarifa = tipo_dto;
-    QStringList condiciones;
-    condiciones << QString("id = '%1'").arg(id_art);
-    condiciones << QString("tarifa = %1").arg(tarifa);
-
-    m = SqlCalls::SelectRecord("vistaart_tarifa",condiciones,Configuracion_global->groupDB,
-                               error);
-    if(!error.isEmpty())
-        QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al recuperar: %1").arg(error));
-
-    QMapIterator <int,QSqlRecord> i(m);
-//    QHash <QString, QVariant> h;
-//    h["found"] = false;
-    while(i.hasNext())
+    if(tipo)
     {
-        i.next();
-        this->id_articulo = i.value().value("id").toInt();
-        if(this->tipo == "V")
+        QString error;
+        QStringList condiciones;
+        condiciones << QString("id = '%1'").arg(id_art);
+        condiciones << QString("tarifa = %1").arg(tarifa);
+
+        QMap <int,QSqlRecord> m = SqlCalls::SelectRecord("vistaart_tarifa",condiciones,Configuracion_global->groupDB,error);
+        if(!error.isEmpty())
         {
-            ui->txtCodigo->setText(i.value().value("codigo").toString());
+            QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al recuperar: %1").arg(error));
+            return;
+        }
+
+        if(!m.isEmpty())
+        {
+            QSqlRecord r = m.first();
+
+            this->id_articulo = r.value("id").toInt();
+
+            ui->txtCodigo->setText(r.value("codigo").toString());
             //TODO MARC REVISA ESTO!!!
-//            if(!Configuracion_global->descripcion_resumida_lineas)
-//                ui->txtDescripcion->setText(i.value().value("descripcion").toString());
-//            else
-                ui->txtDescripcion->setText(i.value().value("descripcion_reducida").toString());
-        } else
-        {
-            if (Configuracion_global->referencia_fabricante_lineas_compras)
-                ui->txtCodigo->setText(i.value().value("codigo_fabricante").toString());
-            else
-                ui->txtCodigo->setText(i.value().value("codigo").toString());
+            // if(!Configuracion_global->descripcion_resumida_lineas)
+            // ui->txtDescripcion->setText(i.value().value("descripcion").toString());
+            // else
+            ui->txtDescripcion->setText(r.value("descripcion_reducida").toString());
 
-//TODO      MARC REVISA ESTO!!!
-//            if(!Configuracion_global->descripcion_resumida_lineas)
-//                ui->txtDescripcion->setText(i.value().value("descripcion").toString());
-//            else
-                ui->txtDescripcion->setText(i.value().value("descripcion_reducida").toString());
-        }
-        this->id_lote = 0;
-        if (i.value().value("lotes").toBool())
-        {
-            frmSelectLotes frmlotes(this);
-            frmlotes.set_id_articulo(id_art);
-            if(frmlotes.exec() == QDialog::Accepted)
+            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(       r.value("pvp_cliente").toDouble(),'f',Configuracion_global->decimales_campos_totales)));
+            ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(r.value("pvp_con_iva").toDouble(),'f',Configuracion_global->decimales_campos_totales)));
+            ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(   r.value("pvp").toDouble(),'f',Configuracion_global->decimales)));
+
+
+            this->id_lote = 0;
+            if (r.value("lotes").toBool())
             {
-                QString lote = frmlotes.get_lote();
-                this->id_lote = frmlotes.get_id();
-                ui->txtDescripcion->setText(ui->txtDescripcion->text().append(lote));
-
+                frmSelectLotes frmlotes(this);
+                frmlotes.set_id_articulo(id_art);
+                if(frmlotes.exec() == QDialog::Accepted)
+                {
+                    QString lote = frmlotes.get_lote();
+                    this->id_lote = frmlotes.get_id();
+                    ui->txtDescripcion->setText(ui->txtDescripcion->text().append(lote));
+                }
+            }
+            // Calculamos %dto tarifa
+            float dto = r.value("pvp").toDouble() - r.value("pvp_cliente").toDouble();
+            if(r.value("pvp_cliente").toDouble() > 0)
+            {
+                if(ui->txtPorc_dto->text() =="0,00" || ui->txtPorc_dto->text() =="0")
+                {
+                    float porc_dto = (dto * 100) / r.value("pvp").toDouble();
+                    ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',Configuracion_global->decimales_campos_totales)));
+                }
+            }
+            else //PVP_CLIENTE == 0
+            {
+                ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(100.0,'f',Configuracion_global->decimales_campos_totales)));
             }
 
-        }
-        if(this->tipo == "V")
-        {
-            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp_cliente").toDouble(),'f',
-                                                                                      Configuracion_global->decimales_campos_totales)));
+            ui->txtCantidad->setText("1");
+            ui->cboIva->setCurrentIndex(ui->cboIva->findText(r.value("tipo_iva").toString()));
 
-            ui->txtPvp_conIva->setText(Configuracion_global->toFormatoMoneda(QString::number(
-                                                                                 i.value().value("pvp_con_iva").toDouble(),'f',
-                                                                                 Configuracion_global->decimales_campos_totales)));
-            ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("pvp").toDouble(),'f',
-                                                                                                  Configuracion_global->decimales)));
-        } else
-        {
-            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("coste").toDouble(),'f',
-                                                                                      Configuracion_global->decimales_campos_totales)));
-            ui->txtPvp_conIva->setText("0,00");
-            ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(i.value().value("coste").toDouble(),'f',
-                                                                                                  Configuracion_global->decimales)));
-        }
-        //-------------------------
-        // Calculamos %dto tarifa
-        //-------------------------
-        float pvp_recom;
-        dto = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) -
-                Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-        if(ui->txtPvp_recomendado->text() == "0,00")
-            pvp_recom = 1;
-        else
-            pvp_recom = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
-        if(ui->txtPorc_dto->text() =="0,00" || ui->txtPorc_dto->text() =="0")
-        {
-            float porc_dto = (dto * 100) / pvp_recom;
-            ui->txtPorc_dto->setText(Configuracion_global->toFormatoMoneda(QString::number(porc_dto,'f',
-                                                                                           Configuracion_global->decimales_campos_totales)));
-        }
-        //---------------------------- Fin calculo & dto tarifa
+            // STOCKS
+            ui->txtStockAlmacen->setText(r.value("stock_fisico_almacen").toString());
+            ui->txtStock_real->setText(r.value("stock_real").toString());
+            ui->txtPendientes_recibir->setText(r.value("unidades_pendientes_recibir").toString());
+            ui->txtUnidades_reservadas->setText(r.value("unidades_reservadas").toString());
+            ui->dateFecha_recepcion->setDate(r.value("fecha_prevista_recepcion").toDate());
 
-        ui->txtCantidad->setText("1");
-        int index = ui->cboIva->findText(i.value().value("tipo_iva").toString());
-        ui->cboIva->setCurrentIndex(index);
+            // PROMOCIONES ARTÍCULO
+            if(r.value("promocionado").toBool())
+            {
+                ui->lblpromocionado->setVisible(true);
+                ui->chk3_2->setVisible(true);
+                ui->chkdto->setVisible(true);
+                ui->chkprecio->setVisible(true);
+                ui->chk_dtoweb->setVisible(true);
 
+                QStringList filter;
+                filter << QString("id=%1").arg(r.value("id").toInt());
+                filter << "activa = 1";
+
+                QMap <int,QSqlRecord> p = SqlCalls::SelectRecord("articulos_ofertas",filter, Configuracion_global->empresaDB,error);
+                if(error.isEmpty() && !p.isEmpty())
+                {
+                    // Oferta 3*2
+                    if(p.value(r.value("id").toInt()).value("oferta32").toBool())
+                    {
+                        ui->chk3_2->setChecked(true);
+                        float por_cada = p.value(r.value("id").toInt()).value("unidades").toFloat();
+                        float regalo = p.value(r.value("id").toInt()).value("regalo").toFloat();
+                        int cant = cant / por_cada;
+                        this->unidades_regalo = cant * regalo;
+                    }
+
+                    // Oferta web
+                    if(p.value(r.value("id").toInt()).value("oferta_web").toBool())
+                    {
+                        ui->chk_dtoweb->setChecked(true);
+                        float dto_web = p.value(r.value("id").toInt()).value("dto_web").toFloat();
+                        if(dto_web > dto)
+                            ui->txtPorc_dto->setText(QString::number(dto_web,'f',2));
+                    }
+
+                    // Oferta dto
+                    if(p.value(r.value("id").toInt()).value("oferta_dto").toBool())
+                    {
+                        ui->chkdto->setChecked(true);
+                        float dto_local = p.value(r.value("id").toInt()).value("dto_local").toFloat();
+                        if(dto_local > dto)
+                            ui->txtPorc_dto->setText(QString::number(dto_local,'f',2));
+                    }
+
+                    // Oferta precio final
+                    if(p.value(r.value("id").toInt()).value("oferta_precio_final").toBool())
+                    {
+                        ui->chkprecio->setChecked(true);
+                        if(p.value(r.value("id").toInt()).value("precio_final").toDouble()<r.value("precio").toDouble())
+                            ui->txtPVP->setText(QString::number(p.value(r.value("id").toInt()).value("precio_final").toDouble(),'f',2));
+                    }
+                }
+            }
+            // TODO Control de Execpciones
+        }
     }
-//    double pvp = (i.value().value("pvp").toDouble()-(i.value().value("pvp").toDouble()*(ui->txtPorc_dto->text().toFloat()/100)));
-//    ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(
-//                                                                  pvp,'f', Configuracion_global->decimales)));
-    // STOCKS
-    ui->txtStockAlmacen->setText(i.value().value("stock_fisico_almacen").toString());
-    ui->txtStock_real->setText(i.value().value("stock_real").toString());
-    ui->txtPendientes_recibir->setText(i.value().value("unidades_pendientes_recibir").toString());
-    ui->txtUnidades_reservadas->setText(i.value().value("unidades_reservadas").toString());
-    ui->dateFecha_recepcion->setDate(i.value().value("fecha_prevista_recepcion").toDate());
-
-    // PROMOCIONES ARTÍCULO
-    bool art_promo = SqlCalls::SelectOneField("articulos","articulo_promocionado",
-                                              QString("id=%1").arg(this->id),Configuracion_global->groupDB,
-                               error).toBool();
-    if(art_promo)
+    else // tipo == false -> COMPRAS
     {
-        ui->lblpromocionado->setVisible(true);
-        ui->chk3_2->setVisible(true);
-        ui->chkdto->setVisible(true);
-        ui->chkprecio->setVisible(true);
-        ui->chk_dtoweb->setVisible(true);
-
-        QStringList filter;
-        filter << QString("id=%1").arg(i.value().value("id").toInt());
-        filter << "activa = 1";
-
-        QMap <int,QSqlRecord> p;
-        p=SqlCalls::SelectRecord("articulos_ofertas",filter, Configuracion_global->empresaDB,error);
-        if(error.isEmpty())
+        QString error;
+        QMap <int,QSqlRecord> m = SqlCalls::SelectRecord("articulos",QString("id = '%1'").arg(id_art),Configuracion_global->groupDB,error);
+        if(!error.isEmpty())
         {
-            //-------------
-            // Oferta 3*2
-            //-------------
-            if(p.value(i.value().value("id").toInt()).value("oferta32").toBool())
-            {
-                ui->chk3_2->setChecked(true);
-                float por_cada = p.value(i.value().value("id").toInt()).value("unidades").toFloat();
-                float regalo = p.value(i.value().value("id").toInt()).value("regalo").toFloat();
-                int cant = cant / por_cada;
-                this->unidades_regalo = cant * regalo;
-            }
-            //--------------
-            // Oferta web
-            //--------------
-            if(p.value(i.value().value("id").toInt()).value("oferta_web").toBool())
-            {
-                ui->chk_dtoweb->setChecked(true);
-                float dto_web = p.value(i.value().value("id").toInt()).value("dto_web").toFloat();
-                if(dto_web > dto){
-                    ui->txtPorc_dto->setText(QString::number(dto_web,'f',2));
-                }
-            }
-            //--------------
-            // Oferta dto
-            //--------------
-            if(p.value(i.value().value("id").toInt()).value("oferta_dto").toBool())
-            {
-                ui->chkdto->setChecked(true);
-                float dto_local = p.value(i.value().value("id").toInt()).value("dto_local").toFloat();
-                if(dto_local > dto){
-                    ui->txtPorc_dto->setText(QString::number(dto_local,'f',2));
-                }
-            }
-            //----------------------
-            // Oferta precio final
-            //----------------------
-            if(p.value(i.value().value("id").toInt()).value("oferta_precio_final").toBool())
-            {
-                ui->chkprecio->setChecked(true);
-                if(p.value(i.value().value("id").toInt()).value("precio_final").toDouble()<i.value().value("precio").toDouble()) {
-                    ui->txtPVP->setText(QString::number(p.value(i.value().value("id").toInt()).value("precio_final").toDouble(),'f',2));
-                }
-            }
-
+            QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al recuperar: %1").arg(error));
+            return;
         }
 
-    }
-        //--------------------------
-        // Control de Execpciones
-    //--------------------------
-    // TODO
-    calcular();
+        if(!m.isEmpty())
+        {
+            QSqlRecord r = m.first();
+            //TODO MARC REVISA ESTO!!!
+            //if (Configuracion_global->referencia_fabricante_lineas_compras)
+            //ui->txtCodigo->setText(r.value("codigo_fabricante").toString());
+            //else
+            ui->txtCodigo->setText(r.value("codigo").toString());
 
+            //TODO MARC REVISA ESTO!!!
+            // if(!Configuracion_global->descripcion_resumida_lineas)
+            // ui->txtDescripcion->setText(i.value().value("descripcion").toString());
+            // else
+            ui->txtDescripcion->setText(r.value("descripcion_reducida").toString());
+
+            ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(            r.value("coste").toDouble(),'f',Configuracion_global->decimales_campos_totales)));
+            ui->txtPvp_recomendado->setText(Configuracion_global->toFormatoMoneda(QString::number(r.value("coste").toDouble(),'f',Configuracion_global->decimales)));
+            ui->txtPvp_conIva->setText("0,00");
+
+            ui->txtCantidad->setText("1");
+            int id_iva = r.value("id_tipos_iva").toInt();
+            for(auto i= 0; i< Configuracion_global->iva_model->rowCount(); ++i)
+            {
+                if(Configuracion_global->iva_model->record(i).value("id").toInt() == id_iva)
+                {
+                    ui->cboIva->setCurrentIndex(i);
+                    break;
+                }
+            }
+
+            // STOCKS
+            ui->txtStockAlmacen->setText(r.value("stock_fisico_almacen").toString());
+            ui->txtStock_real->setText(r.value("stock_real").toString());
+            ui->txtPendientes_recibir->setText(r.value("cantidad_pendiente_recibir").toString());
+            ui->txtUnidades_reservadas->setText(r.value("unidades_reservadas").toString());
+            ui->dateFecha_recepcion->setDate(r.value("fecha_prevista_recepcion").toDate());
+        }
+    }
+    calcular();
     this->codigo_articulo = ui->txtCodigo->text();
 }
 
@@ -526,7 +544,7 @@ void frmEditLine::calcular()
 void frmEditLine::on_txtCantidad_editingFinished()
 {
     if(Configuracion_global->MonedatoDouble(ui->txtStockAlmacen->text()) -
-            Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) <0  && this->tipo =="V")
+            Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) <0  && this->tipo)
         QMessageBox::warning(this,tr("Ventas"),tr("No tiene suficientes unidades en stock para la venta"),tr("Aceptar"));
     calcular();
 }
@@ -569,7 +587,7 @@ void frmEditLine::on_btnAceptar_clicked()
         return;
     }
     QHash <QString, QVariant> lin;
-    if(this->tipo =="V"){
+    if(this->tipo){
 
         lin["cantidad"] = ui->txtCantidad->text().toFloat();
         lin["codigo"] = ui->txtCodigo->text();
@@ -622,7 +640,7 @@ void frmEditLine::on_btnAceptar_clicked()
         {
             if(this->realiza_acumulados)
             {
-                if (this->tipo=="V")
+                if (this->tipo)
                     oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,                                                        anterior.value("total").toDouble(),QDate::currentDate(),"V");
                 else
                     oArticulo->set_pendiente_recibir(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant);
@@ -675,14 +693,14 @@ void frmEditLine::on_btnAceptar_clicked()
         this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
         if(this->realiza_acumulados)
         {
-            if ( this->id >0 && this->tipo =="C")
+            if ( this->id >0 && !this->tipo)
                     oArticulo->set_pendiente_recibir(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant);
 
             if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
                                                                                             anterior.value("cantidad").toFloat(),
                                                           Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
                                                                                                anterior.value("total").toDouble(),
-                                                          QDate::currentDate(),"V") &&this->tipo =="V")
+                                                          QDate::currentDate(),"V") &&this->tipo)
             {
                 // ----------------------------
                 // Lotes
@@ -703,7 +721,7 @@ void frmEditLine::on_btnAceptar_clicked()
             }
             else
             {
-                if(this->tipo == "V")
+                if(this->tipo)
                 {
                     QMessageBox::warning(this,tr("Edición lineas detalle"),
                                          tr("Falló al añadir la linea de detalle en la BD: %1").arg(error),
@@ -738,7 +756,7 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
     if(ui->txtDescripcion->text().isEmpty())
         return;
     QHash <QString, QVariant> lin;
-    if(this->tipo == "V")
+    if(this->tipo)
     {
         lin["cantidad"] = ui->txtCantidad->text().toFloat();
         lin["codigo"] = ui->txtCodigo->text();
@@ -817,5 +835,4 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
         emit refrescar_lineas();
     }
    vaciar_campos();
-
 }

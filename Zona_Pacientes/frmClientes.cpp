@@ -33,7 +33,7 @@ void frmClientes::init_querys()
     queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
     qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
-    pob_completer_model->setTable("municipios");    
+
 
     qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),Configuracion_global->groupDB);
     ui->lista_direccionesAlternativas->setModelColumn(1);
@@ -70,8 +70,10 @@ void frmClientes::init()
     modelHistorial      = new QSqlQueryModel(this);
 
     pob_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
-    pob_completer_model->setTable("municipios");
+
     pob_completer = new QCompleter(pob_completer_model,this);
+    pob_completer_model->setTable("municipios");
+
     pob_completer->setCaseSensitivity(Qt::CaseInsensitive);
     pob_completer->setCompletionColumn(3);
     ui->txtpoblacion->setCompleter(pob_completer);

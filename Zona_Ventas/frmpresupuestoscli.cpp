@@ -2011,7 +2011,7 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
         frmeditar.set_id_cliente(oClientePres->id);
         frmeditar.set_id_tarifa(oClientePres->idTarifa);
         frmeditar.set_id_cab(oPres->id);
-        frmeditar.set_tipo("V");
+        frmeditar.set_tipo(true);
         if(frmeditar.exec() == QDialog::Accepted)
             refrescar_modelo();
         calcular_presupuesto();
@@ -2044,7 +2044,7 @@ void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_cliente(oClientePres->id);
             frmeditar.set_id_tarifa(oClientePres->idTarifa);
             frmeditar.set_id_cab(oPres->id);
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             frmeditar.set_linea(id_lin,"lin_pre");
             frmeditar.set_tabla("lin_pre");
             frmeditar.set_editando();

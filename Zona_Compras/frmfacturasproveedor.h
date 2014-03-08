@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "../Auxiliares/Globlal_Include.h"
-#include "../Auxiliares/table_helper.h"
+
 #include "proveedor.h"
 #include "facturasproveedor.h"
 #include "../mayamodule.h"
@@ -28,12 +28,6 @@ public:
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
 private slots:
-    void totalChanged(double base , double dto ,double subtotal , double iva, double re, double total, QString moneda);
-    void desglose1Changed(double base, double iva, double re, double total);
-    void desglose2Changed(double base, double iva, double re, double total);
-    void desglose3Changed(double base, double iva, double re, double total);
-    void desglose4Changed(double base, double iva, double re, double total);
-    void lineaReady(lineaDetalle *ld);
     void bloquearcampos(bool state);
     void on_btnAnadir_clicked();
     void llenar_campos();
@@ -55,7 +49,6 @@ private slots:
     void on_btnListados_clicked();
 
     void on_btnBuscar_clicked();
-    void resizeTable(int x);
 
     void on_tabla_clicked(const QModelIndex &index);
 
@@ -69,7 +62,6 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
     Ui::FrmFacturasProveedor *ui;
-    Table_Helper helper;
     Proveedor prov;
     FacturasProveedor *oFacPro;
     QAction menuButton;

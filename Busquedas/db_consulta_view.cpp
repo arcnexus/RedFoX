@@ -99,7 +99,7 @@ void db_consulta_view::set_delegate_monetary(QVariantList cols)
 {
     for(int pos=0; pos <= cols.count()-1;pos++)
     {
-        ui->resultado_list->setItemDelegateForColumn(cols.at(pos).toInt(),new MonetaryDelegate);
+        ui->resultado_list->setItemDelegateForColumn(cols.at(pos).toInt(),new MonetaryDelegate(this));
     }
 }
 
@@ -107,7 +107,7 @@ void db_consulta_view::set_delegate_fecha(QVariantList cols)
 {
     for(int pos=0; pos <= cols.count()-1;pos++)
     {
-        ui->resultado_list->setItemDelegateForColumn(cols.at(pos).toInt(),new DateDelegate);
+        ui->resultado_list->setItemDelegateForColumn(cols.at(pos).toInt(),new DateDelegate(this));
     }
 }
 

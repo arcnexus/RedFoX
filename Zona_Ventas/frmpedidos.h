@@ -5,7 +5,7 @@
 
 #include "pedidos.h"
 #include "../Zona_Pacientes/cliente.h"
-#include "../Auxiliares/table_helper.h"
+
 #include "../mayamodule.h"
 namespace Ui {
 class frmPedidos;
@@ -53,8 +53,6 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-
-    void lineaDeleted(lineaDetalle*);
     void refrescar_modelo();
 
     void convertir_en_albaran();
@@ -115,7 +113,6 @@ private:
     void calcular_iva_gastos();
     void buscar_transportista();
 
-    Table_Helper helper;
     QAction * aAlbaran_action;
     QAction * aFactura_action;
     QMenu * convertir_menu;

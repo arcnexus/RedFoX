@@ -1404,34 +1404,6 @@ void FrmPedidos::on_btn_borrar_clicked()
     filter_table(this->texto,this->orden,this->modo);
 }
 
-void FrmPedidos::lineaDeleted(lineaDetalle * ld)
-{
-    //todo borrar de la bd y stock y demas
-    //if id = -1 pasando olimpicamente
-    bool ok_empresa,ok_Maya;
-    ok_empresa = true;
-    ok_Maya = true;
-    Configuracion_global->empresaDB.transaction();
-    Configuracion_global->groupDB.transaction();
-    if(ld->idLinea >-1)
-    {
-        //TODO control de stock
-        QSqlQuery q(Configuracion_global->empresaDB);
-        q.prepare("delete from lin_ped where id =:id");
-        q.bindValue(":id",ld->idLinea);
-        if(q.exec() && ok_Maya)
-        {
-            Configuracion_global->empresaDB.commit();
-            Configuracion_global->groupDB.commit();
-        } else
-        {
-            Configuracion_global->empresaDB.rollback();
-            Configuracion_global->groupDB.rollback();
-        }
-    }
-    delete ld;
-}
-
 void FrmPedidos::refrescar_modelo()
 {
     modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
@@ -2144,7 +2116,7 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             frmeditar.set_linea(id_lin,"lin_ped");
             frmeditar.set_tabla("lin_ped");
             frmeditar.set_editando();
@@ -2176,7 +2148,7 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
 
-            frmeditar.set_tipo("V");
+            frmeditar.set_tipo(true);
             if(!frmeditar.exec() == QDialog::Accepted)
                 refrescar_modelo();
                 calcular_pedido();

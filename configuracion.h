@@ -37,11 +37,22 @@ class Configuracion: public QObject
     Q_OBJECT
 public:
     Configuracion(QObject * parent = 0);
-    bool importado_sp;
 
-    void transaction();
-    void rollback();
-    void commit();
+    //Datos ususario activo
+    QSqlQueryModel* usuarios_model;
+    void CargarUsuarios();
+    int id_usuario_activo;
+    QString user_name;
+    QString user_long_name;
+    QString user_pass;
+    bool    super_user;
+
+    QString user_mail_smpt;
+    QString user_mail_acc;
+    QString user_mail_pass;
+    int user_mail_port;
+
+    //Bases de datos
     QSqlDatabase globalDB;
     QString global_driver;
     QString global_host;
@@ -51,7 +62,6 @@ public:
     QString global_routeLite;
 
     QSqlDatabase groupDB;
-    QSqlDatabase groupDB2;
     QString group_DBName;
     QString group_host;
     QString group_user;
@@ -63,16 +73,22 @@ public:
     QString nombre_bd_empresa;
     QString ruta_bd_empresa;
 
-    QSqlDatabase reportsDB;
-
+    bool medic;
     QSqlDatabase medicaDB;
     QString nombre_bd_medica;
     QString ruta_bd_medica;
 
+    bool contabilidad;
     QSqlDatabase contaDB;
     QString nombre_bd_conta;
     QString RutaBD_Conta;
 
+    void transaction();
+    void rollback();
+    void commit();
+
+    //Bases de datos web
+    bool enlace_web;
     QString nombre_bdTiendaWeb;
     QString cHostBDTiendaWeb;
     QString cUsuarioTiendaWeb;
@@ -85,46 +101,28 @@ public:
     QString PasswordDB_MediTec;
     QString PortDB_MediTec;
 
+    ///
+    QSqlTableModel* client_model;
+
+    //Datos empresa activa
+    int idEmpresa;
+    QString nombreEmpresa;
+    QString cCodEmpresaActiva;
+    QString cEjercicio;
     QString serie;
     int ndigitos_factura;
-    QString cConector;
-    int idEmpresa;
-    QString cCodEmpresaActiva;
-    QString nombreEmpresa;
-
-    bool contabilidad;
     bool ticket_factura;
     bool descripcion_resumida_lineas;
     bool referencia_fabricante_lineas_compras;
-
-    bool enlace_web;
+    int id_divisa_local;
     QString pais;
-    QString cEjercicio;
-    QString cEmpresaActiva;
 
-    int id_usuario_activo;
-
-    QString user_name;
-    QString user_long_name;
-    QString user_pass;
-    bool super_user;
-
-    QString user_mail_smpt;
-    QString user_mail_acc;
-    QString user_mail_pass;
-    int user_mail_port;
-
-    QSqlDatabase dbConfiguracion;
-    QSqlDatabase dbWeb;
-    QSqlDatabase db_meditec;
-    QSqlQuery *QryConfiguracion;
-    QFileDialog dialogo;
     bool auto_codigoart;
     int tamano_codigo;
     int decimales_campos_totales;
     int decimales;
     bool mostrar_siempre; // si está activo mostrará los 0 en decimales a partir de estandar (2) hasta valor decimales
-    bool medic;
+
     bool internacional;
     bool tpv_forzar_cantidad;
     QString divisa_local;
@@ -136,64 +134,6 @@ public:
     QString caja;
     double Importe_apertura;
     int caducidad_vales;
-
-    QHash <QString,QSqlRecord> ivas;
-    QSqlQueryModel* iva_model;
-    QStringList ivaList;
-    QStringList grupo_iva;
-    QStringList reList;
-    void Cargar_iva();
-    int getidIva(QString cIva);
-    QString setTipoIva(int idIva);
-
-  //  QHash <QString,QSqlRecord> paises;
-    QSqlQueryModel *paises_model;
-    QSqlQueryModel *divisas_model;
-    QSqlQueryModel *formapago_model;
-    QSqlQueryModel *agentes_model;
-
-    void Cargar_paises();
-    void Cargar_divisas();
-    void Cargar_formas_pago();
-    void Cargar_agentes();
-
-    int Devolver_id_pais(QString pais);
-    static QString Devolver_pais(int id);
-    QString Devolver_moneda(int id);
-    QString Devolver_codDivisa(int id);
-    int Devolver_id_moneda(QString cDivisa);
-    QString Devolver_idioma(int id);
-    int Devolver_id_idioma(QString idioma);
-    int Devolver_id_forma_pago(QString forma_pago);
-    int Devolver_id_codigo_forma_pago(QString codigo);
-    QString Devolver_forma_pago(int id);
-    QString Devolver_codigo_forma_pago(int id);
-    int Devolver_id_tarifa(QString cTarifa);
-    QString Devolver_tarifa(int id_tarifa);
-    QString Devolver_tipo_gasto(int id_gasto);
-    int Devolver_id_tipo_gasto(QString desc);
-    int Devolver_id_cuenta_contable(QString codigo_cta);
-    QString Devolver_descripcion_tipo_iva(double tipo);
-    QString Devolver_descripcion_cuenta_contable(QString codigo_cta);
-    QString Devolver_codigo_cta_contable(int id);
-    QString devolver_codigo_articulo(int id);
-    QString devolver_codigo_barras(int id);
-    QString devolver_referencia_articulo(int id);
-    float Devolver_iva(int id);
-    float devolver_rec_iva(float porc_iva);
-    QString toRound(double number, int decimals);
-    QString devolver_agente(int id);
-    int devolver_id_agente(QString agente);
-    QString devolver_transportista(int id);
-    int devolver_id_transportista(QString transportista);
-    QSqlTableModel* client_model;
-    int devolver_id_tabla(QSqlQueryModel *model, QModelIndex index);
-    void CargarClientes();
-
-
-    QSqlQueryModel* usuarios_model;
-    void CargarUsuarios();
-
     bool lProfesional;
     bool irpf;
     float porc_irpf;
@@ -226,7 +166,56 @@ public:
     int id_tarifa_predeterminada;
     bool actualizar_divisas;
 
+    //Models centralizados
+    QHash <QString,QSqlRecord> ivas;
+    QSqlQueryModel* iva_model;        
+    QSqlQueryModel *paises_model;
+    QSqlQueryModel *divisas_model;
+    QSqlQueryModel *formapago_model;
+    QSqlQueryModel *agentes_model;
+    QSqlQueryModel *idiomas_model;
+    QSqlQueryModel *tarifas_model;
+    QSqlQueryModel *grupos_gasto_model;
 
+    QStringList ivaList;
+    QStringList grupo_iva;
+    QStringList reList;
+
+    void Cargar_iva();
+    int getidIva(QString cIva);
+    QString setTipoIva(int idIva);
+    void CargarDatosMaestros();
+    void Cargar_paises();
+    void Cargar_divisas();
+    void Cargar_formas_pago();
+    void Cargar_agentes();
+    void Cargar_idiomas();
+    void Cargar_tarifas();
+    void Cargar_gastos();
+
+    int Devolver_id_tarifa(QString nombre);
+    int Devolver_id_moneda(QString nombre);
+    QString Devolver_pais(int id);
+    QString Devolver_codigo_forma_pago(int id);
+    QString Devolver_moneda(int id);
+    QString Devolver_codDivisa(int id);
+    QString Devolver_descripcion_tipo_iva(int id);
+    int Devolver_id_pais(QString nombre);
+    QString Devolver_tarifa(int id);
+    QString Devolver_idioma(int id);
+    QString Devolver_tipo_gasto(int id_gasto);
+    int Devolver_id_tipo_gasto(QString desc);
+    int Devolver_id_cuenta_contable(QString codigo_cta);
+    QString Devolver_descripcion_cuenta_contable(QString codigo_cta);
+    QString Devolver_codigo_cta_contable(int id);
+
+    QString toRound(double number, int decimals);
+
+    QString devolver_transportista(int id);
+    int devolver_id_transportista(QString transportista);
+
+    int devolver_id_tabla(QSqlQueryModel *model, QModelIndex index);
+    void CargarClientes();
 
     QString toFormatoMoneda(QString cTexto);
     double MonedatoDouble(QString moneda);
@@ -256,12 +245,14 @@ public:
     void updateTablaDivisas(QString current);
 
 
+    //UTILES IMPRIMIR - ODS
     static void ImprimirDirecto(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
     static void ImprimirPDF(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params);
     static void ImprimirPreview(QString report, QMap<QString,QString> queryClausules,QMap<QString, QString> params);
     static void EviarMail(QString report, QMap<QString,QString> queryClausules, QMap<QString, QString> params, QString pdfName, QString dest_mail, QString dest_name, QString asunto, QString texto);
-
     static bool SqlToODS(QString fileName, QString query, QSqlDatabase db, QStringList headers, QString& error);
+
+
 public slots:
     void format_text();    
 private slots:
@@ -279,6 +270,9 @@ private:
     bool _block;
     float _cambio;
     static void setUpKeys();
+
+    QString search_string(QSqlQueryModel* model,int id, QString column);
+    QVariant _search(QSqlQueryModel* model, QVariant search_for, QString in_column , QString output_column);
 };
 
 #endif // CONFIGURACION_H

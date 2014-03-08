@@ -38,9 +38,8 @@ void FrmAnadirDiagnostico::BtnBuscar_Clicked()
     ui->listaDiagnositicos->setColumnHidden(1,true);
     ui->listaDiagnositicos->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->listaDiagnositicos->horizontalHeader()->resizeSection(0,350);
-    Configuracion_global->CerrarBDMediTec();
-
-
+    QSqlDatabase::database("db_meditec").close();
+    QSqlDatabase::removeDatabase("db_meditec");
 }
 
 void FrmAnadirDiagnostico::SeleccionLista(QModelIndex index)

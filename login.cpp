@@ -109,7 +109,6 @@ void Login::on_btnAcceder_clicked()
     Configuracion_global->nombre_bd_medica = rEmpresa.value("nombre_bd_medica").toString();
     Configuracion_global->decimales = rEmpresa.value("decimales").toInt();
     Configuracion_global->decimales_campos_totales = rEmpresa.value("decimales_campos_totales").toInt();
-    Configuracion_global->importado_sp = rEmpresa.value("importada_sp").toBool();
     Configuracion_global->porc_irpf = rEmpresa.value("porc_irpf").toFloat();
 
     QSqlQuery q(Configuracion_global->globalDB);
