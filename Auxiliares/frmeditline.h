@@ -30,6 +30,7 @@ public:
 
 
 
+    void init();
 private slots:
 
     void on_txtCodigo_editingFinished();

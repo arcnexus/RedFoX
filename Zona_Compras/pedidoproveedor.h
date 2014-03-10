@@ -80,7 +80,22 @@ public:
     double total3;
     double total4;
 
+    QString desc_gasto1;
+    QString desc_gasto2;
+    QString desc_gasto3;
+    double imp_gasto1;
+    double imp_gasto2;
+    double imp_gasto3;
+    double porc_iva_gasto1;
+    double porc_iva_gasto2;
+    double porc_iva_gasto3;
+    double iva_gasto1;
+    double iva_gasto2;
+    double iva_gasto3;
 
+    QString telefono;
+    QString fax;
+    QString movil;
 signals:
     
 public slots:
@@ -88,8 +103,7 @@ public slots:
     bool guardar();
     bool recuperar(int id);
     bool recuperar(QString cadenaSQL);
-    bool recuperar(QString cadenaSQL,int accion);
-    bool cargar(QSqlQuery *queryPedido, int accion);
+    bool cargar(QSqlQuery *queryPedido);
     void clear();
     void convertir_en_albaran();
     void convertir_en_factura();

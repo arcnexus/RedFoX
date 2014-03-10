@@ -891,7 +891,7 @@ void FrmAlbaran::on_btnImprimir_clicked()
             Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
             break;
         case 2: // email
-            Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,oCliente2->email,oCliente2->nombre_fiscal,asunto,texto);
+            Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,dlg_print.get_email(),oCliente2->nombre_fiscal,asunto,texto);
             break;
         case 3: // PDF
             Configuracion::ImprimirPDF(report,parametros_sql,parametros);
@@ -1517,6 +1517,7 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
     if(ui->btnGuardar->isEnabled())
     {
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_alb");
@@ -1544,8 +1545,8 @@ void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
         int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
         if(id_lin >0)
         {
-
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(true);
             frmeditar.set_id_cliente(oCliente2->id);

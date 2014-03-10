@@ -306,6 +306,7 @@ QString Configuracion::setTipoIva(int idIva)
 
 void Configuracion::CargarDatosMaestros()
 {
+    Cargar_iva();
     Cargar_paises();
     Cargar_divisas();
     Cargar_formas_pago();

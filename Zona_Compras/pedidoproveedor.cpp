@@ -63,7 +63,6 @@ bool PedidoProveedor::guardar()
 
     QSqlQuery queryGuardarPedido(Configuracion_global->empresaDB);
     QHash<QString,QVariant> _data;
-   // queryGuardarPedido.prepare("UPDATE ped_pro SET pedido =  :pedido,"
     _data["pedido"] = pedido;
     _data["ejercicio"]= ejercicio;
     _data["fecha"]= fecha;
@@ -126,25 +125,27 @@ bool PedidoProveedor::guardar()
     _data["porc_iva3"]= porc_iva3;
     _data["porc_iva4"]= porc_iva4;
 
+
+    _data["telefono"]= telefono;
+    _data["fax"]= fax;
+    _data["movil"]= movil;
     /*
-    _data["telefono"]= ;
-    _data["fax"]= ;
-    _data["movil"]= ;
     _data["impreso"]= ;
-    _data["desc_gasto1"]= ;
-    _data["desc_gasto2"]= ;
-    _data["desc_gasto3"]= ;
-    _data["imp_gasto1"]= ;
-    _data["imp_gasto2"]= ;
-    _data["imp_gasto3"]= ;
-    _data["gasto_to_coste"]= ;
-    _data["porc_iva_gasto1"]= ;
-    _data["porc_iva_gasto2"]= ;
-    _data["porc_iva_gasto3"]= ;
-    _data["iva_gasto1"]= ;
-    _data["iva_gasto2"]= ;
-    _data["iva_gasto3"]= ;
-    _data["editable"]= ;*/
+    _data["editable"]= ;
+    _data["gasto_to_coste"]= ;*/
+
+    _data["desc_gasto1"]= desc_gasto1;
+    _data["desc_gasto2"]= desc_gasto2;
+    _data["desc_gasto3"]= desc_gasto3;
+    _data["imp_gasto1"]= imp_gasto1;
+    _data["imp_gasto2"]= imp_gasto2;
+    _data["imp_gasto3"]= imp_gasto3;
+    _data["porc_iva_gasto1"]= porc_iva_gasto1;
+    _data["porc_iva_gasto2"]= porc_iva_gasto2;
+    _data["porc_iva_gasto3"]= porc_iva_gasto3;
+    _data["iva_gasto1"]= iva_gasto1;
+    _data["iva_gasto2"]= iva_gasto2;
+    _data["iva_gasto3"]= iva_gasto3;
 
     QString error;
     bool b = SqlCalls::SqlUpdate(_data,"ped_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id),error);
@@ -159,20 +160,15 @@ bool PedidoProveedor::guardar()
 
 bool PedidoProveedor::recuperar(int id)
 {
-    return recuperar(QString("select * from ped_pro where id = %1").arg(id),0);
+    return recuperar(QString("select * from ped_pro where id = %1").arg(id));
 }
 
 bool PedidoProveedor::recuperar(QString cadenaSQL)
 {
-    return recuperar(cadenaSQL,0);
-}
-
-bool PedidoProveedor::recuperar(QString cadenaSQL, int accion)
-{
     QSqlQuery queryPedido(Configuracion_global->empresaDB);
 
     if(queryPedido.exec(cadenaSQL))
-        return cargar(&queryPedido,accion);
+        return cargar(&queryPedido);
     else
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Atención"),
@@ -254,7 +250,7 @@ void PedidoProveedor::clear()
     this->total4 = 0;
 }
 
-bool PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
+bool PedidoProveedor::cargar(QSqlQuery *queryPedido)
 {
     if(queryPedido->next())
     {
@@ -325,23 +321,25 @@ bool PedidoProveedor::cargar(QSqlQuery *queryPedido, int accion)
         this->total2 = queryPedido->record().value("total2").toDouble();
         this->total3 = queryPedido->record().value("total3").toDouble();
         this->total4 = queryPedido->record().value("total4").toDouble();
+        desc_gasto1 = queryPedido->record().value("desc_gasto1").toString();
+        desc_gasto2 = queryPedido->record().value("desc_gasto2").toString();
+        desc_gasto3 = queryPedido->record().value("desc_gasto3").toString();
+        imp_gasto1 = queryPedido->record().value("imp_gasto1").toDouble();
+        imp_gasto2 = queryPedido->record().value("imp_gasto2").toDouble();
+        imp_gasto3 = queryPedido->record().value("imp_gasto3").toDouble();
+        porc_iva_gasto1 = queryPedido->record().value("porc_iva_gasto1").toDouble();
+        porc_iva_gasto2 = queryPedido->record().value("porc_iva_gasto2").toDouble();
+        porc_iva_gasto3 = queryPedido->record().value("porc_iva_gasto3").toDouble();
+        iva_gasto1 = queryPedido->record().value("iva_gasto1").toDouble();
+        iva_gasto2 = queryPedido->record().value("iva_gasto2").toDouble();
+        iva_gasto3 = queryPedido->record().value("iva_gasto3").toDouble();
+
+        telefono= queryPedido->record().value("telefono").toString();
+        fax = queryPedido->record().value("fax").toString();
+        movil = queryPedido->record().value("movil").toString();
         return true;
     }
-    else
-    {
-        switch (accion) {
-        case 0:
-            QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("No se ha encontrado el pedido."),tr("Aceptar"));
-            break;
-        case 1:
-            QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("Se ha llegado al final del fichero."),tr("Aceptar"));
-            break;
-        case 2:
-            QMessageBox::warning(qApp->activeWindow(),tr("Atención"),tr("Se ha llegado al inicio del fichero."),tr("Aceptar"));
-            break;
-        }
         return false;
-    }
 }
 void PedidoProveedor::convertir_en_albaran()
 {
@@ -383,7 +381,7 @@ bool PedidoProveedor::get(int id)
 {
     QSqlQuery q(Configuracion_global->empresaDB);
     if(q.exec(QString("SELECT * FROM ped_pro WHERE id = %1").arg(id)))
-        return cargar(&q,0);
+        return cargar(&q);
     return false;
 }
 
@@ -391,7 +389,7 @@ bool PedidoProveedor::next()
 {
     QSqlQuery q(Configuracion_global->empresaDB);
     if(q.exec(QString("SELECT * FROM ped_pro WHERE pedido > %1 limit 0,1").arg(pedido)))
-        return cargar(&q,1);
+        return cargar(&q);
     return false;
 }
 
@@ -399,6 +397,6 @@ bool PedidoProveedor::prev()
 {
     QSqlQuery q(Configuracion_global->empresaDB);
     if(q.exec(QString("SELECT * FROM ped_pro WHERE pedido < %1 order by pedido desc  limit 0,1").arg(pedido)))
-        return cargar(&q,2);
+        return cargar(&q);
     return false;
 }

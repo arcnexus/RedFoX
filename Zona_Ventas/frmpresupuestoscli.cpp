@@ -1672,7 +1672,7 @@ void FrmPresupuestosCli::on_btnImprimir_clicked()
                 Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                 break;
             case 2: // email
-                Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,oClientePres->email,oClientePres->nombre_fiscal,asunto,texto);
+                Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,dlg_print.get_email(),oClientePres->nombre_fiscal,asunto,texto);
                 break;
             case 3: // PDF
                 Configuracion::ImprimirPDF(report,parametros_sql,parametros);
@@ -2003,6 +2003,7 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
     if(ui->btnGuardar->isEnabled())
     {
         frmEditLine frmeditar(this);
+        frmeditar.init();
         connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
         frmeditar.set_acumula(false);
         frmeditar.set_reserva(false);
@@ -2036,8 +2037,8 @@ void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
         int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
         if(id_lin >0)
         {
-
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(false);

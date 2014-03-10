@@ -3,12 +3,8 @@
 #include "../Busquedas/db_consulta_view.h"
 #include "../Almacen/frmselectlotes.h"
 
-frmEditLine::frmEditLine(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::frmEditLine)
+void frmEditLine::init()
 {
-    ui->setupUi(this);
-
     this->editando = false;
     this->reserva_unidades = false;
     ui->lblpromocionado->setVisible(false);
@@ -33,6 +29,13 @@ frmEditLine::frmEditLine(QWidget *parent) :
 
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
+}
+
+frmEditLine::frmEditLine(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::frmEditLine)
+{
+    ui->setupUi(this);    
 }
 
 frmEditLine::~frmEditLine()
@@ -252,13 +255,10 @@ void frmEditLine::on_txtCodigo_editingFinished()
         {
 
             QString error;
-            this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1'").arg(ui->txtCodigo->text()),
+            this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1' or codigo_fabricante = '%1' or codigo_barras = '%1'").arg(ui->txtCodigo->text()),
                                                    Configuracion_global->groupDB,error).toInt();
-            if(this->id_articulo <1)
-                this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo_fabricante = '%1'").arg(ui->txtCodigo->text()),
-                                                       Configuracion_global->groupDB,error).toInt();
 
-            if(!error.isEmpty())
+            if(this->id_articulo <1)
             {
                 QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo recuperar el artículo: %1").arg(error),
                                      tr("Acceptar"));
@@ -274,6 +274,7 @@ void frmEditLine::on_txtCodigo_editingFinished()
 
 void frmEditLine::cargar_articulo(int id_art, int tarifa)
 {
+    ui->txtCodigo->blockSignals(true);
     // BUSCAR ARTICULO
     if(tipo)
     {
@@ -415,9 +416,9 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
             QSqlRecord r = m.first();
             //TODO MARC REVISA ESTO!!!
             //if (Configuracion_global->referencia_fabricante_lineas_compras)
-            //ui->txtCodigo->setText(r.value("codigo_fabricante").toString());
+            ui->txtCodigo->setText(r.value("codigo_fabricante").toString());
             //else
-            ui->txtCodigo->setText(r.value("codigo").toString());
+            //ui->txtCodigo->setText(r.value("codigo").toString());
 
             //TODO MARC REVISA ESTO!!!
             // if(!Configuracion_global->descripcion_resumida_lineas)
@@ -450,6 +451,7 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
     }
     calcular();
     this->codigo_articulo = ui->txtCodigo->text();
+    ui->txtCodigo->blockSignals(false);
 }
 
 
@@ -804,7 +806,6 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
                                                                                            anterior.value("total").toDouble(),
                                                       QDate::currentDate(),"V"))
         {
-            emit refrescar_lineas();
             // ----------------------------
             // Lotes
             //-----------------------------
@@ -832,7 +833,7 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
         queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
                       .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat())
                       .arg(this->id_articulo));
-        emit refrescar_lineas();
     }
    vaciar_campos();
+   emit refrescar_lineas();
 }

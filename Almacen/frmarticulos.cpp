@@ -835,6 +835,7 @@ void FrmArticulos::on_botEditar_clicked()
     for(auto i= 0; i < ui->Pestanas->count(); i++)
         LLenarCampos(i);
 
+    Configuracion_global->transaction();
     this->anadir = false;
 
     ui->stackedWidget->setCurrentIndex(0);

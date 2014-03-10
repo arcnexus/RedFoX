@@ -1999,7 +1999,7 @@ void FrmPedidos::on_btnImprimir_clicked()
             Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
             break;
         case 2: // email
-            Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,oCliente3->email,oCliente3->nombre_fiscal,asunto,texto);
+            Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,dlg_print.get_email(),oCliente3->nombre_fiscal,asunto,texto);
             break;
         case 3: // PDF
             Configuracion::ImprimirPDF(report,parametros_sql,parametros);
@@ -2108,8 +2108,8 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
         int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
         if(id_lin >0)
         {
-
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(true);
@@ -2139,6 +2139,7 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
     if(ui->btnGuardar->isEnabled())
     {
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(true);

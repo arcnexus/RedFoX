@@ -710,6 +710,10 @@ void MainWindow::loadModules()
     QSplashScreen splash(pixmap);
     splash.show();
 
+    MayaForm = new init_form(this);
+    ui->stackedWidget->addWidget(MayaForm);
+    ui->stackedWidget->setCurrentWidget(MayaForm);
+
     loadMantenModules(&splash);
     crear_barraMantenimiento();
 
@@ -734,8 +738,6 @@ void MainWindow::loadModules()
     loadAminModules(&splash);
     crear_barraAdmin();
 
-    MayaForm = new init_form(this);
-    ui->stackedWidget->addWidget(MayaForm);
     ui->stackedWidget->setCurrentWidget(MayaForm);
 
     QApplication::processEvents();

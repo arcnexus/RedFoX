@@ -821,7 +821,7 @@ void frmFacturas::on_btnImprimir_clicked()
                 Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
                 break;
             case 2: // email
-                Configuracion::EviarMail(report,parametros_sql,parametros,"Paga_ya",oCliente1->email,oCliente1->nombre,"Haber si pagas nen","¡Te envio esta factura para que te acuerdes que tienes deudas con nosotros!\n:P");
+                Configuracion::EviarMail(report,parametros_sql,parametros,"Paga_ya",dlg_print.get_email(),oCliente1->nombre,"Haber si pagas nen","¡Te envio esta factura para que te acuerdes que tienes deudas con nosotros!\n:P");
                 break;
             case 3: // PDF
                 Configuracion::ImprimirPDF(report,parametros_sql,parametros);
@@ -1632,6 +1632,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
     if(ui->btnGuardar->isEnabled())
     {
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_fac");
@@ -1658,8 +1659,8 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
         int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
         if(id_lin >0)
         {
-
             frmEditLine frmeditar(this);
+            frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(true);
             frmeditar.set_id_cliente(oCliente1->id);

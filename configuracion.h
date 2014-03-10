@@ -105,6 +105,7 @@ public:
     QSqlTableModel* client_model;
 
     //Datos empresa activa
+    QSqlRecord empresa_record;
     int idEmpresa;
     QString nombreEmpresa;
     QString cCodEmpresaActiva;

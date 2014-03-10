@@ -45,14 +45,12 @@ private slots:
     void guardar_pedido();
     void editar_pedido();
     void deshacer();
-    void imprimir();
     void borrar_pedido();
     void llenar_campos();
     void refrescar_modelo();
     void guardar_campos_en_objeto();
     void clear();
-    void on_btnAnadirEntregas_clicked();
-    void cargar_tabla_entregas();
+
     void on_btnImprimir_clicked();
 
     void on_tabla_doubleClicked(const QModelIndex &index);
@@ -85,15 +83,17 @@ private slots:
 
     void on_btnRefrescar__clicked();
 
+    void on_spinPorc_dto_pp_valueChanged(double arg1);
+
+    void on_chkrecargo_equivalencia_toggled(bool checked);
+
+    void on_btnPrev_clicked();
+
+    void on_btnNext_clicked();
+
 private:
 
     void formatotabla();
-
-    void on_btnSiguiente_clicked();
-
-    void on_btnAnterior_clicked();
-
-
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();

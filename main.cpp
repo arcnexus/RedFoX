@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 bool cargarEmpresa(QSqlRecord record)
 {
     // Cargar datos empresa
-
+    Configuracion_global->empresa_record = record;
     Configuracion_global->ruta_bd_empresa = record.field("ruta_bd_sqlite").value().toString();
 
     Configuracion_global->contabilidad = record.field("contabilidad").value().toBool();
