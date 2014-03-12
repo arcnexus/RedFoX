@@ -22,15 +22,23 @@ void Articulo::Anadir()
     {
         // Creamos registro de articulo en acum_articulos
         //TODO en todas las empresas
-        QHash <QString, QVariant> h;
-        h["id_articulo"] = id;
-        h["id_empresa"] = Configuracion_global->idEmpresa;
-        int new_id = SqlCalls::SqlInsert(h,"acum_articulos",Configuracion_global->groupDB,error);
-        if(new_id<0){
-            QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
-                                 tr("Falló la inserción de un nuevo acumulado de artículo :\n %1").arg(error),
-                                 QObject::tr("Ok"));
-        } else
+        QMap<int,int> empresas = SqlCalls::SelectMap<int,int>("empresas","id","id",QStringList(),Configuracion_global->groupDB,error);
+        bool succes = true;
+        for(QMap<int,int>::const_iterator it = empresas.begin(); it!= empresas.end(); ++it)
+        {
+            QHash <QString, QVariant> h;
+            h["id_articulo"] = id;
+            h["id_empresa"] = it.key();
+            int new_id = SqlCalls::SqlInsert(h,"acum_articulos",Configuracion_global->groupDB,error);
+            if(new_id<0){
+                QMessageBox::warning(qApp->activeWindow(),tr("Añadir Artículo"),
+                                     tr("Falló la inserción de un nuevo acumulado de artículo :\n %1").arg(error),
+                                     QObject::tr("Ok"));
+                succes = false;
+            }
+
+        }
+        if(succes)
         {
 
             this->id = id;
@@ -64,7 +72,6 @@ void Articulo::Anadir()
             }
         }
     }
-
 }
 
 bool Articulo::Recuperar(QString cSQL)
