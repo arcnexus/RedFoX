@@ -77,28 +77,32 @@ public:
     bool Next();
     bool Prev();
     void Cargar(QSqlRecord registro);
-    void Guardar();
+    bool Guardar();
     void Vaciar();
     void Borrar(int nid,bool isKit, bool ask , QString codigo = QString());
     QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente,
                                    int id_cliente);
     bool Devolucion(int id, double cantidad, double pvp);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
-    static bool acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, QString accion , bool removeReservas = false);
 
-    void set_pendiente_recibir(int id_articulo, float cantidad);
+    static bool acumulado_ventas (int id_articulo, float cantidad, double total, QDate fecha, bool removeReservas = false);
+    static bool acumulado_compras(int id_articulo, float cantidad, double total, QDate fecha, bool removePendient = false);
+    static bool acum_devolucion_cli(int id_articulo,float cantidad,double total, QDate fecha);
+    static bool acum_devolucion_pro(int id_articulo,float cantidad,double total, QDate fecha);
 
-    void acumulado_compras(int id_articulo,float cantidad, QDate fecha);
+    static bool set_pendiente_recibir(int id_articulo, float cantidad);
 
-    static bool acumulado_devoluciones(int id_articulo, float cantidad, double total, QDate fecha, QString accion);
+
+
+
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);
     int getidSubFamilia(QString subfamilia_);
+
     QString getseccion(int nid);
     QString getfamilia(int nid);
     QString getsubfamilia(int nid);
-    QString getcSubSubFamilia(int nid);
-    QString getcGrupo(int nid);
+
     bool agregar_proveedor_alternativo(int id_art, int idProveedor, QString codigo, double pvd, QString descoferta,
                                        QString oferta, double pvd_real, int id_divisa);
     bool guardarProveedorAlternativo(int id, QString codigo, double pvd, QString descoferta,

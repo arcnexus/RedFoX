@@ -381,20 +381,18 @@ bool Albaran::borrar_linea(int id_lin)
         return false;
     }
 
-        bool success = SqlCalls::SqlDelete("lin_alb",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
-        if(success)
-        {
-            if(oArticulo->acumulado_devoluciones(lin.value(id_lin).value("id_articulo").toInt(),
-                                         lin.value(id_lin).value("cantidad").toFloat(),
-                                                lin.value(id_lin).value("total").toDouble(),
-                                                QDate::currentDate(),"V"))
-                return true;
-        }
-        else
-        {
-            QMessageBox::critical(qApp->activeWindow(), "Error:",error);
-            return false;
-        }
+    bool success = SqlCalls::SqlDelete("lin_alb",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
+    if(success)
+    {
+        if(oArticulo->acum_devolucion_cli(lin.value(id_lin).value("id_articulo").toInt(),lin.value(id_lin).value("cantidad").toFloat(),
+                                          lin.value(id_lin).value("total").toDouble(),QDate::currentDate()))
+            return true;
+    }
+    else
+    {
+        QMessageBox::critical(qApp->activeWindow(), "Error:",error);
+    }
+    return false;
 }
 
 

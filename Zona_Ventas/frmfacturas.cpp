@@ -1640,7 +1640,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmeditar.set_id_cliente(oCliente1->id);
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
-            frmeditar.set_tipo(true);
+            frmeditar.set_venta(true);
             if(!frmeditar.exec() == QDialog::Accepted)
                 modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
@@ -1666,7 +1666,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_cliente(oCliente1->id);
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
-            frmeditar.set_tipo(true);
+            frmeditar.set_venta(true);
             frmeditar.set_linea(id_lin,"lin_fac");
             frmeditar.set_tabla("lin_fac");
             frmeditar.set_editando();

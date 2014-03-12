@@ -804,10 +804,8 @@ void FrmAlbaran::on_btn_borrar_clicked()
             {
                 _it.next();
                 QSqlRecord _it_r = _it.value();
-                succes = Articulo::acumulado_devoluciones(_it_r.value("id_articulo").toInt(),
-                                                            _it_r.value("cantidad").toFloat(),
-                                                            _it_r.value("total").toDouble(),
-                                                            QDate::currentDate(),"V");
+                succes &= Articulo::acum_devolucion_cli(_it_r.value("id_articulo").toInt(),_it_r.value("cantidad").toFloat(),
+                                                       _it_r.value("total").toDouble(),QDate::currentDate());
             }
         }
         q.prepare("DELETE FROM lin_alb WHERE id_cab = "+QString::number(id));
@@ -1525,7 +1523,7 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
             frmeditar.set_id_cab(oAlbaran->id);
-            frmeditar.set_tipo(true);
+            frmeditar.set_venta(true);
             if(!frmeditar.exec() == QDialog::Accepted)
                 modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
@@ -1552,7 +1550,7 @@ void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
             frmeditar.set_id_cab(oAlbaran->id);
-            frmeditar.set_tipo(true);
+            frmeditar.set_venta(true);
             frmeditar.set_linea(id_lin,"lin_alb");
             frmeditar.set_tabla("lin_alb");
             frmeditar.set_editando();

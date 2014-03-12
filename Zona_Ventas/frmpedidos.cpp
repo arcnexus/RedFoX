@@ -1581,7 +1581,7 @@ void FrmPedidos::convertir_en_albaran()
                 int id_art = r_l.value("id_articulo").toInt();
                 double cant = r_l.value("cantidad").toDouble();
                 double total = r_l.value("total").toDouble();
-                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),"V",true))
+                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),/*removeReservas*/true))
                 {
                     error = Configuracion_global->groupDB.lastError().text();
                     updated_art = false;
@@ -1835,7 +1835,7 @@ void FrmPedidos::convertir_enFactura()
                             int id_art = h_lineas_fac.value("id_articulo").toInt();
                             double cant = h_lineas_fac.value("cantidad").toDouble();
                             double total = h_lineas_fac.value("total").toDouble();
-                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),"V",true))
+                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),/*removeReservas*/true))
                             {
                                 QMessageBox::warning(this,tr("Pedidos cliente"),
                                                      tr("Ocurrió un error al crear las líneas de factura:\n%1").arg(Configuracion_global->groupDB.lastError().text()));
@@ -2111,12 +2111,15 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+
+            frmeditar.set_venta(true);
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(true);
+
             frmeditar.set_id_cliente(oCliente3->id);
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
-            frmeditar.set_tipo(true);
+
             frmeditar.set_linea(id_lin,"lin_ped");
             frmeditar.set_tabla("lin_ped");
             frmeditar.set_editando();
@@ -2149,12 +2152,15 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmeditar.set_id_tarifa(oCliente3->idTarifa);
             frmeditar.set_id_cab(oPedido->id);
 
-            frmeditar.set_tipo(true);
+            frmeditar.set_venta(true);
             if(!frmeditar.exec() == QDialog::Accepted)
+            {
                 refrescar_modelo();
                 calcular_pedido();
-
-    } else{
+            }
+    }
+    else
+    {
         QMessageBox::warning(this,tr("Gestión de Pedidos"),tr("Debe editar el pedido para añadir líneas"),
                              tr("Aceptar"));
     }

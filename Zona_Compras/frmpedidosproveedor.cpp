@@ -760,11 +760,14 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
-            frmeditar.set_acumula(true);
+
+            frmeditar.set_venta(false);
+            frmeditar.setAdd_pendientes(true);
+
             frmeditar.set_linea(0,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
             frmeditar.set_id_cab(oPedido_proveedor->id);
-            frmeditar.set_tipo(false);
+
             if(frmeditar.exec() == QDialog::Accepted)
             {
                 refrescar_modelo();
@@ -789,7 +792,7 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
             frmeditar.set_acumula(true);
             frmeditar.set_id_cab(oPedido_proveedor->id);
-            frmeditar.set_tipo(false);
+            frmeditar.set_venta(false);
             frmeditar.set_linea(id_lin,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
             frmeditar.set_editando();

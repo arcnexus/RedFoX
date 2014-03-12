@@ -7,6 +7,7 @@ void frmEditLine::init()
 {
     this->editando = false;
     this->reserva_unidades = false;
+    add_pendientes = false;
     ui->lblpromocionado->setVisible(false);
     ui->chk3_2->setVisible(false);
     ui->chkdto->setVisible(false);
@@ -80,7 +81,7 @@ void frmEditLine::buscar_art()
     consulta.set_texto_tabla("articulos");
     consulta.set_db("Maya");
     consulta.setId_tarifa_cliente(this->id_tarifa);
-    if(tipo)
+    if(is_venta)
     {
         consulta.set_SQL("select id,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,pvp, pvp_cliente as pvp_recom,stock_fisico_almacen"
                          " from vistaart_tarifa");
@@ -118,6 +119,123 @@ void frmEditLine::buscar_art()
         {
             cargar_articulo(this->id_articulo,this->id_tarifa);
             ui->txtCantidad->setFocus();
+        }
+    }
+}
+
+QHash<QString, QVariant> frmEditLine::get_datos()
+{
+    QHash <QString, QVariant> lin;
+    if(this->is_venta)
+    {
+        lin["cantidad"] = ui->txtCantidad->text().toFloat();
+        lin["codigo"] = ui->txtCodigo->text();
+        lin["descripcion"] = ui->txtDescripcion->text();
+        lin["dto"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) - Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        lin["id_articulo"]  =this->id_articulo;
+        lin["id_cab"] = this->id_cab;
+        lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
+        lin["porc_iva"] = ui->cboIva->currentText().toFloat();
+        lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
+        lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
+        lin["promocion"] = ui->lblpromocionado->isVisible();
+        lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
+        lin["id_lote"] = this->id_lote;
+    } else
+    {
+         lin["cantidad"] = ui->txtCantidad->text().toFloat();
+         lin["cantidad_pendiente"] = ui->txtCantidad->text().toFloat();
+         lin["cantidad_recibida"] = 0;
+         lin["cerrado"] = false;
+         lin["codigo"] = ui->txtCodigo->text();
+         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+         lin["descripcion"] = ui->txtDescripcion->text();
+         lin["etiquetas"] = ui->txtCantidad->text().toFloat();
+         lin["id_articulo"] = this->id_articulo;
+         lin["id_cab"] = this->id_cab;
+         lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
+         lin["porc_iva"] = ui->cboIva->currentText().toFloat();
+         lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+         lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+         lin["total"] =  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
+    }
+    return lin;
+}
+
+void frmEditLine::_insert_nueva_linea()
+{
+    QHash<QString, QVariant> lin = get_datos();
+    QString error;
+
+    double cantidad = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
+    double valor = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
+
+    this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
+    if(id < 0)
+    {
+        QMessageBox::critical(this,tr("Error al insertar linea"),error);
+        return;
+    }
+    if(this->is_venta)
+    {
+        if(this->realiza_acumulados) //Si acumula ventas (Albarán / Factura)
+        {
+            if(Articulo::acumulado_ventas(this->id_articulo,cantidad,valor,QDate::currentDate()))
+            {
+                if(this->id_lote>0)
+                {
+                    QString idlote = QString::number(this->id_lote);
+                    QSqlQuery lote(Configuracion_global->groupDB);
+                    if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2").arg(cantidad).arg(idlote)))
+                    {
+                        QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo actualizar el stock del lote: %1")
+                                             .arg(lote.lastError().text()));
+                        close();
+                        return;
+                    }
+                }
+            }
+            else // falló acumulado_ventas
+            {
+                close();
+                return;
+            }
+        }
+        else if(this->reserva_unidades) // Si añade a unidades reservadas (Pedido)
+        {
+            QSqlQuery queryart(Configuracion_global->groupDB);
+            if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
+                              .arg(cantidad)
+                              .arg(this->id_articulo)))
+            {
+                QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al acumular pendientes, %1")
+                                     .arg(queryart.lastError().text()));
+                close();
+                return;
+            }
+        }
+        //else ni acumula ni reserva (Presupuesto)
+    }
+    else //es compra
+    {
+        if(add_pendientes) //Añade unidades pendientes (Pedido)
+        {
+            if(!Articulo::set_pendiente_recibir(this->id_articulo,cantidad))
+            {
+                close();
+                return;
+            }
+        }
+        else //Acumula compras (Recepcion de pedidos / Albarán / Factura)
+        {
+            if(!Articulo::acumulado_compras(id_articulo,cantidad,valor,QDate::currentDate()))
+            {
+                close();
+                return;
+            }
         }
     }
 }
@@ -197,9 +315,9 @@ void frmEditLine::set_id_tarifa(int id)
         QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al localizar la tarifa: %1").arg(error));
 }
 
-void frmEditLine::set_tipo(bool tipo)
+void frmEditLine::set_venta(bool tipo)
 {
-    this->tipo = tipo;
+    this->is_venta = tipo;
     if(tipo)
         ui->lbl_pvp_cliente->setText(tr("PVP\nCliente"));
     else
@@ -209,7 +327,6 @@ void frmEditLine::set_tipo(bool tipo)
         ui->txtTarifa->hide();
     }
 }
-
 
 void frmEditLine::set_id_cab(int id_cabecera)
 {
@@ -238,8 +355,6 @@ void frmEditLine::set_reserva(bool reserv)
     this->reserva_unidades = reserv;
 }
 
-
-
 void frmEditLine::on_txtCodigo_editingFinished()
 {
     ui->txtCodigo->blockSignals(true);
@@ -251,9 +366,9 @@ void frmEditLine::on_txtCodigo_editingFinished()
                                      tr("Ha dejado el código en blanco, si es correcto deberá introducir el resto de datos necesarios a mano,"
                                         "\nDescripción, \nPVP, \n%IVA"),tr("Aceptar"));
 
-        } else
+        }
+        else
         {
-
             QString error;
             this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1' or codigo_fabricante = '%1' or codigo_barras = '%1'").arg(ui->txtCodigo->text()),
                                                    Configuracion_global->groupDB,error).toInt();
@@ -266,7 +381,9 @@ void frmEditLine::on_txtCodigo_editingFinished()
                 ui->txtCodigo->setFocus();
             }
             else
+            {
                 cargar_articulo(this->id_articulo,this->id_tarifa);
+            }
         }          
     }
     ui->txtCodigo->blockSignals(false);
@@ -276,7 +393,7 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
 {
     ui->txtCodigo->blockSignals(true);
     // BUSCAR ARTICULO
-    if(tipo)
+    if(is_venta)
     {
         QString error;
         QStringList condiciones;
@@ -541,12 +658,22 @@ void frmEditLine::calcular()
 
 
 }
+bool frmEditLine::getAdd_pendientes() const
+{
+    return add_pendientes;
+}
+
+void frmEditLine::setAdd_pendientes(bool value)
+{
+    add_pendientes = value;
+}
+
 
 
 void frmEditLine::on_txtCantidad_editingFinished()
 {
     if(Configuracion_global->MonedatoDouble(ui->txtStockAlmacen->text()) -
-            Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) <0  && this->tipo)
+            Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) <0  && this->is_venta)
         QMessageBox::warning(this,tr("Ventas"),tr("No tiene suficientes unidades en stock para la venta"),tr("Aceptar"));
     calcular();
 }
@@ -588,252 +715,98 @@ void frmEditLine::on_btnAceptar_clicked()
         this->accept();
         return;
     }
-    QHash <QString, QVariant> lin;
-    if(this->tipo){
 
-        lin["cantidad"] = ui->txtCantidad->text().toFloat();
-        lin["codigo"] = ui->txtCodigo->text();
-        lin["descripcion"] = ui->txtDescripcion->text();
-        lin["dto"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) - Configuracion_global->MonedatoDouble(
-                    ui->txtPVP->text());
-        //lin["id"] = this->id;
-        lin["id_articulo"]  =this->id_articulo;
-        lin["id_cab"] = this->id_cab;
-        lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
-        lin["porc_iva"] = ui->cboIva->currentText().toFloat();
-        lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
-        lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-        lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
-        lin["promocion"] = ui->lblpromocionado->isVisible();
-        lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-        lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
-        lin["id_lote"] = this->id_lote;
-    } else
-    {
-         lin["cantidad"] = ui->txtCantidad->text().toFloat();
-         lin["cantidad_pendiente"] = ui->txtCantidad->text().toFloat();
-         lin["cantidad_recibida"] = 0;
-         lin["cerrado"] = false;
-         lin["codigo"] = ui->txtCodigo->text();
-         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["descripcion"] = ui->txtDescripcion->text();
-         lin["etiquetas"] = ui->txtCantidad->text().toFloat();
-         lin["id_articulo"] = this->id_articulo;
-         lin["id_cab"] = this->id_cab;
-         //lin["iva"] =  ,
-         lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
-         lin["porc_iva"] = ui->cboIva->currentText().toFloat();
-         //lin["porc_rec"] =  ,
-         lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["total"] =  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
-    }
-    QString error;
-    int cant = anterior.value("cantidad").toFloat();
+    QHash<QString, QVariant> lin = get_datos();
+
+    QString error;    
+
     if(this->editando)
     {
-        //----------------
         // edición línea
-        //----------------
-        bool success = SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),
-                                         error);
-        if ( success)
+        double nueva_cantidad = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) - anterior.value("cantidad").toDouble();
+        double nuevo_valor =Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()) - anterior.value("total").toDouble();
+        if (!SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),error))
         {
-            if(this->realiza_acumulados)
-            {
-                if (this->tipo)
-                    oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant,                                                        anterior.value("total").toDouble(),QDate::currentDate(),"V");
-                else
-                    oArticulo->set_pendiente_recibir(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant);
-
-                // ----------------------------
-                // Lotes
-                //-----------------------------
-                if(this->id_lote>0);
-                {
-                    QSqlQuery lote(Configuracion_global->groupDB);
-                    lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2")
-                              .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant)
-                              .arg(this->id_lote));
-
-                }
-            } else
-            {
-                if(this->reserva_unidades)
-                {
-                    // -------------------------------------------
-                    // Si no acumula añade a unidades reservadas
-                    //--------------------------------------------
-                    QSqlQuery queryart(Configuracion_global->groupDB);
-                    if(!queryart.exec(
-                                QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
-                                .arg(QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat(),'f',2))
-                                .arg(QString::number(this->id_articulo))
-                                ))
-                                QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al reservar unidades, %1").arg(queryart.lastError().text()));
-                }
-
-                emit refrescar_lineas();
-            }
-
-
-
-            emit refrescar_lineas();
-            accept();
-        } else {
-            QMessageBox::warning(this,tr("Edición lineas detalle"),
-                             tr("Falló al guardar la linea de detalle en la BD: %1").arg(error),
-                             tr("Aceptar"));
-
+            QMessageBox::critical(this,tr("Error al actualizar linea"),error);
+            close();
+            return;
         }
-    } else
-    {
-        //----------------------------------------
-        // Nueva línea
-        //----------------------------------------
-        this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-        if(this->realiza_acumulados)
+        if(this->is_venta)
         {
-            if ( this->id >0 && !this->tipo)
-                    oArticulo->set_pendiente_recibir(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-cant);
-
-            if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
-                                                                                            anterior.value("cantidad").toFloat(),
-                                                          Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
-                                                                                               anterior.value("total").toDouble(),
-                                                          QDate::currentDate(),"V") &&this->tipo)
+            if(this->realiza_acumulados) //Si acumula ventas (Albarán / Factura)
             {
-                // ----------------------------
-                // Lotes
-                //-----------------------------
-                if(this->id_lote>0)
+                if(Articulo::acumulado_ventas(this->id_articulo,nueva_cantidad,nuevo_valor,QDate::currentDate()))
                 {
-                    QString idlote = QString::number(this->id_lote);
-                    QSqlQuery lote(Configuracion_global->groupDB);
-                    if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2")
-                                  .arg(QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text()),'f',2))
-                                  .arg(idlote)))
-                        QMessageBox::warning(this,tr("Edición de líneas"),
-                                             tr("No se pudo actualizar el stock del lote: %1").arg(lote.lastError().text()));
-
+                    if(this->id_lote > 0) // Actualizo stock lotes
+                    {
+                        QSqlQuery lote(Configuracion_global->groupDB);
+                        if(!lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2")
+                                  .arg(nueva_cantidad)
+                                  .arg(this->id_lote)))
+                        {
+                            QMessageBox::warning(this,tr("Edición lineas detalle"),tr("Falló al añadir la linea de detalle en la BD: %1")
+                                                 .arg(lote.lastError().text()),tr("Aceptar"));
+                            close();
+                            return;
+                        }
+                    }
                 }
-                emit refrescar_lineas();
-                accept();
-            }
-            else
-            {
-                if(this->tipo)
+                else // falló el acumulado_ventas
                 {
-                    QMessageBox::warning(this,tr("Edición lineas detalle"),
-                                         tr("Falló al añadir la linea de detalle en la BD: %1").arg(error),
-                                         tr("Aceptar"));
                     close();
+                    return;
                 }
             }
-        } else if(this->reserva_unidades)
-        {
-            // -------------------------------------------
-            // Si no acumula añade a unidades reservadas
-            //--------------------------------------------
-            QSqlQuery queryart(Configuracion_global->groupDB);
-            if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2").arg(
-                              QString::number(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value(
-                                                  "cantidad").toFloat(),'f',2),QString::number(this->id_articulo))))
-                QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al acumular pendientes, %1").arg(
-                                         queryart.lastError().text()));
-
-            emit refrescar_lineas();
-            accept();
+            else if(this->reserva_unidades) // Si añade a unidades reservadas (Pedido)
+            {
+                QSqlQuery queryart(Configuracion_global->groupDB);
+                if(!queryart.exec(
+                            QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
+                            .arg(nueva_cantidad)
+                            .arg(this->id_articulo)
+                            ))
+                {
+                    QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al reservar unidades, %1").arg(queryart.lastError().text()));
+                    close();
+                    return;
+                }
+            }
+            //else ni acumula ni reserva (Presupuesto) - NO HACER NADA
         }
-        emit refrescar_lineas();
-        accept();
-
+        else //es compra
+        {
+            if(add_pendientes) //Añade unidades pendientes (Pedido)
+            {
+                if(!Articulo::set_pendiente_recibir(this->id_articulo,nueva_cantidad))
+                {
+                    close();
+                    return;
+                }
+            }
+            else //Acumula compras (Recepcion de pedidos / Albarán / Factura)
+            {
+                if(!Articulo::acumulado_compras(id_articulo,nueva_cantidad,nuevo_valor,QDate::currentDate()))
+                {
+                    close();
+                    return;
+                }
+            }
+        }
     }
-
+    else // Nueva línea
+    {        
+        _insert_nueva_linea();
+    }
+    emit refrescar_lineas();
+    accept();
 }
 
 void frmEditLine::on_btnAnadir_mas_nueva_clicked()
 {
     if(ui->txtDescripcion->text().isEmpty())
         return;
-    QHash <QString, QVariant> lin;
-    if(this->tipo)
-    {
-        lin["cantidad"] = ui->txtCantidad->text().toFloat();
-        lin["codigo"] = ui->txtCodigo->text();
-        lin["descripcion"] = ui->txtDescripcion->text();
-        lin["dto"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) - Configuracion_global->MonedatoDouble(
-                    ui->txtPVP->text());
-        //lin["id"] = this->id;
-        lin["id_articulo"]  =this->id_articulo;
-        lin["id_cab"] = this->id_cab;
-        lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
-        lin["porc_iva"] = ui->cboIva->currentText().toFloat();
-        lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
-        lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-        lin["precio_recom"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text());
-        lin["promocion"] = ui->lblpromocionado->isVisible();
-        lin["subtotal"] = ui->txtCantidad->text().toFloat() * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-        lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
-    } else
-    {
-         lin["cantidad"] = ui->txtCantidad->text().toFloat();
-         lin["cantidad_pendiente"] = ui->txtCantidad->text().toFloat();
-         lin["cantidad_recibida"] = 0;
-         lin["cerrado"] = false;
-         lin["codigo"] = ui->txtCodigo->text();
-         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["descripcion"] = ui->txtDescripcion->text();
-         lin["etiquetas"] = ui->txtCantidad->text().toFloat();
-         lin["id_articulo"] = this->id_articulo;
-         lin["id_cab"] = this->id_cab;
-         //lin["iva"] =  ,
-         lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
-         lin["porc_iva"] = ui->cboIva->currentText().toFloat();
-         //lin["porc_rec"] =  ,
-         lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["total"] =  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
-    }
-    QString error;
-    this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
-    if(this->realiza_acumulados)
-    {
-        if(this->id >0 && oArticulo->acumulado_ventas(this->id_articulo,Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-
-                                                                                  anterior.value("cantidad").toFloat(),
-                                                      Configuracion_global->MonedatoDouble(ui->txt_total_linea->text())-
-                                                                                           anterior.value("total").toDouble(),
-                                                      QDate::currentDate(),"V"))
-        {
-            // ----------------------------
-            // Lotes
-            //-----------------------------
-            if(this->id_lote>0);
-            {
-                QSqlQuery lote(Configuracion_global->groupDB);
-                lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2")
-                          .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat())
-                          .arg(this->id_lote));
-            }
-        } else
 
-        {
-            QMessageBox::warning(this,tr("Edición lineas detalle"),
-                                 tr("Falló al añadir la linea de detalle en la BD: %1").arg(error),
-                                 tr("Aceptar"));
-
-        }
-    } else if(this->reserva_unidades)
-    {
-        // -------------------------------------------
-        // Si no acumula añade a unidades reservadas
-        //--------------------------------------------
-        QSqlQuery queryart(Configuracion_global->groupDB);
-        queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
-                      .arg(Configuracion_global->MonedatoDouble(ui->txtCantidad->text())-anterior.value("cantidad").toFloat())
-                      .arg(this->id_articulo));
-    }
+    _insert_nueva_linea();
    vaciar_campos();
    emit refrescar_lineas();
 }

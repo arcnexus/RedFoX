@@ -312,12 +312,14 @@ void FrmArticulos::on_botAnadir_clicked()
 void FrmArticulos::on_botGuardar_clicked()
 {
     if(!ui->txtseccion->text().isEmpty())
-    {
-        bloquearCampos(true);
+    {        
         CargarCamposEnArticulo();
-        oArticulo->Guardar();
-        Configuracion_global->commit();
-        actualizar();
+        if(oArticulo->Guardar())
+        {
+            Configuracion_global->commit();
+            actualizar();
+            bloquearCampos(true);
+        }
     } else
     {
         QMessageBox::warning(this,tr("Gestion de Productos/servicios"),
@@ -884,15 +886,8 @@ void FrmArticulos::on_botBorrar_clicked()
 void FrmArticulos::on_botDeshacer_clicked()
 {
     Configuracion_global->rollback();
-    if(this->anadir)
-    {
-        oArticulo->Borrar(oArticulo->id,false,false);
-        LLenarCampos(ui->Pestanas->currentIndex());
-    }
-    else
-    {
-        LLenarCampos(ui->Pestanas->currentIndex());
-    }
+    oArticulo->Recuperar(oArticulo->id);
+    LLenarCampos(ui->Pestanas->currentIndex());
     bloquearCampos(true);
 }
 

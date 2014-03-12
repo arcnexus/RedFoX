@@ -127,28 +127,28 @@ bool Factura::borrar(int id)
         QString error;
         lineas = SqlCalls::SelectRecord("lin_fac",QString("id_cab= %1").arg(id),Configuracion_global->empresaDB,error);
         QMapIterator <int, QSqlRecord> i(lineas);
-        while(i.hasNext())
+        bool deleted = true;
+        while(i.hasNext() && deleted)
         {
             i.next();
-            oArticulo->acumulado_devoluciones(i.value().value("id_articulo").toInt(),
-                                                     i.value().value("cantidad").toFloat(),
-                                                            i.value().value("total").toDouble(),
-                                                            QDate::currentDate(),"V");
-
-
+            deleted &= Articulo::acum_devolucion_cli(i.value().value("id_articulo").toInt(),i.value().value("cantidad").toFloat(),
+                                                            i.value().value("total").toDouble(),QDate::currentDate());
         }
 
-        bool deleted = SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id_cab =%1").arg(id),error);
-        if(!deleted){
-            QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Facturas"),
-                                 tr("Ocurrió un error al borrar las líneas: %1").arg(error),tr("Aceptar"));
-            return false;
-        }
-
-        deleted = SqlCalls::SqlDelete("cab_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+        deleted &= SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id_cab =%1").arg(id),error);
         if(!deleted)
+        {
+            QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Facturas"),tr("Ocurrió un error al borrar las líneas: %1")
+                                 .arg(error),tr("Aceptar"));
+        }
+
+        deleted &= SqlCalls::SqlDelete("cab_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id),error);
+
+        if(!deleted)
+        {
             QMessageBox::warning(qApp->activeWindow(),tr("Gestión de Facturas"),
                                  tr("Ocurrió un error al borrar: %1").arg(error),tr("Aceptar"));
+        }
         return deleted;
     }
     return false;
@@ -549,7 +549,6 @@ QString Factura::NuevoNumeroFactura(QString serie) {
 bool Factura::BorrarLineasFactura(int id_lin)
 {
     QMap <int,QSqlRecord> lin;
-    QHash <QString,QVariant> h;
     QString error;
     lin = SqlCalls::SelectRecord("lin_fac",QString("id=%1").arg(id_lin),Configuracion_global->empresaDB,error);
     if(!error.isEmpty())
@@ -560,20 +559,20 @@ bool Factura::BorrarLineasFactura(int id_lin)
         return false;
     }
 
-        bool success = SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
-        if(success)
-        {
-            if(oArticulo->acumulado_devoluciones(lin.value(id_lin).value("id_articulo").toInt(),
+    bool success = SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
+    if(success)
+    {
+        if(Articulo::acum_devolucion_cli(lin.value(id_lin).value("id_articulo").toInt(),
                                          lin.value(id_lin).value("cantidad").toFloat(),
-                                                lin.value(id_lin).value("total").toDouble(),
-                                                QDate::currentDate(),"V"))
-                return true;
-        }
-        else
-        {
-            QMessageBox::critical(qApp->activeWindow(), "Error:",error);
-            return false;
-        }
+                                         lin.value(id_lin).value("total").toDouble(),
+                                         QDate::currentDate()))
+            return true;
+    }
+    else
+    {
+        QMessageBox::critical(qApp->activeWindow(), "Error:",error);
+        return false;
+    }
 }
 
 bool Factura::CobrarFactura()

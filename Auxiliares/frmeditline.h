@@ -20,7 +20,7 @@ public:
     void set_linea(int id, QString fichero);
     void set_id_cliente(int id);
     void set_id_tarifa(int id);
-    void set_tipo(bool tipo);
+    void set_venta(bool is_venta);
     void set_id_cab(int id_cabecera);
     void set_tabla(QString t);
     void set_editando();
@@ -31,6 +31,9 @@ public:
 
 
     void init();
+    bool getAdd_pendientes() const;
+    void setAdd_pendientes(bool value);
+
 private slots:
 
     void on_txtCodigo_editingFinished();
@@ -52,21 +55,27 @@ private slots:
 private:
     Ui::frmEditLine *ui;
     int id,id_cliente,id_tarifa,id_articulo,id_cab;
-    bool tipo; // ("C" compras - "V" - Ventas) //TODO cambiar a bool Y.Y
+
     QString tabla,codigo_articulo;
     void cargar_articulo(int id_art, int tarifa);
     void vaciar_campos();
     int id_lote;
     float unidades_regalo;
     Articulo *oArticulo;
-    void calcular();
-    bool editando;
     bool eventFilter(QObject *obj, QEvent *event);
     QHash <QString,QVariant> anterior;
+    void calcular();
+
+    bool editando;
+    bool is_venta;
     bool realiza_acumulados;
     bool reserva_unidades ;
+    bool add_pendientes;
 
     void buscar_art();
+
+    QHash <QString, QVariant> get_datos();
+    void _insert_nueva_linea();
 signals:
     void refrescar_lineas();
 };
