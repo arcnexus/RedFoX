@@ -30,6 +30,7 @@ public:
     float porc_dto4;
     float porc_dto5;
     float porc_dto6;
+    double iva;
 
 
 
@@ -61,6 +62,8 @@ private slots:
     void on_btnGuardar_volumen_clicked();
 
     void on_txtPrecio_volumen_editingFinished();
+
+    void on_txt_pvpiva_editingFinished();
 
 public slots:
     void calcular_precio(double margen);

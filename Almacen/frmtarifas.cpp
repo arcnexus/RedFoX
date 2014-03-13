@@ -184,8 +184,8 @@ void FrmTarifas::calcular_precio(double margen)
 
     ui->txtPVPLocal->setText(Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',Configuracion_global->decimales)));
     ui->txtPVPDivisa->setText(Configuracion_global->toFormatoMoneda(QString::number(valordivisa,'f',Configuracion_global->decimales)));
+    ui->txt_pvpiva->setText(Configuracion_global->toFormatoMoneda(QString::number(pvp * (1+iva/100.0),'f',Configuracion_global->decimales)));
     this->pvpDivisa = valordivisa;
-    this->pvpDivisa = pvp;
     blockSignals(false);
 }
 
@@ -295,4 +295,12 @@ void FrmTarifas::on_txtPrecio_volumen_editingFinished()
     ui->txtPrecio_volumen->blockSignals(true);
     ui->txtPrecio_volumen->setText(Configuracion_global->toFormatoMoneda(ui->txtPrecio_volumen->text()));
     ui->txtPrecio_volumen->blockSignals(false);
+}
+
+void FrmTarifas::on_txt_pvpiva_editingFinished()
+{
+    double pvp_iva = Configuracion_global->MonedatoDouble(ui->txt_pvpiva->text());
+    double pvp = pvp_iva / (1+iva/100);
+    ui->txtPVPLocal->setText(Configuracion_global->toFormatoMoneda(QString::number(pvp,'f',Configuracion_global->decimales)));
+    on_txtPVPLocal_editingFinished();
 }
