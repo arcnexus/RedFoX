@@ -128,7 +128,7 @@ QHash<QString, QVariant> frmEditLine::get_datos()
     QHash <QString, QVariant> lin;
     if(this->is_venta)
     {
-        lin["cantidad"] = ui->txtCantidad->text().toFloat();
+        lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
         lin["codigo"] = ui->txtCodigo->text();
         lin["descripcion"] = ui->txtDescripcion->text();
         lin["dto"] = Configuracion_global->MonedatoDouble(ui->txtPvp_recomendado->text()) - Configuracion_global->MonedatoDouble(ui->txtPVP->text());
@@ -145,7 +145,7 @@ QHash<QString, QVariant> frmEditLine::get_datos()
         lin["id_lote"] = this->id_lote;
     } else
     {
-         lin["cantidad"] = ui->txtCantidad->text().toFloat();
+         lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
          lin["cantidad_pendiente"] = ui->txtCantidad->text().toFloat();
          lin["cantidad_recibida"] = 0;
          lin["cerrado"] = false;
@@ -231,7 +231,7 @@ void frmEditLine::_insert_nueva_linea()
         }
         else //Acumula compras (Recepcion de pedidos / Albarán / Factura)
         {
-            if(!Articulo::acumulado_compras(id_articulo,cantidad,valor,QDate::currentDate()))
+            if(!Articulo::acumulado_compras(id_articulo,cantidad,valor,QDate::currentDate(),true))
             {
                 close();
                 return;

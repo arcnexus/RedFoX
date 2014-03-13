@@ -30,7 +30,7 @@ FrmPedidosProveedor::~FrmPedidosProveedor()
 
 void FrmPedidosProveedor::init_querys()
 {
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     model_busqueda->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
@@ -132,7 +132,7 @@ void FrmPedidosProveedor::llenarProveedor(int id)
     ui->txtcif->setText(prov.cif);
     ui->combo_pais->setCurrentText(Configuracion_global->Devolver_pais(prov.id_pais));
     ui->lblnombreProveedor->setText(prov.proveedor);
-    ui->chkrecargo_equivalencia->setChecked(prov.recargo_equivalencia);
+    ui->chkrecargo_equivalencia->setChecked(prov.recargo_equivalencia || oPedido_proveedor->recargo_equivalencia);
 }
 
 void FrmPedidosProveedor::bloquearcampos(bool state)
@@ -200,7 +200,7 @@ void FrmPedidosProveedor::buscar_proveeedor()
     campos  << "codigo" << "proveedor";
     consulta.set_campoBusqueda(campos);
     consulta.set_texto_tabla("Proveedores");
-    consulta.set_db("Maya");
+    consulta.set_db("Group");
     consulta.set_SQL("select id, codigo,proveedor,cif,poblacion from proveedores");
     QStringList cabecera;
     QVariantList tamanos;
@@ -394,13 +394,14 @@ void FrmPedidosProveedor::llenar_campos()
     ui->spiniva_gasto3->setValue(oPedido_proveedor->iva_gasto3);
 
     llenarProveedor(oPedido_proveedor->id_proveedor);
+    ui->chkrecargo_equivalencia->setChecked(oPedido_proveedor->recargo_equivalencia);
     refrescar_modelo();
     calcular_pedido();
 }
 
 void FrmPedidosProveedor::refrescar_modelo()
 {
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad  "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad  "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
                           Configuracion_global->empresaDB);
@@ -583,7 +584,6 @@ void FrmPedidosProveedor::setUpBusqueda()
     m_busqueda->addSpacer();
 
     connect(m_busqueda,SIGNAL(key_Down_Pressed()),ui->tabla,SLOT(setFocus()));
-    connect(m_busqueda,SIGNAL(key_F2_Pressed()),this,SLOT(ocultarBusqueda()));
 }
 
 void FrmPedidosProveedor::on_btnImprimir_clicked()
@@ -656,15 +656,16 @@ void FrmPedidosProveedor::formatotabla()
     header.clear();
     sizes.clear();
 
-    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("coste") << tr("Subtotal") << tr("%Dto")  << tr("Total");
+    header << tr("id")<< tr("id_Art") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("coste") << tr("Subtotal") << tr("%Dto")  << tr("Total");
     header  << tr("% I.V.A.") << tr("C.Real/u.") ;
-    sizes << 0 << 100 << 350 << 100 << 100 <<100 <<100 << 100 <<100 << 100 <<110;
+    sizes << 0 << 0 << 100 << 350 << 100 << 100 <<100 <<100 << 100 <<100 << 100 <<110;
     for(int i = 0; i <header.size();i++)
     {
         ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
         modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
     }
     ui->Lineas->setColumnHidden(0,true);
+    ui->Lineas->setColumnHidden(1,true);
 
 
     header.clear();
@@ -790,9 +791,12 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
-            frmeditar.set_acumula(true);
-            frmeditar.set_id_cab(oPedido_proveedor->id);
+
             frmeditar.set_venta(false);
+            frmeditar.set_acumula(true);
+            frmeditar.setAdd_pendientes(true);
+
+            frmeditar.set_id_cab(oPedido_proveedor->id);            
             frmeditar.set_linea(id_lin,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
             frmeditar.set_editando();
@@ -1071,7 +1075,6 @@ void FrmPedidosProveedor::on_spinPorc_dto_pp_valueChanged(double /*arg1*/)
 void FrmPedidosProveedor::on_chkrecargo_equivalencia_toggled(bool checked)
 {
     if (checked) {
-        ui->chkrecargo_equivalencia->setChecked(true);
         oPedido_proveedor->recargo_equivalencia = 1;
         ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
         ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
@@ -1082,7 +1085,6 @@ void FrmPedidosProveedor::on_chkrecargo_equivalencia_toggled(bool checked)
         oPedido_proveedor->porc_rec3 = ui->txtporc_rec3->text().toFloat();
         oPedido_proveedor->porc_rec4 = ui->txtporc_rec4->text().toFloat();
     } else {
-        ui->chkrecargo_equivalencia->setChecked(false);
         oPedido_proveedor->recargo_equivalencia = 0;
         ui->txtporc_rec1->setText("0.00");
         ui->txtporc_rec2->setText("0.00");
@@ -1110,4 +1112,31 @@ void FrmPedidosProveedor::on_btnNext_clicked()
         llenar_campos();
     else
         TimedMessageBox * t = new TimedMessageBox(this,tr("Final de archivo alcanzado"));
+}
+
+void FrmPedidosProveedor::on_btn_borrarLinea_clicked()
+{
+    if(!ui->Lineas->currentIndex().isValid())
+        return;
+
+    if(QMessageBox::question(this,tr("Lineas de pedidos"), tr("¿Borrar la linea?"),
+                             tr("No"),tr("Borrar")) == QMessageBox::Accepted)
+    {
+        QModelIndex index = ui->Lineas->currentIndex();
+        int id_lin = modelLineas->record(index.row()).value("id").toInt();
+        int id_art = modelLineas->record(index.row()).value("id_articulo").toInt();
+        double cantidad = modelLineas->record(index.row()).value("cantidad").toDouble();
+        if(Articulo::set_pendiente_recibir(id_art , -1.0 * cantidad))
+        {
+            QString error;
+            if(SqlCalls::SqlDelete("lin_ped_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id_lin),error))
+            {
+                refrescar_modelo();
+                calcular_pedido();
+            }
+            else
+                QMessageBox::critical(this,tr("Error al borrar linea"),error);
+        }
+        ui->Lineas->setFocus();
+    }
 }

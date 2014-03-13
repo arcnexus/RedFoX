@@ -227,7 +227,8 @@ SOURCES += main.cpp\
     Auxiliares/dlgsetupmail.cpp \
     Zona_Ventas/frmlistadoped.cpp \
     Zona_Ventas/frmlistadoalbaran.cpp \
-    Zona_Ventas/frmlistadofac.cpp
+    Zona_Ventas/frmlistadofac.cpp \
+    Zona_Compras/dlgpedidoalbfact.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -419,7 +420,8 @@ HEADERS  += mainwindow.h \
     Auxiliares/dlgsetupmail.h \
     Zona_Ventas/frmlistadoped.h \
     Zona_Ventas/frmlistadoalbaran.h \
-    Zona_Ventas/frmlistadofac.h
+    Zona_Ventas/frmlistadofac.h \
+    Zona_Compras/dlgpedidoalbfact.h
 
 
 
@@ -525,7 +527,8 @@ FORMS    += mainwindow.ui \
     Auxiliares/dlgsetupmail.ui \
     Zona_Ventas/frmlistadoped.ui \
     Zona_Ventas/frmlistadoalbaran.ui \
-    Zona_Ventas/frmlistadofac.ui
+    Zona_Ventas/frmlistadofac.ui \
+    Zona_Compras/dlgpedidoalbfact.ui
 
 RESOURCES += \
     maya.qrc \

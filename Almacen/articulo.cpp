@@ -1088,13 +1088,18 @@ void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLab
 
 bool Articulo::set_pendiente_recibir(int id_articulo, float cantidad)
 {
- QSqlQuery art(Configuracion_global->groupDB);
- QString cSQL;
- cSQL = QString("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1 where id = %2").arg(
-             cantidad).arg(id_articulo);
- if(!art.exec(cSQL))
-     QMessageBox::warning(qApp->activeWindow(),tr("Compras"),tr("fallo al insertar unidades pendientes de recibir: %1").arg(
-                              art.lastError().text(),tr("Aceptar")));
+    QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL;
+    cSQL = QString("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1,").arg(cantidad);
+    cSQL.append(QString("stock_real = stock_real + %1 ").arg(cantidad));
+    cSQL.append(QString("where id = %1").arg(id_articulo));
+    bool succes = art.exec(cSQL);
+    if(!succes)
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Compras"),tr("Fallo al insertar unidades pendientes de recibir: %1").arg(
+                                 art.lastError().text(),tr("Aceptar")));
+    }
+    return succes;
 }
 
 bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, QDate fecha, bool removePendient)
@@ -1116,7 +1121,7 @@ bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, 
     }
     else
     {
-        cSQL.append(QString("cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1 ").arg(cantidad));
+        cSQL.append(QString("cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1, ").arg(cantidad));
     }
 
     cSQL.append(QString("where id= %1").arg(id_articulo));

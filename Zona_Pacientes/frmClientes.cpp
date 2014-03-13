@@ -187,10 +187,8 @@ void frmClientes::init()
     connect(ui->txtSegundoApellido,SIGNAL(editingFinished()),this,SLOT(txtApellido_Nombre_editingFinished()));
     connect(ui->txtnombre         ,SIGNAL(editingFinished()),this,SLOT(txtApellido_Nombre_editingFinished()));
 
-    connect(ui->txtpoblacion,SIGNAL(editingFinished()),this,SLOT(txtpoblacion_editingFinished()));
     connect(ui->txtprovincia,SIGNAL(editingFinished()),this,SLOT(txtprovincia_editingFinished()));
     connect(ui->txtcif_nif,SIGNAL(editingFinished()),this,SLOT(txtcif_nif_editingFinished()));
-    connect(ui->txtcp,SIGNAL(editingFinished()),this,SLOT(txtcp_editingFinished()));
     connect(ui->txtrRiesgoPermitido,SIGNAL(editingFinished()),this,SLOT(txtrRiesgoPermitido_editingFinished()));
     connect(ui->lista_direccionesAlternativas,SIGNAL(clicked(QModelIndex)),this,SLOT(CargardireccionAlternativa(QModelIndex)));
     connect(ui->btnVer_OtrosContactos,SIGNAL(clicked()),this,SLOT(Contactos()));

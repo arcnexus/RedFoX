@@ -30,7 +30,7 @@ private slots:
     void on_tablaPedidos_doubleClicked(const QModelIndex &index);
 
     void validarcantidad(int, int);
-    void reconectar();
+
     void abrir_albaran();
 
     void on_btnFactura_clicked();
@@ -38,6 +38,8 @@ private slots:
     void on_BtnCancelar_clicked();
 
     void on_btncancelar_alb_clicked();
+
+    void on_btnBuscaProv_clicked();
 
 private:
     Ui::Frmrecepcion_pedidos *ui;
@@ -48,6 +50,7 @@ private:
     int id_pedido;
     QAction menuButton;
     QPushButton* push;
+    QSqlQueryModel *modelPedidos;
 
 signals:
 

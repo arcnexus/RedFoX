@@ -2,6 +2,7 @@
 #include "pedidoproveedor.h"
 #include <QPrintDialog>
 #include "../Auxiliares/frmdialogoimprimir.h"
+#include "../Almacen/articulo.h"
 
 PedidoProveedor::PedidoProveedor(QObject *parent) :
     QObject(parent)
@@ -358,23 +359,31 @@ void PedidoProveedor::convertir_en_factura()
 
 bool PedidoProveedor::borrar(int id)
 {
-    Configuracion_global->empresaDB.transaction();
+    Configuracion_global->transaction();
+    QString error;
+    bool succes = true;
 
-    QSqlQuery queryPedido(Configuracion_global->empresaDB);
-
-    bool ok  = queryPedido.exec(QString("delete from lin_ped_pro where id_cab = %1").arg(id));
-         ok &= queryPedido.exec(QString("delete from ped_pro where id = %1").arg(id));
-    if(!ok)
+    QMap<int, QSqlRecord> lineas = SqlCalls::SelectRecord("lin_ped_pro",QString("id_cab = %1").arg(id),Configuracion_global->empresaDB,error);
+    for(auto i = lineas.begin(); i != lineas.end(); ++i)
     {
-        Configuracion_global->empresaDB.rollback();
-        QMessageBox::warning(qApp->activeWindow(),tr("Gestión de pedidos a proveedores"),tr("Ocurrió un error al borrar: %1").arg(queryPedido.lastError().text()),
-                             tr("Aceptar"));
+        QSqlRecord r = i.value();
+        int id_art = r.value("id_articulo").toInt();
+        double cantidad = r.value("cantidad").toDouble();
+        succes &= Articulo::set_pendiente_recibir(id_art , -1.0 * cantidad);
+    }
+    succes &= SqlCalls::SqlDelete("lin_ped_pro",Configuracion_global->empresaDB,QString("id_cab = %1").arg(id),error);
+    succes &= SqlCalls::SqlDelete("ped_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id),error);
+
+    if(!succes)
+    {
+        Configuracion_global->rollback();
+        QMessageBox::warning(qApp->activeWindow(),tr("Ocurrió un error al borrar pedidos a proveedores"),error,tr("Aceptar"));
     }
     else
     {
-        Configuracion_global->empresaDB.commit();
+        Configuracion_global->commit();
     }
-    return ok;
+    return succes;
 }
 
 bool PedidoProveedor::get(int id)

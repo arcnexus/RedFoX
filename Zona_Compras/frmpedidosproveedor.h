@@ -91,6 +91,8 @@ private slots:
 
     void on_btnNext_clicked();
 
+    void on_btn_borrarLinea_clicked();
+
 private:
 
     void formatotabla();
