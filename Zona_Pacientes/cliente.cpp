@@ -241,32 +241,40 @@ void Cliente::GuardarWeb()
    QSqlDatabase::database("dbweb").close();
    QSqlDatabase::removeDatabase("dbweb");
 }
-void Cliente::Anadir() {
-     QHash <QString, QVariant > cliente;
-     cliente["codigo_cliente"]= this->codigo_cliente;
-     cliente["cuenta_contable"]= this->cuenta_contable;
-     cliente["cuenta_iva_repercutido"] = this->cuenta_iva_repercutido;
-     cliente["cuenta_deudas"]= this->cuenta_deudas;
-     cliente["cuenta_cobros"] = this->cuenta_cobros;
-     cliente["id_tarifa"] = this->idTarifa;
-     QString error;
-     int new_id = SqlCalls::SqlInsert(cliente,"clientes",Configuracion_global->groupDB,error);
-     if(new_id <=0)
-     {
-         QMessageBox::critical(qApp->activeWindow(),"error al insertar:", error);
-     }
-     else
-     {
-         QHash <QString, QVariant> h;
-         h["id_cliente"] = new_id;
-         h["id_empresa"] = Configuracion_global->idEmpresa;
-         SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->groupDB,error);
-         TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Corectamente");
-         int nid = new_id;
-         this->id = nid;
-//         if (Configuracion_global->enlace_web)
-//             anadirWeb();
-     }
+bool Cliente::Anadir()
+{
+    QHash <QString, QVariant > cliente;
+    cliente["codigo_cliente"]= this->codigo_cliente;
+    cliente["cuenta_contable"]= this->cuenta_contable;
+    cliente["cuenta_iva_repercutido"] = this->cuenta_iva_repercutido;
+    cliente["cuenta_deudas"]= this->cuenta_deudas;
+    cliente["cuenta_cobros"] = this->cuenta_cobros;
+    cliente["id_tarifa"] = this->idTarifa;
+    QString error;
+    int new_id = SqlCalls::SqlInsert(cliente,"clientes",Configuracion_global->groupDB,error);
+    if(new_id <=0)
+    {
+        QMessageBox::critical(qApp->activeWindow(),"error al insertar:", error);
+        return false;
+    }
+    else
+    {
+        this->id = new_id;
+        QMap<int,int> empresas = SqlCalls::SelectMap<int,int>("empresas","id","id",QStringList(),Configuracion_global->groupDB,error);
+        bool succes = true;
+        for(QMap<int,int>::const_iterator it = empresas.begin(); it!= empresas.end(); ++it)
+        {
+            QHash <QString, QVariant> h;
+            h["id_cliente"] = new_id;
+            h["id_empresa"] = it.key();
+            succes &= (SqlCalls::SqlInsert(h,"acum_clientes",Configuracion_global->groupDB,error) != -1);
+        }
+        if(succes)
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),"Cliente insertado Corectamente");
+        else
+            QMessageBox::critical(qApp->activeWindow(),"error al insertar:", error);
+        return succes;
+    }
 }
 
 void Cliente::anadirWeb()

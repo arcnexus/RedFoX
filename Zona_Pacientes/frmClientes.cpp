@@ -874,25 +874,31 @@ void frmClientes::on_btnAnadir_clicked()
     } else
     {
         Configuracion_global->groupDB.transaction();
-        ui->stackedWidget->setCurrentIndex(0);
-        emit block();
 
-        bloquearCampos(false);
         VaciarCampos();
 
         this->Altas = true;
         ui->txtcodigo_cliente->setText(oCliente->Nuevocodigo_cliente());      
         ui->txtcuenta_contable->setText(ui->txtcodigo_cliente->text());
         ui->txtcodigo_cliente->setFocus();
-
-        LLenarCliente();
         ui->cboidiomaDocumentos->setCurrentIndex(1);
-        ui->cboforma_pago->setCurrentIndex(-1);
-        oCliente->Anadir();
-        LLenarCampos();
-        ui->txtcif_nif->setText(linea.text());
-        oCliente->cif_nif = linea.text();
-        set_blink();
+        ui->cboforma_pago->setCurrentIndex(1);
+        LLenarCliente();
+
+        if(oCliente->Anadir())
+        {
+            ui->stackedWidget->setCurrentIndex(0);
+            LLenarCampos();
+            ui->txtcif_nif->setText(linea.text());
+            oCliente->cif_nif = linea.text();
+            set_blink();
+            bloquearCampos(false);
+            emit block();
+        }
+        else
+        {
+            Configuracion_global->rollback();
+        }
     }
 }
 

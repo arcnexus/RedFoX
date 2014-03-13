@@ -40,7 +40,7 @@ public:
     int stock_real;
     int nstock_fisico_almacen;
     QString tipo_unidad;
-    int controlar_stock;
+    bool controlar_stock;
     QString modelo;
     QString talla;
     QString color;
@@ -85,8 +85,8 @@ public:
     bool Devolucion(int id, double cantidad, double pvp);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
 
-    static bool acumulado_ventas (int id_articulo, float cantidad, double total, QDate fecha, bool removeReservas = false);
-    static bool acumulado_compras(int id_articulo, float cantidad, double total, QDate fecha, bool removePendient = false);
+    static bool acumulado_ventas   (int id_articulo,float cantidad,double total, QDate fecha, bool removeReservas = false);
+    static bool acumulado_compras  (int id_articulo,float cantidad,double total, QDate fecha, bool removePendient = false);
     static bool acum_devolucion_cli(int id_articulo,float cantidad,double total, QDate fecha);
     static bool acum_devolucion_pro(int id_articulo,float cantidad,double total, QDate fecha);
 

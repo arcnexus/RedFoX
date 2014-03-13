@@ -139,7 +139,7 @@ void Proveedor::guardar_persona_contacto(int id, QString Nombre, QString desc_te
                              tr("Falló el guardar una persona de contacto: %1").arg(qContactos.lastError().text()));
 }
 
-void Proveedor::Anadir()
+bool Proveedor::Anadir()
 {
     QString error;
     QHash<QString,QVariant> _data;
@@ -150,6 +150,20 @@ void Proveedor::Anadir()
         this->codigo = _data.value("codigo").toString();
         this->cuenta_aplicacion = this->codigo;
         this->id = nid;
+        QMap<int,int> empresas = SqlCalls::SelectMap<int,int>("empresas","id","id",QStringList(),Configuracion_global->groupDB,error);
+        bool succes = true;
+        for(QMap<int,int>::const_iterator it = empresas.begin(); it!= empresas.end(); ++it)
+        {
+            QHash <QString, QVariant> h;
+            h["id_proveedor"] = nid;
+            h["id_empresa"] = it.key();
+            succes &= (SqlCalls::SqlInsert(h,"acum_proveedores",Configuracion_global->groupDB,error) != -1 );
+        }
+        if(succes)
+            TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),tr("Proveedor insertado corectamente"));
+        else
+            QMessageBox::critical(qApp->activeWindow(),tr("Error al insertar:"), error);
+        return succes;
     }
     else
     {
@@ -157,6 +171,7 @@ void Proveedor::Anadir()
                              QObject::tr("Gestión de proveedores"),
                              QObject::tr("No se ha podido crear una nueva ficha de proveedor:\n")+
                              error,QObject::tr("Aceptar"));
+        return false;
     }
 }
 

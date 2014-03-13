@@ -20,8 +20,7 @@ void Articulo::Anadir()
     }
     else
     {
-        // Creamos registro de articulo en acum_articulos
-        //TODO en todas las empresas
+        // Creamos registro de articulo en acum_articulos en todas las empresas
         QMap<int,int> empresas = SqlCalls::SelectMap<int,int>("empresas","id","id",QStringList(),Configuracion_global->groupDB,error);
         bool succes = true;
         for(QMap<int,int>::const_iterator it = empresas.begin(); it!= empresas.end(); ++it)
@@ -42,6 +41,7 @@ void Articulo::Anadir()
         {
 
             this->id = id;
+            controlar_stock = true;
             codigo_anterior = data.value("codigo").toString();
             cod_seccion = "";
             cod_familia = "";
@@ -198,7 +198,7 @@ void Articulo::Cargar(QSqlRecord registro)
     this->stock_real = registro.field("stock_real").value().toFloat();
     this->nstock_fisico_almacen = registro.field("stock_fisico_almacen").value().toFloat();
     this->tipo_unidad = registro.field("tipo_unidad").value().toString();
-    this->controlar_stock = registro.field("controlar_stock").value().toInt();
+    this->controlar_stock = registro.field("controlar_stock").value().toBool();
     this->modelo = registro.field("modelo").value().toString();
     this->talla = registro.field("talla").value().toString();
     this->color = registro.field("color").value().toString();

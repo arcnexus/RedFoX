@@ -149,12 +149,12 @@ private slots:
 
     void on_Pestanas_currentChanged(int index);
 
-    void on_txtCoste_real_textChanged(const QString &arg1);
-
     void on_btnResArt_clicked();
 
     void on_btnResArt2_clicked();
 
+
+    void on_txtCoste_real_editingFinished();
 
 public slots:
     void AnadirSeccion();
@@ -192,6 +192,7 @@ private:
     //MODELS
     QSqlQueryModel *modelTarifa;
     void llenar_tabla_tarifas();
+    void recalcular_tarifas(double coste);
 };
 
 #endif // FRMARTICULOS_H

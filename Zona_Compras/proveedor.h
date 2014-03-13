@@ -78,7 +78,7 @@ signals:
     
 public slots:
     // Funcionamiento Base
-    void Anadir();
+    bool Anadir();
     bool Recuperar(int id);
     bool Next();
     bool Prev();

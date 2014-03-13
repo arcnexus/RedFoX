@@ -489,7 +489,9 @@ void frmProveedores::on_btnGuardar_clicked()
     {
         CargarCamposEnProveedor();
         oProveedor->Guardar();
+        Configuracion_global->commit();
         BloquearCampos(true);
+        editing = true;
     } else
     {
         QMessageBox::warning(this,tr("No se puede guardar, falta especificar datos"),cTexto,tr("Aceptar"));
@@ -520,15 +522,22 @@ void frmProveedores::on_btnAnadir_clicked()
         QMessageBox::information(this,tr("Formas de pago"),
                                  tr("Debe añadir al menos una forma de pago antes de poder añadir proveedores"));
         return;
-    }
-    ui->stackedWidget->setCurrentIndex(0);
+    }    
     oProveedor->Vaciar();
-    oProveedor->Anadir();
-    LLenarCampos();
-    BloquearCampos(false);
-    ocultarBusqueda();
-    ui->txtcodigo->setFocus();
-    editing = false;
+    Configuracion_global->transaction();
+    if(oProveedor->Anadir())
+    {
+        LLenarCampos();
+        BloquearCampos(false);
+        ocultarBusqueda();
+        ui->txtcodigo->setFocus();
+        ui->stackedWidget->setCurrentIndex(0);
+        editing = false;
+    }
+    else
+    {
+        Configuracion_global->rollback();
+    }
 }
 
 void frmProveedores::on_txtcp_editingFinished()
@@ -577,10 +586,7 @@ void frmProveedores::on_btnDeshacer_clicked()
                                 "¿ Desea anular los cambios o continuar la edición?"),
                              tr("Continuar Edición"),tr("Anular cambios")) == QDialog::Accepted)
     {
-        if(!this->editing)
-        {
-            oProveedor->Borrar(oProveedor->id);
-        }
+        Configuracion_global->rollback();
         LLenarCampos();
         BloquearCampos(true);
     }
@@ -811,19 +817,21 @@ void frmProveedores::acumulados()
 void frmProveedores::grafica()
 {
     ui->Grafica->Clear();
-
-    ui->Grafica->addItem(tr("Ene"),oProveedor->enero);
-    ui->Grafica->addItem(tr("Feb"),oProveedor->febrero);
-    ui->Grafica->addItem(tr("Mar"),oProveedor->marzo);
-    ui->Grafica->addItem(tr("Abr"),oProveedor->abril);
-    ui->Grafica->addItem(tr("May"),oProveedor->mayo);
-    ui->Grafica->addItem(tr("Jun"),oProveedor->junio);
-    ui->Grafica->addItem(tr("Jul"),oProveedor->julio);
-    ui->Grafica->addItem(tr("Ago"),oProveedor->agosto);
-    ui->Grafica->addItem(tr("Sep"),oProveedor->septiembre);
-    ui->Grafica->addItem(tr("Oct"),oProveedor->octubre);
-    ui->Grafica->addItem(tr("Nov"),oProveedor->noviembre);
-    ui->Grafica->addItem(tr("Dic"),oProveedor->diciembre);
+    if(editing)
+    {
+        ui->Grafica->addItem(tr("Ene"),oProveedor->enero);
+        ui->Grafica->addItem(tr("Feb"),oProveedor->febrero);
+        ui->Grafica->addItem(tr("Mar"),oProveedor->marzo);
+        ui->Grafica->addItem(tr("Abr"),oProveedor->abril);
+        ui->Grafica->addItem(tr("May"),oProveedor->mayo);
+        ui->Grafica->addItem(tr("Jun"),oProveedor->junio);
+        ui->Grafica->addItem(tr("Jul"),oProveedor->julio);
+        ui->Grafica->addItem(tr("Ago"),oProveedor->agosto);
+        ui->Grafica->addItem(tr("Sep"),oProveedor->septiembre);
+        ui->Grafica->addItem(tr("Oct"),oProveedor->octubre);
+        ui->Grafica->addItem(tr("Nov"),oProveedor->noviembre);
+        ui->Grafica->addItem(tr("Dic"),oProveedor->diciembre);
+    }
 }
 
 void frmProveedores::contactos()

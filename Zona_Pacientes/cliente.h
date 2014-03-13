@@ -124,7 +124,7 @@ public slots:
     void clear();
     void Guardar();
     void GuardarWeb();
-    void Anadir();
+    bool Anadir();
     void anadirWeb();
     void AnadirDeuda(int id_cliente, QDate fechaDeuda,QDate fechaVto,QString documento, int id_Tiquet,
                      int id_factura, int tipo, double importe_deuda, double pagado, double pendiente_cobro,

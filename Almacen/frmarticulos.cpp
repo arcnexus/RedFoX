@@ -254,6 +254,27 @@ void FrmArticulos::llenar_tabla_tarifas()
     ui->TablaTarifas->horizontalHeader()->resizeSection(9,20);
 }
 
+void FrmArticulos::recalcular_tarifas(double coste)
+{
+    for(auto i = 0; i< modelTarifa->rowCount(); i++)
+    {
+        int id_t = modelTarifa->record(i).value("id").toInt();
+        double margen = modelTarifa->record(i).value("margen").toDouble();
+        QHash<QString,QVariant> _tar;
+        double pvp =(coste)/(1-(margen/100));
+        _tar["pvp"]= pvp;
+        QString error;
+        if(SqlCalls::SqlUpdate(_tar,"tarifas",Configuracion_global->groupDB,QString("id = %1").arg(id_t),error) < 0)
+        {
+            QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
+                                 tr("Falló la actualización de la tarifa: %1").arg(error),
+                                 tr("Aceptar"));
+            break;
+        }
+    }
+    llenar_tabla_tarifas();
+}
+
 void FrmArticulos::mostrarBusqueda()
 {
     ui->stackedWidget->setCurrentIndex(1);
@@ -292,10 +313,7 @@ void FrmArticulos::on_botAnadir_clicked()
             this->anadir = true;
 
             ui->Pestanas->setCurrentIndex(0);
-            LLenarCampos(ui->Pestanas->currentIndex());
-
-            if(Configuracion_global->auto_codigoart)
-                ui->txtcodigo->setText("auto_codigo");
+            LLenarCampos(ui->Pestanas->currentIndex());            
 
             ui->lblDescripcion->setText(tr("Nuevo artículo"));
             ui->lblCodigo->setText("");
@@ -304,7 +322,15 @@ void FrmArticulos::on_botAnadir_clicked()
             ui->lblCodigo->repaint();
 
             ui->stackedWidget->setCurrentIndex(0);
-            ui->txtcodigo->setFocus();
+            if(Configuracion_global->auto_codigoart)
+            {
+                ui->txtcodigo->setText("auto_codigo");
+                ui->txtcodigo_barras->setFocus();
+            }
+            else
+            {
+                ui->txtcodigo->setFocus();
+            }
         }        
     }
 }
@@ -492,7 +518,7 @@ void FrmArticulos::LLenarCampos(int index)
         ui->txtMargen->setValue(oArticulo->margen);
         ui->txtMargen_min->setValue((oArticulo->margen_min));
 
-        //---------------------
+        ui->chkcontrolar_stock->setChecked(oArticulo->controlar_stock);
         // Tarifas
         //---------------------
         llenar_tabla_tarifas();
@@ -599,11 +625,6 @@ void FrmArticulos::LLenarCampos(int index)
         //ui->txtstock_real->setText(QString::number(oArticulo->stock_real));
         ui->txtstock_real_2->setText(QString::number(oArticulo->stock_real));
         ui->txtstock_fisico_almacen->setText(QString::number(oArticulo->nstock_fisico_almacen));
-
-        if (oArticulo->controlar_stock==1)
-            ui->chkcontrolar_stock->setChecked(true);
-        else
-            ui->chkcontrolar_stock->setChecked(false);
 
         ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
         ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
@@ -1059,7 +1080,17 @@ void FrmArticulos::btnEditarTarifa_clicked()
         return;
     int id_t = modelTarifa->data(modelTarifa->index(ui->TablaTarifas->currentIndex().row(),0),Qt::DisplayRole).toInt();
 
-    FrmTarifas editTarifa(this);
+    double iva = 0.0;
+    for(auto i=0; i< Configuracion_global->iva_model->rowCount();++i)
+    {
+        if(Configuracion_global->iva_model->record(i).value("tipo").toString() == ui->cboTipoIVA->currentText())
+        {
+            iva = Configuracion_global->iva_model->record(i).value("iva").toDouble();
+            break;
+        }
+    }
+    FrmTarifas editTarifa(this);    
+    editTarifa.iva = iva;
     editTarifa.capturar_datos(id_t,ui->txtCoste_real->text(),oArticulo->id);
 
     if(editTarifa.exec() ==QDialog::Accepted)
@@ -2101,12 +2132,14 @@ void FrmArticulos::on_txtcoste_editingFinished()
     // Doy valor a coste_real
     ui->txtCoste_real->setText(ui->txtcoste->text());
 
-    fin = ui->txtcoste->text().replace(".","").replace(",",".").toDouble();
-    if (inicio != fin)
+    fin = Configuracion_global->MonedatoDouble(ui->txtcoste->text());
+    if (inicio != fin
+            && (QMessageBox::question(this,tr("Recalcular tarifas")
+                              ,tr("¿Desea recalcular tarifas en base al nuevo coste?")
+                              ,tr("No"),
+                              tr("Sí")) == QMessageBox::Accepted))
     {
-        blockSignals(true);
-        // TODO recalcular tarifas
-        blockSignals(false);
+        recalcular_tarifas(fin);
     }
 }
 
@@ -2531,33 +2564,6 @@ void FrmArticulos::on_Pestanas_currentChanged(int index)
     LLenarCampos(index);
 }
 
-void FrmArticulos::on_txtCoste_real_textChanged(const QString &arg1)
-{
-    if((oArticulo->coste_real != arg1.toDouble()) && (QMessageBox::question(this,tr("Recalcular tarifas")
-                          ,tr("¿Desea recalcular tarifas en base al nuevo coste?")
-                          ,tr("No"),
-                          tr("Sí")) == QMessageBox::Accepted))
-    {
-        for(auto i = 0; i< modelTarifa->rowCount(); i++)
-        {
-            int id_t = modelTarifa->record(i).value("id").toInt();
-            double margen = modelTarifa->record(i).value("margen").toDouble();
-            QHash<QString,QVariant> _tar;
-            double pvp =(Configuracion_global->MonedatoDouble(arg1))/(1-(margen/100));
-            _tar["pvp"]= pvp;
-            QString error;
-            if(SqlCalls::SqlUpdate(_tar,"tarifas",Configuracion_global->groupDB,QString("id = %1").arg(id_t),error) < 0)
-            {
-                QMessageBox::warning(qApp->activeWindow(),tr("Añadir tarifa"),
-                                     tr("Falló la actualización de la tarifa: %1").arg(error),
-                                     tr("Aceptar"));
-            }
-        }
-        llenar_tabla_tarifas();
-    }
-}
-
-
 void FrmArticulos::on_btnResArt_clicked()
 {
     QStringList hd;
@@ -2585,4 +2591,16 @@ void FrmArticulos::on_btnResArt2_clicked()
         TimedMessageBox *m = new TimedMessageBox(this,tr("El documento se ha creado en la carpeta del programa con el nombre art_2.ods"));
 
 
+}
+
+void FrmArticulos::on_txtCoste_real_editingFinished()
+{
+    if((oArticulo->coste_real != Configuracion_global->MonedatoDouble(ui->txtCoste_real->text()))
+        && (QMessageBox::question(this,tr("Recalcular tarifas")
+                          ,tr("¿Desea recalcular tarifas en base al nuevo coste?")
+                          ,tr("No"),
+                          tr("Sí")) == QMessageBox::Accepted))
+    {
+        recalcular_tarifas(Configuracion_global->MonedatoDouble(ui->txtCoste_real->text()));
+    }
 }
