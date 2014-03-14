@@ -41,6 +41,7 @@ private slots:
 
     void on_btnBuscaProv_clicked();
 
+    void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 private:
     Ui::Frmrecepcion_pedidos *ui;
     bool albaran;
@@ -52,6 +53,7 @@ private:
     QPushButton* push;
     QSqlQueryModel *modelPedidos;
 
+    QMap<int, QSqlRecord> _lineas;
 signals:
 
 };
