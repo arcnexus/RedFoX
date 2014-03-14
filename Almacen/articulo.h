@@ -86,7 +86,7 @@ public:
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
 
     static bool acumulado_ventas   (int id_articulo,float cantidad,double total, QDate fecha, bool removeReservas = false);
-    static bool acumulado_compras  (int id_articulo,float cantidad,double total, QDate fecha, bool removePendient = false);
+    static bool acumulado_compras  (int id_articulo, float cantidad, double total, QDate fecha, bool removePendient = false);
     static bool acum_devolucion_cli(int id_articulo,float cantidad,double total, QDate fecha);
     static bool acum_devolucion_pro(int id_articulo,float cantidad,double total, QDate fecha);
 

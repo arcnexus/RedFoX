@@ -1107,8 +1107,7 @@ bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, 
     QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
 
-    cSQL =  QString("update articulos set fecha_ultima_compra = '%1',").arg(fecha.toString("yyyyMMdd"));
-    cSQL.append(QString("stock_real = stock_real +%1,").arg(cantidad));
+    cSQL =  QString("update articulos set fecha_ultima_compra = '%1',").arg(fecha.toString("yyyyMMdd"));    
 
     //Quito unidades pendientes añadiendo stock y unidades compradas
     //(recepcion de pedidos - nuevo albaran/factura de proveedor)
@@ -1123,7 +1122,7 @@ bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, 
     {
         cSQL.append(QString("cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1, ").arg(cantidad));
     }
-
+    cSQL.append(",stock_real = stock_fisico_almacen + cantidad_pendiente_recibir ");
     cSQL.append(QString("where id= %1").arg(id_articulo));
 
     bool success = art.exec(cSQL);
