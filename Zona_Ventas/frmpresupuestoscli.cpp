@@ -2010,6 +2010,8 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
         frmeditar.set_acumula(false);
         frmeditar.set_reserva(false);
 
+        frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
+
         frmeditar.set_linea(0,"lin_pre");
         frmeditar.set_tabla("lin_pre");
         frmeditar.set_id_cliente(oClientePres->id);
@@ -2043,6 +2045,8 @@ void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
 
             frmeditar.set_venta(true);
             frmeditar.set_acumula(false);

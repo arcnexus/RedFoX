@@ -2110,6 +2110,8 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
+
             frmeditar.set_venta(true);
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(true);
@@ -2142,6 +2144,9 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
+
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(true);
             frmeditar.set_linea(0,"lin_ped");

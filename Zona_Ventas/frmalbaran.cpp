@@ -1517,6 +1517,9 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
+
             frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_alb");
             frmeditar.set_tabla("lin_alb");
@@ -1546,6 +1549,7 @@ void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
             frmeditar.set_acumula(true);
             frmeditar.set_id_cliente(oCliente2->id);
             frmeditar.set_id_tarifa(oCliente2->idTarifa);

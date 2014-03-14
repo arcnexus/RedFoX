@@ -528,7 +528,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     else
         delete frmgestcobros;
 
-    splash->showMessage(tr("Cargando modulos... Modulo de TPV")  ,Qt::AlignLeft,Qt::white);
+  /*  splash->showMessage(tr("Cargando modulos... Modulo de TPV")  ,Qt::AlignLeft,Qt::white);
     QApplication::processEvents();
 
     FrmTPV * frm_tpv = new FrmTPV(this);
@@ -538,7 +538,7 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
         _ventasModules.append(frm_tpv);
     }
     else
-        delete frm_tpv;
+        delete frm_tpv;*/
 }
 
 void MainWindow::loadComprasModules(QSplashScreen *splash)

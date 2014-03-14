@@ -8,6 +8,7 @@ void frmEditLine::init()
     this->editando = false;
     this->reserva_unidades = false;
     add_pendientes = false;
+    use_re = false;
     ui->lblpromocionado->setVisible(false);
     ui->chk3_2->setVisible(false);
     ui->chkdto->setVisible(false);
@@ -143,24 +144,36 @@ QHash<QString, QVariant> frmEditLine::get_datos()
         lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
         lin["total"] = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
         lin["id_lote"] = this->id_lote;
-    } else
+        if(use_re)
+        {
+            lin["porc_rec"] = Configuracion_global->iva_model->record(ui->cboIva->currentIndex()).value("recargo_equivalencia");
+            lin["rec"] = lin.value("total").toDouble() * (lin.value("porc_rec").toDouble()/100);
+        }
+    }
+    else
     {
-         lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
-         lin["cantidad_pendiente"] = ui->txtCantidad->text().toFloat();
-         lin["cantidad_recibida"] = 0;
-         lin["cerrado"] = false;
-         lin["codigo"] = ui->txtCodigo->text();
-         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["descripcion"] = ui->txtDescripcion->text();
-         lin["etiquetas"] = ui->txtCantidad->text().toFloat();
-         lin["id_articulo"] = this->id_articulo;
-         lin["id_cab"] = this->id_cab;
-         lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
-         lin["porc_iva"] = ui->cboIva->currentText().toFloat();
-         lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
-         lin["total"] =  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
+        lin["id_articulo"] = this->id_articulo;
+        lin["id_cab"] = this->id_cab;
+        lin["cantidad"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
+        lin["codigo"] = ui->txtCodigo->text();
+        lin["descripcion"] = ui->txtDescripcion->text();
+        lin["porc_dto"] = Configuracion_global->MonedatoDouble(ui->txtPorc_dto->text());
+        lin["precio"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        lin["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) * Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        lin["total"] =  Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
+        lin["porc_iva"] = ui->cboIva->currentText().toFloat();
+        lin["iva"] = lin.value("total").toDouble() * (lin.value("porc_iva").toDouble()/100);
+        lin["coste_real_unidad"] = Configuracion_global->MonedatoDouble(ui->txtPVP->text());
+        if(use_re)
+        {
+            lin["porc_rec"] = Configuracion_global->iva_model->record(ui->cboIva->currentIndex()).value("recargo_equivalencia");
+            lin["rec"] = lin.value("total").toDouble() * (lin.value("porc_rec").toDouble()/100);
+        }
+        if(add_pendientes)
+        {
+            lin["cantidad_pendiente"] = lin["cantidad"];
+        }
     }
     return lin;
 }
@@ -239,6 +252,16 @@ void frmEditLine::_insert_nueva_linea()
         }
     }
 }
+bool frmEditLine::getUse_re() const
+{
+    return use_re;
+}
+
+void frmEditLine::setUse_re(bool value)
+{
+    use_re = value;
+}
+
 
 int frmEditLine::get_id()
 {

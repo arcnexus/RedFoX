@@ -34,6 +34,9 @@ public:
     bool getAdd_pendientes() const;
     void setAdd_pendientes(bool value);
 
+    bool getUse_re() const;
+    void setUse_re(bool value);
+
 private slots:
 
     void on_txtCodigo_editingFinished();
@@ -76,6 +79,7 @@ private:
 
     QHash <QString, QVariant> get_datos();
     void _insert_nueva_linea();
+    bool use_re;
 signals:
     void refrescar_lineas();
 };

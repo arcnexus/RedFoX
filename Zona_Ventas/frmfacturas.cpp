@@ -1634,6 +1634,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
             frmeditar.set_acumula(true);
             frmeditar.set_linea(0,"lin_fac");
             frmeditar.set_tabla("lin_fac");
@@ -1662,6 +1663,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmEditLine frmeditar(this);
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
             frmeditar.set_acumula(true);
             frmeditar.set_id_cliente(oCliente1->id);
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
