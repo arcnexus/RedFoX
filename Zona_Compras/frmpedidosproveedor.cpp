@@ -324,7 +324,7 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtsubtotal->setText(QString::number(oPedido_proveedor->subtotal));
     ui->txtimporte_descuento->setText(QString::number(oPedido_proveedor->dto));
     ui->txtiva->setText(QString::number(oPedido_proveedor->iva));
-    ui->txtporc_rec1->setText(QString::number(oPedido_proveedor->rec_total));
+
     ui->chkrecargo_equivalencia->setChecked(oPedido_proveedor->recargo_equivalencia);
     ui->txttotal->setText(QString::number(oPedido_proveedor->total));
     ui->chkenviado->setChecked(oPedido_proveedor->enviado);
@@ -364,10 +364,10 @@ void FrmPedidosProveedor::llenar_campos()
     ui->txtiva2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva2,'f',Configuracion_global->decimales)));
     ui->txtiva3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva3,'f',Configuracion_global->decimales)));
     ui->txtiva4->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->iva4,'f',Configuracion_global->decimales)));
-    ui->txtporc_rec1->setText(QString::number(oPedido_proveedor->porc_rec1));
-    ui->txtporc_rec2->setText(QString::number(oPedido_proveedor->porc_rec2));
-    ui->txtporc_rec3->setText(QString::number(oPedido_proveedor->porc_rec3));
-    ui->txtporc_rec4->setText(QString::number(oPedido_proveedor->porc_rec4));
+    ui->txtporc_rec1->setText(QString::number(oPedido_proveedor->porc_rec1,'f',2));
+    ui->txtporc_rec2->setText(QString::number(oPedido_proveedor->porc_rec2,'f',2));
+    ui->txtporc_rec3->setText(QString::number(oPedido_proveedor->porc_rec3,'f',2));
+    ui->txtporc_rec4->setText(QString::number(oPedido_proveedor->porc_rec4,'f',2));
     ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec1,'f',Configuracion_global->decimales)));
     ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec2,'f',Configuracion_global->decimales)));
     ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oPedido_proveedor->rec3,'f',Configuracion_global->decimales)));
@@ -458,14 +458,14 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->porc_iva3 = Configuracion_global->MonedatoDouble(ui->txtporc_iva3->text());
     oPedido_proveedor->porc_iva4 = Configuracion_global->MonedatoDouble(ui->txtporc_iva4->text());
 
-    oPedido_proveedor->porc_rec1 = Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text());
-    oPedido_proveedor->porc_rec2 = Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text());
-    oPedido_proveedor->porc_rec3 = Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text());
-    oPedido_proveedor->porc_rec4 = Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text());
-    oPedido_proveedor->rec1      = Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text());
-    oPedido_proveedor->rec2      = Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text());
-    oPedido_proveedor->rec3      = Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text());
-    oPedido_proveedor->rec4      = Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text());
+    oPedido_proveedor->porc_rec1 = ui->txtporc_rec1->text().toDouble();
+    oPedido_proveedor->porc_rec2 = ui->txtporc_rec2->text().toDouble();
+    oPedido_proveedor->porc_rec3 = ui->txtporc_rec3->text().toDouble();
+    oPedido_proveedor->porc_rec4 = ui->txtporc_rec4->text().toDouble();
+    oPedido_proveedor->rec1      = Configuracion_global->MonedatoDouble(ui->txtrec1->text());
+    oPedido_proveedor->rec2      = Configuracion_global->MonedatoDouble(ui->txtrec2->text());
+    oPedido_proveedor->rec3      = Configuracion_global->MonedatoDouble(ui->txtrec3->text());
+    oPedido_proveedor->rec4      = Configuracion_global->MonedatoDouble(ui->txtrec4->text());
 
     oPedido_proveedor->total1    = Configuracion_global->MonedatoDouble(ui->txttotal1->text());
     oPedido_proveedor->total2    = Configuracion_global->MonedatoDouble(ui->txttotal2->text());
@@ -765,6 +765,8 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
             frmeditar.set_venta(false);
             frmeditar.setAdd_pendientes(true);
 
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
+
             frmeditar.set_linea(0,"lin_ped_pro");
             frmeditar.set_tabla("lin_ped_pro");
             frmeditar.set_id_cab(oPedido_proveedor->id);
@@ -793,8 +795,9 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
             frmeditar.set_venta(false);
-            frmeditar.set_acumula(true);
             frmeditar.setAdd_pendientes(true);
+
+            frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
 
             frmeditar.set_id_cab(oPedido_proveedor->id);            
             frmeditar.set_linea(id_lin,"lin_ped_pro");
