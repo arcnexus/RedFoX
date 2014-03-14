@@ -1181,8 +1181,11 @@ bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, 
         case 12:
             cSQL.append(QString("acum_comp_diciembre = acum_comp_diciembre + %1").arg(total));
             cSQL.append(QString(",unid_comp_diciembre = unid_comp_diciembre + %1").arg(cantidad));
-            break;
+            break;           
         }
+        cSQL.append(QString(",acum_comp_ejercicio = acum_comp_ejercicio + %1").arg(total));
+        cSQL.append(QString(",unid_comp_ejercicio = unid_comp_ejercicio + %1").arg(cantidad));
+        cSQL.append(QString(" where id_articulo = %1 AND id_empresa=%2").arg(id_articulo).arg(Configuracion_global->idEmpresa));
 
         success &= art.exec(cSQL);
         if(!success)
@@ -1259,7 +1262,8 @@ bool Articulo::acum_devolucion_cli(int id_articulo, float cantidad, double total
         cSQL.append(QString(",unid_vent_diciembre = unid_vent_diciembre -%1").arg(cantidad));
         break;
     }
-
+    cSQL.append(QString(",acum_vent_ejercicio = acum_vent_ejercicio - %1").arg(total));
+    cSQL.append(QString(",unid_vent_acumulado = unid_vent_acumulado - %1").arg(cantidad));
     cSQL.append(QString(" where id_articulo = %1 AND id_empresa=%2").arg(id_articulo).arg(Configuracion_global->idEmpresa));
 
     success &= art.exec(cSQL);
@@ -1342,7 +1346,8 @@ bool Articulo::acumulado_ventas(int id_articulo, float cantidad, double total, Q
         cSQL.append(QString(",unid_vent_diciembre = unid_vent_diciembre +%1").arg(cantidad));
         break;
     }
-
+    cSQL.append(QString(",acum_vent_ejercicio = acum_vent_ejercicio + %1").arg(total));
+    cSQL.append(QString(",unid_vent_acumulado = unid_vent_acumulado + %1").arg(cantidad));
     cSQL.append(QString(" where id_articulo = %1 AND id_empresa=%2").arg(id_articulo).arg(Configuracion_global->idEmpresa));
     QSqlQuery art_ac(Configuracion_global->groupDB);
 
@@ -1420,7 +1425,8 @@ bool Articulo::acum_devolucion_pro(int id_articulo, float cantidad, double total
         cSQL.append(QString(",unid_comp_diciembre = unid_comp_diciembre - %1").arg(cantidad));
         break;
     }
-
+    cSQL.append(QString(",acum_comp_ejercicio = acum_comp_ejercicio - %1").arg(total));
+    cSQL.append(QString(",unid_comp_ejercicio = unid_comp_ejercicio - %1").arg(cantidad));
     cSQL.append(QString(" where id_articulo = %1 AND id_empresa=%2").arg(id_articulo).arg(Configuracion_global->idEmpresa));
     QSqlQuery art_ac(Configuracion_global->groupDB);
 

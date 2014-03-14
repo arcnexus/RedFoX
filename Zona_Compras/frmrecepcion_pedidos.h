@@ -54,6 +54,7 @@ private:
     QSqlQueryModel *modelPedidos;
 
     QMap<int, QSqlRecord> _lineas;
+    int id_prov;
 signals:
 
 };

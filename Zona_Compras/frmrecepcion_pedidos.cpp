@@ -8,6 +8,7 @@
 
 #include "dlgpedidoalbfact.h"
 #include "../Almacen/articulo.h"
+#include "../Zona_Compras/proveedor.h"
 
 Frmrecepcion_pedidos::Frmrecepcion_pedidos(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
@@ -240,24 +241,17 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         {
             QSqlQuery queryCabecera(Configuracion_global->empresaDB);
             QString error;
-            bool ok =  queryCabecera.exec(QString("update ped_pro set recibido = 1 where id = %1").arg(id_cab));
-            if(!ok)
-                error = queryCabecera.lastError().text();
 
             QHash<QString,QVariant> _line_data;
             _line_data["cantidad_pendiente"] = pend_now;
             _line_data["cantidad_recibida"] = recibi + rec_now;
-            ok &= SqlCalls::SqlUpdate(_line_data,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(line_id),error);
+            bool ok = SqlCalls::SqlUpdate(_line_data,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(line_id),error);
 
-
-           /* QString sql = QString("update articulos set stock_fisico_almacen = stock_fisico_almacen + %1").arg(rec_now);
-            sql.append(QString(",cantidad_pendiente_recibir = cantidad_pendiente_recibir - %1").arg(rec_now));
-            sql.append(QString(",stock_real = stock_fisico_almacen + cantidad_pendiente_recibir where id = %1").arg(art_id));
-            QSqlQuery query_art(Configuracion_global->groupDB);
-            ok &= query_art.exec(sql);*/
-
+            //ACUMULADOS ARTICULO
             ok &= Articulo::acumulado_compras(art_id,rec_now,rec_now * precio,QDate::currentDate(),true);
 
+            //ACUMLADOS PROVEEDOR
+            ok &= Proveedor::acumular(id_prov,QDate::currentDate().month(),rec_now * precio);
             //LOTES
             if(SqlCalls::SelectOneField("articulos","lotes",QString("id=%1").arg(art_id),Configuracion_global->groupDB,error).toBool())
             {
@@ -265,6 +259,21 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
                 frmLotes.cargar_articulo(art_id);
                 frmLotes.exec();
             }
+
+            if(SqlCalls::SelectRecord("lin_ped_pro",QString("id_cab = %1 AND cantidad_pendiente > 0").arg(id_cab),Configuracion_global->empresaDB,error)
+                    .isEmpty())
+            {
+                ok &=  queryCabecera.exec(QString("update ped_pro set recibido = 1,recibido_completo = 1 where id = %1").arg(id_cab));
+                if(!ok)
+                    error = queryCabecera.lastError().text();
+            }
+            else
+            {
+                ok &=  queryCabecera.exec(QString("update ped_pro set recibido = 1 where id = %1").arg(id_cab));
+                if(!ok)
+                    error = queryCabecera.lastError().text();
+            }
+
             if(ok)
             {
                 Configuracion_global->commit();
@@ -822,6 +831,7 @@ void Frmrecepcion_pedidos::on_btnBuscaProv_clicked()
     if(consulta.exec())
     {
         ui->txtproveedor->setText(consulta.get_record().value("proveedor").toString());
+        id_prov = consulta.get_record().value("id").toInt();
     }
 }
 

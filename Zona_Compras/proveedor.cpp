@@ -30,13 +30,63 @@ void Proveedor::cargaracumulados(int id_proveedor)
         this->noviembre = query_acumulados.record().value("acum_noviembre").toDouble();
         this->diciembre = query_acumulados.record().value("acum_diciembre").toDouble();
     }
-
-
 }
 
-bool Proveedor::acumular(int id_proveedor, int mes, double importe)
+bool Proveedor::acumular(int id_proveedor, int mes, double total)
 {
-return true;
+    QString cSQL = QString("update acum_proveedores set ");
+    switch (mes)
+    {
+    case 1:
+        cSQL.append(QString("acum_enero = acum_enero + %1").arg(total));
+        break;
+    case 2:
+        cSQL.append(QString("acum_febrero = acum_comp_febrero + %1").arg(total));
+        break;
+    case 3:
+        cSQL.append(QString("acum_marzo = acum_marzo + %1").arg(total));
+        break;
+    case 4:
+        cSQL.append(QString("acum_abril = acum_abril + %1").arg(total));
+        break;
+    case 5:
+        cSQL.append(QString("acum_mayo = acum_mayo + %1").arg(total));
+        break;
+    case 6:
+        cSQL.append(QString("acum_junio = acum_junio + %1").arg(total));
+        break;
+    case 7:
+        cSQL.append(QString("acum_julio = acum_julio + %1").arg(total));
+        break;
+    case 8:
+        cSQL.append(QString("acum_agosto = acum_agosto + %1").arg(total));
+        break;
+    case 9:
+        cSQL.append(QString("acum_septiembre = acum_septiembre + %1").arg(total));
+        break;
+    case 10:
+        cSQL.append(QString("acum_octubre = acum_octubre + %1").arg(total));
+        break;
+    case 11:
+        cSQL.append(QString("acum_noviembre = acum_noviembre + %1").arg(total));
+        break;
+    case 12:
+        cSQL.append(QString("acum_diciembre = acum_diciembre + %1").arg(total));
+        break;
+    }
+    cSQL.append(QString(",acum_total = acum_total + %1").arg(total));
+    cSQL.append(QString(" where id_proveedor = %1 AND id_empresa=%2").arg(id_proveedor).arg(Configuracion_global->idEmpresa));
+
+    QSqlQuery art_ac(Configuracion_global->groupDB);
+
+    bool success = art_ac.exec(cSQL);
+    if(!success)
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+                             tr("No se ha podido guardar los acumulados: %1").arg(art_ac.lastError().text()),
+                             tr("Aceptar"));
+    }
+    return success;
 }
 
 void Proveedor::anadir_persona_contacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1,
