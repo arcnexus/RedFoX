@@ -626,7 +626,7 @@ CREATE TABLE `@empresa@`.`lin_alb_pro` (
   `dto` double DEFAULT '0',
   `subtotal` double DEFAULT '0',
   `iva` double DEFAULT '0',
-  `coste_real` double DEFAULT NULL,
+  `coste_real_unidad` DOUBLE  NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_fac` (
@@ -668,6 +668,7 @@ CREATE TABLE `@empresa@`.`lin_fac_pro` (
   `pedido` int(11) DEFAULT '0',
   `porc_rec` float DEFAULT '0',
   `rec` double DEFAULT '0',
+  `coste_real_unidad` DOUBLE  NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `cCodigo` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -714,6 +715,7 @@ CREATE TABLE `@empresa@`.`lin_ped_pro` (
   `cantidad_pendiente` int(11) DEFAULT '0',
   `cerrado` tinyint(1) DEFAULT '0',
   `coste_real_unidad` DOUBLE  NOT NULL DEFAULT '0',
+  `en_albaran` double DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_pre` (

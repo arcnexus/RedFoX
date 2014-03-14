@@ -184,3 +184,8 @@ VIEW `GrupoTests`.`inventario` AS
         `GrupoTests`.`articulos`.`stock_fisico_almacen` AS `stock_fisico_almacen`
     from
         `GrupoTests`.`articulos`
+
+ALTER TABLE `empNeux`.`lin_ped_pro` ADD COLUMN `en_albaran` DOUBLE NULL DEFAULT '0' AFTER `coste_real_unidad`;
+ALTER TABLE `empNeux`.`lin_ped_pro` CHANGE COLUMN `cantidad` `cantidad` DOUBLE NULL DEFAULT '0' ,CHANGE COLUMN `cantidad_recibida` `cantidad_recibida` DOUBLE NULL DEFAULT '0' ,CHANGE COLUMN `cantidad_pendiente` `cantidad_pendiente` DOUBLE NULL DEFAULT '0';
+ALTER TABLE `emptests`.`lin_alb_pro` CHANGE COLUMN `coste_real` `coste_real_unidad` DOUBLE NULL DEFAULT NULL ;
+ALTER TABLE `emptests`.`lin_fac_pro` ADD COLUMN `coste_real_unidad` DOUBLE NULL DEFAULT '0' AFTER `rec`;
