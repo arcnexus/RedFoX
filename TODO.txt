@@ -189,3 +189,19 @@ ALTER TABLE `empNeux`.`lin_ped_pro` ADD COLUMN `en_albaran` DOUBLE NULL DEFAULT 
 ALTER TABLE `empNeux`.`lin_ped_pro` CHANGE COLUMN `cantidad` `cantidad` DOUBLE NULL DEFAULT '0' ,CHANGE COLUMN `cantidad_recibida` `cantidad_recibida` DOUBLE NULL DEFAULT '0' ,CHANGE COLUMN `cantidad_pendiente` `cantidad_pendiente` DOUBLE NULL DEFAULT '0';
 ALTER TABLE `emptests`.`lin_alb_pro` CHANGE COLUMN `coste_real` `coste_real_unidad` DOUBLE NULL DEFAULT NULL ;
 ALTER TABLE `emptests`.`lin_fac_pro` ADD COLUMN `coste_real_unidad` DOUBLE NULL DEFAULT '0' AFTER `rec`;
+
+ALTER TABLE `Grupopatata`.`acum_proveedores`
+CHANGE COLUMN `id_proveedor` `id_proveedor` INT(11) NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_enero` `acum_enero` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_febrero` `acum_febrero` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_marzo` `acum_marzo` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_abril` `acum_abril` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_mayo` `acum_mayo` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_junio` `acum_junio` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_julio` `acum_julio` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_agosto` `acum_agosto` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_septiembre` `acum_septiembre` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_octubre` `acum_octubre` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_noviembre` `acum_noviembre` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_diciembre` `acum_diciembre` DOUBLE NULL DEFAULT '0' ,
+CHANGE COLUMN `acum_total` `acum_total` DOUBLE NULL DEFAULT '0' ;
