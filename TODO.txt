@@ -205,3 +205,10 @@ CHANGE COLUMN `acum_octubre` `acum_octubre` DOUBLE NULL DEFAULT '0' ,
 CHANGE COLUMN `acum_noviembre` `acum_noviembre` DOUBLE NULL DEFAULT '0' ,
 CHANGE COLUMN `acum_diciembre` `acum_diciembre` DOUBLE NULL DEFAULT '0' ,
 CHANGE COLUMN `acum_total` `acum_total` DOUBLE NULL DEFAULT '0' ;
+
+ALTER TABLE `empneux`.`ped_pro` ADD COLUMN `porc_dto` DOUBLE NULL DEFAULT '0' AFTER `subtotal`;
+ALTER TABLE `empneux`.`fac_pro` DROP COLUMN `importe_deuda_pendiente`,DROP COLUMN `importe_pagado_total`,DROP COLUMN `forma_pago`,CHANGE COLUMN `dto` `porc_dto` DECIMAL(9,2) NULL DEFAULT '0.00' ,CHANGE COLUMN `retencion_irpf` `porc_irpf` FLOAT NULL DEFAULT '0' ,CHANGE COLUMN `total_base` `base_total` DOUBLE NULL DEFAULT '0' ,CHANGE COLUMN `total_iva` `iva_total` DOUBLE NULL DEFAULT '0' ,CHANGE COLUMN `total_retencion` `irpf` DOUBLE NULL DEFAULT '0' ;
+ALTER TABLE `empneux`.`fac_pro` CHANGE COLUMN `total_dto` `dto` DOUBLE NULL DEFAULT NULL ;
+ALTER TABLE `empneux`.`alb_pro` CHANGE COLUMN `importe_rec_total` `total_recargo` DOUBLE NULL DEFAULT NULL ;
+ALTER TABLE `empneux`.`alb_pro` ADD COLUMN `porc_dto` DOUBLE NULL DEFAULT '0' AFTER `id_pais`;
+
