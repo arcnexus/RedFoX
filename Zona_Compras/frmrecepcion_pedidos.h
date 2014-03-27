@@ -15,7 +15,6 @@ class Frmrecepcion_pedidos : public MayaModule
 public:
     explicit Frmrecepcion_pedidos(QWidget *parent = 0);
     ~Frmrecepcion_pedidos();
-    bool paso;
     module_zone module_zone(){return Compras;}
     QString module_name(){return "Recepcion de pedidos";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
@@ -26,8 +25,6 @@ private slots:
     void on_btnBuscar_clicked();
 
     void on_chkForzarCierre_clicked();
-
-    void on_tablaPedidos_doubleClicked(const QModelIndex &index);
 
     void validarcantidad(int, int);
 
@@ -44,16 +41,12 @@ private slots:
     void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 private:
     Ui::Frmrecepcion_pedidos *ui;
-    bool albaran;
-    int id_albaran;
-    bool factura;
-    int id_factura;
-    int id_pedido;
     QAction menuButton;
     QPushButton* push;
     QSqlQueryModel *modelPedidos;
 
     QMap<int, QSqlRecord> _lineas;
+    void crear_documento(bool es_albaran);
     int id_prov;
 signals:
 

@@ -92,6 +92,7 @@ public:
 
     static bool set_pendiente_recibir(int id_articulo, float cantidad);
 
+    static bool update_coste_kits(int id_articulo, double new_coste);
 
 
 

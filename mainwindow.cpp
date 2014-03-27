@@ -365,7 +365,6 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Clientes->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Clientes);
-        QTimer::singleShot(0,Clientes,SLOT(init()));
     }
     else
         delete Clientes;
@@ -376,7 +375,6 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Proveedores->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Proveedores);
-        QTimer::singleShot(0,Proveedores,SLOT(init()));
     }
     else
         delete Proveedores;
@@ -388,7 +386,6 @@ void MainWindow::loadMantenModules(QSplashScreen* splash)
     if(Transportistas->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _mantenModules.append(Transportistas);
-        QTimer::singleShot(0,Transportistas,SLOT(init()));
     }
     else
         delete Transportistas;
@@ -427,7 +424,6 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
     if(Articulos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _almacenModules.append(Articulos);
-        QTimer::singleShot(0,Articulos,SLOT(init()));
     }
     else
         delete Articulos;
@@ -465,7 +461,6 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Presupcli->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Presupcli);
-        QTimer::singleShot(0,Presupcli,SLOT(init()));
     }
     else
         delete Presupcli;
@@ -477,7 +472,6 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Pedidos->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Pedidos);
-        QTimer::singleShot(0,Pedidos,SLOT(init()));
     }
     else
         delete Pedidos;
@@ -489,7 +483,6 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Albaran->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Albaran);
-        QTimer::singleShot(0,Albaran,SLOT(init()));
     }
     else
         delete Albaran;
@@ -512,7 +505,6 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
     if(Facturas->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _ventasModules.append(Facturas);
-        QTimer::singleShot(0,Facturas,SLOT(init()));
     }
     else
         delete Facturas;
@@ -561,7 +553,6 @@ void MainWindow::loadComprasModules(QSplashScreen *splash)
     if(FrmPedidos_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
     {
         _comprasModules.append(FrmPedidos_pro);
-        QTimer::singleShot(0,FrmPedidos_pro,SLOT(init()));
     }
     else
         delete FrmPedidos_pro;

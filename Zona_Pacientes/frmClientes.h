@@ -159,5 +159,6 @@ private:
     QSqlTableModel * calle_completer_model;
 
     void llenar_tipoCliente();
+    bool __init;
 };
 #endif

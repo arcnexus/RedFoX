@@ -57,16 +57,11 @@ private slots:
 
     void convertir_en_albaran();
     void convertir_enFactura();
-    void on_tabWidget_2_currentChanged(int index);
 
 
     void on_txtcodigo_cliente_editingFinished();
 
     void on_btnImprimir_clicked();
-
-    void on_radBusqueda_toggled(bool checked);
-
-    void on_tabla_clicked(const QModelIndex &index);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
@@ -85,7 +80,7 @@ private slots:
     void mostrarBusqueda();
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
-    void on_table_row_changed(QModelIndex actual,QModelIndex previous);
+
     void on_Lineas_doubleClicked(const QModelIndex &index);
 
     void on_btnAnadirLinea_clicked();
@@ -133,6 +128,8 @@ private:
     QString texto;
     QString orden;
     QString modo;
+
+    bool __init;
 };
 
 #endif // FRMPEDidOS_H

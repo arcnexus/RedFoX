@@ -13,7 +13,7 @@ Proveedor::Proveedor(QObject *parent) :
 
 void Proveedor::cargaracumulados(int id_proveedor)
 {
-    QSqlQuery query_acumulados(Configuracion_global->empresaDB);
+    QSqlQuery query_acumulados(Configuracion_global->groupDB);
     if(query_acumulados.exec(QString("select * from acum_proveedores where id_proveedor =%1 and id_empresa=%2").arg(id_proveedor).arg(Configuracion_global->idEmpresa)))
     {
         query_acumulados.next();

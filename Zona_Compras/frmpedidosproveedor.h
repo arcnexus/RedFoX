@@ -96,6 +96,7 @@ private slots:
 private:
 
     void formatotabla();
+    bool __init;
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();

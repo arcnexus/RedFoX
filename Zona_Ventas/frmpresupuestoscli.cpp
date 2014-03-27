@@ -24,6 +24,10 @@ FrmPresupuestosCli::FrmPresupuestosCli(QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/presupuestos.png"),"",this))
 
 {
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de presupuestos a clientes"));
+    __init = false;
+    this->installEventFilter(this);
 }
 
 FrmPresupuestosCli::~FrmPresupuestosCli()
@@ -33,9 +37,10 @@ FrmPresupuestosCli::~FrmPresupuestosCli()
 
 void FrmPresupuestosCli::init()
 {
-    ui->setupUi(this);
-    push->setStyleSheet("background-color: rgb(133, 170, 142)");
-    push->setToolTip(tr("Gestión de presupuestos a clientes"));
+    if(__init)
+        return;
+
+    ui->setupUi(this);    
     ui->stackedWidget->setCurrentIndex(1);
 
     ui->cbo_Pais->setModel(Configuracion_global->paises_model);
@@ -113,6 +118,7 @@ void FrmPresupuestosCli::init()
         (*it)->installEventFilter(this);
 
     BloquearCampos(true);
+    __init = true;
 }
 void FrmPresupuestosCli::setConvertirMenu()
 {
@@ -134,6 +140,8 @@ void FrmPresupuestosCli::setConvertirMenu()
 
 void FrmPresupuestosCli::init_querys()
 {
+    if(__init)
+        return;
     model_busqueda->setQuery(QString("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc"),Configuracion_global->empresaDB);
     modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio_recom,porc_dto,precio,subtotal,porc_iva,total "
                           "from lin_pre where id = 0;",Configuracion_global->empresaDB);
@@ -142,6 +150,8 @@ void FrmPresupuestosCli::init_querys()
 }
 void FrmPresupuestosCli::LLenarCampos()
 {
+    if(__init)
+        return;
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->irpf ,'f',Configuracion_global->decimales_campos_totales)));
     ui->spinPorc_irpf->setValue(oPres->porc_irpf);
     ui->txtpresupuesto->setText(oPres->presupuesto);
@@ -289,6 +299,8 @@ void FrmPresupuestosCli::LLenarCampos()
 
 void FrmPresupuestosCli::LLenarCamposCliente()
 {
+    if(__init)
+        return;
     ui->txtcodigo_cliente->setText(oClientePres->codigo_cliente);
     ui->txtcliente->setText(oClientePres->nombre_fiscal);
     ui->lblTopcliente->setText(oClientePres->nombre_fiscal);
@@ -1737,6 +1749,8 @@ void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo
 
 void FrmPresupuestosCli::calcular_presupuesto()
 {
+    if(__init)
+        return;
     double subtotal,dto,dtopp,base,irpf,iva,re,total;
     double base1,iva1,re1,total1;
     double base2,iva2,re2,total2;
@@ -1780,6 +1794,15 @@ void FrmPresupuestosCli::calcular_presupuesto()
             base4 += li.value().value("total").toDouble()* _dtoPP ;
     }
 
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+
     // añadir gastos extras
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist1->value();
@@ -1787,10 +1810,7 @@ void FrmPresupuestosCli::calcular_presupuesto()
         base1 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
-    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
@@ -1798,10 +1818,7 @@ void FrmPresupuestosCli::calcular_presupuesto()
         base2 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
-    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
@@ -1809,10 +1826,7 @@ void FrmPresupuestosCli::calcular_presupuesto()
         base3 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
-    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
@@ -1820,12 +1834,9 @@ void FrmPresupuestosCli::calcular_presupuesto()
         base4 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
-    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);    
 
     // TOTALES GENERALES
-
     dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
     double _dto = subtotal *(ui->spin_porc_dto_especial->value()/100.0);
     base = base1 + base2+base3+base4;
@@ -1839,11 +1850,9 @@ void FrmPresupuestosCli::calcular_presupuesto()
     total3 = base3 +iva3 +re3;
     total4 = base4 +iva4 +re4;
 
-
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf ,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtDto_pp->setText(Configuracion_global      ->toFormatoMoneda(QString::number(dtopp,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtdto->setText(Configuracion_global         ->toFormatoMoneda(QString::number(_dto ,'f',Configuracion_global->decimales_campos_totales)));
-
 
     // Desglose llenar controles iva 1
     ui->txtbase1->setText(Configuracion_global ->toFormatoMoneda(QString::number(base1 ,'f',Configuracion_global->decimales_campos_totales)));
@@ -1887,7 +1896,6 @@ void FrmPresupuestosCli::setUpBusqueda()
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
     this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
 
     QStringList orden;
     orden  << tr("presupuesto") <<tr("cliente") << tr("teléfono");
@@ -1955,6 +1963,7 @@ void FrmPresupuestosCli::on_btnDesbloquear_clicked()
 
 void FrmPresupuestosCli::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }
@@ -1993,7 +2002,11 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
             return true;
     }
     if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
 
     return MayaModule::eventFilter(obj,event);
 }
@@ -2030,9 +2043,12 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
 
 void FrmPresupuestosCli::refrescar_modelo()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
                                   "from lin_pre where id_cab = %1;").arg(oPres->id),Configuracion_global->empresaDB);
     formato_tablas();
+    calcular_presupuesto();
 }
 
 void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
@@ -2167,6 +2183,8 @@ void FrmPresupuestosCli::on_spinPorc_irpf_valueChanged(double)
 
 void FrmPresupuestosCli::on_chkrecargo_equivalencia_toggled(bool checked)
 {
+    if(!__init)
+        return;
     if (checked) {
         ui->chkrecargo_equivalencia->setChecked(true);
         oPres->recargo_equivalencia = 1;

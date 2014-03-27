@@ -31,6 +31,8 @@ void frmFacturas::formato_tabla_lineas()
 
 void frmFacturas::init_querys()
 {
+    if(!__init)
+        return;
     model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
 
     modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
@@ -51,6 +53,8 @@ void frmFacturas::init_querys()
 
 void frmFacturas::init()
 {
+    if(__init)
+        return;
     ui->setupUi(this);
     oFactura  = new Factura(this);
     oCliente1 = new Cliente(this);
@@ -76,8 +80,6 @@ void frmFacturas::init()
 
     setUpBusqueda();
 
-    push->setStyleSheet("background-color: rgb(133, 170, 142)");
-    push->setToolTip(tr("Gestión de facturas a clientes"));
     ui->tabWidget_2->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(1);
     this->Altas = false;
@@ -145,6 +147,8 @@ void frmFacturas::init()
     VaciarCampos();
     BloquearCampos(true);
     ui->tabla_facturas->selectRow(0);
+
+    __init = true;
 }
 
 frmFacturas::frmFacturas( QWidget *parent) :
@@ -155,6 +159,10 @@ frmFacturas::frmFacturas( QWidget *parent) :
     push(new QPushButton(QIcon(":/Icons/PNG/Factura.png"),"",this))
 
 {
+    __init = false;
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de facturas a clientes"));
+    this->installEventFilter(this);
 }
 
 frmFacturas::~frmFacturas()
@@ -164,6 +172,8 @@ frmFacturas::~frmFacturas()
 
 void frmFacturas::LLenarCampos()
 {
+    if(!__init)
+        return;
     ui->lblFactura->setText(oFactura->factura.replace("\n","").replace("\r",""));
     ui->btnBorrar->setVisible(ui->lblFactura->text() == tr("BORRADOR"));
     ui->lblCliente->setText(oFactura->cliente);
@@ -365,6 +375,8 @@ void frmFacturas::LLenarCampos()
 
 void frmFacturas::LLenarCamposCliente()
 {
+    if(!__init)
+        return;
     ui->lblCliente->setText(oCliente1->nombre_fiscal);
     ui->txtcodigo_cliente->setText(oCliente1->codigo_cliente);
     ui->txtcliente->setText(oCliente1->nombre_fiscal);
@@ -786,6 +798,7 @@ void frmFacturas::on_botBuscarCliente_clicked()
 void frmFacturas::on_btnBuscar_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+    mostrarBusqueda();
 }
 
 void frmFacturas::on_btnImprimir_clicked()
@@ -845,6 +858,8 @@ void frmFacturas::mostrar_factura()
 
 void frmFacturas::refrescar_modelo()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                               "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
     calcular_factura();
@@ -921,6 +936,7 @@ void frmFacturas::on_btndeshacer_clicked()
 
 void frmFacturas::on_txtcodigo_cliente_editingFinished()
 {
+    //FIXME comprobar estos acumulados
     if(ui->txtcodigo_cliente->text() != oFactura->codigo_cliente)
     {
         oCliente1->decrementar_acumulados(oCliente1->id,oFactura->total,QDate::currentDate());
@@ -974,6 +990,8 @@ void frmFacturas::formato_tabla_facturas()
 
 void frmFacturas::filter_table(QString texto, QString orden, QString modo)
 {
+    if(!__init)
+        return;
     this->texto = texto;
     this->orden = orden;
     this->modo = modo;
@@ -1039,16 +1057,6 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
             if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
                 on_botBuscarCliente_clicked();
         }
-        if(obj == ui->txtcp)
-        {
-            if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
-                buscar_poblacion(1);
-        }
-        if(obj == ui->txtCp_entrega)
-        {
-            if(keyEvent->key() == Qt::Key_F1 && ui->btnGuardar->isEnabled())
-                buscar_poblacion(2);
-        }
 
         if(keyEvent->key() == Qt::Key_F1)
         {
@@ -1067,61 +1075,18 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
             return true;
     }
     if(event->type() == QEvent::Resize)
-        _resizeBarraBusqueda(m_busqueda);
-    return MayaModule::eventFilter(obj,event);
-}
-
-void frmFacturas::buscar_poblacion(int tipo)
-{
-    // 1 general // 2 Entrega
-    db_consulta_view consulta;
-    QStringList campos;
-    campos  <<"poblacion" <<"cp" << "provinca";
-    consulta.set_campoBusqueda(campos);
-    consulta.set_texto_tabla("poblaciones");
-    consulta.set_db("Maya");
-    consulta.set_SQL("select id,poblacion,cp,provincia from poblaciones");
-    QStringList cabecera;
-    QVariantList tamanos;
-    cabecera  << tr("Población") << tr("C.P.") << tr("Provincia");
-    tamanos <<"0" << "300" << "70" << "150";
-    consulta.set_headers(cabecera);
-    consulta.set_tamano_columnas(tamanos);
-    consulta.set_titulo("Busqueda de Poblaciones");
-    if(consulta.exec())
     {
-        int id = consulta.get_id();
-        QMap <int,QSqlRecord> m;
-        QString error;
-        int index;
-        m = SqlCalls::SelectRecord("poblaciones",QString("id=%1").arg(id),Configuracion_global->groupDB,error);
-        if(error.isEmpty())
-            if(tipo == 1)
-            {
-                ui->txtcp->setText(m.value(id).value("cp").toString());
-                ui->txtpoblacion->setText(m.value(id).value("poblacion").toString());
-                ui->txtprovincia->setText(m.value(id).value("provincia").toString());
-                index = ui->comboPais->findText(Configuracion_global->Devolver_pais(m.value(id).value("id_pais").toInt()));
-                ui->comboPais->setCurrentIndex(index);
-
-            } else
-            {
-                ui->txtCp_entrega->setText(m.value(id).value("cp").toString());
-                ui->txtPoblacion_entrega->setText(m.value(id).value("poblacion").toString());
-                ui->txtProvincia_entrega->setText(m.value(id).value("provincia").toString());
-                index = ui->cboPais_entrega->findText(Configuracion_global->Devolver_pais(m.value(id).value("id_pais").toInt()));
-                ui->cboPais_entrega->setCurrentIndex(index);
-
-            }
-        else
-            QMessageBox::warning(this,tr("Gestión Facturas"),tr("Falló la recuperación de la población : %1").arg(error),
-                                 tr("Aceptar"));
+        if(!__init)
+            init();
+        _resizeBarraBusqueda(m_busqueda);
     }
-
+    return MayaModule::eventFilter(obj,event);
 }
 
 void frmFacturas::calcular_factura()
 {
+    if(!__init)
+        return;
     double subtotal,dto,dtopp,base,iva,re,total;
     double base1,iva1,re1,total1;
     double base2,iva2,re2,total2;
@@ -1176,6 +1141,15 @@ void frmFacturas::calcular_factura()
         }
 
     }
+    if(ui->chkrecargo_equivalencia)
+        re1 = base1 * (ui->txtrec1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re2 = base2 * (ui->txtrec1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re3 = base3 * (ui->txtrec3->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re4 = base4 * (ui->txtrec4->text().toFloat()/100);
+
     // añadir gastos extras
     if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist1->value();
@@ -1183,9 +1157,7 @@ void frmFacturas::calcular_factura()
         base1 += ui->SpinGastoDist2->value();
     if(ui->cbo_porc_gasto_iva3->currentText().toFloat()== ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
-    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re1 = base1 * (ui->txtrec1->text().toFloat()/100);
+    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);    
 
     if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
@@ -1193,9 +1165,7 @@ void frmFacturas::calcular_factura()
         base2 += ui->SpinGastoDist2->value();
     if(ui->cbo_porc_gasto_iva3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
-    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re2 = base2 * (ui->txtrec1->text().toFloat()/100);
+    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);    
 
     if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
@@ -1203,9 +1173,7 @@ void frmFacturas::calcular_factura()
         base3 += ui->SpinGastoDist2->value();
     if(ui->cbo_porc_gasto_iva3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
-    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re3 = base3 * (ui->txtrec3->text().toFloat()/100);
+    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);    
 
     if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
@@ -1213,9 +1181,7 @@ void frmFacturas::calcular_factura()
         base4 += ui->SpinGastoDist2->value();
     if(ui->cbo_porc_gasto_iva3->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
-    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re4 = base4 * (ui->txtrec4->text().toFloat()/100);
+    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);    
 
     // TOTALES PARCIALES
     total1 = base1+iva1+re1;
@@ -1302,7 +1268,6 @@ void frmFacturas::setUpBusqueda()
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
     this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
 
     QStringList orden;
     orden  <<  tr("Factura") << tr("Código cliente") << tr("Cliente") << tr("Fecha Factura") << tr("CIF/NIF") << tr("Total");
@@ -1422,6 +1387,8 @@ void frmFacturas::on_btnBorrar_clicked()
 
 void frmFacturas::on_spinPorc_dto_editingFinished()
 {
+    if(!__init)
+        return;
     //--------------------------------------------
     // Cambio dto en líneas
     //--------------------------------------------
@@ -1571,7 +1538,6 @@ void frmFacturas::on_btnGuardar_clicked()
 
 }
 
-
 void frmFacturas::mostrarBusqueda()
 {
      _showBarraBusqueda(m_busqueda);
@@ -1642,10 +1608,8 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_venta(true);
-            if(!frmeditar.exec() == QDialog::Accepted)
-                modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
-                                      "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
-            calcular_factura();
+            frmeditar.exec();
+            refrescar_modelo();
 
     } else{
         QMessageBox::warning(this,tr("Gestión de facturas"),tr("Debe editar la factura para añadir líneas"),
@@ -1674,8 +1638,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_editando();
             frmeditar.exec();
 
-            //refrescar_modelo();
-            calcular_factura();
+            refrescar_modelo();
             ui->Lineas->setFocus();
 
         } else
@@ -1706,6 +1669,8 @@ void frmFacturas::on_btn_borrarLinea_clicked()
 
 void frmFacturas::on_cboDireccionesEntrega_currentIndexChanged(int index)
 {
+    if(!__init)
+        return;
     QSqlRecord r = model_dir_entrega->record(index);
     ui->txtDireccion1_entrega->setText(r.value("direccion1").toString());
     ui->txtDireccion2_entrega->setText(r.value("direccion2").toString());

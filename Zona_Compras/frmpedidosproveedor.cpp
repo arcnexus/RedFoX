@@ -21,15 +21,21 @@ FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
 {
     ui->setupUi(this);
     ui->btn_cerrar->setVisible(showCerrar);
+    this->installEventFilter(this);
+    shortCut->setToolTip(tr("Gestión de pedidos a proveedor"));
+    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
+    __init = false;
 }
 
 FrmPedidosProveedor::~FrmPedidosProveedor()
 {
-    delete ui;
+    delete ui;    
 }
 
 void FrmPedidosProveedor::init_querys()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     model_busqueda->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
@@ -38,10 +44,14 @@ void FrmPedidosProveedor::init_querys()
                           Configuracion_global->empresaDB);
 
     formatotabla();
+    ui->stackedWidget->setCurrentIndex(1);
+    ui->tabWidget_2->setCurrentIndex(0);
 }
 
 void FrmPedidosProveedor::init()
 {
+    if(__init)
+        return;
     ui->stackedWidget->setCurrentIndex(1);
     ui->tabWidget_2->setCurrentIndex(0);
 
@@ -57,8 +67,6 @@ void FrmPedidosProveedor::init()
     ui->lbimpreso->setVisible(false);
     ui->lblnombreProveedor->clear();
     ui->lblnumero_pedido->clear();
-    shortCut->setToolTip(tr("Gestión de pedidos a proveedor"));
-    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
 
     ui->combo_pais->setModel(Configuracion_global->paises_model);
     ui->combo_pais->setModelColumn(1);
@@ -116,10 +124,13 @@ void FrmPedidosProveedor::init()
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
     bloquearcampos(true);
+    __init = true;
 }
 
 void FrmPedidosProveedor::llenarProveedor(int id)
 {
+    if(!__init)
+        return;
     prov.Recuperar(id);
     oPedido_proveedor->id_forma_pago = prov.idFormadePago;
     ui->txtcodigo_proveedor->setText(prov.codigo);
@@ -265,6 +276,7 @@ void FrmPedidosProveedor::editar_pedido()
     emit block();
     ui->txtcodigo_proveedor->setFocus();
 }
+
 void FrmPedidosProveedor::deshacer()
 {
     Configuracion_global->rollback();
@@ -392,8 +404,10 @@ void FrmPedidosProveedor::llenar_campos()
     ui->spiniva_gasto1->setValue(oPedido_proveedor->iva_gasto1);
     ui->spiniva_gasto2->setValue(oPedido_proveedor->iva_gasto2);
     ui->spiniva_gasto3->setValue(oPedido_proveedor->iva_gasto3);
+    ui->spinPorc_dto_pp->setValue(oPedido_proveedor->porc_dto);
 
-    llenarProveedor(oPedido_proveedor->id_proveedor);
+    //llenarProveedor(oPedido_proveedor->id_proveedor);
+    prov.Recuperar(oPedido_proveedor->id_proveedor);
     ui->chkrecargo_equivalencia->setChecked(oPedido_proveedor->recargo_equivalencia);
     refrescar_modelo();
     calcular_pedido();
@@ -401,11 +415,14 @@ void FrmPedidosProveedor::llenar_campos()
 
 void FrmPedidosProveedor::refrescar_modelo()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad  "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
                           Configuracion_global->empresaDB);
     formatotabla();
+    calcular_pedido();
 }
 
 void FrmPedidosProveedor::guardar_campos_en_objeto()
@@ -488,74 +505,77 @@ void FrmPedidosProveedor::guardar_campos_en_objeto()
     oPedido_proveedor->telefono = prov.telefono1;
     oPedido_proveedor->fax = prov.fax;
     oPedido_proveedor->movil = prov.movil;
+
+    oPedido_proveedor->porc_dto = ui->spinPorc_dto_pp->value();
 }
 
 void FrmPedidosProveedor::clear()
 {
-    ui->txtpedido->clear();
-    ui->txtfecha->clear();
-    ui->txtFechaLimite->clear();
-    ui->txtcodigo_proveedor->clear();
-    ui->txtproveedor->clear();
-    ui->txtdireccion1->clear();
-    ui->txtdireccion2->clear();
-    ui->txtcp->clear();
-    ui->txtpoblacion->clear();
-    ui->txtprovincia->clear();
-    ui->txtcif->clear();
-    ui->txtbase->clear();
-    ui->txtsubtotal->clear();
-    ui->txtimporte_descuento->clear();
-    ui->txtiva->clear();
-    ui->txtporc_rec1->clear();
-    ui->txttotal->clear();
+    QString zero = Configuracion_global->toFormatoMoneda(QString::number(0.0,'f',Configuracion_global->decimales_campos_totales));
+
+    ui->txtpedido->setText("");
+    ui->txtfecha->setDate(QDate::currentDate());
+    ui->txtFechaLimite->setDate(QDate::currentDate().addMonths(1));
+    ui->txtcodigo_proveedor->setText("");
+    ui->txtproveedor->setText("");
+    ui->txtdireccion1->setText("");
+    ui->txtdireccion2->setText("");
+    ui->txtcp->setText("");
+    ui->txtpoblacion->setText("");
+    ui->txtprovincia->setText("");
+    ui->txtcif->setText("");
+    ui->txtbase->setText(zero);
+    ui->txtsubtotal->setText(zero);
+    ui->txtimporte_descuento->setText(zero);
+    ui->txtiva->setText(zero);
+    ui->txttotal->setText(zero);
     ui->chkenviado->setChecked(false);
     ui->chkRecibido->setChecked(false);
     ui->chkcompleto->setChecked(false);
+    ui->chkrecargo_equivalencia->setChecked(false);
 
-    ui->txtcomentario->clear();
-    ui->txtfechaRecepcion->clear();
-    ui->txtdireccion_entrega1->clear();
-    ui->txtdireccion_entrega1_2->clear();
-    ui->txtcp_entrega->clear();
-    ui->txtpoblacion_entrega->clear();
-    ui->txtprovincia_entrega->clear();
-    ui->txtHorarioEntrega->clear();
-    ui->txtbase1->clear();
-    ui->txtbase2->clear();
-    ui->txtbase3->clear();
-    ui->txtbase4->clear();
-    ui->txtiva1->clear();
-    ui->txtiva2->clear();
-    ui->txtiva3->clear();
-    ui->txtiva4->clear();
-    ui->txtiva1->clear();
-    ui->txtiva2->clear();
-    ui->txtiva3->clear();
-    ui->txtiva4->clear();
-    ui->txtporc_rec1->clear();
-    ui->txtporc_rec2->clear();
-    ui->txtporc_rec3->clear();
-    ui->txtporc_rec4->clear();
-    ui->txtporc_rec1->clear();
-    ui->txtporc_rec2->clear();
-    ui->txtporc_rec3->clear();
-    ui->txtporc_rec4->clear();
-    ui->txttotal1->clear();
-    ui->txttotal2->clear();
-    ui->txttotal3->clear();
-    ui->txttotal4->clear();
-    ui->lblnombreProveedor->clear();
-    ui->lblnumalb->clear();
-    ui->lblnumero_pedido->clear();
+    ui->txtcomentario->setText("");
+    ui->txtfechaRecepcion->setDate(QDate::currentDate().addDays(10));
+    ui->txtdireccion_entrega1->setText("");
+    ui->txtdireccion_entrega1_2->setText("");
+    ui->txtcp_entrega->setText("");
+    ui->txtpoblacion_entrega->setText("");
+    ui->txtprovincia_entrega->setText("");
+    ui->txtHorarioEntrega->setText("");
+    ui->txtbase1->setText(zero);
+    ui->txtbase2->setText(zero);
+    ui->txtbase3->setText(zero);
+    ui->txtbase4->setText(zero);
+    ui->txtiva1->setText(zero);
+    ui->txtiva2->setText(zero);
+    ui->txtiva3->setText(zero);
+    ui->txtiva4->setText(zero);
+    ui->txtiva1->setText(zero);
+    ui->txtiva2->setText(zero);
+    ui->txtiva3->setText(zero);
+    ui->txtiva4->setText(zero);
+//    ui->txtporc_rec1->setText("");
+//    ui->txtporc_rec2->setText("");
+//    ui->txtporc_rec3->setText("");
+//    ui->txtporc_rec4->setText("");
+    ui->txtrec1->setText(zero);
+    ui->txtrec2->setText(zero);
+    ui->txtrec3->setText(zero);
+    ui->txtrec4->setText(zero);
+    ui->txttotal1->setText(zero);
+    ui->txttotal2->setText(zero);
+    ui->txttotal3->setText(zero);
+    ui->txttotal4->setText(zero);
+    ui->lblnombreProveedor->setText("");
+    ui->lblnumalb->setText("");
+    ui->lblnumero_pedido->setText("");
 }
 
 void FrmPedidosProveedor::setUpBusqueda()
 {
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
-    this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
+    this->setAttribute(Qt::WA_Hover);    
 
     QStringList orden;
     orden  << tr("pedido") <<tr("fecha") <<tr("recepción") <<tr("codigo_proveedor") <<tr("proveedor");
@@ -722,6 +742,7 @@ void FrmPedidosProveedor::on_btnBuscar_clicked()
 
 void FrmPedidosProveedor::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(1);
     _showBarraBusqueda(m_busqueda);
     m_busqueda->doFocustoText();
 }
@@ -735,10 +756,16 @@ bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Show && obj == this)
     {
+        if(!__init)
+            init();
         init_querys();
     }
     else if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
     else if(event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
@@ -771,11 +798,9 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
             frmeditar.set_tabla("lin_ped_pro");
             frmeditar.set_id_cab(oPedido_proveedor->id);
 
-            if(frmeditar.exec() == QDialog::Accepted)
-            {
-                refrescar_modelo();
-                calcular_pedido();
-            }
+            frmeditar.exec();
+            refrescar_modelo();
+            calcular_pedido();
     }
     else
     {
@@ -818,6 +843,8 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
 
 void FrmPedidosProveedor::calcular_pedido()
 {
+    if(!__init)
+        return;
     double subtotal,dto,dtopp,base,irpf,iva,re,total;
     double base1,iva1,re1,total1;
     double base2,iva2,re2,total2;
@@ -860,6 +887,17 @@ void FrmPedidosProveedor::calcular_pedido()
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
             base4 += li.value().value("total").toDouble()* _dtoPP;
     }
+
+    //Los gastos no pueden añadir R.E.
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+
     // añadir gastos extras
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist1->value();
@@ -867,9 +905,7 @@ void FrmPedidosProveedor::calcular_pedido()
         base1 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
-    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
@@ -878,8 +914,6 @@ void FrmPedidosProveedor::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
     iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re2 = base2 * (ui->txtporc_rec1->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
@@ -888,8 +922,6 @@ void FrmPedidosProveedor::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
     iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
@@ -898,11 +930,8 @@ void FrmPedidosProveedor::calcular_pedido()
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
     iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
 
     // TOTALES GENERALES
-
     dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
 
     base = base1 + base2+base3+base4;

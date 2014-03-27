@@ -119,6 +119,8 @@ private:
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+
+    bool __init;
 };
 
 #endif // FRMPRESUPUESTOSCLI_H

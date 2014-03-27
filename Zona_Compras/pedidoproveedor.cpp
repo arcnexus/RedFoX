@@ -81,6 +81,7 @@ bool PedidoProveedor::guardar()
     _data["base_total"]= base_total;
     _data["subtotal"]= subtotal;
     _data["dto"]= dto;
+    _data["porc_dto"] = porc_dto;
     _data["rec_total"]= rec_total;
     _data["total"]= total;
     _data["enviado"]= enviado;
@@ -338,6 +339,8 @@ bool PedidoProveedor::cargar(QSqlQuery *queryPedido)
         telefono= queryPedido->record().value("telefono").toString();
         fax = queryPedido->record().value("fax").toString();
         movil = queryPedido->record().value("movil").toString();
+
+        porc_dto = queryPedido->record().value("porc_dto").toDouble();
         return true;
     }
         return false;

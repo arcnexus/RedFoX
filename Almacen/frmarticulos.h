@@ -193,6 +193,9 @@ private:
     QSqlQueryModel *modelTarifa;
     void llenar_tabla_tarifas();
     void recalcular_tarifas(double coste);
+
+    bool __init;
+    bool _closeBtn;
 };
 
 #endif // FRMARTICULOS_H

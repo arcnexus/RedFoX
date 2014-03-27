@@ -55,6 +55,8 @@ public:
     QString nombre_cliente;
     QString horario_activo;
 
+    double porc_dto;
+
     float porc_iva1;
     float porc_iva2;
     float porc_iva3;

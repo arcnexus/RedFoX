@@ -129,6 +129,8 @@ private:
 
     Albaran *oAlbaran ;
     Cliente *oCliente2;
+
+    bool __init;
 };
 
 #endif // FRMALBARAN_H

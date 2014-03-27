@@ -22,6 +22,10 @@ FrmAlbaran::FrmAlbaran(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/albaran.png"),tr("Albaranes"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran.png"),"",this))
 {    
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de albaranes a clientes"));
+    __init = false;
+    this->installEventFilter(this);
 }
 
 FrmAlbaran::~FrmAlbaran()
@@ -30,6 +34,8 @@ FrmAlbaran::~FrmAlbaran()
 }
 void FrmAlbaran::init_querys()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_alb where id = 0;",Configuracion_global->empresaDB);
     m->setQuery(QString("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb where ejercicio =%1 order by albaran desc").arg(
@@ -40,6 +46,8 @@ void FrmAlbaran::init_querys()
 
 void FrmAlbaran::init()
 {
+    if(__init)
+        return;
     ui->setupUi(this);
 
     oAlbaran = new Albaran(this);
@@ -53,8 +61,6 @@ void FrmAlbaran::init()
     // Pongo valores por defecto
     ui->lbfacturado->setVisible(false);
     ui->lbimpreso->setVisible(false);
-    push->setStyleSheet("background-color: rgb(133, 170, 142)");
-    push->setToolTip(tr("Gestión de albaranes a clientes"));
 
     ui->comboPais->setModel(Configuracion_global->paises_model);
     ui->cboPais_entrega->setModel(Configuracion_global->paises_model);
@@ -117,9 +123,7 @@ void FrmAlbaran::init()
     ui->cboporc_iva_gasto3->setModelColumn(4);
 
     ui->cboDivisa->setModel(Configuracion_global->divisas_model);
-    ui->cboDivisa->setModelColumn(1);
-
-    this->installEventFilter(this);
+    ui->cboDivisa->setModelColumn(1);    
 
     QList<QWidget*> l = this->findChildren<QWidget*>();
     QList<QWidget*> ::Iterator it;
@@ -128,10 +132,13 @@ void FrmAlbaran::init()
         (*it)->installEventFilter(this);
 
     BloquearCampos(true);
+    __init = true;
 }
 
 void FrmAlbaran::LLenarCampos()
 {
+    if(!__init)
+        return;
     ui->txtTelefonoCli->setText(oAlbaran->telefono);
     ui->txtFaxCli->setText(oAlbaran->fax);
     ui->txtMovilCli->setText(oAlbaran->movil);
@@ -292,6 +299,8 @@ void FrmAlbaran::LLenarCampos()
 }
 void FrmAlbaran::LLenarCamposCliente()
 {
+    if(!__init)
+        return;
     //oCliente2->Recuperar("Select * from clientes where id ="+QString::number(oAlbaran->id_cliente));
     ui->lblCliente->setText(oCliente2->nombre_fiscal);
     ui->txtcodigo_cliente->setText(oCliente2->codigo_cliente);
@@ -930,6 +939,8 @@ void FrmAlbaran::formato_tabla()
 
 void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
 {
+    if(!__init)
+        return;
     this->texto = texto;
     this->orden = orden;
     this->modo = modo;
@@ -1026,12 +1037,17 @@ void FrmAlbaran::on_cboseries_currentIndexChanged(const QString &arg1)
 
 void FrmAlbaran::refrescar_modelo()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                               "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
+    calcular_albaran();
 }
 
 void FrmAlbaran::calcular_albaran()
 {
+    if(!__init)
+        return;
     double subtotal,dto,dtopp,base,iva,re,total;
     double base1,iva1,re1,total1;
     double base2,iva2,re2,total2;
@@ -1069,6 +1085,15 @@ void FrmAlbaran::calcular_albaran()
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
             base4 += li.value().value("total").toDouble()* _dtoPP;
     }
+    if(ui->chkrecargo_equivalencia)
+        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia)
+        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+
     // añadir gastos extras
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist1->value();
@@ -1076,9 +1101,7 @@ void FrmAlbaran::calcular_albaran()
         base1 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
-    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
@@ -1086,9 +1109,7 @@ void FrmAlbaran::calcular_albaran()
         base2 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
-    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
@@ -1096,9 +1117,7 @@ void FrmAlbaran::calcular_albaran()
         base3 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
-    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat()  == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
@@ -1106,9 +1125,7 @@ void FrmAlbaran::calcular_albaran()
         base4 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat()  == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
-    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);    
 
     // TOTALES GENERALES
     dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
@@ -1224,7 +1241,11 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
         return false;
     }
     else if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
     return MayaModule::eventFilter(obj,event);
 }
 

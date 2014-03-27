@@ -197,26 +197,6 @@ color: rgb(255, 255, 255);</string>
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="3" column="0">
-        <widget class="QPushButton" name="btalbaran">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Crear albarán</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QPushButton" name="btnFactura">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Crear Factura</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0" colspan="4">
         <widget class="QTableWidget" name="tablaLineas">
          <property name="alternatingRowColors">
@@ -230,106 +210,27 @@ color: rgb(255, 255, 255);</string>
          </attribute>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QPushButton" name="btnImprimir">
+       <item row="2" column="0">
+        <widget class="QPushButton" name="btalbaran">
          <property name="enabled">
           <bool>true</bool>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="text">
-          <string>Imprimir</string>
+          <string>Crear albarán</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="4">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="lblAlbaran">
-           <property name="text">
-            <string>Albarán Num:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="txtAlbaran">
-           <property name="maximumSize">
-            <size>
-             <width>120</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblfecha_albaran">
-           <property name="text">
-            <string>Fecha:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QDateEdit" name="txtFecha_albaran">
-           <property name="displayFormat">
-            <string>dd/MM/yyyy</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblfactura">
-           <property name="text">
-            <string>Factura Num:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="txtFactura">
-           <property name="maximumSize">
-            <size>
-             <width>110</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblFecha_factura">
-           <property name="text">
-            <string>Fecha:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QDateEdit" name="txtFecha_factura">
-           <property name="displayFormat">
-            <string>dd/MM/yyyy</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="chkForzarCierre">
-           <property name="text">
-            <string>Forzar Cerrar Pedido</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="btnFactura">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Crear Factura</string>
+         </property>
+        </widget>
        </item>
-       <item row="3" column="3">
+       <item row="2" column="3">
         <widget class="QPushButton" name="btetiquetas">
          <property name="enabled">
           <bool>true</bool>
@@ -339,6 +240,19 @@ color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Etiquetas</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="btnImprimir">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Imprimir</string>
          </property>
         </widget>
        </item>

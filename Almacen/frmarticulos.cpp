@@ -25,17 +25,20 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     shortCut(new QPushButton(QIcon(":/Icons/PNG/Box.png"),"",this))
 
 {
-    id_oferta = 0;    
-    ui->setupUi(this);
-
-
+    id_oferta = 0;
+    _closeBtn = closeBtn;
     shortCut->setToolTip(tr("Gestión del fichero de artículos"));
-    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
-    ui->btn_cerrar->setVisible(closeBtn);    
+    shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");   
+    __init = false;    
+    this->installEventFilter(this);
 }
 
 void FrmArticulos::init()
 {
+    if(__init)
+        return;
+    ui->setupUi(this);
+    ui->btn_cerrar->setVisible(_closeBtn);
     oArticulo = new Articulo(this);
     ui->lbl_en_promocion->setVisible(false);
     ui->stackedWidget->setCurrentIndex(1);
@@ -108,8 +111,7 @@ void FrmArticulos::init()
 
     // CONTROL DE EVENTOS
     QList<QWidget*> l = this->findChildren<QWidget*>();
-    QList<QWidget*> ::Iterator it;
-    this->installEventFilter(this);
+    QList<QWidget*> ::Iterator it;    
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
 
@@ -131,6 +133,8 @@ void FrmArticulos::init()
     GraficaUnidades();
     //SET TABLE FORMAT
     format_tables();
+
+    __init = true;
 }
 
 void FrmArticulos::format_tables()
@@ -215,6 +219,8 @@ void FrmArticulos::setUpBusqueda()
 
 void FrmArticulos::llenar_tabla_tarifas()
 {
+    if(!__init)
+        return;
     modelTarifa->setQuery("select id,codigo_tarifa,descripcion,pais,moneda,margen, margen_minimo, pvp,pvp_con_iva,simbolo "
                          "from viewtarifa where id_articulo = "+QString::number(oArticulo->id),
                          Configuracion_global->groupDB);
@@ -823,6 +829,8 @@ QString cSQL = "Select id,codigo, descripcion_reducida,  codigo_barras,codigo_fa
 
 void FrmArticulos::rellenar_grafica_proveedores()
 {
+    if(!__init)
+        return;
     //----------------------
     // GRAFICA SEGÚN pvd_real
     //----------------------
@@ -925,7 +933,11 @@ bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
        ui->Pestanas->setCurrentIndex(0);
     }
     else if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
 
     QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
     if(event->type() == QEvent::KeyPress)
@@ -1241,6 +1253,8 @@ void FrmArticulos::TablaTrazabilidad_clicked(QModelIndex)
 
 void FrmArticulos::graficar(QString Tipo)
 {
+    if(!__init)
+        return;
     if(ui->radGrafica_unidades->isChecked())
        GraficaUnidades();
     else
@@ -1617,6 +1631,8 @@ void FrmArticulos::MostrarGrafica_comparativa(bool grafica_unidades)
 
 void FrmArticulos::LLenarGraficas()
 {
+    if(!__init)
+        return;
     QSqlQuery queryAcumulados(Configuracion_global->groupDB);
     if(!queryAcumulados.exec("select * from acum_articulos where id_articulo=" +QString::number(oArticulo->id)+ " AND id_empresa= "+QString::number(Configuracion_global->idEmpresa)))
     {
@@ -1776,6 +1792,8 @@ void FrmArticulos::LLenarGraficas()
 
 void FrmArticulos::LLenarGrafica_comparativa(int index)
 {    
+    if(!__init)
+        return;
     QSqlQuery acum2(Configuracion_global->groupDB);
     if(acum2.exec("select * from acum_articulos where id_articulo ="+QString::number(oArticulo->id)+ " AND id_empresa= "+QString::number(Configuracion_global->idEmpresa)))
     {

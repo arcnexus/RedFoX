@@ -37,6 +37,8 @@ void FrmPedidos::listados()
 
 void FrmPedidos::init()
 {
+    if(__init)
+        return;
     ui->setupUi(this);
     ui->tabWidget_2->setCurrentIndex(0);
     ui->cboPais->setModel(Configuracion_global->paises_model);
@@ -52,9 +54,6 @@ void FrmPedidos::init()
     // Pongo valores por defecto
     ui->lblfacturado->setVisible(false);
     ui->lblimpreso->setVisible(false);
-
-    push->setStyleSheet("background-color: rgb(133, 170, 142)");
-    push->setToolTip(tr("Gestión de pedidos de clientes"));
 
 
     oPedido = new Pedidos();
@@ -172,6 +171,7 @@ void FrmPedidos::init()
 
     BloquearCampos(true);
     ui->tabla->selectRow(0);
+    __init = true;
 }
 
 FrmPedidos::FrmPedidos(QWidget *parent) :
@@ -180,6 +180,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/pedidos_cli.png"),tr("Pedidos"),this),
     push(new QPushButton(QIcon(":/Icons/PNG/pedidos_cli.png"),"",this))
 {
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    push->setToolTip(tr("Gestión de pedidos de clientes"));
+    __init = false;
+    this->installEventFilter(this);
 }
 
 FrmPedidos::~FrmPedidos()
@@ -191,7 +195,8 @@ FrmPedidos::~FrmPedidos()
 
 void FrmPedidos::init_querys()
 {
-
+    if(!__init)
+        return;
 
     modelLineas->setQuery("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
 
@@ -244,6 +249,8 @@ void FrmPedidos::init_querys()
 
 void FrmPedidos::LLenarCampos()
 {
+    if(!__init)
+        return;
     ui->txtTelefono->setText(oPedido->telefono);
     ui->txtMovil->setText(oPedido->movil);
     ui->txtFax->setText(oPedido->fax);
@@ -787,12 +794,6 @@ void FrmPedidos::filter_table(QString texto, QString orden, QString modo)
     ui->tabla->selectRow(0);
 }
 
-void FrmPedidos::on_table_row_changed(QModelIndex actual, QModelIndex previous)
-{
-    Q_UNUSED(previous);
-    on_tabla_clicked(actual);
-}
-
 void FrmPedidos::calcular_iva_gastos()
 {
     calcular_pedido();
@@ -874,12 +875,18 @@ bool FrmPedidos::eventFilter(QObject *obj, QEvent *event)
             return true;
     }
     if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
     return MayaModule::eventFilter(obj,event);
 }
 
 void FrmPedidos::calcular_pedido()
 {
+    if(!__init)
+        return;
     double subtotal,dto,dtopp,base,irpf,iva,re,total;
     double base1,iva1,re1,total1;
     double base2,iva2,re2,total2;
@@ -941,6 +948,15 @@ void FrmPedidos::calcular_pedido()
         }
 
     }
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+
     // añadir gastos extras
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist1->value();
@@ -948,10 +964,7 @@ void FrmPedidos::calcular_pedido()
         base1 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
         base1 += ui->SpinGastoDist3->value();
-    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+    iva1 = base1 * (ui->txtporc_iva1->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist1->value();
@@ -959,10 +972,7 @@ void FrmPedidos::calcular_pedido()
         base2 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva2->text().toFloat())
         base2 += ui->SpinGastoDist3->value();
-    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+    iva2 = base2 * (ui->txtporc_iva2->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist1->value();
@@ -970,10 +980,7 @@ void FrmPedidos::calcular_pedido()
         base3 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva3->text().toFloat())
         base3 += ui->SpinGastoDist3->value();
-    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+    iva3 = base3 * (ui->txtporc_iva3->text().toFloat()/100);    
 
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist1->value();
@@ -981,10 +988,7 @@ void FrmPedidos::calcular_pedido()
         base4 += ui->SpinGastoDist2->value();
     if(ui->cboporc_iva_gasto3->currentText().toFloat() == ui->txtporc_iva4->text().toFloat())
         base4 += ui->SpinGastoDist3->value();
-    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);
-
-    if(ui->chkrecargo_equivalencia->isChecked())
-        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+    iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);    
 
     // TOTALES GENERALES
 
@@ -1050,7 +1054,6 @@ void FrmPedidos::setUpBusqueda()
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
     this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
 
     QStringList orden;
     orden  << tr("Pedido") <<tr("Cliente") <<tr("Fecha");
@@ -1404,9 +1407,12 @@ void FrmPedidos::on_btn_borrar_clicked()
 
 void FrmPedidos::refrescar_modelo()
 {
+    if(!__init)
+        return;
     modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio_recom, porc_dto, precio,subtotal,porc_iva,total "
                               "from lin_ped where id_cab = %1;").arg(oPedido->id),Configuracion_global->empresaDB);
     formatLineas();
+    calcular_pedido();
 }
 
 void FrmPedidos::convertir_en_albaran()
@@ -1925,13 +1931,6 @@ void FrmPedidos::convertir_enFactura()
     }
 }
 
-void FrmPedidos::on_tabWidget_2_currentChanged(int index)
-{
-    Q_UNUSED(index);
-    //helper.resizeTable();
-}
-
-
 void FrmPedidos::on_txtcodigo_cliente_editingFinished()
 {
     if(ui->txtcodigo_cliente->text() != oPedido->codigo_cliente)
@@ -2009,24 +2008,6 @@ void FrmPedidos::on_btnImprimir_clicked()
             break;
         }
     }
-}
-
-void FrmPedidos::on_radBusqueda_toggled(bool checked)
-{
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
-    else
-        ui->stackedWidget->setCurrentIndex(0);
-
-}
-
-void FrmPedidos::on_tabla_clicked(const QModelIndex &index)
-{
-    int id = ui->tabla->model()->data(ui->tabla->model()->index(index.row(),0),Qt::EditRole).toInt();
-    oPedido->id = id;
-//    oPedido->RecuperarPedido("select * from ped_cli where id ="+QString::number(id));
-//    //LLenarCampos();
- //   BloquearCampos(true);
 }
 
 void FrmPedidos::on_tabla_doubleClicked(const QModelIndex &index)
@@ -2193,6 +2174,8 @@ void FrmPedidos::on_btn_borrarLinea_clicked()
 
 void FrmPedidos::on_chkrecargo_equivalencia_toggled(bool checked)
 {
+    if(!__init)
+        return;
     if (checked) {
         ui->chkrecargo_equivalencia->setChecked(true);
         oPedido->recargo_equivalencia = 1;

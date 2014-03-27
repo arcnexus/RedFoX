@@ -18,15 +18,26 @@ frmClientes::frmClientes(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/clientes_2.png"),tr("Clientes"),this),
       push(new QPushButton(QIcon(":/Icons/PNG/clientes_2.png"),"",this))
 {
-    ui->setupUi(this);
 
-    // Modo busqueda
-    ui->stackedWidget->setCurrentIndex(1);
+    //CONFIG SHORTCUT
+    if (Configuracion_global->medic){
+        push->setToolTip(tr("Gestión del fichero de pacientes/clientes"));
+        menuButton.setText("Gestión\nPacientes");
+    }
+    else{
+        push->setToolTip(tr("Gestión del fichero de clientes"));
+        menuButton.setText("Gestión\nClientes");
+    }
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    __init = false;
+    this->installEventFilter(this);
     this->Altas = false;
 }
 
 void frmClientes::init_querys()
 {
+    if(!__init)
+        return;
     qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
     m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",Configuracion_global->groupDB);
     queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
@@ -51,6 +62,15 @@ void frmClientes::init_querys()
 
 void frmClientes::init()
 {
+    if(__init)
+        return;
+    ui->setupUi(this);
+    if (Configuracion_global->medic)
+        ui->textoTitulo->setText(tr("Gestión de Pacientes - datos administrativos"));
+    else
+        ui->textoTitulo->setText(tr("Gestión de Clientes"));
+
+    ui->stackedWidget->setCurrentIndex(1);
     oCliente = new Cliente(this);
      //ALLOCS MODELS
     m_clientes          = new QSqlQueryModel(this);
@@ -161,20 +181,7 @@ void frmClientes::init()
     h_Buscar["Teléfono"] = "telefono1";
     h_Buscar["Código cliente"]="codigo_cliente";
     h_Buscar["Cif / Nif"] = "cif_nif";
-    h_Buscar["Nombre Fiscal"]="nombre_fiscal";
-
-    //CONFIG SHORTCUT
-    if (Configuracion_global->medic){
-        push->setToolTip(tr("Gestión del fichero de pacientes/clientes"));
-        ui->textoTitulo->setText(tr("Gestión de Pacientes - datos administrativos"));
-        menuButton.setText("Gestión\nPacientes");
-    }
-    else{
-        push->setToolTip(tr("Gestión del fichero de clientes"));
-        ui->textoTitulo->setText(tr("Gestión de Clientes"));
-        menuButton.setText("Gestión\nClientes");
-    }
-    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    h_Buscar["Nombre Fiscal"]="nombre_fiscal";   
 
 
     ValidarCC();
@@ -219,6 +226,7 @@ void frmClientes::init()
     QList<QWidget*> ::Iterator it;
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
+    __init = true;
 }
 
 frmClientes::~frmClientes()
@@ -227,6 +235,8 @@ frmClientes::~frmClientes()
 }
 void frmClientes::LLenarCampos()
 {
+    if(!__init)
+        return;
     /* Global */
     ui->txtNombreFiscal->setText(oCliente->nombre_fiscal);
 
@@ -578,6 +588,7 @@ void frmClientes::LLenarCampos()
     ui->tablaAsientos->setColumnWidth(7,75);
     ui->tablaAsientos->setColumnWidth(8,60);   
 }
+
 void frmClientes::VaciarCampos()
 {
     QDate fecha;
@@ -1255,6 +1266,8 @@ void frmClientes::ver_asiento()
 
 void frmClientes::refrescar_grafica()
 {
+    if(!__init)
+        return;
     ui->graficaEstadistica->Clear();
     ui->graficaEstadistica->setTipo(OpenChart::BarraMultiple);
     ui->graficaEstadistica->addMulibarColor("Compras",Qt::darkBlue);
@@ -1411,8 +1424,7 @@ void frmClientes::setUpBusqueda()
 {
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
-    this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
+    this->setAttribute(Qt::WA_Hover);    
 
     QStringList orden;
     orden  <<  tr("Nombre Fiscal") << tr("Cif / Nif") << tr("Código cliente") << tr("Población");
@@ -1455,11 +1467,17 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::Show && obj == this)
     {
+        if(!__init)
+            init();
         init_querys();
     }
 
     if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
     if(event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
@@ -1490,6 +1508,8 @@ bool frmClientes::eventFilter(QObject *obj, QEvent *event)
 
 void frmClientes::llenar_tipoCliente()
 {
+    if(!__init)
+        return;
     ui->lista_tipos->clear();
     QString query = QString("SELECT id_tipo_cliente as id,tipocliente_def.nombre as tipo, tiposubcliente_def.nombre as subtipo "
                     "FROM `tipocliente` "
@@ -1675,6 +1695,8 @@ void frmClientes::on_btnCobroTotal_clicked()
 
 void frmClientes::on_radPendientes_toggled(bool checked)
 {
+    if(!__init)
+        return;
     QString cSQL;
     if(checked)
     {

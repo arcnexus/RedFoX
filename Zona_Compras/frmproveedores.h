@@ -142,6 +142,8 @@ private:
 
     QCompleter * calle_completer;
     QSqlTableModel * calle_completer_model;
+
+    bool __init;
 };
 
 #endif // FRMPROVEEDORES_H

@@ -10,7 +10,6 @@ MonetaryDelegate::MonetaryDelegate(QObject *parent, bool readonly) :
 
 void MonetaryDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    qDebug() << editor;
     if(QLineEdit *lineedit = qobject_cast<QLineEdit*>(editor))
     {
     lineedit->text();

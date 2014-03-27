@@ -15,8 +15,10 @@ frmProveedores::frmProveedores(QWidget *parent) :
   menuButton(QIcon(":/Icons/PNG/proveedores_2.png"),tr("Proveedores"),this),
   push(new QPushButton(QIcon(":/Icons/PNG/proveedores_2.png"),"",this))
 
-{
-    ui->setupUi(this);        
+{    
+    push->setStyleSheet("background-color: rgb(133, 170, 142)");
+    __init = false;
+    this->installEventFilter(this);
 }
 
 frmProveedores::~frmProveedores()
@@ -26,6 +28,9 @@ frmProveedores::~frmProveedores()
 
 void frmProveedores::init()
 {
+    if(__init)
+        return;
+    ui->setupUi(this);
     oProveedor     = new Proveedor(this);
     modelBusqueda  = new QSqlQueryModel(this);
     modelArticulo  = new QSqlQueryModel(this);
@@ -139,10 +144,14 @@ void frmProveedores::init()
     calle_completer->setCompletionColumn(2);
     ui->txtdireccion1->setCompleter(calle_completer);
     ui->txtdireccion2->setCompleter(calle_completer);
+
+    __init = true;
 }
 
 void frmProveedores::init_querys()
 {
+    if(!__init)
+        return;
     QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by proveedor";
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
     formato_tabla(modelBusqueda);
@@ -171,6 +180,8 @@ void frmProveedores::llenar_tabDatos()
 
 void frmProveedores::llenar_tabFinanzas()
 {
+    if(!__init)
+        return;
     ui->txtentidad_bancaria_proveedor->setText(oProveedor->entidad_bancaria_proveedor);
     ui->txtoficina_bancaria_proveedor->setText(oProveedor->oficina_bancaria_proveedor);
     ui->txtentidad_pago_proveedor->setText(oProveedor->entidad_pago_proveedor);
@@ -226,6 +237,8 @@ void frmProveedores::llenar_tabFinanzas()
 
 void frmProveedores::llenar_tabPagos()
 {
+    if(!__init)
+        return;
     modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
                            "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
                            QString::number(oProveedor->id)+" and id_empresa= "+Configuracion_global->idEmpresa+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
@@ -273,6 +286,8 @@ void frmProveedores::llenar_tabAlmacen()
 
 void frmProveedores::llenar_tabConta()
 {
+    if(!__init)
+        return;
     ui->txtcuenta_aplicacion->setText(oProveedor->cuenta_aplicacion);
 
     modelAsientos->setQuery("select id,asiento,fecha_asiento,cuenta_d,descripcion_d, importe_d,cuenta_h,descripcion_h,importe_h "
@@ -293,6 +308,8 @@ void frmProveedores::llenar_tabConta()
 
 void frmProveedores::LLenarCampos()
 {
+    if(!__init)
+        return;
     ui->lblcodigo_proveedor->setText(oProveedor->codigo);
     ui->lblproveedor->setText(oProveedor->proveedor);
 
@@ -313,10 +330,19 @@ void frmProveedores::LLenarCampos()
     llenar_tabAlmacen();
 
     /* tabArticulos => index 5  */
-    modelArticulo->setQuery("select codigo,codigo_barras, descripcion,coste "
+    modelArticulo->setQuery("select codigo,codigo_barras, descripcion_reducida,coste "
                            "from articulos where id_proveedor =" +QString::number(oProveedor->id),
                            Configuracion_global->groupDB);
-    ui->tablaArticulos->setColumnWidth(2,200);
+    QStringList header;
+    QVariantList sizes;
+    header  << tr("Código") << tr("Codigo de barras") <<tr("Descripción") <<tr("Coste");
+    sizes << 120 << 120 <<300 << 120 ;
+    for(int cnt =0;cnt<header.length();cnt++)
+    {
+        modelArticulo->setHeaderData(cnt,Qt::Horizontal,header.at(cnt));
+        ui->tabla->setColumnWidth(cnt,sizes.at(cnt).toInt());
+
+    }
 
     /* txttexto_para_pedidos => index 6 */
     ui->txttexto_para_pedidos->setPlainText(oProveedor->texto_para_pedidos);
@@ -731,6 +757,8 @@ void frmProveedores::ver_asiento()
 
 void frmProveedores::historiales()
 {
+    if(!__init)
+        return;
     // Cargar historial Pedidos
     modelPedidos->setQuery("select id,pedido,fecha,total,recibido_completo from ped_pro where id_proveedor ="+
                            QString::number(oProveedor->id)+" order by pedido desc",Configuracion_global->empresaDB);        
@@ -836,7 +864,8 @@ void frmProveedores::grafica()
 
 void frmProveedores::contactos()
 {
-
+    if(!__init)
+        return;
     modelContactos->setQuery("select id,id_proveedor,cargo_empresa, nombre, desc_telefono1,telefono1,desc_telefono2,telefono2,"
                              "desc_telefono3, telefono3, desc_movil1,movil1,desc_movil2,movil2,email "
                              "from personascontactoproveedor where id_proveedor ="+QString::number(oProveedor->id),
@@ -1105,8 +1134,7 @@ void frmProveedores::setUpBusqueda()
 {
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
-    this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
+    this->setAttribute(Qt::WA_Hover);    
 
     QStringList orden;
     orden  <<tr("Proveedor")<<tr("código") << tr("CIF") <<tr("Teléfono") << tr("Persona contacto");
@@ -1168,7 +1196,11 @@ bool frmProveedores::eventFilter(QObject *obj, QEvent *event)
         init_querys();
 
     if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
     if(event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
@@ -1192,7 +1224,7 @@ bool frmProveedores::eventFilter(QObject *obj, QEvent *event)
                 else
                     mostrarBusqueda();
                 return true;
-             }
+            }
         }
     }
     return MayaModule::eventFilter(obj,event);

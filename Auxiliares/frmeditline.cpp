@@ -53,7 +53,9 @@ bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
 
         if(keyEvent->key() == Qt::Key_B &&  keyEvent->modifiers() == Qt::ControlModifier)
         {
+            ui->txtCodigo->blockSignals(true);
             buscar_art();
+            ui->txtCodigo->blockSignals(false);
             return true;
         }
         if(keyEvent->key() == Qt::Key_Plus)
@@ -383,15 +385,15 @@ void frmEditLine::on_txtCodigo_editingFinished()
     ui->txtCodigo->blockSignals(true);
     if(ui->txtCodigo->text() != this->codigo_articulo )
     {
-        if(ui->txtCodigo->text().isEmpty())
+        if(!ui->txtCodigo->text().isEmpty())
         {
-            QMessageBox::information(this,tr("Edición de líneas de detalle"),
-                                     tr("Ha dejado el código en blanco, si es correcto deberá introducir el resto de datos necesarios a mano,"
-                                        "\nDescripción, \nPVP, \n%IVA"),tr("Aceptar"));
+//            QMessageBox::information(this,tr("Edición de líneas de detalle"),
+//                                     tr("Ha dejado el código en blanco, si es correcto deberá introducir el resto de datos necesarios a mano,"
+//                                        "\nDescripción, \nPVP, \n%IVA"),tr("Aceptar"));
 
-        }
-        else
-        {
+//        }
+//        else
+//        {
             QString error;
             this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1' or codigo_fabricante = '%1' or codigo_barras = '%1'").arg(ui->txtCodigo->text()),
                                                    Configuracion_global->groupDB,error).toInt();

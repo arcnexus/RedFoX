@@ -359,7 +359,8 @@ bool Articulo::Guardar()
 
     bool success = SqlCalls::SqlUpdate(articulo,"articulos",Configuracion_global->groupDB,
                                        QString("id = %1").arg(this->id),error);
-    if(!success) {
+    if(!success)
+    {
         QMessageBox::warning(qApp->activeWindow(),QObject::tr("Guardar Artículo"),
                              QObject::tr("No se puede guardar el artículo ERROR: %1 ").arg(error),
                              QObject::tr("Ok"));
@@ -369,67 +370,12 @@ bool Articulo::Guardar()
     {
         if(coste_real_anterior != coste_real)
         {
-            QString error = "";
-            QMap<int,QSqlRecord> _kits = SqlCalls::SelectRecord("kits",QString("id_componente = %1").arg(this->id),Configuracion_global->groupDB,error);
-            if(!_kits.isEmpty() || !error.isEmpty())
-            {
-                if(!_kits.isEmpty())
-                {
-                    QMapIterator<int,QSqlRecord> _it(_kits);
-                    QStringList _affected_kits;
-                    while (_it.hasNext())
-                    {
-                        _it.next();
-                        QSqlRecord r = _it.value();
-                        _affected_kits.append(r.value("codigo_kit").toString());
-                        double coste_anterior = r.value("coste_base").toDouble();
-                        if(coste_anterior != coste_real)
-                        {
-                            int row_id = r.value("id").toInt();
-                            double coste_final_anterior = r.value("cantidad").toDouble() * r.value("coste_final").toDouble();
-                            double coste_final = coste_real * (1-(r.value("porc_dto").toDouble()/100));
-                            QHash<QString,QVariant> _data;
-                            _data["coste_base"] = coste_real;
-                            _data["coste_final"] = coste_final;
-
-                            if(SqlCalls::SqlUpdate(_data,"kits",Configuracion_global->groupDB,QString("id = %1").arg(row_id),error))
-                            {
-                                QMap<int,QSqlRecord> _articulo_kit = SqlCalls::SelectRecord("articulos",QString("codigo = '%1'").arg(r.value("codigo_kit").toString()),Configuracion_global->groupDB,error);
-                                if(!_articulo_kit.isEmpty())
-                                {
-                                    QSqlRecord art_r = _articulo_kit.first();
-                                    int art_id = art_r.value("id").toInt();
-                                    double art_coste_real = art_r.value("coste_real").toDouble();
-                                    art_coste_real -= coste_final_anterior;
-                                    art_coste_real += coste_final;
-
-                                    QHash<QString, QVariant> _art_data;
-                                    _art_data["coste_real"] = art_coste_real;
-                                    _art_data["coste"] = art_coste_real;
-
-                                    if(!SqlCalls::SqlUpdate(_art_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(art_id),error))
-                                        QMessageBox::warning(qApp->activeWindow(),tr("Error actualizando conste de kit afectado %1").arg(r.value("codigo_kit").toString()),error);
-                                }
-                            }
-                        }
-                    }
-
-                    QMessageBox::information(qApp->activeWindow(),tr("Kits afectados"),tr("Los cambios en este artículo afectaron a los siguientes kits:\n")
-                                             +_affected_kits.join("\n")+"\nNo olvide revisar las tarífas correspondientes.");
-                }
-                else
-                {
-                    QMessageBox::critical(qApp->activeWindow(),tr("Error guardando árticulo"),error);
-                    return false;
-                }
-            }
+            success &= Articulo::update_coste_kits(this->id,coste_real);
             coste_real_anterior = coste_real;
         }
-        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(),
-                                                  QObject::tr("Se ha guardado el artículo en la base de datos"));
-        return true;
+        TimedMessageBox * t = new TimedMessageBox(qApp->activeWindow(), QObject::tr("Se ha guardado el artículo en la base de datos"));
     }
-
+    return success;
 }
 
 void Articulo::Vaciar()
@@ -1100,6 +1046,71 @@ bool Articulo::set_pendiente_recibir(int id_articulo, float cantidad)
                                  art.lastError().text(),tr("Aceptar")));
     }
     return succes;
+}
+
+bool Articulo::update_coste_kits(int id_articulo, double new_coste)
+{
+    QString error = "";
+    QMap<int,QSqlRecord> _kits = SqlCalls::SelectRecord("kits",QString("id_componente = %1").arg(id_articulo),Configuracion_global->groupDB,error);
+    if(!_kits.isEmpty() || !error.isEmpty())
+    {
+        if(!_kits.isEmpty())
+        {
+            QMapIterator<int,QSqlRecord> _it(_kits);
+            QStringList _affected_kits;
+            while (_it.hasNext())
+            {
+                _it.next();
+                QSqlRecord r = _it.value();
+                _affected_kits.append(r.value("codigo_kit").toString());
+                double coste_anterior = r.value("coste_base").toDouble();
+                if(coste_anterior != new_coste)
+                {
+                    int row_id = r.value("id").toInt();
+                    double coste_final_anterior = r.value("cantidad").toDouble() * r.value("coste_final").toDouble();
+                    double coste_final = new_coste * (1-(r.value("porc_dto").toDouble()/100));
+                    QHash<QString,QVariant> _data;
+                    _data["coste_base"] = new_coste;
+                    _data["coste_final"] = coste_final;
+
+                    if(SqlCalls::SqlUpdate(_data,"kits",Configuracion_global->groupDB,QString("id = %1").arg(row_id),error))
+                    {
+                        QMap<int,QSqlRecord> _articulo_kit = SqlCalls::SelectRecord("articulos",QString("codigo = '%1'").arg(r.value("codigo_kit").toString()),Configuracion_global->groupDB,error);
+                        if(!_articulo_kit.isEmpty())
+                        {
+                            QSqlRecord art_r = _articulo_kit.first();
+                            int art_id = art_r.value("id").toInt();
+                            double art_coste_real = art_r.value("coste_real").toDouble();
+                            art_coste_real -= coste_final_anterior;
+                            art_coste_real += coste_final;
+
+                            QHash<QString, QVariant> _art_data;
+                            _art_data["coste_real"] = art_coste_real;
+                            _art_data["coste"] = art_coste_real;
+
+                            if(!SqlCalls::SqlUpdate(_art_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(art_id),error))
+                            {
+                                QMessageBox::warning(qApp->activeWindow(),
+                                                     tr("Error actualizando conste de kit afectado %1").
+                                                     arg(r.value("codigo_kit").toString()),error);
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            QMessageBox::information(qApp->activeWindow(),tr("Kits afectados"),tr("Los cambios en este artículo afectaron a los siguientes kits:\n")
+                                     +_affected_kits.join("\n")+"\nNo olvide revisar las tarífas correspondientes.");
+            return true;
+        }
+        else // !error.isEmpty()
+        {
+            QMessageBox::critical(qApp->activeWindow(),tr("Error guardando árticulo"),error);
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, QDate fecha, bool removePendient)

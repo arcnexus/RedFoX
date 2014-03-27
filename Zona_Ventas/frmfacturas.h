@@ -131,7 +131,6 @@ private:
     void formato_tabla_facturas();
 
     bool eventFilter(QObject *obj, QEvent *event);
-    void buscar_poblacion(int tipo);
     void calcular_factura();
 
     BarraBusqueda* m_busqueda;
@@ -148,6 +147,8 @@ private:
 
     QSqlQueryModel * model_series;
     QSqlQueryModel * model_dir_entrega;
+
+    bool __init;
 };
 
 #endif // FRMFACTURAS_H
