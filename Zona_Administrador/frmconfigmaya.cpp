@@ -743,7 +743,7 @@ void frmConfigmaya::llenarModulos(QString bd_name,int id_user)
 void frmConfigmaya::on_cboUser_permiso_currentIndexChanged(int index)
 {
     QSqlRecord r = model_empresa->record(ui->cboEmpresa_permiso->currentIndex());
-    int id_user = r.value("id").toInt();
+    int id_user = Configuracion_global->usuarios_model->record(ui->cboUser_permiso->currentIndex()).value("id").toInt();
     llenarModulos(r.value("nombre_bd").toString(),id_user);
     ui->chkSuperUser_permiso->setChecked(r.value("super_user").toBool());
 }

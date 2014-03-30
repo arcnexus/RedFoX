@@ -182,6 +182,8 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
 {
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de pedidos de clientes"));
+    oPedido = 0;
+    oCliente3 = 0;
     __init = false;
     this->installEventFilter(this);
 }
@@ -189,8 +191,10 @@ FrmPedidos::FrmPedidos(QWidget *parent) :
 FrmPedidos::~FrmPedidos()
 {
     delete ui;
-    delete oPedido;
-    delete oCliente3;
+    if(oPedido)
+        delete oPedido;
+    if(oCliente3)
+        delete oCliente3;
 }
 
 void FrmPedidos::init_querys()

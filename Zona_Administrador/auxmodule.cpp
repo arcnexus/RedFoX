@@ -55,5 +55,6 @@ void AuxModule::save(int index)
     q2.bindValue(":id", this->id_user);
     q2.bindValue(":mod",this->id);
     q2.bindValue(":lvl",index+1);
-    q2.exec();
+    if(!q2.exec())
+        qDebug() << q2.lastError();
 }

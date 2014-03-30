@@ -706,28 +706,22 @@ void MainWindow::loadModules()
     ui->stackedWidget->setCurrentWidget(MayaForm);
 
     loadMantenModules(&splash);
-    crear_barraMantenimiento();
-
     loadAlmacenModules(&splash);
-    crear_barraAlmacen();
-
     loadComprasModules(&splash);
+    loadVentasModules(&splash);    
+    loadUtilsModules(&splash);    
+    loadContaModules(&splash);    
+    loadAminModules(&splash);
+
+    crear_barraMantenimiento();
+    crear_barraAlmacen();
     crear_barraCompras();
-
-    loadVentasModules(&splash);
     crear_barraVentas();
-
-    loadUtilsModules(&splash);
     crear_barraUtils();
-
-    loadContaModules(&splash);
     crear_barraContabilidad();
-
+    crear_barraAdmin();
   //  loadSecMedModules(&splash);
   //  crear_barraClinica();
-
-    loadAminModules(&splash);
-    crear_barraAdmin();
 
     ui->stackedWidget->setCurrentWidget(MayaForm);
 

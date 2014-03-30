@@ -19,19 +19,17 @@ public slots:
 
 public:
     explicit FrmAlbaranProveedor(QWidget *parent = 0, bool showCerrar = false);
-    ~FrmAlbaranProveedor();
-    void llenarProveedor(int id);
-    void llenar_tabla_entregas();
-    int id;
-
+    ~FrmAlbaranProveedor();    
 
     module_zone module_zone(){return Compras;}
     QString module_name(){return "Albaranes Proveedor";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
-    QString ModuleMenuPath(){return tr("");}
-    
+    QString ModuleMenuPath(){return tr("");}    
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+
+    void init_querys();
 private slots:
+    void init();
     void on_btnSiguiente_clicked();
 
     void on_btnAnterior_clicked();
@@ -70,6 +68,7 @@ private:
     Ui::FrmAlbaranProveedor *ui;
     Proveedor prov;
     AlbaranProveedor *oAlbPro;
+    QSqlQueryModel *modelEntregas;
     QString moneda;
     void llenar_campos();
     void bloquearcampos(bool estado);
@@ -81,6 +80,11 @@ private:
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+    void llenarProveedor(int id);
+    void llenar_tabla_entregas();
+    int id;
+    bool __init;
+    bool _showCerrar;
 signals:
 
 protected:

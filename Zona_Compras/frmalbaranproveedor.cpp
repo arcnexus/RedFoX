@@ -7,6 +7,12 @@
 #include "../Auxiliares/entregascuenta.h"
 
 
+void FrmAlbaranProveedor::init_querys()
+{
+    m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by albaran desc",Configuracion_global->empresaDB);
+    formato_tabla();
+}
+
 FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmAlbaranProveedor),
@@ -14,63 +20,11 @@ FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     menuButton(QIcon(":/Icons/PNG/albaran_pro.png"),tr("Albaranes Prov."),this),
     push(new QPushButton(QIcon(":/Icons/PNG/albaran_pro.png"),"",this))
 {
-    ui->setupUi(this);
-    oAlbPro = new AlbaranProveedor(this);
     push->setStyleSheet("background-color: rgb(133, 170, 142)");
     push->setToolTip(tr("Gestión de albaranes de proveedor"));
-    ui->cbo_pais->setModel(Configuracion_global->paises_model);
-
-    ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
-    ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
-    ui->txtporc_iva3->setText(Configuracion_global->ivaList.at(2));
-    ui->txtporc_iva4->setText(Configuracion_global->ivaList.at(3));
-
-    ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
-    ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
-    ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
-    ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
-
-    ui->btn_cerrar->setVisible(showCerrar);
-    // ------------------------------
-    // control estado widgets
-    //-------------------------------
-    ui->btnAnterior->setEnabled(false);
-    ui->btnBorrar->setEnabled(false);
-    ui->btnImprimir->setEnabled(false);
-    ui->btnFacturar->setEnabled(false);
-    oAlbPro->id = 0;
-    ui->lblAlbaran->setText("");
-    ui->lblproveedor->setText("");
-
-    ui->lbfacturado->setVisible(false);
-    ui->lblNumFactura->setVisible(false);
-    ui->txtfecha_factura->setVisible(false);
-    ui->txtcNumFra->setVisible(false);
-
-    //----------------------
-    // Modelo Tabla
-    //----------------------
-    m = new QSqlQueryModel(this);
-    m->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by albaran desc",Configuracion_global->empresaDB);
-    ui->tabla->setModel(m);
-    formato_tabla();
-    ui->tabla->selectRow(0);
-
-    ui->stackedWidget->setCurrentIndex(1);
-
-    setUpBusqueda();
-
-    bloquearcampos(true);
-
-    //--------------------
-    // CONTROL DE EVENTOS
-    //--------------------
-    QList<QWidget*> l = this->findChildren<QWidget*>();
-    QList<QWidget*> ::Iterator it;
-
-    for( it = l.begin() ;it!= l.end();++it )
-        (*it)->installEventFilter(this);
-
+    _showCerrar = showCerrar;
+    __init = false;
+    this->installEventFilter(this);
 }
 
 void FrmAlbaranProveedor::setUpBusqueda()
@@ -78,7 +32,6 @@ void FrmAlbaranProveedor::setUpBusqueda()
     m_busqueda = new BarraBusqueda(this);
     this->setMouseTracking(true);
     this->setAttribute(Qt::WA_Hover);
-    this->installEventFilter(this);
 
     QStringList orden;
     orden << tr("Albarán") << tr("Fecha") <<tr("Cif/Nif") <<tr("Proveedor");
@@ -119,6 +72,73 @@ FrmAlbaranProveedor::~FrmAlbaranProveedor()
     delete ui;
 }
 
+void FrmAlbaranProveedor::init()
+{
+    if(__init)
+        return;
+
+    ui->setupUi(this);
+    oAlbPro = new AlbaranProveedor(this);
+    modelEntregas = new QSqlQueryModel(this);
+    ui->tabla_entregas->setModel(modelEntregas);
+
+    ui->cbo_pais->setModel(Configuracion_global->paises_model);
+
+    ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtporc_iva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtporc_iva4->setText(Configuracion_global->ivaList.at(3));
+
+    ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
+    ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
+    ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
+    ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
+
+    ui->btn_cerrar->setVisible(_showCerrar);
+    // ------------------------------
+    // control estado widgets
+    //-------------------------------
+    ui->btnAnterior->setEnabled(false);
+    ui->btnBorrar->setEnabled(false);
+    ui->btnImprimir->setEnabled(false);
+    ui->btnFacturar->setEnabled(false);
+    oAlbPro->id = 0;
+    ui->lblAlbaran->setText("");
+    ui->lblproveedor->setText("");
+
+    ui->lbfacturado->setVisible(false);
+    ui->lblNumFactura->setVisible(false);
+    ui->txtfecha_factura->setVisible(false);
+    ui->txtcNumFra->setVisible(false);
+
+    //----------------------
+    // Modelo Tabla
+    //----------------------
+    m = new QSqlQueryModel(this);
+    ui->tabla->setModel(m);
+    ui->tabla->selectRow(0);
+
+    ui->stackedWidget->setCurrentIndex(1);
+
+    setUpBusqueda();
+
+    bloquearcampos(true);
+
+    //--------------------
+    // CONTROL DE EVENTOS
+    //--------------------
+    QList<QWidget*> l = this->findChildren<QWidget*>();
+    QList<QWidget*> ::Iterator it;
+
+    for( it = l.begin() ;it!= l.end();++it )
+        (*it)->installEventFilter(this);
+
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tabla_entregas->setItemDelegateForColumn(1,new DateDelegate );
+    ui->tabla_entregas->setItemDelegateForColumn(3, new MonetaryDelegate);
+    __init = true;
+}
+
 void FrmAlbaranProveedor::llenarProveedor(int id)
 {
     prov.clear();
@@ -142,16 +162,13 @@ void FrmAlbaranProveedor::llenarProveedor(int id)
 
 void FrmAlbaranProveedor::llenar_tabla_entregas()
 {
-    QSqlQueryModel *modelEntregas = new QSqlQueryModel(this);
     modelEntregas->setQuery("select id, fecha_entrega, concepto, importe from proveedor_a_cuenta where id_proveedor = "+
-                            QString::number(prov.id),Configuracion_global->groupDB);
-    ui->tabla_entregas->setModel(modelEntregas);
+                            QString::number(prov.id),Configuracion_global->groupDB);   
     ui->tabla_entregas->setColumnHidden(0,true);
     ui->tabla_entregas->setColumnWidth(1,120);
-    ui->tabla_entregas->setItemDelegateForColumn(1,new DateDelegate );
     ui->tabla_entregas->setColumnWidth(2,400);
     ui->tabla_entregas->setColumnWidth(3,120);
-    ui->tabla_entregas->setItemDelegateForColumn(3, new MonetaryDelegate);
+
     QStringList cabecera;
     cabecera << tr("id") << tr("Fecha entrega") << tr("Concepto") << tr("Importe");
     for(int pos = 0; pos < cabecera.size();pos++)
@@ -237,9 +254,7 @@ void FrmAlbaranProveedor::formato_tabla()
     {
         ui->tabla->setColumnWidth(i,sizes.at(i).toInt());
         m->setHeaderData(i,Qt::Horizontal,headers.at(i));
-    }
-    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
-
+    }    
 }
 
 void FrmAlbaranProveedor::filter_table(QString texto, QString orden, QString modo)
@@ -559,8 +574,19 @@ void FrmAlbaranProveedor::ocultarBusqueda()
 }
 bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
 {
+    if(event->type() == QEvent::Show && obj == this)
+    {
+        if(!__init)
+            init();
+        init_querys();
+    }
+
     if(event->type() == QEvent::Resize)
+    {
+        if(!__init)
+            init();
         _resizeBarraBusqueda(m_busqueda);
+    }
 
 
     if(event->type() == QEvent::KeyPress)
