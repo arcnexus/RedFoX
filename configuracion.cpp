@@ -578,7 +578,6 @@ bool Configuracion::CargarDatosBD()
     }
 
     Configuracion_global->CargarUsuarios();
-    Configuracion_global->Cargar_paises();
 
     return (!this->globalDB.lastError().isValid()) && _mayaglobal;
 }

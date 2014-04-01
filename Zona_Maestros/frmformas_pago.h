@@ -45,7 +45,7 @@ private slots:
 
     void on_btn_borrar_clicked();
 
-    void on_btnborrar_2_clicked();
+    //void on_btnborrar_2_clicked();
 
     void on_txtcod_cuenta_contable_editingFinished();
 

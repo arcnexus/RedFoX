@@ -862,30 +862,31 @@ void FrmPedidosProveedor::calcular_pedido()
 
     double _dtoPP = 1-(ui->spinPorc_dto_pp->value()/100);
 
-    QMap <int,QSqlRecord> l;
-    QString error;
-    l = SqlCalls::SelectRecord("lin_ped_pro",QString("id_cab=%1").arg(oPedido_proveedor->id),Configuracion_global->empresaDB,error);
-    QMapIterator <int,QSqlRecord> li(l);
-    while(li.hasNext())
-    {
-        li.next();
+//    QMap <int,QSqlRecord> l;
+//    QString error;
+//    l = SqlCalls::SelectRecord("lin_ped_pro",QString("id_cab=%1").arg(oPedido_proveedor->id),Configuracion_global->empresaDB,error);
+//    QMapIterator <int,QSqlRecord> li(l);
 
-        subtotal += li.value().value("subtotal").toDouble();
+    for(auto i= 0; i<modelLineas->rowCount();++i)
+    {
+        QSqlRecord r = modelLineas->record(i);
+
+        subtotal += r.value("subtotal").toDouble();
         // base1
-        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva1->text().toFloat())     
-            base1 += li.value().value("total").toDouble() * _dtoPP;
+        if(r.value("porc_iva").toFloat() == ui->txtporc_iva1->text().toFloat())
+            base1 += r.value("total").toDouble() * _dtoPP;
 
         // base2
-        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva2->text().toFloat())
-            base2 += li.value().value("total").toDouble()* _dtoPP;
+        if(r.value("porc_iva").toFloat() == ui->txtporc_iva2->text().toFloat())
+            base2 += r.value("total").toDouble()* _dtoPP;
 
         // base3
-        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva3->text().toFloat())
-            base3 += li.value().value("total").toDouble()* _dtoPP;
+        if(r.value("porc_iva").toFloat() == ui->txtporc_iva3->text().toFloat())
+            base3 += r.value("total").toDouble()* _dtoPP;
 
         // base4
-        if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
-            base4 += li.value().value("total").toDouble()* _dtoPP;
+        if(r.value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
+            base4 += r.value("total").toDouble()* _dtoPP;
     }
 
     //Los gastos no pueden añadir R.E.

@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    Configuracion_global = new Configuracion;
+   Configuracion_global = new Configuracion;
 
     //QTextCodec *linuxCodec = QTextCodec::codecForName("UTF-8");
    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -171,7 +171,6 @@ bool cargarEmpresa(QSqlRecord record)
             Configuracion_global->contaDB.setDatabaseName(Configuracion_global->nombre_bd_conta);
             Configuracion_global->contaDB.setHostName(Configuracion_global->group_host);
             Configuracion_global->contaDB.open(Configuracion_global->group_user,Configuracion_global->group_pass);
-            // qDebug() << Configuracion_global->contaDB.lastError().text();
         }
         if (Configuracion_global->contaDB.lastError().isValid())
         {

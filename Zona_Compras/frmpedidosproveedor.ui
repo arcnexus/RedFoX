@@ -211,6 +211,16 @@ color: rgb(255,255,255);</string>
                   </property>
                  </spacer>
                 </item>
+                <item>
+                 <widget class="QLabel" name="label_15">
+                  <property name="text">
+                   <string>Cif/Nif/Nie:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="txtcif"/>
+                </item>
                </layout>
               </item>
               <item row="1" column="0">
@@ -219,44 +229,6 @@ color: rgb(255,255,255);</string>
                  <string>Proveedor</string>
                 </property>
                </widget>
-              </item>
-              <item row="1" column="3" rowspan="3">
-               <layout class="QGridLayout" name="gridLayout">
-                <item row="0" column="0" colspan="2">
-                 <widget class="QLabel" name="label_34">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: #304163;
-color: rgb(255,255,255);</string>
-                  </property>
-                  <property name="text">
-                   <string>Datos extras calculo pedido</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_33">
-                  <property name="text">
-                   <string>%Dto P.P.:</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QDoubleSpinBox" name="spinPorc_dto_pp"/>
-                </item>
-                <item row="2" column="0" colspan="2">
-                 <widget class="QCheckBox" name="chkrecargo_equivalencia">
-                  <property name="text">
-                   <string>Recargo de equivalencia</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_3">
@@ -326,13 +298,6 @@ color: rgb(255,255,255);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Cif/Nif/Nie:</string>
-                </property>
-               </widget>
-              </item>
               <item row="4" column="0">
                <widget class="QLabel" name="label_6">
                 <property name="text">
@@ -399,9 +364,6 @@ color: rgb(255,255,255);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="txtcif"/>
-              </item>
               <item row="7" column="1">
                <spacer name="verticalSpacer">
                 <property name="orientation">
@@ -414,6 +376,44 @@ color: rgb(255,255,255);</string>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item row="0" column="2" rowspan="3">
+               <layout class="QGridLayout" name="gridLayout">
+                <item row="0" column="0" colspan="2">
+                 <widget class="QLabel" name="label_34">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Datos extras calculo pedido</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_33">
+                  <property name="text">
+                   <string>%Dto P.P.:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QDoubleSpinBox" name="spinPorc_dto_pp"/>
+                </item>
+                <item row="2" column="0" colspan="2">
+                 <widget class="QCheckBox" name="chkrecargo_equivalencia">
+                  <property name="text">
+                   <string>Recargo de equivalencia</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -1237,6 +1237,9 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>IVA</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item row="3" column="5">
@@ -1324,6 +1327,9 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>TOTAL</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item row="0" column="5">
@@ -1334,6 +1340,9 @@ color: rgb(255,255,255);</string>
                </property>
                <property name="text">
                 <string>R.E.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -1506,6 +1515,9 @@ color: rgb(255,255,255);</string>
                <property name="text">
                 <string>%IVA</string>
                </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
              <item row="0" column="1">
@@ -1516,6 +1528,9 @@ color: rgb(255,255,255);</string>
                </property>
                <property name="text">
                 <string>BASE</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -1613,6 +1628,9 @@ color: rgb(255,255,255);</string>
                </property>
                <property name="text">
                 <string>%R.E.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>

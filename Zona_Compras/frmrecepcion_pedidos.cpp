@@ -66,32 +66,6 @@ void Frmrecepcion_pedidos::on_btnBuscar_clicked()
             this,SLOT(selectionChanged(QItemSelection,QItemSelection)));
 }
 
-
-void Frmrecepcion_pedidos::on_chkForzarCierre_clicked()
-{
-//    if(QMessageBox::question(this,tr("Gestión pedidos"),
-//                             tr("¿desea cambiar el estado de este pedido?"),tr("No"),tr("Si")) ==QDialog::Accepted)
-//    {
-//        QModelIndex index = ui->tablaPedidos->currentIndex();
-//        int nid =ui->tablaPedidos->model()->data(ui->tablaPedidos->model()->index(index.row(),0),Qt::EditRole).toInt();
-//        QSqlQuery queryPedido(Configuracion_global->empresaDB);
-//        queryPedido.prepare("update ped_pro set recibido_completo =:estado where id = :id");
-//        int estado;
-//        if(ui->chkForzarCierre->isChecked())
-//            estado=1;
-//        else
-//            estado = 0;
-
-//        queryPedido.bindValue(":estado",estado);
-//        queryPedido.bindValue(":id",nid);
-//        if(!queryPedido.exec())
-//            QMessageBox::warning(this,tr("Gestión de pedidos"),
-//                                 tr("ATENCIÓN, Falló el cambio de estado: %1").arg(queryPedido.lastError().text()),
-//                                 tr("Aceptar"));
-//    }
-}
-
-
 void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 {
     ui->tablaLineas->blockSignals(true);
@@ -272,45 +246,6 @@ void Frmrecepcion_pedidos::abrir_albaran()
 void Frmrecepcion_pedidos::on_btnFactura_clicked()
 {
    crear_documento(false);
-}
-
-
-
-void Frmrecepcion_pedidos::on_BtnCancelar_clicked()
-{
-//    QSqlQuery queryFactura(Configuracion_global->groupDB);
-//    queryFactura.exec("delete from fac_pro where id ="+QString::number(this->id_factura));
-//    ui->lblfactura->setVisible(false);
-//    ui->txtFactura->setText("");
-//    ui->txtFactura->setVisible(false);
-//    ui->txtFecha_factura->setDate(QDate::currentDate());
-//    ui->lblFecha_factura->setVisible(false);
-//    ui->txtFecha_factura->setVisible(false);
-//    ui->btnFactura->setText("Abrir Factura");
-//    ui->lblFecha_factura->setVisible(false);
-//    ui->BtnCancelar->setEnabled(false);
-//    emit unblock();
-
-
-}
-
-void Frmrecepcion_pedidos::on_btncancelar_alb_clicked()
-{
-
-//    QSqlQuery queryAlbaran(Configuracion_global->groupDB);
-//    queryAlbaran.exec("delete from alb_pro where id ="+QString::number(this->id_albaran));
-//    ui->lblAlbaran->setVisible(false);
-//    ui->txtAlbaran->setText("");
-//    ui->txtAlbaran->setVisible(false);
-//    ui->txtFecha_albaran->setDate(QDate::currentDate());
-//    ui->lblfecha_albaran->setVisible(false);
-//    ui->txtFecha_albaran->setVisible(false);
-//    ui->btalbaran->setText("Abrir albarán");
-//    ui->lblfecha_albaran->setVisible(false);
-//    albaran = false;
-//    ui->tablaPedidos->setEnabled(true);
-//    ui->btncancelar_alb->setEnabled(false);
-//    emit unblock();
 }
 
 void Frmrecepcion_pedidos::on_btnBuscaProv_clicked()

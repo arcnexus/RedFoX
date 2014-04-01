@@ -1081,7 +1081,7 @@ void FrmPedidos::setUpBusqueda()
     m_busqueda->addWidget(edit);
 
     QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
-   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
+    connect(print,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));//TODO
     m_busqueda->addWidget(print);
 
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
@@ -1966,6 +1966,17 @@ void FrmPedidos::on_txtcodigo_cliente_editingFinished()
 
 void FrmPedidos::on_btnImprimir_clicked()
 {
+    if(ui->stackedWidget->currentIndex()==1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        int id_ped = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        if(!oPedido->RecuperarPedido(QString("Select * from ped_cli where id = %1 limit 1 ").arg(id_ped)))
+        {
+            QMessageBox::critical(this,tr("Error al recuperar pedido"),Configuracion_global->empresaDB.lastError().text());
+            return;
+        }
+    }
     FrmDialogoImprimir dlg_print(this);
     dlg_print.set_email(oCliente3->email);
     dlg_print.set_preview(false);

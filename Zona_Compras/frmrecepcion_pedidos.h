@@ -24,17 +24,11 @@ public:
 private slots:
     void on_btnBuscar_clicked();
 
-    void on_chkForzarCierre_clicked();
-
     void validarcantidad(int, int);
 
     void abrir_albaran();
 
     void on_btnFactura_clicked();
-
-    void on_BtnCancelar_clicked();
-
-    void on_btncancelar_alb_clicked();
 
     void on_btnBuscaProv_clicked();
 

@@ -17,7 +17,7 @@ public:
     ~frmInventario();
     
     module_zone module_zone(){return Almacen;}
-    QString module_name(){return "Articulos";}
+    QString module_name(){return "Inventario";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
 

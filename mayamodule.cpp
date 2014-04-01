@@ -33,7 +33,6 @@ bool MayaModule::userHaveAcces(int id_user)
             _user_level = static_cast<accessLevel>(q.record().value(3).toInt());
         }
     }
-    qDebug() << q.lastError();
     return (_user_level != SinAcceso);
 }
 

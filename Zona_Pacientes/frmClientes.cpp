@@ -1446,9 +1446,9 @@ void frmClientes::setUpBusqueda()
     connect(edit,SIGNAL(clicked()),this,SLOT(on_btnEditar_clicked()));
     m_busqueda->addWidget(edit);
 
-    QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
-   // connect(print,SIGNAL(clicked()),this,SLOT(on_btnEditar_2_clicked()));//TODO
-    m_busqueda->addWidget(print);
+    //QPushButton* print = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
+    //TODO print button @Clientes
+    //m_busqueda->addWidget(print);
 
     QPushButton* del = new QPushButton(QIcon(":/Icons/PNG/borrar.png"),tr("Borrar"),this);
     connect(del,SIGNAL(clicked()),this,SLOT(on_btnBorrar_clicked()));

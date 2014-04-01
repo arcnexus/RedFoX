@@ -614,14 +614,6 @@ void MainWindow::loadUtilsModules(QSplashScreen *splash)
 
 void MainWindow::loadAminModules(QSplashScreen *splash)
 {
-   // splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configuración general")  ,Qt::AlignLeft,Qt::white);
-/*    frmConfigmaya* c = new frmConfigmaya(this);
-    if(c->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _adminModules.append(c);
-    }
-    else
-        delete c;*/
     if(Configuracion_global->super_user)
     {
         splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
@@ -629,16 +621,6 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
         FrmEmpresas* e = new FrmEmpresas(this);
         _adminModules.append(e);
     }
-
-/*
-    splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Usuarios")  ,Qt::AlignLeft,Qt::white);
-    FrmUsuarios* u = new FrmUsuarios(this);
-    if(u->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _adminModules.append(u);
-    }
-    else
-        delete u*/;
 }
 
 void MainWindow::loadContaModules(QSplashScreen *splash)

@@ -325,7 +325,7 @@ void FrmFormas_pago::on_btn_borrar_clicked()
     }
 }
 
-void FrmFormas_pago::on_btnborrar_2_clicked()
+/*void FrmFormas_pago::on_btnborrar_2_clicked()
 {
     QModelIndex  index = ui->tabla_buscar->currentIndex();
     int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
@@ -335,7 +335,7 @@ void FrmFormas_pago::on_btnborrar_2_clicked()
     llenar_campos();
     on_btn_borrar_clicked();
 
-}
+}*/
 
 void FrmFormas_pago::on_txtcod_cuenta_contable_editingFinished()
 {

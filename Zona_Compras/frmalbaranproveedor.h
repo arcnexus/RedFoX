@@ -33,7 +33,7 @@ private slots:
     void on_btnSiguiente_clicked();
 
     void on_btnAnterior_clicked();
-    void buscar_proveeedor();
+
     void on_btnEditar_clicked();
 
     void on_btnGuardar_clicked();
@@ -41,7 +41,6 @@ private slots:
 
     void on_btnBuscar_clicked();
 
-    void on_botBuscarCliente_clicked();
 
     void on_btnAnadir_clicked();
 
@@ -53,8 +52,6 @@ private slots:
 
     void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
 
-    void on_tabla_clicked(const QModelIndex &index);
-
     void on_tabla_doubleClicked(const QModelIndex &index);
 
     void mostrarBusqueda();
@@ -63,6 +60,10 @@ private slots:
     void on_btnImprimir_clicked();
 
     void on_btnDeshacer_clicked();
+
+    void on_botBuscarProv_clicked();
+
+    void on_chklporc_rec_toggled(bool checked);
 
 private:
     Ui::FrmAlbaranProveedor *ui;
@@ -74,15 +75,18 @@ private:
     void bloquearcampos(bool estado);
     QAction menuButton;
     QPushButton* push;
-    QSqlQueryModel *m;
+    QSqlQueryModel *model_busqueda;
     void formato_tabla();
+    QSqlQueryModel *modelLineas;
+    void llenarLineas();
+    void calcular_albaran();
 
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
     void llenarProveedor(int id);
     void llenar_tabla_entregas();
-    int id;
+
     bool __init;
     bool _showCerrar;
 signals:
