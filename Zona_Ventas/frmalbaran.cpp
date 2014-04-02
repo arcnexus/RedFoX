@@ -1694,6 +1694,32 @@ void FrmAlbaran::on_chkrecargo_equivalencia_toggled(bool checked)
         oAlbaran->porc_rec3 = 0;
         oAlbaran->porc_rec4 = 0;
     }
+    QString error;
+    for(auto i = 0; i<modelLineas->rowCount();++i)
+    {
+        QSqlRecord r = modelLineas->record(i);
+        QHash<QString,QVariant> lin;
+        double iva_art = r.value("porc_iva").toDouble();
+        double porc_re_art;
+
+        if(iva_art == oAlbaran->porc_iva1)
+            porc_re_art = oAlbaran->porc_rec1;
+        if(iva_art == oAlbaran->porc_iva2)
+            porc_re_art = oAlbaran->porc_rec2;
+        if(iva_art == oAlbaran->porc_iva3)
+            porc_re_art = oAlbaran->porc_rec3;
+        if(iva_art == oAlbaran->porc_iva4)
+            porc_re_art = oAlbaran->porc_rec4;
+
+        lin["porc_rec"] = porc_re_art;
+        lin["rec"] = r.value("total").toDouble() * (porc_re_art/100.0);
+
+        if(!SqlCalls::SqlUpdate(lin,"lin_alb",Configuracion_global->empresaDB,QString("id=%1").arg(r.value("id").toInt()),error))
+        {
+            QMessageBox::critical(this,tr("Error al actualizar lineas"),error);
+            break;
+        }
+    }
     calcular_albaran();
 }
 

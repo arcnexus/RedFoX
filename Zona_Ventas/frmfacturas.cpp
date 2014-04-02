@@ -1387,6 +1387,7 @@ void frmFacturas::on_btnBorrar_clicked()
 
 void frmFacturas::on_spinPorc_dto_editingFinished()
 {
+    //FIXME que es esto!?
     if(!__init)
         return;
     //--------------------------------------------
