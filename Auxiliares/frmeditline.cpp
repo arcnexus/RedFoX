@@ -149,7 +149,7 @@ QHash<QString, QVariant> frmEditLine::get_datos()
         if(use_re)
         {
             lin["porc_rec"] = Configuracion_global->iva_model->record(ui->cboIva->currentIndex()).value("recargo_equivalencia");
-            lin["rec"] = lin.value("total").toDouble() * (lin.value("porc_rec").toDouble()/100);
+            lin["rec"] = lin.value("total").toDouble() * (lin.value("porc_rec").toDouble()/100.0);
         }
     }
     else
@@ -244,9 +244,9 @@ void frmEditLine::_insert_nueva_linea()
                 return;
             }
         }
-        else //Acumula compras (Recepcion de pedidos / Albarán / Factura)
+        else //Agrega stock
         {
-            if(!Articulo::acumulado_compras(id_articulo,cantidad,valor,QDate::currentDate(),true))
+            if(!Articulo::agregar_stock_fisico(id_articulo,cantidad))
             {
                 close();
                 return;
@@ -808,9 +808,9 @@ void frmEditLine::on_btnAceptar_clicked()
                     return;
                 }
             }
-            else //Acumula compras (Recepcion de pedidos / Albarán / Factura)
+            else //Agrega stock
             {
-                if(!Articulo::acumulado_compras(id_articulo,nueva_cantidad,nuevo_valor,QDate::currentDate()))
+                if(!Articulo::agregar_stock_fisico(id_articulo,nueva_cantidad))
                 {
                     close();
                     return;

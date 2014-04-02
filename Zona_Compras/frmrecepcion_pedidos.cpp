@@ -81,7 +81,6 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
         int art_id = ui->tablaLineas->item(row,8)->data(Qt::DisplayRole).toInt();
         int line_id= ui->tablaLineas->item(row,0)->data(Qt::DisplayRole).toInt();
         int id_cab = _lineas.value(line_id).value("id_cab").toInt();
-        double precio = _lineas.value(line_id).value("precio").toDouble();
 
         if(rec_now > 0) //unidades recibidas
         {
@@ -95,11 +94,10 @@ void Frmrecepcion_pedidos::validarcantidad(int row, int col)
 
             bool ok = SqlCalls::SqlUpdate(_line_data,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(line_id),error);
 
-            //ACUMULADOS ARTICULO
-            ok &= Articulo::acumulado_compras(art_id,rec_now,rec_now * precio,QDate::currentDate(),true);
+            //STOCK ARTICULO
+            ok &= Articulo::set_pendiente_recibir(art_id, -1.0 * rec_now);
+            ok &= Articulo::agregar_stock_fisico(art_id,rec_now);
 
-            //ACUMLADOS PROVEEDOR
-            ok &= Proveedor::acumular(id_prov,QDate::currentDate().month(),rec_now * precio);
             //LOTES
             if(SqlCalls::SelectOneField("articulos","lotes",QString("id=%1").arg(art_id),Configuracion_global->groupDB,error).toBool())
             {

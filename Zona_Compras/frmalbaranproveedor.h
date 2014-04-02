@@ -65,6 +65,12 @@ private slots:
 
     void on_chklporc_rec_toggled(bool checked);
 
+    void on_btnAnadirLinea_clicked();
+
+    void on_btn_borrarLinea_clicked();
+
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::FrmAlbaranProveedor *ui;
     Proveedor prov;
@@ -89,6 +95,10 @@ private:
 
     bool __init;
     bool _showCerrar;
+    bool editando;
+    double total_anterior;
+    QDate fecha_anterior;
+    QSqlQueryModel* lineas_anterior;
 signals:
 
 protected:

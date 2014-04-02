@@ -5,6 +5,7 @@
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Auxiliares/frmaddentregascuenta.h"
 #include "../Auxiliares/entregascuenta.h"
+#include "../Auxiliares/frmeditline.h"
 
 FrmAlbaranProveedor::FrmAlbaranProveedor(QWidget *parent, bool showCerrar) :
     MayaModule(module_zone(),module_name(),parent),
@@ -79,6 +80,8 @@ void FrmAlbaranProveedor::init()
     oAlbPro = new AlbaranProveedor(this);
     modelEntregas = new QSqlQueryModel(this);
     modelLineas = new QSqlQueryModel(this);
+    lineas_anterior = new QSqlQueryModel(this);
+
     ui->tabla_entregas->setModel(modelEntregas);
     ui->Lineas->setModel(modelLineas);
 
@@ -573,6 +576,10 @@ void FrmAlbaranProveedor::llenar_campos()
 
 void FrmAlbaranProveedor::on_btnEditar_clicked()
 {
+    total_anterior = oAlbPro->total;
+    fecha_anterior = oAlbPro->fecha;
+    lineas_anterior->setQuery(QString("select id,id_articulo,cantidad,total from lin_alb_pro where id_cab = %1;").arg(oAlbPro->id),Configuracion_global->empresaDB);
+    editando = true;
     Configuracion_global->transaction();
     bloquearcampos(false);
     emit block();
@@ -587,10 +594,42 @@ void FrmAlbaranProveedor::on_btnGuardar_clicked()
         guardar_campos_en_objeto();
         if(oAlbPro->guardar())
         {
-            llenar_campos();
-            bloquearcampos(true);
-            Configuracion_global->commit();
-            emit unblock();
+            double acumular = oAlbPro->total;
+            if(editando)
+            {
+                //BORRAR LOS ACUMULADOS ANTERIORES COMPLETAMENTE
+                if(!Proveedor::acumular(oAlbPro->id_proveedor,fecha_anterior.month(),-1.0 * total_anterior))
+                {
+                    Configuracion_global->rollback();
+                    return;
+                }
+                for(auto i=0;i< lineas_anterior->rowCount();++i)
+                {
+                    QSqlRecord r = lineas_anterior->record(i);
+                    if(!Articulo::acumulado_compras(r.value("id_articulo").toInt(),-1.0* r.value("cantidad").toDouble(),-1.0* r.value("total").toDouble(),fecha_anterior))
+                    {
+                        Configuracion_global->rollback();
+                        return;
+                    }
+                }
+            }
+
+            if(Proveedor::acumular(oAlbPro->id_proveedor,oAlbPro->fecha.month(),acumular))
+            {
+                for(auto i=0; i<modelLineas->rowCount();++i)
+                {
+                    QSqlRecord r = modelLineas->record(i);
+                    if(!Articulo::acumulado_compras(r.value("id_articulo").toInt(),r.value("cantidad").toDouble(),r.value("total").toDouble(),oAlbPro->fecha))
+                    {
+                        Configuracion_global->rollback();
+                        return;
+                    }
+                }
+                llenar_campos();
+                bloquearcampos(true);
+                Configuracion_global->commit();
+                emit unblock();
+            }
         }
     }
     else
@@ -647,6 +686,7 @@ void FrmAlbaranProveedor::on_btnBuscar_clicked()
 
 void FrmAlbaranProveedor::on_btnAnadir_clicked()
 {
+    editando = false;
     Configuracion_global->transaction();
     if(oAlbPro->anadir())
     {
@@ -655,7 +695,9 @@ void FrmAlbaranProveedor::on_btnAnadir_clicked()
         llenar_campos();
         bloquearcampos(false);
         ui->stackedWidget->setCurrentIndex(0);
+        ocultarBusqueda();
         ui->txtcodigo_proveedor->setFocus();
+        ui->txtfecha->setDate(QDate::currentDate());
     }
     else
     {
@@ -835,5 +877,123 @@ void FrmAlbaranProveedor::on_chklporc_rec_toggled(bool checked)
         oAlbPro->porc_rec3 = 0;
         oAlbPro->porc_rec4 = 0;
     }
+    QString error;
+    for(auto i = 0; i<modelLineas->rowCount();++i)
+    {
+        QSqlRecord r = modelLineas->record(i);
+        QHash<QString,QVariant> lin;
+        double iva_art = r.value("porc_iva").toDouble();
+        double porc_re_art;
+
+        if(iva_art == oAlbPro->porc_iva1)
+            porc_re_art = oAlbPro->porc_rec1;
+        if(iva_art == oAlbPro->porc_iva2)
+            porc_re_art = oAlbPro->porc_rec2;
+        if(iva_art == oAlbPro->porc_iva3)
+            porc_re_art = oAlbPro->porc_rec3;
+        if(iva_art == oAlbPro->porc_iva4)
+            porc_re_art = oAlbPro->porc_rec4;
+
+        lin["porc_rec"] = porc_re_art;
+        lin["rec"] = r.value("total").toDouble() * (porc_re_art/100.0);
+
+        if(!SqlCalls::SqlUpdate(lin,"lin_alb_pro",Configuracion_global->empresaDB,QString("id=%1").arg(r.value("id").toInt()),error))
+        {
+            QMessageBox::critical(this,tr("Error al actualizar lineas"),error);
+            break;
+        }
+    }
     calcular_albaran();
+}
+
+void FrmAlbaranProveedor::on_btnAnadirLinea_clicked()
+{
+    frmEditLine frmeditar(this);
+    frmeditar.init();
+    connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
+
+    frmeditar.set_venta(false);
+    frmeditar.setAdd_pendientes(false);
+
+    frmeditar.setUse_re(ui->chklporc_rec->isChecked());
+
+    frmeditar.set_linea(0,"lin_alb_pro");
+    frmeditar.set_tabla("lin_alb_pro");
+    frmeditar.set_id_cab(oAlbPro->id);
+
+    frmeditar.exec();
+    llenarLineas();
+}
+
+void FrmAlbaranProveedor::on_btn_borrarLinea_clicked()
+{
+    if(!ui->Lineas->currentIndex().isValid())
+        return;
+
+    if(QMessageBox::question(this,tr("Lineas de albarán"), tr("¿Borrar la linea?"),
+                             tr("No"),tr("Borrar")) == QMessageBox::Accepted)
+    {
+        QModelIndex index = ui->Lineas->currentIndex();
+        int id_lin = modelLineas->record(index.row()).value("id").toInt();
+        int id_art = modelLineas->record(index.row()).value("id_articulo").toInt();
+        double cantidad = modelLineas->record(index.row()).value("cantidad").toDouble();
+        if(editando)
+        {
+            bool ok = true;
+            if(QMessageBox::question(this,tr("Stock de almacén"), tr("¿Desea retirar el stock de almacén?"),
+                                     tr("No"),tr("Sí")) == QMessageBox::Accepted)
+            {
+                ok = Articulo::agregar_stock_fisico(id_art, -1.0 * cantidad);
+            }
+
+            QString error;
+            if(ok && SqlCalls::SqlDelete("lin_alb_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id_lin),error))
+            {
+                llenarLineas();
+            }
+            else
+            {
+                QMessageBox::critical(this,tr("Error al borrar linea"),error);
+            }
+        }
+        else
+        {
+            bool ok = Articulo::agregar_stock_fisico(id_art, -1.0 * cantidad);
+            QString error;
+            if(ok && SqlCalls::SqlDelete("lin_alb_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id_lin),error))
+            {
+                llenarLineas();
+            }
+            else
+            {
+                QMessageBox::critical(this,tr("Error al borrar linea"),error);
+            }
+        }
+        ui->Lineas->setFocus();
+    }
+}
+
+void FrmAlbaranProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
+{
+    int id_lin = ui->Lineas->model()->data(index.model()->index(index.row(),0)).toInt();
+    if(id_lin >0)
+    {
+        frmEditLine frmeditar(this);
+        frmeditar.init();
+        connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
+
+        frmeditar.set_venta(false);
+        frmeditar.setAdd_pendientes(false);
+
+        frmeditar.setUse_re(ui->chklporc_rec->isChecked());
+
+        frmeditar.set_id_cab(oAlbPro->id);
+        frmeditar.set_linea(id_lin,"lin_alb_pro");
+        frmeditar.set_tabla("lin_alb_pro");
+        frmeditar.set_editando();
+        frmeditar.exec();
+
+        calcular_albaran();
+        ui->Lineas->setFocus();
+    }
 }

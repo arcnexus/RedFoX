@@ -1107,7 +1107,8 @@ void FrmPedidosProveedor::on_spinPorc_dto_pp_valueChanged(double /*arg1*/)
 
 void FrmPedidosProveedor::on_chkrecargo_equivalencia_toggled(bool checked)
 {
-    if (checked) {
+    if (checked)
+    {
         oPedido_proveedor->recargo_equivalencia = 1;
         ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
         ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
@@ -1117,7 +1118,9 @@ void FrmPedidosProveedor::on_chkrecargo_equivalencia_toggled(bool checked)
         oPedido_proveedor->porc_rec2 = ui->txtporc_rec2->text().toFloat();
         oPedido_proveedor->porc_rec3 = ui->txtporc_rec3->text().toFloat();
         oPedido_proveedor->porc_rec4 = ui->txtporc_rec4->text().toFloat();
-    } else {
+    }
+    else
+    {
         oPedido_proveedor->recargo_equivalencia = 0;
         ui->txtporc_rec1->setText("0.00");
         ui->txtporc_rec2->setText("0.00");
@@ -1127,6 +1130,32 @@ void FrmPedidosProveedor::on_chkrecargo_equivalencia_toggled(bool checked)
         oPedido_proveedor->porc_rec2 = 0;
         oPedido_proveedor->porc_rec3 = 0;
         oPedido_proveedor->porc_rec4 = 0;
+    }
+    QString error;
+    for(auto i = 0; i<modelLineas->rowCount();++i)
+    {
+        QSqlRecord r = modelLineas->record(i);
+        QHash<QString,QVariant> lin;
+        double iva_art = r.value("porc_iva").toDouble();
+        double porc_re_art;
+
+        if(iva_art == oPedido_proveedor->porc_iva1)
+            porc_re_art = oPedido_proveedor->porc_rec1;
+        if(iva_art == oPedido_proveedor->porc_iva2)
+            porc_re_art = oPedido_proveedor->porc_rec2;
+        if(iva_art == oPedido_proveedor->porc_iva3)
+            porc_re_art = oPedido_proveedor->porc_rec3;
+        if(iva_art == oPedido_proveedor->porc_iva4)
+            porc_re_art = oPedido_proveedor->porc_rec4;
+
+        lin["porc_rec"] = porc_re_art;
+        lin["rec"] = r.value("total").toDouble() * (porc_re_art/100.0);
+
+        if(!SqlCalls::SqlUpdate(lin,"lin_ped_pro",Configuracion_global->empresaDB,QString("id=%1").arg(r.value("id").toInt()),error))
+        {
+            QMessageBox::critical(this,tr("Error al actualizar lineas"),error);
+            break;
+        }
     }
     calcular_pedido();
 }

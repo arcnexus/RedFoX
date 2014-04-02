@@ -195,7 +195,7 @@
                    <string>Buscar Proveedor</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../maya.qrc">
+                   <iconset>
                     <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                   </property>
                  </widget>
@@ -468,7 +468,7 @@ color: rgb(255,255,255);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../maya.qrc">
+              <iconset>
                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
              </property>
             </widget>
@@ -479,7 +479,7 @@ color: rgb(255,255,255);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../maya.qrc">
+              <iconset>
                <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
              </property>
             </widget>
@@ -638,7 +638,7 @@ color: rgb(0, 85, 0);</string>
                    <string>Añadir entregas a cuenta</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../maya.qrc">
+                   <iconset>
                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -1691,7 +1691,7 @@ color: rgb(255,255,255);</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../maya.qrc">
+                 <iconset>
                   <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
                 </property>
                </widget>
@@ -1708,7 +1708,7 @@ color: rgb(255,255,255);</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../maya.qrc">
+                 <iconset>
                   <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                 </property>
                </widget>
@@ -1764,7 +1764,7 @@ color: rgb(255,255,255);</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../maya.qrc">
+                 <iconset>
                   <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
                 </property>
                </widget>
@@ -1967,7 +1967,7 @@ color: rgb(0, 0, 0);</string>
              <string>&amp;Nueva</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
             <property name="iconSize">
@@ -1990,7 +1990,7 @@ color: rgb(0, 0, 0);</string>
              <string>&amp;Anterior</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
             </property>
             <property name="iconSize">
@@ -2013,7 +2013,7 @@ color: rgb(0, 0, 0);</string>
              <string>Siguient&amp;e</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
             </property>
             <property name="iconSize">
@@ -2036,7 +2036,7 @@ color: rgb(0, 0, 0);</string>
              <string>Buscar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
             <property name="iconSize">
@@ -2059,7 +2059,7 @@ color: rgb(0, 0, 0);</string>
              <string>imprimir</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
             </property>
             <property name="iconSize">
@@ -2082,7 +2082,7 @@ color: rgb(0, 0, 0);</string>
              <string>Editar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -2108,7 +2108,7 @@ color: rgb(0, 0, 0);</string>
              <string>Guardar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -2131,7 +2131,7 @@ color: rgb(0, 0, 0);</string>
              <string>Deshacer</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -2154,7 +2154,7 @@ color: rgb(0, 0, 0);</string>
              <string>Borrar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
             </property>
             <property name="iconSize">
@@ -2177,7 +2177,7 @@ color: rgb(0, 0, 0);</string>
              <string>Facturar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Factura.png</normaloff>:/Icons/PNG/Factura.png</iconset>
             </property>
             <property name="iconSize">
@@ -2200,7 +2200,7 @@ color: rgb(0, 0, 0);</string>
              <string>Cerrar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
             </property>
             <property name="iconSize">
@@ -2358,9 +2358,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txttotal_recargo</tabstop>
   <tabstop>txttotal</tabstop>
  </tabstops>
- <resources>
-  <include location="../maya.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>btn_cerrar</sender>

@@ -2,7 +2,7 @@
 #include "ui_dlgpedidoalbfact.h"
 #include "../Auxiliares/monetarydelegate.h"
 #include "../Almacen/articulo.h"
-
+#include "proveedor.h"
 #include <QTimer>
 DlgPedidoAlbFact::DlgPedidoAlbFact(QString label,QString prov, QWidget *parent) :
     QDialog(parent),
@@ -411,6 +411,7 @@ bool DlgPedidoAlbFact::crear_documento()
         return false;
     }
     success &= crear_lineas(id);
+    success &= Proveedor::acumular(r_prov.value("id").toInt(), ui->fechaDoc->date().month() , Configuracion_global->MonedatoDouble(ui->txttotal->text()));
     return success;
 }
 
@@ -457,7 +458,7 @@ bool DlgPedidoAlbFact::crear_lineas(int id_cab)
         _data["dto"] = _data.value("subtotal").toDouble() * (_data.value("porc_dto").toDouble() / 100);
 
         _data["iva"] = _data.value("total").toDouble() * (_data.value("porc_iva").toDouble() / 100);
-      //  _data["coste_real_unidad"] =
+        //  _data["coste_real_unidad"] =
 
         if(SqlCalls::SqlInsert(_data,tabla,Configuracion_global->empresaDB,error) == -1)
         {
@@ -466,16 +467,23 @@ bool DlgPedidoAlbFact::crear_lineas(int id_cab)
             break;
         }
         QHash<QString,QVariant> _ped_data;
-        _ped_data["en_albaran"] = ui->tablaLineas->itemAt(i,4)->text().toDouble() + _data.value("cantidad").toDouble();
+        _ped_data["en_albaran"] = lineas.value(id_linea_ped).value("en_albaran").toDouble() + _data.value("cantidad").toDouble();
         if(!SqlCalls::SqlUpdate(_ped_data,"lin_ped_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id_linea_ped),error))
         {
             QMessageBox::critical(this,tr("Error al actualizar lineas de Pedido"),error);
             success = false;
             break;
         }
+
+        if(!Articulo::acumulado_compras(_data.value("id_articulo").toInt(),_data.value("cantidad").toDouble(),_data.value("total").toDouble(),ui->fechaDoc->date()))
+        {
+            success = false;
+            break;
+        }
     }
     return success;
 }
+
 
 QHash<QString, QVariant> DlgPedidoAlbFact::_datosComunes()
 {
