@@ -107,8 +107,7 @@ public slots:
     bool recuperar(QString cadenaSQL);
     bool cargar(QSqlQuery *queryPedido);
     void clear();
-    void convertir_en_albaran();
-    void convertir_en_factura();
+
     bool borrar(int id); 
 
     bool get(int id);

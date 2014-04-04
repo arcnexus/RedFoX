@@ -345,20 +345,6 @@ bool PedidoProveedor::cargar(QSqlQuery *queryPedido)
     }
         return false;
 }
-void PedidoProveedor::convertir_en_albaran()
-{
-    if(QMessageBox::question(qApp->activeWindow(),tr("Gestión de proveedores"),
-                             tr("¿Desea traspasar la información a un nuevo albarán?"),
-                             tr("No"),tr("Sí"))==QMessageBox::Accepted)
-    {
-
-    }
-}
-
-void PedidoProveedor::convertir_en_factura()
-{
-
-}
 
 bool PedidoProveedor::borrar(int id)
 {
@@ -372,6 +358,15 @@ bool PedidoProveedor::borrar(int id)
         QSqlRecord r = i.value();
         int id_art = r.value("id_articulo").toInt();
         double cantidad = r.value("cantidad").toDouble();
+        double cant_rec = r.value("cantidad_recibida").toDouble();
+        double cantidad_alb = r.value("en_albaran").toDouble();
+        if(cant_rec > cantidad_alb)
+        {
+            error = tr("Este pedido tiene lineas recibidas sin pasar a albarán/factura");
+            succes = false;
+            break;
+        }
+        cantidad -= cant_rec;
         succes &= Articulo::set_pendiente_recibir(id_art , -1.0 * cantidad);
     }
     succes &= SqlCalls::SqlDelete("lin_ped_pro",Configuracion_global->empresaDB,QString("id_cab = %1").arg(id),error);

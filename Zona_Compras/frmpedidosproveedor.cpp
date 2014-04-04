@@ -36,7 +36,7 @@ void FrmPedidosProveedor::init_querys()
 {
     if(!__init)
         return;
-    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad,cantidad_recibida,en_albaran "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     model_busqueda->setQuery("select id,pedido,fecha,recepcion,cif_nif,codigo_proveedor,proveedor from ped_pro where ejercicio = "+
                     Configuracion_global->cEjercicio+" order by pedido desc",Configuracion_global->empresaDB);
@@ -299,7 +299,7 @@ void FrmPedidosProveedor::borrar_pedido()
                              tr("Cancelar"),tr("Aceptar")) == QMessageBox::Accepted)
     {
         if (oPedido_proveedor->borrar(_id))
-            clear();
+            mostrarBusqueda();
     }
 }
 
@@ -417,7 +417,7 @@ void FrmPedidosProveedor::refrescar_modelo()
 {
     if(!__init)
         return;
-    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad  "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,subtotal, porc_dto,total,porc_iva,coste_real_unidad,cantidad_recibida,en_albaran  "
                               "from lin_ped_pro where id_cab = %1;").arg(oPedido_proveedor->id),Configuracion_global->empresaDB);
     modelgastos->setQuery(QString("select id,descripcion,importe from gastos_ped_pro where id_cab = %1").arg(oPedido_proveedor->id),
                           Configuracion_global->empresaDB);
@@ -686,7 +686,8 @@ void FrmPedidosProveedor::formatotabla()
     }
     ui->Lineas->setColumnHidden(0,true);
     ui->Lineas->setColumnHidden(1,true);
-
+    ui->Lineas->setColumnHidden(11,true);
+    ui->Lineas->setColumnHidden(12,true);
 
     header.clear();
     sizes.clear();
@@ -1188,6 +1189,14 @@ void FrmPedidosProveedor::on_btn_borrarLinea_clicked()
         int id_lin = modelLineas->record(index.row()).value("id").toInt();
         int id_art = modelLineas->record(index.row()).value("id_articulo").toInt();
         double cantidad = modelLineas->record(index.row()).value("cantidad").toDouble();
+        double cantidad_rec = modelLineas->record(index.row()).value("cantidad_recibida").toDouble();
+        double cantidad_alb = modelLineas->record(index.row()).value("en_albaran").toDouble();
+        if(cantidad_rec > cantidad_alb)
+        {
+            QMessageBox::warning(this,tr("No se puede borrar esta linea"),tr("Esta linea tiene %1 unidades recibidas no pasada a albarán/factura").arg(cantidad_rec - cantidad_alb));
+            return;
+        }
+        cantidad -= cantidad_rec;
         if(Articulo::set_pendiente_recibir(id_art , -1.0 * cantidad))
         {
             QString error;
