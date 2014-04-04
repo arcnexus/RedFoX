@@ -1085,14 +1085,13 @@ void FrmAlbaran::calcular_albaran()
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
             base4 += li.value().value("total").toDouble()* _dtoPP;
     }
-    if(ui->chkrecargo_equivalencia)
+    if(ui->chkrecargo_equivalencia->isChecked())
+    {
         re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
         re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
         re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
         re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+    }
 
     // añadir gastos extras
     if(ui->cboporc_iva_gasto1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())

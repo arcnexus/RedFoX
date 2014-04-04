@@ -941,7 +941,8 @@ void frmFacturas::on_txtcodigo_cliente_editingFinished()
     {
         oCliente1->decrementar_acumulados(oCliente1->id,oFactura->total,QDate::currentDate());
     }
-    if((ui->txtcodigo_cliente->text() != oFactura->codigo_cliente)&& !ui->txtcodigo_cliente->text().isEmpty()){
+    if((ui->txtcodigo_cliente->text() != oFactura->codigo_cliente)&& !ui->txtcodigo_cliente->text().isEmpty())
+    {
         if(ui->txtcodigo_cliente->text().trimmed().size() < Configuracion_global->digitos_cuentas_contables)
         {
             QString ccod= Configuracion_global->cuenta_clientes;
@@ -1097,6 +1098,9 @@ void frmFacturas::calcular_factura()
     re1=0;re2=0;re3=0;re4 =0;
     total1 =0; total2 =0;total3=0; total4=0;
     subtotal =0; dto=0; dtopp =0; base =0; iva =0; re =0; total =0;
+
+    double _dtoPP = 1-((ui->spinPorc_dto_pp->value()+ui->spinPorc_dto->value())/100);
+
     QMap <int,QSqlRecord> l;
     QString error;
     l = SqlCalls::SelectRecord("lin_fac",QString("id_cab=%1").arg(oFactura->id),Configuracion_global->empresaDB,error);
@@ -1108,47 +1112,33 @@ void frmFacturas::calcular_factura()
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva1->text().toFloat())
         {
             // base1
-            base1 += li.value().value("total").toDouble();
-            iva1 = base1*(li.value().value("porc_iva").toFloat()/100);
-            re1 = base1*(li.value().value("porc_re").toFloat()/100);
-            total1 = base1 + iva1 + re1;
+            base1 += li.value().value("total").toDouble()* _dtoPP;
         }
         // base2
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva2->text().toFloat())
         {
-            base2 += li.value().value("total").toDouble();
-            iva2 = base2*(li.value().value("porc_iva").toFloat()/100);
-            re1 = base2*(li.value().value("porc_re").toFloat()/100);
-            total2 = base2 + iva2 + re2;
+            base2 += li.value().value("total").toDouble()* _dtoPP;
 
         }
         // base3
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva3->text().toFloat())
         {
-            base3 += li.value().value("total").toDouble();
-            iva3 = base3*(li.value().value("porc_iva").toFloat()/100);
-            re3 = base3*(li.value().value("porc_re").toFloat()/100);
-            total3 = base3 + iva3 + re3;
+            base3 += li.value().value("total").toDouble()* _dtoPP;
 
         }
         // base4
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
         {
-            base4 += li.value().value("total").toDouble();
-            iva4 = base4*(li.value().value("porc_iva").toFloat()/100);
-            re4 = base4*(li.value().value("porc_re").toFloat()/100);
-            total4 = base4 + iva4 + re4;
+            base4 += li.value().value("total").toDouble()* _dtoPP;
         }
-
     }
-    if(ui->chkrecargo_equivalencia)
-        re1 = base1 * (ui->txtrec1->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re2 = base2 * (ui->txtrec1->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re3 = base3 * (ui->txtrec3->text().toFloat()/100);
-    if(ui->chkrecargo_equivalencia)
-        re4 = base4 * (ui->txtrec4->text().toFloat()/100);
+    if(ui->chkrecargo_equivalencia->isChecked())
+    {
+        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+    }
 
     // añadir gastos extras
     if(ui->cbo_porc_gasto_iva1->currentText().toFloat() == ui->txtporc_iva1->text().toFloat())
@@ -1183,22 +1173,26 @@ void frmFacturas::calcular_factura()
         base4 += ui->SpinGastoDist3->value();
     iva4 = base4 * (ui->txtporc_iva4->text().toFloat()/100);    
 
-    // TOTALES PARCIALES
-    total1 = base1+iva1+re1;
-    total2 = base2+iva2+re2;
-    total3 = base3+iva3+re3;
-    total4 = base4+iva4+re4;
-
     // TOTALES GENERALES
-
-    if(l.size() >0)
-        dto += li.value().value("dto").toDouble();
-    base = base1 + base2+base3+base4;
-
     dtopp = subtotal *(ui->spinPorc_dto_pp->value()/100.0);
-    base -= dtopp;
+    double _dto = subtotal *(ui->spinPorc_dto->value()/100.0);
+    base = base1 + base2+base3+base4;
+    iva = iva1 + iva2 +iva3+iva4;
+    re  = re1 +re2 + re3 + re4;
+    double irpf = base * (ui->spinporc_irpf->value()/100.0);
+
+    total = (base - irpf) + iva +re;
+    total1 = base1 +iva1 +re1;
+    total2 = base2 +iva2 +re2;
+    total3 = base3 +iva3 +re3;
+    total4 = base4 +iva4 +re4;
+
+    ui->txtimporte_irpf->setText     (Configuracion_global->toFormatoMoneda(QString::number(irpf ,'f',2)));
+
     ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(dtopp,'f',
                                                 Configuracion_global->decimales_campos_totales)));
+    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(_dto ,'f',Configuracion_global->decimales_campos_totales)));
+
 
 
     // Desglose llenar controles
@@ -1239,17 +1233,17 @@ void frmFacturas::calcular_factura()
     ui->txttotal4->setText(Configuracion_global->toFormatoMoneda(QString::number(total4,'f',
                                                                  Configuracion_global->decimales_campos_totales)));
 
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
+    //ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->toRound(dtopp,Configuracion_global->decimales_campos_totales)));
     iva = iva1 + iva2 +iva3+iva4;
     re  = re1 +re2 + re3 + re4;
     total = base + iva +re;
 
-    double irpf = base * (ui->spinporc_irpf->value()/100.0);
+
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
     ui->txtimporte_irpf_2->setText(Configuracion_global->toFormatoMoneda(QString::number(irpf,'f',2)));
     this->moneda = moneda;
     ui->txtbase->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
+    //ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtsubtotal->setText(Configuracion_global->toFormatoMoneda(QString::number(subtotal,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtiva->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_recargo->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
@@ -1387,64 +1381,12 @@ void frmFacturas::on_btnBorrar_clicked()
 
 void frmFacturas::on_spinPorc_dto_editingFinished()
 {
-    //FIXME que es esto!?
-    if(!__init)
-        return;
-    //--------------------------------------------
-    // Cambio dto en líneas
-    //--------------------------------------------
-    QMap <int,QSqlRecord> rec;
-    QString error;
-    QStringList clauses;
-    Articulo oArt(this);
-    int id_art,id_lin;
-    float porc_dto_esp, porc_dto_lin;
-    double subtotal;
-
-    clauses << QString("id_cab = %1").arg(oFactura->id);
-
-    rec = SqlCalls::SelectRecord("lin_fac",clauses,Configuracion_global->empresaDB,error);
-    QMapIterator <int, QSqlRecord> i(rec);
-    while (i.hasNext())
-    {
-        i.next();
-        id_lin = i.value().value("id").toInt();
-        id_art = i.value().value("id_articulo").toInt();
-        subtotal = i.value().value("subtotal").toDouble();
-        porc_dto_lin = i.value().value("porc_dto").toFloat();
-
-        porc_dto_esp = oArt.asigna_dto_linea(id_art,oCliente1->id,ui->spinPorc_dto->value(),porc_dto_lin);
-        QHash <QString,QVariant> f;
-        clauses.clear();
-        clauses << QString("id = %1").arg(id_lin);
-        f["porc_dto"] = porc_dto_esp;
-        f["dto"] = subtotal *(porc_dto_esp/100.0);
-
-        bool upd = SqlCalls::SqlUpdate(f,"lin_fac",Configuracion_global->empresaDB,clauses,error);
-        if(!upd)
-            QMessageBox::warning(this,tr("Cambio DTO"),tr("No se pudo realizar el cambio en las líneas, error:%1").arg(error),
-                                 tr("Aceptar"));
-        //else
-           // helper.calculatotal();
-    }
-    //--------------------------
-    // Calculo dto total
-    //--------------------------
-    double dto = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spinPorc_dto->value()/100.0));
-    ui->txtimporte_descuento->setText(Configuracion_global->toFormatoMoneda(QString::number(dto,'f',Configuracion_global->decimales_campos_totales)));
-    oFactura->dto = dto;
-    QString filter = QString("id_cab = '%1'").arg(oFactura->id);
-    //helper.fillTable("empresa","lin_fac",filter);
+    calcular_factura();
 }
 
 void frmFacturas::on_spinPorc_dto_pp_editingFinished()
 {
-    float dto_pp;
-    dto_pp = (Configuracion_global->MonedatoDouble(ui->txtsubtotal->text())*(ui->spinPorc_dto_pp->value()/100.0));
-    ui->txtDtoPP->setText(Configuracion_global->toFormatoMoneda(QString::number(dto_pp,'f',Configuracion_global->decimales_campos_totales)));
-    oFactura->dto_pp = dto_pp;
-    QString filter = QString("id_cab = '%1'").arg(oFactura->id);
-    //helper.fillTable("empresa","lin_fac",filter);
+    calcular_factura();
 }
 
 void frmFacturas::on_btnCobrar_clicked()
@@ -1694,4 +1636,58 @@ void frmFacturas::listados()
 {
     frmListadoFac d(this);
     d.exec();
+}
+
+void frmFacturas::on_chkrecargo_equivalencia_toggled(bool checked)
+{
+    if (checked) {
+        ui->chkrecargo_equivalencia->setChecked(true);
+        oFactura->recargo_equivalencia = 1;
+        ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
+        ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
+        ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
+        ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
+        oFactura->porc_rec1 = ui->txtporc_rec1->text().toFloat();
+        oFactura->porc_rec2 = ui->txtporc_rec2->text().toFloat();
+        oFactura->porc_rec3 = ui->txtporc_rec3->text().toFloat();
+        oFactura->porc_rec4 = ui->txtporc_rec4->text().toFloat();
+    } else {
+        ui->chkrecargo_equivalencia->setChecked(false);
+        oFactura->recargo_equivalencia = 0;
+        ui->txtporc_rec1->setText("0.00");
+        ui->txtporc_rec2->setText("0.00");
+        ui->txtporc_rec3->setText("0.00");
+        ui->txtporc_rec4->setText("0.00");
+        oFactura->porc_rec1 = 0;
+        oFactura->porc_rec2 = 0;
+        oFactura->porc_rec3 = 0;
+        oFactura->porc_rec4 = 0;
+    }
+    QString error;
+    for(auto i = 0; i<modelLineas->rowCount();++i)
+    {
+        QSqlRecord r = modelLineas->record(i);
+        QHash<QString,QVariant> lin;
+        double iva_art = r.value("porc_iva").toDouble();
+        double porc_re_art;
+
+        if(iva_art == oFactura->porc_iva1)
+            porc_re_art = oFactura->porc_rec1;
+        if(iva_art == oFactura->porc_iva2)
+            porc_re_art = oFactura->porc_rec2;
+        if(iva_art == oFactura->porc_iva3)
+            porc_re_art = oFactura->porc_rec3;
+        if(iva_art == oFactura->porc_iva4)
+            porc_re_art = oFactura->porc_rec4;
+
+        lin["porc_rec"] = porc_re_art;
+        lin["rec"] = r.value("total").toDouble() * (porc_re_art/100.0);
+
+        if(!SqlCalls::SqlUpdate(lin,"lin_fac",Configuracion_global->empresaDB,QString("id=%1").arg(r.value("id").toInt()),error))
+        {
+            QMessageBox::critical(this,tr("Error al actualizar lineas"),error);
+            break;
+        }
+    }
+    calcular_factura();
 }
