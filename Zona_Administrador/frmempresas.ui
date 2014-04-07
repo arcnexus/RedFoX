@@ -14,7 +14,7 @@
    <string>Gestión de empresas</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -37,7 +37,7 @@
           <string>Añadir Empresa</string>
          </property>
          <property name="icon">
-          <iconset resource="../maya.qrc">
+          <iconset>
            <normaloff>:/Icons/PNG/empresa.png</normaloff>:/Icons/PNG/empresa.png</iconset>
          </property>
          <property name="iconSize">
@@ -63,7 +63,7 @@
           <string>Editar Empresa</string>
          </property>
          <property name="icon">
-          <iconset resource="../maya.qrc">
+          <iconset>
            <normaloff>:/Icons/PNG/empresa.png</normaloff>:/Icons/PNG/empresa.png</iconset>
          </property>
          <property name="iconSize">
@@ -86,7 +86,7 @@
           <string>Configurar Terminal</string>
          </property>
          <property name="icon">
-          <iconset resource="../maya.qrc">
+          <iconset>
            <normaloff>:/Icons/PNG/Config.png</normaloff>:/Icons/PNG/Config.png</iconset>
          </property>
          <property name="iconSize">
@@ -159,7 +159,8 @@
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_73">
          <property name="text">
-          <string>RedFox utiliza el sitema de grupo de empresas por el cual podrá agrupar diferentes empresas las cuales compartirán varios datos generales como clientes árticulos... sin necesidad de duplicar datos.</string>
+          <string>RedFox utiliza el sitema de grupo de empresas por el cual podrá agrupar diferentes empresas
+las cuales compartirán varios datos generales como clientes árticulos... sin necesidad de duplicar datos.</string>
          </property>
         </widget>
        </item>
@@ -1279,8 +1280,8 @@ se guarda en el cajón portamonedas).</string>
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1195</width>
-                    <height>366</height>
+                    <width>98</width>
+                    <height>32</height>
                    </rect>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_33">
@@ -1296,7 +1297,7 @@ se guarda en el cajón portamonedas).</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux_red_fox.png</pixmap>
+                      <pixmap>:/Icons/PNG/Neux_red_fox.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -2468,7 +2469,7 @@ color: rgb(255, 255, 255);</string>
           <string>Guardar</string>
          </property>
          <property name="icon">
-          <iconset resource="../maya.qrc">
+          <iconset>
            <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
          </property>
         </widget>
@@ -3375,8 +3376,8 @@ Numeración correlativa con las facturas.</string>
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1195</width>
-                    <height>364</height>
+                    <width>98</width>
+                    <height>32</height>
                    </rect>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_31">
@@ -3392,7 +3393,7 @@ Numeración correlativa con las facturas.</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux_red_fox.png</pixmap>
+                      <pixmap>:/Icons/PNG/Neux_red_fox.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -4636,7 +4637,7 @@ color: rgb(255, 255, 255);</string>
             <string>Guardar</string>
            </property>
            <property name="icon">
-            <iconset resource="../maya.qrc">
+            <iconset>
              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
           </widget>
@@ -4913,8 +4914,6 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btn_guardar_edit</tabstop>
   <tabstop>btn_inicio</tabstop>
  </tabstops>
- <resources>
-  <include location="../maya.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

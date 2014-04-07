@@ -526,10 +526,10 @@ color: rgb(255,255,255);</string>
            <string>Procesos</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="3">
-            <widget class="QDateEdit" name="txtfecha_factura">
-             <property name="displayFormat">
-              <string>dd/MM/yyyy</string>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Pedido :</string>
              </property>
             </widget>
            </item>
@@ -540,23 +540,43 @@ color: rgb(255,255,255);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="txtpedido_cliente">
-             <property name="minimumSize">
+           <item row="1" column="4">
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
               <size>
-               <width>0</width>
-               <height>27</height>
+               <width>40</width>
+               <height>20</height>
               </size>
              </property>
+            </spacer>
+           </item>
+           <item row="0" column="2" colspan="3">
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>893</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLineEdit" name="txtcNumFra">
              <property name="maximumSize">
               <size>
-               <width>120</width>
+               <width>130</width>
                <height>16777215</height>
               </size>
              </property>
             </widget>
            </item>
-           <item row="2" column="0" colspan="6">
+           <item row="2" column="0" colspan="5">
             <widget class="QGroupBox" name="groupBox_3">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(170, 170, 127);</string>
@@ -665,6 +685,22 @@ alternate-background-color: rgb(255, 255, 222);</string>
              </layout>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="txtpedido_cliente">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="1">
             <widget class="QLabel" name="lbfacturado">
              <property name="styleSheet">
@@ -678,49 +714,6 @@ color: rgb(255, 255, 255);</string>
               <set>Qt::AlignCenter</set>
              </property>
             </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_24">
-             <property name="text">
-              <string>Pedido :</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QLineEdit" name="txtcNumFra">
-             <property name="maximumSize">
-              <size>
-               <width>130</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2" colspan="4">
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>893</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="5">
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
@@ -2302,7 +2295,6 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtprovincia</tabstop>
   <tabstop>cbo_pais</tabstop>
   <tabstop>txtpedido_cliente</tabstop>
-  <tabstop>txtfecha_factura</tabstop>
   <tabstop>txtcNumFra</tabstop>
   <tabstop>txtentregado_a_cuenta</tabstop>
   <tabstop>btnAnadirEntrega</tabstop>

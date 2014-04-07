@@ -147,6 +147,8 @@ void FrmPresupuestosCli::init_querys()
                           "from lin_pre where id = 0;",Configuracion_global->empresaDB);
 
     formato_tablas();
+    ui->tabWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 void FrmPresupuestosCli::LLenarCampos()
 {

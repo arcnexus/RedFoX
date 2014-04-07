@@ -49,6 +49,8 @@ void frmFacturas::init_querys()
     cboSeries->addItems(series2_l);
 
     formato_tabla_facturas();
+    ui->tabWidget_2->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void frmFacturas::init()

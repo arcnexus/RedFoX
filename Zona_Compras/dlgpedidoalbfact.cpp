@@ -417,7 +417,6 @@ bool DlgPedidoAlbFact::crear_documento()
 
 bool DlgPedidoAlbFact::crear_lineas(int id_cab)
 {
-    //TODO compactar lineas con el mismo articulo
     if(id_cab < 0 )
         return false;
     bool success = true;
@@ -434,6 +433,16 @@ bool DlgPedidoAlbFact::crear_lineas(int id_cab)
         _data["precio"] = ui->tablaLineas->item(i,6)->data(Qt::DisplayRole);        
         double porc_iva = lineas.value(id_linea_ped).value("porc_iva").toDouble();
         _data["porc_iva"] = porc_iva;
+        _data["total"] = Configuracion_global->MonedatoDouble(ui->tablaLineas->item(i, 8)->text());
+
+        _data["cantidad"] = qobject_cast<QDoubleSpinBox*>(ui->tablaLineas->cellWidget(i,5))->value();
+        _data["subtotal"] = _data.value("cantidad").toDouble() * _data.value("precio").toDouble();
+
+        _data["porc_dto"] = qobject_cast<QDoubleSpinBox*>(ui->tablaLineas->cellWidget(i,7))->value();
+        _data["dto"] = _data.value("subtotal").toDouble() * (_data.value("porc_dto").toDouble() / 100);
+
+        _data["iva"] = _data.value("total").toDouble() * (_data.value("porc_iva").toDouble() / 100);
+
         if(ui->chkrecargo_equivalencia->isChecked())
         {
             double porc_re = 0;
@@ -446,18 +455,8 @@ bool DlgPedidoAlbFact::crear_lineas(int id_cab)
                 }
             }
             _data["porc_rec"] = porc_re;
-            _data["rec"] = Configuracion_global->MonedatoDouble(ui->txttotal_recargo->text());
+            _data["rec"] = _data.value("total").toDouble() * (_data.value("porc_rec").toDouble() / 100);
         }
-
-        _data["cantidad"] = qobject_cast<QDoubleSpinBox*>(ui->tablaLineas->cellWidget(i,5))->value();
-        _data["subtotal"] = _data.value("cantidad").toDouble() * _data.value("precio").toDouble();
-
-        _data["total"] = Configuracion_global->MonedatoDouble(ui->tablaLineas->item(i, 8)->text());
-
-        _data["porc_dto"] = qobject_cast<QDoubleSpinBox*>(ui->tablaLineas->cellWidget(i,7))->value();
-        _data["dto"] = _data.value("subtotal").toDouble() * (_data.value("porc_dto").toDouble() / 100);
-
-        _data["iva"] = _data.value("total").toDouble() * (_data.value("porc_iva").toDouble() / 100);
         //  _data["coste_real_unidad"] =
 
         if(SqlCalls::SqlInsert(_data,tabla,Configuracion_global->empresaDB,error) == -1)

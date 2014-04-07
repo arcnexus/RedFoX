@@ -48,9 +48,7 @@ private slots:
 
     void on_btnAnadirEntrega_clicked();
 
-    void on_radBusqueda_toggled(bool checked);
-
-    void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
+    //void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
 
@@ -70,6 +68,8 @@ private slots:
     void on_btn_borrarLinea_clicked();
 
     void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btnFacturar_clicked();
 
 private:
     Ui::FrmAlbaranProveedor *ui;

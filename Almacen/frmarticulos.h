@@ -34,6 +34,7 @@ public:
     QPushButton* wantShortCut(bool& ok){ok = true; return shortCut;}
 
     void format_tables();
+    void init_querys();
 private slots:
     void on_botSiguiente_clicked();
 

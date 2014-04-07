@@ -74,6 +74,9 @@ void FrmPedidos::init()
     ui->Lineas->setItemDelegateForColumn(7,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
     ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
+
+    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
+    ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate(this));
     //-------------------------------------------------------
 
 
@@ -223,15 +226,7 @@ void FrmPedidos::init_querys()
         ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
         modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
     }
-    ui->Lineas->setItemDelegateForColumn(3,new NumericDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(4,new MonetaryDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(5,new MonetaryDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(6,new MonetaryDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(7,new MonetaryDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(8,new MonetaryDelegate(this,true));
-    ui->Lineas->setItemDelegateForColumn(9,new MonetaryDelegate_totals(this,true));
-    //-------------------------------------------------------
-    //------------------------------
+
     // tabla busquedas
     // id, pedido, fecha, cliente
     //------------------------------
@@ -244,10 +239,11 @@ void FrmPedidos::init_querys()
         ui->tabla->setColumnWidth(i,size.at(i).toInt());
         model_busqueda->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
-    ui->tabla->setItemDelegateForColumn(2,new DateDelegate(this));
-    ui->tabla->setItemDelegateForColumn(3, new MonetaryDelegate(this));
+
     ui->tabla->setColumnHidden(0,true);
 
+    ui->tabWidget_2->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 

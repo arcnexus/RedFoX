@@ -69,6 +69,7 @@ void FrmAlbaranProveedor::init_querys()
         return;
     model_busqueda->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by albaran desc",Configuracion_global->empresaDB);
     formato_tabla();
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void FrmAlbaranProveedor::init()
@@ -123,7 +124,6 @@ void FrmAlbaranProveedor::init()
 
     ui->lbfacturado->setVisible(false);
     ui->lblNumFactura->setVisible(false);
-    ui->txtfecha_factura->setVisible(false);
     ui->txtcNumFra->setVisible(false);
 
     // Modelo Tabla
@@ -238,7 +238,6 @@ void FrmAlbaranProveedor::bloquearcampos(bool state)
 
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarProv->setEnabled(!state);
-    ui->btnFacturar->setEnabled(!state);
     m_busqueda->block(!state);
 }
 
@@ -294,7 +293,6 @@ void FrmAlbaranProveedor::calcular_albaran()
     total1 =0; total2 =0;total3=0; total4=0;
     subtotal =0; dto=0; dtopp =0; base =0; irpf = 0; iva =0; re =0; total =0;
 
-    //TODO revisar comentarios esa funcion
     ui->spiniva_gasto1->setValue((ui->SpinGastoDist1->value()*(ui->cboporc_iva_gasto1->currentText().toDouble()/100)));
     ui->spiniva_gasto2->setValue((ui->SpinGastoDist2->value()*(ui->cboporc_iva_gasto2->currentText().toDouble()/100)));
     ui->spiniva_gasto3->setValue((ui->SpinGastoDist3->value()*(ui->cboporc_iva_gasto3->currentText().toDouble()/100)));
@@ -424,11 +422,7 @@ void FrmAlbaranProveedor::calcular_albaran()
     ui->txtimporte_rec_total->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
 
-    //ui->txtbase_total_2->setText(Configuracion_global->toFormatoMoneda(QString::number(base,'f',Configuracion_global->decimales_campos_totales)));
-    //ui->txttotal_iva_2->setText(Configuracion_global->toFormatoMoneda(QString::number(iva,'f',Configuracion_global->decimales_campos_totales)));
-    //ui->txttotal_recargo_2->setText(Configuracion_global->toFormatoMoneda(QString::number(re,'f',Configuracion_global->decimales_campos_totales)));
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
-
 }
 
 void FrmAlbaranProveedor::filter_table(QString texto, QString orden, QString modo)
@@ -558,14 +552,12 @@ void FrmAlbaranProveedor::llenar_campos()
         ui->btnFacturar->setEnabled(true);
         ui->lbfacturado->setVisible(false);
         ui->lblNumFactura->setVisible(false);
-        ui->txtfecha_factura->setVisible(false);
         ui->txtcNumFra->setVisible(false);
     } else
     {
         ui->btnFacturar->setEnabled(false);
         ui->lbfacturado->setVisible(true);
         ui->lblNumFactura->setVisible(true);
-        ui->txtfecha_factura->setVisible(true);
         ui->txtcNumFra->setVisible(true);
     }
 
@@ -576,6 +568,19 @@ void FrmAlbaranProveedor::llenar_campos()
 
 void FrmAlbaranProveedor::on_btnEditar_clicked()
 {
+    if(ui->stackedWidget->currentIndex() == 1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        int id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        oAlbPro->Recuperar(id);
+    }
+    if(!oAlbPro->factura.isEmpty())
+    {
+        QMessageBox::warning(this,tr("No puede editar este albarán"),tr("Este albarán ha sido facturado.\nNo se puede editar"));
+        return;
+    }
+
     total_anterior = oAlbPro->total;
     fecha_anterior = oAlbPro->fecha;
     lineas_anterior->setQuery(QString("select id,id_articulo,cantidad,total from lin_alb_pro where id_cab = %1;").arg(oAlbPro->id),Configuracion_global->empresaDB);
@@ -642,9 +647,11 @@ void FrmAlbaranProveedor::on_btnGuardar_clicked()
 
 void FrmAlbaranProveedor::guardar_campos_en_objeto()
 {
+    //TODO revisar esto
     oAlbPro->albaran = ui->txtalbaran->text();
     oAlbPro->fecha = ui->txtfecha->date();
     oAlbPro->proveedor = ui->txtproveedor->text();
+    oAlbPro->codigo_proveedor = ui->txtcodigo_proveedor->text();
     oAlbPro->cif_proveedor = ui->txtcif->text();
     oAlbPro->total1 = ui->txttotal1->text().replace(".","").replace(",",".").toDouble();
     oAlbPro->total2 = ui->txttotal2->text().replace(".","").replace(",",".").toDouble();
@@ -670,7 +677,7 @@ void FrmAlbaranProveedor::guardar_campos_en_objeto()
     oAlbPro->base2 = ui->txtbase2->text().replace(".","").replace(",",".").toDouble();
     oAlbPro->base3 = ui->txtbase3->text().replace(".","").replace(",",".").toDouble();
     oAlbPro->base4 = ui->txtbase4->text().replace(".","").replace(",",".").toDouble();
-    oAlbPro->factura = ui->txtcNumFra->text().replace(".","").replace(",",".").toDouble();
+    oAlbPro->factura = ui->txtcNumFra->text();
     oAlbPro->base_total = ui->txtbase->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->iva_total = ui->txtiva_total->text().replace(".","").replace(",",".").replace(moneda,"").toDouble();
     oAlbPro->total_recargo = ui->txtimporte_rec_total->text().replace(".","").replace(moneda,"").replace(".","").replace(",",".").toDouble();
@@ -695,6 +702,7 @@ void FrmAlbaranProveedor::on_btnAnadir_clicked()
         llenar_campos();
         bloquearcampos(false);
         ui->stackedWidget->setCurrentIndex(0);
+        ui->tabWidget_2->setCurrentIndex(0);
         ocultarBusqueda();
         ui->txtcodigo_proveedor->setFocus();
         ui->txtfecha->setDate(QDate::currentDate());
@@ -707,11 +715,24 @@ void FrmAlbaranProveedor::on_btnAnadir_clicked()
 
 void FrmAlbaranProveedor::on_btnBorrar_clicked()
 {
+    if(ui->stackedWidget->currentIndex() == 1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        int _id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        oAlbPro->Recuperar(_id);
+    }
+    if(!oAlbPro->factura.isEmpty())
+    {
+        QMessageBox::warning(this,tr("No puede borrar este albarán"),tr("Este albarán ha sido facturado.\nNo se puede borrar"));
+        return;
+    }
+
     if(QMessageBox::warning(this,tr("Gestión de albaranes de proveedor"),
                             tr("¿Seguro que desea borrar ese albarán?"),tr("NO"),tr("SÍ")) == QMessageBox::Accepted)
     {
-        oAlbPro->borrar(oAlbPro->id);
-        on_btnAnterior_clicked();
+        oAlbPro->borrar();
+        mostrarBusqueda();
     }
 }
 
@@ -730,27 +751,19 @@ void FrmAlbaranProveedor::on_btnAnadirEntrega_clicked()
 
 }
 
-void FrmAlbaranProveedor::on_radBusqueda_toggled(bool checked)
-{
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
-    else
-        ui->stackedWidget->setCurrentIndex(0);
-}
-
-void FrmAlbaranProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
-{
-    QHash <QString,QString> h;
-    h[tr("albarán")] = "albaran";
-    h[tr("fecha")] = "fecha";
-    h[tr("cif/nif")] = "cif_proveedor";
-    h[tr("Proveedor")] = "proveedor";
-    QString order = h.value(arg1);
-    if (order == "albaran" || order =="fecha")
-        model_busqueda->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order+" desc",Configuracion_global->empresaDB);
-    else
-        model_busqueda->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order,Configuracion_global->empresaDB);
-}
+//void FrmAlbaranProveedor::on_cboOrdenar_por_currentIndexChanged(const QString &arg1)
+//{
+//    QHash <QString,QString> h;
+//    h[tr("albarán")] = "albaran";
+//    h[tr("fecha")] = "fecha";
+//    h[tr("cif/nif")] = "cif_proveedor";
+//    h[tr("Proveedor")] = "proveedor";
+//    QString order = h.value(arg1);
+//    if (order == "albaran" || order =="fecha")
+//        model_busqueda->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order+" desc",Configuracion_global->empresaDB);
+//    else
+//        model_busqueda->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by "+order,Configuracion_global->empresaDB);
+//}
 
 void FrmAlbaranProveedor::on_tabla_doubleClicked(const QModelIndex &index)
 {
@@ -819,6 +832,13 @@ bool FrmAlbaranProveedor::eventFilter(QObject *obj, QEvent *event)
 
 void FrmAlbaranProveedor::on_btnImprimir_clicked()
 {
+    if(ui->stackedWidget->currentIndex() == 1)
+    {
+        if(!ui->tabla->currentIndex().isValid())
+            return;
+        int id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        oAlbPro->Recuperar(id);
+    }
     //TODO - IMPRIMIR
 }
 
@@ -995,5 +1015,194 @@ void FrmAlbaranProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
 
         calcular_albaran();
         ui->Lineas->setFocus();
+    }
+}
+
+void FrmAlbaranProveedor::on_btnFacturar_clicked()
+{
+    if(!oAlbPro->factura.isEmpty())
+        return;
+
+    if(QMessageBox::question(this,tr("¿Facturar albarán?"),tr("¿Desea facturar este albarán?"),
+            tr("No"),tr("Facturar")) == QMessageBox::Accepted)
+    {
+        QDialog d(this);
+        d.setWindowTitle(tr("Idique fecha y nº de documento"));
+
+        QLabel l_fecha(tr("Fecha:"),&d);
+        QLabel l_numero(tr("Nº de documento"),&d);
+
+        QDateEdit dateedit(QDate::currentDate(),&d);
+        QLineEdit lineedit(&d);
+
+        QPushButton btn_accept(tr("Aceptar"),&d);
+        QPushButton btn_cancel(tr("Cancelar"),&d);
+
+
+        QGridLayout layout;
+
+        layout.addWidget(&l_fecha,0,0,1,1);
+        layout.addWidget(&dateedit,0,1,1,1);
+
+        layout.addWidget(&l_numero,1,0,1,1);
+        layout.addWidget(&lineedit,1,1,1,1);
+
+        layout.addWidget(&btn_cancel,2,0,1,1);
+        layout.addWidget(&btn_accept,2,1,1,1);
+
+        d.setLayout(&layout);
+
+        connect(&btn_accept,SIGNAL(clicked()),&d,SLOT(accept()));
+        connect(&btn_cancel,SIGNAL(clicked()),&d,SLOT(reject()));
+
+        QString doc = "";
+        do
+        {
+            if(d.exec() == QDialog::Rejected)
+            {
+                return;
+            }
+            doc = lineedit.text();
+        }
+        while(doc.isEmpty());
+
+        QHash<QString,QVariant> _data;
+        _data["factura"] = doc;
+        _data["fecha"] = dateedit.date();
+        _data["id_proveedor"] = oAlbPro->id_proveedor;
+        _data["proveedor"] = oAlbPro->proveedor;
+        _data["cif_proveedor"] = oAlbPro->cif_proveedor;
+        _data["total1"] = Configuracion_global->MonedatoDouble(ui->txttotal1->text());
+        _data["total2"] = Configuracion_global->MonedatoDouble(ui->txttotal2->text());
+        _data["total3"] = Configuracion_global->MonedatoDouble(ui->txttotal3->text());
+        _data["total4"] = Configuracion_global->MonedatoDouble(ui->txttotal4->text());
+        _data["porc_iva1"] = ui->txtporc_iva1->text().toDouble();
+        _data["porc_iva2"] = ui->txtporc_iva2->text().toDouble();
+        _data["porc_iva3"] = ui->txtporc_iva3->text().toDouble();
+        _data["porc_iva4"] = ui->txtporc_iva4->text().toDouble();
+        _data["iva1"] = Configuracion_global->MonedatoDouble(ui->txtiva1->text());
+        _data["iva2"] = Configuracion_global->MonedatoDouble(ui->txtiva2->text());
+        _data["iva3"] = Configuracion_global->MonedatoDouble(ui->txtiva3->text());
+        _data["iva4"] = Configuracion_global->MonedatoDouble(ui->txtiva4->text());
+        _data["base1"] = Configuracion_global->MonedatoDouble(ui->txtbase1->text());
+        _data["base2"] = Configuracion_global->MonedatoDouble(ui->txtbase2->text());
+        _data["base3"] = Configuracion_global->MonedatoDouble(ui->txtbase3->text());
+        _data["base4"] = Configuracion_global->MonedatoDouble(ui->txtbase4->text());
+        _data["base_total"] = Configuracion_global->MonedatoDouble(ui->txtbase_total->text());
+        _data["iva_total"] = Configuracion_global->MonedatoDouble(ui->txttotal_iva->text());
+        _data["total"] = Configuracion_global->MonedatoDouble(ui->txttotal->text());
+        _data["comentario"] = ui->txtcomentario->toPlainText();
+        _data["recargo_equivalencia"] = ui->chklporc_rec->isChecked();
+        _data["porc_rec1"] = ui->txtporc_rec1->text().toDouble();
+        _data["porc_rec2"] = ui->txtporc_rec2->text().toDouble();
+        _data["porc_rec3"] = ui->txtporc_rec3->text().toDouble();
+        _data["porc_rec4"] = ui->txtporc_rec4->text().toDouble();
+        _data["rec1"] = Configuracion_global->MonedatoDouble(ui->txtrec1->text());
+        _data["rec2"] = Configuracion_global->MonedatoDouble(ui->txtrec2->text());
+        _data["rec3"] = Configuracion_global->MonedatoDouble(ui->txtrec3->text());
+        _data["rec4"] = Configuracion_global->MonedatoDouble(ui->txtrec4->text());
+        _data["total_recargo"] = Configuracion_global->MonedatoDouble(ui->txttotal_recargo->text());
+        _data["ejercicio"] = dateedit.date().year();
+        _data["subtotal"] = Configuracion_global->MonedatoDouble(ui->txtsubtotal->text());
+        _data["direccion1"] = oAlbPro->direccion1;
+        _data["direccion2"] = oAlbPro->direccion2;
+        _data["cp"] = oAlbPro->cp;
+        _data["poblacion"] = oAlbPro->poblacion;
+        _data["provincia"] = oAlbPro->provincia;
+        _data["id_pais"] = oAlbPro->id_pais;
+        _data["porc_dto"] = ui->spinPorc_dto_pp->value();
+        _data["dto"] = Configuracion_global->MonedatoDouble(ui->txtimporte_descuento->text());
+        _data["telefono"] = oAlbPro->telefono;
+        _data["fax"] = oAlbPro->fax;
+        _data["movil"] = oAlbPro->movil;
+        _data["codigo_proveedor"] = oAlbPro->codigo_proveedor;
+        _data["id_forma_pago"] = oAlbPro->id_forma_pago;
+        _data["impreso"] = false;
+        _data["desc_gasto1"] = ui->txtGastoDist1->text();
+        _data["desc_gasto2"] = ui->txtGastoDist2->text();
+        _data["desc_gasto3"] = ui->txtGastoDist3->text();
+        _data["imp_gasto1"] = ui->SpinGastoDist1->value();
+        _data["imp_gasto2"] = ui->SpinGastoDist2->value();
+        _data["imp_gasto3"] = ui->SpinGastoDist3->value();
+        _data["porc_iva_gasto1"] = ui->cboporc_iva_gasto1->currentText().toDouble();
+        _data["porc_iva_gasto2"] = ui->cboporc_iva_gasto2->currentText().toDouble();
+        _data["porc_iva_gasto3"] = ui->cboporc_iva_gasto3->currentText().toDouble();
+        _data["iva_gasto1"] = ui->spiniva_gasto1->value();
+        _data["iva_gasto2"] = ui->spiniva_gasto2->value();
+        _data["iva_gasto3"] = ui->spiniva_gasto3->value();
+        _data["editable"] = false;
+
+        Configuracion_global->transaction();
+        QString error;
+        int id = SqlCalls::SqlInsert(_data,"fac_pro",Configuracion_global->empresaDB,error);
+        bool success = id != -1;
+        if(!success)
+        {
+            QMessageBox::critical(this,tr("Error al insertar Factura"),error);
+            Configuracion_global->rollback();
+            return;
+        }
+
+        QString tabla = "lin_fac_pro";
+        for(auto i = 0; i<modelLineas->rowCount(); ++i)
+        {
+            QSqlRecord r = modelLineas->record(i);
+            QHash<QString,QVariant> _data;
+
+            _data["id_cab"] = id;
+            _data["id_articulo"] = r.value("id_articulo");
+            _data["codigo"] = r.value("codigo");
+            _data["descripcion"] = r.value("descripcion");
+            _data["precio"] = r.value("precio");
+            double porc_iva = r.value("porc_iva").toDouble();
+            _data["porc_iva"] = porc_iva;
+
+            _data["cantidad"] = r.value("cantidad");
+            _data["subtotal"] = r.value("subtotal");
+
+            _data["total"] = r.value("total");
+
+            _data["porc_dto"] = r.value("porc_dto");
+            _data["dto"] = _data.value("subtotal").toDouble() * (_data.value("porc_dto").toDouble() / 100);
+
+            _data["iva"] = _data.value("total").toDouble() * (_data.value("porc_iva").toDouble() / 100);
+
+            if(ui->chklporc_rec->isChecked())
+            {
+                double porc_re = 0;
+                for(auto a = 0; a< Configuracion_global->iva_model->rowCount(); ++a)
+                {
+                    if(Configuracion_global->iva_model->record(a).value("iva").toDouble() == porc_iva)
+                    {
+                        porc_re = Configuracion_global->iva_model->record(a).value("recargo_equivalencia").toDouble();
+                        break;
+                    }
+                }
+                _data["porc_rec"] = porc_re;
+                _data["rec"] = _data.value("total").toDouble() * (_data.value("porc_rec").toDouble() / 100);
+            }
+
+            //  _data["coste_real_unidad"] =
+
+            if(SqlCalls::SqlInsert(_data,tabla,Configuracion_global->empresaDB,error) == -1)
+            {
+                QMessageBox::critical(this,tr("Error al insertar lineas de Factura"),error);
+                success = false;
+                break;
+            }
+        }
+        oAlbPro->factura = doc;
+        success &= oAlbPro->guardar();
+
+        if(success)
+        {
+            Configuracion_global->commit();
+            llenar_campos();
+            TimedMessageBox * t = new TimedMessageBox(parentWidget(),tr("Factura creada con éxito"));
+        }
+        else
+        {
+            Configuracion_global->rollback();
+        }
     }
 }

@@ -33,6 +33,24 @@ FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     this->installEventFilter(this);
 }
 
+void FrmArticulos::init_querys()
+{    
+    modelEmpresa->setQuery("select * from vistaEmpresa",Configuracion_global->groupDB);
+    promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
+    volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
+
+    QString cSQL = "select id,codigo, descripcion_reducida, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
+            "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
+    modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
+
+    if(modelBusqueda->rowCount() == 0)
+        modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos", Configuracion_global->groupDB);
+
+    tarifa_model->select();
+    ui->Pestanas->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
 void FrmArticulos::init()
 {
     if(__init)
@@ -115,20 +133,7 @@ void FrmArticulos::init()
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
 
-    bloquearCampos(true);
-
-    modelEmpresa->setQuery("select * from vistaEmpresa",Configuracion_global->groupDB);
-    promociones->setQuery("select id,activa,descripcion from articulos_ofertas where id_articulo = 0",Configuracion_global->empresaDB);
-    volumen->setQuery("select id,desde,hasta,precio from articulos_volumen",Configuracion_global->groupDB);
-
-    QString cSQL = "select id,codigo, descripcion_reducida, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,stock_fisico_almacen from vistaart_tarifa "
-            "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
-    modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
-
-    if(modelBusqueda->rowCount() == 0)
-        modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos", Configuracion_global->groupDB);
-
-    tarifa_model->select();
+    bloquearCampos(true);    
 
     GraficaUnidades();
     //SET TABLE FORMAT
@@ -928,9 +933,9 @@ void FrmArticulos::AnadirSeccion()
 
 bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 {
-    if(target == this && event->type() == QEvent::Hide)
+    if(target == this && event->type() == QEvent::Show)
     {
-       ui->Pestanas->setCurrentIndex(0);
+       init_querys();
     }
     else if(event->type() == QEvent::Resize)
     {

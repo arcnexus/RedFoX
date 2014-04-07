@@ -58,6 +58,9 @@ void frmClientes::init_querys()
     ui->cboagente->setModelColumn(1);
     ui->cbotarifa_cliente ->setModelColumn(1);
     ui->cboidiomaDocumentos->setModelColumn(1);
+
+    ui->tabWidget_2->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void frmClientes::init()

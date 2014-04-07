@@ -1,4 +1,6 @@
 #include "albaranproveedor.h"
+#include "../Almacen/articulo.h"
+#include "proveedor.h"
 
 AlbaranProveedor::AlbaranProveedor(QObject *parent) :
     QObject(parent)
@@ -45,21 +47,37 @@ void AlbaranProveedor::Recuperar(int id)
 
 }
 
-bool AlbaranProveedor::borrar(int id_alb)
+bool AlbaranProveedor::borrar()
 {
-    bool transaccion = true;
+    bool succes = true;
     Configuracion_global->empresaDB.transaction();
-    QSqlQuery queryAlbpro(Configuracion_global->empresaDB);
 
-    transaccion &= queryAlbpro.exec("delete from lin_alb_pro where id_cab = "+QString::number(id_alb));
-    transaccion &= queryAlbpro.exec("delete from alb_pro where id ="+QString::number(id_alb));
+    QString error;
+    QMap<int, QSqlRecord> lineas = SqlCalls::SelectRecord("lin_alb_pro",QString("id_cab = %1").arg(this->id),Configuracion_global->empresaDB,error);
+    for(auto i = lineas.begin(); i != lineas.end(); ++i)
+    {
+        QSqlRecord r = i.value();
+        int id_art = r.value("id_articulo").toInt();
+        double cantidad = r.value("cantidad").toDouble();
+        double total_art = r.value("total").toDouble();
 
-    // TODO --- Actualizar stock
-    if(transaccion)
-        transaccion = Configuracion_global->empresaDB.commit();
-    if(!transaccion)
-        Configuracion_global->empresaDB.rollback();
-    return transaccion;
+        succes &= Articulo::acumulado_compras(id_art,-1.0*cantidad, -1.0*total_art,this->fecha);
+
+    }
+    succes &= Proveedor::acumular(this->id_proveedor,this->fecha.month(),-1.0*total);
+    succes &= SqlCalls::SqlDelete("lin_alb_pro",Configuracion_global->empresaDB,QString("id_cab = %1").arg(id),error);
+    succes &= SqlCalls::SqlDelete("alb_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id),error);
+
+    if(!succes)
+    {
+        Configuracion_global->rollback();
+        QMessageBox::warning(qApp->activeWindow(),tr("Ocurrió un error al borrar albarán de proveedores"),error,tr("Aceptar"));
+    }
+    else
+    {
+        Configuracion_global->commit();
+    }
+    return succes;
 }
 
 

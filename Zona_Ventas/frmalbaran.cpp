@@ -42,6 +42,8 @@ void FrmAlbaran::init_querys()
                     Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
     series->setQuery("select serie from series", Configuracion_global->empresaDB);
     formato_tabla();
+    ui->tabWidget_2->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void FrmAlbaran::init()

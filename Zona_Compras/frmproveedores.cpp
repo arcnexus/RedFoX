@@ -155,6 +155,8 @@ void frmProveedores::init_querys()
     QString cSQL = "select id,codigo,proveedor,cif,telefono1,fax,movil,persona_contacto from proveedores order by proveedor";
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
     formato_tabla(modelBusqueda);
+    ui->tabWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void frmProveedores::llenar_tabDatos()
