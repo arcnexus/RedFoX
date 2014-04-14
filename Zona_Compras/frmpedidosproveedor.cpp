@@ -761,7 +761,7 @@ bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
             init();
         init_querys();
     }
-    else if(event->type() == QEvent::Resize)
+    else if(event->type() == QEvent::Resize && obj == this)
     {
         if(!__init)
             init();

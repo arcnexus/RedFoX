@@ -19,7 +19,6 @@ public:
     explicit FrmFacturasProveedor(QWidget *parent = 0, bool showCerrar = false);
     ~FrmFacturasProveedor();
     void llenarProveedor(int id);
-    int id;
 
     module_zone module_zone(){return Compras;}
     QString module_name(){return "Facturas Proveedor";}
@@ -27,6 +26,8 @@ public:
     QString ModuleMenuPath(){return tr("");}
     
     QPushButton* wantShortCut(bool& ok){ok = true; return push;}
+    void init_querys();
+    void init();
 private slots:
     void bloquearcampos(bool state);
     void on_btnAnadir_clicked();
@@ -58,6 +59,12 @@ private slots:
     void ocultarBusqueda();
     void filter_table(QString texto, QString orden, QString modo);
     void borrarFactura();
+    void on_btnAnadirLinea_clicked();
+
+    void on_Lineas_doubleClicked(const QModelIndex &index);
+
+    void on_btn_borrarLinea_clicked();
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
@@ -66,12 +73,24 @@ private:
     FacturasProveedor *oFacPro;
     QAction menuButton;
     QPushButton* push;
-    QSqlQueryModel *m;
+
+    QSqlQueryModel *model_busqueda;
+    QSqlQueryModel *modeltipogasto;
+    QSqlQueryModel *modelLineas;
     void formato_tabla();
 
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
+
+    bool __init;
+    bool _showCerrar;
+    void llenarLineas();
+    bool editando;
+    double total_anterior;
+    QDate fecha_anterior;
+    QSqlQueryModel* lineas_anterior;
+    void calcular_factura();
 signals:
 
 };

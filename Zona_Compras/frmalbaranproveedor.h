@@ -46,8 +46,6 @@ private slots:
 
     void on_btnBorrar_clicked();
 
-    void on_btnAnadirEntrega_clicked();
-
     //void on_cboOrdenar_por_currentIndexChanged(const QString &arg1);
 
     void on_tabla_doubleClicked(const QModelIndex &index);
@@ -75,7 +73,6 @@ private:
     Ui::FrmAlbaranProveedor *ui;
     Proveedor prov;
     AlbaranProveedor *oAlbPro;
-    QSqlQueryModel *modelEntregas;
     QString moneda;
     void llenar_campos();
     void bloquearcampos(bool estado);
@@ -91,7 +88,6 @@ private:
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
     void llenarProveedor(int id);
-    void llenar_tabla_entregas();
 
     bool __init;
     bool _showCerrar;
