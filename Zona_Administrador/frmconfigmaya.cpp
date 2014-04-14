@@ -12,6 +12,8 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/Config.png"),tr("Configuracion General"),this)
 {
     ui->setupUi(this);
+    model_grupos = new QSqlQueryModel(this);
+    model_empresa= new QSqlQueryModel(this);
 
     QFile f(qApp->applicationDirPath()+"/MayaConfig.ini");
     if(!f.exists())
@@ -50,10 +52,10 @@ frmConfigmaya::frmConfigmaya(QWidget *parent) :
     ui->chkVademecum_MTC->setChecked(settings.value("vad_MTC").toBool());
     ui->chk_vademecum_fitoterapia->setChecked(settings.value("vad_fito").toBool());
 
-    model_grupos = new QSqlQueryModel(this);
+
     model_grupos->setQuery("SELECT * from redfoxglobal.grupos",Configuracion_global->globalDB);
 
-    model_empresa= new QSqlQueryModel(this);
+
 
     ui->cbo_user_edit->setModel(Configuracion_global->usuarios_model);
     ui->cbo_user_edit->setModelColumn(1);
