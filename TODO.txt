@@ -212,3 +212,6 @@ ALTER TABLE `empneux`.`fac_pro` CHANGE COLUMN `total_dto` `dto` DOUBLE NULL DEFA
 ALTER TABLE `empneux`.`alb_pro` CHANGE COLUMN `importe_rec_total` `total_recargo` DOUBLE NULL DEFAULT NULL ;
 ALTER TABLE `empneux`.`alb_pro` ADD COLUMN `porc_dto` DOUBLE NULL DEFAULT '0' AFTER `id_pais`;
 
+ALTER TABLE `empNeux`.`lin_fac_pro` ADD COLUMN `albaran` VARCHAR(45) NULL AFTER `coste_real_unidad`;
+ALTER TABLE `empNeux`.`lin_fac` ADD COLUMN `lin_faccol` VARCHAR(45) NULL AFTER `id_lote`;
+ALTER TABLE `empNeux`.`fac_pro` CHANGE COLUMN `recargo_equivalencia` `recargo_equivalencia` TINYINT NULL DEFAULT '0' ;

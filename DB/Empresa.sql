@@ -509,7 +509,7 @@ CREATE TABLE `@empresa@`.`fac_pro` (
   `fax` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `porc_dto` decimal(9,2) DEFAULT '0.00',
   `porc_irpf` float DEFAULT '0',
-  `recargo_equivalencia` float DEFAULT '0',
+  `recargo_equivalencia` tinyint(1) DEFAULT '0',
   `base1` double DEFAULT '0',
   `base2` double DEFAULT '0',
   `base3` double DEFAULT '0' COMMENT '	',
@@ -646,6 +646,7 @@ CREATE TABLE `@empresa@`.`lin_fac` (
   `total` double DEFAULT '0',
   `promocion` tinyint(1) DEFAULT '0',
   `id_lote` int(11) DEFAULT NULL,
+  `albaran` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@empresa@`.`lin_fac_pro` (
@@ -667,6 +668,7 @@ CREATE TABLE `@empresa@`.`lin_fac_pro` (
   `porc_rec` float DEFAULT '0',
   `rec` double DEFAULT '0',
   `coste_real_unidad` DOUBLE  NOT NULL DEFAULT '0',
+  `albaran` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cCodigo` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
