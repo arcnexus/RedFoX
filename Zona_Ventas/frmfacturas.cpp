@@ -1077,7 +1077,7 @@ bool frmFacturas::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent->key() == Qt::Key_Escape)
             return true;
     }
-    if(event->type() == QEvent::Resize)
+    if(event->type() == QEvent::Resize && obj == this)
     {
         if(!__init)
             init();

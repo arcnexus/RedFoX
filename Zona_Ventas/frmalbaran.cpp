@@ -1241,7 +1241,7 @@ bool FrmAlbaran::eventFilter(QObject *obj, QEvent *event)
                 on_table2_doubleClicked(ui->table2->currentIndex());
         return false;
     }
-    else if(event->type() == QEvent::Resize)
+    else if(event->type() == QEvent::Resize && obj == this)
     {
         if(!__init)
             init();
