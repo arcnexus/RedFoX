@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1108</width>
-    <height>571</height>
+    <width>1137</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Gestión de Facturas de proveedor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../maya.qrc">
+   <iconset>
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -115,15 +115,36 @@ color: rgb(255, 255, 255);</string>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="5" column="2" colspan="6">
-               <widget class="QLineEdit" name="txtpoblacion">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
+             <layout class="QGridLayout" name="gridLayout_15">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Código Proveedor:</string>
                 </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Proveedor:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="txtdireccion1">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -132,34 +153,112 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="6">
-               <widget class="QCheckBox" name="chkRetencioirpf">
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_6">
                 <property name="text">
-                 <string>Retención IRPF</string>
+                 <string>Dirección 2:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Cif/Nif/Nie:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="7">
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="txtdireccion2">
+                <property name="minimumSize">
                  <size>
-                  <width>40</width>
-                  <height>20</height>
+                  <width>0</width>
+                  <height>27</height>
                  </size>
                 </property>
-               </spacer>
+               </widget>
               </item>
-              <item row="2" column="1" colspan="7">
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Provincia:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLineEdit" name="txtcodigo_proveedor">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="botBuscarCliente">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Buscar Proveedor</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_15">
+                  <property name="text">
+                   <string>Cif/Nif/Nie:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="txtcif">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="8" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLineEdit" name="txtprovincia"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_14">
+                  <property name="text">
+                   <string>Pais:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="combo_pais"/>
+                </item>
+               </layout>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>Dirección:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
                <widget class="QLineEdit" name="txtproveedor">
                 <property name="minimumSize">
                  <size>
@@ -169,90 +268,7 @@ color: rgb(255, 255, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="3">
-               <widget class="QLineEdit" name="txtcif">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1" colspan="4">
-               <widget class="QLineEdit" name="txtprovincia"/>
-              </item>
-              <item row="5" column="1">
-               <widget class="QLineEdit" name="txtcp">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>70</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>Dirección 2:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>Dirección:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>Provincia:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="5">
-               <widget class="QCheckBox" name="chklporc_rec">
-                <property name="text">
-                 <string>Recargo Equivalencia</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Código Proveedor:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>Población:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0" colspan="5">
+              <item row="0" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <item>
                  <widget class="QLabel" name="lblnumfac">
@@ -310,89 +326,106 @@ color: rgb(255, 255, 255);</string>
                 </item>
                </layout>
               </item>
-              <item row="6" column="5" colspan="3">
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_17">
+                <property name="text">
+                 <string>C.P.:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <item>
-                 <widget class="QLabel" name="label_14">
-                  <property name="text">
-                   <string>Pais:</string>
+                 <widget class="QLineEdit" name="txtcp">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="combo_pais"/>
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>Población:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="txtpoblacion">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>27</height>
+                   </size>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
-              <item row="4" column="1" colspan="7">
-               <widget class="QLineEdit" name="txtdireccion2">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>27</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="4">
-               <widget class="QPushButton" name="botBuscarCliente">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Buscar Proveedor</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../maya.qrc">
-                  <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="txtcodigo_proveedor">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Proveedor:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1" colspan="7">
-               <widget class="QLineEdit" name="txtdireccion1">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>27</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <spacer name="verticalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
+              <item row="0" column="2" rowspan="5">
+               <layout class="QGridLayout" name="gridLayout">
+                <item row="1" column="1">
+                 <widget class="QDoubleSpinBox" name="spinPorc_dto_pp"/>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_38">
+                  <property name="text">
+                   <string>%Dto P.P.:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="chklporc_rec">
+                  <property name="text">
+                   <string>Recargo Equivalencia</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0" colspan="2">
+                 <widget class="QLabel" name="label_37">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: #304163;
+color: rgb(255,255,255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Datos extras calculo pedido</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QCheckBox" name="chkRetencioirpf">
+                  <property name="text">
+                   <string>Retención IRPF</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -403,180 +436,71 @@ color: rgb(255, 255, 255);</string>
           <attribute name="title">
            <string>Líneas de Factura</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_10">
+          <layout class="QGridLayout" name="gridLayout_9">
            <item row="0" column="0">
-            <widget class="QSplitter" name="splitter">
+            <widget class="QPushButton" name="btnAnadirLinea">
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Añadir línea con los datos cargados</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btn_borrarLinea">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <spacer name="horizontalSpacer_2">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
-             <widget class="QWidget" name="layoutWidget">
-              <layout class="QGridLayout" name="gridLayout_9">
-               <item row="0" column="1">
-                <widget class="QPushButton" name="btn_borrarLinea">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../maya.qrc">
-                   <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QPushButton" name="btnAnadirLinea">
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Añadir línea con los datos cargados</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../maya.qrc">
-                   <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>897</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="0" colspan="3">
-                <widget class="QTableWidget" name="Lineas">
-                 <property name="horizontalScrollBarPolicy">
-                  <enum>Qt::ScrollBarAsNeeded</enum>
-                 </property>
-                 <property name="alternatingRowColors">
-                  <bool>true</bool>
-                 </property>
-                 <property name="selectionMode">
-                  <enum>QAbstractItemView::SingleSelection</enum>
-                 </property>
-                 <property name="selectionBehavior">
-                  <enum>QAbstractItemView::SelectRows</enum>
-                 </property>
-                 <property name="gridStyle">
-                  <enum>Qt::DotLine</enum>
-                 </property>
-                 <property name="cornerButtonEnabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="columnCount">
-                  <number>10</number>
-                 </property>
-                 <attribute name="horizontalHeaderCascadingSectionResizes">
-                  <bool>false</bool>
-                 </attribute>
-                 <attribute name="horizontalHeaderMinimumSectionSize">
-                  <number>100</number>
-                 </attribute>
-                 <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                  <bool>false</bool>
-                 </attribute>
-                 <attribute name="horizontalHeaderStretchLastSection">
-                  <bool>true</bool>
-                 </attribute>
-                 <attribute name="verticalHeaderCascadingSectionResizes">
-                  <bool>false</bool>
-                 </attribute>
-                 <attribute name="verticalHeaderStretchLastSection">
-                  <bool>false</bool>
-                 </attribute>
-                 <column>
-                  <property name="text">
-                   <string>Codigo</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Cantidad</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Descripcion</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>P.V.P</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>subtotal</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>DTO</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>DTO%</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>% I.V.A.</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Total</string>
-                  </property>
-                 </column>
-                 <column/>
-                </widget>
-               </item>
-               <item row="2" column="0" colspan="3">
-                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                 <item>
-                  <spacer name="horizontalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_17">
-                   <property name="text">
-                    <string>Total:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="lbl_total">
-                   <property name="text">
-                    <string>0€</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>968</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QTableView" name="Lineas">
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <property name="gridStyle">
+              <enum>Qt::DotLine</enum>
+             </property>
+             <property name="cornerButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
@@ -768,7 +692,11 @@ background-color: rgb(253, 0, 4);</string>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="txtAlbaran"/>
+               <widget class="QLineEdit" name="txtAlbaran">
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -853,7 +781,7 @@ color: rgb(0, 0, 0);</string>
                 <item>
                  <widget class="QPushButton" name="pushButton_2">
                   <property name="icon">
-                   <iconset resource="../maya.qrc">
+                   <iconset>
                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -881,7 +809,7 @@ color: rgb(0, 0, 0);</string>
                  <string>Pagar Factura</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../maya.qrc">
+                 <iconset>
                   <normaloff>:/Icons/PNG/Fp.png</normaloff>:/Icons/PNG/Fp.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -922,685 +850,929 @@ color: rgb(0, 0, 0);</string>
           <attribute name="title">
            <string>Desglose</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_28">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
-             </property>
-             <property name="text">
-              <string>BASE</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="label_55">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
-             </property>
-             <property name="text">
-              <string>%IVA</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLabel" name="label_56">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
-             </property>
-             <property name="text">
-              <string>IVA</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QLabel" name="label_57">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
-             </property>
-             <property name="text">
-              <string>%R.E.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <widget class="QLabel" name="label_58">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
-             </property>
-             <property name="text">
-              <string>R.E.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="6">
-            <widget class="QLabel" name="label_59">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 192);</string>
-             </property>
-             <property name="text">
-              <string>TOTAL</string>
-             </property>
-            </widget>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0" colspan="2">
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_28">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>BASE</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_55">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>%IVA</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLabel" name="label_56">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>IVA</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QLabel" name="label_57">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>%R.E.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="7">
+              <widget class="QLabel" name="label_58">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>R.E.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="10">
+              <widget class="QLabel" name="label_59">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>TOTAL</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="maximumSize">
+                <size>
+                 <width>17</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(72, 124, 19);</string>
+               </property>
+               <property name="text">
+                <string>N:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="txtbase1">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="txtporc_iva1">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QLineEdit" name="txtiva1">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="6">
+              <widget class="QLineEdit" name="txtporc_rec1">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="7">
+              <widget class="QLineEdit" name="txtrec1">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="8">
+              <spacer name="horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="10">
+              <widget class="QLineEdit" name="txttotal1">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_25">
+               <property name="maximumSize">
+                <size>
+                 <width>17</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(72, 124, 19);</string>
+               </property>
+               <property name="text">
+                <string>R:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="txtbase2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="txtporc_iva2">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLineEdit" name="txtiva2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="6">
+              <widget class="QLineEdit" name="txtporc_rec2">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="7">
+              <widget class="QLineEdit" name="txtrec2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="10">
+              <widget class="QLineEdit" name="txttotal2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_26">
+               <property name="maximumSize">
+                <size>
+                 <width>17</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(72, 124, 19);</string>
+               </property>
+               <property name="text">
+                <string>S.R.:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="txtbase3">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="txtporc_iva3">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="4">
+              <widget class="QLineEdit" name="txtiva3">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="6">
+              <widget class="QLineEdit" name="txtporc_rec3">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="7">
+              <widget class="QLineEdit" name="txtrec3">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="10">
+              <widget class="QLineEdit" name="txttotal3">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="maximumSize">
+                <size>
+                 <width>17</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(72, 124, 19);</string>
+               </property>
+               <property name="text">
+                <string>EX.:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="txtbase4">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3">
+              <widget class="QLineEdit" name="txtporc_iva4">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="4">
+              <widget class="QLineEdit" name="txtiva4">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="6">
+              <widget class="QLineEdit" name="txtporc_rec4">
+               <property name="maximumSize">
+                <size>
+                 <width>45</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="7">
+              <widget class="QLineEdit" name="txtrec4">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="10">
+              <widget class="QLineEdit" name="txttotal4">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_29">
+               <property name="maximumSize">
+                <size>
+                 <width>17</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(72, 124, 19);</string>
+               </property>
+               <property name="text">
+                <string>T:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="txtbase_total_2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="4">
+              <widget class="QLineEdit" name="txttotal_iva_2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="7">
+              <widget class="QLineEdit" name="txttotal_recargo_2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="10">
+              <widget class="QLineEdit" name="txttotal_2">
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="8">
+              <widget class="QLabel" name="lblIRPF">
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string>% IRPF:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="8">
+              <widget class="QLineEdit" name="txtporc_irpf">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="9">
+              <widget class="QLineEdit" name="txtimporte_irpf">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="9">
+              <widget class="QLabel" name="lblIRPF_3">
+               <property name="styleSheet">
+                <string notr="true">background: #304163;
+color: rgb(255,255,255);</string>
+               </property>
+               <property name="text">
+                <string> IRPF:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="maximumSize">
-              <size>
-               <width>17</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(72, 124, 19);</string>
-             </property>
-             <property name="text">
-              <string>N:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="txtbase1">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLineEdit" name="txtporc_iva1">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QLineEdit" name="txtiva1">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QLineEdit" name="txtporc_rec1">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="5">
-            <widget class="QLineEdit" name="txtporc_rec1">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="6">
-            <widget class="QLineEdit" name="txttotal1">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_25">
-             <property name="maximumSize">
-              <size>
-               <width>17</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(72, 124, 19);</string>
-             </property>
-             <property name="text">
-              <string>R:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="txtbase2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLineEdit" name="txtporc_iva2">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QLineEdit" name="txtiva2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
-            <widget class="QLineEdit" name="txtporc_rec2">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="5">
-            <widget class="QLineEdit" name="txtporc_rec2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="6">
-            <widget class="QLineEdit" name="txttotal2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_26">
-             <property name="maximumSize">
-              <size>
-               <width>17</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(72, 124, 19);</string>
-             </property>
-             <property name="text">
-              <string>S.R.:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="txtbase3">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QLineEdit" name="txtporc_iva3">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLineEdit" name="txtiva3">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4">
-            <widget class="QLineEdit" name="txtporc_rec3">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="5">
-            <widget class="QLineEdit" name="txtporc_rec3">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="6">
-            <widget class="QLineEdit" name="txttotal3">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_27">
-             <property name="maximumSize">
-              <size>
-               <width>17</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(72, 124, 19);</string>
-             </property>
-             <property name="text">
-              <string>EX.:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QLineEdit" name="txtbase4">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QLineEdit" name="txtporc_iva4">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3">
-            <widget class="QLineEdit" name="txtiva4">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="4">
-            <widget class="QLineEdit" name="txtporc_rec4">
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="5">
-            <widget class="QLineEdit" name="txtporc_rec4">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="6">
-            <widget class="QLineEdit" name="txttotal4">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_29">
-             <property name="maximumSize">
-              <size>
-               <width>17</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(72, 124, 19);</string>
-             </property>
-             <property name="text">
-              <string>T:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLineEdit" name="txtbase_total_2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="3">
-            <widget class="QLineEdit" name="txttotal_iva_2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="5">
-            <widget class="QLineEdit" name="txttotal_recargo_2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="6">
-            <widget class="QLineEdit" name="txttotal_2">
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="2">
-            <spacer name="verticalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>38</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="6" column="3">
-            <spacer name="verticalSpacer_8">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>38</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLabel" name="lblIRPF">
-             <property name="text">
-              <string>% IRPF:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="2">
-            <widget class="QLineEdit" name="txtirpf">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>45</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="6">
-            <widget class="QLineEdit" name="txtimporte_irpf">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>0,00</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0" colspan="5">
             <widget class="QGroupBox" name="groupBox_2">
              <property name="title">
-              <string>Gastos distribuidos</string>
+              <string>Gastos factura (imputan en importes finales factura y desglose de IVA)</string>
              </property>
-             <layout class="QGridLayout" name="gridLayout_11">
-              <item row="2" column="2">
-               <widget class="QPushButton" name="btn_AplyGastoDist">
-                <property name="text">
-                 <string>Aplicar a Coste</string>
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="2" column="0">
+               <widget class="QLineEdit" name="txtGastoDist3">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QDoubleSpinBox" name="SpinGastoDist1">
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              <item row="2" column="3">
+               <widget class="QDoubleSpinBox" name="spiniva_gasto3">
+                <property name="enabled">
+                 <bool>false</bool>
                 </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
-               <widget class="QDoubleSpinBox" name="SpinGastoDist3">
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              <item row="0" column="3">
+               <widget class="QDoubleSpinBox" name="spiniva_gasto1">
+                <property name="enabled">
+                 <bool>false</bool>
                 </property>
-                <property name="maximum">
-                 <double>999999999.000000000000000</double>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item row="1" column="1">
                <widget class="QDoubleSpinBox" name="SpinGastoDist2">
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <property name="minimum">
+                 <double>-999999999.000000000000000</double>
                 </property>
                 <property name="maximum">
-                 <double>999999999.000000000000000</double>
+                 <double>999999999.990000009536743</double>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLineEdit" name="txtGastoDist2">
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
+              <item row="2" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto3"/>
+              </item>
+              <item row="0" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto1"/>
+              </item>
+              <item row="1" column="2">
+               <widget class="QComboBox" name="cboporc_iva_gasto2"/>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="SpinGastoDist1">
+                <property name="minimum">
+                 <double>-999999999.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>999999999.990000009536743</double>
                 </property>
                </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLineEdit" name="txtGastoDist1">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
                 <property name="placeholderText">
                  <string>Descripcion...</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLineEdit" name="txtGastoDist3">
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="SpinGastoDist3">
+                <property name="minimum">
+                 <double>-999999999.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>999999999.990000009536743</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLineEdit" name="txtGastoDist2">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
                 <property name="placeholderText">
                  <string>Descripcion...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QDoubleSpinBox" name="spiniva_gasto2">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QGroupBox" name="groupBox_7">
+             <property name="title">
+              <string>Gastos distribuidos líneas (calculo coste real productos)</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_12">
+              <item row="0" column="0" rowspan="3" colspan="2">
+               <widget class="QTableView" name="tablagastos">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="btnAnadir_costes">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btnBorrarCostes">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btnRefrescar_">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>Aplicar a líneas</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_33">
+                <property name="text">
+                 <string>Total gastos distribuidos líneas:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="txtTotal_gastos_linea">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>0,00</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1838,7 +2010,7 @@ color: rgb(0, 0, 0);</string>
              <string>&amp;Nueva</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
             <property name="iconSize">
@@ -1864,7 +2036,7 @@ color: rgb(0, 0, 0);</string>
              <string>&amp;Anterior</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
             </property>
             <property name="iconSize">
@@ -1887,7 +2059,7 @@ color: rgb(0, 0, 0);</string>
              <string>Siguient&amp;e</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
             </property>
             <property name="iconSize">
@@ -1910,7 +2082,7 @@ color: rgb(0, 0, 0);</string>
              <string>Buscar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
             <property name="iconSize">
@@ -1936,7 +2108,7 @@ color: rgb(0, 0, 0);</string>
              <string>imprimir</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
             </property>
             <property name="iconSize">
@@ -1959,7 +2131,7 @@ color: rgb(0, 0, 0);</string>
              <string>Listados</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
             </property>
             <property name="iconSize">
@@ -1985,7 +2157,7 @@ color: rgb(0, 0, 0);</string>
              <string>Editar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -2014,7 +2186,7 @@ color: rgb(0, 0, 0);</string>
              <string>Guardar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -2040,7 +2212,7 @@ color: rgb(0, 0, 0);</string>
              <string>Deshacer</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -2063,7 +2235,7 @@ color: rgb(0, 0, 0);</string>
              <string>Cerrar</string>
             </property>
             <property name="icon">
-             <iconset resource="../maya.qrc">
+             <iconset>
               <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
             </property>
             <property name="iconSize">
@@ -2135,9 +2307,7 @@ background-color: #304163;</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../maya.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>btn_cerrar</sender>

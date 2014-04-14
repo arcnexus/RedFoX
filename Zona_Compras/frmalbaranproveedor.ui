@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1122</width>
+    <width>1153</width>
     <height>607</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
        <property name="rightMargin">
         <number>20</number>
        </property>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_18">
          <property name="minimumSize">
           <size>
@@ -53,7 +53,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QLabel" name="lblAlbaran">
          <property name="maximumSize">
           <size>
@@ -66,7 +66,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="1" column="2">
         <widget class="QLabel" name="label_21">
          <property name="maximumSize">
           <size>
@@ -79,14 +79,28 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
+       <item row="1" column="3">
         <widget class="QLabel" name="lblproveedor">
          <property name="text">
           <string>TextLabel</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="4">
+       <item row="1" column="4">
+        <widget class="QLabel" name="lbfacturado">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="text">
+          <string>   Facturado   </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="5">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
           <number>0</number>
@@ -108,6 +122,12 @@
               </item>
               <item>
                <widget class="QLineEdit" name="txtalbaran">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>120</width>
@@ -151,6 +171,58 @@
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_24">
+                <property name="text">
+                 <string>Pedido :</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="txtpedido_cliente">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>27</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblNumFactura">
+                <property name="text">
+                 <string>Factura numero:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="txtcNumFra">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>130</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -516,202 +588,6 @@ color: rgb(255,255,255);</string>
              </property>
              <property name="cornerButtonEnabled">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_7">
-          <attribute name="title">
-           <string>Procesos</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_24">
-             <property name="text">
-              <string>Pedido :</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="lblNumFactura">
-             <property name="text">
-              <string>Factura numero:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="2" colspan="3">
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>893</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="3">
-            <widget class="QLineEdit" name="txtcNumFra">
-             <property name="maximumSize">
-              <size>
-               <width>130</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="5">
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(170, 170, 127);</string>
-             </property>
-             <property name="title">
-              <string>Entregas a cuenta:</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_8">
-              <item row="0" column="0">
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>314</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <spacer name="horizontalSpacer_8">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_23">
-                  <property name="text">
-                   <string>Entregado a Cuenta en ficha Proveedor:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="txtentregado_a_cuenta">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 85, 0);</string>
-                  </property>
-                  <property name="text">
-                   <string>0,00</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnAnadirEntrega">
-                  <property name="toolTip">
-                   <string>Añadir entregas a cuenta</string>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>15</width>
-                    <height>15</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QTableView" name="tabla_entregas">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);
-alternate-background-color: rgb(255, 255, 222);</string>
-                </property>
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="txtpedido_cliente">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>120</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="lbfacturado">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 170, 0);
-color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>   Facturado   </string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -1613,16 +1489,6 @@ color: rgb(255,255,255);</string>
               <item row="1" column="2">
                <widget class="QComboBox" name="cboporc_iva_gasto2"/>
               </item>
-              <item row="0" column="0">
-               <widget class="QLineEdit" name="txtGastoDist1">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Descripcion...</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="1">
                <widget class="QDoubleSpinBox" name="SpinGastoDist1">
                 <property name="minimum">
@@ -1630,6 +1496,16 @@ color: rgb(255,255,255);</string>
                 </property>
                 <property name="maximum">
                  <double>999999999.990000009536743</double>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLineEdit" name="txtGastoDist1">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Descripcion...</string>
                 </property>
                </widget>
               </item>
@@ -1779,7 +1655,7 @@ color: rgb(255,255,255);</string>
          </widget>
         </widget>
        </item>
-       <item row="2" column="0" colspan="4">
+       <item row="3" column="0" colspan="5">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="label_8">
@@ -1924,7 +1800,7 @@ color: rgb(0, 0, 0);</string>
          </item>
         </layout>
        </item>
-       <item row="3" column="0" colspan="4">
+       <item row="4" column="0" colspan="5">
         <widget class="QFrame" name="frame_4">
          <property name="minimumSize">
           <size>
@@ -2294,11 +2170,6 @@ color: rgb(255, 255, 255);</string>
   <tabstop>txtcp</tabstop>
   <tabstop>txtprovincia</tabstop>
   <tabstop>cbo_pais</tabstop>
-  <tabstop>txtpedido_cliente</tabstop>
-  <tabstop>txtcNumFra</tabstop>
-  <tabstop>txtentregado_a_cuenta</tabstop>
-  <tabstop>btnAnadirEntrega</tabstop>
-  <tabstop>tabla_entregas</tabstop>
   <tabstop>txtcomentario</tabstop>
   <tabstop>btnAnadir</tabstop>
   <tabstop>btnAnterior</tabstop>
