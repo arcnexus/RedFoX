@@ -1,0 +1,142 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include <QSplashScreen>
+
+#include "archivosgeneralesext.h"
+
+#include "Zona_Administrador/frmconfigmaya.h"
+#include "Zona_Administrador/frmempresas.h"
+
+#include "Zona_Administrador/block_Maya_form.h"
+
+#include "Auxiliares/Globlal_Include.h"
+#include "Auxiliares/init_form.h"
+
+#include "db_table_view.h"
+
+#include "Zona_Pacientes/frmClientes.h"
+#include "Zona_Pacientes/clinicaext.h"
+
+#include "Almacen/frmarticulos.h"
+#include "Almacen/frmtipostarifa.h"
+#include "Almacen/divisionalmacenext.h"
+#include "Almacen/frminventario.h"
+
+#include "Zona_Compras/frmproveedores.h"
+#include "Zona_Compras/frmpedidosproveedor.h"
+#include "Zona_Compras/frmalbaranproveedor.h"
+#include "Zona_Compras/frmfacturasproveedor.h"
+#include "Zona_Compras/frmorden_pedido_producto.h"
+#include "Zona_Compras/frmrecepcion_pedidos.h"
+#include "Zona_Compras/frmpedidosproveedor.h"
+
+
+#include "Zona_Ventas/frmgestioncobros.h"
+#include "Zona_Ventas/frmfacturaralabaranes.h"
+#include "Zona_Ventas/frmalbaran.h"
+#include "Zona_Ventas/frmpedidos.h"
+#include "Zona_Ventas/frmpresupuestoscli.h"
+#include "Zona_Ventas/frmfacturas.h"
+#include "TPV/frmtpv.h"
+#include "Zona_Maestros/frmformas_pago.h"
+#include "Zona_Maestros/frmagentes.h"
+
+
+//#include "openrptLibs/reportmodule.h"
+#include "EditorReports/repdesignmodule.h"
+#include "Agenda/agendaform.h"
+#include "Agenda/permisosagendaform.h"
+
+#include "Zona_Contabilidad/frmentrada_apuntes.h"
+#include "Zona_Contabilidad/frmcuadro_cuentas.h"
+
+#include "Zona_Maestros/frmtransportistas.h"
+#include "Zona_Maestros/frmcajas.h"
+
+#include "barraavisos.h"
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+    
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+
+    void showInfo();
+    void updateDivisas();
+    void loadModules();
+protected:
+    bool eventFilter(QObject *t, QEvent *e);
+private slots:
+
+
+    void actualizar_divisas(float valor_divisa, QString divisaDest);
+
+    void block_main();
+    void unblock_main();
+    void on_btn_bloquear_clicked();
+
+    void handle_toolBar();
+
+    void handle_permisosAgenda();
+
+    void llenaravisos();
+    void hideAvisos();
+    void showAvisos();
+    void on_lineUsuarioActivo_clicked();
+
+    void on_txtEjercicio_editingFinished();
+
+private:
+    Ui::MainWindow *ui;
+    void closeEvent(QCloseEvent *e);
+    void blockMe(bool state);
+
+
+    void loadVentasModules(QSplashScreen *splash);
+    void loadComprasModules(QSplashScreen *splash);
+    void loadAlmacenModules(QSplashScreen *splash);
+    void loadMantenModules(QSplashScreen *splash);
+    void loadUtilsModules(QSplashScreen *splash);
+    void loadAminModules(QSplashScreen *splash);
+    void loadContaModules(QSplashScreen *splash);
+    void loadSecMedModules(QSplashScreen *splash);
+
+    void crear_barraMantenimiento();
+    void crear_barraVentas();
+    void crear_barraAlmacen();
+    void crear_barraCompras();
+    void crear_barraUtils();
+    void crear_barraAdmin();
+    void crear_barraContabilidad();
+    void crear_barraClinica();
+
+    void addShortCut(QPushButton* button);
+
+    init_form * MayaForm;
+    bool on_edit;
+    QVector<MayaModule*> _mantenModules;
+    QVector<MayaModule*> _ventasModules;
+    QVector<MayaModule*> _comprasModules;
+    QVector<MayaModule*> _almacenModules;
+    QVector<MayaModule*> _utilsModules;
+    QVector<MayaModule*> _adminModules;
+    QVector<MayaModule*> _contaModules;
+    QVector<MayaModule*> _clinicaModules;
+
+    QVector<ModuleExtension* > _almacenExtensions;
+    QVector<ModuleExtension* > _mantenExtensions;
+    QVector<ModuleExtension* > _clinicaExtensions;
+
+    QHash<QPushButton*,QWidget*> _shortCuts;
+
+    BarraAvisos * m_avisos;
+    QTimer keepAlive;
+};
+
+#endif // MAINWINDOW_H
