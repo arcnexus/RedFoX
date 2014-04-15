@@ -299,7 +299,7 @@
        <item row="3" column="1" rowspan="2" colspan="2">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tabDatos">
           <attribute name="title">
@@ -829,55 +829,35 @@
           <attribute name="title">
            <string>Datos financieros</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_28">
-           <item row="5" column="0" colspan="6">
-            <widget class="QLabel" name="label_20">
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_21">
              <property name="text">
-              <string>Cuenta del  Proveedor para Transferencias:</string>
+              <string>Forma Pago:</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="4" colspan="2">
+           <item row="0" column="1">
+            <widget class="QComboBox" name="cboDivisas"/>
+           </item>
+           <item row="4" column="0">
             <widget class="QLabel" name="lblCuenta1Valida">
              <property name="text">
               <string>La cuenta no es válida</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
-            <widget class="QLineEdit" name="txtentidad_bancaria_proveedor">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
+           <item row="3" column="0" colspan="3">
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Cuenta del  Proveedor para Transferencias:</string>
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
-            <widget class="QLineEdit" name="txtentidad_pago_proveedor">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="txtcodigoFormaPago"/>
            </item>
-           <item row="10" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtoficina_pago_proveedor">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="5">
-            <widget class="QLineEdit" name="txtforma_pago"/>
-           </item>
-           <item row="4" column="0" colspan="6">
+           <item row="2" column="0" colspan="2">
             <widget class="QGroupBox" name="groupBox">
              <property name="minimumSize">
               <size>
@@ -923,64 +903,68 @@
              </layout>
             </widget>
            </item>
-           <item row="8" column="0" colspan="6">
+           <item row="6" column="0" colspan="2">
             <widget class="QLabel" name="label_27">
              <property name="text">
               <string>Cuenta domiciliación proveedor:</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="4" colspan="2">
-            <widget class="QLabel" name="lblcuenta2Valida">
-             <property name="text">
-              <string>La cuenta no es válida</string>
-             </property>
-            </widget>
+           <item row="5" column="0" colspan="4">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLineEdit" name="txtentidad_bancaria_proveedor">
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtoficina_bancaria_proveedor">
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtdc_proveedor">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcc_proveedor">
+               <property name="text">
+                <string>0000295314</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
-           <item row="10" column="3">
-            <widget class="QLineEdit" name="txtdc_pago_proveedor">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="4" colspan="2">
-            <widget class="QLineEdit" name="txtcuentaPagoProveedor"/>
-           </item>
-           <item row="7" column="1" colspan="2">
-            <widget class="QLineEdit" name="txtoficina_bancaria_proveedor">
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="3">
-            <widget class="QLineEdit" name="txtdc_proveedor">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="4" colspan="2">
-            <widget class="QLineEdit" name="txtcc_proveedor"/>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QLabel" name="label_21">
-             <property name="text">
-              <string>Forma Pago:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="3">
+           <item row="9" column="1">
             <spacer name="verticalSpacer_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -993,9 +977,6 @@
              </property>
             </spacer>
            </item>
-           <item row="1" column="2" colspan="3">
-            <widget class="QComboBox" name="txtcodigoFormaPago"/>
-           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_32">
              <property name="text">
@@ -1003,8 +984,72 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="2" colspan="3">
-            <widget class="QComboBox" name="cboDivisas"/>
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="txtforma_pago">
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="lblcuenta2Valida">
+             <property name="text">
+              <string>La cuenta no es válida</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="4">
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QLineEdit" name="txtentidad_pago_proveedor">
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtoficina_pago_proveedor">
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtdc_pago_proveedor">
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtcuentaPagoProveedor"/>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -1013,51 +1058,32 @@
            <string>Pagos</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="1" column="0" colspan="4">
+           <item row="0" column="0" colspan="4">
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
+             <item row="1" column="0">
               <widget class="QLabel" name="label_36">
                <property name="text">
                 <string>Pendiente: </string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1" colspan="2">
-              <widget class="QLineEdit" name="txtdeuda_actual">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>99</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
+             <item row="2" column="0">
               <widget class="QLabel" name="label_37">
                <property name="text">
                 <string>A Cuenta:</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="2" column="1">
               <widget class="QLineEdit" name="txtentregado_a_cuenta">
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>99</width>
-                 <height>16777215</height>
-                </size>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
                <property name="text">
                 <string>                  0,00</string>
@@ -1067,47 +1093,40 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="2" colspan="3">
+             <item row="2" column="2" colspan="3">
               <widget class="QCheckBox" name="chkrecargo_equivalencia">
                <property name="text">
                 <string>Recargo Equivalencia</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="3" column="0">
               <widget class="QLabel" name="label_38">
                <property name="text">
                 <string>Ret IRPF:</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="3" column="1">
               <widget class="QLineEdit" name="txttipo_retencioirpf">
-               <property name="maximumSize">
-                <size>
-                 <width>50</width>
-                 <height>16777215</height>
-                </size>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
               </widget>
              </item>
-             <item row="2" column="2" colspan="2">
-              <widget class="QLabel" name="label_39">
-               <property name="text">
-                <string>Importe IRPF:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
+             <item row="3" column="3">
               <widget class="QLineEdit" name="txtretencion_irpf">
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1117,20 +1136,89 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="3">
+             <item row="1" column="2">
               <widget class="QLabel" name="label_14">
                <property name="text">
                 <string>Riesgo Permitido:</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="4">
+             <item row="1" column="3">
               <widget class="QLineEdit" name="txtdeuda_maxima">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_39">
+               <property name="text">
+                <string>Importe IRPF:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="txtdeuda_actual">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>0,00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_40">
+               <property name="text">
+                <string>Día cobro proveedor:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="txtdia_cobro">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_41">
+               <property name="text">
+                <string>Dto.Predeterminado:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="txtdto">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
                <property name="text">
                 <string>0,00</string>
@@ -1142,7 +1230,7 @@
              </item>
             </layout>
            </item>
-           <item row="4" column="0" colspan="4">
+           <item row="3" column="0" colspan="4">
             <widget class="QTableView" name="tablaPagos">
              <property name="alternatingRowColors">
               <bool>true</bool>
@@ -1155,7 +1243,7 @@
              </attribute>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="2" column="2">
             <widget class="QRadioButton" name="radioButton_2">
              <property name="text">
               <string>Todos</string>
@@ -1165,72 +1253,26 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="2" column="1">
             <widget class="QRadioButton" name="radioButton_3">
              <property name="text">
               <string>Solo Pagados</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="2" column="0">
             <widget class="QRadioButton" name="radioButton">
              <property name="text">
               <string>Solo pendientes de Pago</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="0" colspan="4">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="label_40">
-               <property name="text">
-                <string>Día cobro proveedor:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtdia_cobro">
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_41">
-               <property name="text">
-                <string>Dto.Predeterminado:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtdto">
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>0,00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0" colspan="4">
+           <item row="1" column="0" colspan="4">
             <widget class="QLabel" name="label_63">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
+              <string notr="true">background: #304163;
+color: rgb(255,255,255);
+</string>
              </property>
              <property name="text">
               <string>GESTIÓN DE PAGOS</string>
@@ -1247,24 +1289,62 @@ color: rgb(255, 255, 255);</string>
            <string>Dirección almacén</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_8">
-           <item row="0" column="2">
-            <widget class="QLineEdit" name="txtdireccion_almacen"/>
-           </item>
            <item row="0" column="0">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>C.P.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="QLineEdit" name="txtcp_almacen">
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_42">
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtpoblacion_almacen">
+               <property name="minimumSize">
+                <size>
+                 <width>273</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
             <widget class="QLabel" name="label_10">
              <property name="text">
               <string>Dirección</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_45">
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="txtdireccion_almacen"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_43">
              <property name="text">
-              <string>Teléfono:</string>
+              <string>Provincia:</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="2" column="1">
             <widget class="QLineEdit" name="txtprovinciaAmacen">
              <property name="maximumSize">
               <size>
@@ -1274,7 +1354,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="label_44">
              <property name="text">
               <string>País:</string>
@@ -1284,39 +1364,8 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QLabel" name="label_42">
-             <property name="text">
-              <string>Población:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLineEdit" name="txtpoblacion_almacen">
-             <property name="minimumSize">
-              <size>
-               <width>273</width>
-               <height>0</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_46">
-             <property name="text">
-              <string>Fax:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="text">
-              <string>C.P.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLineEdit" name="txtcp_almacen">
+           <item row="3" column="1">
+            <widget class="QComboBox" name="txtpaisAlmacen">
              <property name="maximumSize">
               <size>
                <width>200</width>
@@ -1325,7 +1374,41 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_45">
+             <property name="text">
+              <string>Teléfono:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="txttelefono_almacen">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_46">
+             <property name="text">
+              <string>Fax:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="txtfax_almacen">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
             <spacer name="verticalSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -1337,43 +1420,6 @@ color: rgb(255, 255, 255);</string>
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_43">
-             <property name="text">
-              <string>Provincia:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QComboBox" name="txtpaisAlmacen">
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2">
-            <widget class="QLineEdit" name="txttelefono_almacen">
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="2">
-            <widget class="QLineEdit" name="txtfax_almacen">
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -1960,7 +2006,7 @@ color: rgb(0, 0, 0);</string>
               <enum>QTabWidget::North</enum>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>3</number>
              </property>
              <widget class="QWidget" name="tab_8">
               <attribute name="title">
@@ -2152,6 +2198,36 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>txtfax</tabstop>
   <tabstop>txtweb</tabstop>
   <tabstop>btnAbrirWeb</tabstop>
+  <tabstop>tablaContactos</tabstop>
+  <tabstop>txtNombre</tabstop>
+  <tabstop>txtCargo</tabstop>
+  <tabstop>txtDescripcionT1</tabstop>
+  <tabstop>txtTelefono1</tabstop>
+  <tabstop>txtDescripcionT2</tabstop>
+  <tabstop>txtTelefono2</tabstop>
+  <tabstop>txtDescripcionT3</tabstop>
+  <tabstop>txtTelefono3</tabstop>
+  <tabstop>txtDescripcionM1</tabstop>
+  <tabstop>txtMovil1</tabstop>
+  <tabstop>txtDescripcionM2</tabstop>
+  <tabstop>txtMovil2</tabstop>
+  <tabstop>txtemail_contacto</tabstop>
+  <tabstop>btnGuardarContacto</tabstop>
+  <tabstop>btnAnadir_persona_contacto</tabstop>
+  <tabstop>cboDivisas</tabstop>
+  <tabstop>txtcodigoFormaPago</tabstop>
+  <tabstop>radGeneral</tabstop>
+  <tabstop>radUE</tabstop>
+  <tabstop>radExcento</tabstop>
+  <tabstop>radExportacion</tabstop>
+  <tabstop>txtentidad_bancaria_proveedor</tabstop>
+  <tabstop>txtoficina_bancaria_proveedor</tabstop>
+  <tabstop>txtdc_proveedor</tabstop>
+  <tabstop>txtcc_proveedor</tabstop>
+  <tabstop>txtentidad_pago_proveedor</tabstop>
+  <tabstop>txtoficina_pago_proveedor</tabstop>
+  <tabstop>txtdc_pago_proveedor</tabstop>
+  <tabstop>txtcuentaPagoProveedor</tabstop>
   <tabstop>txtdia_cobro</tabstop>
   <tabstop>txtdto</tabstop>
   <tabstop>txtdeuda_actual</tabstop>
@@ -2164,68 +2240,37 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>radioButton_3</tabstop>
   <tabstop>radioButton_2</tabstop>
   <tabstop>tablaPagos</tabstop>
-  <tabstop>txtdireccion_almacen</tabstop>
+  <tabstop>txtcp_almacen</tabstop>
   <tabstop>txtpoblacion_almacen</tabstop>
+  <tabstop>txtdireccion_almacen</tabstop>
   <tabstop>txtprovinciaAmacen</tabstop>
+  <tabstop>txtpaisAlmacen</tabstop>
   <tabstop>txttelefono_almacen</tabstop>
   <tabstop>txtfax_almacen</tabstop>
-  <tabstop>txtcomentarios</tabstop>
+  <tabstop>tablaArticulos</tabstop>
+  <tabstop>txttexto_para_pedidos</tabstop>
   <tabstop>txtcuenta_aplicacion</tabstop>
   <tabstop>tablaAsientos</tabstop>
+  <tabstop>txtfecha_ultima_compra</tabstop>
+  <tabstop>txtimporte_acumulado_compras</tabstop>
+  <tabstop>txtEnero</tabstop>
+  <tabstop>txtjulio</tabstop>
+  <tabstop>txtFebrero</tabstop>
+  <tabstop>txtAgosto</tabstop>
+  <tabstop>txtMarzo</tabstop>
+  <tabstop>txtSeptiembre</tabstop>
+  <tabstop>txtAbril</tabstop>
+  <tabstop>txtOctubre</tabstop>
+  <tabstop>txtMayo</tabstop>
+  <tabstop>txtNoviembre</tabstop>
+  <tabstop>txtJunio</tabstop>
+  <tabstop>txtDiciembre</tabstop>
+  <tabstop>txtcomentarios</tabstop>
+  <tabstop>pestanaHistAlbaranes</tabstop>
   <tabstop>tablacolumnasFacturas</tabstop>
   <tabstop>tablaColumnasAlbaran</tabstop>
   <tabstop>tablaColumnasPedidos</tabstop>
-  <tabstop>txtDescripcionT2</tabstop>
-  <tabstop>txtcodigoFormaPago</tabstop>
-  <tabstop>txtforma_pago</tabstop>
-  <tabstop>txtDescripcionT3</tabstop>
-  <tabstop>txtMovil1</tabstop>
-  <tabstop>txtemail_contacto</tabstop>
-  <tabstop>txtMovil2</tabstop>
-  <tabstop>txtDescripcionT1</tabstop>
-  <tabstop>txtTelefono1</tabstop>
-  <tabstop>txtNombre</tabstop>
-  <tabstop>txtCargo</tabstop>
-  <tabstop>tablaContactos</tabstop>
   <tabstop>tabla_entregas</tabstop>
-  <tabstop>btnGuardarContacto</tabstop>
-  <tabstop>txtTelefono3</tabstop>
-  <tabstop>txtDescripcionM1</tabstop>
-  <tabstop>txtTelefono2</tabstop>
-  <tabstop>txtDescripcionM2</tabstop>
-  <tabstop>btnAnadir_persona_contacto</tabstop>
-  <tabstop>txtentidad_bancaria_proveedor</tabstop>
-  <tabstop>txtentidad_pago_proveedor</tabstop>
-  <tabstop>txtoficina_pago_proveedor</tabstop>
-  <tabstop>radUE</tabstop>
-  <tabstop>radGeneral</tabstop>
-  <tabstop>radExcento</tabstop>
-  <tabstop>radExportacion</tabstop>
-  <tabstop>txtdc_pago_proveedor</tabstop>
-  <tabstop>txtcuentaPagoProveedor</tabstop>
-  <tabstop>txtoficina_bancaria_proveedor</tabstop>
-  <tabstop>txtdc_proveedor</tabstop>
-  <tabstop>txtcc_proveedor</tabstop>
-  <tabstop>cboDivisas</tabstop>
-  <tabstop>txtcp_almacen</tabstop>
-  <tabstop>txtpaisAlmacen</tabstop>
-  <tabstop>tablaArticulos</tabstop>
-  <tabstop>txttexto_para_pedidos</tabstop>
-  <tabstop>txtFebrero</tabstop>
-  <tabstop>txtAgosto</tabstop>
-  <tabstop>txtfecha_ultima_compra</tabstop>
-  <tabstop>txtNoviembre</tabstop>
-  <tabstop>txtMayo</tabstop>
-  <tabstop>txtJunio</tabstop>
-  <tabstop>txtOctubre</tabstop>
-  <tabstop>txtEnero</tabstop>
-  <tabstop>txtMarzo</tabstop>
-  <tabstop>txtAbril</tabstop>
-  <tabstop>txtDiciembre</tabstop>
-  <tabstop>txtSeptiembre</tabstop>
-  <tabstop>txtimporte_acumulado_compras</tabstop>
-  <tabstop>txtjulio</tabstop>
-  <tabstop>pestanaHistAlbaranes</tabstop>
   <tabstop>tabla</tabstop>
  </tabstops>
  <resources>

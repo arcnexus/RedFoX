@@ -111,6 +111,10 @@ private slots:
 
     void on_txtdireccion2_editingFinished();
 
+    void on_btnAbrirWeb_clicked();
+
+    void on_txtcodigoFormaPago_currentIndexChanged(int index);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:

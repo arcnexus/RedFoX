@@ -9,6 +9,8 @@
 #include "Auxiliares/frmaddentregascuenta.h"
 #include "Auxiliares/entregascuenta.h"
 
+
+#include <QDesktopServices>
 frmProveedores::frmProveedores(QWidget *parent) :
   MayaModule(module_zone(),module_name(),parent),
   ui(new Ui::frmProveedores),
@@ -136,6 +138,7 @@ void frmProveedores::init()
     pob_completer->setCaseSensitivity(Qt::CaseInsensitive);
     pob_completer->setCompletionColumn(3);
     ui->txtpoblacion->setCompleter(pob_completer);
+    ui->txtpoblacion_almacen->setCompleter(pob_completer);
 
     calle_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
     calle_completer_model->setTable("calles");
@@ -144,6 +147,7 @@ void frmProveedores::init()
     calle_completer->setCompletionColumn(2);
     ui->txtdireccion1->setCompleter(calle_completer);
     ui->txtdireccion2->setCompleter(calle_completer);
+    ui->txtdireccion_almacen->setCompleter(calle_completer);
 
     __init = true;
 }
@@ -500,19 +504,32 @@ void frmProveedores::on_btnGuardar_clicked()
 {
     bool lGuardar = true;
     QString cTexto;
-    cTexto = tr("Hay campos que debe rellenar para poder guardar")+"\n";
+    cTexto = tr("Hay campos que debe rellenar para poder guardar:")+"\n";
 
     if (ui->txtcodigoFormaPago->currentIndex() == -1)
     {
         lGuardar = false;
-        cTexto = cTexto + tr("Debe elegir una forma de pago")+"\n";
+        cTexto.append(tr("Debe elegir una forma de pago")).append("\n");
     }
 
     if (ui->cboPais->currentIndex() == -1)
     {
         lGuardar = false;
-        cTexto = cTexto + tr("Debe elegir el pais del Proveedor")+"\n";
+        cTexto.append(tr("Debe elegir el pais del Proveedor")).append("\n");
     }
+
+    if(ui->txtproveedor->text().isEmpty())
+    {
+        lGuardar = false;
+        cTexto.append(tr("Debe especificar el nombre del Proveedor")).append("\n");
+    }
+
+    if(ui->txtcif->text().isEmpty())
+    {
+        lGuardar = false;
+        cTexto.append(tr("Debe especificar el cif del Proveedor")).append("\n");
+    }
+
     if (lGuardar)
     {
         CargarCamposEnProveedor();
@@ -520,7 +537,8 @@ void frmProveedores::on_btnGuardar_clicked()
         Configuracion_global->commit();
         BloquearCampos(true);
         editing = true;
-    } else
+    }
+    else
     {
         QMessageBox::warning(this,tr("No se puede guardar, falta especificar datos"),cTexto,tr("Aceptar"));
     }
@@ -532,11 +550,12 @@ void frmProveedores::on_btnEditar_clicked()
     {
         if(!ui->tabla->currentIndex().isValid())
             return;
-        QSqlRecord r = modelBusqueda->record(ui->tabla->currentIndex().row());
-        oProveedor->Cargar(r);
+        int _id = modelBusqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
+        oProveedor->Recuperar(_id);
         LLenarCampos();
         ui->stackedWidget->setCurrentIndex(0);
     }
+    Configuracion_global->transaction();
     BloquearCampos(false);
     ocultarBusqueda();
     ui->txtcodigo->setFocus();
@@ -610,13 +629,15 @@ void frmProveedores::on_btnDeshacer_clicked()
 {
     if(QMessageBox::question(NULL,tr("Gestión de proveedores"),
                              tr("Se perderán los cambios realizados en la ficha\n"
-                                " Esta opción no se puede deshacer\n\n"
-                                "¿ Desea anular los cambios o continuar la edición?"),
+                                "Esta opción no se puede deshacer\n\n"
+                                "¿Desea anular los cambios o continuar la edición?"),
                              tr("Continuar Edición"),tr("Anular cambios")) == QDialog::Accepted)
     {
         Configuracion_global->rollback();
         LLenarCampos();
         BloquearCampos(true);
+        if(!editing)
+            mostrarBusqueda();
     }
 }
 
@@ -734,7 +755,26 @@ void frmProveedores::on_txtcuentaPagoProveedor_editingFinished()
 
 void frmProveedores::on_txtcp_almacen_editingFinished()
 {
-    // TODO - BUSCAR POBLACION
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp_almacen->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion_almacen->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovinciaAmacen->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->txtpaisAlmacen->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1)
+            ui->txtpoblacion_almacen->setFocus();
+        else
+            ui->txtdireccion_almacen->setFocus();
+    }
 }
 
 void frmProveedores::pagar_deuda()
@@ -934,6 +974,11 @@ void frmProveedores::menu_deudas(const QPoint &position)
 
 void frmProveedores::nuevo_contacto()
 {
+    if(ui->txtNombre->text().isEmpty())
+    {
+        QMessageBox::warning(this,tr("Nombre de contacto"),tr("Debe especificar u nombre  para el contacto"));
+        return;
+    }
     oProveedor->anadir_persona_contacto(oProveedor->id,ui->txtNombre->text(),ui->txtDescripcionT1->text(),
                                    ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
                                    ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
@@ -1104,6 +1149,7 @@ void frmProveedores::formato_tabla(QSqlQueryModel *modelo)
        ui->tabla->setColumnWidth(i,tamanos.at(i).toInt());
        modelo->setHeaderData(i,Qt::Horizontal,titulos.at(i));
    }
+   ui->tabla->setColumnHidden(0,true);
 }
 
 void frmProveedores::filter_table(QString texto, QString orden, QString modo)
@@ -1129,6 +1175,7 @@ void frmProveedores::filter_table(QString texto, QString orden, QString modo)
             "where " +campo+" like '%"+texto.trimmed()+"%' order by "+campo+" "+modo;
 
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
+    formato_tabla(modelBusqueda);
     ui->tabla->selectRow(0);
 }
 
@@ -1236,4 +1283,20 @@ void frmProveedores::on_txtdireccion2_editingFinished()
 {
     if(!ui->txtprovincia->text().isEmpty())
         ui->txttelefono1->setFocus();
+}
+
+void frmProveedores::on_btnAbrirWeb_clicked()
+{
+    if(!ui->txtweb->text().isEmpty())
+    {
+        if(ui->txtweb->text().startsWith("http"))
+            QDesktopServices::openUrl(QUrl(ui->txtweb->text()));
+        else
+            QDesktopServices::openUrl(QUrl(QString("http://%1").arg(ui->txtweb->text())));
+    }
+}
+
+void frmProveedores::on_txtcodigoFormaPago_currentIndexChanged(int index)
+{
+    ui->txtforma_pago->setText(Configuracion_global->formapago_model->record(index).value("forma_pago").toString());
 }
