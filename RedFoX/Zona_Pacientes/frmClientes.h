@@ -29,6 +29,7 @@ public:
     QPushButton* wantShortCut(bool& ok) {ok = true; return push;}
 
     void init_querys();
+    void bloquear_direccion_alt(bool state);
 signals:
 
 public slots:
@@ -71,7 +72,7 @@ private slots:
 
     void on_btnFichaPaciente_clicked();
 
-    void DeshacerdireccionAlternativa();
+
     void BorrardireccionAlternativa();
     void EditardireccionAlternativa();
     void CargardireccionAlternativa(QModelIndex);
@@ -115,6 +116,8 @@ private slots:
     void on_txtdireccion1Alternativa2_editingFinished();
 
     void on_btnDeshacerdireccionAlternativa_clicked();
+
+    void on_chklBloqueoCliente_toggled(bool checked);
 
 private:
     Ui::frmClientes *ui;

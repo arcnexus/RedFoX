@@ -59,6 +59,8 @@ void frmClientes::init_querys()
     ui->cbotarifa_cliente ->setModelColumn(1);
     ui->cboidiomaDocumentos->setModelColumn(1);
 
+    formato_tabla_busquedas();
+
     ui->tabWidget_2->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(1);
 }
@@ -206,7 +208,7 @@ void frmClientes::init()
     connect(ui->txtentidad_bancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->txtoficina_bancaria,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->txtdc,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
-    connect(ui->txtcuenta_contable,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
+    connect(ui->txtcuenta_corriente,SIGNAL(editingFinished()),this,SLOT(ValidarCC()));
     connect(ui->btnValidarVIES,SIGNAL(clicked()),this,SLOT(validarNifIntrac()));
     connect(ui->txtnombre_fiscal,SIGNAL(editingFinished()),this,SLOT(set_blink()));
     connect(ui->txtcif_nif,SIGNAL(editingFinished()),this,SLOT(set_blink()));
@@ -696,6 +698,14 @@ void frmClientes::VaciarCampos()
             break;
         }
     }
+
+    ui->txtdescripcion_direccion->clear();
+    ui->txtcpPoblacionAlternativa->clear();
+    ui->txtpoblacionAlternativa->clear();
+    ui->txtdireccion1Alternativa1->clear();
+    ui->txtdireccion1Alternativa2->clear();
+    ui->txtemail_alternativa->clear();
+    ui->txtcomentarios_alternativa->clear();
 }
 
 void frmClientes::LLenarCliente()
@@ -846,17 +856,30 @@ void frmClientes::on_btnAnadir_clicked()
     linea.setStyleSheet("background-color: rgb(255,255,255)");
 
     QPushButton  btn(tr("Aceptar"),&dlg);
+    QPushButton btnCancel(tr("Cancelar"), &dlg);
 
-    QVBoxLayout lay(&dlg);
-    lay.addWidget(&linea);
-    lay.addWidget(&btn);
+    QGridLayout lay(&dlg);
+    lay.addWidget(&linea,0,0,1,2);
+    lay.addWidget(&btnCancel,1,0,1,1);
+    lay.addWidget(&btn,1,1,1,1);
 
     dlg.setLayout(&lay);
     connect(&btn,SIGNAL(clicked()),&dlg,SLOT(accept()));
+    connect(&btnCancel,SIGNAL(clicked()),&dlg,SLOT(reject()));
 
-    dlg.exec();
+    QString _dni = "";
+    int acepted = QDialog::Accepted;
+    do
+    {
+        acepted = dlg.exec();
+        _dni = linea.text();
 
-    linea.setText(Configuracion_global->letraDNI(linea.text()));
+    } while (acepted == QDialog::Accepted && _dni.isEmpty());
+
+    if(acepted == QDialog::Rejected)
+        return;
+
+    linea.setText(Configuracion_global->letraDNI(linea.text()).toUpper());
     //---------------
     // Buscamos DNI
     //---------------
@@ -876,11 +899,12 @@ void frmClientes::on_btnAnadir_clicked()
     if( cif == linea.text())
     {
         QMessageBox::information(this,tr("Altas de clientes"),tr("Ya existe un cliente con ese numero de identificación"),
-                                 tr("Aceptar"));
-        ui->stackedWidget->setCurrentIndex(0);
+                                 tr("Aceptar"));        
         oCliente->Recuperar(id);
         LLenarCampos();
         bloquearCampos(true);
+        ui->tabwidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(0);
         emit unblock();
 
     } else
@@ -899,12 +923,15 @@ void frmClientes::on_btnAnadir_clicked()
 
         if(oCliente->Anadir())
         {
+            ui->tabwidget->setCurrentIndex(0);
             ui->stackedWidget->setCurrentIndex(0);
             LLenarCampos();
             ui->txtcif_nif->setText(linea.text());
             oCliente->cif_nif = linea.text();
             set_blink();
             bloquearCampos(false);
+            ui->btnVer_OtrosContactos->setEnabled(false);
+            ui->cboidiomaDocumentos->setCurrentIndex(0);
             emit block();
         }
         else
@@ -974,11 +1001,27 @@ void frmClientes::on_btnEditar_clicked()
 
     emit block();
     bloquearCampos(false);
+    ui->txtcomentario_bloqueo->setReadOnly(!ui->chklBloqueoCliente->isChecked());
+    ui->tabwidget->setCurrentIndex(0);
+    ui->btnVer_OtrosContactos->setEnabled(true);
     ui->txtcodigo_cliente->setEnabled(false);
     set_blink();
     ui->txtcif_nif->setFocus();
     ocultarBusqueda();
 }
+void frmClientes::bloquear_direccion_alt(bool state)
+{
+    ui->txtdescripcion_direccion->setReadOnly(state);
+    ui->txtdireccion1Alternativa1->setReadOnly(state);
+    ui->txtdireccion1Alternativa2->setReadOnly(state);
+    ui->txtcpPoblacionAlternativa->setReadOnly(state);
+    ui->txtpoblacionAlternativa->setReadOnly(state);
+    ui->txtprovinciaAlternativa->setReadOnly(state);
+    ui->txtemail_alternativa->setReadOnly(state);
+    ui->txtcomentarios_alternativa->setReadOnly(state);
+    ui->cbopaisAlternativa->setEnabled(!state);
+}
+
 void frmClientes::bloquearCampos(bool state) {
 
     QList<QLineEdit *> lineEditList = this->findChildren<QLineEdit *>();
@@ -1041,24 +1084,34 @@ void frmClientes::bloquearCampos(bool state) {
     ui->btnAnadirdireccion->setEnabled(!state);
     ui->btnBorrardireccion->setEnabled(!state);
     ui->btnEdita_tipoCliente->setEnabled(!state);
-    ui->btnVer_OtrosContactos->setEnabled(state);
+    ui->btnVer_OtrosContactos->setEnabled(!state);
     ui->btnEditardireccionAlternativa->setEnabled(!state);
+
+    bloquear_direccion_alt(true);
+
     m_busqueda->block(!state);
 }
 
 void frmClientes::on_btnDeshacer_clicked()
 {
-    Configuracion_global->groupDB.rollback();
-    if(this->Altas)
+    if(QMessageBox::question(NULL,tr("Gestión de clientes"),
+                             tr("Se perderán los cambios realizados en la ficha\n"
+                                "Esta opción no se puede deshacer\n\n"
+                                "¿Desea anular los cambios o continuar la edición?"),
+                             tr("Continuar Edición"),tr("Anular cambios")) == QDialog::Accepted)
     {
-        oCliente->Recuperar("Select * from clientes order by id desc limit 1 ");
-        this->Altas = false;
-    }
+        Configuracion_global->groupDB.rollback();
+        if(this->Altas)
+        {
+            mostrarBusqueda();
+            this->Altas = false;
+        }
 
-    LLenarCampos();
-    bloquearCampos(true);
-    set_blink();
-    emit unblock();
+        LLenarCampos();
+        bloquearCampos(true);
+        set_blink();
+        emit unblock();
+    }
 }
 
 void frmClientes::on_btnBorrar_clicked()
@@ -1115,16 +1168,6 @@ void frmClientes::on_btnFichaPaciente_clicked()
     frmPaciente.exec();
 }
 
-void frmClientes::DeshacerdireccionAlternativa()
-{
-    ui->btnGuardar->setEnabled(true);
-    ui->btnDeshacer->setEnabled(true);
-    ui->btnGuardardireccionAlternativa->setEnabled(false);
-    ui->btnDeshacerdireccionAlternativa->setEnabled(false);
-    ui->btnEditardireccionAlternativa->setEnabled(true);
-    CargardireccionAlternativa(ui->lista_direccionesAlternativas->currentIndex());
-}
-
 void frmClientes::BorrardireccionAlternativa()
 {
     if(QMessageBox::question(this,tr("direcciones alternativas"),tr("va a borrar una dirección alternativa\n"
@@ -1151,19 +1194,13 @@ void frmClientes::BorrardireccionAlternativa()
 }
 
 void frmClientes::EditardireccionAlternativa()
-{
-    ui->btnGuardar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(false);
-    ui->btnEditardireccionAlternativa->setEnabled(false);
+{   
+    bloquear_direccion_alt(false);
     ui->btnGuardardireccionAlternativa->setEnabled(true);
+    ui->btnAnadirdireccion->setEnabled(false);
+    ui->btnEditardireccionAlternativa->setEnabled(false);
+    ui->btnBorrardireccion->setEnabled(false);
     ui->btnDeshacerdireccionAlternativa->setEnabled(true);
-    ui->txtdescripcion_direccion->setEnabled(true);
-    ui->txtdireccion1Alternativa1->setEnabled(true);
-    ui->txtdireccion1Alternativa2->setEnabled(true);
-    ui->txtcpPoblacionAlternativa->setEnabled(true);
-    ui->txtpoblacionAlternativa->setEnabled(true);
-    ui->txtprovinciaAlternativa->setEnabled(true);
-    ui->cbopaisAlternativa->setEnabled(true);
     Anadirdireccion = false;
 }
 
@@ -1390,17 +1427,25 @@ void frmClientes::on_tabla_busquedas_doubleClicked(const QModelIndex &index)
     oCliente->Recuperar(id);
     LLenarCampos();
     ocultarBusqueda();
+    ui->tabwidget->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(0);
 }
 
 void frmClientes::formato_tabla_busquedas()
 {
-    ui->tabla_busquedas->setColumnHidden(0,true);
-    QList<int> variant;
-    variant << 20 << 80 <<230 <<100 <<140 <<140 <<90 <<90 <<120;
+    //id, codigo_cliente,nombre_fiscal,cif_nif, direccion1, poblacion,telefono1,movil,email
+    QStringList titulos;
+    QVariantList tamanos;
+    titulos << "id" << tr("Código") << tr("Nombre fiscal") << tr("Cif")<< tr("Dirección")<< tr("Población") << tr("Telefono");
+    titulos <<tr("Movil") << tr("Email");
+    tamanos <<  0 << 110 << 230 << 80 << 175 << 100 << 90 << 90 << 80;
 
-    for(int pos= 0; pos <variant.count();pos++)
-            ui->tabla_busquedas->setColumnWidth(pos,variant.at(pos));
+    for(int i = 0;i<titulos.size();i++ )
+    {
+        ui->tabla_busquedas->setColumnWidth(i,tamanos.at(i).toInt());
+        m_clientes->setHeaderData(i,Qt::Horizontal,titulos.at(i));
+    }
+    ui->tabla_busquedas->setColumnHidden(0,true);
 }
 
 void frmClientes::filter_table(QString texto, QString orden, QString modo)
@@ -1417,7 +1462,7 @@ void frmClientes::filter_table(QString texto, QString orden, QString modo)
             " where "+index+" like '%"+texto.trimmed()+"%' order by "+index+" "+modo;
     m_clientes->setQuery(cSQL,Configuracion_global->groupDB);
 
-    //formato_tabla_busquedas();
+    formato_tabla_busquedas();
 
     ui->tabla_busquedas->selectRow(0);
 
@@ -1552,90 +1597,93 @@ void frmClientes::llenar_tipoCliente()
 
 void frmClientes::on_btnGuardardireccionAlternativa_clicked()
 {
+    QString campos = tr("Debe rellenar lo siguientes campos:\n");
+    bool ok = true;
+
+    if(ui->txtdescripcion_direccion->text().isEmpty())
+    {
+        campos.append(tr("Descripción")).append("\n");
+        ok = false;
+    }
+    if(ui->txtdireccion1Alternativa1->text().isEmpty())
+    {
+        campos.append(tr("Dirección")).append("\n");
+        ok = false;
+    }
+    if(ui->txtcpPoblacionAlternativa->text().isEmpty())
+    {
+        campos.append(tr("Código postal")).append("\n");
+        ok = false;
+    }
+    if(ui->txtpoblacionAlternativa->text().isEmpty())
+    {
+        campos.append(tr("Población")).append("\n");
+        ok = false;
+    }
+    if(ui->txtprovinciaAlternativa->text().isEmpty())
+    {
+        campos.append(tr("Provincia")).append("\n");
+        ok = false;
+    }
     if(ui->cbopaisAlternativa->currentText().isEmpty())
     {
-        TimedMessageBox::Box(this,tr("Debe rellenar el campo pais para poder guardar"));
+        campos.append(tr("País")).append("\n");
+        ok = false;
     }
-    else
-    {
-        ui->txtdescripcion_direccion->setEnabled(false);
-        ui->txtdireccion1Alternativa1->setEnabled(false);
-        ui->txtdireccion1Alternativa2->setEnabled(false);
-        ui->txtcpPoblacionAlternativa->setEnabled(false);
-        ui->txtpoblacionAlternativa->setEnabled(false);
-        ui->txtprovinciaAlternativa->setEnabled(false);
-        ui->cbopaisAlternativa->setEnabled(false);
-        ui->txtemail_alternativa->setEnabled(false);
-        ui->txtcomentarios_alternativa->setEnabled(false);
 
-        if (Anadirdireccion)
-            oCliente->Guardardireccion(true,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
+    if(!ok)
+    {
+        QMessageBox::information(this,tr("Campos vacios"),campos);
+        return;
+    }
+
+    if (Anadirdireccion)
+    {
+        oCliente->Guardardireccion(true,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
                                    ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
                                    ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
                                    ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail_alternativa->text(),
                                    ui->txtcomentarios_alternativa->toPlainText(),0);
-        else
-            oCliente->Guardardireccion(false,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
+    }
+    else
+    {
+        oCliente->Guardardireccion(false,ui->txtdescripcion_direccion->text(),ui->txtdireccion1Alternativa1->text(),
                                    ui->txtdireccion1Alternativa2->text(),ui->txtcpPoblacionAlternativa->text(),
                                    ui->txtpoblacionAlternativa->text(),ui->txtprovinciaAlternativa->text(),
                                    ui->cbopaisAlternativa->currentText(),oCliente->id,ui->txtemail_alternativa->text(),
                                    ui->txtcomentarios_alternativa->toPlainText(),iddireccionAlternativa);
-        Anadirdireccion = false;
-        //-----------------
-        // direcciones
-        //-----------------
-
-        qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
-                                  Configuracion_global->groupDB);
-
-        ui->btnGuardar->setEnabled(true);
-        ui->btnDeshacer->setEnabled(true);
-        ui->btnGuardardireccionAlternativa->setEnabled(false);
-        ui->btnDeshacerdireccionAlternativa->setEnabled(false);
-        ui->btnAnadirdireccion->setEnabled(true);
-        ui->btnBorrardireccion->setEnabled(true);
-        ui->btnEditardireccionAlternativa->setEnabled(true);
     }
+    Anadirdireccion = false;
+
+    qModeldireccion->setQuery("select * from cliente_direcciones where id_cliente = "+QString::number(oCliente->id),
+                              Configuracion_global->groupDB);
+
+    bloquear_direccion_alt(true);
+    ui->btnGuardardireccionAlternativa->setEnabled(false);
+    ui->btnAnadirdireccion->setEnabled(true);
+    ui->btnEditardireccionAlternativa->setEnabled(true);
+    ui->btnBorrardireccion->setEnabled(true);
+    ui->btnDeshacerdireccionAlternativa->setEnabled(false);
 }
 
 void frmClientes::on_btnAnadirdireccion_clicked()
 {
-    Anadirdireccion = true;
-    ui->txtdescripcion_direccion->setEnabled(true);
     ui->txtdescripcion_direccion->setText("");
-    ui->txtdireccion1Alternativa1->setEnabled(true);
     ui->txtdireccion1Alternativa1->setText("");
-    ui->txtdireccion1Alternativa2->setEnabled(true);
     ui->txtdireccion1Alternativa2->setText("");
-    ui->txtcpPoblacionAlternativa->setEnabled(true);
     ui->txtcpPoblacionAlternativa->setText("");
     ui->txtpoblacionAlternativa->setText("");
-    ui->txtpoblacionAlternativa->setEnabled(true);
     ui->txtprovinciaAlternativa->setText("");
-    ui->txtprovinciaAlternativa->setEnabled(true);
     ui->txtemail_alternativa->clear();
     ui->txtcomentarios_alternativa->clear();
-    ui->cbopaisAlternativa->setEnabled(true);
+
+    bloquear_direccion_alt(false);
     ui->btnGuardardireccionAlternativa->setEnabled(true);
-    ui->btnDeshacerdireccionAlternativa->setEnabled(true);
     ui->btnAnadirdireccion->setEnabled(false);
-    ui->btnBorrardireccion->setEnabled(false);
-    ui->txtdescripcion_direccion->setFocus();
-    ui->btnGuardardireccionAlternativa->setEnabled(true);
-    ui->btnDeshacerdireccionAlternativa->setEnabled(true);
-    ui->btnAnadirdireccion->setEnabled(false);
-    ui->btnBorrardireccion->setEnabled(false);
-    ui->btnGuardar->setEnabled(false);
-    ui->btnDeshacer->setEnabled(false);
     ui->btnEditardireccionAlternativa->setEnabled(false);
-    ui->txtemail_alternativa->setEnabled(true);
-    ui->txtcomentarios_alternativa->setEnabled(true);
-    ui->btnAnadirdireccion->setEnabled(false);
     ui->btnBorrardireccion->setEnabled(false);
-    ui->btnEditardireccionAlternativa->setEnabled(false);
-    ui->btnGuardardireccionAlternativa->setEnabled(true);
     ui->btnDeshacerdireccionAlternativa->setEnabled(true);
-    ui->txtdescripcion_direccion->setFocus();
+    Anadirdireccion = true;
 }
 
 void frmClientes::btnExcepciones_clicked()
@@ -1812,10 +1860,19 @@ void frmClientes::on_txtdireccion1Alternativa2_editingFinished()
 
 void frmClientes::on_btnDeshacerdireccionAlternativa_clicked()
 {
+    bloquear_direccion_alt(true);
+    ui->btnGuardardireccionAlternativa->setEnabled(false);
     ui->btnAnadirdireccion->setEnabled(true);
     ui->btnEditardireccionAlternativa->setEnabled(true);
     ui->btnBorrardireccion->setEnabled(true);
-    ui->btnGuardardireccionAlternativa->setEnabled(false);
     ui->btnDeshacerdireccionAlternativa->setEnabled(false);
     CargardireccionAlternativa(ui->lista_direccionesAlternativas->currentIndex());
+}
+
+void frmClientes::on_chklBloqueoCliente_toggled(bool checked)
+{
+    bool can_edit = ui->btnGuardar->isEnabled() && checked;
+    ui->txtcomentario_bloqueo->setReadOnly(!can_edit);
+    if(!checked)
+        ui->txtcomentario_bloqueo->clear();
 }

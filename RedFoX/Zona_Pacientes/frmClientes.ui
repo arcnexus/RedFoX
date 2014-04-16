@@ -315,7 +315,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="tab_datos">
           <property name="styleSheet">
@@ -2608,9 +2608,12 @@ color: rgb(255,255,255);</string>
              <item>
               <widget class="QTextEdit" name="txtcomentario_bloqueo">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="undoRedoEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="readOnly">
                 <bool>true</bool>
                </property>
               </widget>
