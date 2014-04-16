@@ -1331,6 +1331,11 @@ void FrmPedidos::on_botBuscarCliente_clicked()
     {
         int id = consulta.get_id();
         oCliente3->Recuperar("select * from clientes where id="+QString::number(id),false);
+        if(oCliente3->bloqueado)
+        {
+            QMessageBox::warning(this,tr("¡CLIENTE BLOQUEADO!"),tr("NO SE PUEDE VENDER A ESTE CLIENTE:\n%1").arg(oCliente3->comentario_bloqueo));
+            return;
+        }
         LLenarCamposCliente();
     }
 }

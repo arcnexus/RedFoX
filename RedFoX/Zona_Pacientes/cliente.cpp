@@ -362,7 +362,7 @@ void Cliente::cargar(QSqlRecord registro)
         this->riesgo_maximo = registro.field("riesgo_maximo").value().toDouble();
         this->deuda_actual = registro.field("deuda_actual").value().toDouble();
         this->comentarios = registro.field("comentarios").value().toString();
-        this->bloqueado = registro.field("bloqueado").value().toInt();
+        this->bloqueado = registro.field("bloqueado").value().toBool();
         this->comentario_bloqueo = registro.field("comentario_bloqueo").value().toString();
         this->porc_dto_cliente = registro.field("porc_dto_cliente").value().toDouble();
         this->recargo_equivalencia = registro.field("recargo_equivalencia").value().toBool();
@@ -454,7 +454,7 @@ void Cliente::clear()
     this->riesgo_maximo=0;
     this->deuda_actual=0;
     this->comentarios ="";
-    this->bloqueado = 0;
+    this->bloqueado = false;
     this->comentario_bloqueo = "";
     this->porc_dto_cliente= 0;
     this->recargo_equivalencia= 0;

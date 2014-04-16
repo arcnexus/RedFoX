@@ -720,6 +720,11 @@ void FrmAlbaran::on_botBuscarCliente_clicked()
     {
         int id = consulta.get_id();
         oCliente2->Recuperar("select * from clientes where id="+QString::number(id));
+        if(oCliente2->bloqueado)
+        {
+            QMessageBox::warning(this,tr("¡CLIENTE BLOQUEADO!"),tr("NO SE PUEDE VENDER A ESTE CLIENTE:\n%1").arg(oCliente2->comentario_bloqueo));
+            return;
+        }
         LLenarCamposCliente();
     }
 

@@ -790,11 +790,16 @@ void frmFacturas::on_botBuscarCliente_clicked()
     {
         int id = consulta.get_id();
         oCliente1->Recuperar("select * from clientes where id="+QString::number(id));
+        if(oCliente1->bloqueado)
+        {
+            QMessageBox::warning(this,tr("¡CLIENTE BLOQUEADO!"),tr("NO SE PUEDE VENDER A ESTE CLIENTE:\n%1").arg(oCliente1->comentario_bloqueo));
+            blockSignals(false);
+            return;
+        }
         oFactura->id_cliente = id;
         LLenarCamposCliente();
     }
     blockSignals(false);
-
 }
 
 void frmFacturas::on_btnBuscar_clicked()

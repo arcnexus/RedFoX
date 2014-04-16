@@ -908,6 +908,11 @@ void FrmPresupuestosCli::on_botBuscarCliente_clicked()
     {
         int id = consulta.get_id();
         oClientePres->Recuperar("select * from clientes where id="+QString::number(id));
+        if(oClientePres->bloqueado)
+        {
+            QMessageBox::warning(this,tr("¡CLIENTE BLOQUEADO!"),tr("NO SE PUEDE VENDER A ESTE CLIENTE:\n%1").arg(oClientePres->comentario_bloqueo));
+            return;
+        }
         LLenarCamposCliente();
     }
 }
