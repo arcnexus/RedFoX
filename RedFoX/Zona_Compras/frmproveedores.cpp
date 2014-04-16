@@ -557,6 +557,7 @@ void frmProveedores::on_btnEditar_clicked()
     }
     Configuracion_global->transaction();
     BloquearCampos(false);
+    ui->tabWidget->setCurrentIndex(0);
     ocultarBusqueda();
     ui->txtcodigo->setFocus();
     editing = true;
@@ -578,6 +579,7 @@ void frmProveedores::on_btnAnadir_clicked()
         BloquearCampos(false);
         ocultarBusqueda();
         ui->txtcodigo->setFocus();
+        ui->tabWidget->setCurrentIndex(0);
         ui->stackedWidget->setCurrentIndex(0);
         editing = false;
     }
@@ -1219,6 +1221,7 @@ void frmProveedores::on_tabla_doubleClicked(const QModelIndex &index)
     oProveedor->Recuperar(id);
     LLenarCampos();
     ocultarBusqueda();
+    ui->tabWidget->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(0);
 }
 
