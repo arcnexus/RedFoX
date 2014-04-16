@@ -30,8 +30,12 @@ private slots:
     void on_btnBuscar_clicked();
 
     void on_btnImprimir_clicked();
-
+protected:
+    bool eventFilter(QObject *, QEvent *);
 private:
+    void init();
+    void init_querys();
+    bool __init;
     Ui::frmInventario *ui;
     QAction menuButton;
     QPushButton* shortCut;

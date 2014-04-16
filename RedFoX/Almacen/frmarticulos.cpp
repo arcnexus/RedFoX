@@ -2427,7 +2427,7 @@ void FrmArticulos::on_btnKit_clicked()
     if(oArticulo->kit)
     {
         FrmKit kit(this);
-        kit.set_articulo(oArticulo->codigo, oArticulo->descripcion, oArticulo->nstock_fisico_almacen);
+        kit.set_articulo(oArticulo->codigo, oArticulo->descripcion_reducida, oArticulo->nstock_fisico_almacen);
         kit.setWindowState(kit.windowState() | Qt::WindowMaximized);
         kit.exec();
         double newCoste = kit.getCoste();
@@ -2450,12 +2450,6 @@ void FrmArticulos::on_btnKit_clicked()
         }
         LLenarCampos(ui->Pestanas->currentIndex());
     }
-}
-
-void FrmArticulos::on_btnAnadir_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(0);
-    on_botAnadir_clicked();
 }
 
 void FrmArticulos::on_btnEditarOferta_clicked()

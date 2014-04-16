@@ -8,29 +8,9 @@ frmInventario::frmInventario(QWidget *parent) :
   shortCut(new QPushButton(QIcon(":/Icons/PNG/inventario.png"),"",this))
 
 {
-    ui->setupUi(this);
-    ui->btnSincronizar->setVisible(false);
-    // ------------------------
-    // Tabla
-    // ------------------------
-    m = new QSqlTableModel(this,Configuracion_global->groupDB);
-    m->setTable("inventario");
-    m->setSort(1,Qt::AscendingOrder);
-    m->select();
-    ui->tabla->setModel(m);
-    formato_tabla(m);
-    //---------------------
-    // combo indices
-    //---------------------
-    QStringList orders;
-    orders << tr("código") <<tr("código Barras") <<tr("referencia proveedor") <<tr("descripción");
-    ui->cboOrder->addItems(orders);
+    __init = false;
     shortCut->setStyleSheet("background-color: rgb(133, 170, 142)");
-
-    connect(m,&QSqlTableModel::dataChanged,[this](const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles ){
-       ui->txtBuscar->setText("");
-       ui->txtBuscar->setFocus();
-    });
+    this->installEventFilter(this);
 }
 
 frmInventario::~frmInventario()
@@ -121,7 +101,50 @@ void frmInventario::on_btnImprimir_clicked()
         default:
             break;
         }
-
-
     }
 }
+
+bool frmInventario::eventFilter(QObject * target, QEvent * event)
+{
+    if(target == this && event->type() == QEvent::Show)
+    {
+        if(!__init)
+            init();
+       init_querys();
+    }
+    return MayaModule::eventFilter(target,event);
+}
+
+void frmInventario::init()
+{
+    ui->setupUi(this);
+    ui->btnSincronizar->setVisible(false);
+    // ------------------------
+    // Tabla
+    // ------------------------
+    m = new QSqlTableModel(this,Configuracion_global->groupDB);
+    m->setTable("inventario");
+    m->setSort(1,Qt::AscendingOrder);
+    m->select();
+    ui->tabla->setModel(m);
+    formato_tabla(m);
+    //---------------------
+    // combo indices
+    //---------------------
+    QStringList orders;
+    orders << tr("código") <<tr("código Barras") <<tr("referencia proveedor") <<tr("descripción");
+    ui->cboOrder->addItems(orders);
+
+
+    connect(m,&QSqlTableModel::dataChanged,[this](const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles ){
+       ui->txtBuscar->setText("");
+       ui->txtBuscar->setFocus();
+    });
+    __init = true;
+}
+
+void frmInventario::init_querys()
+{
+    on_txtBuscar_textEdited(ui->txtBuscar->text());
+}
+
