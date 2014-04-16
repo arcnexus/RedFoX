@@ -715,6 +715,15 @@ QString Configuracion::ValidarCC(QString Entidad, QString Oficina, QString CC)
 
 QString Configuracion::letraDNI(QString Nif)
 {
+    if(Nif.isEmpty())
+    {
+        QMessageBox::critical(qApp->activeWindow(),tr("Internal error"),tr("DNI vacio"));
+        return "";
+    }
+
+    if(Nif.at(0).isLetter())
+        return Nif;
+
     int nSuma, nSumaPar, nSumaNon;
     Nif = Nif.toUpper();
 
