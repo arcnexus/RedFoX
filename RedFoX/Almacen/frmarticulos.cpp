@@ -43,12 +43,10 @@ void FrmArticulos::init_querys()
             "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
     modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
 
-    if(modelBusqueda->rowCount() == 0)
-        modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos", Configuracion_global->groupDB);
-
     tarifa_model->select();
     ui->Pestanas->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(1);
+    format_tables();
 }
 
 void FrmArticulos::init()
@@ -56,6 +54,16 @@ void FrmArticulos::init()
     if(__init)
         return;
     ui->setupUi(this);
+    //FIXME cuando se habiliten excepciones
+    ui->btnExcepciones_3->setVisible(false);
+    //
+    //FIXME cuando se revise parte web
+    ui->Pestanas->removeTab(ui->Pestanas->indexOf(ui->tab_web));
+    //
+    //FIXME cuando se reactive trazabilidad
+    ui->Pestanas->removeTab(ui->Pestanas->indexOf(ui->tab_Trazabilidad));
+    //
+
     ui->btn_cerrar->setVisible(_closeBtn);
     oArticulo = new Articulo(this);
     ui->lbl_en_promocion->setVisible(false);
@@ -169,7 +177,7 @@ void FrmArticulos::format_tables()
     titulo <<"id" << tr("Código") << tr("Descripción")  << tr("C. Barras") << tr("código fabricante") <<tr("%IVA") << tr("KIT") << tr("P.V.P.")
            << tr("PVP+IVA") << tr("S.Alm.") ;
 
-    col_size << 0<<130<<400<<130<<130<<100<<50<<100<<100<<100;
+    col_size << 0<<130<<400<<130<<130<<50<<50<<80<<80<<100;
     for(int i =0;i<titulo.size();i++)
     {
         modelBusqueda->setHeaderData(i,Qt::Horizontal,titulo.at(i));
@@ -210,10 +218,12 @@ void FrmArticulos::setUpBusqueda()
     m_busqueda->addWidget(deleteproduct);
     m_busqueda->addSpacer();
 
+    //FIXME cuando se habiliten excepciones
+    /*
     QPushButton* excep = new QPushButton(QIcon(":/Icons/PNG/excepciones.png"),tr("Excepciones"),this);
     connect(excep,SIGNAL(clicked()),this,SLOT(on_btnExcepciones_clicked()));
     m_busqueda->addWidget(excep);
-
+    */
 
     QPushButton* kit = new QPushButton(QIcon(":/Icons/PNG/kits.png"),tr("Crear/Editar Kit"),this);
     connect(kit,SIGNAL(clicked()),this,SLOT(on_btnKit_clicked()));
@@ -333,6 +343,7 @@ void FrmArticulos::on_botAnadir_clicked()
             ui->lblCodigo->repaint();
 
             ui->stackedWidget->setCurrentIndex(0);
+            ui->Pestanas->setCurrentIndex(0);
             if(Configuracion_global->auto_codigoart)
             {
                 ui->txtcodigo->setText("auto_codigo");
@@ -348,8 +359,25 @@ void FrmArticulos::on_botAnadir_clicked()
 
 void FrmArticulos::on_botGuardar_clicked()
 {
-    if(!ui->txtseccion->text().isEmpty())
-    {        
+    QString campos = tr("Debe especificar los siguientes campos:").append("\n");
+    bool ok = true;
+    if(ui->txtcodigo->text().isEmpty())
+    {
+        ok = false;
+        campos.append(tr("Código de artículo")).append("\n");
+    }
+    if(ui->txtdescripcionResumida->text().isEmpty())
+    {
+        ok = false;
+        campos.append(tr("Nombre del artículo")).append("\n");
+    }
+    if(ui->txtseccion->text().isEmpty())
+    {
+        campos.append(tr("Sección")).append("\n");
+        ok = false;
+    }
+    if(ok)
+    {
         CargarCamposEnArticulo();
         if(oArticulo->Guardar())
         {
@@ -357,11 +385,10 @@ void FrmArticulos::on_botGuardar_clicked()
             actualizar();
             bloquearCampos(true);
         }
-    } else
+    }
+    else
     {
-        QMessageBox::warning(this,tr("Gestion de Productos/servicios"),
-                             tr("Es necesario que asocie el registro a una sección antes de poder guardar"),
-                             tr("Aceptar"));
+        QMessageBox::warning(this,tr("Faltan campos obligatorios por especificar"),campos);
     }
 }
 
@@ -437,6 +464,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->botGuardar->setEnabled(!state);
     ui->botSiguiente->setEnabled(state);
     ui->btnKit->setEnabled(state);
+    ui->btnBuscar->setEnabled(state);
 
     // Botones artículos
     ui->botBuscarSeccion->setEnabled(!state);
@@ -498,7 +526,7 @@ void FrmArticulos::LLenarCampos(int index)
     ui->lblDescripcion->setText(oArticulo->descripcion);
     ui->lbl_en_promocion->setVisible(oArticulo->articulo_promocionado);
 
-    if(index == 0 /*ui->Pestanas->currentWidget() == ui->tab_articulo*/)
+    if(index == ui->Pestanas->indexOf(ui->tab_articulo))//0 /*ui->Pestanas->currentWidget() == ui->tab_articulo*/)
     {
         ui->txtCoste_real->blockSignals(true);
         //IVA desde config
@@ -536,7 +564,7 @@ void FrmArticulos::LLenarCampos(int index)
         ui->txtCoste_real->blockSignals(false);
     }
 
-    else if(index == 1 /*ui->Pestanas->currentWidget()==ui->tab_proveedores*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_proveedores))// /*ui->Pestanas->currentWidget()==ui->tab_proveedores*/)
     {
         // Proveedores frecuentes
         modelProv->setQuery("Select id,cod_pro,proveedor,codigo,pvd,pvd_real,moneda,descoferta,id_prov from proveedores_frecuentes "
@@ -576,20 +604,22 @@ void FrmArticulos::LLenarCampos(int index)
         rellenar_grafica_proveedores();
     }
 
-    else if(index == 2 /*ui->Pestanas->currentWidget() == ui->tab_promociones*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_promociones))//2 /*ui->Pestanas->currentWidget() == ui->tab_promociones*/)
     {
         ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
         ui->framePromocion->setEnabled(false);
-
         ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
-
-
-        //-----------------------------
-        // LLENO  OFERTAS/promociones
-        //-----------------------------
         promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
                               Configuracion_global->empresaDB);
+
+        ui->txtOferta_Fecha_ini->blockSignals(true);
+        ui->txtOferta_Fecha_fin->blockSignals(true);
+
         ui->tabla_ofertas->selectRow(0);
+        on_tabla_ofertas_clicked(ui->tabla_ofertas->currentIndex());
+
+        ui->txtOferta_Fecha_ini->blockSignals(false);
+        ui->txtOferta_Fecha_fin->blockSignals(false);
     }
 
     else if(index == 3 /*ui->Pestanas->currentWidget() == ui->tab_precios_volumen*/)
@@ -607,7 +637,7 @@ void FrmArticulos::LLenarCampos(int index)
         //--------------------------------------------------------------
 
     }
-    else if(index == 5 /*imagenes*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_imagenes))
     {
         //-----------------------------
         // Recuperamos imagen desde BD
@@ -622,7 +652,7 @@ void FrmArticulos::LLenarCampos(int index)
 
 
 
-    else if(index == 6 /*ui->Pestanas->currentWidget() == ui->tab_estadistica*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_estadistica))
     {
         ui->txtfecha_fecha_ultima_compra->setDate(oArticulo->fecha_ultima_compra);
         ui->txtfechaUltimaVenta->setDate(oArticulo->fecha_ultima_venta);
@@ -643,7 +673,7 @@ void FrmArticulos::LLenarCampos(int index)
         GraficaImportes();
     }
 
-    else if(index == 7 /*ui->Pestanas->currentWidget() == ui->tab_grafica*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_grafica) )
     {
         LLenarGraficas();
         if(ui->radGrafica_importes->isChecked())
@@ -652,12 +682,12 @@ void FrmArticulos::LLenarCampos(int index)
             GraficaUnidades();
     }
 
-    else if(index == 8 /*ui->Pestanas->currentWidget() == ui->tab_comparativa*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_comparativa))
     {
         LLenarGrafica_comparativa(1);
     }
 
-    else if(index == 9/*ui->Pestanas->currentWidget() == ui->tab_Trazabilidad*/)
+    else if(index == ui->Pestanas->indexOf(ui->tab_Trazabilidad))
     {
         // -------------------
         // TABLA TRAZABILIDAD
@@ -821,12 +851,12 @@ QString cSQL = "Select id,codigo, descripcion_reducida,  codigo_barras,codigo_fa
         QString::number(Configuracion_global->id_tarifa_predeterminada)+" order by "+campo +" "+mode;
 
     modelBusqueda->setQuery(cSQL,Configuracion_global->groupDB);
-    if(modelBusqueda->rowCount() == 0)
+    /*if(modelBusqueda->rowCount() == 0)
     {
         QString cSQL2 = "Select id,codigo, descripcion_reducida, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos where "+
                 campo+" like '%"+texto.trimmed()+"%' order by "+campo +" "+mode;
         modelBusqueda->setQuery(cSQL2, Configuracion_global->groupDB);
-    }
+    }*/
 
     format_tables();
     ui->tablaBusqueda->selectRow(0);
@@ -874,6 +904,7 @@ void FrmArticulos::on_botEditar_clicked()
     Configuracion_global->transaction();
     this->anadir = false;
 
+    ui->Pestanas->setCurrentIndex(0);
     ui->stackedWidget->setCurrentIndex(0);
     bloquearCampos(false);
     ui->txtcodigo->setReadOnly(true);
@@ -906,30 +937,31 @@ void FrmArticulos::on_botBorrar_clicked()
     oArticulo->Borrar(id,isKit,true,codigo);
 
     LLenarCampos(ui->Pestanas->currentIndex());
-    if(sender() != ui->botBorrar)
-    {
-        QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,,stock_fisico_almacen from vistaart_tarifa "
-                "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
-        modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
+    ui->stackedWidget->setCurrentIndex(1);
 
-        if(modelBusqueda->rowCount() == 0)
-            modelBusqueda->setQuery("Select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit,stock_fisico_almacen from articulos", Configuracion_global->groupDB);
-    }
+    QString cSQL = "select id,codigo, descripcion, codigo_barras,codigo_fabricante,tipo_iva,kit, pvp,pvp_con_iva,,stock_fisico_almacen from vistaart_tarifa "
+            "where tarifa ="+QString::number(Configuracion_global->id_tarifa_predeterminada);
+    modelBusqueda->setQuery(cSQL, Configuracion_global->groupDB);
+    format_tables();
 }
 
 void FrmArticulos::on_botDeshacer_clicked()
 {
-    Configuracion_global->rollback();
-    oArticulo->Recuperar(oArticulo->id);
-    LLenarCampos(ui->Pestanas->currentIndex());
-    bloquearCampos(true);
+    if(QMessageBox::question(NULL,tr("Gestión de artículos"),
+                             tr("Se perderán los cambios realizados en la ficha\n"
+                                "Esta opción no se puede deshacer\n\n"
+                                "¿Desea anular los cambios o continuar la edición?"),
+                             tr("Continuar Edición"),tr("Anular cambios")) == QDialog::Accepted)
+    {
+        Configuracion_global->rollback();
+        //oArticulo->Recuperar(oArticulo->id);
+        LLenarCampos(ui->Pestanas->currentIndex());
+        bloquearCampos(true);
+        if(anadir)
+            mostrarBusqueda();
+    }
 }
 
-void FrmArticulos::AnadirSeccion()
-{
-    QLineEdit *txtseccionNueva = new QLineEdit(ventana);
-    layout->addWidget(txtseccionNueva,2,1,2,1);
-}
 
 bool FrmArticulos::eventFilter(QObject *target, QEvent *event)
 {
@@ -1537,7 +1569,9 @@ void FrmArticulos::GraficaUnidades_comparativa()
         diciembre <<ui->txtUnid_ventas_diciembre_EA->text().toInt() <<ui->txtUnid_ventas_diciembre_3->text().toInt();
         ui->Grafica_comparativa->addItem("Dic",diciembre);
         ui->Grafica_comparativa->repaint();
-    } else{
+    }
+    else
+    {
         // TODO -GRAFICA
         ui->Grafica_comparativa->Clear();
         ui->Grafica_comparativa->setTipo(OpenChart::Lineas);
@@ -2220,8 +2254,8 @@ void FrmArticulos::on_btnAnadir_oferta_clicked()
     ui->txtOfertaDtoOferta->setText("0");
     ui->txtOfertaregalo_de->setText("0");
     ui->txtOferta_Descripcion_promocion->clear();
-    ui->txtOferta_Fecha_fin->setDate(QDate::currentDate().addMonths(1));
-    ui->txtOferta_Fecha_ini->setDate(QDate::currentDate());
+    //ui->txtOferta_Fecha_fin->setDate(QDate::currentDate().addMonths(1));
+    //ui->txtOferta_Fecha_ini->setDate(QDate::currentDate());
     ui->txtOferta_por_cada->setText("0");
     ui->txtoferta_pvp_fijo->setText("0,00");
 
@@ -2229,8 +2263,7 @@ void FrmArticulos::on_btnAnadir_oferta_clicked()
     ui->btnDeshacer_oferta->setEnabled(true);
     ui->btnAnadir_oferta->setEnabled(false);
     ui->btnEditarOferta->setEnabled(false);
-    ui->botGuardar->setEnabled(false);
-    ui->botDeshacer->setEnabled(false);
+
     ui->framePromocion->setEnabled(true);
     ui->frame_comentarios->setEnabled(true);
     ui->txtOferta_Descripcion_promocion->setFocus();
@@ -2244,8 +2277,7 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
         ui->btnDeshacer_oferta->setEnabled(false);
         ui->btnAnadir_oferta->setEnabled(true);
         ui->btnEditarOferta->setEnabled(true);
-        ui->botGuardar->setEnabled(true);
-        ui->botDeshacer->setEnabled(true);
+
 
         QHash <QString, QVariant> oferta;
 
@@ -2271,7 +2303,14 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
             nueva_oferta = false;
             if(QMessageBox::question(this,tr("Gestión de Artículos"),tr("¿Desea guardar como oferta activa?"),
                                      tr("No"),tr("Si")) == QMessageBox::Accepted)
+            {
+                QString error;
+                SqlData _data;
+                _data["activa"] = false;
+                if(!SqlCalls::SqlUpdate(_data,"articulos_ofertas",Configuracion_global->empresaDB,QString("id_articulo = %1").arg(oArticulo->id),error))
+                    QMessageBox::critical(this,tr("Error al actualizar promoción"),error);
                 oferta["activa"] = true;
+            }
             else
                 oferta["activa"] = false;
             new_id = SqlCalls::SqlInsert(oferta,"articulos_ofertas",Configuracion_global->empresaDB,error);
@@ -2306,10 +2345,7 @@ void FrmArticulos::on_chkArticulo_promocionado_toggled(bool checked)
         ui->btnBorrar_oferta->setEnabled(checked);
 
 
-    } /*else
-        QMessageBox::warning(this,tr("Gestión de artículos"),
-                             tr("Debe estar en modo edición de articulo para poder modificar/crear una oferta"),
-                             tr("Aceptar"));*/
+    }
 }
 
 void FrmArticulos::on_btnDeshacer_oferta_clicked()
@@ -2319,6 +2355,8 @@ void FrmArticulos::on_btnDeshacer_oferta_clicked()
 
 void FrmArticulos::on_tabla_ofertas_clicked(const QModelIndex &index)
 {
+    if(!index.isValid())
+        return;
     int id = ui->tabla_ofertas->model()->data(ui->tabla_ofertas->model()->index(index.row(),0),Qt::EditRole).toInt();
     QMap <int,QSqlRecord> oferta;
     QString error;
@@ -2625,5 +2663,38 @@ void FrmArticulos::on_txtCoste_real_editingFinished()
                           tr("Sí")) == QMessageBox::Accepted))
     {
         recalcular_tarifas(Configuracion_global->MonedatoDouble(ui->txtCoste_real->text()));
+    }
+}
+
+void FrmArticulos::on_txtOferta_Fecha_ini_userDateChanged(const QDate &date)
+{
+    QString error;
+    SqlData _data;
+    _data["fecha_inicio"] = date;
+    if(!SqlCalls::SqlUpdate(_data,"articulos_ofertas",Configuracion_global->empresaDB,QString("id_articulo = %1").arg(oArticulo->id),error))
+        QMessageBox::critical(this,tr("Error al actualizar promoción"),error);
+}
+
+void FrmArticulos::on_txtOferta_Fecha_fin_userDateChanged(const QDate &date)
+{
+    QString error;
+    SqlData _data;
+    _data["fecha_fin"] = date;
+    if(!SqlCalls::SqlUpdate(_data,"articulos_ofertas",Configuracion_global->empresaDB,QString("id_articulo = %1").arg(oArticulo->id),error))
+        QMessageBox::critical(this,tr("Error al actualizar promoción"),error);
+}
+
+void FrmArticulos::on_txtcodigo_proveedor_editingFinished()
+{
+    QString error;
+    QMap<int, QSqlRecord> proveedores = SqlCalls::SelectRecord("proveedores",QString("codigo = %1").arg(ui->txtcodigo_proveedor->text()),Configuracion_global->groupDB,error);
+    if(!proveedores.isEmpty())
+    {
+        QSqlRecord r = proveedores.first();
+        oArticulo->idProveedor = r.value("id").toInt();
+        oArticulo->proveedor = r.value("proveedor").toString();
+        oArticulo->cCodProveedor = r.value("codigo").toString();
+        ui->txtcodigo_proveedor->setText(r.value("codigo").toString());
+        ui->txtproveedor->setText(r.value("proveedor").toString());
     }
 }

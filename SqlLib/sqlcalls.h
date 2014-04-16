@@ -85,4 +85,5 @@ public:
     static QString lastError;
 };
 
+typedef QHash<QString,QVariant> SqlData;
 #endif // SQLCALLS_H

@@ -74,7 +74,7 @@ void FrmKit::set_articulo(QString codigo , QString Descripcion, int stock)
 {
     ui->txtCodigo_kit->setText(codigo);
     ui->txtDesc_kit->setText(Descripcion);
-    m_arts->setQuery("select id,codigo,descripcion,coste_real, stock_fisico_almacen from articulos where kit = 0",Configuracion_global->groupDB);
+    m_arts->setQuery("select id,codigo,descripcion_reducida,coste_real, stock_fisico_almacen from articulos where kit = 0",Configuracion_global->groupDB);
     ui->tabla_buscar->setColumnHidden(0,true);
     ui->tabla_buscar->setColumnHidden(4,true);
     ui->tabla_buscar->setColumnWidth(1,100);
@@ -91,7 +91,7 @@ double FrmKit::getCoste()
     double d = 0.0;
     for(auto i=0; i< m_kits->rowCount(); i++)
     {
-        d += (m_kits->record(i).value(2).toDouble() * m_kits->record(i).value(5).toDouble());
+        d += (m_kits->record(i).value("cantidad").toDouble() * m_kits->record(i).value("coste_final").toDouble());
     }
     return d;
 }
@@ -172,7 +172,7 @@ void FrmKit::on_txtBuscar_textEdited(const QString &arg1)
 
     QString ord = orden.value(ui->cboOrden->currentText());
 
-    SQL = "select id,codigo,descripcion,coste_real from articulos where "+ord+
+    SQL = "select id,codigo,descripcion_reducida,coste_real from articulos where "+ord+
             " like '%"+arg1.trimmed()+"%' order by "+ord+" "+sentido;
     m_arts->setQuery(SQL,Configuracion_global->groupDB);
 

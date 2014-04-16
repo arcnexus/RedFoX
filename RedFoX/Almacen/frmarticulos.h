@@ -17,15 +17,6 @@ class FrmArticulos : public MayaModule
 public:
     explicit FrmArticulos(QWidget *parent = 0, bool closeBtn = false);
     ~FrmArticulos();
-    Articulo *oArticulo;
-    QSqlQueryModel *qTarifas;
-    QSqlTableModel * tarifa_model;
-    QSqlQueryModel *modelProv;
-    QSqlQueryModel *modelTrazabilidad1;
-    QSqlQueryModel *modelTrazabilidad2;
-    QSqlQueryModel *promociones;
-    QSqlQueryModel *volumen;
-    QSqlQueryModel *modelEmpresa;
     module_zone module_zone(){return Almacen;}
     QString module_name(){return "Articulos";}
     QAction * ModuleMenuBarButton(){return &menuButton;}
@@ -157,8 +148,13 @@ private slots:
 
     void on_txtCoste_real_editingFinished();
 
+    void on_txtOferta_Fecha_ini_userDateChanged(const QDate &date);
+
+    void on_txtOferta_Fecha_fin_userDateChanged(const QDate &date);
+
+    void on_txtcodigo_proveedor_editingFinished();
+
 public slots:
-    void AnadirSeccion();
     void init();
 
 private:
@@ -172,18 +168,12 @@ private:
     void VaciarCampos();
     void ChangeValues_TablaProveedores(int row, int column);
 
-
-    QListView *lista;
-    QDialog *ventana;
-    QString *Devolucion;
-    QGridLayout *layout;
     bool anadir;
     void rellenar_grafica_proveedores();
-    MonetaryDelegate *Delegado;
+
     QAction menuButton;
     QPushButton* shortCut;
     QSqlQueryModel *modelBusqueda;
-
 
     BarraBusqueda* m_busqueda;
     void setUpBusqueda();
@@ -194,6 +184,16 @@ private:
     QSqlQueryModel *modelTarifa;
     void llenar_tabla_tarifas();
     void recalcular_tarifas(double coste);
+
+    Articulo *oArticulo;
+    QSqlQueryModel *qTarifas;
+    QSqlTableModel *tarifa_model;
+    QSqlQueryModel *modelProv;
+    QSqlQueryModel *modelTrazabilidad1;
+    QSqlQueryModel *modelTrazabilidad2;
+    QSqlQueryModel *promociones;
+    QSqlQueryModel *volumen;
+    QSqlQueryModel *modelEmpresa;
 
     bool __init;
     bool _closeBtn;
