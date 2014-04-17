@@ -10,18 +10,18 @@ public:
     explicit DivisionAlmacenExt(QObject *parent = 0);
     
     QList<QAction *> Extensions();
-    QString ExtensionPath(){return "Divisiones de Almacén";}// Use '|' to subPaths
+    QString ExtensionPath(){return "";}// Use '|' to subPaths
 
     MayaModule::module_zone module_zone(){return MayaModule::Almacen;}
 signals:
     
 public slots:
+
 private slots:
-    void handle_actions();
+    void do_divisiones();
+
 private:
-    QAction Seccion;
-    QAction familias;
-    QAction subFam;
+    QAction divisiones;
     QVector<QPair<QAction *, MayaModule::accessLevel> > _actions;
 };
 

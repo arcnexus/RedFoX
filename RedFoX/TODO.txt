@@ -215,3 +215,9 @@ ALTER TABLE `empneux`.`alb_pro` ADD COLUMN `porc_dto` DOUBLE NULL DEFAULT '0' AF
 ALTER TABLE `empNeux`.`lin_fac_pro` ADD COLUMN `albaran` VARCHAR(45) NULL AFTER `coste_real_unidad`;
 ALTER TABLE `empNeux`.`lin_fac` ADD COLUMN `lin_faccol` VARCHAR(45) NULL AFTER `id_lote`;
 ALTER TABLE `empNeux`.`fac_pro` CHANGE COLUMN `recargo_equivalencia` `recargo_equivalencia` TINYINT NULL DEFAULT '0' ;
+
+17/4/13
+ALTER TABLE `GrupoNeuxGroup`.`secciones` CHANGE COLUMN `image` `image` MEDIUMBLOB NULL DEFAULT NULL ;
+ALTER TABLE `GrupoNeuxGroup`.`familias` CHANGE COLUMN `image` `image` MEDIUMBLOB NULL DEFAULT NULL ;
+ALTER TABLE `GrupoNeuxGroup`.`subfamilias` CHANGE COLUMN `image` `image` MEDIUMBLOB NULL DEFAULT NULL ;
+

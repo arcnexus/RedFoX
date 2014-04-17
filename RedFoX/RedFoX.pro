@@ -215,8 +215,6 @@ SOURCES += main.cpp\
     Almacen/frmselectlotes.cpp \
     Zona_Maestros/frmcajas.cpp \
     Zona_Maestros/cajas.cpp \
-    Almacen/frmseccionesalmacen.cpp \
-    Almacen/frmfamiliasalmacen.cpp \
     Zona_Maestros/frmagentes.cpp \
     Zona_Maestros/frmtipocliente.cpp\
     Auxiliares/frmgastos_ped_pro.cpp \
@@ -225,7 +223,8 @@ SOURCES += main.cpp\
     Zona_Ventas/frmlistadoped.cpp \
     Zona_Ventas/frmlistadoalbaran.cpp \
     Zona_Ventas/frmlistadofac.cpp \
-    Zona_Compras/dlgpedidoalbfact.cpp
+    Zona_Compras/dlgpedidoalbfact.cpp \
+    Almacen/dlgdivisionesalmacen.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -405,8 +404,6 @@ HEADERS  += mainwindow.h \
     Almacen/frmselectlotes.h \
     Zona_Maestros/frmcajas.h \
     Zona_Maestros/cajas.h \
-    Almacen/frmseccionesalmacen.h \
-    Almacen/frmfamiliasalmacen.h \
     Zona_Maestros/frmagentes.h \
     Zona_Maestros/frmtipocliente.h \
     Auxiliares/frmgastos_ped_pro.h \
@@ -415,7 +412,8 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmlistadoped.h \
     Zona_Ventas/frmlistadoalbaran.h \
     Zona_Ventas/frmlistadofac.h \
-    Zona_Compras/dlgpedidoalbfact.h
+    Zona_Compras/dlgpedidoalbfact.h \
+    Almacen/dlgdivisionesalmacen.h
 
 
 
@@ -512,8 +510,6 @@ FORMS    += mainwindow.ui \
     Almacen/frmaddlotes.ui \
     Almacen/frmselectlotes.ui \
     Zona_Maestros/frmcajas.ui \
-    Almacen/frmseccionesalmacen.ui \
-    Almacen/frmfamiliasalmacen.ui \
     Zona_Maestros/frmagentes.ui \
     Zona_Maestros/frmtipocliente.ui \
     Auxiliares/frmgastos_ped_pro.ui \
@@ -522,7 +518,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmlistadoped.ui \
     Zona_Ventas/frmlistadoalbaran.ui \
     Zona_Ventas/frmlistadofac.ui \
-    Zona_Compras/dlgpedidoalbfact.ui
+    Zona_Compras/dlgpedidoalbfact.ui \
+    Almacen/dlgdivisionesalmacen.ui
 
 RESOURCES += \
     maya.qrc \

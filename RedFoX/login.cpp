@@ -101,6 +101,11 @@ void Login::on_btnAcceder_clicked()
         QMessageBox::critical(this,tr("Error"),Configuracion_global->groupDB.lastError().text());
         return;
     }
+    else
+    {
+        QSqlQuery q(Configuracion_global->groupDB);
+        q.exec("SET GLOBAL max_allowed_packet=1073741824;");
+    }
 
     QSqlRecord rEmpresa = _empresas.value(ui->comboGroup->currentText()).rec_empresas.value(ui->cboEmpresa->currentText());
 

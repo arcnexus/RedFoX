@@ -502,7 +502,7 @@ CREATE TABLE `@grupo@`.`familias` (
   `codigo` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `familia` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_seccion` int(11) DEFAULT '0',
-  `image` blob,
+  `image` mediumblob,
   `type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -726,7 +726,7 @@ CREATE TABLE `@grupo@`.`secciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `seccion` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_web` int(11) DEFAULT NULL,
-  `image` blob,
+  `image` mediumblob,
   `type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -735,7 +735,7 @@ CREATE TABLE `@grupo@`.`subfamilias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sub_familia` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_familia` int(11) DEFAULT '0',
-  `image` blob,
+  `image` mediumblob,
   `type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
