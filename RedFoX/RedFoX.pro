@@ -532,13 +532,6 @@ OTHER_FILES += \
     EditorReports/Graphics.pro.user \
 
 
-unix: LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazip
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazip
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/Auxiliares/QuaZIP/lib/ -lquazipd
-
-INCLUDEPATH += $$PWD/Auxiliares/QuaZIP
-DEPENDPATH += $$PWD/Auxiliares/QuaZIP
-
 !win32: LIBS += -lz
 
 DEFINES += NOMINMAX
@@ -570,3 +563,17 @@ else:unix: LIBS += -L$$OUT_PWD/../BlinkingLabel/ -lblinkinkplugin
 
 INCLUDEPATH += $$PWD/../BlinkingLabel
 DEPENDPATH += $$PWD/../BlinkingLabel
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ODSlib/release/ -lODSlib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ODSlib/debug/ -lODSlib
+else:unix: LIBS += -L$$OUT_PWD/../ODSlib/ -lODSlib
+
+INCLUDEPATH += $$PWD/../ODSlib
+DEPENDPATH += $$PWD/../ODSlib
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../quazip/release/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../quazip/debug/ -lquazip
+else:unix: LIBS += -L$$OUT_PWD/../quazip/ -lquazip
+
+INCLUDEPATH += $$PWD/../quazip
+DEPENDPATH += $$PWD/../quazip

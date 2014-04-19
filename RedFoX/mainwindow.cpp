@@ -536,16 +536,16 @@ void MainWindow::loadVentasModules(QSplashScreen *splash)
 
 void MainWindow::loadComprasModules(QSplashScreen *splash)
 {
-    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") ,Qt::AlignLeft,Qt::white );
-    QApplication::processEvents();
+//    splash->showMessage(tr("Cargando modulos... Modulo de Compras: Orden de Pedido") ,Qt::AlignLeft,Qt::white );
+//    QApplication::processEvents();
 
-    FrmOrden_Pedido_Producto * frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
-    if(frmOrden_Ped_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
-    {
-        _comprasModules.append(frmOrden_Ped_pro);
-    }
-    else
-        delete frmOrden_Ped_pro;
+//    FrmOrden_Pedido_Producto * frmOrden_Ped_pro = new FrmOrden_Pedido_Producto(this);
+//    if(frmOrden_Ped_pro->userHaveAcces(Configuracion_global->id_usuario_activo))
+//    {
+//        _comprasModules.append(frmOrden_Ped_pro);
+//    }
+//    else
+//        delete frmOrden_Ped_pro;
 
     splash->showMessage(tr("Cargando modulos... Modulo de Compras: pedidos")  ,Qt::AlignLeft,Qt::white);
     QApplication::processEvents();
