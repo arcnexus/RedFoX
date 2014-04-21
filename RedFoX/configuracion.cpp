@@ -300,7 +300,7 @@ void Configuracion::Cargar_idiomas()
 
 void Configuracion::Cargar_tarifas()
 {
-    tarifas_model->setQuery("Selet * from codigotarifa",Configuracion_global->groupDB);
+    tarifas_model->setQuery("Select * from codigotarifa",Configuracion_global->groupDB);
 }
 
 void Configuracion::Cargar_gastos()
