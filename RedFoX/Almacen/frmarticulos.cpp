@@ -523,7 +523,7 @@ void FrmArticulos::LLenarCampos(int index)
     //Widgets globales
     ui->lblkit->setVisible(oArticulo->kit);
     ui->lblCodigo->setText(oArticulo->codigo);
-    ui->lblDescripcion->setText(oArticulo->descripcion);
+    ui->lblDescripcion->setText(oArticulo->descripcion_reducida);
     ui->lbl_en_promocion->setVisible(oArticulo->articulo_promocionado);
 
     if(index == ui->Pestanas->indexOf(ui->tab_articulo))//0 /*ui->Pestanas->currentWidget() == ui->tab_articulo*/)

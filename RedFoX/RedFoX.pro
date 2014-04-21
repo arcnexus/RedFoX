@@ -13,6 +13,7 @@ QT       += network
 QT       += xml
 QT       += webkit
 QT += printsupport
+QT+= webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,18 +22,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #QTPLUGIN+=qsqlmysql
 
 win32:RC_FILE = windowsRc.rc
-
-INCLUDEPATH += /Qwt/5.2.1/include
-INCLUDEPATH += /usr/local/Qxt/include/QxtCore
-DEPENDPATH += /Qwt/5.2.1/lib
-greaterThan(QT_MAJOR_VERSION, 4):INCLUDEPATH += /home/arcnexus/Qt5.0.0/5.0.0/gcc_64/include/QtWebKitWidgets
-
-
-
-LIBS += -LC:/Qt/Qwt/5.2.1/lib
-LIBS += -L/usr/local/Qxt/lib
-greaterThan(QT_MAJOR_VERSION, 4):LIBS += -L/home/arcnexus/Qt5.0.0/Tools/QtCreator/lib/qtcreator/ -lQt5WebKitWidgets
-
 
 TARGET = RedFoX
 TEMPLATE = app
@@ -224,7 +213,9 @@ SOURCES += main.cpp\
     Zona_Ventas/frmlistadoalbaran.cpp \
     Zona_Ventas/frmlistadofac.cpp \
     Zona_Compras/dlgpedidoalbfact.cpp \
-    Almacen/dlgdivisionesalmacen.cpp
+    Almacen/dlgdivisionesalmacen.cpp \
+    Almacen/importararticuloext.cpp \
+    Almacen/dlgimportods.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -413,7 +404,9 @@ HEADERS  += mainwindow.h \
     Zona_Ventas/frmlistadoalbaran.h \
     Zona_Ventas/frmlistadofac.h \
     Zona_Compras/dlgpedidoalbfact.h \
-    Almacen/dlgdivisionesalmacen.h
+    Almacen/dlgdivisionesalmacen.h \
+    Almacen/importararticuloext.h \
+    Almacen/dlgimportods.h
 
 
 
@@ -519,7 +512,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmlistadoalbaran.ui \
     Zona_Ventas/frmlistadofac.ui \
     Zona_Compras/dlgpedidoalbfact.ui \
-    Almacen/dlgdivisionesalmacen.ui
+    Almacen/dlgdivisionesalmacen.ui \
+    Almacen/dlgimportods.ui
 
 RESOURCES += \
     maya.qrc \

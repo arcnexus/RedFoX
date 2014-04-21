@@ -443,6 +443,12 @@ void MainWindow::loadAlmacenModules(QSplashScreen* splash)
         _almacenExtensions.append(x);
     else
         delete x;
+
+    ImportarArticuloExt* import = new ImportarArticuloExt(this);
+    if(!import->Extensions().isEmpty())
+        _almacenExtensions.append(import);
+    else
+        delete import;
 }
 
 void MainWindow::loadVentasModules(QSplashScreen *splash)

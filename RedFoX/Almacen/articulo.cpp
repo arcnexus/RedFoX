@@ -318,11 +318,8 @@ bool Articulo::Guardar()
     articulo["descripcion_reducida"] = this->descripcion_reducida;
     articulo["id_proveedor"] = this->idProveedor;
     articulo["id_familia"] = this->id_familia;
-   // articulo["familia"] = this->familia;
     articulo["id_seccion"] = this->id_seccion;
-   // articulo["seccion"] = this->seccion;
     articulo["id_subfamilia"] = this->id_subfamilia;
-  //  articulo["subfamilia"] = this->subfamilia;
     articulo["tipo_iva"] = this->tipo_iva;
     articulo["porc_dto"] = this->porc_dto;
     articulo["fecha_ultima_compra"] = this->fecha_ultima_compra;
@@ -337,7 +334,6 @@ bool Articulo::Guardar()
     articulo["stock_real"] = this->stock_real;
     articulo["stock_fisico_almacen"] = this->nstock_fisico_almacen;
     articulo["controlar_stock"] = this->controlar_stock;
-   // articulo["composicion"] = this->composicion;
     articulo["pvp_incluye_iva"] = this->pvp_incluye_iva;
     articulo["fecha_prevista_recepcion"]= fecha_prevista_recepcion;
     articulo["cantidad_pendiente_recibir"] = this->cantidad_pendiente_recibir;

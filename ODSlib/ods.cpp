@@ -316,14 +316,6 @@ bool ODS::ODStoTable(QString fileName, QAbstractItemModel *model)
         return false;
     }
 
-    QDomNode table_table_column = table_table.namedItem("table:table-column");
-    if(table_table_column.isNull())
-    {
-        ODS::lastError = tr("No es un documento office válido :: table:table-column");
-        return false;
-    }
-
-    int total_columns = table_table_column.toElement().attribute("table:number-columns-repeated").toInt();
 
     QDomNode table_table_row = table_table.namedItem("table:table-row");
     if(table_table_row.isNull())
@@ -332,7 +324,7 @@ bool ODS::ODStoTable(QString fileName, QAbstractItemModel *model)
         return false;
     }
 
-    while(model->columnCount() < total_columns)
+    if(model->columnCount() == 0)
     {
         if(!model->insertColumn(model->columnCount()))
         {
@@ -340,6 +332,7 @@ bool ODS::ODStoTable(QString fileName, QAbstractItemModel *model)
             return false;
         }
     }
+
 
     while(!table_table_row.isNull())
     {
@@ -357,13 +350,48 @@ bool ODS::ODStoTable(QString fileName, QAbstractItemModel *model)
             QDomNode table_cell = table_table_row.namedItem("table:table-cell");
             while(!table_cell.isNull())
             {
+                if(model->columnCount()-1 < column)
+                {
+                    if(!model->insertColumn(model->columnCount()))
+                    {
+                        ODS::lastError = tr("Error escribiendo columnas");
+                        return false;
+                    }
+                }
+
                 QString content = "";
+                int repeat = 1;
+                if(table_cell.toElement().hasAttribute("table:number-columns-repeated"))
+                    repeat = table_cell.toElement().attribute("table:number-columns-repeated").toInt();
+
                 QDomNode text_p = table_cell.firstChildElement("text:p");
-                if(!text_p.isNull())
+
+                if( (table_cell.toElement().hasAttribute("office:value-type") && table_cell.toElement().hasAttribute("office:value"))
+                         || text_p.isNull() )
+                {
+                    content = table_cell.toElement().attribute("office:value");
+                    for(int r = 0; r< repeat; ++r)
+                    {
+                        if(!model->setData(model->index(row,column),content))
+                        {
+                            ODS::lastError = tr("Error escribiendo campo");
+                            return false;
+                        }
+                        ++column;
+                    }
+                }
+                else if(!text_p.isNull())
                 {
                     content = text_p.toElement().text();
-                    model->setData(model->index(row,column),content);
-                    ++column;
+                    for(int r = 0; r< repeat; ++r)
+                    {
+                        if(!model->setData(model->index(row,column),content))
+                        {
+                            ODS::lastError = tr("Error escribiendo campo");
+                            return false;
+                        }
+                        ++column;
+                    }
                 }
                 table_cell = table_cell.nextSiblingElement("table:table-cell");
             }

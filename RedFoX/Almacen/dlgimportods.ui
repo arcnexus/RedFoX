@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DlgImportODS</class>
+ <widget class="QDialog" name="DlgImportODS">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0" colspan="8">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Especifique las columnas a utilizar. Deje a 0 las que desee ignorar.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QSpinBox" name="spinCBarras"/>
+   </item>
+   <item row="1" column="0" colspan="13">
+    <widget class="QTableView" name="tableView"/>
+   </item>
+   <item row="3" column="7">
+    <widget class="QSpinBox" name="spinDesc"/>
+   </item>
+   <item row="5" column="9">
+    <widget class="QSpinBox" name="spinFamilia"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Código</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="4">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si existe un articulo con el mismo código, codigo de barras o código de fabricante, se actualizará con estos datos&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Sobreescribir articulos existentes</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Código de barras</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="12">
+    <widget class="QLineEdit" name="txtFile"/>
+   </item>
+   <item row="5" column="6">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Código Sección</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3">
+    <widget class="QSpinBox" name="spinStock"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="spinCodigo"/>
+   </item>
+   <item row="5" column="7">
+    <widget class="QSpinBox" name="spinSeccion"/>
+   </item>
+   <item row="3" column="8">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Des. reducida</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Código del fabricante</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="6">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Descripción</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="5">
+    <widget class="QSpinBox" name="spinCFabricante"/>
+   </item>
+   <item row="3" column="10">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>IVA</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="9">
+    <widget class="QSpinBox" name="spinDesRed"/>
+   </item>
+   <item row="5" column="2">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Control stock</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Coste</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>Mostrar web:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="5">
+    <widget class="QSpinBox" name="spinWeb"/>
+   </item>
+   <item row="5" column="8">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>Código Familia</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QSpinBox" name="spinCoste"/>
+   </item>
+   <item row="5" column="10">
+    <widget class="QLabel" name="label_13">
+     <property name="text">
+      <string>Código Subfamilia</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="11">
+    <widget class="QSpinBox" name="spinIVA">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QToolButton" name="btnFile">
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="11">
+    <widget class="QSpinBox" name="spinSubfamilia"/>
+   </item>
+   <item row="8" column="10">
+    <widget class="QPushButton" name="btnExit">
+     <property name="text">
+      <string>Salir</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="8">
+    <widget class="QPushButton" name="btnImpor">
+     <property name="text">
+      <string>Importar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="8">
+    <widget class="QGroupBox" name="groupTarifas">
+     <property name="title">
+      <string>Actualizar tarífas</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QTableWidget" name="tableTarifas">
+        <column>
+         <property name="text">
+          <string>Tarífa</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Columna a usar</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnExit</sender>
+   <signal>clicked()</signal>
+   <receiver>DlgImportODS</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>517</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>502</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
