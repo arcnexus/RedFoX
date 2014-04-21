@@ -563,10 +563,10 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->txtbase2->setText("0,00");
     ui->txtbase3->setText("0,00");
     ui->txtbase4->setText("0,00");
-    ui->txtporc_iva1->setText("1");
-    ui->txtporc_iva2->setText("1");
-    ui->txtporc_iva3->setText("1");
-    ui->txtporc_iva4->setText("1 casa");
+    ui->txtporc_iva1->setText(Configuracion_global->ivaList.at(0));
+    ui->txtporc_iva2->setText(Configuracion_global->ivaList.at(1));
+    ui->txtporc_iva3->setText(Configuracion_global->ivaList.at(2));
+    ui->txtporc_iva4->setText(Configuracion_global->ivaList.at(3));
     ui->txtiva1->setText("0,00");
     ui->txtiva2->setText("0,00");
     ui->txtiva3->setText("0,00");
@@ -1755,7 +1755,7 @@ void FrmPresupuestosCli::filter_table(QString texto, QString orden, QString modo
 
 void FrmPresupuestosCli::calcular_presupuesto()
 {
-    if(__init)
+    if(!__init)
         return;
     double subtotal,dto,  dtopp,base,irpf,iva,re ,total;
     double base1,iva1,re1,total1;
