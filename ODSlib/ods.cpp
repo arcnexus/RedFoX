@@ -182,9 +182,9 @@ bool ODS::SqlToODS(QString fileName, QString query, QSqlDatabase db, QStringList
         QFile inFile;
 
         QStringList _root_list;
-        _root_list << content <<  ":/ODS/Auxiliares/QuaZIP/ODS/meta.xml" << ":/ODS/Auxiliares/QuaZIP/ODS/mimetype" << ":/ODS/Auxiliares/QuaZIP/ODS/settings.xml" << ":/ODS/Auxiliares/QuaZIP/ODS/styles.xml";
-        _root_list << ":/ODS/Auxiliares/QuaZIP/ODS/META-INF/manifest.xml";
-        _root_list << ":/ODS/Auxiliares/QuaZIP/ODS/Thumbnails/thumbnail.png";
+        _root_list << content <<  "://ODS/meta.xml" << "://ODS/mimetype" << "://ODS/settings.xml" << "://ODS/styles.xml";
+        _root_list << "://ODS/Thumbnails/thumbnail.png";
+        _root_list << "://ODS/META-INF/manifest.xml";
 
         QFileInfoList _root_files;
         foreach (QString fn, _root_list) _root_files << QFileInfo(fn);
@@ -196,7 +196,7 @@ bool ODS::SqlToODS(QString fileName, QString query, QSqlDatabase db, QStringList
             if(fileInfo.filePath() == content)
                fileNameWithRelativePath = fileInfo.fileName();
             else
-                fileNameWithRelativePath= fileInfo.filePath().replace(":/ODS/Auxiliares/QuaZIP/ODS/","");
+                fileNameWithRelativePath= fileInfo.filePath().replace("://ODS/","");
 
             inFile.setFileName(fileInfo.filePath());
 

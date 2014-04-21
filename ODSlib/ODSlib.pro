@@ -29,3 +29,6 @@ else:unix: LIBS += -L$$OUT_PWD/../quazip/ -lquazip
 
 INCLUDEPATH += $$PWD/../quazip
 DEPENDPATH += $$PWD/../quazip
+
+RESOURCES += \
+    resource.qrc

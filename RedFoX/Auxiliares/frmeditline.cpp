@@ -431,11 +431,12 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
             QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al recuperar: %1").arg(error));
             return;
         }
+        //QString filtro = QString("id_articulo = %1 and activa=1 and fecha_inicio <= %2 and fecha_fin >= %2")
+        QMap <int,QSqlRecord> ofertas = SqlCalls::SelectRecord("articulo_ofertas",condiciones,Configuracion_global->groupDB,error);
 
         if(!m.isEmpty())
         {
-            QSqlRecord r = m.first();
-
+            QSqlRecord r = m.first();            
             this->id_articulo = r.value("id").toInt();
 
             ui->txtCodigo->setText(r.value("codigo").toString());
@@ -488,7 +489,7 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
             ui->dateFecha_recepcion->setDate(r.value("fecha_prevista_recepcion").toDate());
 
             // PROMOCIONES ARTÍCULO
-            if(r.value("promocionado").toBool())
+            if(r.value("articulo_promocionado").toBool())
             {
                 ui->lblpromocionado->setVisible(true);
                 ui->chk3_2->setVisible(true);

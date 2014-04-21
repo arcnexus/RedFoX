@@ -152,6 +152,8 @@ private slots:
 
     void on_txtcodigo_proveedor_editingFinished();
 
+    void on_cboTarifaOferta_currentIndexChanged(int index);
+
 public slots:
     void init();
 

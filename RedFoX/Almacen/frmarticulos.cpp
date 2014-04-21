@@ -93,6 +93,8 @@ void FrmArticulos::init()
     ui->tablaVentas->setModel(modelTrazabilidad2);
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(2);
+    ui->cboTarifaOferta->setModel(Configuracion_global->tarifas_model);
+    ui->cboTarifaOferta->setModelColumn(1);
 
     //SET DELEGATES
     ui->TablaTarifas->setItemDelegateForColumn(5, new MonetaryDelegate(this));
@@ -609,7 +611,8 @@ void FrmArticulos::LLenarCampos(int index)
         ui->chkArticulo_promocionado->setChecked(oArticulo->articulo_promocionado);
         ui->framePromocion->setEnabled(false);
         ui->chkMostrar_en_cuadro->setChecked(oArticulo->mostrar_en_cuadro);
-        promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
+        int id_tarifa = Configuracion_global->tarifas_model->record(ui->cboTarifaOferta->currentIndex()).value("id").toInt();
+        promociones->setQuery(QString("select id, activa, descripcion from articulos_ofertas where id_articulo = %1 and id_tarifa=%2 order by activa desc").arg(oArticulo->id).arg(id_tarifa),
                               Configuracion_global->empresaDB);
 
         ui->txtOferta_Fecha_ini->blockSignals(true);
@@ -2324,7 +2327,8 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
                 QMessageBox::warning(this,tr("Gestión de artículos"),tr("Se ha producido un error al actualizar la oferta: %1").arg(error));
 
         }
-        promociones->setQuery(QString("select id,activa, descripcion from articulos_ofertas where id_articulo = %1 order by activa desc").arg(oArticulo->id),
+        int id_tarifa = Configuracion_global->tarifas_model->record(ui->cboTarifaOferta->currentIndex()).value("id").toInt();
+        promociones->setQuery(QString("select id,activa, descripcion from articulos_ofertas where id_articulo = %1 and id_tarifa=%2 order by activa desc").arg(oArticulo->id).arg(id_tarifa),
                                 Configuracion_global->empresaDB);
     }
     else
@@ -2691,4 +2695,11 @@ void FrmArticulos::on_txtcodigo_proveedor_editingFinished()
         ui->txtcodigo_proveedor->setText(r.value("codigo").toString());
         ui->txtproveedor->setText(r.value("proveedor").toString());
     }
+}
+
+void FrmArticulos::on_cboTarifaOferta_currentIndexChanged(int index)
+{
+    int id_tarifa = Configuracion_global->tarifas_model->record(index).value("id").toInt();
+    promociones->setQuery(QString("select id,activa, descripcion from articulos_ofertas where id_articulo = %1 and id_tarifa=%2 order by activa desc").arg(oArticulo->id).arg(id_tarifa),
+                            Configuracion_global->empresaDB);
 }

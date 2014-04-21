@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ODS/meta.xml</file>
+        <file>ODS/mimetype</file>
+        <file>ODS/settings.xml</file>
+        <file>ODS/styles.xml</file>
+        <file>ODS/Thumbnails/thumbnail.png</file>
+        <file>ODS/META-INF/manifest.xml</file>
+    </qresource>
+</RCC>
