@@ -93,6 +93,7 @@ void FrmArticulos::init()
     ui->tablaVentas->setModel(modelTrazabilidad2);
     ui->cboTipoIVA->setModel(Configuracion_global->iva_model);
     ui->cboTipoIVA->setModelColumn(2);
+
     ui->cboTarifaOferta->setModel(Configuracion_global->tarifas_model);
     ui->cboTarifaOferta->setModelColumn(1);
 
@@ -500,7 +501,7 @@ void FrmArticulos::bloquearCampos(bool state) {
     // activo controles que deben estar activos.
     //----------------------------------------------------
     ui->chkValorGrafica->setEnabled(true);
-
+    ui->cboTarifaOferta->setEnabled(true);
     //----------------------------------------------------
     // desactivo controles que deben estar desactivados
     //----------------------------------------------------
@@ -2253,6 +2254,7 @@ void FrmArticulos::on_btnAnadir_oferta_clicked()
     ui->chkOferta_web->setEnabled(true);
     ui->txtOferta_Descripcion_promocion->setEnabled(true);
     ui->lblDescripcion_oferta->setEnabled(true);
+    ui->cboTarifaOferta->setEnabled(false);
 
     ui->txtOfertaDtoOferta->setText("0");
     ui->txtOfertaregalo_de->setText("0");
@@ -2280,6 +2282,7 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
         ui->btnDeshacer_oferta->setEnabled(false);
         ui->btnAnadir_oferta->setEnabled(true);
         ui->btnEditarOferta->setEnabled(true);
+        ui->cboTarifaOferta->setEnabled(true);
 
 
         QHash <QString, QVariant> oferta;
@@ -2298,9 +2301,11 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
         oferta["comentarios"] = ui->txtOferta_comentarios_promocion->toPlainText();
         oferta["fecha_inicio"] =ui->txtOferta_Fecha_ini->date();
         oferta["fecha_fin"] = ui->txtOferta_Fecha_fin->date();
+        oferta["id_tarifa"] = Configuracion_global->tarifas_model->record(ui->cboTarifaOferta->currentIndex()).value("id").toInt();
         int new_id;
         bool success;
         QString error;
+        int id_tarifa = Configuracion_global->tarifas_model->record(ui->cboTarifaOferta->currentIndex()).value("id").toInt();
         if(nueva_oferta)
         {
             nueva_oferta = false;
@@ -2310,7 +2315,7 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
                 QString error;
                 SqlData _data;
                 _data["activa"] = false;
-                if(!SqlCalls::SqlUpdate(_data,"articulos_ofertas",Configuracion_global->empresaDB,QString("id_articulo = %1").arg(oArticulo->id),error))
+                if(!SqlCalls::SqlUpdate(_data,"articulos_ofertas",Configuracion_global->empresaDB,QString("id_articulo = %1 and id_tarifa=%2").arg(oArticulo->id).arg(id_tarifa),error))
                     QMessageBox::critical(this,tr("Error al actualizar promoción"),error);
                 oferta["activa"] = true;
             }
@@ -2326,8 +2331,7 @@ void FrmArticulos::on_btnguardar_oferta_clicked()
             if(!success)
                 QMessageBox::warning(this,tr("Gestión de artículos"),tr("Se ha producido un error al actualizar la oferta: %1").arg(error));
 
-        }
-        int id_tarifa = Configuracion_global->tarifas_model->record(ui->cboTarifaOferta->currentIndex()).value("id").toInt();
+        }        
         promociones->setQuery(QString("select id,activa, descripcion from articulos_ofertas where id_articulo = %1 and id_tarifa=%2 order by activa desc").arg(oArticulo->id).arg(id_tarifa),
                                 Configuracion_global->empresaDB);
     }
@@ -2354,6 +2358,7 @@ void FrmArticulos::on_chkArticulo_promocionado_toggled(bool checked)
 
 void FrmArticulos::on_btnDeshacer_oferta_clicked()
 {
+    ui->cboTarifaOferta->setEnabled(true);
     on_tabla_ofertas_clicked(ui->tabla_ofertas->currentIndex());
 }
 
@@ -2468,6 +2473,7 @@ void FrmArticulos::on_btnEditarOferta_clicked()
     ui->btnEditarOferta->setEnabled(false);
     ui->btnguardar_oferta->setEnabled(true);
     ui->btnDeshacer_oferta->setEnabled(true);
+    ui->cboTarifaOferta->setEnabled(false);
 }
 
 
