@@ -109,6 +109,7 @@ CREATE TABLE `@empresa@`.`articulos_excepciones` (
 CREATE TABLE `@empresa@`.`articulos_ofertas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_articulo` int(11) DEFAULT NULL,
+  `id_tarifa` int(11) DEFAULT '0',
   `descripcion` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `oferta_32` tinyint(4) DEFAULT NULL,
   `oferta_dto` tinyint(4) DEFAULT NULL,

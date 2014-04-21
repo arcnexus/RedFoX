@@ -221,3 +221,7 @@ ALTER TABLE `GrupoNeuxGroup`.`secciones` CHANGE COLUMN `image` `image` MEDIUMBLO
 ALTER TABLE `GrupoNeuxGroup`.`familias` CHANGE COLUMN `image` `image` MEDIUMBLOB NULL DEFAULT NULL ;
 ALTER TABLE `GrupoNeuxGroup`.`subfamilias` CHANGE COLUMN `image` `image` MEDIUMBLOB NULL DEFAULT NULL ;
 
+21/04/14
+ALTER TABLE `empresa`.`articulos_ofertas` ADD COLUMN `id_tarifa` INT NULL DEFAULT '0' AFTER `id_articulo`;
+
+

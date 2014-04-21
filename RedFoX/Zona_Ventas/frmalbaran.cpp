@@ -1437,6 +1437,7 @@ void FrmAlbaran::on_btnFacturar_clicked()
                         h_lineas_fac["dto"] = lineas_pre.record().value("dto").toDouble();
                         h_lineas_fac["porc_iva"] = lineas_pre.record().value("porc_iva").toDouble();
                         h_lineas_fac["total"] = lineas_pre.record().value("total").toDouble();
+                        h_lineas_fac["albaran"] = oAlbaran->albaran;
 
                         int new_id = SqlCalls::SqlInsert(h_lineas_fac,"lin_fac",Configuracion_global->empresaDB,error);
 
