@@ -148,7 +148,6 @@ private:
     QSqlQueryModel *modelAsientos;
     QSqlQueryModel *queryTransportistas;
     QSqlQueryModel *queryAgentes;
-    QSqlQueryModel *qTarifa;
     QSqlQueryModel *qmidiomas;
     QSqlQueryModel *modelPoblaciones;
     QSqlQueryModel *deudas ;

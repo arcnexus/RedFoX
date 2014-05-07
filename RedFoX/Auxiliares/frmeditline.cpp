@@ -431,19 +431,18 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
             QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al recuperar: %1").arg(error));
             return;
         }
-        //QString filtro = QString("id_articulo = %1 and activa=1 and fecha_inicio <= %2 and fecha_fin >= %2")
-        QMap <int,QSqlRecord> ofertas = SqlCalls::SelectRecord("articulo_ofertas",condiciones,Configuracion_global->groupDB,error);
+        QStringList filtro;
+        filtro << QString("id_articulo = %1").arg(id_art);
+        filtro << QString("id_tarifa = %1").arg(id_tarifa);
+        filtro << QString("fecha_inicio <= %1 and fecha_fin >= %1").arg(QDate::currentDate().toString("yyyy-MM-dd"));
+        QMap <int,QSqlRecord> ofertas = SqlCalls::SelectRecord("articulo_ofertas",filtro,Configuracion_global->empresaDB,error);
 
         if(!m.isEmpty())
         {
-            QSqlRecord r = m.first();            
+            QSqlRecord r = m.first();
             this->id_articulo = r.value("id").toInt();
 
             ui->txtCodigo->setText(r.value("codigo").toString());
-            //TODO MARC REVISA ESTO!!!
-            // if(!Configuracion_global->descripcion_resumida_lineas)
-            // ui->txtDescripcion->setText(i.value().value("descripcion").toString());
-            // else
             ui->txtDescripcion->setText(r.value("descripcion_reducida").toString());
 
             ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(       r.value("pvp_cliente").toDouble(),'f',Configuracion_global->decimales_campos_totales)));
@@ -557,16 +556,9 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
         if(!m.isEmpty())
         {
             QSqlRecord r = m.first();
-            //TODO MARC REVISA ESTO!!!
-            //if (Configuracion_global->referencia_fabricante_lineas_compras)
-            ui->txtCodigo->setText(r.value("codigo_fabricante").toString());
-            //else
-            //ui->txtCodigo->setText(r.value("codigo").toString());
 
-            //TODO MARC REVISA ESTO!!!
-            // if(!Configuracion_global->descripcion_resumida_lineas)
-            // ui->txtDescripcion->setText(i.value().value("descripcion").toString());
-            // else
+            ui->txtCodigo->setText(r.value("codigo_fabricante").toString());
+
             ui->txtDescripcion->setText(r.value("descripcion_reducida").toString());
 
             ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(QString::number(            r.value("coste").toDouble(),'f',Configuracion_global->decimales_campos_totales)));

@@ -38,11 +38,11 @@ void frmClientes::init_querys()
 {
     if(!__init)
         return;
-    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
+
     m_clientes->setQuery("select id, codigo_cliente,nombre_fiscal,cif_nif, direccion1,poblacion,telefono1,movil,email from clientes",Configuracion_global->groupDB);
     queryTransportistas->setQuery("Select id,transportista from transportista",Configuracion_global->groupDB);
     queryAgentes->setQuery("Select id,nombre from agentes",Configuracion_global->groupDB);
-    qTarifa->setQuery("select id,descripcion from codigotarifa",Configuracion_global->groupDB);
+
     qmidiomas->setQuery("select id,idioma from idiomas order by idioma", Configuracion_global->groupDB);
 
 
@@ -51,7 +51,7 @@ void frmClientes::init_querys()
 
     ui->cbotransportista   ->setModel(queryTransportistas);
     ui->cboagente          ->setModel(queryAgentes);
-    ui->cbotarifa_cliente  ->setModel(qTarifa);
+    ui->cbotarifa_cliente  ->setModel(Configuracion_global->tarifas_model);
     ui->cboidiomaDocumentos->setModel(qmidiomas);
 
     ui->cbotransportista->setModelColumn(1);
@@ -90,7 +90,7 @@ void frmClientes::init()
     modelAsientos       = new QSqlQueryModel(this);
     queryTransportistas = new QSqlQueryModel(this);
     queryAgentes        = new QSqlQueryModel(this);
-    qTarifa             = new QSqlQueryModel(this);    
+
     qmidiomas           = new QSqlQueryModel(this);
     modelHistorial      = new QSqlQueryModel(this);
 
@@ -326,9 +326,9 @@ void frmClientes::LLenarCampos()
         break;
     }
 
-    for(auto i=0; i< qTarifa->rowCount();i++)
+    for(auto i=0; i< Configuracion_global->tarifas_model->rowCount();i++)
     {
-        if(qTarifa->record(i).value("id").toInt() == oCliente->idTarifa)
+        if(Configuracion_global->tarifas_model->record(i).value("id").toInt() == oCliente->idTarifa)
         {
             ui->cbotarifa_cliente->setCurrentIndex(i);
             break;
@@ -673,9 +673,9 @@ void frmClientes::VaciarCampos()
     ui->lista_tipos->clear();
     oCliente->codigo_cliente= "";
 
-    for(auto i=0; i< qTarifa->rowCount();i++)
+    for(auto i=0; i< Configuracion_global->tarifas_model->rowCount();i++)
     {
-        if(qTarifa->record(i).value("id").toInt() == 1)
+        if(Configuracion_global->tarifas_model->record(i).value("id").toInt() == 1)
         {
             ui->cbotarifa_cliente->setCurrentIndex(i);
             break;
@@ -753,7 +753,7 @@ void frmClientes::LLenarCliente()
     oCliente->dia_pago2=ui->txtdia_pago2->value();
     oCliente->riesgo_maximo=Configuracion_global->MonedatoDouble(ui->txtrRiesgoPermitido->text());
 
-    oCliente->idTarifa= this->qTarifa->record(ui->cbotarifa_cliente->currentIndex()).value("id").toInt();
+    oCliente->idTarifa= Configuracion_global->tarifas_model->record(ui->cbotarifa_cliente->currentIndex()).value("id").toInt();
 
     oCliente->importe_a_cuenta=ui->txtimporte_a_cuenta->text().toDouble();
     oCliente->vales= ui->txtvales->text().replace(".","").toDouble();

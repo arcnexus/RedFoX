@@ -95,7 +95,8 @@ void Cliente::Guardar() {
     h_cliente["id_agente"] = this->id_agente;
     h_cliente["id_transportista"] = this->id_transportista;
     h_cliente["grupo_iva"] = this->grupo_iva;
-   // h_cliente["tipo_dto_tarifa"] = this->tipo_dto_tarifa;
+    h_cliente["id_tarifa"] = this->idTarifa;
+
 
     bool updated = SqlCalls::SqlUpdate(h_cliente,"clientes",Configuracion_global->groupDB,condiciones,error);
     if(!updated){
