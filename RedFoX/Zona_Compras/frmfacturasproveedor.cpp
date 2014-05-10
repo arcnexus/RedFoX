@@ -11,7 +11,8 @@ void FrmFacturasProveedor::init_querys()
     model_busqueda->setQuery("select id,factura,fecha,cif_proveedor,telefono,proveedor,total from fac_pro order by factura desc",Configuracion_global->empresaDB);
     modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_fac_pro where id = 0;",Configuracion_global->empresaDB);
-
+    ui->stackedWidget->setCurrentIndex(1);
+    ui->tabWidget_2->setCurrentIndex(0);
 }
 
 void FrmFacturasProveedor::init()
@@ -24,6 +25,7 @@ void FrmFacturasProveedor::init()
     model_busqueda = new QSqlQueryModel(this);
     modeltipogasto = new QSqlQueryModel(this);
     modelLineas = new QSqlQueryModel(this);
+    lineas_anterior = new QSqlQueryModel(this);
 
     ui->tabla->setModel(model_busqueda);
     ui->Lineas->setModel(modelLineas);
@@ -396,7 +398,7 @@ void FrmFacturasProveedor::on_btnGuardar_clicked()
         {
             if(oFacPro->albaran.isEmpty())
             {
-                double acumular = oFacPro->total;
+                double acumular = oFacPro->base_total;
                 if(editando)
                 {
                     //BORRAR LOS ACUMULADOS ANTERIORES COMPLETAMENTE
@@ -498,7 +500,7 @@ void FrmFacturasProveedor::on_btnEditar_clicked()
         oFacPro->Recuperar(id);
         llenar_campos();
     }
-    total_anterior = oFacPro->total;
+    total_anterior = oFacPro->base_total;
     fecha_anterior = oFacPro->fecha;
     lineas_anterior->setQuery(QString("select id,id_articulo,cantidad,total,albaran from lin_fac_pro where id_cab = %1;").arg(oFacPro->id),Configuracion_global->empresaDB);
     editando = true;
@@ -860,6 +862,7 @@ void FrmFacturasProveedor::on_btnAnadirLinea_clicked()
     connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
     frmeditar.set_venta(false);
+    frmeditar.setTipoDoc(frmEditLine::Factura);
     frmeditar.setAdd_pendientes(false);
 
     frmeditar.setUse_re(ui->chklporc_rec->isChecked());
@@ -882,6 +885,7 @@ void FrmFacturasProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
         connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
         frmeditar.set_venta(false);
+        frmeditar.setTipoDoc(frmEditLine::Factura);
         frmeditar.setAdd_pendientes(false);
 
         frmeditar.setUse_re(ui->chklporc_rec->isChecked());

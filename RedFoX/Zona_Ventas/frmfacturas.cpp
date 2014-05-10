@@ -19,14 +19,16 @@ void frmFacturas::formato_tabla_lineas()
 {
     QStringList header;
     QVariantList sizes;
-    header << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
+    header << tr("id") << "id_art" << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
     header << tr("porc_dto") << tr("porc_iva") << tr("Total");
-    sizes << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
+    sizes << 0 << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
     for(int i = 0; i <header.size();i++)
     {
         ui->Lineas->setColumnWidth(i,sizes.at(i).toInt());
         modelLineas->setHeaderData(i,Qt::Horizontal,header.at(i));
     }
+    ui->Lineas->setColumnHidden(0,true);
+    ui->Lineas->setColumnHidden(1,true);
 }
 
 void frmFacturas::init_querys()
@@ -35,7 +37,7 @@ void frmFacturas::init_querys()
         return;
     model_series->setQuery("select serie from series",Configuracion_global->empresaDB);
 
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_fac where id = 0;",Configuracion_global->empresaDB);
     formato_tabla_lineas();
 
@@ -75,6 +77,7 @@ void frmFacturas::init()
     ui->tabla_facturas->setItemDelegateForColumn(4, new DateDelegate(this));
 
     modelLineas       = new QSqlQueryModel(this);
+    lineas_anterior   = new QSqlQueryModel(this);
     m_facturas        = new QSqlQueryModel(this);
     model_series      = new QSqlQueryModel(this);
     model_dir_entrega = new QSqlQueryModel(this);
@@ -370,7 +373,7 @@ void frmFacturas::LLenarCampos()
     //----------------------------
     // Lineas Facturas
     //----------------------------
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
 
 }
@@ -745,7 +748,7 @@ void frmFacturas::on_btnAnadir_clicked()
         ui->txtcodigo_cliente->setFocus();
 
         ui->spinporc_irpf->setValue(oFactura->porc_irpf);
-        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+        modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
 
         calcular_factura();
@@ -867,7 +870,7 @@ void frmFacturas::refrescar_modelo()
 {
     if(!__init)
         return;
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                               "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
     calcular_factura();
 }
@@ -883,8 +886,10 @@ void frmFacturas::on_btnEditar_clicked()
         // ----------------------------
         // Guardo datos para acumulados
         //-----------------------------
-        acumulados["id_cliente"] = oFactura->id_cliente;
-        acumulados["total"] = oFactura->total;
+
+        total_anterior = oFactura->base;
+        fecha_anterior = oFactura->fecha;
+        lineas_anterior->setQuery(QString("select id,id_articulo,cantidad,total from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
 
         Configuracion_global->empresaDB.transaction();
         Configuracion_global->groupDB.transaction();
@@ -1380,6 +1385,7 @@ void frmFacturas::on_btnBorrar_clicked()
                                                          ui->tabla_facturas->currentIndex().row(),0)).toInt();
 
     oFactura->borrar(oFactura->id);
+    Cliente::incrementar_acumulados(oFactura->id_cliente,-1.0 * oFactura->base,oFactura->fecha);
     oFactura->clear();
     LLenarCampos();
     filter_table(this->texto,this->orden,this->modo);
@@ -1420,17 +1426,40 @@ void frmFacturas::on_btnGuardar_clicked()
     if(oFactura->factura.isEmpty())
         oFactura->factura = oFactura->NuevoNumeroFactura(ui->cbo_serie->currentText());
 
-    //------------------------
+
     // Acumulados clientes
-    //------------------------
-    double diferencia_total = oFactura->total - acumulados.value("total").toDouble();
-    if(acumulados["id_cliente"].toInt() != oFactura->id_cliente)
+    double acumular = oFactura->base;
+    if(in_edit)
     {
-        oCliente1->decrementar_acumulados(acumulados.value("id_cliente").toInt(),acumulados.value("total").toDouble(),
-                                          QDate::currentDate());
-        succes = oCliente1->incrementar_acumulados(oFactura->id_cliente,acumulados.value("total").toDouble(),QDate::currentDate());
-    } else
-        succes = oCliente1->incrementar_acumulados(oFactura->id_cliente,diferencia_total,QDate::currentDate());
+        //BORRAR LOS ACUMULADOS ANTERIORES COMPLETAMENTE
+        if(!Cliente::incrementar_acumulados(oFactura->id_cliente,-1.0 * total_anterior,fecha_anterior))
+        {
+            Configuracion_global->rollback();
+            return;
+        }
+        for(auto i=0;i< lineas_anterior->rowCount();++i)
+        {
+            QSqlRecord r = lineas_anterior->record(i);
+            if(!Articulo::acumulado_ventas(r.value("id_articulo").toInt(),-1.0* r.value("cantidad").toDouble(),-1.0* r.value("total").toDouble(),fecha_anterior))
+            {
+                Configuracion_global->rollback();
+                return;
+            }
+        }
+    }
+
+    if(Cliente::incrementar_acumulados(oFactura->id_cliente,acumular,oFactura->fecha))
+    {
+        for(auto i=0; i<modelLineas->rowCount();++i)
+        {
+            QSqlRecord r = modelLineas->record(i);
+            if(!Articulo::acumulado_ventas(r.value("id_articulo").toInt(),r.value("cantidad").toDouble(),r.value("total").toDouble(),oFactura->fecha))
+            {
+                Configuracion_global->rollback();
+                return;
+            }
+        }
+    }
 
     if(succes)
     {
@@ -1558,6 +1587,7 @@ void frmFacturas::on_btnAnadirLinea_clicked()
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Factura);
             frmeditar.exec();
             refrescar_modelo();
 
@@ -1583,6 +1613,7 @@ void frmFacturas::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_tarifa(oFactura->tarifa_cliente);
             frmeditar.set_id_cab(oFactura->id);
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Factura);
             frmeditar.set_linea(id_lin,"lin_fac");
             frmeditar.set_tabla("lin_fac");
             frmeditar.set_editando();
@@ -1609,7 +1640,7 @@ void frmFacturas::on_btn_borrarLinea_clicked()
         QModelIndex index = ui->Lineas->currentIndex();
         int id_lin = ui->Lineas->model()->index(index.row(),0).data().toInt();
         oFactura->BorrarLineasFactura(id_lin);
-        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+        modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_fac where id_cab = %1;").arg(oFactura->id),Configuracion_global->empresaDB);
         calcular_factura();
         ui->Lineas->setFocus();

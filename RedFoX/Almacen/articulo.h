@@ -85,17 +85,17 @@ public:
     bool Devolucion(int id, double cantidad, double pvp);
     void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
 
-    static bool acumulado_ventas   (int id_articulo,float cantidad,double total, QDate fecha, bool removeReservas = false);
-    static bool acumulado_compras  (int id_articulo, float cantidad, double total, QDate fecha);
+    static bool acumulado_ventas   (int id_articulo,float cantidad,double total, QDate fecha);
+    static bool acumulado_compras  (int id_articulo,float cantidad,double total, QDate fecha);
     static bool acum_devolucion_cli(int id_articulo,float cantidad,double total, QDate fecha);
     static bool acum_devolucion_pro(int id_articulo,float cantidad,double total, QDate fecha);
 
     static bool set_pendiente_recibir(int id_articulo, double cantidad);
     static bool agregar_stock_fisico(int id_articulo, double cantidad);
+    static bool reservar(int id_articulo, double cantidad);
 
     static bool update_coste_kits(int id_articulo, double new_coste);
 
-    static bool agregarStock(int id, int cantidad);
 
     int getidSeccion(QString seccion_);
     int getidFamilia(QString familia_);

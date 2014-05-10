@@ -1029,6 +1029,8 @@ void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLab
 
 bool Articulo::set_pendiente_recibir(int id_articulo, double cantidad)
 {
+    Q_ASSERT(id_articulo > 0);
+
     QSqlQuery art(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1,").arg(cantidad);
@@ -1045,6 +1047,8 @@ bool Articulo::set_pendiente_recibir(int id_articulo, double cantidad)
 
 bool Articulo::agregar_stock_fisico(int id_articulo, double cantidad)
 {
+    Q_ASSERT(id_articulo > 0);
+
     QSqlQuery art(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update articulos set stock_fisico_almacen = stock_fisico_almacen + %1,").arg(cantidad);
@@ -1059,8 +1063,25 @@ bool Articulo::agregar_stock_fisico(int id_articulo, double cantidad)
     return succes;
 }
 
+bool Articulo::reservar(int id_articulo, double cantidad)
+{
+    Q_ASSERT(id_articulo > 0);
+
+    QSqlQuery queryart(Configuracion_global->groupDB);
+    if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
+                      .arg(cantidad)
+                      .arg(id_articulo)))
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Error al reservar"),queryart.lastError().text());
+        return false;
+    }
+    return true;
+}
+
 bool Articulo::update_coste_kits(int id_articulo, double new_coste)
 {
+    Q_ASSERT(id_articulo > 0);
+
     QString error = "";
     QMap<int,QSqlRecord> _kits = SqlCalls::SelectRecord("kits",QString("id_componente = %1").arg(id_articulo),Configuracion_global->groupDB,error);
     if(!_kits.isEmpty() || !error.isEmpty())
@@ -1126,6 +1147,8 @@ bool Articulo::update_coste_kits(int id_articulo, double new_coste)
 
 bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, QDate fecha)
 {
+    Q_ASSERT(id_articulo > 0);
+
     QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
 
@@ -1207,6 +1230,8 @@ bool Articulo::acumulado_compras(int id_articulo, float cantidad, double total, 
 
 bool Articulo::acum_devolucion_cli(int id_articulo, float cantidad, double total, QDate fecha)
 {
+    Q_ASSERT(id_articulo > 0);
+
     QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
 
@@ -1285,20 +1310,19 @@ bool Articulo::acum_devolucion_cli(int id_articulo, float cantidad, double total
     return success;
 }
 
-bool Articulo::acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha, bool removeReservas)
+bool Articulo::acumulado_ventas(int id_articulo, float cantidad, double total, QDate fecha)
 {
+    Q_ASSERT(id_articulo > 0);
+
     // ACUMULADOS ARTICULO Y STOCK
-    QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
+    QString cSQL = QString("update articulos set unidades_vendidas = unidades_vendidas +%1, ").arg(cantidad);
+    cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas +%1").arg(total));
 
-    cSQL = QString("update articulos set fecha_ultima_venta = '%1',stock_real = stock_real -%2,").arg(fecha.toString("yyyyMMdd")).arg(cantidad);
-    cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen -%1,").arg(cantidad));
-    cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas +%1,").arg(total));
+    if(cantidad > 0)
+        cSQL.append(QString(",fecha_ultima_venta=IF(fecha_ultima_venta < %1,%1,fecha_ultima_venta) ").arg(fecha.toString("yyyyMMdd")));
 
-    if(removeReservas) // Usado unicamente al pasar de pedido a albarán/fatura
-        cSQL.append(QString("unidades_reservadas = unidades_reservadas - %1,").arg(cantidad));
-
-    cSQL.append(QString("unidades_vendidas = unidades_vendidas +%5 where id= %6").arg(cantidad).arg(id_articulo));
+    cSQL.append(QString(" where id= %1").arg(id_articulo));
 
     bool success = art.exec(cSQL);
 
@@ -1370,6 +1394,8 @@ bool Articulo::acumulado_ventas(int id_articulo, float cantidad, double total, Q
 
 bool Articulo::acum_devolucion_pro(int id_articulo, float cantidad, double total, QDate fecha)
 {
+    Q_ASSERT(id_articulo > 0);
+
     // DESCONTAR ACUMULADOS ARTICULO Y STOCK
     QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
@@ -1590,11 +1616,6 @@ bool Articulo::cambiarProveedorPrincipal(int id, int id_proveedor)
         this->idProveedor = id_proveedor;
         return true;
     }
-}
-
-bool Articulo::agregarStock(int id, int cantidad)
-{    
-
 }
 
 float Articulo::asigna_dto_linea(int id_art, int id_cliente, float dto_esp,float dto_lin)
@@ -1864,3 +1885,5 @@ float Articulo::asigna_dto_linea(int id_art, int id_cliente, float dto_esp,float
         dto = dto_lin;
     return dto;
 }
+
+

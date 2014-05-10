@@ -4,7 +4,7 @@
 #include "../Almacen/frmselectlotes.h"
 
 void frmEditLine::init()
-{
+{    
     this->editando = false;
     this->reserva_unidades = false;
     add_pendientes = false;
@@ -14,10 +14,8 @@ void frmEditLine::init()
     ui->chkdto->setVisible(false);
     ui->chkprecio->setVisible(false);
     ui->chk_dtoweb->setVisible(false);
-    oArticulo = new Articulo(this);
-    //-------------------
+
     //IVA desde config
-    //-------------------
     ui->cboIva->setModel(Configuracion_global->iva_model);
     ui->cboIva->setModelColumn(4);
     int index = ui->cboIva->findText("21");
@@ -38,11 +36,17 @@ frmEditLine::frmEditLine(QWidget *parent) :
     ui(new Ui::frmEditLine)
 {
     ui->setupUi(this);    
+    _tipoDoc = Presupuesto;
 }
 
 frmEditLine::~frmEditLine()
 {
     delete ui;
+}
+
+void frmEditLine::setTipoDoc(frmEditLine::tipoDoc doc)
+{
+    _tipoDoc = doc;
 }
 
 bool frmEditLine::eventFilter(QObject *obj, QEvent *event)
@@ -186,74 +190,62 @@ void frmEditLine::_insert_nueva_linea()
     QString error;
 
     double cantidad = Configuracion_global->MonedatoDouble(ui->txtCantidad->text());
-    double valor = Configuracion_global->MonedatoDouble(ui->txt_total_linea->text());
 
     this->id = SqlCalls::SqlInsert(lin,this->tabla,Configuracion_global->empresaDB,error);
     if(id < 0)
     {
         QMessageBox::critical(this,tr("Error al insertar linea"),error);
         return;
-    }
+    }    
+    do_stocks(cantidad);
+}
+
+void frmEditLine::do_stocks(double cantidad)
+{
     if(this->is_venta)
     {
-        if(this->realiza_acumulados) //Si acumula ventas (Albarán / Factura)
+        switch (_tipoDoc)
         {
-            if(Articulo::acumulado_ventas(this->id_articulo,cantidad,valor,QDate::currentDate()))
+        case frmEditLine::Presupuesto:
+            return;
+            break;
+        case frmEditLine::Pedido:
+            Articulo::reservar(this->id_articulo,cantidad);
+            break;
+        case frmEditLine::Albaran:
+        case frmEditLine::Factura:
+            Articulo::agregar_stock_fisico(this->id_articulo, -1.0 * cantidad);
+            if(this->id_lote > 0)
             {
-                if(this->id_lote>0)
+                QString idlote = QString::number(this->id_lote);
+                QSqlQuery lote(Configuracion_global->groupDB);
+                if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2").arg(cantidad).arg(idlote)))
                 {
-                    QString idlote = QString::number(this->id_lote);
-                    QSqlQuery lote(Configuracion_global->groupDB);
-                    if(!lote.exec(QString("update articulos_lotes set stock = stock - %1 where id = %2").arg(cantidad).arg(idlote)))
-                    {
-                        QMessageBox::warning(this,tr("Edición de líneas"),tr("No se pudo actualizar el stock del lote: %1")
-                                             .arg(lote.lastError().text()));
-                        close();
-                        return;
-                    }
+                    QMessageBox::warning(this,tr("No se pudo actualizar el stock del lote"),lote.lastError().text());
+                    close();
+                    return;
                 }
             }
-            else // falló acumulado_ventas
-            {
-                close();
-                return;
-            }
+            break;
         }
-        else if(this->reserva_unidades) // Si añade a unidades reservadas (Pedido)
-        {
-            QSqlQuery queryart(Configuracion_global->groupDB);
-            if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
-                              .arg(cantidad)
-                              .arg(this->id_articulo)))
-            {
-                QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al acumular pendientes, %1")
-                                     .arg(queryart.lastError().text()));
-                close();
-                return;
-            }
-        }
-        //else ni acumula ni reserva (Presupuesto)
     }
     else //es compra
     {
-        if(add_pendientes) //Añade unidades pendientes (Pedido)
+        switch (_tipoDoc)
         {
-            if(!Articulo::set_pendiente_recibir(this->id_articulo,cantidad))
-            {
-                close();
-                return;
-            }
-        }
-        else //Agrega stock
-        {
-            if(!Articulo::agregar_stock_fisico(id_articulo,cantidad))
-            {
-                close();
-                return;
-            }
+        case frmEditLine::Presupuesto:
+            break;
+        case frmEditLine::Pedido:
+            Articulo::set_pendiente_recibir(this->id_articulo,cantidad);
+            break;
+        case frmEditLine::Albaran:
+        case frmEditLine::Factura:
+            Articulo::agregar_stock_fisico(id_articulo,cantidad);
+            break;
         }
     }
 }
+
 bool frmEditLine::getUse_re() const
 {
     return use_re;
@@ -263,7 +255,6 @@ void frmEditLine::setUse_re(bool value)
 {
     use_re = value;
 }
-
 
 int frmEditLine::get_id()
 {
@@ -387,13 +378,6 @@ void frmEditLine::on_txtCodigo_editingFinished()
     {
         if(!ui->txtCodigo->text().isEmpty())
         {
-//            QMessageBox::information(this,tr("Edición de líneas de detalle"),
-//                                     tr("Ha dejado el código en blanco, si es correcto deberá introducir el resto de datos necesarios a mano,"
-//                                        "\nDescripción, \nPVP, \n%IVA"),tr("Aceptar"));
-
-//        }
-//        else
-//        {
             QString error;
             this->id_articulo = SqlCalls::SelectOneField("articulos","id",QString("codigo = '%1' or codigo_fabricante = '%1' or codigo_barras = '%1'").arg(ui->txtCodigo->text()),
                                                    Configuracion_global->groupDB,error).toInt();
@@ -589,8 +573,6 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
     ui->txtCodigo->blockSignals(false);
 }
 
-
-
 void frmEditLine::vaciar_campos()
 {
     ui->txtCantidad->setText("1");
@@ -676,6 +658,7 @@ void frmEditLine::calcular()
 
 
 }
+
 bool frmEditLine::getAdd_pendientes() const
 {
     return add_pendientes;
@@ -685,8 +668,6 @@ void frmEditLine::setAdd_pendientes(bool value)
 {
     add_pendientes = value;
 }
-
-
 
 void frmEditLine::on_txtCantidad_editingFinished()
 {
@@ -700,7 +681,6 @@ void frmEditLine::on_txtPVP_editingFinished()
 {
     ui->txtPVP->blockSignals(true);
     ui->txtPVP->setText(Configuracion_global->toFormatoMoneda(ui->txtPVP->text()));
-    //ui->txtPorc_dto->setText("0,00");
     calcular();
     ui->txtPVP->blockSignals(false);
 }
@@ -742,74 +722,14 @@ void frmEditLine::on_btnAceptar_clicked()
     {
         // edición línea
         double nueva_cantidad = Configuracion_global->MonedatoDouble(ui->txtCantidad->text()) - anterior.value("cantidad").toDouble();
-        double nuevo_valor =Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()) - anterior.value("total").toDouble();
+        //double nuevo_valor =Configuracion_global->MonedatoDouble(ui->txt_total_linea->text()) - anterior.value("total").toDouble();
         if (!SqlCalls::SqlUpdate(lin,this->tabla,Configuracion_global->empresaDB,QString("id=%1").arg(this->id),error))
         {
             QMessageBox::critical(this,tr("Error al actualizar linea"),error);
             close();
             return;
         }
-        if(this->is_venta)
-        {
-            if(this->realiza_acumulados) //Si acumula ventas (Albarán / Factura)
-            {
-                if(Articulo::acumulado_ventas(this->id_articulo,nueva_cantidad,nuevo_valor,QDate::currentDate()))
-                {
-                    if(this->id_lote > 0) // Actualizo stock lotes
-                    {
-                        QSqlQuery lote(Configuracion_global->groupDB);
-                        if(!lote.exec(QString("update articulos_lote set stock = stock - %1 where id = %2")
-                                  .arg(nueva_cantidad)
-                                  .arg(this->id_lote)))
-                        {
-                            QMessageBox::warning(this,tr("Edición lineas detalle"),tr("Falló al añadir la linea de detalle en la BD: %1")
-                                                 .arg(lote.lastError().text()),tr("Aceptar"));
-                            close();
-                            return;
-                        }
-                    }
-                }
-                else // falló el acumulado_ventas
-                {
-                    close();
-                    return;
-                }
-            }
-            else if(this->reserva_unidades) // Si añade a unidades reservadas (Pedido)
-            {
-                QSqlQuery queryart(Configuracion_global->groupDB);
-                if(!queryart.exec(
-                            QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
-                            .arg(nueva_cantidad)
-                            .arg(this->id_articulo)
-                            ))
-                {
-                    QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al reservar unidades, %1").arg(queryart.lastError().text()));
-                    close();
-                    return;
-                }
-            }
-            //else ni acumula ni reserva (Presupuesto) - NO HACER NADA
-        }
-        else //es compra
-        {
-            if(add_pendientes) //Añade unidades pendientes (Pedido)
-            {
-                if(!Articulo::set_pendiente_recibir(this->id_articulo,nueva_cantidad))
-                {
-                    close();
-                    return;
-                }
-            }
-            else //Agrega stock
-            {
-                if(!Articulo::agregar_stock_fisico(id_articulo,nueva_cantidad))
-                {
-                    close();
-                    return;
-                }
-            }
-        }
+        do_stocks(nueva_cantidad);
     }
     else // Nueva línea
     {        

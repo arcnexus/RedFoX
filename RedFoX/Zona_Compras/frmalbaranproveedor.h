@@ -69,6 +69,7 @@ private slots:
 
     void on_btnFacturar_clicked();
 
+    void llenarLineas();
 private:
     Ui::FrmAlbaranProveedor *ui;
     Proveedor prov;
@@ -81,7 +82,7 @@ private:
     QSqlQueryModel *model_busqueda;
     void formato_tabla();
     QSqlQueryModel *modelLineas;
-    void llenarLineas();
+
     void calcular_albaran();
 
 

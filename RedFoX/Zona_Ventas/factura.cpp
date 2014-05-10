@@ -560,17 +560,10 @@ bool Factura::BorrarLineasFactura(int id_lin)
     }
 
     bool success = SqlCalls::SqlDelete("lin_fac",Configuracion_global->empresaDB,QString("id=%1").arg(id_lin),error);
-    if(success)
+    success &= Articulo::agregar_stock_fisico(lin.value(id_lin).value("id_articulo").toInt(),lin.value(id_lin).value("cantidad").toDouble());
+    if(!success)
     {
-        success =  Articulo::acum_devolucion_cli(lin.value(id_lin).value("id_articulo").toInt(),
-                                         lin.value(id_lin).value("cantidad").toFloat(),
-                                         lin.value(id_lin).value("total").toDouble(),
-                                         QDate::currentDate());
-    }
-    else
-    {
-        QMessageBox::critical(qApp->activeWindow(), "Error:",error);
-        return false;
+        QMessageBox::critical(qApp->activeWindow(), tr("Error  borrando línea:"),error);
     }
     return success;
 }

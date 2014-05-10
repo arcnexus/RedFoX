@@ -140,7 +140,7 @@ void FrmPresupuestosCli::setConvertirMenu()
 
 void FrmPresupuestosCli::init_querys()
 {
-    if(__init)
+    if(!__init)
         return;
     model_busqueda->setQuery(QString("select id,presupuesto,fecha,telefono,movil,cliente from cab_pre order by presupuesto desc"),Configuracion_global->empresaDB);
     modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio_recom,porc_dto,precio,subtotal,porc_iva,total "
@@ -152,7 +152,7 @@ void FrmPresupuestosCli::init_querys()
 }
 void FrmPresupuestosCli::LLenarCampos()
 {
-    if(__init)
+    if(!__init)
         return;
     ui->txtimporte_irpf->setText(Configuracion_global->toFormatoMoneda(QString::number(oPres->irpf ,'f',Configuracion_global->decimales_campos_totales)));
     ui->spinPorc_irpf->setValue(oPres->porc_irpf);
@@ -301,7 +301,7 @@ void FrmPresupuestosCli::LLenarCampos()
 
 void FrmPresupuestosCli::LLenarCamposCliente()
 {
-    if(__init)
+    if(!__init)
         return;
     ui->txtcodigo_cliente->setText(oClientePres->codigo_cliente);
     ui->txtcliente->setText(oClientePres->nombre_fiscal);
@@ -591,9 +591,19 @@ void FrmPresupuestosCli::VaciarCampos()
     ui->spinIva_gasto1->setValue(0);
     ui->spinIva_gasto2->setValue(0);
     ui->spinIva_gasto3->setValue(0);
+
+    ui->cboporc_iva_gasto1->blockSignals(true);
+    ui->cboporc_iva_gasto2->blockSignals(true);
+    ui->cboporc_iva_gasto3->blockSignals(true);
+
     ui->cboporc_iva_gasto1->setCurrentIndex(0);
     ui->cboporc_iva_gasto2->setCurrentIndex(0);
     ui->cboporc_iva_gasto3->setCurrentIndex(0);
+
+    ui->cboporc_iva_gasto1->blockSignals(false);
+    ui->cboporc_iva_gasto2->blockSignals(false);
+    ui->cboporc_iva_gasto3->blockSignals(false);
+
     ui->SpinGastoDist1->setValue(0);
     ui->SpinGastoDist2->setValue(0);
     ui->SpinGastoDist3->setValue(0);
@@ -1287,7 +1297,7 @@ void FrmPresupuestosCli::convertir_ealbaran()
                 int id_art = r_l.value("id_articulo").toInt();
                 double cant = r_l.value("cantidad").toDouble();
                 double total = r_l.value("total").toDouble();
-                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),"V"))
+                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate()))
                 {
                     error = Configuracion_global->groupDB.lastError().text();
                     updated_art = false;
@@ -1548,7 +1558,7 @@ void FrmPresupuestosCli::convertir_enFactura()
                             int id_art = h_lineas_fac.value("id_articulo").toInt();
                             double cant = h_lineas_fac.value("cantidad").toDouble();
                             double total = h_lineas_fac.value("total").toDouble();
-                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),"V"))
+                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate()))
                             {
                                 QMessageBox::warning(this,tr("Pedidos cliente"),
                                                      tr("Ocurrió un error al crear las líneas de factura:\n%1").arg(Configuracion_global->groupDB.lastError().text()));
@@ -1785,20 +1795,25 @@ void FrmPresupuestosCli::calcular_presupuesto()
         subtotal += li.value().value("subtotal").toDouble();
         // base1
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva1->text().toFloat())
-            base1 += li.value().value("total").toDouble()* _dtoPP ;
+            base1 += li.value().value("total").toDouble();
 
         // base2
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva2->text().toFloat())
-            base2 += li.value().value("total").toDouble()* _dtoPP ;
+            base2 += li.value().value("total").toDouble();
 
         // base3
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva3->text().toFloat())
-            base3 += li.value().value("total").toDouble()* _dtoPP ;
+            base3 += li.value().value("total").toDouble();
 
         // base4
         if(li.value().value("porc_iva").toFloat() == ui->txtporc_iva4->text().toFloat())
-            base4 += li.value().value("total").toDouble()* _dtoPP ;
+            base4 += li.value().value("total").toDouble();
     }
+
+    base1 = base1 * _dtoPP;
+    base2 = base2 * _dtoPP;
+    base3 = base3 * _dtoPP;
+    base4 = base4 * _dtoPP;
 
     if(ui->chkrecargo_equivalencia->isChecked())
     {
@@ -2025,6 +2040,7 @@ void FrmPresupuestosCli::on_btnAnadirLinea_clicked()
         connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
         frmeditar.set_venta(true);
+        frmeditar.setTipoDoc(frmEditLine::Presupuesto);
         frmeditar.set_acumula(false);
         frmeditar.set_reserva(false);
 
@@ -2070,6 +2086,7 @@ void FrmPresupuestosCli::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
 
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Presupuesto);
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(false);
 

@@ -16,6 +16,10 @@ class frmEditLine : public QDialog
 public:
     explicit frmEditLine(QWidget *parent = 0);
     ~frmEditLine();
+
+    enum tipoDoc { Presupuesto = 0, Pedido, Albaran , Factura};
+    void setTipoDoc(tipoDoc doc);
+
     int get_id();
     void set_linea(int id, QString fichero);
     void set_id_cliente(int id);
@@ -26,9 +30,6 @@ public:
     void set_editando();
     void set_acumula(bool acum);
     void set_reserva(bool reserv);
-
-
-
 
     void init();
     bool getAdd_pendientes() const;
@@ -64,7 +65,7 @@ private:
     void vaciar_campos();
     int id_lote;
     float unidades_regalo;
-    Articulo *oArticulo;
+
     bool eventFilter(QObject *obj, QEvent *event);
     QHash <QString,QVariant> anterior;
     void calcular();
@@ -80,6 +81,10 @@ private:
     QHash <QString, QVariant> get_datos();
     void _insert_nueva_linea();
     bool use_re;
+
+    tipoDoc _tipoDoc;
+
+    void do_stocks(double cantidad);
 signals:
     void refrescar_lineas();
 };

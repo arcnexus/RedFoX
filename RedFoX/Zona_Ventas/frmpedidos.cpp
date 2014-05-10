@@ -1589,7 +1589,7 @@ void FrmPedidos::convertir_en_albaran()
                 int id_art = r_l.value("id_articulo").toInt();
                 double cant = r_l.value("cantidad").toDouble();
                 double total = r_l.value("total").toDouble();
-                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),/*removeReservas*/true))
+                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate()))
                 {
                     error = Configuracion_global->groupDB.lastError().text();
                     updated_art = false;
@@ -1843,7 +1843,7 @@ void FrmPedidos::convertir_enFactura()
                             int id_art = h_lineas_fac.value("id_articulo").toInt();
                             double cant = h_lineas_fac.value("cantidad").toDouble();
                             double total = h_lineas_fac.value("total").toDouble();
-                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate(),/*removeReservas*/true))
+                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate()))
                             {
                                 QMessageBox::warning(this,tr("Pedidos cliente"),
                                                      tr("Ocurrió un error al crear las líneas de factura:\n%1").arg(Configuracion_global->groupDB.lastError().text()));
@@ -2109,6 +2109,7 @@ void FrmPedidos::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
 
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Pedido);
             frmeditar.set_acumula(false);
             frmeditar.set_reserva(true);
 
@@ -2152,6 +2153,8 @@ void FrmPedidos::on_btnAnadirLinea_clicked()
             frmeditar.set_id_cab(oPedido->id);
 
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Pedido);
+
             if(!frmeditar.exec() == QDialog::Accepted)
             {
                 refrescar_modelo();

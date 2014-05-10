@@ -122,6 +122,9 @@ private:
     QAction * actionGuardaFactura;
     QMenu* menu_guardar;
     bool Altas;
+    double total_anterior;
+    QDate fecha_anterior;
+    QSqlQueryModel* lineas_anterior;
     bool in_edit;
 
     QAction menuButton;

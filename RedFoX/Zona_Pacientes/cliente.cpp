@@ -748,7 +748,10 @@ bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
     QSqlQuery cli(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update clientes set acumulado_ventas = acumulado_ventas +%1,").arg(total);
-    cSQL.append(QString("fecha_ultima_compra = '%1',").arg(fecha.toString("yyyyMMdd")));
+
+    if(total > 0)
+        cSQL.append(QString("fecha_ultima_compra=IF(fecha_ultima_compra < %1,%1,fecha_ultima_compra),").arg(fecha.toString("yyyyMMdd")));
+
     cSQL.append(QString("ventas_ejercicio = ventas_ejercicio +%1 ").arg(total));
     cSQL.append(QString(" where id = %1").arg(id_cliente));
     if(!cli.exec(cSQL)){
@@ -807,7 +810,10 @@ bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)
     QSqlQuery cli(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update clientes set acumulado_ventas = acumulado_ventas -%1,").arg(total);
-    cSQL.append(QString("fecha_ultima_compra = '%1',").arg(fecha.toString("yyyyMMdd")));
+
+    if(total > 0)
+        cSQL.append(QString("fecha_ultima_compra=IF(fecha_ultima_compra < %1,%1,fecha_ultima_compra),").arg(fecha.toString("yyyyMMdd")));
+
     cSQL.append(QString("ventas_ejercicio = ventas_ejercicio -%1").arg(total));
     cSQL.append(QString(" where id = %1").arg(id_cliente));
     if(!cli.exec(cSQL)){

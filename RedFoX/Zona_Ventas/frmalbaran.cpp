@@ -36,7 +36,7 @@ void FrmAlbaran::init_querys()
 {
     if(!__init)
         return;
-    modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_alb where id = 0;",Configuracion_global->empresaDB);
     m->setQuery(QString("select id,serie,albaran,fecha,cif,total_albaran,cliente from cab_alb where ejercicio =%1 order by albaran desc").arg(
                     Configuracion_global->cEjercicio),Configuracion_global->empresaDB);
@@ -87,6 +87,7 @@ void FrmAlbaran::init()
 
     // Modelo y formato tabla lineas
     modelLineas = new QSqlQueryModel(this);
+    lineas_anterior = new QSqlQueryModel(this);
     m = new QSqlQueryModel(this);
 
     ui->Lineas->setModel(modelLineas);
@@ -749,6 +750,11 @@ void FrmAlbaran::on_btnEditar_clicked()
         if(Configuracion_global->contabilidad)
             Configuracion_global->contaDB.transaction();
         BloquearCampos(false);
+
+        total_anterior = oAlbaran->base_total;
+        fecha_anterior = oAlbaran->fecha;
+        lineas_anterior->setQuery(QString("select id,id_articulo,cantidad,total from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
+
         emit block();
     }
     else
@@ -771,6 +777,43 @@ void FrmAlbaran::on_btnGuardar_clicked()
         succes &= Configuracion_global->groupDB.commit();
         if(Configuracion_global->contabilidad)
             succes &=Configuracion_global->contaDB.commit();
+
+
+        double acumular = oAlbaran->base_total;
+        if(in_edit)
+        {
+            //BORRAR LOS ACUMULADOS ANTERIORES COMPLETAMENTE
+            if(!Cliente::incrementar_acumulados(oAlbaran->id_cliente,-1.0 * total_anterior,fecha_anterior))
+            {
+                Configuracion_global->rollback();
+                return;
+            }
+            for(auto i=0;i< lineas_anterior->rowCount();++i)
+            {
+                QSqlRecord r = lineas_anterior->record(i);
+                if(!Articulo::acumulado_ventas(r.value("id_articulo").toInt(),-1.0* r.value("cantidad").toDouble(),-1.0* r.value("total").toDouble(),fecha_anterior))
+                {
+                    Configuracion_global->rollback();
+                    return;
+                }
+            }
+        }
+
+        if(Cliente::incrementar_acumulados(oAlbaran->id_cliente,acumular,oAlbaran->fecha))
+        {
+            for(auto i=0; i<modelLineas->rowCount();++i)
+            {
+                QSqlRecord r = modelLineas->record(i);
+                if(!Articulo::acumulado_ventas(r.value("id_articulo").toInt(),r.value("cantidad").toDouble(),r.value("total").toDouble(),oAlbaran->fecha))
+                {
+                    Configuracion_global->rollback();
+                    return;
+                }
+            }
+            Configuracion_global->commit();
+            emit unblock();
+        }
+
     }
     if(succes)
     {
@@ -798,6 +841,7 @@ void FrmAlbaran::on_btn_borrar_clicked()
         if(!ui->table2->currentIndex().isValid())
             return;
         id = m->record(ui->table2->currentIndex().row()).value("id").toInt();
+        oAlbaran->RecuperarAlbaran(QString("select * from cab_alb where id = %1").arg(id));
     }
     if (QMessageBox::question(this,tr("Borrar"),
                               tr("Esta acción no se puede deshacer.\n¿Desea continuar?"),
@@ -824,6 +868,7 @@ void FrmAlbaran::on_btn_borrar_clicked()
                                                        _it_r.value("total").toDouble(),QDate::currentDate());
             }
         }
+        succes &= Cliente::incrementar_acumulados(oAlbaran->id_cliente,-1.0 * oAlbaran->base_total,oAlbaran->fecha);
         q.prepare("DELETE FROM lin_alb WHERE id_cab = "+QString::number(id));
         succes &= q.exec();
 
@@ -934,14 +979,16 @@ void FrmAlbaran::formato_tabla()
     ui->table2->setColumnHidden(0,true);
     QStringList header2;
     QVariantList sizes2;
-    header2 << tr("id") << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
+    header2 << tr("id") << "id_art" << tr("Código") << tr("Descripción") << tr("cantidad") << tr("pvp") << tr("pvp recom.") << tr("Subtotal");
     header2 << tr("porc_dto") << tr("porc_iva") << tr("Total");
-    sizes2 << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
+    sizes2 << 0 << 0 << 100 << 300 << 100 << 100 <<100 << 100 <<100 << 100 <<110;
     for(int i = 0; i <header2.size();i++)
     {
         ui->Lineas->setColumnWidth(i,sizes2.at(i).toInt());
         modelLineas->setHeaderData(i,Qt::Horizontal,header2.at(i));
     }
+    ui->Lineas->setColumnHidden(0,true);
+    ui->Lineas->setColumnHidden(1,true);
 }
 
 void FrmAlbaran::filter_table(QString texto, QString orden, QString modo)
@@ -1046,7 +1093,7 @@ void FrmAlbaran::refrescar_modelo()
 {
     if(!__init)
         return;
-    modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+    modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                               "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
     calcular_albaran();
 }
@@ -1555,8 +1602,9 @@ void FrmAlbaran::on_btnAnadirLinea_clicked()
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
             frmeditar.set_id_cab(oAlbaran->id);
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Albaran);
             if(!frmeditar.exec() == QDialog::Accepted)
-                modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+                modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
                 calcular_albaran();
 
@@ -1583,6 +1631,7 @@ void FrmAlbaran::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.set_id_tarifa(oCliente2->idTarifa);
             frmeditar.set_id_cab(oAlbaran->id);
             frmeditar.set_venta(true);
+            frmeditar.setTipoDoc(frmEditLine::Albaran);
             frmeditar.set_linea(id_lin,"lin_alb");
             frmeditar.set_tabla("lin_alb");
             frmeditar.set_editando();
@@ -1609,9 +1658,8 @@ void FrmAlbaran::on_btn_borrarLinea_clicked()
     {
         QModelIndex index = ui->Lineas->currentIndex();
         int id_lin = ui->Lineas->model()->index(index.row(),0).data().toInt();
-        //TODO .
         oAlbaran->borrar_linea(id_lin);
-        modelLineas->setQuery(QString("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
+        modelLineas->setQuery(QString("select id,id_articulo,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                                       "from lin_alb where id_cab = %1;").arg(oAlbaran->id),Configuracion_global->empresaDB);
         calcular_albaran();
         ui->Lineas->setFocus();

@@ -791,6 +791,7 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
             frmeditar.set_venta(false);
+            frmeditar.setTipoDoc(frmEditLine::Pedido);
             frmeditar.setAdd_pendientes(true);
 
             frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());
@@ -821,6 +822,7 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
             frmeditar.set_venta(false);
+            frmeditar.setTipoDoc(frmEditLine::Pedido);
             frmeditar.setAdd_pendientes(true);
 
             frmeditar.setUse_re(ui->chkrecargo_equivalencia->isChecked());

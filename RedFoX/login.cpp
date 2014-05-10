@@ -28,16 +28,16 @@ Login::Login(QWidget *parent) :
 
     if(!init())
     {
-        if(Configuracion_global->globalDB.isOpen())
-        {
+        //if(Configuracion_global->globalDB.isOpen())
+        //{
             frmConfigmaya frmConf;
             if(frmConf.exec()==QDialog::Accepted){
                 TimedMessageBox::Box(this,tr("Configuración inicial realizada con éxito"));
                 init();
             }
-        }
-        else
-            QMessageBox::critical(0, "error:", Configuracion_global->globalDB.lastError().text());
+        //}
+        //else
+        //    QMessageBox::critical(0, "error:", Configuracion_global->globalDB.lastError().text());
     }
 }
 

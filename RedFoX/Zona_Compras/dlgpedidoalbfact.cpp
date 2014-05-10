@@ -411,7 +411,7 @@ bool DlgPedidoAlbFact::crear_documento()
         return false;
     }
     success &= crear_lineas(id);
-    success &= Proveedor::acumular(r_prov.value("id").toInt(), ui->fechaDoc->date().month() , Configuracion_global->MonedatoDouble(ui->txttotal->text()));
+    success &= Proveedor::acumular(r_prov.value("id").toInt(), ui->fechaDoc->date().month() , Configuracion_global->MonedatoDouble(ui->txtbase->text()));
     return success;
 }
 

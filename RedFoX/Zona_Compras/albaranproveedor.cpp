@@ -52,6 +52,9 @@ bool AlbaranProveedor::borrar()
     bool succes = true;
     Configuracion_global->empresaDB.transaction();
 
+    bool borrar_stock = (QMessageBox::question(qApp->activeWindow(),tr("Stock de artículos"), tr("¿Borrar el stock de artículos?"),
+                         tr("No"),tr("Borrar")) == QMessageBox::Accepted);
+
     QString error;
     QMap<int, QSqlRecord> lineas = SqlCalls::SelectRecord("lin_alb_pro",QString("id_cab = %1").arg(this->id),Configuracion_global->empresaDB,error);
     for(auto i = lineas.begin(); i != lineas.end(); ++i)
@@ -62,9 +65,11 @@ bool AlbaranProveedor::borrar()
         double total_art = r.value("total").toDouble();
 
         succes &= Articulo::acumulado_compras(id_art,-1.0*cantidad, -1.0*total_art,this->fecha);
+        if(borrar_stock)
+            succes &= Articulo::agregar_stock_fisico(id_art, -1.0*cantidad);
 
     }
-    succes &= Proveedor::acumular(this->id_proveedor,this->fecha.month(),-1.0*total);
+    succes &= Proveedor::acumular(this->id_proveedor,this->fecha.month(),-1.0*base_total);
     succes &= SqlCalls::SqlDelete("lin_alb_pro",Configuracion_global->empresaDB,QString("id_cab = %1").arg(id),error);
     succes &= SqlCalls::SqlDelete("alb_pro",Configuracion_global->empresaDB,QString("id = %1").arg(id),error);
 

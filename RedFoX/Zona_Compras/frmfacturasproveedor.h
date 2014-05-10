@@ -65,6 +65,7 @@ private slots:
 
     void on_btn_borrarLinea_clicked();
 
+    void llenarLineas();
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
@@ -85,7 +86,7 @@ private:
 
     bool __init;
     bool _showCerrar;
-    void llenarLineas();
+
     bool editando;
     double total_anterior;
     QDate fecha_anterior;

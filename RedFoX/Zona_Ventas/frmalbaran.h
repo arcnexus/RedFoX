@@ -107,7 +107,12 @@ private:
     Ui::FrmAlbaran *ui;
     QSqlQueryModel *ModelLin_alb;
     QSqlQueryModel *modelLineas;
+
     bool in_edit;
+    double total_anterior;
+    QDate fecha_anterior;
+    QSqlQueryModel* lineas_anterior;
+
     QString moneda;
 
     QAction menuButton;

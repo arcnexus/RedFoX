@@ -56,7 +56,7 @@ void FrmAlbaranProveedor::setUpBusqueda()
     m_busqueda->addWidget(btnDelete);
 
     QPushButton *btnPrint = new QPushButton(QIcon(":/Icons/PNG/print2.png"),tr("Imprimir"),this);
-    connect(btnDelete,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
+    connect(btnPrint,SIGNAL(clicked()),this,SLOT(on_btnImprimir_clicked()));
     m_busqueda->addWidget(btnPrint);
     m_busqueda->addSpacer();
 
@@ -69,7 +69,8 @@ void FrmAlbaranProveedor::init_querys()
         return;
     model_busqueda->setQuery("select id,albaran,fecha,cif_proveedor,proveedor from alb_pro order by albaran desc",Configuracion_global->empresaDB);
     formato_tabla();
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(1);    
+    ui->tabWidget_2->setCurrentIndex(0);
 }
 
 void FrmAlbaranProveedor::init()
@@ -562,7 +563,7 @@ void FrmAlbaranProveedor::on_btnEditar_clicked()
         return;
     }
 
-    total_anterior = oAlbPro->total;
+    total_anterior = oAlbPro->base_total;
     fecha_anterior = oAlbPro->fecha;
     lineas_anterior->setQuery(QString("select id,id_articulo,cantidad,total from lin_alb_pro where id_cab = %1;").arg(oAlbPro->id),Configuracion_global->empresaDB);
     editando = true;
@@ -580,7 +581,7 @@ void FrmAlbaranProveedor::on_btnGuardar_clicked()
         guardar_campos_en_objeto();
         if(oAlbPro->guardar())
         {
-            double acumular = oAlbPro->total;
+            double acumular = oAlbPro->base_total;
             if(editando)
             {
                 //BORRAR LOS ACUMULADOS ANTERIORES COMPLETAMENTE
@@ -973,6 +974,7 @@ void FrmAlbaranProveedor::on_btnAnadirLinea_clicked()
     connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
     frmeditar.set_venta(false);
+    frmeditar.setTipoDoc(frmEditLine::Albaran);
     frmeditar.setAdd_pendientes(false);
 
     frmeditar.setUse_re(ui->chklporc_rec->isChecked());
@@ -1043,6 +1045,7 @@ void FrmAlbaranProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
         connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
         frmeditar.set_venta(false);
+        frmeditar.setTipoDoc(frmEditLine::Albaran);
         frmeditar.setAdd_pendientes(false);
 
         frmeditar.setUse_re(ui->chklporc_rec->isChecked());
