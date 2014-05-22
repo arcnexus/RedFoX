@@ -137,6 +137,7 @@ void frmConfigmaya::on_btnSiguiente_clicked()
             ui->stackedWidget->setCurrentIndex(4);
             ui->btnCancel->setEnabled(false);
         }
+        ui->stackedWidget->setCurrentIndex(0);
         break;
     case 4:
         if(createSuperUser())
@@ -146,6 +147,8 @@ void frmConfigmaya::on_btnSiguiente_clicked()
             ui->btnCancel->setEnabled(true);
         }
         break;
+    default:
+        ui->stackedWidget->setCurrentIndex(0);
     }
 }
 
