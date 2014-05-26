@@ -8,13 +8,14 @@ class cajas : public QObject
     Q_OBJECT
 public:
     explicit cajas(QObject *parent = 0);
-    QHash <QString, QVariant> h_cajas;
+    QString id;
+    QString descripcion;
 
     bool anadir();
-    bool guardar(QString nuevo);
-    bool recuperar(QStringList filtro, QStringList extras);
-    bool borrar();
-    bool vaciar();
+    bool guardar(QString id, QString descripcion, bool anadiendo);
+    bool recuperar(QString codigo);
+    bool borrar(QString id);
+    void vaciar();
 
 signals:
 
