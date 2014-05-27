@@ -20,11 +20,11 @@ FrmFormas_pago::FrmFormas_pago(QWidget *parent) :
     //-------------------
     // Tabla buscar
     //-------------------
-    m=  new QSqlQueryModel(this);
-    m->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos, "
+    model_busqueda=  new QSqlQueryModel(this);
+    model_busqueda->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos, "
                 "numero_plazos, cuenta_cont_pago  from formpago order by codigo",
                 Configuracion_global->groupDB);
-    ui->tabla_buscar->setModel(m);
+    ui->tabla_buscar->setModel(model_busqueda);
     QStringList headers;
     QVariantList sizes;
     ui->tabla_buscar->setColumnHidden(0,true);
@@ -34,7 +34,7 @@ FrmFormas_pago::FrmFormas_pago(QWidget *parent) :
     for(int i = 0; i < headers.size();i++)
     {
         ui->tabla_buscar->setColumnWidth(i,sizes.at(i).toInt());
-        m->setHeaderData(i,Qt::Horizontal,headers.at(i));
+        model_busqueda->setHeaderData(i,Qt::Horizontal,headers.at(i));
     }
 
     ui->stackedWidget->setCurrentIndex(0);
@@ -53,9 +53,7 @@ FrmFormas_pago::~FrmFormas_pago()
 void FrmFormas_pago::on_tabla_buscar_doubleClicked(const QModelIndex &index)
 {
     int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones;
-    opciones << QString("id= %1").arg(id);
-    oVtos->recuperar(opciones);
+    oVtos->recuperar(QString("id= %1").arg(id));
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(1);
 }
@@ -74,6 +72,7 @@ void FrmFormas_pago::llenar_campos()
     ui->spinNumero_plazos->setValue(oVtos->numero_plazos);
     ui->dias_hasta_pago->setValue(oVtos->dias_hasta_pago);
     ui->rdbContado->setChecked(oVtos->al_contado);
+    ui->radioButton_2->setChecked(!oVtos->al_contado);
 }
 
 void FrmFormas_pago::llenar_objeto()
@@ -103,7 +102,7 @@ void FrmFormas_pago::filter_table(QString texto, QString orden, QString modo)
     else
         modo = "DESC";
 
-    m->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos,"
+    model_busqueda->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos,"
                 "numero_plazos, cuenta_cont_pago  from formpago where "+order+" like '%"+texto.trimmed()+
                 "%' order by "+order +" "+modo,Configuracion_global->groupDB);
 }
@@ -161,7 +160,6 @@ void FrmFormas_pago::consultar_cuenta()
                 ui->txtcod_cuenta_contable->setText(r.value().value("codigo_cta").toString());
                 ui->txtCuenta_contable->setText(r.value().value("descripcion").toString());
             }
-
         }
     }
     buscando = false;
@@ -206,17 +204,13 @@ void FrmFormas_pago::setUpBusqueda()
 
 void FrmFormas_pago::on_btnSiguiente_2_clicked()
 {
-    QStringList opciones, extras;
-    opciones << QString("codigo > '%1' order by codigo limit 0,1").arg(oVtos->codigo);
-    oVtos->recuperar(opciones);
+    oVtos->recuperar(QString("codigo > '%1' order by codigo limit 0,1").arg(oVtos->codigo));
     llenar_campos();
 }
 
 void FrmFormas_pago::on_btnAnterior_2_clicked()
 {
-    QStringList opciones, extras;
-    opciones << QString("codigo < '%1' order by id desc limit 0,1").arg(oVtos->codigo);
-    oVtos->recuperar(opciones);
+    oVtos->recuperar(QString("codigo < '%1' order by id desc limit 0,1").arg(oVtos->codigo));
     llenar_campos();
 }
 
@@ -235,8 +229,6 @@ void FrmFormas_pago::on_btnAnadir_3_clicked()
     ui->txtCuenta_contable->clear();
     bloquear_campos(false);
     ui->txtcod_forma_pago->setFocus();
-
-
 }
 
 void FrmFormas_pago::bloquear_campos(bool state)
@@ -284,6 +276,7 @@ void FrmFormas_pago::on_btnGuardar_2_clicked()
         oVtos->anadir();
     else
         oVtos->guardar();
+    Configuracion_global->Cargar_formas_pago();
     Configuracion_global->groupDB.commit();
     bloquear_campos(true);
 }
@@ -292,9 +285,7 @@ void FrmFormas_pago::on_btndeshacer_2_clicked()
 {
     anadiendo = false;
     Configuracion_global->groupDB.rollback();
-    QStringList condiciones;
-    condiciones << QString("id=%1 limit 0,1").arg(oVtos->id);
-    oVtos->recuperar(condiciones);
+    oVtos->recuperar(QString("id=%1 limit 0,1").arg(oVtos->id));
     llenar_campos();
     bloquear_campos(true);
 }
@@ -303,9 +294,7 @@ void FrmFormas_pago::on_btnEditar_2_clicked()
 {
     QModelIndex  index = ui->tabla_buscar->currentIndex();
     int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones;
-    opciones << QString("id= %1").arg(id);
-    oVtos->recuperar(opciones);
+    oVtos->recuperar(QString("id= %1").arg(id));
     llenar_campos();
     ui->stackedWidget->setCurrentIndex(1);
     on_btnEditar_3_clicked();
@@ -313,6 +302,13 @@ void FrmFormas_pago::on_btnEditar_2_clicked()
 
 void FrmFormas_pago::on_btn_borrar_clicked()
 {
+    if(ui->stackedWidget->currentIndex() == 0)
+    {
+        if(!ui->tabla_buscar->currentIndex().isValid())
+            return;
+        int id = model_busqueda->record(ui->tabla_buscar->currentIndex().row()).value("id").toInt();
+        oVtos->recuperar(QString("id= %1").arg(id));
+    }
     if(QMessageBox::warning(this,tr("Formas de pago"),
                             tr("Si borra esta forma de pago, clientes,"
                                " proveedores y distos documentos que la estén usando perderán esta información\n"
@@ -321,21 +317,13 @@ void FrmFormas_pago::on_btn_borrar_clicked()
     {
         oVtos->borrar();
         oVtos->clear();
+        model_busqueda->setQuery("select id, codigo, forma_pago, dia_pago1, dia_pago2, dia_pago3, dia_pago4, dias_entre_plazos, "
+                    "numero_plazos, cuenta_cont_pago  from formpago order by codigo",
+                    Configuracion_global->groupDB);
+        Configuracion_global->Cargar_formas_pago();
         llenar_campos();
     }
 }
-
-/*void FrmFormas_pago::on_btnborrar_2_clicked()
-{
-    QModelIndex  index = ui->tabla_buscar->currentIndex();
-    int id = ui->tabla_buscar->model()->data(ui->tabla_buscar->model()->index(index.row(),0),Qt::EditRole).toInt();
-    QStringList opciones;
-    opciones << QString("id= %1").arg(id);
-    oVtos->recuperar(opciones);
-    llenar_campos();
-    on_btn_borrar_clicked();
-
-}*/
 
 void FrmFormas_pago::on_txtcod_cuenta_contable_editingFinished()
 {
@@ -352,6 +340,7 @@ void FrmFormas_pago::on_txtcod_cuenta_contable_editingFinished()
 
 void FrmFormas_pago::mostrarBusqueda()
 {
+    ui->stackedWidget->setCurrentIndex(0);
     _showBarraBusqueda(m_busqueda);
 }
 

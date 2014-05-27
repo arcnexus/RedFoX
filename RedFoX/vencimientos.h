@@ -21,7 +21,7 @@ public:
 
     explicit vencimientos(QObject *parent = 0);
 
-    void recuperar(QStringList condiciones);
+    void recuperar(QString condiciones);
     void anadir();
     void guardar();
     void borrar();

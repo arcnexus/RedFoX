@@ -54,7 +54,7 @@ private slots:
     void filter_table(QString texto, QString orden, QString modo);
 private:
     Ui::FrmFormas_pago *ui;
-    QSqlQueryModel *m;
+    QSqlQueryModel *model_busqueda;
     QAction menuButton;
     vencimientos * oVtos;
     bool anadiendo,buscando;

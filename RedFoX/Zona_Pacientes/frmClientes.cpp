@@ -911,6 +911,7 @@ void frmClientes::on_btnAnadir_clicked()
     {
         Configuracion_global->groupDB.transaction();
 
+        Configuracion_global->CargarDatosMaestros();
         VaciarCampos();
 
         this->Altas = true;
@@ -998,6 +999,9 @@ void frmClientes::on_btnEditar_clicked()
     }
 
     Configuracion_global->groupDB.transaction();
+
+    Configuracion_global->CargarDatosMaestros();
+    LLenarCampos();
 
     emit block();
     bloquearCampos(false);

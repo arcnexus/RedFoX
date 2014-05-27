@@ -6,7 +6,7 @@ vencimientos::vencimientos(QObject *parent) :
     clear();
 }
 
-void vencimientos::recuperar(QStringList condiciones)
+void vencimientos::recuperar(QString condiciones)
 {
     QString error;
     QMap <int,QSqlRecord> m = SqlCalls::SelectRecord("formpago",condiciones,Configuracion_global->groupDB,error);
@@ -48,6 +48,7 @@ void vencimientos::anadir()
     h["dia_pago4"] = this->dia_pago4;
     h["dias_entre_plazos"] = this->dias_entre_plazos;
     //h["cuenta_cont_pago"] =;
+    h["numero_plazos"] = this->numero_plazos;
     h["dias_hasta_pago"] = dias_hasta_pago;
     h["al_contado"] = al_contado;
 
@@ -73,6 +74,7 @@ void vencimientos::guardar()
     //h["cuenta_cont_pago"] =;
     h["dias_hasta_pago"] = dias_hasta_pago;
     h["al_contado"] = al_contado;
+    h["numero_plazos"] = numero_plazos;
 
     if(SqlCalls::SqlUpdate(h,"formpago",Configuracion_global->groupDB,condicion,error))
         TimedMessageBox::Box(qApp->activeWindow(),tr("Se ha actualizado la forma de pago"));

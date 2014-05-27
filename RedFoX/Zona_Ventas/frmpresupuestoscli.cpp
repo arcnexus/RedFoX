@@ -2004,7 +2004,7 @@ bool FrmPresupuestosCli::eventFilter(QObject *obj, QEvent *event)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
-        if(obj == ui->txtcodigo_cliente && keyEvent->key() == Qt::Key_F1)
+        if(obj == ui->txtcodigo_cliente && keyEvent->key() == Qt::Key_F1 && ui->botBuscarCliente->isEnabled())
             on_botBuscarCliente_clicked();
 
         else if(keyEvent->key() ==Qt::Key_F1 && ui->btnEditar->isEnabled())
