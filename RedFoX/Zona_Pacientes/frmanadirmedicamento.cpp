@@ -164,6 +164,8 @@ void FrmAnadirMedicamento::BuscarProspectoMedicamento(int irow, int icol)
 
 void FrmAnadirMedicamento::finishedSlotBuscarProspectoMedicamento(QNetworkReply* reply)
 {
+    //TODO rehacer sin webkit
+    /*
     //qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
      QString cXML = data;
@@ -226,7 +228,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMedicamento(QNetworkReply*
 
 
      //ui->textProspecto->setText((cXML));
-    reply->manager()->deleteLater();
+    reply->manager()->deleteLater();*/
 }
 // FIN BUSCAR EL PROSPECTO
 
@@ -470,6 +472,8 @@ void FrmAnadirMedicamento::on_tablamedicamentosPatologia_clicked()
 
 void FrmAnadirMedicamento::finishedSlotBuscarProspecto(QNetworkReply* reply)
 {
+    //TODO reahcer sin webkit
+    /*
     //qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
      QString cXML = data;
@@ -534,7 +538,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspecto(QNetworkReply* reply)
 
 
      //ui->textProspecto->setText((cXML));
-    reply->manager()->deleteLater();
+    reply->manager()->deleteLater();*/
 }
 // FIN BUSCAR EL PROSPECTO
 
@@ -746,6 +750,8 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporMolecula_clicked()
 
 void FrmAnadirMedicamento::on_tablamedicamentosMolecula_clicked()
 {
+    //TODO rehacer sin webkit
+    /*
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_prospecto/get_prospecto?national_code="+
     ui->tablamedicamentosMolecula->item(ui->tablamedicamentosMolecula->currentRow(),3)->text();
     ui->textProspectoMolecula->setHtml("");
@@ -763,11 +769,14 @@ void FrmAnadirMedicamento::on_tablamedicamentosMolecula_clicked()
                 this, SLOT(finishedSlotBuscarProspectoMolecula(QNetworkReply*)));
 
        manager->get(QNetworkRequest(QUrl(cUrl)));
+       */
 }
 
 
 void FrmAnadirMedicamento::finishedSlotBuscarProspectoMolecula(QNetworkReply* reply)
 {
+    //TODO rehacer sin webkit
+    /*
     //qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
      QString cXML = data;
@@ -829,7 +838,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoMolecula(QNetworkReply* re
 
 
      //ui->textProspecto->setText((cXML));
-    reply->manager()->deleteLater();
+    reply->manager()->deleteLater();*/
 }
 // FIN BUSCAR EL PROSPECTO
 // BUSCAR POR PRINCIPIOS ACTIVOS
@@ -1035,6 +1044,8 @@ void FrmAnadirMedicamento::on_btnBuscarMedicamentoporPA_clicked()
 
 void FrmAnadirMedicamento::on_tablamedicamentospactivos_clicked()
 {
+    //TODO rehacer sin webkit
+    /*
     QString cUrl = "http://demo.vademecumdata.es/vweb/xml/ws_prospecto/get_prospecto?national_code="+
     ui->tablamedicamentospactivos->item(ui->tablamedicamentospactivos->currentRow(),3)->text();
     ui->textProspectopa->setHtml("");
@@ -1052,11 +1063,14 @@ void FrmAnadirMedicamento::on_tablamedicamentospactivos_clicked()
                 this, SLOT(finishedSlotBuscarProspectoPrincAct(QNetworkReply*)));
 
        manager->get(QNetworkRequest(QUrl(cUrl)));
+       */
 }
 
 
 void FrmAnadirMedicamento::finishedSlotBuscarProspectoPrincAct(QNetworkReply* reply)
 {
+    //TODO rehacer sin webkit
+    /*
     //qDebug()<<reply->readAll();
      QString data=(QString)reply->readAll();
      QString cXML = data;
@@ -1118,7 +1132,7 @@ void FrmAnadirMedicamento::finishedSlotBuscarProspectoPrincAct(QNetworkReply* re
 
     reply->manager()->deleteLater();
      //ui->textProspecto->setText((cXML));
-
+    */
 }
 // FIN BUSCAR EL PROSPECTO
 

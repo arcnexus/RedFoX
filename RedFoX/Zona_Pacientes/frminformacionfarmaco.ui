@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1023</width>
+    <width>1024</width>
     <height>550</height>
    </rect>
   </property>
@@ -405,24 +405,6 @@ background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="10" rowspan="4" colspan="3">
-    <widget class="QWebView" name="webLogoLaboratorio">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>175</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
    <item row="12" column="11" colspan="2">
     <widget class="QPushButton" name="btnAceptar">
      <property name="text">
@@ -437,45 +419,6 @@ background-color: rgb(255, 255, 255);</string>
        <width>24</width>
        <height>24</height>
       </size>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="5" rowspan="2">
-    <widget class="QWebView" name="webimagen1">
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="6" rowspan="2" colspan="2">
-    <widget class="QWebView" name="webimagen2">
-     <property name="minimumSize">
-      <size>
-       <width>164</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="8" rowspan="2" colspan="2">
-    <widget class="QWebView" name="webimagen3">
-     <property name="minimumSize">
-      <size>
-       <width>110</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
      </property>
     </widget>
    </item>
@@ -501,13 +444,6 @@ color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../maya.qrc"/>
  </resources>

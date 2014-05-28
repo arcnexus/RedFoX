@@ -35,26 +35,6 @@ ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
         _actions.append(p);
     }
 
-    tryRegisterModule(MayaModule::Mantenimiento,"Paises",id);
-    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
-    {
-        connect(&paises,SIGNAL(triggered()),this,SLOT(handle_paises()));
-        QPair<QAction *, MayaModule::accessLevel> p;
-        p.first = &paises;
-        p.second = getUserLvl(id);
-        _actions.append(p);
-    }
-
-//    tryRegisterModule(MayaModule::Mantenimiento,"Formas de pago",id);
-//    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
-//    {
-//        connect(&fPago,SIGNAL(triggered()),this,SLOT(handle_fomasPago()));
-//        QPair<QAction *, MayaModule::accessLevel> p;
-//        p.first = &fPago;
-//        p.second = getUserLvl(id);
-//        _actions.append(p);
-//    }
-
     tryRegisterModule(MayaModule::Mantenimiento,"Tipos de iva",id);
     if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
     {
@@ -74,6 +54,18 @@ ArchivosGeneralesExt::ArchivosGeneralesExt(QObject *parent) :
         p.second = getUserLvl(id);
         _actions.append(p);
     }
+
+    tryRegisterModule(MayaModule::Mantenimiento,"Paises",id);
+    if(userHaveAcess(id,Configuracion_global->id_usuario_activo))
+    {
+        connect(&paises,SIGNAL(triggered()),this,SLOT(handle_paises()));
+        QPair<QAction *, MayaModule::accessLevel> p;
+        p.first = &paises;
+        p.second = getUserLvl(id);
+        _actions.append(p);
+    }
+
+
 
     tryRegisterModule(MayaModule::Mantenimiento,"Avisos",id);
     if(userHaveAcess(id,Configuracion_global->id_usuario_activo))

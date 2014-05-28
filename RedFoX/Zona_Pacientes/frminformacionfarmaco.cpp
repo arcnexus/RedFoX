@@ -6,10 +6,10 @@ FrmInformacionFarmaco::FrmInformacionFarmaco(QWidget *parent) :
     ui(new Ui::FrmInformacionFarmaco)
 {
     ui->setupUi(this);
-    ui->webimagen1->setVisible(false);
+    /*ui->webimagen1->setVisible(false);
     ui->webimagen2->setVisible(false);
     ui->webimagen3->setVisible(false);
-    ui->webLogoLaboratorio->setVisible(false);
+    ui->webLogoLaboratorio->setVisible(false);*/
     ui->txtFechaBaja->setVisible(false);
     ui->lblfechabaja->setVisible(false);
 
@@ -44,6 +44,8 @@ void FrmInformacionFarmaco::capturarid(QString codigo_nacional)
 
 void FrmInformacionFarmaco::finishedSlotBuscarMedicamento(QNetworkReply* reply)
 {
+    //TODO rehacer sin webkit
+    /*
     //qDebug()<<reply->readAll();
     QString data=(QString)reply->readAll();
     QString cXML = data;
@@ -225,38 +227,45 @@ void FrmInformacionFarmaco::finishedSlotBuscarMedicamento(QNetworkReply* reply)
         }
     }
     //NOTE - pero se puede borrar aqui
-    reply->manager()->deleteLater();
+    reply->manager()->deleteLater();*/
 }
 
 void FrmInformacionFarmaco::cargaFinalizada1(bool /*estado*/)
 {
-
+    //TODO rehacer sin webkit
+    /*
     if(ui->webimagen1->findText("Not Found"))
         ui->webimagen1->setVisible(false);
     else
-        ui->webimagen1->setVisible(true);
+        ui->webimagen1->setVisible(true);*/
 }
 void FrmInformacionFarmaco::cargaFinalizada2(bool /*estado*/)
 {
-
+    //TODO rehacer sin webkit
+    /*
     if(ui->webimagen2->findText("Not Found"))
         ui->webimagen2->setVisible(false);
     else
         ui->webimagen2->setVisible(true);
+        */
 }
 void FrmInformacionFarmaco::cargaFinalizada3(bool /*estado*/)
 {
-
+    //TODO rehacer sin webkit
+    /*
     if(ui->webimagen3->findText("Not Found"))
         ui->webimagen3->setVisible(false);
     else
         ui->webimagen3->setVisible(true);
+        */
 }
 void FrmInformacionFarmaco::cargaFinalizadaLogo(bool /*estado*/)
 {
-
+    //TODO rehacer sin webkit
+    /*
     if(ui->webLogoLaboratorio->findText("Not Found"))
         ui->webLogoLaboratorio->setVisible(false);
     else
         ui->webLogoLaboratorio->setVisible(true);
+        */
 }
