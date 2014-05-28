@@ -372,6 +372,14 @@ bool ODS::ODStoTable(QString fileName, QAbstractItemModel *model)
                     content = table_cell.toElement().attribute("office:value");
                     for(int r = 0; r< repeat; ++r)
                     {
+                        if(model->columnCount()-1 < column)
+                        {
+                            if(!model->insertColumn(model->columnCount()))
+                            {
+                                ODS::lastError = tr("Error escribiendo columnas");
+                                return false;
+                            }
+                        }
                         if(!model->setData(model->index(row,column),content))
                         {
                             ODS::lastError = tr("Error escribiendo campo");
@@ -385,6 +393,14 @@ bool ODS::ODStoTable(QString fileName, QAbstractItemModel *model)
                     content = text_p.toElement().text();
                     for(int r = 0; r< repeat; ++r)
                     {
+                        if(model->columnCount()-1 < column)
+                        {
+                            if(!model->insertColumn(model->columnCount()))
+                            {
+                                ODS::lastError = tr("Error escribiendo columnas");
+                                return false;
+                            }
+                        }
                         if(!model->setData(model->index(row,column),content))
                         {
                             ODS::lastError = tr("Error escribiendo campo");
