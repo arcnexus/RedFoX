@@ -10,7 +10,6 @@ FrmCajas::FrmCajas(QWidget *parent) :
 
 {
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(0);
     anadiendo = false;
     oCajas = new cajas;
 
@@ -20,6 +19,8 @@ FrmCajas::FrmCajas(QWidget *parent) :
     setUpBusqueda();
     bloquearCampos(true);
     llenarTabla();
+    ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 FrmCajas::~FrmCajas()
@@ -77,7 +78,7 @@ void FrmCajas::ocultarBusqueda()
 
 void FrmCajas::filter_table(QString texto, QString orden, QString modo)
 {
-    if(ui->stackedWidget->currentIndex() ==1)
+    if(ui->stackedWidget->currentIndex() == 1)
         ui->stackedWidget->setCurrentIndex(0);
     QHash <QString, QString> lista;
     lista[tr("Descripción")] = "desc_caja";
@@ -281,3 +282,4 @@ void FrmCajas::on_lineEditCaja_editingFinished()
         }
     }
 }
+

@@ -1,7 +1,7 @@
 #ifndef FRMCAJAS_H
 #define FRMCAJAS_H
 
-#include <QDialog>
+//#include <QDialog>
 #include "cajas.h"
 #include "../mayamodule.h"
 #include "Auxiliares/Globlal_Include.h"
@@ -49,6 +49,8 @@ private slots:
 
     void on_lineEditCaja_editingFinished();
 
+    void filter_table(QString texto, QString orden, QString modo);
+
 private:
     Ui::FrmCajas *ui;
     QAction menuButton;
@@ -56,9 +58,10 @@ private:
 
     BarraBusqueda *m_busqueda;
     void setUpBusqueda();
+
+
     bool anadiendo;
     cajas *oCajas;
-    void filter_table(QString texto, QString orden, QString modo);
     void bloquearCampos(bool estado);
     void recuperarDatos(QString id);
     void llenarCampos();
