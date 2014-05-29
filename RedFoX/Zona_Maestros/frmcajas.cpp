@@ -91,7 +91,6 @@ void FrmCajas::filter_table(QString texto, QString orden, QString modo)
         modo = "DESC";
 
     QString cSQL = "SELECT * FROM cajas WHERE "+order+" LIKE '%"+texto.trimmed()+"%' ORDER BY "+order+" "+modo;
-    qDebug() << cSQL;
     model->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->tablaBusqueda->selectRow(0);
