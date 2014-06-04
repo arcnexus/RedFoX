@@ -66,6 +66,8 @@ private slots:
     void on_btn_borrarLinea_clicked();
 
     void llenarLineas();
+    void on_chklporc_rec_toggled(bool checked);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:

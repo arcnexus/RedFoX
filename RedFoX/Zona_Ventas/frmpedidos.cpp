@@ -1753,8 +1753,7 @@ void FrmPedidos::convertir_enFactura()
             cab_fac["impreso"]= oPedido->impreso;
             cab_fac["cobrado"] = false;
             cab_fac["contabilizado"] = false;
-            cab_fac["id_forma_pago"] = oPedido->id_forma_pago;
-            //cab_fac["forma_pago"] = oPedido->;
+            cab_fac["id_forma_pago"] = oPedido->id_forma_pago;            
             cab_fac["comentario"] = oPedido->comentario;
             cab_fac["base1"] = oPedido->base1;
             cab_fac["base2"] = oPedido->base2;

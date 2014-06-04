@@ -236,10 +236,10 @@ oFacPro->editable
     ui->txtporc_rec3->setText(QString::number(oFacPro->porc_rec3));
     ui->txtporc_rec4->setText(QString::number(oFacPro->porc_rec4));
 
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec1)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec2)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec3)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec4)));
+    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec1)));
+    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec2)));
+    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec3)));
+    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec4)));
 
     ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total1)));
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total2)));
@@ -586,13 +586,13 @@ void FrmFacturasProveedor::calcular_factura()
 
     //Los gastos no pueden añadir R.E.
     if(ui->chklporc_rec->isChecked())
-        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
+        re1 = base1 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text())/100);
     if(ui->chklporc_rec->isChecked())
-        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
+        re2 = base2 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text())/100);
     if(ui->chklporc_rec->isChecked())
-        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
+        re3 = base3 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text())/100);
     if(ui->chklporc_rec->isChecked())
-        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+        re4 = base4 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text())/100);
 
     // añadir gastos extras
 
@@ -947,4 +947,56 @@ void FrmFacturasProveedor::on_btn_borrarLinea_clicked()
         }
         ui->Lineas->setFocus();
     }
+}
+
+void FrmFacturasProveedor::on_chklporc_rec_toggled(bool checked)
+{
+    if (checked) {
+        oFacPro->recargo_equivalencia = 1;
+        ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
+        ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
+        ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
+        ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
+        oFacPro->porc_rec1 = ui->txtporc_rec1->text().toFloat();
+        oFacPro->porc_rec2 = ui->txtporc_rec2->text().toFloat();
+        oFacPro->porc_rec3 = ui->txtporc_rec3->text().toFloat();
+        oFacPro->porc_rec4 = ui->txtporc_rec4->text().toFloat();
+    } else {
+        oFacPro->recargo_equivalencia = 0;
+        ui->txtporc_rec1->setText("0.00");
+        ui->txtporc_rec2->setText("0.00");
+        ui->txtporc_rec3->setText("0.00");
+        ui->txtporc_rec4->setText("0.00");
+        oFacPro->porc_rec1 = 0;
+        oFacPro->porc_rec2 = 0;
+        oFacPro->porc_rec3 = 0;
+        oFacPro->porc_rec4 = 0;
+    }
+    QString error;
+    for(auto i = 0; i<modelLineas->rowCount();++i)
+    {
+        QSqlRecord r = modelLineas->record(i);
+        QHash<QString,QVariant> lin;
+        double iva_art = r.value("porc_iva").toDouble();
+        double porc_re_art;
+
+        if(iva_art == oFacPro->porc_iva1)
+            porc_re_art = oFacPro->porc_rec1;
+        if(iva_art == oFacPro->porc_iva2)
+            porc_re_art = oFacPro->porc_rec2;
+        if(iva_art == oFacPro->porc_iva3)
+            porc_re_art = oFacPro->porc_rec3;
+        if(iva_art == oFacPro->porc_iva4)
+            porc_re_art = oFacPro->porc_rec4;
+
+        lin["porc_rec"] = porc_re_art;
+        lin["rec"] = r.value("total").toDouble() * (porc_re_art/100.0);
+
+        if(!SqlCalls::SqlUpdate(lin,"lin_alb_pro",Configuracion_global->empresaDB,QString("id=%1").arg(r.value("id").toInt()),error))
+        {
+            QMessageBox::critical(this,tr("Error al actualizar lineas"),error);
+            break;
+        }
+    }
+    calcular_factura();
 }
