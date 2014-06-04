@@ -3,7 +3,6 @@
 
 Articulo::Articulo(QObject *parent) : QObject(parent)
 {
-
 }
 
 void Articulo::Anadir()
@@ -1034,7 +1033,7 @@ bool Articulo::set_pendiente_recibir(int id_articulo, double cantidad)
     QSqlQuery art(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update articulos set cantidad_pendiente_recibir = cantidad_pendiente_recibir + %1,").arg(cantidad);
-    cSQL.append(QString("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir "));
+    cSQL.append(QString("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir - unidades_reservadas "));
     cSQL.append(QString("where id = %1").arg(id_articulo));
     bool succes = art.exec(cSQL);
     if(!succes)
@@ -1052,12 +1051,12 @@ bool Articulo::agregar_stock_fisico(int id_articulo, double cantidad)
     QSqlQuery art(Configuracion_global->groupDB);
     QString cSQL;
     cSQL = QString("update articulos set stock_fisico_almacen = stock_fisico_almacen + %1,").arg(cantidad);
-    cSQL.append(QString("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir "));
+    cSQL.append(QString("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir - unidades_reservadas "));
     cSQL.append(QString("where id = %1").arg(id_articulo));
     bool succes = art.exec(cSQL);
     if(!succes)
     {
-        QMessageBox::warning(qApp->activeWindow(),tr("Compras"),tr("Fallo al insertar stock fisico almacen:\n%1").arg(
+        QMessageBox::warning(qApp->activeWindow(),tr("Control de Stock"),tr("Fallo al insertar stock fisico almacen:\n%1").arg(
                                  art.lastError().text(),tr("Aceptar")));
     }
     return succes;
@@ -1068,9 +1067,11 @@ bool Articulo::reservar(int id_articulo, double cantidad)
     Q_ASSERT(id_articulo > 0);
 
     QSqlQuery queryart(Configuracion_global->groupDB);
-    if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
-                      .arg(cantidad)
-                      .arg(id_articulo)))
+    QString sql = QString("update articulos set unidades_reservadas = unidades_reservadas + %1,").arg(cantidad);
+    sql.append(QString("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir - unidades_reservadas "));
+    sql.append(QString(" where id = %1").arg(id_articulo));
+
+    if(!queryart.exec(sql))
     {
         QMessageBox::warning(qApp->activeWindow(),tr("Error al reservar"),queryart.lastError().text());
         return false;
@@ -1235,8 +1236,8 @@ bool Articulo::acum_devolucion_cli(int id_articulo, float cantidad, double total
     QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
 
-    cSQL = QString("update articulos set stock_real = stock_real +%1,").arg(cantidad);
-    cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen +%1,").arg(cantidad));
+    cSQL = QString("update articulos set stock_fisico_almacen = stock_fisico_almacen +%1,").arg(cantidad);
+    cSQL.append("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir - unidades_reservadas,");
     cSQL.append(QString("importe_acumulado_ventas = importe_acumulado_ventas -%1,").arg(total));
     cSQL.append(QString("unidades_vendidas = unidades_vendidas -%1 where id= %2").arg(cantidad).arg(id_articulo));
 
@@ -1400,8 +1401,8 @@ bool Articulo::acum_devolucion_pro(int id_articulo, float cantidad, double total
     QString cSQL;
     QSqlQuery art(Configuracion_global->groupDB);
 
-    cSQL = QString("update articulos set stock_real = stock_real -%1,").arg(cantidad);
-    cSQL.append(QString("stock_fisico_almacen = stock_fisico_almacen -%1,").arg(cantidad));
+    cSQL = QString("update articulos set stock_fisico_almacen = stock_fisico_almacen -%1,").arg(cantidad);
+    cSQL.append("stock_real = stock_fisico_almacen + cantidad_pendiente_recibir - unidades_reservadas,");
     cSQL.append(QString("importe_acumulado_compras = importe_acumulado_compras -%1,").arg(total));
     cSQL.append(QString("unidades_compradas = unidades_compradas -%1 where id= %2").arg(cantidad).arg(id_articulo));
 

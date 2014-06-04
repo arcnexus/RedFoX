@@ -793,12 +793,9 @@ bool Cliente::incrementar_acumulados(int id_cliente,double total,QDate fecha)
         QMessageBox::warning(qApp->activeWindow(),tr("Clientes"),
                              tr("No se ha podido guardar los acumulados en acumulados de cliente: %1").arg(cli_acum.lastError().text()),
                              tr("Aceptar"));
-        return false;
+        success = false;
     }
-    if(!success)
-        return false;
-    return true;
-
+    return success;
 }
 
 bool Cliente::decrementar_acumulados(int id_cliente, double total, QDate fecha)

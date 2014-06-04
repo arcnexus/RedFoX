@@ -1559,10 +1559,10 @@ void FrmPedidos::convertir_en_albaran()
         h["serie"] = serie;
         h["fecha"] = QDate::currentDate();
 
-        int added = SqlCalls::SqlInsert(h,"cab_alb",Configuracion_global->empresaDB,error);
+        int id_new_alb = SqlCalls::SqlInsert(h,"cab_alb",Configuracion_global->empresaDB,error);
 
         // Lineas de albaran
-        int added_l;
+        int id_new_line;
         bool updated_art = true;
 
         QString d = QString("id_cab = %1").arg(oPedido->id);
@@ -1577,11 +1577,11 @@ void FrmPedidos::convertir_en_albaran()
             for(int i= 1; i< r_l.count();i++)
                 h_l.insert(r_l.fieldName(i),r_l.value(i));
 
-            h_l["id_cab"] = added;
+            h_l["id_cab"] = id_new_alb;
 
             h_l.remove("cantidad_a_servir");
-            added_l = SqlCalls::SqlInsert(h_l,"lin_alb",Configuracion_global->empresaDB,error);
-            if(added_l == -1)
+            id_new_line = SqlCalls::SqlInsert(h_l,"lin_alb",Configuracion_global->empresaDB,error);
+            if(id_new_line == -1)
                 break;
             else
             {
@@ -1589,7 +1589,10 @@ void FrmPedidos::convertir_en_albaran()
                 int id_art = r_l.value("id_articulo").toInt();
                 double cant = r_l.value("cantidad").toDouble();
                 double total = r_l.value("total").toDouble();
-                if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate()))
+                bool update_acums = Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate());
+                update_acums &= Articulo::reservar(id_art, -1.0 * cant);
+                update_acums &= Articulo::agregar_stock_fisico(id_art, -1.0 * cant);
+                if(!update_acums)
                 {
                     error = Configuracion_global->groupDB.lastError().text();
                     updated_art = false;
@@ -1599,7 +1602,10 @@ void FrmPedidos::convertir_en_albaran()
             }
 
         }
-        if(added_l == -1 || added == -1 ||!updated_art)
+
+        bool cli_acums = Cliente::incrementar_acumulados(oPedido->id_cliente,oPedido->base_total,h.value("fecha").toDate());
+
+        if(id_new_line == -1 || id_new_alb == -1 ||!updated_art ||!cli_acums)
         {
             Configuracion_global->empresaDB.rollback();
             Configuracion_global->groupDB.rollback();
@@ -1843,18 +1849,22 @@ void FrmPedidos::convertir_enFactura()
                             int id_art = h_lineas_fac.value("id_articulo").toInt();
                             double cant = h_lineas_fac.value("cantidad").toDouble();
                             double total = h_lineas_fac.value("total").toDouble();
-                            if(!Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate()))
+                            bool update_acums = Articulo::acumulado_ventas(id_art,cant,total,QDate::currentDate());
+                            update_acums &= Articulo::reservar(id_art, -1.0 * cant);
+                            update_acums &= Articulo::agregar_stock_fisico(id_art, -1.0 * cant);
+                            if(!update_acums)
                             {
                                 QMessageBox::warning(this,tr("Pedidos cliente"),
                                                      tr("Ocurrió un error al crear las líneas de factura:\n%1").arg(Configuracion_global->groupDB.lastError().text()));
 
                                 transaccion = false;
                                 break;
-                            }
-                            //TODO ACUMULADOS CLIENTE
+                            }                            
                         }
                     }
                 }
+
+                transaccion &= Cliente::incrementar_acumulados(oPedido->id_cliente,oPedido->base_total,cab_fac.value("fecha").toDate());
 
                 if(transaccion)
                 {

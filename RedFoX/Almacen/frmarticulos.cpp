@@ -666,8 +666,7 @@ void FrmArticulos::LLenarCampos(int index)
         ui->txtimporte_acumulado_ventas->setText(Configuracion_global->toFormatoMoneda(QString::number(oArticulo->importe_acumulado_ventas,'f',Configuracion_global->decimales)));
         ui->txtcomentario->setText(oArticulo->comentario);
         ui->txtstock_maximo->setText(QString::number(oArticulo->stock_maximo));
-        ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));
-        //ui->txtstock_real->setText(QString::number(oArticulo->stock_real));
+        ui->txtstock_minimo->setText(QString::number(oArticulo->stock_minimo));        
         ui->txtstock_real_2->setText(QString::number(oArticulo->stock_real));
         ui->txtstock_fisico_almacen->setText(QString::number(oArticulo->nstock_fisico_almacen));
 
@@ -741,7 +740,6 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->stock_maximo=ui->txtstock_maximo->text().toInt();
     oArticulo->stock_minimo=ui->txtstock_minimo->text().toInt();
 
-  //  oArticulo->stock_real=ui->txtstock_real->text().toInt();
 
     if (ui->chkcontrolar_stock->isChecked())
        oArticulo->controlar_stock=1;
@@ -762,14 +760,10 @@ void FrmArticulos::CargarCamposEnArticulo()
     oArticulo->cCodProveedor = ui->txtcodigo_proveedor->text();
     oArticulo->proveedor = ui->txtproveedor->text();
 
-//    this->id_web = registro.field("id_web").value().toInt();
-  //  oArticulo->stock_fisico_almacen = ui->txtstock_fisico_almacen->text().toInt();
     oArticulo->articulo_promocionado = ui->chkArticulo_promocionado->isChecked();
     oArticulo->porc_dto = ui->txtdto->text().toFloat();
     oArticulo->coste_real = ui->txtCoste_real->text().replace(".","").replace(",",".").toDouble();
     oArticulo->mostrar_en_cuadro = ui->chkMostrar_en_cuadro->isChecked();
-   // oArticulo->margen = ui->txtMargen->value();
-   // oArticulo->margen_min = ui->txtMargen_min->value();
 
 }
 
@@ -797,10 +791,8 @@ void FrmArticulos::VaciarCampos()
    ui->txtimporte_acumulado_ventas->setText("0,00");
    ui->txtcomentario->setText("");
    ui->txtstock_maximo->setText("0");
-   ui->txtstock_minimo->setText("0");
-  // ui->txtstock_real->setText("0");
-   ui->txtstock_real_2->setText("0");
-  // ui->txtstock_fisico_almacen->setText("0");
+   ui->txtstock_minimo->setText("0");  
+   ui->txtstock_real_2->setText("0");  
    ui->chkcontrolar_stock->setChecked(false);
    ui->txtcantidad_pendiente_recibir->setText("0");
    ui->txtfecha_prevista_recepcion->setDate(QDate::currentDate());
@@ -810,10 +802,6 @@ void FrmArticulos::VaciarCampos()
    ui->chkArticulo_promocionado->setChecked(false);
    ui->txtoferta_pvp_fijo->setText("0");
    ui->txtCoste_real->setText("0,00");
-   //ui->txtMargen->setValue(0);
-   //ui->txtMargen_min->setValue(0);
-
-
 }
 
 void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)

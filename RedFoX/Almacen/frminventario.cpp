@@ -50,10 +50,6 @@ void frmInventario::on_txtBuscar_textEdited(const QString &arg1)
 
 void frmInventario::on_btnSincronizar_clicked()
 {
-//    QSqlQuery stock(Configuracion_global->groupDB);
-//    QString cSql = "update articulos set stock_fisico_almacen = stock_real where id >0;";
-//    if(stock.exec(cSql))
-//        TimedMessageBox::Box(this,tr("Se han sincronizado los stocks"));
 }
 
 void frmInventario::on_btnBuscar_clicked()

@@ -195,38 +195,27 @@ void FrmKit::on_btnAnadirKits_clicked()
 
         if(!art.isEmpty() && art.first().value("controlar_stock").toBool())
         {
-            float cant = cantidades.value(art.first().value("codigo").toString());
-            QString SQL = QString("update articulos set stock_real = stock_real - %1,"
-                          "stock_fisico_almacen = stock_fisico_almacen -%1 where id = %2").arg((cant*ui->spinCant->value())).arg(
-                        art.first().value("id").toInt());
-            QSqlQuery articulo(Configuracion_global->groupDB);
-            if(!articulo.exec(SQL))
-                QMessageBox::warning(this,tr("Gestión de Kits"),tr("Ocurrió un error al actulizar stock:\n%1").arg(
-                                         articulo.lastError().text()));
+            double cant = cantidades.value(art.first().value("codigo").toString());
+            Articulo::agregar_stock_fisico(art.first().value("id").toInt(),-1.0 * cant * ui->spinCant->value());
         }
     }
 
     //Aumentar stock Kit
     QMap <int,QSqlRecord> kit = SqlCalls::SelectRecord("articulos",QString("codigo ='%1'").arg(ui->txtCodigo_kit->text()),
-                                                       Configuracion_global->groupDB,error);
-    int s;
+                                                       Configuracion_global->groupDB,error);    
+    int s = 0;
     if(error.isEmpty() && !kit.isEmpty())
     {
         QSqlRecord r = kit.first();
-        QHash <QString,QVariant> _data;
         s = r.value("stock_fisico_almacen").toDouble() + ui->spinCant->value();
-        _data["stock_fisico_almacen"] = s;
-        _data["stock_real"] = r.value("stock_real").toDouble() + ui->spinCant->value();
-        if(SqlCalls::SqlUpdate(_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(r.value("id").toInt()),error))
+        if(Articulo::agregar_stock_fisico(r.value("id").toInt(), ui->spinCant->value()))
         {
-            if(t)
-                Configuracion_global->groupDB.commit();
+            Configuracion_global->groupDB.commit();
             TimedMessageBox::Box(this,tr("Estock de artículos actualizado"));
         }
         else
         {
-            if(t)
-                Configuracion_global->groupDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
 
@@ -256,15 +245,9 @@ void FrmKit::on_btnQuitar_clicked()
 
         if(!art.isEmpty() && art.first().value("controlar_stock").toBool())
         {
-            QString SQL = QString("update articulos set stock_real = stock_real + %1,"
-                          "stock_fisico_almacen = stock_fisico_almacen +%1 where id = %2").arg((cant*ui->spinCantRomper->maximum())).arg(
-                        art.first().value("id").toInt());
-            QSqlQuery articulo(Configuracion_global->groupDB);
-            if(!articulo.exec(SQL))
-                QMessageBox::warning(this,tr("Gestión de Kits"),tr("Ocurrió un error al actulizar stock:\n%1").arg(
-                                         articulo.lastError().text()));
-            else
+            if(Articulo::agregar_stock_fisico(art.first().value("id").toInt(), cant*ui->spinCantRomper->maximum()))
                 TimedMessageBox::Box(this,tr("Estock de artículos actualizado"));
+
         }
         else if(!error.isEmpty())
         {
@@ -319,13 +302,7 @@ void FrmKit::on_btnRomperKit_clicked()
         if(!art.isEmpty() && art.first().value("controlar_stock").toBool())
         {
             float cant = cantidades.value(art.first().value("codigo").toString());
-            QString SQL = QString("update articulos set stock_real = stock_real + %1,"
-                          "stock_fisico_almacen = stock_fisico_almacen +%1 where id = %2").arg((cant*ui->spinCantRomper->value())).arg(
-                        art.first().value("id").toInt());
-            QSqlQuery articulo(Configuracion_global->groupDB);
-            if(!articulo.exec(SQL))
-                QMessageBox::warning(this,tr("Gestión de Kits"),tr("Ocurrió un error al actulizar stock:\n%1").arg(
-                                         articulo.lastError().text()));
+            Articulo::agregar_stock_fisico(art.first().value("id").toInt(), cant*ui->spinCantRomper->value());
         }
     }
 
@@ -336,20 +313,15 @@ void FrmKit::on_btnRomperKit_clicked()
     if(error.isEmpty() && !kit.isEmpty())
     {
         QSqlRecord r = kit.first();
-        QHash <QString,QVariant> _data;
-        s = r.value("stock_fisico_almacen").toDouble() - ui->spinCantRomper->value();
-        _data["stock_fisico_almacen"] = s;
-        _data["stock_real"] = r.value("stock_real").toDouble() - ui->spinCantRomper->value();
-        if(SqlCalls::SqlUpdate(_data,"articulos",Configuracion_global->groupDB,QString("id = %1").arg(r.value("id").toInt()),error))
+
+        if(Articulo::agregar_stock_fisico(r.value("id").toInt(), ui->spinCantRomper->value()))
         {
-            if(t)
-                Configuracion_global->groupDB.commit();
+            Configuracion_global->groupDB.commit();
             TimedMessageBox::Box(this,tr("Estock de artículos actualizado"));
         }
         else
         {
-            if(t)
-                Configuracion_global->groupDB.rollback();
+            Configuracion_global->groupDB.rollback();
         }
     }
 

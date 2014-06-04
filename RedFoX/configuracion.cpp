@@ -528,6 +528,7 @@ bool Configuracion::CargarDatosBD()
     {
         this->globalDB.setHostName(Configuracion_global->global_host);
         this->globalDB.open(Configuracion_global->global_user,Configuracion_global->global_pass);
+        qDebug() << globalDB.lastError();
     }
 
     bool _mayaglobal = true;

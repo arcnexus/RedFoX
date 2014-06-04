@@ -145,6 +145,7 @@ public slots:
     void Guardardireccion(bool Anadir, QString Descripcion, QString direccion1, QString direccion2, QString CP, QString Poblacion,
                          QString Provincia, QString Pais, int id_cliente, QString email, QString comentarios, int id);
     void DescontarDeuda(int id_deuda,double pagado);
+
     static bool incrementar_acumulados(int id_cliente, double total, QDate fecha);
     bool decrementar_acumulados(int id_cliente, double total, QDate fecha);
 

@@ -1058,13 +1058,8 @@ void FrmPresupuestosCli::convertir_epedido()
                 //UPDATE ART
                 int id_art = r_l.value("id_articulo").toInt();
                 double cant = r_l.value("cantidad").toDouble();
-                QSqlQuery queryart(Configuracion_global->groupDB);
-                if(!queryart.exec(QString("update articulos set unidades_reservadas = unidades_reservadas + %1 where id = %2")
-                                  .arg(cant)
-                                  .arg(QString::number(id_art))
-                                  ))
+                if(!Articulo::reservar(id_art, cant))
                 {
-                    error = queryart.lastError().text();
                     updated_art = false;
                     break;
                 }

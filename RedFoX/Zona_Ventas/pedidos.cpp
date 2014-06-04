@@ -1,5 +1,5 @@
 #include "pedidos.h"
-
+#include "../Almacen/articulo.h"
 
 Pedidos::Pedidos()
 {
@@ -34,16 +34,9 @@ bool Pedidos::BorrarTodasLineas(int id_pedido)
 bool Pedidos::BorrarLinea(int id_linea ,int id_art, double cantidad)
 {
     QString error;
-    bool success = true;
-
-    QString cSQL = QString("update articulos set unidades_reservadas = unidades_reservadas -%1 where id = %2")
-            .arg(cantidad)
-            .arg(id_art);
-
-    QSqlQuery art(Configuracion_global->groupDB);
-    success &= art.exec(cSQL);
-    success &= SqlCalls::SqlDelete("lin_ped",Configuracion_global->empresaDB,QString("id = %1")
-                                   .arg(id_linea),error);
+    bool success = Articulo::reservar(id_art, -1.0 * cantidad);
+    success &= SqlCalls::SqlDelete("lin_ped",Configuracion_global->empresaDB,
+                                   QString("id = %1").arg(id_linea),error);
     return success;
 }
 int Pedidos::AnadirPedido()
