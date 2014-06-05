@@ -46,9 +46,10 @@ private slots:
 private:
     Ui::FrmGestionCobros2 *ui;
     double importe;
-    int id;
+    int id_deuda;
     int id_factura;
     int id_ticket;
+
     struct valores
     {
         double efectivo;

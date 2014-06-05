@@ -30,41 +30,39 @@ FrmGestionCobros2::~FrmGestionCobros2()
 
 void FrmGestionCobros2::on_btnAceptar_clicked()
 {
-    valores * val = new valores;
-    val->efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
-    val->cheque  = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
-    val->internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
-    val->tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
-    val->transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
-    val->vale = Configuracion_global->MonedatoDouble(ui->txtVale->text());
-    val->domiciliacion = Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text());
+    valores val;
+    val.efectivo = Configuracion_global->MonedatoDouble(ui->txtEfectivo->text());
+    val.cheque  = Configuracion_global->MonedatoDouble(ui->txtCheque->text());
+    val.internet = Configuracion_global->MonedatoDouble(ui->txtInternet->text());
+    val.tarjeta = Configuracion_global->MonedatoDouble(ui->txtTarjeta->text());
+    val.transferencia = Configuracion_global->MonedatoDouble(ui->txtTransferencia->text());
+    val.vale = Configuracion_global->MonedatoDouble(ui->txtVale->text());
+    val.domiciliacion = Configuracion_global->MonedatoDouble(ui->txtDomiciliacion->text());
 
-    // ---------------------------------------
-    // Actualizamos tabla clientes_deuda
-    //----------------------------------------
+    // Actualizamos tabla clientes_deuda    
     QHash <QString,QVariant> e;
-    e["importe_efectivo"] = val->efectivo;
-    e["importe_cheque"] = val->cheque;
-    e["importe_domiciliacion"] = val->domiciliacion;
-    e["importe_internet"] = val->internet;
-    e["importe_tarjeta"] = val->tarjeta;
-    e["importe_transferencia"] = val->transferencia;
-
-    e["importe_vale"] = val->vale;
+    e["importe_efectivo"] = val.efectivo;
+    e["importe_cheque"] = val.cheque;
+    e["importe_domiciliacion"] = val.domiciliacion;
+    e["importe_internet"] = val.internet;
+    e["importe_tarjeta"] = val.tarjeta;
+    e["importe_transferencia"] = val.transferencia;
+    e["importe_vale"] = val.vale;
     e["pagado"] = Configuracion_global->MonedatoDouble(ui->txtEntrega->text());
     e["pendiente_cobro"] = Configuracion_global->MonedatoDouble(ui->txtPendiente->text());
 
     QString error;
-    bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1 and id_empresa=%2").arg(this->id).arg(Configuracion_global->idEmpresa),error);
+    bool updated = SqlCalls::SqlUpdate(e,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1 and id_empresa=%2").arg(this->id_deuda).arg(Configuracion_global->idEmpresa),error);
     if(!updated)
+    {
         QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos: %1").arg(error));
-    else {
-
-        if(val->efectivo >0 || val->tarjeta >0 || val->cheque >0 || val->vale >0)
+    }
+    else
+    {
+        if(val.efectivo >0 || val.tarjeta >0 || val.cheque >0 || val.vale >0)
         {
-            //-----------------------------------
-            // Guardar/mostrar en cierre de caja
-            //-----------------------------------
+            /* TODO Reactivar y revias con TPV!!
+            // Guardar/mostrar en cierre de caja            
             if(QMessageBox::question(this,tr("Gestión de cobros y pagos"),
                                      tr("¿Desea que los cobros efectivo, tarjeta, cheque o vale aparezcan reflejados en el cierre de caja?"
                                         "\nEsto es importante si el dinero o resguardo de cobro se guarda en el cajón portamonedas"),
@@ -84,7 +82,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 // efectivo
                 h["concepto"] = tr("Cobro efectivo deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
                 h["id_usuario"] = Configuracion_global->id_usuario_activo;
-                h["importe"] = val->efectivo;
+                h["importe"] = val.efectivo;
                 h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
                 h["hora"] = QTime::currentTime().toString("hh:mm");
                 h["entrada"]  = 3;
@@ -94,7 +92,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 // tarjetas
                 h["concepto"] = tr("Cobro tarjeta deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
                 h["id_usuario"] = Configuracion_global->id_usuario_activo;
-                h["importe"] = val->efectivo;
+                h["importe"] = val.efectivo;
                 h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
                 h["hora"] = QTime::currentTime().toString("hh:mm");
                 h["entrada"]  = 4;
@@ -104,7 +102,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 // Cheques
                 h["concepto"] = tr("Cobro cheque deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
                 h["id_usuario"] = Configuracion_global->id_usuario_activo;
-                h["importe"] = val->efectivo;
+                h["importe"] = val.efectivo;
                 h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
                 h["hora"] = QTime::currentTime().toString("hh:mm");
                 h["entrada"]  = 5;
@@ -114,7 +112,7 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 // vales R
                 h["concepto"] = tr("Cobro con vale deuda pendiente de : %1 documento : %2 y de fecha: %3").arg(cliente,documento,fecha);
                 h["id_usuario"] = Configuracion_global->id_usuario_activo;
-                h["importe"] = val->efectivo;
+                h["importe"] = val.efectivo;
                 h["fecha"]= QDate::currentDate().toString("yyyyMMdd");
                 h["hora"] = QTime::currentTime().toString("hh:mm");
                 h["entrada"]  = 6;
@@ -122,48 +120,48 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
                 if(new_id <0)
                     QMessageBox::warning(this,tr("Gestión de cobros"),tr("se produjo un error al insertar: %1").arg(error));
             }
-        } else{
-            if(val->internet >0 || val->transferencia >0 || val->domiciliacion >0)
-            {
-                //-----------------------
-                // recupero datos cuenta
-                //-----------------------
-                QHash <QString, QVariant > deuda;
-                QMap<int,QSqlRecord> bancos;
-                bancos = SqlCalls::SelectRecord("bancos",QString("descripcion = '%1'").arg(ui->cboEntidad->currentText()),
-                                                Configuracion_global->groupDB,error);
-                if(error.isEmpty())
-                {
-                    QMapIterator <int, QSqlRecord> i(bancos);
-                    while (i.hasNext())
-                    {
-                        i.next();
-                        deuda["entidad"] = i.value().value("entidad").toString();
-                        this->entidad =  i.value().value("entidad").toString();
-                        deuda["oficina"] = i.value().value("oficina").toString();
-                        this->oficina  = i.value().value("oficina").toString();
-                        deuda["dc"] = i.value().value("dc").toString();
-                        this->dc = i.value().value("dc").toString();
-                        deuda["cuenta"] = i.value().value("cuenta").toString();
-                        this->cuenta  = i.value().value("cuenta").toString();
-
-                    }
-
-                } else
-                {
-                    QMessageBox::warning(this,tr("Ocurrió un error al localizar la cuenta :%1").arg(error),tr("Aceptar"));
-                }
-                bool updated = SqlCalls::SqlUpdate(deuda,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1 id_empresa=%2").arg(this->id).arg(Configuracion_global->idEmpresa),error);
-                if(!updated)
-                    QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos de la deuda:%1").arg(error),
-                                         tr("Aceptar"));
-            }
+            */
         }
-        //-----------------------
-        // historial de deudas
-        //-----------------------
+
+        if(val.internet >0 || val.transferencia >0 || val.domiciliacion >0)
+        {
+            //-----------------------
+            // recupero datos cuenta
+            //-----------------------
+            QHash <QString, QVariant > deuda;
+            QMap<int,QSqlRecord> bancos;
+            bancos = SqlCalls::SelectRecord("bancos",QString("descripcion = '%1'").arg(ui->cboEntidad->currentText()),
+                                            Configuracion_global->groupDB,error);
+            if(error.isEmpty())
+            {
+                QMapIterator <int, QSqlRecord> i(bancos);
+                while (i.hasNext())
+                {
+                    i.next();
+                    deuda["entidad"] = i.value().value("entidad").toString();
+                    this->entidad =  i.value().value("entidad").toString();
+                    deuda["oficina"] = i.value().value("oficina").toString();
+                    this->oficina  = i.value().value("oficina").toString();
+                    deuda["dc"] = i.value().value("dc").toString();
+                    this->dc = i.value().value("dc").toString();
+                    deuda["cuenta"] = i.value().value("cuenta").toString();
+                    this->cuenta  = i.value().value("cuenta").toString();
+
+                }
+
+            } else
+            {
+                QMessageBox::warning(this,tr("Ocurrió un error al localizar la cuenta :%1").arg(error),tr("Aceptar"));
+            }
+            bool updated = SqlCalls::SqlUpdate(deuda,"clientes_deuda",Configuracion_global->groupDB,QString("id=%1 id_empresa=%2").arg(this->id_deuda).arg(Configuracion_global->idEmpresa),error);
+            if(!updated)
+                QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar los datos de la deuda:%1").arg(error),
+                                     tr("Aceptar"));
+        }
+
+        // historial de deudas        
         QHash <QString, QVariant> historial;
-        historial["id_cab"] = this->id;
+        historial["id_cab"] = this->id_deuda;
         historial["fecha_movimiento"] = QDate::currentDate().toString("yyyyMMdd");
         historial["importe_anterior"] = importe;
         historial["pagado"] = Configuracion_global->MonedatoDouble(ui->txtEntrega->text());
@@ -207,13 +205,15 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
         {
             clausula = QString("id = %1").arg(this->id_factura);
             updated =SqlCalls::SqlUpdate(c,"cab_fac",Configuracion_global->empresaDB,clausula,error);
-        } else if(id_ticket > -1)
+        }
+        else if(id_ticket > -1)
+        {
             clausula = QString("id = %1").arg(this->id_ticket);
             updated =SqlCalls::SqlUpdate(c,"cab_tpv",Configuracion_global->empresaDB,clausula,error);
-        if(!updated)
-            QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar: %1").arg(error),
-                                 tr("Aceptar"));
+        }
 
+        if(!updated)
+            QMessageBox::warning(this,tr("Gestión de cobros"),tr("Ocurrió un error al actualizar: %1").arg(error),tr("Aceptar"));
     }
 
     if(Configuracion_global->contabilidad)
@@ -249,7 +249,6 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
 //        apunte = oApunte.asiento;
 //        nuevo = oApunte.nuevalinea();
     }
-
     accept();
 }
 double FrmGestionCobros2::getImporte() const
@@ -260,11 +259,9 @@ double FrmGestionCobros2::getImporte() const
 void FrmGestionCobros2::setImporte(double value,int id_)
 {
     importe = value;
-    this->id = id_;
-    ui->txtImporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,
-                                                                'f',Configuracion_global->decimales_campos_totales)));
-    ui->txtPendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,
-                                                                     'f',Configuracion_global->decimales_campos_totales)));
+    this->id_deuda = id_;
+    ui->txtImporte_pendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,'f',Configuracion_global->decimales_campos_totales)));
+    ui->txtPendiente->setText(Configuracion_global->toFormatoMoneda(QString::number(importe,'f',Configuracion_global->decimales_campos_totales)));
     ui->txtEfectivo->setFocus();
 }
 

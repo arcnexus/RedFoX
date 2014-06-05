@@ -1715,8 +1715,10 @@ void frmClientes::ocultarBusqueda()
 
 void frmClientes::on_btnCobroTotal_clicked()
 {
-    QModelIndex index;
-    index = ui->TablaDeudas->currentIndex();
+    QModelIndex index = ui->TablaDeudas->currentIndex();
+    if(!index.isValid())
+        return;
+
     int id= ui->TablaDeudas->model()->index(index.row(),0).data().toInt();
     int id_factura,id_ticket;
     double pendiente_cobro;
