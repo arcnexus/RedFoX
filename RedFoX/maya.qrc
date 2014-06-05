@@ -199,4 +199,7 @@
         <file>DB/Paises.sql</file>
         <file>DB/Global.sql</file>
     </qresource>
+    <qresource prefix="/backgrounds">
+        <file>PNG/logo-config.png</file>
+    </qresource>
 </RCC>

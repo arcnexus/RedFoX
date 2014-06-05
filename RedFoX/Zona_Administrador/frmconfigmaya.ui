@@ -11,41 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Configuración de maya</string>
+   <string>Configuración de RedFoX</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>3</number>
-   </property>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QPushButton" name="btnInicio">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Inicio</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Configuración de RedFox</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="1">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -176,7 +149,11 @@ color: rgb(255,255,255);</string>
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QLineEdit" name="txtPassword"/>
+        <widget class="QLineEdit" name="txtPassword">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_3">
@@ -881,7 +858,7 @@ color: rgb(255,255,255);</string>
      </widget>
     </widget>
    </item>
-   <item>
+   <item row="3" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -906,6 +883,43 @@ color: rgb(255,255,255);</string>
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btnInicio">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Inicio</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Configuración de RedFox</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QPushButton" name="btnCancel">
        <property name="styleSheet">
@@ -917,6 +931,16 @@ color: rgb(255,255,255);</string>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0" rowspan="2">
+    <widget class="QLabel" name="label_21">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../maya.qrc">:/backgrounds/PNG/logo-config.png</pixmap>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -932,7 +956,6 @@ color: rgb(255,255,255);</string>
   <tabstop>txtmailpass2</tabstop>
   <tabstop>chk_createSuper</tabstop>
   <tabstop>btnSiguiente</tabstop>
-  <tabstop>btnCancel</tabstop>
   <tabstop>btnInicio</tabstop>
   <tabstop>txtclaveV4_1</tabstop>
   <tabstop>chkVademecum_MTC</tabstop>

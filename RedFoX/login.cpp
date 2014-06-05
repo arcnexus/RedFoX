@@ -157,6 +157,8 @@ void Login::Crearconfiguracion_clicked()
         frmConfigmaya frmConf;
         if(frmConf.exec()==QDialog::Accepted)
             TimedMessageBox::Box(this,tr("Configuración inicial realizada con éxito"));
+        ui->cboUsers->setModel(Configuracion_global->usuarios_model);
+        ui->cboUsers->setModelColumn(1);
     }
 }
 

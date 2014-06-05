@@ -134,17 +134,22 @@ void frmConfigmaya::on_btnSiguiente_clicked()
         if(!checkForMayaGlobal())
         {
             crear_MayaGlobal();
-            ui->stackedWidget->setCurrentIndex(4);
-            ui->btnCancel->setEnabled(false);
+            ui->stackedWidget->setCurrentIndex(4);            
         }
-        ui->stackedWidget->setCurrentIndex(0);
+        else
+        {
+            ui->stackedWidget->setCurrentIndex(0);
+        }
         break;
     case 4:
-        if(createSuperUser())
+        if(createUser() && !ui->chk_createSuper->isChecked())
         {
             gotoEditPermisos();
             ui->cboUser_permiso->setCurrentIndex(ui->cboUser_permiso->findText(ui->txtname->text()));
-            ui->btnCancel->setEnabled(true);
+        }
+        else
+        {
+            ui->stackedWidget->setCurrentIndex(0);
         }
         break;
     default:
@@ -178,8 +183,6 @@ void frmConfigmaya::crear_MayaGlobal()
             {
                 if(!q.exec(querys.at(i)))
                 {
-                    qDebug() << q.lastError().text();
-                    qDebug() << querys.at(i);
                     error = true;
                     break;
                 }
@@ -187,6 +190,11 @@ void frmConfigmaya::crear_MayaGlobal()
         }
     }
     f.close();
+
+    if(error)
+        QMessageBox::critical(this, tr("Error creando base de datos global"), q.lastError().text());
+    else
+        TimedMessageBox::Box(this,tr("Base de datos global creada con éxito"));
 }
 
 void frmConfigmaya::doMenuSelection()
@@ -212,7 +220,7 @@ void frmConfigmaya::doMenuSelection()
     }
 }
 
-bool frmConfigmaya::createSuperUser()
+bool frmConfigmaya::createUser()
 {
     if(ui->txtname->text().isEmpty())
     {
@@ -277,16 +285,32 @@ bool frmConfigmaya::createSuperUser()
                     {
                         _dato_acceso["id_modulo"] = q.record().value("id");
                         if(!SqlCalls::SqlInsert(_dato_acceso,table_acceso,db,error))
+                        {
                             QMessageBox::critical(this,tr("Error al insertar acceso"),error);
+                            return false;
+                        }
                     }
                 }
             }
             db.close();
             QSqlDatabase::removeDatabase("temp_savePermiso");
-
         }
     }
     Configuracion_global->usuarios_model->setQuery("SELECT * from redfoxglobal.usuarios",Configuracion_global->globalDB);
+    ui->cbo_user_edit->setModel(Configuracion_global->usuarios_model);
+    ui->cbo_user_edit->setModelColumn(1);
+
+    ui->txtname->clear();
+    ui->txtpass1->clear();
+    ui->txtpass2->clear();
+    ui->txtsmtp->clear();
+    ui->txtmail->clear();
+    ui->txtmailpass1->clear();
+    ui->txtmailpass2->clear();
+    ui->txtNameComplete->clear();
+    ui->spinSmtpPort->setValue(445);
+
+    TimedMessageBox::Box(this, tr("Usuario creado con éxito"));
     return true;
 }
 

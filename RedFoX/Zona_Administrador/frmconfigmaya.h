@@ -29,7 +29,7 @@ private slots:
     bool checkForMayaGlobal();
     void crear_MayaGlobal();
     void doMenuSelection();
-    bool createSuperUser();
+    bool createUser();
     void on_btnInicio_clicked();
     void gotoEditPermisos();
     void on_cboGrupo_permiso_currentIndexChanged(int index);
