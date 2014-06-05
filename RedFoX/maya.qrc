@@ -202,4 +202,16 @@
     <qresource prefix="/backgrounds">
         <file>PNG/logo-config.png</file>
     </qresource>
+    <qresource prefix="/reports">
+        <file>reports/alb_pro_1.xml</file>
+        <file>reports/albaran_1.xml</file>
+        <file>reports/lista_albaran_1.xml</file>
+        <file>reports/lista_factura_1.xml</file>
+        <file>reports/lista_pedidos_1.xml</file>
+        <file>reports/lista_presupuestos_1.xml</file>
+        <file>reports/ped_pro_1.xml</file>
+        <file>reports/pedido_1.xml</file>
+        <file>reports/presupuesto_1.xml</file>
+        <file>reports/factura_1.xml</file>
+    </qresource>
 </RCC>

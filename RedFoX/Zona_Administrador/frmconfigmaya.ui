@@ -510,7 +510,7 @@ color: rgb(255,255,255);</string>
        <item row="1" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>Nombre (Usado para accedes a RedFox)</string>
+          <string>Nombre (Usado para acceder a RedFox)</string>
          </property>
         </widget>
        </item>

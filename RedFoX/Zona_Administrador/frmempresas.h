@@ -91,6 +91,7 @@ private:
     bool _insertIVA(QSqlDatabase db, QString &error);
 
     bool _insertPaises(QSqlDatabase db, QString &error);
+    bool _insertReports(QSqlDatabase db, QString empresa);
     void _insertNewGroup(QString grupo);
     void createGroup();
     QString _targetGroup;

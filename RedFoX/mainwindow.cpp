@@ -737,42 +737,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_avisos,SIGNAL(showMe()),this,SLOT(showAvisos()));
 
     on_edit = false;
-
- //   QTimer *timer = new QTimer(this);
- //   connect(timer, SIGNAL(timeout()), this, SLOT(llenaravisos()));
- //   timer->start(300000);
     llenaravisos();
 
-//    QSettings settings(qApp->applicationDirPath()+"/MayaConfig.ini", QSettings::IniFormat);
-
-// QString error;
-// QStringList w;
-// w << "id < 10" << "id > 5";
-// QMap<int,QString> idnombre = SqlCalls::SelectMap<int,QString>("clientes","idpatata","nombre_fiscal",w,Configuracion_global->groupDB,error);
-// qDebug() << idnombre;
-// qDebug() << idnombre.value(3);
-// qDebug() << error;
-
-    // Add record.
-// QHash<QString,QVariant> v;
-// v["nombre_fiscal"]="Paco";
-// v["telefono1"]="555333222";
-// v["bloqueado"]=true;
-
-// int id = SqlCalls::SqlInsert(v,"clientes",Configuracion_global->groupDB,error);
-// if(id < 0)
-// qDebug() << error;
-// else
-// qDebug() << id;
-    // Recuperar valores registro
-// QMap<int, QSqlRecord> map = SqlCalls::SelectRecord("clientes", "id<10",Configuracion_global->groupDB, error);
-// QMapIterator<int, QSqlRecord> i(map);
-// while (i.hasNext())
-// {
-// i.next();
-// qDebug() << i.value();
-// }
-// qDebug() << map.value(7).value("nombre").toString();   
     keepAlive.setInterval(360000);
 
     connect(&keepAlive, &QTimer::timeout,[this]{
@@ -789,7 +755,7 @@ MainWindow::MainWindow(QWidget *parent) :
            // q4.exec("Select * from pacientes limit 1");
         }
     });
-    keepAlive.start(360000);
+    keepAlive.start(360000);    
 }
 
 void MainWindow::block_main()

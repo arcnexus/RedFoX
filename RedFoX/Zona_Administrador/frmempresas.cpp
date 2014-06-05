@@ -274,6 +274,10 @@ void FrmEmpresas::_addEmpresa()
         }
         f.close();
 
+        QApplication::processEvents();
+        if(!error)
+            error = _insertReports(db, nEmpresa);
+
         QFile f2(":/DB/DB/Conta.sql");
         error = !f2.open(QFile::ReadOnly);
         if(!error)
@@ -691,7 +695,6 @@ void FrmEmpresas::createGroup()
         if(!error)
             error = _insertPaises(db, sError);
 
-        //TODO Reports por defecto al crear grupo
     }
 
     if(!error)
@@ -811,6 +814,38 @@ bool FrmEmpresas::_insertPaises(QSqlDatabase db, QString& error)
         }
     }
     return e;
+}
+
+bool FrmEmpresas::_insertReports(QSqlDatabase db, QString empresa)
+{
+    QDirIterator it(":/reports",QDir::Files | QDir::NoDotAndDotDot , QDirIterator::Subdirectories);
+    QString tabla = QString("%1`.`report").arg(empresa);
+    while (it.hasNext())
+    {
+        QString file = it.next();
+        int start = file.lastIndexOf("/")+1;
+        int end = file.lastIndexOf(".");
+        QString name = file.mid(start, end-start);
+
+        QFile f(file);
+        if(!f.open(QFile::ReadOnly))
+        {
+            empresa = f.errorString();
+            return false;
+        }
+
+        QString source = f.readAll();
+        f.close();
+
+        SqlData rep_data;
+        rep_data["report_grade"] = 0;
+        rep_data["report_source"] = source;
+        rep_data["report_name"] = name;
+        rep_data["report_descrip"] = name;
+
+        if(SqlCalls::SqlInsert(rep_data, tabla, db, empresa) < 0)
+            return false;
+    }
 }
 
 void FrmEmpresas::_insertNewGroup(QString grupo)
