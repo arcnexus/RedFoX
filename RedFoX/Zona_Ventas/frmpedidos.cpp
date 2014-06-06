@@ -698,10 +698,10 @@ void FrmPedidos::LLenarPedido()
     oPedido->porc_rec2=ui->txtporc_rec2->text().toDouble();
     oPedido->porc_rec3=ui->txtporc_rec3->text().toDouble();
     oPedido->porc_rec4=ui->txtporc_rec4->text().toDouble();
-    oPedido->rec1=ui->txtporc_rec1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
-    oPedido->rec2=ui->txtporc_rec2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
-    oPedido->rec3=ui->txtporc_rec3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
-    oPedido->rec4=ui->txtporc_rec4->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
+    oPedido->rec1=ui->txtporc_rec1->text().toDouble();
+    oPedido->rec2=ui->txtporc_rec2->text().toDouble();
+    oPedido->rec3=ui->txtporc_rec3->text().toDouble();
+    oPedido->rec4=ui->txtporc_rec4->text().toDouble();
     oPedido->total1=ui->txttotal1->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     oPedido->total2=ui->txttotal2->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();
     oPedido->total3=ui->txttotal3->text().replace(_moneda,"").replace(".","").replace(",",".").toDouble();

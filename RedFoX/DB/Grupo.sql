@@ -176,7 +176,7 @@ CREATE TABLE `@grupo@`.`articulos` (
   `localizacion_en_almacen` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_tipos_iva` int(11) DEFAULT NULL,
   `id_web` int(11) DEFAULT '0',
-  `stock_fisico_almacen` float DEFAULT NULL,
+  `stock_fisico_almacen` float DEFAULT 0,
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
   `imagen2` blob,

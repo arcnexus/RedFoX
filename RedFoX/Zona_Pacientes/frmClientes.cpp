@@ -140,8 +140,7 @@ void frmClientes::init()
     ui->TablaDeudas->setItemDelegateForColumn(5,new DateDelegate(this));
     ui->TablaDeudas->setItemDelegateForColumn(6,new DateDelegate(this));
 
-    ui->tablahistorial_deudas->setItemDelegateForColumn(2,  new DateDelegate(this));
-    ui->tablahistorial_deudas->setItemDelegateForColumn(3,  new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(3,  new DateDelegate(this));
     ui->tablahistorial_deudas->setItemDelegateForColumn(4,  new MonetaryDelegate(this));
     ui->tablahistorial_deudas->setItemDelegateForColumn(5,  new MonetaryDelegate(this));
     ui->tablahistorial_deudas->setItemDelegateForColumn(6,  new MonetaryDelegate(this));
@@ -152,6 +151,7 @@ void frmClientes::init()
     ui->tablahistorial_deudas->setItemDelegateForColumn(15, new MonetaryDelegate(this));
     ui->tablahistorial_deudas->setItemDelegateForColumn(16, new MonetaryDelegate(this));
     ui->tablahistorial_deudas->setItemDelegateForColumn(17, new MonetaryDelegate(this));
+    ui->tablahistorial_deudas->setItemDelegateForColumn(18, new MonetaryDelegate(this));
 
 
     //SET MODELS
@@ -1777,20 +1777,23 @@ void frmClientes::on_TablaDeudas_clicked(const QModelIndex &index)
     //-------------------------
     // Refresco modelo hijo
     //-------------------------
-    modelHistorial->setQuery(QString("select * from histo_clientes_deuda where id_cab = %1 and id_empresa = %").arg(id).arg(Configuracion_global->idEmpresa),
+    modelHistorial->setQuery(QString("select * from histo_clientes_deuda where id_cab = %1 and id_empresa = %2").arg(id).arg(Configuracion_global->idEmpresa),
                              Configuracion_global->groupDB);
     QStringList headers;
-    headers << "id" <<"id_cab" <<tr("Fecha Movim.") << tr("Imp.Ant.") <<tr("pagado") <<tr("cambio") <<tr("Pendiente");
+    headers << "id" <<"id_cab" <<"id_empresa" <<tr("Fecha Movim.") << tr("Imp.Ant.") <<tr("pagado") <<tr("cambio") <<tr("Pendiente");
     headers <<tr("Entidad") << tr("oficina") <<tr("dc") <<tr("cuenta") << tr("efectivo") << tr("tarjeta") ;
     headers << tr("cheque") <<tr("Transf.") << tr("Domic.") <<("PyPal") <<tr("Vales");
 
     QVariantList sizes;
-    sizes << 0 << 0 <<100<<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 << 90 <<90 <<90 <<90 <<90;
+    sizes << 0 << 0 << 0 <<100<<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 <<90 << 90 <<90 <<90 <<90 <<90;
     for(int i = 0; i< sizes.size(); i++)
     {
         modelHistorial->setHeaderData(i,Qt::Horizontal,headers.at(i));
         ui->tablahistorial_deudas->setColumnWidth(i,sizes.at(i).toInt());
     }
+    ui->tablahistorial_deudas->setColumnHidden(0,true);
+    ui->tablahistorial_deudas->setColumnHidden(1,true);
+    ui->tablahistorial_deudas->setColumnHidden(2,true);
 }
 
 void frmClientes::on_txtcp_editingFinished()

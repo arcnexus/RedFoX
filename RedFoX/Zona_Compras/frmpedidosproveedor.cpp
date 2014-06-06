@@ -770,7 +770,7 @@ bool FrmPedidosProveedor::eventFilter(QObject *obj, QEvent *event)
     else if(event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if(keyEvent->key() == Qt::Key_Return)
+        if(keyEvent->key() == Qt::Key_Return && obj==ui->tabla)
             on_tabla_doubleClicked(ui->tabla->currentIndex());
         if(keyEvent->key() == Qt::Key_F1)
             if(ui->btnEditar->isEnabled())

@@ -405,12 +405,13 @@ void frmFacturas::LLenarCamposCliente()
     ui->chkrecargo_equivalencia->setChecked(oCliente1->recargo_equivalencia);
 
     if(oCliente1->recargo_equivalencia)
-    {
-        ui->txtporc_rec1->setText(QString::number(Configuracion_global->reList.at(0).toFloat(),'f',2));
-        ui->txtporc_rec2->setText(QString::number(Configuracion_global->reList.at(1).toFloat(),'f',2));
-        ui->txtporc_rec3->setText(QString::number(Configuracion_global->reList.at(2).toFloat(),'f',2));
-        ui->txtporc_rec4->setText(QString::number(Configuracion_global->reList.at(3).toFloat(),'f',2));
-    } else
+    {        
+        ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(0)));
+        ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(1)));
+        ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(2)));
+        ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(3)));
+    }
+    else
     {
         ui->txtporc_rec1->setText("0.00");
         ui->txtporc_rec2->setText("0.00");
@@ -661,14 +662,14 @@ void frmFacturas::LLenarFactura()
     oFactura->total2 = (ui->txttotal2->text().replace(".","").replace(",",".").toDouble());
     oFactura->total3 = (ui->txttotal3->text().replace(".","").replace(",",".").toDouble());
     oFactura->total4 = (ui->txttotal4->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec1 = (ui->txtporc_rec1->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec2 = (ui->txtporc_rec2->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec3 = (ui->txtporc_rec3->text().replace(".","").replace(",",".").toDouble());
-    oFactura->porc_rec4 = (ui->txtporc_rec4->text().replace(".","").replace(",",".").toDouble());
-    oFactura->rec1 = (ui->txtrec1->text().replace(".","").replace(",",".").toDouble());
-    oFactura->rec2 = (ui->txtrec2->text().replace(".","").replace(",",".").toDouble());
-    oFactura->rec3 = (ui->txtrec3->text().replace(".","").replace(",",".").toDouble());
-    oFactura->rec4 = (ui->txtrec4->text().replace(".","").replace(",",".").toDouble());
+    oFactura->porc_rec1 = Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text());
+    oFactura->porc_rec2 = Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text());
+    oFactura->porc_rec3 = Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text());
+    oFactura->porc_rec4 = Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text());
+    oFactura->rec1 = Configuracion_global->MonedatoDouble(ui->txtrec1->text());
+    oFactura->rec2 = Configuracion_global->MonedatoDouble(ui->txtrec2->text());
+    oFactura->rec3 = Configuracion_global->MonedatoDouble(ui->txtrec3->text());
+    oFactura->rec4 = Configuracion_global->MonedatoDouble(ui->txtrec4->text());
     oFactura->total_recargo = (ui->txttotal_recargo->text().replace(".","").replace(",",".").toDouble());
     //oFactura->entregado_a_cuenta = (ui->txtentregado_a_cuenta->text().replace(".","").replace(",",".").toDouble());
     oFactura->importe_pendiente = (ui->txtimporte_pendiente->text().replace(".","").replace(",",".").toDouble());
@@ -1146,10 +1147,10 @@ void frmFacturas::calcular_factura()
     }
     if(ui->chkrecargo_equivalencia->isChecked())
     {
-        re1 = base1 * (ui->txtporc_rec1->text().toFloat()/100);
-        re2 = base2 * (ui->txtporc_rec2->text().toFloat()/100);
-        re3 = base3 * (ui->txtporc_rec3->text().toFloat()/100);
-        re4 = base4 * (ui->txtporc_rec4->text().toFloat()/100);
+        re1 = base1 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text())/100);
+        re2 = base2 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text())/100);
+        re3 = base3 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text())/100);
+        re4 = base4 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text())/100);
     }
 
     // añadir gastos extras
@@ -1681,10 +1682,10 @@ void frmFacturas::on_chkrecargo_equivalencia_toggled(bool checked)
     if (checked) {
         ui->chkrecargo_equivalencia->setChecked(true);
         oFactura->recargo_equivalencia = 1;
-        ui->txtporc_rec1->setText(Configuracion_global->reList.at(0));
-        ui->txtporc_rec2->setText(Configuracion_global->reList.at(1));
-        ui->txtporc_rec3->setText(Configuracion_global->reList.at(2));
-        ui->txtporc_rec4->setText(Configuracion_global->reList.at(3));
+        ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(0)));
+        ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(1)));
+        ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(2)));
+        ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(Configuracion_global->reList.at(3)));
         oFactura->porc_rec1 = ui->txtporc_rec1->text().toFloat();
         oFactura->porc_rec2 = ui->txtporc_rec2->text().toFloat();
         oFactura->porc_rec3 = ui->txtporc_rec3->text().toFloat();

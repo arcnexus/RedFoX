@@ -224,4 +224,6 @@ ALTER TABLE `GrupoNeuxGroup`.`subfamilias` CHANGE COLUMN `image` `image` MEDIUMB
 21/04/14
 ALTER TABLE `empresa`.`articulos_ofertas` ADD COLUMN `id_tarifa` INT NULL DEFAULT '0' AFTER `id_articulo`;
 
+6/6/2014
+alter table `grupo`.`articulos` modify column `stock_fisico_almacen` float null default '0' AFTER `id_web` ,comment = 'utf8_general_ci'
 
