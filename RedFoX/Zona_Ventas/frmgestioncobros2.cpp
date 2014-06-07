@@ -199,12 +199,19 @@ void FrmGestionCobros2::on_btnAceptar_clicked()
 
         QHash <QString,QVariant> c;
         c["cobrado"] = true;
-        bool updated;
+        bool updated = true;
         QString clausula;
         if(this->id_factura > -1)
         {
-            clausula = QString("id = %1").arg(this->id_factura);
-            updated =SqlCalls::SqlUpdate(c,"cab_fac",Configuracion_global->empresaDB,clausula,error);
+            //QString("select id,fecha,vencimiento,importe,pagado,pendiente_cobro from clientes_deuda where id_factura = %1 and id_empresa = %2;"
+            QStringList cl;
+            cl << QString("id_factura = %1 and id_empresa = %2").arg(id_factura).arg(Configuracion_global->idEmpresa);
+            cl << QString("pendiente_cobro > 0");
+            if(SqlCalls::SelectRecord("clientes_deuda",cl,Configuracion_global->groupDB,error).isEmpty())
+            {
+                clausula = QString("id = %1").arg(this->id_factura);
+                updated =SqlCalls::SqlUpdate(c,"cab_fac",Configuracion_global->empresaDB,clausula,error);
+            }
         }
         else if(id_ticket > -1)
         {

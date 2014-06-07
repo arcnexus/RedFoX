@@ -15,6 +15,8 @@
 
 #include "../Almacen/articulo.h"
 #include "frmlistadofac.h"
+#include "frmcobrarfactura.h"
+
 void frmFacturas::formato_tabla_lineas()
 {
     QStringList header;
@@ -1405,13 +1407,11 @@ void frmFacturas::on_spinPorc_dto_pp_editingFinished()
 
 void frmFacturas::on_btnCobrar_clicked()
 {
-    frmGestionCobros gc(this);
-    gc.buscar_deuda(oCliente1->id);
-    gc.setId_factura(oFactura->id);
-    gc.setOcultarBoton_cerrar(false);
+    FrmCobrarFactura cobrar(this);
+    cobrar.setFactura(oFactura->id);
+    cobrar.setWindowTitle(tr("Cobrar factura %1/%2").arg(oFactura->serie).arg(oFactura->factura));
+    cobrar.exec();
 
-    gc.titulo(QString("Pagos pendientes de: %1").arg(oFactura->cliente));
-    gc.exec();
     QString error;
     oFactura->cobrado = SqlCalls::SelectOneField("cab_fac","cobrado",QString("id=%1").arg(oFactura->id),
                                                  Configuracion_global->empresaDB,error).toBool();

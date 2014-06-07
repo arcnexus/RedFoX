@@ -215,7 +215,8 @@ SOURCES += main.cpp\
     Zona_Compras/dlgpedidoalbfact.cpp \
     Almacen/dlgdivisionesalmacen.cpp \
     Almacen/importararticuloext.cpp \
-    Almacen/dlgimportods.cpp
+    Almacen/dlgimportods.cpp \
+    Zona_Ventas/frmcobrarfactura.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -406,7 +407,8 @@ HEADERS  += mainwindow.h \
     Zona_Compras/dlgpedidoalbfact.h \
     Almacen/dlgdivisionesalmacen.h \
     Almacen/importararticuloext.h \
-    Almacen/dlgimportods.h
+    Almacen/dlgimportods.h \
+    Zona_Ventas/frmcobrarfactura.h
 
 
 
@@ -513,7 +515,8 @@ FORMS    += mainwindow.ui \
     Zona_Ventas/frmlistadofac.ui \
     Zona_Compras/dlgpedidoalbfact.ui \
     Almacen/dlgdivisionesalmacen.ui \
-    Almacen/dlgimportods.ui
+    Almacen/dlgimportods.ui \
+    Zona_Ventas/frmcobrarfactura.ui
 
 RESOURCES += \
     maya.qrc \

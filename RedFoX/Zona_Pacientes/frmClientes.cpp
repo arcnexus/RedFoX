@@ -1747,7 +1747,6 @@ void frmClientes::on_btnCobroTotal_clicked()
                 + QString::number(oCliente->id)+" and id_empresa= "+QString::number(Configuracion_global->idEmpresa) + " and pendiente_cobro <=0";
     deudas->setQuery(cSQL,Configuracion_global->groupDB);
     on_TablaDeudas_clicked(index);
-
 }
 
 void frmClientes::on_radPendientes_toggled(bool checked)
