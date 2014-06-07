@@ -595,7 +595,7 @@ void frmFacturas::BloquearCampos(bool state)
     ui->btndeshacer->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->botBuscarCliente->setEnabled(!state);
-    ui->btnImprimir->setEnabled(true);
+    ui->btnImprimir->setEnabled(state);
     ui->btnCobrar->setEnabled(state);
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);

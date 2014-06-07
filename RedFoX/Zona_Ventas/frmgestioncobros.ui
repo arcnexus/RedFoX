@@ -76,7 +76,7 @@
 color: rgb(0, 0, 0);</string>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>DEUDAS ENTRE FECHAS</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -221,7 +221,7 @@ color: rgb(0, 0, 0);</string>
               <enum>QAbstractItemView::SelectRows</enum>
              </property>
              <attribute name="horizontalHeaderStretchLastSection">
-              <bool>false</bool>
+              <bool>true</bool>
              </attribute>
             </widget>
            </item>
@@ -328,12 +328,12 @@ background-color: #304163;</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>37</x>
-     <y>83</y>
+     <x>56</x>
+     <y>119</y>
     </hint>
     <hint type="destinationlabel">
-     <x>239</x>
-     <y>106</y>
+     <x>258</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>
@@ -344,12 +344,12 @@ background-color: #304163;</string>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
-     <y>57</y>
+     <x>615</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>732</x>
-     <y>425</y>
+     <x>966</x>
+     <y>482</y>
     </hint>
    </hints>
   </connection>

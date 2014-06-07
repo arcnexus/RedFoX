@@ -20,38 +20,36 @@ public:
     QAction * ModuleMenuBarButton(){return &menuButton;}
     QString ModuleMenuPath(){return tr("");}
     QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
-    void buscar_deuda(int id_cli);
-    void buscar_deuda(int id_cli, int id_doc);
-    void titulo(QString titulo);
-    int getId_factura() const;
-    void setId_factura(int value);
 
-    int getId_ticket() const;
-    void setId_ticket(int value);
-    void setOcultarBoton_cerrar(bool state);
+    void format_tables();
+private slots:
+
+    void on_radPendientes_toggled(bool checked);
+
+    void on_radPagados_toggled(bool checked);
+
+    void on_radTodos_toggled(bool checked);
+
+    void on_txtbuscar_cliente_editingFinished();
+
+    void on_txtfecha_ini_dateChanged(const QDate &date);
+
+    void on_txtfecha_fin_dateChanged(const QDate &date);
+
+    void on_tabla_clientes_clicked(const QModelIndex &index);
+
+    void on_btncobro_total_clicked();
 
 private:
     Ui::frmGestionCobros *ui;
+    bool eventFilter(QObject *obj, QEvent *event);
+
     QAction menuButton;
     QSqlQueryModel *deudas;
-
-
-    int id_cliente;
-    int id_factura;
-    int id_ticket;
-    bool varios;
-
-
-private slots:
-    void on_txtbuscar_cliente_textChanged(const QString &arg1);
-    void on_btncobro_total_clicked();
-    void on_btnCerrar_clicked();
-    void seleccionar_factura();
-    void seleccionar_ticket();
-    void seleccionar_varios();
-    void on_txtfecha_fin_editingFinished();
-    void on_chkCliente_clicked(bool checked);
-    void on_txtfecha_ini_editingFinished();
+    QSqlQueryModel *modelo_clientes;
+    void init_querys();
+    void init();
+    bool __init;
 };
 
 #endif // FRMGESTIONCOBROS_H
