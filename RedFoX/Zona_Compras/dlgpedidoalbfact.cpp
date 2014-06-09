@@ -412,6 +412,66 @@ bool DlgPedidoAlbFact::crear_documento()
     }
     success &= crear_lineas(id);
     success &= Proveedor::acumular(r_prov.value("id").toInt(), ui->fechaDoc->date().month() , Configuracion_global->MonedatoDouble(ui->txtbase->text()));
+
+    if(_tipo == Factura)
+    {
+        QDialog d2(this);
+
+        QLabel label(tr("Fecha de vencimiento"),&d2);
+        QDateEdit edit(ui->fechaDoc->date(),&d2);
+        QPushButton aceptar(tr("Aceptar"),&d2);
+        QPushButton cancelar(tr("Cancelar"),&d2);
+        QGridLayout lay(&d2);
+
+        lay.addWidget(&label,0,0,1,1);
+        lay.addWidget(&edit,0,1,1,1);
+        lay.addWidget(&aceptar,1,0,1,1);
+        lay.addWidget(&cancelar,1,1,1,1);
+
+        connect(&aceptar,SIGNAL(clicked()),&d2,SLOT(accept()));
+        connect(&cancelar,SIGNAL(clicked()),&d2,SLOT(reject()));
+
+        double total_factura = Configuracion_global->MonedatoDouble(ui->txttotal->text());
+        double acum = total_factura;
+        do
+        {
+            if(d2.exec() == QDialog::Accepted)
+            {
+                bool ok;
+                double cantidad = QInputDialog::getDouble(this, tr("Valor del vencimiento"),
+                                                          tr("Cantidad:"), 0, 0, acum, 2, &ok);
+
+                cantidad = Configuracion_global->MonedatoDouble(Configuracion_global->toRound(cantidad,2));
+                if (ok)
+                {
+                    acum = acum - cantidad;
+                    SqlData data;
+                    data["id_empresa"] = Configuracion_global->idEmpresa;
+                    data["id_documento"] = id;
+                    data["documento"] = ui->txtDoc->text();
+                    data["fecha_deuda"] = ui->fechaDoc->date();
+                    data["vencimiento"] = edit.date();
+                    data["importe_deuda"] = cantidad;
+                    data["pendiente"] = cantidad;
+                    data["pagado"] = 0.0;
+                    QString error;
+                    if(!SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
+                    {
+                        QMessageBox::critical(this,tr("Error al insertar vencimiento"),error);
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }while((int)acum > 0);
+    }
     return success;
 }
 

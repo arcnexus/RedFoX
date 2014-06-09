@@ -1237,6 +1237,68 @@ void FrmAlbaranProveedor::on_btnFacturar_clicked()
                 break;
             }
         }
+
+        QDialog d2(this);
+
+        QLabel label(tr("Fecha de vencimiento"),&d2);
+        QDateEdit edit(dateedit.date(),&d2);
+        QPushButton aceptar(tr("Aceptar"),&d2);
+        QPushButton cancelar(tr("Cancelar"),&d2);
+        QGridLayout lay(&d2);
+
+        lay.addWidget(&label,0,0,1,1);
+        lay.addWidget(&edit,0,1,1,1);
+        lay.addWidget(&aceptar,1,0,1,1);
+        lay.addWidget(&cancelar,1,1,1,1);
+
+        connect(&aceptar,SIGNAL(clicked()),&d2,SLOT(accept()));
+        connect(&cancelar,SIGNAL(clicked()),&d2,SLOT(reject()));
+
+        double total_factura = oAlbPro->total;
+        double acum = total_factura;
+        do
+        {
+            if(d2.exec() == QDialog::Accepted)
+            {
+                bool ok;
+                double cantidad = QInputDialog::getDouble(this, tr("Valor del vencimiento"),
+                                                          tr("Cantidad:"), 0, 0, acum, 2, &ok);
+
+                cantidad = Configuracion_global->MonedatoDouble(Configuracion_global->toRound(cantidad,2));
+                if (ok)
+                {
+                    acum = acum - cantidad;
+                    SqlData data;
+                    data["id_empresa"] = Configuracion_global->idEmpresa;
+                    data["id_documento"] = id;
+                    data["documento"] = doc;
+                    data["fecha_deuda"] = dateedit.date();
+                    data["vencimiento"] = edit.date();
+                    data["importe_deuda"] = cantidad;
+                    data["pendiente"] = cantidad;
+                    data["pagado"] = 0.0;
+                    QString error;
+                    if(!SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
+                    {
+                        QMessageBox::critical(this,tr("Error al insertar vencimiento"),error);
+                        Configuracion_global->rollback();
+                        return;
+                    }
+                }
+                else
+                {
+                    Configuracion_global->rollback();
+                    return;
+                }
+            }
+            else
+            {
+                Configuracion_global->rollback();
+                return;
+            }
+        }while((int)acum > 0);
+
+
         oAlbPro->factura = doc;
         success &= oAlbPro->guardar();
 

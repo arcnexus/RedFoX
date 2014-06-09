@@ -14,7 +14,7 @@
    <string>Gestión de Facturas de proveedor</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -100,7 +100,7 @@ color: rgb(255, 255, 255);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -204,7 +204,7 @@ color: rgb(255, 255, 255);</string>
                    <string>Buscar Proveedor</string>
                   </property>
                   <property name="icon">
-                   <iconset>
+                   <iconset resource="../maya.qrc">
                     <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
                   </property>
                  </widget>
@@ -452,7 +452,7 @@ color: rgb(255,255,255);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../maya.qrc">
                <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
              </property>
             </widget>
@@ -463,7 +463,7 @@ color: rgb(255,255,255);</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../maya.qrc">
                <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
              </property>
             </widget>
@@ -707,33 +707,13 @@ background-color: rgb(253, 0, 4);</string>
               <string notr="true">background-color: rgb(170, 170, 127);</string>
              </property>
              <property name="title">
-              <string>Entregas a cuenta:</string>
+              <string>Vencimientos:</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
-              <item row="0" column="0">
-               <spacer name="horizontalSpacer_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>314</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="0" colspan="2">
-               <widget class="QTableView" name="tabla_entregas">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="1">
                <layout class="QHBoxLayout" name="horizontalLayout_8">
                 <item>
-                 <spacer name="horizontalSpacer_8">
+                 <spacer name="horizontalSpacer_3">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -746,78 +726,104 @@ background-color: rgb(253, 0, 4);</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_23">
-                  <property name="text">
-                   <string>Entregado a Cuenta:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="txtentregado_a_cuenta">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+                 <widget class="QPushButton" name="btnAddVencimiento">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>0,00</string>
+                   <string/>
                   </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pushButton_2">
                   <property name="icon">
-                   <iconset>
+                   <iconset resource="../maya.qrc">
                     <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
-                    <width>15</width>
-                    <height>15</height>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnDeleteVencimiento">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../maya.qrc">
+                    <normaloff>:/Icons/PNG/Delete.png</normaloff>:/Icons/PNG/Delete.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
                    </size>
                   </property>
                  </widget>
                 </item>
                </layout>
               </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnCobrar">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color:rgb(0, 0, 0);</string>
-                </property>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="btnPagarVencimiento">
                 <property name="text">
-                 <string>Pagar Factura</string>
+                 <string>Pagar vencimiento</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/Icons/PNG/Fp.png</normaloff>:/Icons/PNG/Fp.png</iconset>
+                 <iconset resource="../maya.qrc">
+                  <normaloff>:/Icons/PNG/pagos.png</normaloff>:/Icons/PNG/pagos.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>24</width>
-                  <height>24</height>
+                  <width>32</width>
+                  <height>32</height>
                  </size>
                 </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QTableWidget" name="tabla_vencimientos">
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <attribute name="horizontalHeaderMinimumSectionSize">
+                 <number>1</number>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <column>
+                 <property name="text">
+                  <string>Vencimiento</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>New Column</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Pagado</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Pendiente</string>
+                 </property>
+                </column>
                </widget>
               </item>
              </layout>
@@ -1705,7 +1711,7 @@ color: rgb(255,255,255);</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
                 </property>
                </widget>
@@ -1728,7 +1734,7 @@ color: rgb(255,255,255);</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
                 </property>
                </widget>
@@ -1748,7 +1754,7 @@ color: rgb(255,255,255);</string>
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../maya.qrc">
                   <normaloff>:/Icons/PNG/refrescar.png</normaloff>:/Icons/PNG/refrescar.png</iconset>
                 </property>
                </widget>
@@ -2010,7 +2016,7 @@ color: rgb(0, 0, 0);</string>
              <string>&amp;Nueva</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/add.png</normaloff>:/Icons/PNG/add.png</iconset>
             </property>
             <property name="iconSize">
@@ -2036,7 +2042,7 @@ color: rgb(0, 0, 0);</string>
              <string>&amp;Anterior</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Previous.png</normaloff>:/Icons/PNG/Previous.png</iconset>
             </property>
             <property name="iconSize">
@@ -2059,7 +2065,7 @@ color: rgb(0, 0, 0);</string>
              <string>Siguient&amp;e</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Next.png</normaloff>:/Icons/PNG/Next.png</iconset>
             </property>
             <property name="iconSize">
@@ -2082,7 +2088,7 @@ color: rgb(0, 0, 0);</string>
              <string>Buscar</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/search.png</normaloff>:/Icons/PNG/search.png</iconset>
             </property>
             <property name="iconSize">
@@ -2108,7 +2114,7 @@ color: rgb(0, 0, 0);</string>
              <string>imprimir</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Print.png</normaloff>:/Icons/PNG/Print.png</iconset>
             </property>
             <property name="iconSize">
@@ -2131,7 +2137,7 @@ color: rgb(0, 0, 0);</string>
              <string>Listados</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/List.png</normaloff>:/Icons/PNG/List.png</iconset>
             </property>
             <property name="iconSize">
@@ -2157,7 +2163,7 @@ color: rgb(0, 0, 0);</string>
              <string>Editar</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -2186,7 +2192,7 @@ color: rgb(0, 0, 0);</string>
              <string>Guardar</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
             </property>
             <property name="iconSize">
@@ -2212,7 +2218,7 @@ color: rgb(0, 0, 0);</string>
              <string>Deshacer</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/undo.png</normaloff>:/Icons/PNG/undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -2235,7 +2241,7 @@ color: rgb(0, 0, 0);</string>
              <string>Cerrar</string>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../maya.qrc">
               <normaloff>:/Icons/PNG/Exit.png</normaloff>:/Icons/PNG/Exit.png</iconset>
             </property>
             <property name="iconSize">
@@ -2307,7 +2313,9 @@ background-color: #304163;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btn_cerrar</sender>

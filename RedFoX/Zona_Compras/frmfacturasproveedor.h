@@ -68,6 +68,12 @@ private slots:
     void llenarLineas();
     void on_chklporc_rec_toggled(bool checked);
 
+    void on_btnAddVencimiento_clicked();
+
+    void on_btnDeleteVencimiento_clicked();
+
+    void on_btnPagarVencimiento_clicked();
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
@@ -94,6 +100,8 @@ private:
     QDate fecha_anterior;
     QSqlQueryModel* lineas_anterior;
     void calcular_factura();
+
+    void llenar_vencimientos();
 signals:
 
 };

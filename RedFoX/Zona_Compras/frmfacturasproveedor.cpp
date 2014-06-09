@@ -6,13 +6,14 @@
 #include "Auxiliares/frmeditline.h"
 
 void FrmFacturasProveedor::init_querys()
-{
+{    
     modeltipogasto->setQuery("id,select descripcion from grupos_gasto",Configuracion_global->groupDB);
     model_busqueda->setQuery("select id,factura,fecha,cif_proveedor,telefono,proveedor,total from fac_pro order by factura desc",Configuracion_global->empresaDB);
     modelLineas->setQuery("select id,codigo,descripcion,cantidad,precio,precio_recom,subtotal,porc_dto,porc_iva,total "
                           "from lin_fac_pro where id = 0;",Configuracion_global->empresaDB);
     ui->stackedWidget->setCurrentIndex(1);
     ui->tabWidget_2->setCurrentIndex(0);
+    formato_tabla();
 }
 
 void FrmFacturasProveedor::init()
@@ -25,13 +26,18 @@ void FrmFacturasProveedor::init()
     model_busqueda = new QSqlQueryModel(this);
     modeltipogasto = new QSqlQueryModel(this);
     modelLineas = new QSqlQueryModel(this);
+
     lineas_anterior = new QSqlQueryModel(this);
+
+
 
     ui->tabla->setModel(model_busqueda);
     ui->Lineas->setModel(modelLineas);
+
     ui->cbo_grupo_gasto->setModel(modeltipogasto);
     ui->cbo_grupo_gasto->setModelColumn(1);
     ui->cboforma_pago->setModel(Configuracion_global->formapago_model);
+    ui->cboforma_pago->setModelColumn(1);
     ui->combo_pais->setModel(Configuracion_global->paises_model);
     ui->combo_pais->setModelColumn(1);
 
@@ -135,6 +141,11 @@ void FrmFacturasProveedor::bloquearcampos(bool state)
 
     ui->btn_borrarLinea->setEnabled(!state);
     ui->botBuscarCliente->setEnabled(!state);
+
+    ui->btnPagarVencimiento->setEnabled(!state);
+    ui->btnAddVencimiento->setEnabled(!state);
+    ui->btnDeleteVencimiento->setEnabled(!state);
+
     m_busqueda->block(!state);
 }
 
@@ -176,25 +187,7 @@ void FrmFacturasProveedor::on_btnAnadir_clicked()
 }
 
 void FrmFacturasProveedor::llenar_campos()
-{    /*
-oFacPro->telefono
-oFacPro->movil
-oFacPro->fax
-oFacPro->porc_dto
-oFacPro->porc_irpf
-
-oFacPro->total_recargo
-oFacPro->total
-
-oFacPro->gasto_to_coste
-
-oFacPro->dto
-oFacPro->ejercicio
-oFacPro->contabilizada
-oFacPro->subtotal
-oFacPro->impreso
-oFacPro->editable
-*/
+{
 
     ui->txtfactura->setText(oFacPro->factura);
     ui->lblFactura->setText(oFacPro->factura);
@@ -236,10 +229,10 @@ oFacPro->editable
     ui->txtporc_rec3->setText(QString::number(oFacPro->porc_rec3));
     ui->txtporc_rec4->setText(QString::number(oFacPro->porc_rec4));
 
-    ui->txtporc_rec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec1)));
-    ui->txtporc_rec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec2)));
-    ui->txtporc_rec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec3)));
-    ui->txtporc_rec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->porc_rec4)));
+    ui->txtrec1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec1)));
+    ui->txtrec2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec2)));
+    ui->txtrec3->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec3)));
+    ui->txtrec4->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->rec4)));
 
     ui->txttotal1->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total1)));
     ui->txttotal2->setText(Configuracion_global->toFormatoMoneda(QString::number(oFacPro->total2)));
@@ -286,6 +279,7 @@ oFacPro->editable
     ui->spinPorc_dto_pp->setValue(oFacPro->porc_dto);
 
     llenarLineas();
+    llenar_vencimientos();
 }
 
 void FrmFacturasProveedor::llenar_fac_pro()
@@ -306,8 +300,8 @@ void FrmFacturasProveedor::llenar_fac_pro()
     //oFacPro->telefono =
     //oFacPro->movil =
     //oFacPro->fax =
-    oFacPro->porc_dto =
-    oFacPro->porc_irpf =
+    oFacPro->porc_dto = ui->spinPorc_dto_pp->value();
+    //oFacPro->porc_irpf =
     oFacPro->recargo_equivalencia = ui->chklporc_rec->isChecked();
 
     oFacPro->base1  = Configuracion_global->MonedatoDouble(ui->txtbase1->text());
@@ -330,10 +324,10 @@ void FrmFacturasProveedor::llenar_fac_pro()
     oFacPro->porc_rec3 = ui->txtporc_rec3->text().toDouble();
     oFacPro->porc_rec4 = ui->txtporc_rec4->text().toDouble();
 
-    oFacPro->rec1  = Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text());
-    oFacPro->rec2  = Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text());
-    oFacPro->rec3  = Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text());
-    oFacPro->rec4  = Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text());
+    oFacPro->rec1  = Configuracion_global->MonedatoDouble(ui->txtrec1->text());
+    oFacPro->rec2  = Configuracion_global->MonedatoDouble(ui->txtrec2->text());
+    oFacPro->rec3  = Configuracion_global->MonedatoDouble(ui->txtrec3->text());
+    oFacPro->rec4  = Configuracion_global->MonedatoDouble(ui->txtrec4->text());
 
     oFacPro->total1  = Configuracion_global->MonedatoDouble(ui->txttotal1->text());
     oFacPro->total2  = Configuracion_global->MonedatoDouble(ui->txttotal2->text());
@@ -392,7 +386,19 @@ void FrmFacturasProveedor::llenar_campos_iva()
 void FrmFacturasProveedor::on_btnGuardar_clicked()
 {
     if(!ui->txtfactura->text().isEmpty())
-    {        
+    {                
+        double acum = 0.0;
+        for(int i = 0; i < ui->tabla_vencimientos->rowCount(); ++i)
+        {
+            double d = ui->tabla_vencimientos->item(i,1)->text().toDouble();
+            acum += d;
+        }
+        double max_fac = oFacPro->total - acum;
+        if(max_fac > 0)
+        {
+            QMessageBox::information(this,tr("Vencimientos"), tr("Por favor, rellene los vencimientos de la factura antes de guardar"));
+            return;
+        }
         llenar_fac_pro();
         if(oFacPro->guardar_factura())
         {
@@ -586,13 +592,13 @@ void FrmFacturasProveedor::calcular_factura()
 
     //Los gastos no pueden añadir R.E.
     if(ui->chklporc_rec->isChecked())
-        re1 = base1 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec1->text())/100);
+        re1 = base1 * (ui->txtporc_rec1->text().toDouble()/100);
     if(ui->chklporc_rec->isChecked())
-        re2 = base2 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec2->text())/100);
+        re2 = base2 * (ui->txtporc_rec2->text().toDouble()/100);
     if(ui->chklporc_rec->isChecked())
-        re3 = base3 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec3->text())/100);
+        re3 = base3 * (ui->txtporc_rec3->text().toDouble()/100);
     if(ui->chklporc_rec->isChecked())
-        re4 = base4 * (Configuracion_global->MonedatoDouble(ui->txtporc_rec4->text())/100);
+        re4 = base4 * (ui->txtporc_rec4->text().toDouble()/100);
 
     // añadir gastos extras
 
@@ -688,6 +694,37 @@ void FrmFacturasProveedor::calcular_factura()
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
 }
 
+void FrmFacturasProveedor::llenar_vencimientos()
+{
+    QString error;
+    QMap<int,QSqlRecord> deudas = SqlCalls::SelectRecord("deudas_proveedores",
+                                    QString("id_empresa=%1 and id_documento = %2").arg(Configuracion_global->idEmpresa).arg(oFacPro->id),
+                                    Configuracion_global->groupDB,
+                                    error);
+    ui->tabla_vencimientos->clear();
+    ui->tabla_vencimientos->setRowCount(0);
+    QMapIterator<int,QSqlRecord> it(deudas);
+    while(it.hasNext())
+    {
+        const QSqlRecord r = it.next().value();
+        QTableWidgetItem * venc = new QTableWidgetItem(r.value("vencimiento").toDate().toString("dd/MM/yyyy"));
+        QTableWidgetItem * importe = new QTableWidgetItem(QString::number(r.value("importe_deuda").toDouble(), 'f', Configuracion_global->decimales_campos_totales));
+        QTableWidgetItem * pendiente = new QTableWidgetItem(QString::number(r.value("pendiente").toDouble(), 'f', Configuracion_global->decimales_campos_totales));
+        QTableWidgetItem * pagado = new QTableWidgetItem(QString::number(r.value("pagado").toDouble(), 'f', Configuracion_global->decimales_campos_totales));
+
+        int r_c = ui->tabla_vencimientos->rowCount();
+        ui->tabla_vencimientos->insertRow(r_c);
+        ui->tabla_vencimientos->setItem(r_c,0,venc);
+        ui->tabla_vencimientos->setItem(r_c,1,importe);
+        ui->tabla_vencimientos->setItem(r_c,2,pagado);
+        ui->tabla_vencimientos->setItem(r_c,3,pendiente);
+    }
+
+    QStringList head;
+    head << tr("Vencimiento") << tr("Importe") << tr("Pagado") << tr("Pendiente");
+    ui->tabla_vencimientos->setHorizontalHeaderLabels(head);
+}
+
 void FrmFacturasProveedor::formato_tabla()
 {
     QStringList header;
@@ -715,6 +752,7 @@ void FrmFacturasProveedor::formato_tabla()
     }
     ui->Lineas->setColumnHidden(0,true);
     ui->Lineas->setColumnHidden(1,true);
+
 }
 
 void FrmFacturasProveedor::filter_table(QString texto, QString orden, QString modo)
@@ -740,6 +778,7 @@ void FrmFacturasProveedor::filter_table(QString texto, QString orden, QString mo
        QString cSQL = "select id,factura,fecha,cif_proveedor,telefono,proveedor,total from fac_pro "
                 "where "+order+" like '%"+texto.trimmed()+"%' order by "+order+" "+modo;
         model_busqueda->setQuery(cSQL,Configuracion_global->empresaDB);
+        formato_tabla();
     }
 }
 
@@ -1000,3 +1039,82 @@ void FrmFacturasProveedor::on_chklporc_rec_toggled(bool checked)
     }
     calcular_factura();
 }
+
+void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
+{
+    double max_fac = oFacPro->total;
+    for(int i = 0; i < ui->tabla_vencimientos->rowCount(); ++i)
+        max_fac -= ui->tabla_vencimientos->item(i,1)->text().toDouble();
+
+    if(max_fac == 0)
+    {
+        QMessageBox::information(this,tr("Vencimientos completos"), tr("Los vencimientos actuales cubren el total de la factura.\n"
+                                                                       "Borre/edite algún vencimiento si es erroneo"));
+        return;
+    }
+
+    QDialog d(this);
+
+    QLabel label(tr("Fecha de vencimiento"),&d);
+    QDateEdit edit(oFacPro->fecha,&d);
+    QPushButton aceptar(tr("Aceptar"),&d);
+    QPushButton cancelar(tr("Cancelar"),&d);
+    QGridLayout lay(&d);
+
+    lay.addWidget(&label,0,0,1,1);
+    lay.addWidget(&edit,0,1,1,1);
+    lay.addWidget(&aceptar,1,0,1,1);
+    lay.addWidget(&cancelar,1,1,1,1);
+
+    connect(&aceptar,SIGNAL(clicked()),&d,SLOT(accept()));
+    connect(&cancelar,SIGNAL(clicked()),&d,SLOT(reject()));
+    if(d.exec() == QDialog::Accepted)
+    {
+        bool ok;
+        double cantidad = QInputDialog::getDouble(this, tr("Valor del vencimiento"),
+                                           tr("Cantidad:"), 0, 0, max_fac, 2, &ok);
+        if (ok)
+        {
+            SqlData data;
+            data["id_empresa"] = Configuracion_global->idEmpresa;
+            data["id_documento"] = oFacPro->id;
+            data["documento"] = oFacPro->factura;
+            data["fecha_deuda"] = oFacPro->fecha;
+            data["vencimiento"] = edit.date();
+            data["importe_deuda"] = cantidad;
+            data["pendiente"] = cantidad;
+            data["pagado"] = 0.0;
+            QString error;
+            if(SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
+            {
+                TimedMessageBox::Box(this,tr("Vencimiento insertado con éxito"));                                               
+                QTableWidgetItem * venc = new QTableWidgetItem(edit.date().toString("dd/MM/yyyy"));
+                QTableWidgetItem * importe = new QTableWidgetItem(QString::number(cantidad, 'f', Configuracion_global->decimales_campos_totales));
+                QTableWidgetItem * pendiente = new QTableWidgetItem(QString::number(cantidad, 'f', Configuracion_global->decimales_campos_totales));
+                QTableWidgetItem * pagado = new QTableWidgetItem("0.0");
+
+                int r_c = ui->tabla_vencimientos->rowCount();
+                ui->tabla_vencimientos->insertRow(r_c);
+                ui->tabla_vencimientos->setItem(r_c,0,venc);
+                ui->tabla_vencimientos->setItem(r_c,1,importe);
+                ui->tabla_vencimientos->setItem(r_c,2,pagado);
+                ui->tabla_vencimientos->setItem(r_c,3,pendiente);
+            }
+            else
+            {
+                QMessageBox::critical(this,tr("Error al insertar vencimiento"),error);
+            }
+        }
+    }
+}
+
+void FrmFacturasProveedor::on_btnDeleteVencimiento_clicked()
+{
+
+}
+
+void FrmFacturasProveedor::on_btnPagarVencimiento_clicked()
+{
+
+}
+
