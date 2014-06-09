@@ -299,7 +299,7 @@
        <item row="3" column="1" rowspan="2" colspan="2">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="tabDatos">
           <attribute name="title">
@@ -1244,26 +1244,29 @@
             </widget>
            </item>
            <item row="2" column="2">
-            <widget class="QRadioButton" name="radioButton_2">
+            <widget class="QRadioButton" name="rdbTodos">
              <property name="text">
               <string>Todos</string>
              </property>
              <property name="checked">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QRadioButton" name="radioButton_3">
+            <widget class="QRadioButton" name="rdbPagados">
              <property name="text">
               <string>Solo Pagados</string>
              </property>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QRadioButton" name="radioButton">
+            <widget class="QRadioButton" name="rdbPendientes">
              <property name="text">
               <string>Solo pendientes de Pago</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -2236,9 +2239,9 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>chkrecargo_equivalencia</tabstop>
   <tabstop>txttipo_retencioirpf</tabstop>
   <tabstop>txtretencion_irpf</tabstop>
-  <tabstop>radioButton</tabstop>
-  <tabstop>radioButton_3</tabstop>
-  <tabstop>radioButton_2</tabstop>
+  <tabstop>rdbPendientes</tabstop>
+  <tabstop>rdbPagados</tabstop>
+  <tabstop>rdbTodos</tabstop>
   <tabstop>tablaPagos</tabstop>
   <tabstop>txtcp_almacen</tabstop>
   <tabstop>txtpoblacion_almacen</tabstop>

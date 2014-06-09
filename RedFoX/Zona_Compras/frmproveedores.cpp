@@ -245,19 +245,26 @@ void frmProveedores::llenar_tabPagos()
 {
     if(!__init)
         return;
-    modeloDeudas->setQuery("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
-                           "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = "+
-                           QString::number(oProveedor->id)+" and id_empresa= "+Configuracion_global->idEmpresa+ " order by fecha_deuda desc",Configuracion_global->empresaDB);
+    QString sql = QString("select id,documento,fecha_deuda,vencimiento,importe_deuda,pagado,pendiente,pago_por,"
+                          "numero_tarjeta_cuenta,asiento_numero from deudas_proveedores where id_proveedor = %1 "
+                          " and id_empresa=%2 ").arg(oProveedor->id).arg(Configuracion_global->idEmpresa);
+    if(ui->rdbPagados->isChecked())
+        sql.append("and pendiente=0 ");
+    else if(ui->rdbPendientes->isChecked())
+        sql.append("and pendiente>0 ");
+
+    sql.append("order by vencimiento");
+    modeloDeudas->setQuery(sql,Configuracion_global->groupDB);
 
     ui->tablaPagos->setColumnHidden(0,true);
-    ui->tablaPagos->setColumnWidth(1,80);
-    ui->tablaPagos->setColumnWidth(2,70);
-    ui->tablaPagos->setColumnWidth(3,70);
+    ui->tablaPagos->setColumnWidth(1,100);
+    ui->tablaPagos->setColumnWidth(2,95);
+    ui->tablaPagos->setColumnWidth(3,95);
     ui->tablaPagos->setColumnWidth(4,65);
     ui->tablaPagos->setColumnWidth(5,65);
-    ui->tablaPagos->setColumnWidth(6,65);
+    ui->tablaPagos->setColumnWidth(6,80);
     ui->tablaPagos->setColumnWidth(8,200);
-    ui->tablaPagos->setColumnWidth(9,200);
+    //ui->tablaPagos->setColumnWidth(9,200);
 
     modeloDeudas->setHeaderData(1,Qt::Horizontal,tr("Documento"));
     modeloDeudas->setHeaderData(2,Qt::Horizontal,tr("F. Deuda"));
@@ -1302,4 +1309,19 @@ void frmProveedores::on_btnAbrirWeb_clicked()
 void frmProveedores::on_txtcodigoFormaPago_currentIndexChanged(int index)
 {
     ui->txtforma_pago->setText(Configuracion_global->formapago_model->record(index).value("forma_pago").toString());
+}
+
+void frmProveedores::on_rdbPendientes_toggled(bool /*checked*/)
+{
+    llenar_tabPagos();
+}
+
+void frmProveedores::on_rdbPagados_toggled(bool /*checked*/)
+{
+    llenar_tabPagos();
+}
+
+void frmProveedores::on_rdbTodos_toggled(bool /*checked*/)
+{
+    llenar_tabPagos();
 }

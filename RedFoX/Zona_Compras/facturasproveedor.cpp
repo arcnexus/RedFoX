@@ -8,6 +8,7 @@ FacturasProveedor::FacturasProveedor(QObject *parent) :
 bool FacturasProveedor::anadir_factura()
 {
     QHash<QString,QVariant> _data;
+    _data["fecha"] = QDate::currentDate();
     _data["porc_iva1"] = Configuracion_global->ivaList.at(0);
     _data["porc_iva2"] = Configuracion_global->ivaList.at(1);
     _data["porc_iva3"] = Configuracion_global->ivaList.at(2);

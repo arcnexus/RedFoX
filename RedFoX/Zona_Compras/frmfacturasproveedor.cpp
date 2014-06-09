@@ -171,6 +171,7 @@ void FrmFacturasProveedor::on_btnAnadir_clicked()
     Configuracion_global->transaction();
     if(oFacPro->anadir_factura())
     {
+        pendiente_anterior = 0.0;
         oFacPro->Recuperar(oFacPro->id);
         llenar_campos();
         bloquearcampos(false);
@@ -394,7 +395,7 @@ void FrmFacturasProveedor::on_btnGuardar_clicked()
             acum += d;
         }
         double max_fac = oFacPro->total - acum;
-        if(max_fac > 0)
+        if((int)max_fac > 0)
         {
             QMessageBox::information(this,tr("Vencimientos"), tr("Por favor, rellene los vencimientos de la factura antes de guardar"));
             return;
@@ -405,6 +406,13 @@ void FrmFacturasProveedor::on_btnGuardar_clicked()
             if(oFacPro->albaran.isEmpty())
             {
                 double acumular = oFacPro->base_total;
+                double pendiente = 0.0;
+                for(auto i=0; i<ui->tabla_vencimientos->rowCount(); ++i)
+                {
+                    double d = ui->tabla_vencimientos->item(i,3)->text().toDouble();
+                    pendiente += d;
+                }
+
                 if(editando)
                 {
                     //BORRAR LOS ACUMULADOS ANTERIORES COMPLETAMENTE
@@ -422,6 +430,13 @@ void FrmFacturasProveedor::on_btnGuardar_clicked()
                             return;
                         }
                     }
+                    pendiente -= pendiente_anterior;
+                }
+
+                if(!Proveedor::acumular_deuda(oFacPro->id_proveedor, pendiente))
+                {
+                    Configuracion_global->rollback();
+                    return;
                 }
 
                 if(Proveedor::acumular(oFacPro->id_proveedor,oFacPro->fecha.month(),acumular))
@@ -505,6 +520,12 @@ void FrmFacturasProveedor::on_btnEditar_clicked()
         int id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
         oFacPro->Recuperar(id);
         llenar_campos();
+    }
+    pendiente_anterior = 0.0;
+    for(auto i=0; i<ui->tabla_vencimientos->rowCount(); ++i)
+    {
+        double d = ui->tabla_vencimientos->item(i,3)->text().toDouble();
+        pendiente_anterior += d;
     }
     total_anterior = oFacPro->base_total;
     fecha_anterior = oFacPro->fecha;
@@ -692,6 +713,9 @@ void FrmFacturasProveedor::calcular_factura()
     ui->txttotal->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
 
     ui->txttotal_2->setText(Configuracion_global->toFormatoMoneda(QString::number((base-irpf)+(iva+re),'f',Configuracion_global->decimales_campos_totales)));
+
+    if(!editando)
+        oFacPro->total = (base-irpf)+(iva+re);
 }
 
 void FrmFacturasProveedor::llenar_vencimientos()
@@ -1042,6 +1066,12 @@ void FrmFacturasProveedor::on_chklporc_rec_toggled(bool checked)
 
 void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
 {
+    if(ui->txtfactura->text().isEmpty())
+    {
+        QMessageBox::information(this,tr("Gestión de Facturas de proveedor"),
+                                 tr("Debe especificar el numero de Factura antes de guardar"),tr("Aceptar"));
+        ui->txtfactura->setFocus();
+    }
     double max_fac = oFacPro->total;
     for(int i = 0; i < ui->tabla_vencimientos->rowCount(); ++i)
         max_fac -= ui->tabla_vencimientos->item(i,1)->text().toDouble();
@@ -1056,7 +1086,7 @@ void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
     QDialog d(this);
 
     QLabel label(tr("Fecha de vencimiento"),&d);
-    QDateEdit edit(oFacPro->fecha,&d);
+    QDateEdit edit(ui->txtfecha->date(),&d);
     QPushButton aceptar(tr("Aceptar"),&d);
     QPushButton cancelar(tr("Cancelar"),&d);
     QGridLayout lay(&d);
@@ -1078,12 +1108,13 @@ void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
             SqlData data;
             data["id_empresa"] = Configuracion_global->idEmpresa;
             data["id_documento"] = oFacPro->id;
-            data["documento"] = oFacPro->factura;
-            data["fecha_deuda"] = oFacPro->fecha;
+            data["documento"] = ui->txtfactura->text();
+            data["fecha_deuda"] = ui->txtfecha->date();
             data["vencimiento"] = edit.date();
             data["importe_deuda"] = cantidad;
             data["pendiente"] = cantidad;
             data["pagado"] = 0.0;
+            data["id_proveedor"] = oFacPro->id_proveedor;
             QString error;
             if(SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
             {

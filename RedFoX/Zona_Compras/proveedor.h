@@ -67,6 +67,7 @@ public:
     double enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre;
     void cargaracumulados(int id_proveedor);
     static bool acumular(int id_proveedor, int mes, double total);
+    static bool acumular_deuda(int id_proveedor, double cantidad);
     void anadir_persona_contacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1,
                                  QString desc_telefono2, QString Telefono2, QString desc_telefono3, QString Telefono3,
                                  QString desc_movil1, QString Movil1, QString desc_movil2, QString Movil2, QString cargo, QString email);

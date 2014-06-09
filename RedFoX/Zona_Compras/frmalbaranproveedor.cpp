@@ -1277,6 +1277,7 @@ void FrmAlbaranProveedor::on_btnFacturar_clicked()
                     data["importe_deuda"] = cantidad;
                     data["pendiente"] = cantidad;
                     data["pagado"] = 0.0;
+                    data["id_proveedor"] = oAlbPro->id_proveedor;
                     QString error;
                     if(!SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
                     {
@@ -1298,6 +1299,7 @@ void FrmAlbaranProveedor::on_btnFacturar_clicked()
             }
         }while((int)acum > 0);
 
+        success &= Proveedor::acumular_deuda(oAlbPro->id_proveedor, total_factura);
 
         oAlbPro->factura = doc;
         success &= oAlbPro->guardar();

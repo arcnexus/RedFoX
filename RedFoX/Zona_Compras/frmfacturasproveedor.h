@@ -97,6 +97,7 @@ private:
 
     bool editando;
     double total_anterior;
+    double pendiente_anterior;
     QDate fecha_anterior;
     QSqlQueryModel* lineas_anterior;
     void calcular_factura();

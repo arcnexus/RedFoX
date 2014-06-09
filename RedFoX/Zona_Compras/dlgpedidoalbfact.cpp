@@ -454,6 +454,7 @@ bool DlgPedidoAlbFact::crear_documento()
                     data["importe_deuda"] = cantidad;
                     data["pendiente"] = cantidad;
                     data["pagado"] = 0.0;
+                    data["id_proveedor"] = r_prov.value("id");
                     QString error;
                     if(!SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
                     {
@@ -471,6 +472,8 @@ bool DlgPedidoAlbFact::crear_documento()
                 return false;
             }
         }while((int)acum > 0);
+
+        Proveedor::acumular_deuda(r_prov.value("id").toInt(), total_factura);
     }
     return success;
 }

@@ -115,6 +115,12 @@ private slots:
 
     void on_txtcodigoFormaPago_currentIndexChanged(int index);
 
+    void on_rdbPendientes_toggled(bool checked);
+
+    void on_rdbPagados_toggled(bool checked);
+
+    void on_rdbTodos_toggled(bool checked);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:

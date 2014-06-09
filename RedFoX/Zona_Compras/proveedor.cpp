@@ -34,6 +34,8 @@ void Proveedor::cargaracumulados(int id_proveedor)
 
 bool Proveedor::acumular(int id_proveedor, int mes, double total)
 {
+    Q_ASSERT(id_proveedor > 0);
+
     QString cSQL = QString("update acum_proveedores set ");
     switch (mes)
     {
@@ -82,8 +84,27 @@ bool Proveedor::acumular(int id_proveedor, int mes, double total)
     bool success = art_ac.exec(cSQL);
     if(!success)
     {
-        QMessageBox::warning(qApp->activeWindow(),tr("Artículos"),
+        QMessageBox::warning(qApp->activeWindow(),tr("Proveedor"),
                              tr("No se ha podido guardar los acumulados: %1").arg(art_ac.lastError().text()),
+                             tr("Aceptar"));
+    }
+    return success;
+}
+
+bool Proveedor::acumular_deuda(int id_proveedor, double cantidad)
+{
+    Q_ASSERT(id_proveedor > 0);
+    if(cantidad == 0)
+        return true;
+
+    QString sql = QString("update `proveedores` set deuda_actual=deuda_actual+%1 where id=%2")
+            .arg(cantidad).arg(id_proveedor);
+    QSqlQuery q(Configuracion_global->groupDB);
+    bool success = q.exec(sql);
+    if(!success)
+    {
+        QMessageBox::warning(qApp->activeWindow(),tr("Proveedor"),
+                             tr("No se ha podido guardar la deuda: %1").arg(q.lastError().text()),
                              tr("Aceptar"));
     }
     return success;
