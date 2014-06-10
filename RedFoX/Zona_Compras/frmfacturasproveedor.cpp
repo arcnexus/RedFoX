@@ -20,6 +20,7 @@ void FrmFacturasProveedor::init()
 {
     ui->setupUi(this);
     ui->btn_cerrar->setVisible(_showCerrar);
+    ui->tabla_vencimientos->setColumnHidden(4,true);
 
     setUpBusqueda();
     oFacPro = new FacturasProveedor(this);
@@ -735,6 +736,7 @@ void FrmFacturasProveedor::llenar_vencimientos()
         QTableWidgetItem * importe = new QTableWidgetItem(QString::number(r.value("importe_deuda").toDouble(), 'f', Configuracion_global->decimales_campos_totales));
         QTableWidgetItem * pendiente = new QTableWidgetItem(QString::number(r.value("pendiente").toDouble(), 'f', Configuracion_global->decimales_campos_totales));
         QTableWidgetItem * pagado = new QTableWidgetItem(QString::number(r.value("pagado").toDouble(), 'f', Configuracion_global->decimales_campos_totales));
+        QTableWidgetItem * id = new QTableWidgetItem(r.value("id").toString());
 
         int r_c = ui->tabla_vencimientos->rowCount();
         ui->tabla_vencimientos->insertRow(r_c);
@@ -742,6 +744,7 @@ void FrmFacturasProveedor::llenar_vencimientos()
         ui->tabla_vencimientos->setItem(r_c,1,importe);
         ui->tabla_vencimientos->setItem(r_c,2,pagado);
         ui->tabla_vencimientos->setItem(r_c,3,pendiente);
+        ui->tabla_vencimientos->setItem(r_c,4,id);
     }
 
     QStringList head;
@@ -1116,13 +1119,16 @@ void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
             data["pagado"] = 0.0;
             data["id_proveedor"] = oFacPro->id_proveedor;
             QString error;
-            if(SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error))
+            int id = SqlCalls::SqlInsert(data,"deudas_proveedores",Configuracion_global->groupDB,error);
+            if(id > 0)
             {
                 TimedMessageBox::Box(this,tr("Vencimiento insertado con éxito"));                                               
                 QTableWidgetItem * venc = new QTableWidgetItem(edit.date().toString("dd/MM/yyyy"));
                 QTableWidgetItem * importe = new QTableWidgetItem(QString::number(cantidad, 'f', Configuracion_global->decimales_campos_totales));
                 QTableWidgetItem * pendiente = new QTableWidgetItem(QString::number(cantidad, 'f', Configuracion_global->decimales_campos_totales));
                 QTableWidgetItem * pagado = new QTableWidgetItem("0.0");
+                QString s_id = QString::number(id);
+                QTableWidgetItem * id = new QTableWidgetItem(s_id);
 
                 int r_c = ui->tabla_vencimientos->rowCount();
                 ui->tabla_vencimientos->insertRow(r_c);
@@ -1130,6 +1136,7 @@ void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
                 ui->tabla_vencimientos->setItem(r_c,1,importe);
                 ui->tabla_vencimientos->setItem(r_c,2,pagado);
                 ui->tabla_vencimientos->setItem(r_c,3,pendiente);
+                ui->tabla_vencimientos->setItem(r_c,4,id);
             }
             else
             {
@@ -1141,11 +1148,50 @@ void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
 
 void FrmFacturasProveedor::on_btnDeleteVencimiento_clicked()
 {
-
+    QModelIndex index = ui->tabla_vencimientos->currentIndex();
+    if(!index.isValid())
+        return;
+    int id = ui->tabla_vencimientos->item(ui->tabla_vencimientos->currentRow(),4)->data(Qt::EditRole).toInt();
+    QString error;
+    if(SqlCalls::SqlDelete("deudas_proveedores",Configuracion_global->groupDB,QString("id=%1").arg(id),error))
+    {
+        ui->tabla_vencimientos->removeRow(ui->tabla_vencimientos->currentRow());
+        TimedMessageBox::Box(this,tr("Vencimiento borrado con éxito"));
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("Error al borrar vencimiento"), error);
+    }
 }
 
 void FrmFacturasProveedor::on_btnPagarVencimiento_clicked()
 {
+    QModelIndex index = ui->tabla_vencimientos->currentIndex();
+    if(!index.isValid())
+        return;
+    int current_r = ui->tabla_vencimientos->currentRow();
+    int id = ui->tabla_vencimientos->item(current_r,4)->data(Qt::EditRole).toInt();
+    double pendiente = ui->tabla_vencimientos->item(current_r,3)->data(Qt::EditRole).toDouble();
 
+    bool ok;
+    double cantidad = QInputDialog::getDouble(this, tr("Importe pagado"),
+                                       tr("Cantidad:"), pendiente, 0, pendiente, 2, &ok);
+    if(ok)
+    {
+        SqlData data;
+        data["pagado"] = cantidad;
+        data["pendiente"] = pendiente - cantidad;
+        QString error;
+        if(SqlCalls::SqlUpdate(data,"deudas_proveedores",Configuracion_global->groupDB,QString("id=%1").arg(id),error))
+        {
+            ui->tabla_vencimientos->item(current_r,2)->setData(Qt::EditRole, QString::number(cantidad,'f',2));
+            ui->tabla_vencimientos->item(current_r,3)->setData(Qt::EditRole, QString::number(pendiente - cantidad,'f',2));
+            TimedMessageBox::Box(this,tr("Vencimiento pagado con éxito"));
+        }
+        else
+        {
+            QMessageBox::critical(this,tr("Error al pagar vencimiento"),error);
+        }
+    }
 }
 

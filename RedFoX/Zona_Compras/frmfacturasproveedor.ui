@@ -100,7 +100,7 @@ color: rgb(255, 255, 255);</string>
        <item row="1" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_3">
           <attribute name="title">
@@ -822,6 +822,11 @@ background-color: rgb(253, 0, 4);</string>
                 <column>
                  <property name="text">
                   <string>Pendiente</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>id</string>
                  </property>
                 </column>
                </widget>
