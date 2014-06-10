@@ -473,7 +473,6 @@ bool DlgPedidoAlbFact::crear_documento()
             }
         }while((int)acum > 0);
 
-        Proveedor::acumular_deuda(r_prov.value("id").toInt(), total_factura);
     }
     return success;
 }

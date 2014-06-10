@@ -38,6 +38,9 @@ public:
     bool getUse_re() const;
     void setUse_re(bool value);
 
+    int getId_prov() const;
+    void setId_prov(int value);
+
 private slots:
 
     void on_txtCodigo_editingFinished();
@@ -59,6 +62,7 @@ private slots:
 private:
     Ui::frmEditLine *ui;
     int id,id_cliente,id_tarifa,id_articulo,id_cab;
+    int id_prov;
 
     QString tabla,codigo_articulo;
     void cargar_articulo(int id_art, int tarifa);

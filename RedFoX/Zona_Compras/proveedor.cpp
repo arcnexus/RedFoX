@@ -91,24 +91,27 @@ bool Proveedor::acumular(int id_proveedor, int mes, double total)
     return success;
 }
 
-bool Proveedor::acumular_deuda(int id_proveedor, double cantidad)
+bool Proveedor::get_deuda(int id_proveedor, double& deuda)
 {
     Q_ASSERT(id_proveedor > 0);
-    if(cantidad == 0)
-        return true;
-
-    QString sql = QString("update `proveedores` set deuda_actual=deuda_actual+%1 where id=%2")
-            .arg(cantidad).arg(id_proveedor);
     QSqlQuery q(Configuracion_global->groupDB);
-    bool success = q.exec(sql);
-    if(!success)
+    QString sql = QString("SELECT SUM(pendiente) FROM deudas_proveedores where id_empresa=%1 and id_proveedor=%2;")
+            .arg(Configuracion_global->idEmpresa)
+            .arg(id_proveedor);
+    if(q.exec(sql))
     {
-        QMessageBox::warning(qApp->activeWindow(),tr("Proveedor"),
-                             tr("No se ha podido guardar la deuda: %1").arg(q.lastError().text()),
-                             tr("Aceptar"));
+        q.next();
+        deuda = q.record().value(0).toDouble();
+        return true;
     }
-    return success;
+    else
+    {
+        deuda = 0.0;
+        QMessageBox::critical(qApp->activeWindow(),tr("Error al recuperar deuda de proveedor"), q.lastError().text());
+        return false;
+    }
 }
+
 
 void Proveedor::anadir_persona_contacto(int id, QString Nombre, QString desc_telefono1, QString Telefono1,
                                         QString desc_telefono2, QString Telefono2, QString desc_telefono3, QString Telefono3,
@@ -361,7 +364,7 @@ void Proveedor::Cargar(QSqlRecord &rProveedor)
     this->dto = rProveedor.field("dto").value().toDouble();
     this->fecha_alta = rProveedor.field("fecha_alta").value().toDate();
     this->deuda_maxima = rProveedor.field("deuda_maxima").value().toDouble();
-    this->deuda_actual = rProveedor.field("deuda_actual").value().toDouble();
+    Proveedor::get_deuda(id,this->deuda_actual);
     this->recargo_equivalencia = rProveedor.field("recargo_equivalencia").value().toInt();
     this->texto_para_pedidos = rProveedor.field("texto_para_pedidos").value().toString();
     this->entregado_a_cuenta = rProveedor.field("entregado_a_cuenta").value().toDouble();

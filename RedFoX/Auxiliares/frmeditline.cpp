@@ -106,7 +106,9 @@ void frmEditLine::buscar_art()
     }
     else
     {
-        consulta.set_SQL("Select id,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,stock_fisico_almacen from articulos");
+        QString sql = QString("select id_articulo,codigo,codigo_barras,codigo_fabricante,descripcion_reducida,coste,"
+                              "stock_fisico_almacen from vista_art_prov where id_proveedor = %1").arg(id_prov);
+        consulta.set_SQL(sql);
         QStringList cabecera;
         QVariantList tamanos;
         QVariantList moneda;
@@ -530,7 +532,9 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
     else // tipo == false -> COMPRAS
     {
         QString error;
-        QMap <int,QSqlRecord> m = SqlCalls::SelectRecord("articulos",QString("id = '%1'").arg(id_art),Configuracion_global->groupDB,error);
+        QMap <int,QSqlRecord> m = SqlCalls::SelectRecord("vista_art_prov",QString("id_articulo = '%1' and id_proveedor=%2")
+                                                         .arg(id_art).arg(id_prov)
+                                                         ,Configuracion_global->groupDB,error);
         if(!error.isEmpty())
         {
             QMessageBox::warning(this,tr("Edición de líneas"),tr("Ocurrió un error al recuperar: %1").arg(error));
@@ -541,7 +545,7 @@ void frmEditLine::cargar_articulo(int id_art, int tarifa)
         {
             QSqlRecord r = m.first();
 
-            ui->txtCodigo->setText(r.value("codigo_fabricante").toString());
+            ui->txtCodigo->setText(r.value("codigo_proveedor").toString());
 
             ui->txtDescripcion->setText(r.value("descripcion_reducida").toString());
 
@@ -748,3 +752,13 @@ void frmEditLine::on_btnAnadir_mas_nueva_clicked()
    vaciar_campos();
    emit refrescar_lineas();
 }
+int frmEditLine::getId_prov() const
+{
+    return id_prov;
+}
+
+void frmEditLine::setId_prov(int value)
+{
+    id_prov = value;
+}
+

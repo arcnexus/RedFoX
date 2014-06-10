@@ -973,6 +973,7 @@ void FrmAlbaranProveedor::on_btnAnadirLinea_clicked()
     frmeditar.init();
     connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
+    frmeditar.setId_prov(oAlbPro->id_proveedor);
     frmeditar.set_venta(false);
     frmeditar.setTipoDoc(frmEditLine::Albaran);
     frmeditar.setAdd_pendientes(false);
@@ -1044,6 +1045,7 @@ void FrmAlbaranProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
         frmeditar.init();
         connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
+        frmeditar.setId_prov(oAlbPro->id_proveedor);
         frmeditar.set_venta(false);
         frmeditar.setTipoDoc(frmEditLine::Albaran);
         frmeditar.setAdd_pendientes(false);
@@ -1297,9 +1299,7 @@ void FrmAlbaranProveedor::on_btnFacturar_clicked()
                 Configuracion_global->rollback();
                 return;
             }
-        }while((int)acum > 0);
-
-        success &= Proveedor::acumular_deuda(oAlbPro->id_proveedor, total_factura);
+        }while((int)acum > 0);        
 
         oAlbPro->factura = doc;
         success &= oAlbPro->guardar();

@@ -1238,14 +1238,6 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
 
-
-//    QMessageBox mensaje(this);
-//    mensaje.setStyleSheet("background-color: rgb(221,221,221)");
-//    mensaje.setWindowTitle(tr("Assignar proveedor"));
-//    mensaje.setText(tr("¿Desea hacer de este proveedor el principal?"));
-//    mensaje.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
-//    mensaje.setButtonText(0,tr("No"));
-//    mensaje.setButtonText(1,tr("Sí"));
     if (QMessageBox::question(this,tr("Re-asignar proveedor"),
                           tr("¿Desea cambiar el proveedor principal?"),tr("No"),tr("Sí")) == QMessageBox::Accepted){
 

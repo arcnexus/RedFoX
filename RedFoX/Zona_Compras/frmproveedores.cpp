@@ -348,7 +348,7 @@ void frmProveedores::LLenarCampos()
 
     /* tabArticulos => index 5  */
     modelArticulo->setQuery("select codigo,codigo_barras, descripcion_reducida,coste "
-                           "from articulos where id_proveedor =" +QString::number(oProveedor->id),
+                            "from vista_art_prov where id_proveedor =" +QString::number(oProveedor->id),
                            Configuracion_global->groupDB);
     QStringList header;
     QVariantList sizes;
@@ -423,8 +423,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->comentarios = ui->txtcomentarios->toPlainText();
     oProveedor->dto = ui->txtdto->text().replace(".","").replace(",",".").toDouble();
     oProveedor->fecha_alta = ui->txtfecha_alta->date();
-    oProveedor->deuda_maxima = ui->txtdeuda_maxima->text().replace(".","").replace(",",".").toDouble();
-    oProveedor->deuda_actual = ui->txtdeuda_actual->text().replace(".","").replace(",",".").toDouble();
+    oProveedor->deuda_maxima = ui->txtdeuda_maxima->text().replace(".","").replace(",",".").toDouble();    
     oProveedor->recargo_equivalencia = ui->chkrecargo_equivalencia->isChecked();
     oProveedor->texto_para_pedidos = ui->txttexto_para_pedidos->toPlainText();
     if(ui->radGeneral->isChecked())
@@ -1359,6 +1358,7 @@ void frmProveedores::on_btnPagarVencimiento_clicked()
         QString error;
         if(SqlCalls::SqlUpdate(data,"deudas_proveedores",Configuracion_global->groupDB,QString("id=%1").arg(id),error))
         {
+            Proveedor::get_deuda(oProveedor->id, oProveedor->deuda_actual);
             TimedMessageBox::Box(this,tr("Vencimiento pagado con éxito"));
             llenar_tabPagos();
         }

@@ -790,6 +790,7 @@ void FrmPedidosProveedor::on_btnAnadirLinea_clicked()
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
+            frmeditar.setId_prov(oPedido_proveedor->id_proveedor);
             frmeditar.set_venta(false);
             frmeditar.setTipoDoc(frmEditLine::Pedido);
             frmeditar.setAdd_pendientes(true);
@@ -821,6 +822,7 @@ void FrmPedidosProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
             frmeditar.init();
             connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(refrescar_modelo()));
 
+            frmeditar.setId_prov(oPedido_proveedor->id_proveedor);
             frmeditar.set_venta(false);
             frmeditar.setTipoDoc(frmEditLine::Pedido);
             frmeditar.setAdd_pendientes(true);

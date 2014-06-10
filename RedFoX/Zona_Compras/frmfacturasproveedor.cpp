@@ -434,12 +434,6 @@ void FrmFacturasProveedor::on_btnGuardar_clicked()
                     pendiente -= pendiente_anterior;
                 }
 
-                if(!Proveedor::acumular_deuda(oFacPro->id_proveedor, pendiente))
-                {
-                    Configuracion_global->rollback();
-                    return;
-                }
-
                 if(Proveedor::acumular(oFacPro->id_proveedor,oFacPro->fecha.month(),acumular))
                 {
                     for(auto i=0; i<modelLineas->rowCount();++i)
@@ -927,6 +921,7 @@ void FrmFacturasProveedor::on_btnAnadirLinea_clicked()
     frmeditar.init();
     connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
+    frmeditar.setId_prov(oFacPro->id_proveedor);
     frmeditar.set_venta(false);
     frmeditar.setTipoDoc(frmEditLine::Factura);
     frmeditar.setAdd_pendientes(false);
@@ -950,6 +945,7 @@ void FrmFacturasProveedor::on_Lineas_doubleClicked(const QModelIndex &index)
         frmeditar.init();
         connect(&frmeditar,SIGNAL(refrescar_lineas()),this,SLOT(llenarLineas()));
 
+        frmeditar.setId_prov(oFacPro->id_proveedor);
         frmeditar.set_venta(false);
         frmeditar.setTipoDoc(frmEditLine::Factura);
         frmeditar.setAdd_pendientes(false);
