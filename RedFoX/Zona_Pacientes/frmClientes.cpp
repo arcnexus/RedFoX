@@ -18,7 +18,6 @@ frmClientes::frmClientes(QWidget *parent) :
     menuButton(QIcon(":/Icons/PNG/clientes_2.png"),tr("Clientes"),this),
       push(new QPushButton(QIcon(":/Icons/PNG/clientes_2.png"),"",this))
 {
-
     //CONFIG SHORTCUT
     if (Configuracion_global->medic){
         push->setToolTip(tr("Gestión del fichero de pacientes/clientes"));
@@ -70,6 +69,10 @@ void frmClientes::init()
     if(__init)
         return;
     ui->setupUi(this);
+
+    //TODO reactivar con contabilidad
+    ui->frameConta->setVisible(false);
+
     if (Configuracion_global->medic)
         ui->textoTitulo->setText(tr("Gestión de Pacientes - datos administrativos"));
     else
@@ -86,7 +89,7 @@ void frmClientes::init()
     Facturas            = new QSqlQueryModel(this);
     Presupuestos        = new QSqlQueryModel(this);
     Vales               = new QSqlQueryModel(this);
-    Tickets             = new QSqlQueryModel(this);
+
     modelAsientos       = new QSqlQueryModel(this);
     queryTransportistas = new QSqlQueryModel(this);
     queryAgentes        = new QSqlQueryModel(this);
@@ -118,9 +121,6 @@ void frmClientes::init()
     ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
     ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate(this,false));
     ui->tablaAsientos->setItemDelegateForColumn(8, new MonetaryDelegate(this,false));
-
-    ui->tablaTickets->setItemDelegateForColumn(2, new ColumnaFecha(this));
-    ui->tablaTickets->setItemDelegateForColumn(3, new ColumnaFecha(this));
 
     ui->tablaVales->setItemDelegateForColumn(2, new DateDelegate(this));
     ui->tablaVales->setItemDelegateForColumn(3, new DateDelegate(this));
@@ -158,7 +158,7 @@ void frmClientes::init()
     ui->tablaFacturas                ->setModel(Facturas);
     ui->tablaPresupuestos            ->setModel(Presupuestos);
     ui->tablaVales                   ->setModel(Vales);
-    ui->tablaTickets                 ->setModel(Tickets);
+
     ui->lista_direccionesAlternativas->setModel(qModeldireccion);
     ui->tablaAsientos                ->setModel(modelAsientos);
     ui->TablaAlbaranes               ->setModel(Albaranes);
@@ -479,11 +479,13 @@ void frmClientes::LLenarCampos()
     Pedidos->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->tablaPedidos->setColumnWidth(0,0);
-    ui->tablaPedidos->setColumnWidth(1,85);
-    ui->tablaPedidos->setColumnWidth(2,85);
-    ui->tablaPedidos->setColumnWidth(3,85);
-    ui->tablaPedidos->setColumnWidth(4,85);
-    ui->tablaPedidos->setColumnWidth(5,85);
+    ui->tablaPedidos->setColumnWidth(1,195);
+    ui->tablaPedidos->setColumnWidth(2,195);
+    ui->tablaPedidos->setColumnWidth(3,195);
+    ui->tablaPedidos->setColumnWidth(4,195);
+    //ui->tablaPedidos->setColumnWidth(5,85);
+
+    ui->tablaPedidos->setColumnHidden(0,true);
 
     Pedidos->setHeaderData(1, Qt::Horizontal, QObject::tr("PEDIDO"));
     Pedidos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -497,10 +499,12 @@ void frmClientes::LLenarCampos()
     Albaranes->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->TablaAlbaranes->setColumnWidth(0,0);
-    ui->TablaAlbaranes->setColumnWidth(1,85);
-    ui->TablaAlbaranes->setColumnWidth(2,85);
-    ui->TablaAlbaranes->setColumnWidth(3,85);
-    ui->TablaAlbaranes->setColumnWidth(4,85);       
+    ui->TablaAlbaranes->setColumnWidth(1,240);
+    ui->TablaAlbaranes->setColumnWidth(2,240);
+    ui->TablaAlbaranes->setColumnWidth(3,240);
+    //ui->TablaAlbaranes->setColumnWidth(4,85);
+
+    ui->TablaAlbaranes->setColumnHidden(0,true);
 
     Albaranes->setHeaderData(1, Qt::Horizontal, QObject::tr("ALBARAN"));
     Albaranes->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -514,10 +518,12 @@ void frmClientes::LLenarCampos()
     Facturas->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->tablaFacturas->setColumnWidth(0,0);
-    ui->tablaFacturas->setColumnWidth(1,85);
-    ui->tablaFacturas->setColumnWidth(2,85);
-    ui->tablaFacturas->setColumnWidth(3,85);
-    ui->tablaFacturas->setColumnWidth(4,85);
+    ui->tablaFacturas->setColumnWidth(1,240);
+    ui->tablaFacturas->setColumnWidth(2,240);
+    ui->tablaFacturas->setColumnWidth(3,240);
+    //ui->tablaFacturas->setColumnWidth(4,85);
+
+    ui->tablaFacturas->setColumnHidden(0,true);
 
     Facturas->setHeaderData(1, Qt::Horizontal, QObject::tr("FACTURA"));
     Facturas->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -531,10 +537,12 @@ void frmClientes::LLenarCampos()
     Presupuestos->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->tablaPresupuestos->setColumnWidth(0,0);
-    ui->tablaPresupuestos->setColumnWidth(1,85);
-    ui->tablaPresupuestos->setColumnWidth(2,85);
-    ui->tablaPresupuestos->setColumnWidth(3,85);
-    ui->tablaPresupuestos->setColumnWidth(4,85);
+    ui->tablaPresupuestos->setColumnWidth(1,240);
+    ui->tablaPresupuestos->setColumnWidth(2,240);
+    ui->tablaPresupuestos->setColumnWidth(3,240);
+   // ui->tablaPresupuestos->setColumnWidth(4,85);
+
+    ui->tablaPresupuestos->setColumnHidden(0,true);
 
     Presupuestos->setHeaderData(1, Qt::Horizontal, QObject::tr("PRES"));
     Presupuestos->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
@@ -548,31 +556,18 @@ void frmClientes::LLenarCampos()
     Vales->setQuery(cSQL,Configuracion_global->empresaDB);
 
     ui->tablaVales->setColumnWidth(0,0);
-    ui->tablaVales->setColumnWidth(1,85);
-    ui->tablaVales->setColumnWidth(2,85);
-    ui->tablaVales->setColumnWidth(3,85);
-    ui->tablaVales->setColumnWidth(4,85);
+    ui->tablaVales->setColumnWidth(1,240);
+    ui->tablaVales->setColumnWidth(2,240);
+    ui->tablaVales->setColumnWidth(3,240);
+    //ui->tablaVales->setColumnWidth(4,85);
+
+    ui->tablaVales->setColumnHidden(0,true);
 
     Vales->setHeaderData(1, Qt::Horizontal, QObject::tr("VALE"));
     Vales->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
     Vales->setHeaderData(3, Qt::Horizontal, QObject::tr("VTO."));
     Vales->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
-    /********************************************************************
-    * TICKETS
-    *******************************************************************/
-    cSQL= "Select id,ticket,fecha,hora,importe from cab_tpv where id_cliente =" + QString::number(oCliente->id);
-    Tickets->setQuery(cSQL,Configuracion_global->empresaDB);
 
-    ui->tablaTickets->setColumnWidth(0,0);
-    ui->tablaTickets->setColumnWidth(1,85);
-    ui->tablaTickets->setColumnWidth(2,85);
-    ui->tablaTickets->setColumnWidth(3,85);
-    ui->tablaTickets->setColumnWidth(4,85);
-
-    Tickets->setHeaderData(1, Qt::Horizontal, QObject::tr("TICKET"));
-    Tickets->setHeaderData(2, Qt::Horizontal, QObject::tr("FECHA"));
-    Tickets->setHeaderData(3, Qt::Horizontal, QObject::tr("HORA"));
-    Tickets->setHeaderData(4, Qt::Horizontal, QObject::tr("TOTAL"));
 
     //----------------------
     // Asientos contables
@@ -1293,19 +1288,9 @@ void frmClientes::menu_deudas(QPoint position)
     actionFraccion->deleteLater();
 }
 
-void frmClientes::cobrar_deuda()
-{
-// TODO COBRAR DEUDA
-}
-
-void frmClientes::cobrar_fraccion()
-{
-// TODO COBRAR fraccion
-}
-
 void frmClientes::ver_asiento()
 {
-// TODO ver_asiento
+// TODO ver_asiento contabilidad
 }
 
 void frmClientes::refrescar_grafica()

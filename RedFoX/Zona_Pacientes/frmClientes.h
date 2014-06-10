@@ -81,8 +81,6 @@ private slots:
     void Contactos();
     void menu_deudas(QPoint);
 
-    void cobrar_deuda();
-    void cobrar_fraccion();
     void ver_asiento();
     void refrescar_grafica();
     void set_blink();
@@ -144,7 +142,6 @@ private:
     QSqlQueryModel *Facturas;
     QSqlQueryModel *Presupuestos;
     QSqlQueryModel *Vales;
-    QSqlQueryModel *Tickets;
     QSqlQueryModel *modelAsientos;
     QSqlQueryModel *queryTransportistas;
     QSqlQueryModel *queryAgentes;

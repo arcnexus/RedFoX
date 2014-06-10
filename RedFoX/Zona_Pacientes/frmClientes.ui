@@ -315,7 +315,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>5</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_datos">
           <property name="styleSheet">
@@ -2868,6 +2868,9 @@ color: rgb(255,255,255);</string>
                     <property name="selectionMode">
                      <enum>QAbstractItemView::SingleSelection</enum>
                     </property>
+                    <attribute name="horizontalHeaderStretchLastSection">
+                     <bool>true</bool>
+                    </attribute>
                    </widget>
                   </item>
                  </layout>
@@ -2885,26 +2888,9 @@ color: rgb(255,255,255);</string>
                     <property name="selectionMode">
                      <enum>QAbstractItemView::SingleSelection</enum>
                     </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QWidget" name="tab_11">
-                 <attribute name="title">
-                  <string>Tiquets</string>
-                 </attribute>
-                 <layout class="QGridLayout" name="gridLayout_12">
-                  <item row="0" column="0">
-                   <widget class="QTableView" name="tablaTickets">
-                    <property name="alternatingRowColors">
+                    <attribute name="horizontalHeaderStretchLastSection">
                      <bool>true</bool>
-                    </property>
-                    <property name="selectionMode">
-                     <enum>QAbstractItemView::SingleSelection</enum>
-                    </property>
-                    <property name="selectionBehavior">
-                     <enum>QAbstractItemView::SelectRows</enum>
-                    </property>
+                    </attribute>
                    </widget>
                   </item>
                  </layout>
@@ -2925,6 +2911,9 @@ color: rgb(255,255,255);</string>
                     <property name="selectionBehavior">
                      <enum>QAbstractItemView::SelectRows</enum>
                     </property>
+                    <attribute name="horizontalHeaderStretchLastSection">
+                     <bool>true</bool>
+                    </attribute>
                    </widget>
                   </item>
                  </layout>
@@ -2932,7 +2921,7 @@ color: rgb(255,255,255);</string>
                </widget>
               </item>
               <item>
-               <widget class="QFrame" name="frame_4">
+               <widget class="QFrame" name="frameConta">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -3171,7 +3160,6 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>tablaPedidos</tabstop>
   <tabstop>TablaAlbaranes</tabstop>
   <tabstop>tablaFacturas</tabstop>
-  <tabstop>tablaTickets</tabstop>
   <tabstop>tablaVales</tabstop>
   <tabstop>tabla_busquedas</tabstop>
  </tabstops>
