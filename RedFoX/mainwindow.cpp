@@ -626,6 +626,7 @@ void MainWindow::loadAminModules(QSplashScreen *splash)
         splash->showMessage(tr("Cargando modulos... Modulo de Administracion: Configurar empresa")  ,Qt::AlignLeft,Qt::white);
         QApplication::processEvents();
         FrmEmpresas* e = new FrmEmpresas(this);
+        e->hide_salir();
         _adminModules.append(e);
     }
 }

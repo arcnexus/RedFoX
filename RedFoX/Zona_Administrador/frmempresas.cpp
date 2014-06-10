@@ -4,6 +4,8 @@
 #include "../Zona_Administrador/frmconfigurar_terminal.h"
 
 #include <QFileDialog>
+#include <QCompleter>
+
 FrmEmpresas::FrmEmpresas(QWidget *parent) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmEmpresas),
@@ -13,6 +15,26 @@ FrmEmpresas::FrmEmpresas(QWidget *parent) :
     on_btn_inicio_clicked();
     ui->cboSerie->addItem("A");
     getEmpresas();
+
+    pob_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
+
+    pob_completer = new QCompleter(pob_completer_model,this);
+    pob_completer_model->setTable("municipios");
+
+    pob_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    pob_completer->setCompletionColumn(3);
+    ui->txtpoblacion->setCompleter(pob_completer);
+    ui->txtpoblacion_3->setCompleter(pob_completer);
+
+    calle_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
+    calle_completer_model->setTable("calles");
+    calle_completer = new QCompleter(calle_completer_model,this);
+    calle_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    calle_completer->setCompletionColumn(2);
+
+    ui->txtdireccion1->setCompleter(calle_completer);
+    ui->txtdireccion1_3->setCompleter(calle_completer);
+
 }
 
 FrmEmpresas::~FrmEmpresas()
@@ -96,6 +118,11 @@ void FrmEmpresas:: CargarCamposEnEmpresa()
 
     oEmpresa.irpf = ui->chkIRPF->isChecked();
     oEmpresa.porc_irpf = ui->spinPorc_irpf->value();
+}
+
+void FrmEmpresas::hide_salir()
+{
+    ui->btn_salir->setVisible(false);
 }
 
 void FrmEmpresas::groupError(QString s)
@@ -1119,4 +1146,68 @@ void FrmEmpresas::on_btnCambiarLogo_edit_clicked()
         ui->label_logo_edit->setMaximumSize(p.size());
         ui->label_logo_edit->setPixmap(p);
     }
+}
+
+void FrmEmpresas::on_txtcp_editingFinished()
+{
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovincia->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->cboPais_create->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1){
+            ui->txtpoblacion->setText("");
+            ui->txtpoblacion->setFocus();
+        }
+        else
+            ui->txtdireccion1->setFocus();
+    }
+}
+
+void FrmEmpresas::on_txtdireccion1_editingFinished()
+{
+    if(!ui->txtprovincia->text().isEmpty())
+        ui->txtcif->setFocus();
+}
+
+void FrmEmpresas::on_txtcp_3_editingFinished()
+{
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp_3->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion_3->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovincia_3->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->cboPais_edit->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1){
+            ui->txtpoblacion_3->setText("");
+            ui->txtpoblacion_3->setFocus();
+        }
+        else
+            ui->txtdireccion1_3->setFocus();
+    }
+}
+
+void FrmEmpresas::on_txtdireccion1_3_editingFinished()
+{
+    if(!ui->txtprovincia_3->text().isEmpty())
+        ui->txtcif_3->setFocus();
 }

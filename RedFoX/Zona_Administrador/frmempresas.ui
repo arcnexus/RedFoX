@@ -7,18 +7,44 @@
     <x>0</x>
     <y>0</y>
     <width>1291</width>
-    <height>612</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Gestión de empresas</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../maya.qrc">
     <normaloff>:/Icons/PNG/NeuX.png</normaloff>:/Icons/PNG/NeuX.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="1" column="0" colspan="2">
+   <item row="0" column="2">
+    <widget class="QPushButton" name="btn_inicio">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Inicio</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="btn_salir">
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Salir</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -37,7 +63,7 @@
           <string>Añadir Empresa</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/empresa.png</normaloff>:/Icons/PNG/empresa.png</iconset>
          </property>
          <property name="iconSize">
@@ -63,7 +89,7 @@
           <string>Editar Empresa</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/empresa.png</normaloff>:/Icons/PNG/empresa.png</iconset>
          </property>
          <property name="iconSize">
@@ -86,7 +112,7 @@
           <string>Configurar Terminal</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/Config.png</normaloff>:/Icons/PNG/Config.png</iconset>
          </property>
          <property name="iconSize">
@@ -218,6 +244,9 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
            <height>16777215</height>
           </size>
          </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="2" column="0" colspan="2">
@@ -240,6 +269,9 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
            <width>200</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -279,6 +311,9 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
          </property>
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -418,7 +453,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0" colspan="2">
+           <item row="1" column="0" colspan="2">
             <widget class="QLabel" name="label_13">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -431,58 +466,14 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="0" column="2">
+           <item row="1" column="2">
             <widget class="QLineEdit" name="txtdireccion1">
              <property name="clearButtonEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>C.P.:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QLineEdit" name="txtcp">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_50">
-               <property name="text">
-                <string>Población</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtpoblacion">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0" colspan="2">
+           <item row="3" column="0" colspan="2">
             <widget class="QLabel" name="label_15">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -495,7 +486,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
+           <item row="3" column="2">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
               <widget class="QLineEdit" name="txtprovincia">
@@ -548,7 +539,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </item>
             </layout>
            </item>
-           <item row="3" column="0" colspan="2">
+           <item row="4" column="0" colspan="2">
             <widget class="QLabel" name="label_22">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -567,7 +558,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="4" column="2">
             <widget class="QLineEdit" name="txtcif">
              <property name="maximumSize">
               <size>
@@ -580,7 +571,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="2">
+           <item row="5" column="0" colspan="2">
             <widget class="QLabel" name="label_23">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -593,14 +584,14 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="4" column="2">
+           <item row="5" column="2">
             <widget class="QLineEdit" name="txtcInscripcion">
              <property name="clearButtonEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="5" column="0" colspan="2">
+           <item row="6" column="0" colspan="2">
             <widget class="QLabel" name="label_17">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -619,7 +610,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="5" column="2">
+           <item row="6" column="2">
             <widget class="QLineEdit" name="txttelefono1">
              <property name="maximumSize">
               <size>
@@ -635,7 +626,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="6" column="0" colspan="2">
+           <item row="7" column="0" colspan="2">
             <widget class="QLabel" name="label_18">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -654,7 +645,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="6" column="2">
+           <item row="7" column="2">
             <widget class="QLineEdit" name="txttelefono2">
              <property name="maximumSize">
               <size>
@@ -670,7 +661,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="7" column="0" colspan="2">
+           <item row="8" column="0" colspan="2">
             <widget class="QLabel" name="label_19">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -689,7 +680,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="7" column="2">
+           <item row="8" column="2">
             <widget class="QLineEdit" name="txtfax">
              <property name="maximumSize">
               <size>
@@ -708,7 +699,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="8" column="0" colspan="2">
+           <item row="9" column="0" colspan="2">
             <widget class="QLabel" name="label_20">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -727,7 +718,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="8" column="2">
+           <item row="9" column="2">
             <widget class="QLineEdit" name="txtcMail">
              <property name="maximumSize">
               <size>
@@ -746,7 +737,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="9" column="0" colspan="2">
+           <item row="10" column="0" colspan="2">
             <widget class="QLabel" name="label_21">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -765,7 +756,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="9" column="2">
+           <item row="10" column="2">
             <widget class="QLineEdit" name="txtweb">
              <property name="maximumSize">
               <size>
@@ -784,7 +775,7 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
              </property>
             </widget>
            </item>
-           <item row="10" column="1">
+           <item row="11" column="1">
             <spacer name="verticalSpacer_9">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -796,6 +787,50 @@ las cuales compartirán varios datos generales como clientes árticulos... sin n
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_14">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>C.P.:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLineEdit" name="txtcp">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_50">
+               <property name="text">
+                <string>Población</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtpoblacion">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -1297,7 +1332,7 @@ se guarda en el cajón portamonedas).</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap>:/Icons/PNG/Neux_red_fox.png</pixmap>
+                      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux_red_fox.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -2469,7 +2504,7 @@ color: rgb(255, 255, 255);</string>
           <string>Guardar</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../maya.qrc">
            <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
          </property>
         </widget>
@@ -2606,7 +2641,17 @@ color: rgb(255, 255, 255);</string>
            <string>Datos Fiscales y de Gestión</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_30">
-           <item row="0" column="0" colspan="2">
+           <item row="8" column="0" colspan="2">
+            <widget class="QLabel" name="label_192">
+             <property name="text">
+              <string>Fax:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
             <widget class="QLabel" name="label_151">
              <property name="text">
               <string>Dirección:</string>
@@ -2616,45 +2661,14 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="2">
+           <item row="1" column="2">
             <widget class="QLineEdit" name="txtdireccion1_3">
              <property name="clearButtonEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QLineEdit" name="txtcp_3">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_54">
-               <property name="text">
-                <string>Población:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtpoblacion_3">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0" colspan="2">
+           <item row="3" column="0" colspan="2">
             <widget class="QLabel" name="label_152">
              <property name="text">
               <string>Provincia:</string>
@@ -2664,7 +2678,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
+           <item row="3" column="2">
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
               <widget class="QLineEdit" name="txtprovincia_3">
@@ -2704,7 +2718,7 @@ color: rgb(255, 255, 255);</string>
              </item>
             </layout>
            </item>
-           <item row="3" column="0" colspan="2">
+           <item row="4" column="0" colspan="2">
             <widget class="QLabel" name="label_195">
              <property name="minimumSize">
               <size>
@@ -2720,7 +2734,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="4" column="2">
             <widget class="QLineEdit" name="txtcif_3">
              <property name="maximumSize">
               <size>
@@ -2733,7 +2747,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="2">
+           <item row="5" column="0" colspan="2">
             <widget class="QLabel" name="label_196">
              <property name="text">
               <string>Inscripción:</string>
@@ -2743,14 +2757,14 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="2">
+           <item row="5" column="2">
             <widget class="QLineEdit" name="txtcInscripcion_3">
              <property name="clearButtonEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="5" column="0" colspan="2">
+           <item row="6" column="0" colspan="2">
             <widget class="QLabel" name="label_191">
              <property name="text">
               <string>Teléfono 1:</string>
@@ -2760,7 +2774,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="2">
+           <item row="6" column="2">
             <widget class="QLineEdit" name="txttelefono1_3">
              <property name="minimumSize">
               <size>
@@ -2779,7 +2793,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="0" colspan="2">
+           <item row="7" column="0" colspan="2">
             <widget class="QLabel" name="label_193">
              <property name="text">
               <string>Telefono 2:</string>
@@ -2789,7 +2803,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="2">
+           <item row="7" column="2">
             <widget class="QLineEdit" name="txttelefono2_3">
              <property name="maximumSize">
               <size>
@@ -2802,17 +2816,17 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="0" colspan="2">
-            <widget class="QLabel" name="label_192">
+           <item row="9" column="0" colspan="2">
+            <widget class="QLabel" name="label_190">
              <property name="text">
-              <string>Fax:</string>
+              <string>Mail:</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="7" column="2">
+           <item row="8" column="2">
             <widget class="QLineEdit" name="txtfax_3">
              <property name="maximumSize">
               <size>
@@ -2828,17 +2842,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="8" column="0" colspan="2">
-            <widget class="QLabel" name="label_190">
-             <property name="text">
-              <string>Mail:</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="2">
+           <item row="9" column="2">
             <widget class="QLineEdit" name="txtcMail_3">
              <property name="maximumSize">
               <size>
@@ -2854,7 +2858,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="0" colspan="2">
+           <item row="10" column="0" colspan="2">
             <widget class="QLabel" name="label_194">
              <property name="text">
               <string>Web:</string>
@@ -2864,7 +2868,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="9" column="2">
+           <item row="10" column="2">
             <widget class="QLineEdit" name="txtweb_3">
              <property name="maximumSize">
               <size>
@@ -2883,7 +2887,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
-           <item row="10" column="1">
+           <item row="11" column="1">
             <spacer name="verticalSpacer_10">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -2896,7 +2900,7 @@ color: rgb(255, 255, 255);</string>
              </property>
             </spacer>
            </item>
-           <item row="1" column="0" colspan="2">
+           <item row="0" column="0">
             <widget class="QLabel" name="label_153">
              <property name="text">
               <string>C.P.</string>
@@ -2905,6 +2909,37 @@ color: rgb(255, 255, 255);</string>
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
+           </item>
+           <item row="0" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QLineEdit" name="txtcp_3">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_54">
+               <property name="text">
+                <string>Población:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtpoblacion_3">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -3393,7 +3428,7 @@ Numeración correlativa con las facturas.</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap>:/Icons/PNG/Neux_red_fox.png</pixmap>
+                      <pixmap resource="../maya.qrc">:/Icons/PNG/Neux_red_fox.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -4637,7 +4672,7 @@ color: rgb(255, 255, 255);</string>
             <string>Guardar</string>
            </property>
            <property name="icon">
-            <iconset>
+            <iconset resource="../maya.qrc">
              <normaloff>:/Icons/PNG/Save.png</normaloff>:/Icons/PNG/Save.png</iconset>
            </property>
           </widget>
@@ -4688,7 +4723,7 @@ color: rgb(255, 255, 255);</string>
      </widget>
     </widget>
    </item>
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label">
      <property name="styleSheet">
       <string notr="true">background-color: #304163;
@@ -4700,19 +4735,6 @@ color: rgb(255, 255, 255);</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="btn_inicio">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Inicio</string>
      </property>
     </widget>
    </item>
@@ -4914,6 +4936,25 @@ color: rgb(255, 255, 255);</string>
   <tabstop>btn_guardar_edit</tabstop>
   <tabstop>btn_inicio</tabstop>
  </tabstops>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../maya.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>btn_salir</sender>
+   <signal>clicked()</signal>
+   <receiver>FrmEmpresas</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1264</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1288</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

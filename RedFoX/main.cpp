@@ -56,6 +56,11 @@ int main(int argc, char *argv[])
    if(file.open(QFile::ReadOnly))
         a.setStyleSheet(file.readAll());
 
+   QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
+   calles.setDatabaseName(qApp->applicationDirPath() + "/poblaciones/Poblaciones.sqlite");
+   if(!calles.open())
+       QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
+
    Login l;
    int ret = 0;
    if ( l.exec()==QDialog::Accepted)
@@ -180,10 +185,6 @@ bool cargarEmpresa(QSqlRecord record)
 
     }
 
-    QSqlDatabase calles = QSqlDatabase::addDatabase("QSQLITE","calles");
-    calles.setDatabaseName(qApp->applicationDirPath() + "/poblaciones/Poblaciones.sqlite");
-    if(!calles.open())
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al abrir base de datos de poblaciones"),QObject::tr("No funcionará el autocompletado de poblaciones.\Error:\n")+calles.lastError().text());
 
     Configuracion_global->CargarDatosMaestros();
 

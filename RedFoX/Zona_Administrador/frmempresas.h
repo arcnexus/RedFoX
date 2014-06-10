@@ -29,6 +29,7 @@ public:
     QString ModuleMenuPath(){return tr("");}
     QPushButton* wantShortCut(bool& ok){ok = false; return 0;}
 
+    void hide_salir();
 signals:
     void endGroup(bool);
     void _groupError(QString);
@@ -69,6 +70,14 @@ private slots:
 
     void on_btnCambiarLogo_edit_clicked();
 
+    void on_txtcp_editingFinished();
+
+    void on_txtcp_3_editingFinished();
+
+    void on_txtdireccion1_3_editingFinished();
+
+    void on_txtdireccion1_editingFinished();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
@@ -103,6 +112,12 @@ private:
     QSqlQueryModel * monedaEditModel;
     QSqlQueryModel * seriesEditModel;
     QSqlQueryModel * paisesEditModel;
+
+    QCompleter * pob_completer;
+    QSqlTableModel * pob_completer_model;
+
+    QCompleter * calle_completer;
+    QSqlTableModel * calle_completer_model;
 };
 
 #endif // FRMEMPRESAS_H
