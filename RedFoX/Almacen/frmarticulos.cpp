@@ -1165,6 +1165,15 @@ void FrmArticulos::anadir_proveedor_clicked()
     frmAsociar.setAnadir();
     if(frmAsociar.exec() == QDialog::Accepted)
     {
+        for(auto i=0; i< modelProv->rowCount(); ++i)
+        {
+            if(modelProv->record(i).value("id_prov").toInt() == frmAsociar.id_proveedor)
+            {
+                QMessageBox::information(this,tr("Añadir proveedor de artículo"),
+                                         tr("Este proveedor ya forma parte de los proveedores de este artículo."));
+                return;
+            }
+        }
         bool ok = oArticulo->agregar_proveedor_alternativo(oArticulo->id,frmAsociar.id_proveedor,frmAsociar.codigo,frmAsociar.pvd,
                                                  frmAsociar.DescOferta,frmAsociar.Oferta,frmAsociar.pvd_real,frmAsociar.id_divisa);
         if (!ok)
@@ -1184,6 +1193,8 @@ void FrmArticulos::anadir_proveedor_clicked()
 void FrmArticulos::editar_proveedor_clicked()
 {
     QModelIndex celda=ui->tablaProveedores->currentIndex();
+    if(!celda.isValid())
+        return;
     QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
@@ -1203,6 +1214,8 @@ void FrmArticulos::editar_proveedor_clicked()
 void FrmArticulos::borrar_proveedor_clicked()
 {
     QModelIndex celda=ui->tablaProveedores->currentIndex();
+    if(!celda.isValid())
+        return;
     QModelIndex index1=modelProv->index(celda.row(),0);     ///< '0' es la posicion del registro que nos interesa
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
@@ -1234,6 +1247,8 @@ void FrmArticulos::borrar_proveedor_clicked()
 void FrmArticulos::asignar_proveedor_principal_clicked()
 {
     QModelIndex celda=ui->tablaProveedores->currentIndex();
+    if(!celda.isValid())
+        return;
     QModelIndex index1=modelProv->index(celda.row(),8);     ///< '0' es la posicion del registro que nos interesa
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);

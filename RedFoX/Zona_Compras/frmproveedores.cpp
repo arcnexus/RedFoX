@@ -48,7 +48,7 @@ void frmProveedores::init()
     modelAlbaranes = new QSqlQueryModel(this);
     modelEntregas  = new QSqlQueryModel(this);
 
-    ui->tablaArticulos->setItemDelegateForColumn(3,new MonetaryDelegate(this));
+    ui->tablaArticulos->setItemDelegateForColumn(4,new MonetaryDelegate(this));
 
     ui->tablaAsientos->setItemDelegateForColumn(2, new DateDelegate(this));
     ui->tablaAsientos->setItemDelegateForColumn(5, new MonetaryDelegate(this));
@@ -347,18 +347,17 @@ void frmProveedores::LLenarCampos()
     llenar_tabAlmacen();
 
     /* tabArticulos => index 5  */
-    modelArticulo->setQuery("select codigo,codigo_barras, descripcion_reducida,coste "
+    modelArticulo->setQuery("select codigo,codigo_barras,codigo_proveedor,descripcion_reducida,coste "
                             "from vista_art_prov where id_proveedor =" +QString::number(oProveedor->id),
                            Configuracion_global->groupDB);
     QStringList header;
     QVariantList sizes;
-    header  << tr("Código") << tr("Codigo de barras") <<tr("Descripción") <<tr("Coste");
-    sizes << 120 << 120 <<300 << 120 ;
+    header  << tr("Código") << tr("Código de barras")<< tr("Código de proveedor") <<tr("Descripción") <<tr("Coste");
+    sizes << 125 << 160 << 160 << 400 << 20 ;
     for(int cnt =0;cnt<header.length();cnt++)
     {
         modelArticulo->setHeaderData(cnt,Qt::Horizontal,header.at(cnt));
-        ui->tabla->setColumnWidth(cnt,sizes.at(cnt).toInt());
-
+        ui->tablaArticulos->setColumnWidth(cnt,sizes.at(cnt).toInt());
     }
 
     /* txttexto_para_pedidos => index 6 */

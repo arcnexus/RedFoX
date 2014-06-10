@@ -652,7 +652,10 @@ void FrmEmpresas::on_btn_crearGrupo_clicked()
         ui->stackedWidget->setCurrentWidget(ui->create_page_empresa);
     }
     else
+    {
+        QMessageBox::critical(this,tr("Error al creal el grupo"),_targetGroupDb.lastError().text());
         qDebug() << _targetGroupDb.lastError().text();
+    }
 }
 
 void FrmEmpresas::createGroup()
