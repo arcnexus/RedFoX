@@ -299,7 +299,7 @@
        <item row="3" column="1" rowspan="2" colspan="2">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabDatos">
           <attribute name="title">
@@ -1524,19 +1524,6 @@ color: rgb(255,255,255);
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="4" column="0">
             <widget class="QLabel" name="label_49">
              <property name="text">
@@ -1963,14 +1950,7 @@ color: rgb(0, 0, 0);</string>
              </property>
             </spacer>
            </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tabGraf">
-          <attribute name="title">
-           <string>Grafica</string>
-          </attribute>
-          <layout class="QGridLayout" name="gridLayout_15">
-           <item row="0" column="0">
+           <item row="8" column="0" colspan="5">
             <widget class="OpenChart" name="Grafica" native="true">
              <property name="Title" stdset="0">
               <string>Compras ejercicio.</string>
@@ -2009,7 +1989,7 @@ color: rgb(0, 0, 0);</string>
               <enum>QTabWidget::North</enum>
              </property>
              <property name="currentIndex">
-              <number>3</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_8">
               <attribute name="title">

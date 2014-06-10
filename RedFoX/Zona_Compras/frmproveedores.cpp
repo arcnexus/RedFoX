@@ -33,6 +33,10 @@ void frmProveedores::init()
     if(__init)
         return;
     ui->setupUi(this);
+
+    //TODO reactivar con contabilidad
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabConta));
+
     oProveedor     = new Proveedor(this);
     modelBusqueda  = new QSqlQueryModel(this);
     modelArticulo  = new QSqlQueryModel(this);
@@ -405,7 +409,7 @@ void frmProveedores::CargarCamposEnProveedor()
     oProveedor->fax_almacen = ui->txtfax_almacen->text();
     oProveedor->codigoFormaPago = ui->txtcodigoFormaPago->currentText();
     oProveedor->fecha_ultima_compra = ui->txtfecha_ultima_compra->date();
-    oProveedor->importe_acumulado_compras = ui->txtimporte_acumulado_compras->text().replace(".","").replace(",",".").toDouble();
+    //oProveedor->importe_acumulado_compras = ui->txtimporte_acumulado_compras->text().replace(".","").replace(",",".").toDouble();
     oProveedor->entidad_bancaria_proveedor = ui->txtentidad_bancaria_proveedor->text();
     oProveedor->oficina_bancaria_proveedor = ui->txtoficina_bancaria_proveedor->text();
     oProveedor->dc_proveedor = ui->txtdc_proveedor->text();
@@ -876,8 +880,13 @@ void frmProveedores::historiales()
 
 void frmProveedores::acumulados()
 {
-    ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);
-    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->importe_acumulado_compras,'f',Configuracion_global->decimales)));
+    ui->txtfecha_ultima_compra->setDate(oProveedor->fecha_ultima_compra);    
+
+    double total = oProveedor->enero + oProveedor->febrero + oProveedor->marzo + oProveedor->abril;
+    total += (oProveedor->mayo + oProveedor->junio + oProveedor->julio + oProveedor->agosto);
+    total += (oProveedor->septiembre + oProveedor->octubre + oProveedor->noviembre + oProveedor->diciembre);
+
+    ui->txtimporte_acumulado_compras->setText(Configuracion_global->toFormatoMoneda(QString::number(total,'f',Configuracion_global->decimales)));
 
     ui->txtEnero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->enero,'f',Configuracion_global->decimales)));
     ui->txtFebrero->setText(Configuracion_global->toFormatoMoneda(QString::number(oProveedor->febrero,'f',Configuracion_global->decimales)));
