@@ -1074,6 +1074,7 @@ void FrmFacturasProveedor::on_btnAddVencimiento_clicked()
         QMessageBox::information(this,tr("Gestión de Facturas de proveedor"),
                                  tr("Debe especificar el numero de Factura antes de guardar"),tr("Aceptar"));
         ui->txtfactura->setFocus();
+        return;
     }
     double max_fac = oFacPro->total;
     for(int i = 0; i < ui->tabla_vencimientos->rowCount(); ++i)

@@ -490,6 +490,7 @@ void frmProveedores::BloquearCampos(bool state)
     ui->btnGuardar->setEnabled(!state);
     ui->btnSiguiente->setEnabled(state);
     ui->btnAnadir_persona_contacto->setEnabled(!state);
+    ui->btnPagarVencimiento->setEnabled(!state);
 
     m_busqueda->block(!state);
 
@@ -1333,4 +1334,37 @@ void frmProveedores::on_rdbPagados_toggled(bool /*checked*/)
 void frmProveedores::on_rdbTodos_toggled(bool /*checked*/)
 {
     llenar_tabPagos();
+}
+
+void frmProveedores::on_btnPagarVencimiento_clicked()
+{
+    QModelIndex index = ui->tablaPagos->currentIndex();
+    if(!index.isValid())
+        return;
+
+    int id = modeloDeudas->record(index.row()).value("id").toInt();
+    double pendiente = modeloDeudas->record(index.row()).value("pendiente").toDouble();
+
+    if(pendiente == 0)
+        return;
+
+    bool ok;
+    double cantidad = QInputDialog::getDouble(this, tr("Importe pagado"),
+                                       tr("Cantidad:"), pendiente, 0, pendiente, 2, &ok);
+    if(ok)
+    {
+        SqlData data;
+        data["pagado"] = cantidad;
+        data["pendiente"] = pendiente - cantidad;
+        QString error;
+        if(SqlCalls::SqlUpdate(data,"deudas_proveedores",Configuracion_global->groupDB,QString("id=%1").arg(id),error))
+        {
+            TimedMessageBox::Box(this,tr("Vencimiento pagado con éxito"));
+            llenar_tabPagos();
+        }
+        else
+        {
+            QMessageBox::critical(this,tr("Error al pagar vencimiento"),error);
+        }
+    }
 }

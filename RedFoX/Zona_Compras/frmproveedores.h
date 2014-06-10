@@ -121,6 +121,8 @@ private slots:
 
     void on_rdbTodos_toggled(bool checked);
 
+    void on_btnPagarVencimiento_clicked();
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
