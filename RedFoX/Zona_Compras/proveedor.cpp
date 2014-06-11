@@ -155,7 +155,7 @@ void Proveedor::anadir_persona_contacto(int id, QString Nombre, QString desc_tel
                            qContactos.bindValue(":telefono1",Telefono1);
                            qContactos.bindValue( ":telefono2",Telefono2);
                            qContactos.bindValue(":telefono3",Telefono3);
-                           qContactos.bindValue(":movil",Movil1);
+                           qContactos.bindValue(":movil1",Movil1);
                            qContactos.bindValue(":movil2",Movil2);
                            qContactos.bindValue(":id_proveedor",id);
                            qContactos.bindValue(":desc_telefono1",desc_telefono1);

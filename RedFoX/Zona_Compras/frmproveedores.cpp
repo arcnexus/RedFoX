@@ -1000,7 +1000,7 @@ void frmProveedores::nuevo_contacto()
                                    ui->txtTelefono1->text(),ui->txtDescripcionT2->text(),ui->txtTelefono2->text(),
                                    ui->txtDescripcionT3->text(),ui->txtTelefono3->text(),ui->txtDescripcionM1->text(),
                                    ui->txtMovil1->text(),ui->txtDescripcionM2->text(),ui->txtMovil2->text(),ui->txtCargo->text(),
-                                        ui->txtemail_contacto->text());
+                                   ui->txtemail_contacto->text());
     ui->txtDescripcionM1->setText("");
     ui->txtDescripcionM2->setText("");
     ui->txtDescripcionT1->setText("");
@@ -1043,19 +1043,19 @@ void frmProveedores::guardar_contacto()
 
     contactos();
     ui->btnGuardarContacto->setVisible(false);
-    ui->txtDescripcionM1->setReadOnly(true);
-    ui->txtDescripcionM2->setReadOnly(true);
-    ui->txtDescripcionT1->setReadOnly(true);
-    ui->txtDescripcionT2->setReadOnly(true);
-    ui->txtDescripcionT3->setReadOnly(true);
-    ui->txtMovil1->setReadOnly(true);
-    ui->txtMovil2->setReadOnly(true);
-    ui->txtNombre->setReadOnly(true);
-    ui->txtTelefono1->setReadOnly(true);
-    ui->txtTelefono2->setReadOnly(true);
-    ui->txtTelefono3->setReadOnly(true);
-    ui->txtCargo->setReadOnly(true);
-    ui->txtemail->setReadOnly(true);
+//    ui->txtDescripcionM1->setReadOnly(true);
+//    ui->txtDescripcionM2->setReadOnly(true);
+//    ui->txtDescripcionT1->setReadOnly(true);
+//    ui->txtDescripcionT2->setReadOnly(true);
+//    ui->txtDescripcionT3->setReadOnly(true);
+//    ui->txtMovil1->setReadOnly(true);
+//    ui->txtMovil2->setReadOnly(true);
+//    ui->txtNombre->setReadOnly(true);
+//    ui->txtTelefono1->setReadOnly(true);
+//    ui->txtTelefono2->setReadOnly(true);
+//    ui->txtTelefono3->setReadOnly(true);
+//    ui->txtCargo->setReadOnly(true);
+//    ui->txtemail->setReadOnly(true);
 }
 
 void frmProveedores::editar_contacto()
