@@ -335,7 +335,7 @@ void frmFacturas::LLenarCampos()
 
 
     // DIRECCION ALTERNATIVA    
-    model_dir_entrega->setQuery(QString("Select * from cliente_direcciones where id_cliente = %1").arg(oCliente1->id));
+    model_dir_entrega->setQuery(QString("Select * from cliente_direcciones where id_cliente = %1").arg(oCliente1->id),Configuracion_global->groupDB);
 
     ui->txtDireccion1_entrega->setText(oFactura->direccion1_entrega);
     ui->txtDireccion2_entrega->setText(oFactura->direccion2_entrega);
@@ -459,7 +459,7 @@ void frmFacturas::LLenarCamposCliente()
     oFactura->id_forma_pago = oCliente1->id_forma_pago;
     oFactura->tarifa_cliente = oCliente1->idTarifa;
 
-    model_dir_entrega->setQuery(QString("Select * from cliente_direcciones where id_cliente = %1").arg(oCliente1->id));
+    model_dir_entrega->setQuery(QString("Select * from cliente_direcciones where id_cliente = %1").arg(oCliente1->id),Configuracion_global->groupDB);
     ui->cboDireccionesEntrega->setCurrentIndex(0);
 }
 

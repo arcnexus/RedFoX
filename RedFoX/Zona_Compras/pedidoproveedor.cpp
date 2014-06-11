@@ -131,8 +131,9 @@ bool PedidoProveedor::guardar()
     _data["telefono"]= telefono;
     _data["fax"]= fax;
     _data["movil"]= movil;
+    _data["impreso"]= impreso;
     /*
-    _data["impreso"]= ;
+     ;
     _data["editable"]= ;
     _data["gasto_to_coste"]= ;*/
 
@@ -341,6 +342,7 @@ bool PedidoProveedor::cargar(QSqlQuery *queryPedido)
         movil = queryPedido->record().value("movil").toString();
 
         porc_dto = queryPedido->record().value("porc_dto").toDouble();
+        impreso = queryPedido->record().value("impreso").toBool();
         return true;
     }
         return false;

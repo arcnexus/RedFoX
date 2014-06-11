@@ -18,7 +18,7 @@ FrmExcepciones::FrmExcepciones(QWidget *parent) :
     this->id_agente = 0;
     this->id_articulo = 0;
     m = new QSqlQueryModel(this);
-    m->setQuery("select id,");
+    //m->setQuery("select id,");
     ui->txt_codigo_articulo->installEventFilter(this);
     ui->txt_codigo_cliente->installEventFilter(this);
     ui->txt_codigo_familia->installEventFilter(this);

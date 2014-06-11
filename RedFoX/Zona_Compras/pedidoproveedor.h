@@ -98,6 +98,8 @@ public:
     QString telefono;
     QString fax;
     QString movil;
+
+    bool impreso;
 signals:
     
 public slots:

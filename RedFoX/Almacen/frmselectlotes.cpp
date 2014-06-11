@@ -9,7 +9,7 @@ frmSelectLotes::frmSelectLotes(QWidget *parent) :
 {
     ui->setupUi(this);
     modelo = new QSqlQueryModel(this);
-    modelo->setQuery("select * from articulos_lotes where id = 0");
+    modelo->setQuery("select * from articulos_lotes where id = 0",Configuracion_global->groupDB);
     ui->tablaLotes->setModel(modelo);
     QStringList headers;
     QVariantList sizes;

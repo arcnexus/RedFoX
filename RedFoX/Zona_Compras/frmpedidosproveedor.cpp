@@ -12,6 +12,8 @@
 #include "Auxiliares/numericdelegate.h"
 #include "Auxiliares/frmgastos_ped_pro.h"
 
+#include <QCompleter>
+
 FrmPedidosProveedor::FrmPedidosProveedor(QWidget *parent, bool showCerrar) :
     MayaModule(module_zone(),module_name(),parent),
     ui(new Ui::FrmPedidosProveedor),
@@ -124,6 +126,27 @@ void FrmPedidosProveedor::init()
     for( it = l.begin() ;it!= l.end();++it )
         (*it)->installEventFilter(this);
     bloquearcampos(true);
+
+    pob_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
+
+    pob_completer = new QCompleter(pob_completer_model,this);
+    pob_completer_model->setTable("municipios");
+
+    pob_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    pob_completer->setCompletionColumn(3);
+    ui->txtpoblacion->setCompleter(pob_completer);
+    ui->txtpoblacion_entrega->setCompleter(pob_completer);
+
+    calle_completer_model = new QSqlTableModel(this,QSqlDatabase::database("calles"));
+    calle_completer_model->setTable("calles");
+    calle_completer = new QCompleter(calle_completer_model,this);
+    calle_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    calle_completer->setCompletionColumn(2);
+    ui->txtdireccion1->setCompleter(calle_completer);
+    ui->txtdireccion2->setCompleter(calle_completer);
+    ui->txtdireccion_entrega1->setCompleter(calle_completer);
+    ui->txtdireccion_entrega1_2->setCompleter(calle_completer);
+
     __init = true;
 }
 
@@ -193,6 +216,7 @@ void FrmPedidosProveedor::bloquearcampos(bool state)
     ui->btnAnadir->setEnabled(state);
     ui->btnBuscar->setEnabled(state);
     ui->btnPrev->setEnabled(state);
+    ui->btnImprimir->setEnabled(state);
     ui->btn_borrar->setEnabled(state);
     ui->btnDeshacer->setEnabled(!state);
     ui->btnEditar->setEnabled(state);
@@ -200,7 +224,7 @@ void FrmPedidosProveedor::bloquearcampos(bool state)
     ui->btnNext->setEnabled(state);
     ui->btnAnadirLinea->setEnabled(!state);
     ui->btn_borrarLinea->setEnabled(!state);
-    ui->botBuscarCliente->setEnabled(!state);
+    ui->botBuscarCliente->setEnabled(!state);    
     m_busqueda->block(!state);
 }
 
@@ -306,6 +330,7 @@ void FrmPedidosProveedor::borrar_pedido()
 void FrmPedidosProveedor::llenar_campos()
 {
     this->id =oPedido_proveedor->id;
+    ui->lbimpreso->setVisible(oPedido_proveedor->impreso);
     ui->txtpedido->setText(oPedido_proveedor->pedido);
     ui->lblnumero_pedido->setText(oPedido_proveedor->pedido);
     ui->lblnombreProveedor->setText(oPedido_proveedor->proveedor);
@@ -615,46 +640,47 @@ void FrmPedidosProveedor::on_btnImprimir_clicked()
         int _id = model_busqueda->record(ui->tabla->currentIndex().row()).value("id").toInt();
         oPedido_proveedor->recuperar(_id);
         llenar_campos();
-    }
+    }   
+
     FrmDialogoImprimir dlg_print(this);
     dlg_print.set_email(prov.email);
     dlg_print.set_preview(false);
     if(dlg_print.exec() == dlg_print.Accepted)
     {
-        bool ok  = true/* = oFactura->set_impresa(true)*/;
-        if(ok)
-        {
-            ui->lbimpreso->setVisible(true);
-            int valor = dlg_print.get_option();
-            QMap <QString,QString> parametros_sql;
-            parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
-            parametros_sql["Empresa.ped_pro"] = QString("id = %1").arg(oPedido_proveedor->id);
-            parametros_sql["Empresa.lin_ped_pro"] = QString("id_cab = %1").arg(oPedido_proveedor->id);
-            QString report = "ped_pro_"+QString::number(1);//TODO idioma en proveedores??
+        oPedido_proveedor->impreso = true;
+        if(!oPedido_proveedor->guardar())
+            return;
 
-            QString pdfname = QString("Pedido-%1").arg(oPedido_proveedor->pedido);
-            QString asunto = tr("Envio de pedido %1").arg(oPedido_proveedor->pedido);
-            QString texto = tr("Estimado/a %1:\n"
-                             "Le adjunto el pedido nº %2.\n\n"
-                             "Un saludo.").arg(oPedido_proveedor->proveedor).arg(oPedido_proveedor->pedido);
-            QMap <QString,QString> parametros;
-            //TODO add parametros
-            switch (valor) {
-            case 1: // Impresora
-                Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
-                break;
-            case 2: // email
-                Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,dlg_print.get_email(),oPedido_proveedor->proveedor,asunto,texto);
-                break;
-            case 3: // PDF
-                Configuracion::ImprimirPDF(report,parametros_sql,parametros);
-                break;
-            case 4: //preview
-                Configuracion::ImprimirPreview(report,parametros_sql,parametros);
-                break;
-            default:
-                break;
-            }
+        ui->lbimpreso->setVisible(true);
+        int valor = dlg_print.get_option();
+        QMap <QString,QString> parametros_sql;
+        parametros_sql["General.empresas"] = QString("id = %1").arg(Configuracion_global->idEmpresa);
+        parametros_sql["Empresa.ped_pro"] = QString("id = %1").arg(oPedido_proveedor->id);
+        parametros_sql["Empresa.lin_ped_pro"] = QString("id_cab = %1").arg(oPedido_proveedor->id);
+        QString report = "ped_pro_"+QString::number(1);//TODO idioma en proveedores??
+
+        QString pdfname = QString("Pedido-%1").arg(oPedido_proveedor->pedido);
+        QString asunto = tr("Envio de pedido %1").arg(oPedido_proveedor->pedido);
+        QString texto = tr("Estimado/a %1:\n"
+                           "Le adjunto el pedido nº %2.\n\n"
+                           "Un saludo.").arg(oPedido_proveedor->proveedor).arg(oPedido_proveedor->pedido);
+        QMap <QString,QString> parametros;
+        //TODO add parametros
+        switch (valor) {
+        case 1: // Impresora
+            Configuracion::ImprimirDirecto(report,parametros_sql,parametros);
+            break;
+        case 2: // email
+            Configuracion::EviarMail(report,parametros_sql,parametros,pdfname,dlg_print.get_email(),oPedido_proveedor->proveedor,asunto,texto);
+            break;
+        case 3: // PDF
+            Configuracion::ImprimirPDF(report,parametros_sql,parametros);
+            break;
+        case 4: //preview
+            Configuracion::ImprimirPreview(report,parametros_sql,parametros);
+            break;
+        default:
+            break;
         }
     }
 }
@@ -1214,4 +1240,62 @@ void FrmPedidosProveedor::on_btn_borrarLinea_clicked()
         }
         ui->Lineas->setFocus();
     }
+}
+
+void FrmPedidosProveedor::on_txtcp_editingFinished()
+{
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovincia->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->combo_pais->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1){
+            ui->txtpoblacion->setText("");
+            ui->txtpoblacion->setFocus();
+        }
+        else
+            ui->txtdireccion1->setFocus();
+    }
+}
+
+void FrmPedidosProveedor::on_txtcp_entrega_editingFinished()
+{
+    if(!QSqlDatabase::database("calles").isOpen())
+        return;
+    QString cp = QString("CodPostal = '%1'").arg(ui->txtcp->text());
+    pob_completer_model->setFilter(cp);
+    pob_completer_model->select();
+
+    calle_completer_model->setFilter(cp);
+    calle_completer_model->select();
+
+    if(pob_completer_model->rowCount() > 0)
+    {
+        ui->txtpoblacion_entrega->setText(pob_completer_model->record(0).value("Municipio").toString());
+        ui->txtprovincia_entrega->setText(pob_completer_model->record(0).value("CodProv").toString());
+        ui->combo_pais_entrega->setCurrentText("España");
+
+        if(pob_completer_model->rowCount() > 1){
+            ui->txtpoblacion_entrega->setText("");
+            ui->txtpoblacion_entrega->setFocus();
+        }
+        else
+            ui->txtdireccion_entrega1->setFocus();
+    }
+}
+
+void FrmPedidosProveedor::on_txtdireccion_entrega1_2_editingFinished()
+{
+    if(!ui->txtprovincia_entrega->text().isEmpty())
+        ui->txtFechaLimite->setFocus();
 }

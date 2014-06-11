@@ -700,7 +700,7 @@ void MainWindow::loadModules()
     loadComprasModules(&splash);
     loadVentasModules(&splash);    
     loadUtilsModules(&splash);    
-    loadContaModules(&splash);    
+    //loadContaModules(&splash);
     loadAminModules(&splash);
 
     crear_barraMantenimiento();
@@ -708,7 +708,7 @@ void MainWindow::loadModules()
     crear_barraCompras();
     crear_barraVentas();
     crear_barraUtils();
-    crear_barraContabilidad();
+    //crear_barraContabilidad();
     crear_barraAdmin();
   //  loadSecMedModules(&splash);
   //  crear_barraClinica();

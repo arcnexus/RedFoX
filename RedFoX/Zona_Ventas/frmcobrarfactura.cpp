@@ -32,7 +32,7 @@ void FrmCobrarFactura::setFactura(int id)
 {
     _idFactura = id;
     vencimientos->setQuery(QString("select id,fecha,vencimiento,importe,pagado,pendiente_cobro from clientes_deuda where id_factura = %1 and id_empresa = %2;")
-                           .arg(id).arg(Configuracion_global->idEmpresa));
+                           .arg(id).arg(Configuracion_global->idEmpresa),Configuracion_global->groupDB);
     QStringList headers;
     QVariantList sizes;
     headers  <<"id"  <<tr("Fecha") <<tr("Vencimiento") <<tr("Importe") << tr("Pagado") <<tr("Pendiente");

@@ -93,6 +93,12 @@ private slots:
 
     void on_btn_borrarLinea_clicked();
 
+    void on_txtcp_editingFinished();
+
+    void on_txtcp_entrega_editingFinished();
+
+    void on_txtdireccion_entrega1_2_editingFinished();
+
 private:
 
     void formatotabla();
@@ -114,6 +120,12 @@ private:
 
     QSqlQueryModel *modelgastos;
     QSqlQueryModel *modelEntregas;
+
+    QCompleter * pob_completer;
+    QSqlTableModel * pob_completer_model;
+
+    QCompleter * calle_completer;
+    QSqlTableModel * calle_completer_model;
 };
 
 #endif // FRMPEDidOSPROVEEDOR_H

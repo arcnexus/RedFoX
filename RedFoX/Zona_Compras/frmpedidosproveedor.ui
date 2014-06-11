@@ -28,19 +28,23 @@
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_5">
-       <property name="rightMargin">
-        <number>20</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_18">
-         <property name="maximumSize">
+       <item row="0" column="5">
+        <widget class="QLabel" name="lbimpreso">
+         <property name="minimumSize">
           <size>
-           <width>100</width>
-           <height>16777215</height>
+           <width>150</width>
+           <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
-          <string>PEDIDO:</string>
+          <string>IMPRESO</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -57,27 +61,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_21">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>PROVEEDOR:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="lblnombreProveedor">
-         <property name="text">
-          <string>AAAAAAAAAAAAAl</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="4">
+       <item row="1" column="0" colspan="6">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
           <number>0</number>
@@ -113,13 +97,6 @@ color: rgb(255,255,255);</string>
               </item>
               <item>
                <widget class="QLineEdit" name="txtpedido"/>
-              </item>
-              <item>
-               <widget class="QLabel" name="lbimpreso">
-                <property name="text">
-                 <string>IMPRESO</string>
-                </property>
-               </widget>
               </item>
               <item>
                <widget class="QLabel" name="label">
@@ -528,31 +505,24 @@ color: rgb(255,255,255);</string>
               <bool>false</bool>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_38">
-                <property name="text">
-                 <string>Dirección:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="txtdireccion_entrega1">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QLabel" name="label_41">
                 <property name="text">
                  <string>Dirección 2:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_19">
+                <property name="text">
+                 <string>Horario Entrega:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="txtHorarioEntrega"/>
+              </item>
+              <item row="2" column="1">
                <widget class="QLineEdit" name="txtdireccion_entrega1_2">
                 <property name="minimumSize">
                  <size>
@@ -562,64 +532,7 @@ color: rgb(255,255,255);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_31">
-                <property name="text">
-                 <string>C.P</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <widget class="QLineEdit" name="txtcp_entrega">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>100</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_40">
-                  <property name="text">
-                   <string>Población:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="txtpoblacion_entrega">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>25</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_39">
-                <property name="text">
-                 <string>Provincia:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
+              <item row="4" column="1">
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <item>
                  <widget class="QLineEdit" name="txtprovincia_entrega">
@@ -668,14 +581,7 @@ color: rgb(255,255,255);</string>
                 </item>
                </layout>
               </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_23">
-                <property name="text">
-                 <string>F. limite:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
+              <item row="5" column="1">
                <widget class="QDateEdit" name="txtFechaLimite">
                 <property name="maximumSize">
                  <size>
@@ -688,14 +594,14 @@ color: rgb(255,255,255);</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_42">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_38">
                 <property name="text">
-                 <string>Fecha Recepción: </string>
+                 <string>Dirección:</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
+              <item row="6" column="1">
                <widget class="QDateEdit" name="txtfechaRecepcion">
                 <property name="minimumSize">
                  <size>
@@ -717,15 +623,86 @@ color: rgb(255,255,255);</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_19">
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_23">
                 <property name="text">
-                 <string>Horario Entrega:</string>
+                 <string>F. limite:</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="txtHorarioEntrega"/>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_39">
+                <property name="text">
+                 <string>Provincia:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="txtdireccion_entrega1">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_42">
+                <property name="text">
+                 <string>Fecha Recepción: </string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_31">
+                <property name="text">
+                 <string>C.P</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLineEdit" name="txtcp_entrega">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_40">
+                  <property name="text">
+                   <string>Población:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="txtpoblacion_entrega">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -782,38 +759,6 @@ color: rgb(255,255,255);</string>
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="lbfacturado">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>fecha Factura:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDateEdit" name="txtfecha_factura">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
-               </widget>
               </item>
              </layout>
             </widget>
@@ -1716,7 +1661,53 @@ color: rgb(255,255,255);</string>
          </widget>
         </widget>
        </item>
-       <item row="2" column="0" colspan="4">
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_21">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>PROVEEDOR:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="lblnombreProveedor">
+         <property name="text">
+          <string>AAAAAAAAAAAAAl</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>PEDIDO:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0" colspan="6">
         <widget class="QFrame" name="frame_3">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1934,7 +1925,7 @@ color: rgb(0, 0, 0);</string>
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="4">
+       <item row="3" column="0" colspan="6">
         <widget class="QFrame" name="frame_4">
          <property name="minimumSize">
           <size>
@@ -2205,6 +2196,8 @@ color: rgb(0, 0, 0);</string>
       <zorder>lblnombreProveedor</zorder>
       <zorder>frame_3</zorder>
       <zorder>frame_4</zorder>
+      <zorder>lbimpreso</zorder>
+      <zorder>horizontalSpacer_6</zorder>
      </widget>
      <widget class="QWidget" name="page_2">
       <layout class="QGridLayout" name="gridLayout_14">
