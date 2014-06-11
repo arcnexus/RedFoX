@@ -1368,8 +1368,17 @@ color: rgb(255, 255, 255);</string>
                 <enum>Qt::DotLine</enum>
                </property>
                <property name="sortingEnabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
+               <attribute name="horizontalHeaderCascadingSectionResizes">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="horizontalHeaderStretchLastSection">
+                <bool>true</bool>
+               </attribute>
                <attribute name="verticalHeaderVisible">
                 <bool>false</bool>
                </attribute>
@@ -2643,126 +2652,7 @@ color: rgb(255, 255, 255);</string>
            <string>Imagenes Artículo</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_23">
-           <item row="2" column="9">
-            <widget class="QLabel" name="lblImagenArticulo_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>255</horstretch>
-               <verstretch>255</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>256</width>
-               <height>256</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../maya.qrc">:/Icons/PNG/paquete.png</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="botCambiarImagen_3">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Cambiar
-Imagen.</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="4">
-            <widget class="QLabel" name="lblImagenArticulo_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>255</horstretch>
-               <verstretch>255</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>256</width>
-               <height>256</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../maya.qrc">:/Icons/PNG/paquete.png</pixmap>
-             </property>
-             <property name="scaledContents">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="6">
-            <widget class="QPushButton" name="botCambiarImagen_4">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Cambiar
-Imagen.</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="botCambiarImagen">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Cambiar
-Imagen.</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
+           <item row="0" column="0">
             <widget class="QLabel" name="lblImagenArticulo_1">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2790,28 +2680,171 @@ Imagen.</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="6">
-            <widget class="QPushButton" name="botCambiarImagen_2">
-             <property name="enabled">
-              <bool>false</bool>
+           <item row="0" column="1">
+            <widget class="QLabel" name="lblImagenArticulo_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>255</horstretch>
+               <verstretch>255</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>256</width>
+               <height>256</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
              </property>
              <property name="text">
-              <string>Cambiar
-Imagen.</string>
+              <string/>
              </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+             <property name="pixmap">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/paquete.png</pixmap>
              </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="3" column="9">
+           <item row="1" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QPushButton" name="botCambiarImagen">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>256</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cambiar
+Imagen.</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnBorrarImagen_1">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Borrar</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <item>
+              <widget class="QPushButton" name="botCambiarImagen_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Cambiar
+Imagen.</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnBorrarimagen_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Borrar</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lblImagenArticulo_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>255</horstretch>
+               <verstretch>255</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>256</width>
+               <height>256</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>La imagen introducida debe tener los mismos pixels horizontales que verticales</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../maya.qrc">:/Icons/PNG/paquete.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
             <widget class="QLabel" name="lblImagenArticulo_4">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2839,85 +2872,113 @@ Imagen.</string>
              </property>
             </widget>
            </item>
+           <item row="3" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="QPushButton" name="botCambiarImagen_3">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>256</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Cambiar
+Imagen.</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnBorrarImagen_3">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Borrar</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
            <item row="3" column="1">
-            <widget class="QPushButton" name="btnBorrarImagen_3">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Borrar</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="7">
-            <widget class="QPushButton" name="btnBorrarimagen_4">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Borrar</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="7">
-            <widget class="QPushButton" name="btnBorrarimagen_2">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Borrar</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="btnBorrarImagen_1">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Borrar</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../maya.qrc">
-               <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <item>
+              <widget class="QPushButton" name="botCambiarImagen_4">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Cambiar
+Imagen.</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/image.png</normaloff>:/Icons/PNG/image.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnBorrarimagen_4">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Borrar</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../maya.qrc">
+                 <normaloff>:/Icons/PNG/borrar.png</normaloff>:/Icons/PNG/borrar.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -3183,6 +3244,38 @@ Imagen.</string>
            <item row="0" column="0">
             <widget class="QFrame" name="frame">
              <layout class="QGridLayout" name="gridLayout_12">
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="txtunidades_vendidas">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>27</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_29">
+                <property name="text">
+                 <string>Unidades Vendidas:</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_28">
                 <property name="text">
@@ -3222,6 +3315,38 @@ Imagen.</string>
                 </property>
                </widget>
               </item>
+              <item row="2" column="1">
+               <widget class="QDateEdit" name="txtfecha_fecha_ultima_compra">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>27</height>
+                 </size>
+                </property>
+                <property name="displayFormat">
+                 <string>dd/MM/yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+                <property name="date">
+                 <date>
+                  <year>1752</year>
+                  <month>9</month>
+                  <day>14</day>
+                 </date>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="1">
                <widget class="QLineEdit" name="txtimporte_acumulado_compras">
                 <property name="enabled">
@@ -3241,38 +3366,6 @@ Imagen.</string>
                 </property>
                 <property name="text">
                  <string>0,00</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="label_29">
-                <property name="text">
-                 <string>Unidades Vendidas:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="txtunidades_vendidas">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>0</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3312,46 +3405,14 @@ Imagen.</string>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QLabel" name="label_33">
+               <widget class="QLabel" name="lblFechaCompra">
                 <property name="text">
                  <string>Fecha últ. Compra:</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
-               <widget class="QDateEdit" name="txtfecha_fecha_ultima_compra">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>27</height>
-                 </size>
-                </property>
-                <property name="displayFormat">
-                 <string>dd/MM/yyyy</string>
-                </property>
-                <property name="calendarPopup">
-                 <bool>true</bool>
-                </property>
-                <property name="date">
-                 <date>
-                  <year>1752</year>
-                  <month>9</month>
-                  <day>14</day>
-                 </date>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="2">
-               <widget class="QLabel" name="label_34">
+               <widget class="QLabel" name="lblFechaVenta">
                 <property name="text">
                  <string>Fecha últ. Venta:</string>
                 </property>
@@ -6357,11 +6418,9 @@ font: 14pt &quot;Sans Serif&quot;;</string>
   <tabstop>btnImg_web4_add</tabstop>
   <tabstop>btnImg_web4_delete</tabstop>
   <tabstop>botCambiarImagen</tabstop>
-  <tabstop>btnBorrarImagen_1</tabstop>
   <tabstop>botCambiarImagen_2</tabstop>
   <tabstop>btnBorrarimagen_2</tabstop>
   <tabstop>botCambiarImagen_3</tabstop>
-  <tabstop>btnBorrarImagen_3</tabstop>
   <tabstop>botCambiarImagen_4</tabstop>
   <tabstop>btnBorrarimagen_4</tabstop>
   <tabstop>txtunidades_compradas</tabstop>

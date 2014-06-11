@@ -53,16 +53,7 @@ void FrmArticulos::init()
 {
     if(__init)
         return;
-    ui->setupUi(this);
-    //FIXME cuando se habiliten excepciones
-    ui->btnExcepciones_3->setVisible(false);
-    //
-    //FIXME cuando se revise parte web
-    ui->Pestanas->removeTab(ui->Pestanas->indexOf(ui->tab_web));
-    //
-    //FIXME cuando se reactive trazabilidad
-    ui->Pestanas->removeTab(ui->Pestanas->indexOf(ui->tab_Trazabilidad));
-    //
+    ui->setupUi(this);    
 
     ui->btn_cerrar->setVisible(_closeBtn);
     oArticulo = new Articulo(this);
@@ -150,6 +141,15 @@ void FrmArticulos::init()
     //SET TABLE FORMAT
     format_tables();
 
+    //FIXME cuando se habiliten excepciones
+    ui->btnExcepciones_3->setVisible(false);
+    //
+    //FIXME cuando se revise parte web
+    ui->Pestanas->removeTab(ui->Pestanas->indexOf(ui->tab_web));
+    //
+    //FIXME cuando se reactive trazabilidad
+    ui->Pestanas->removeTab(ui->Pestanas->indexOf(ui->tab_Trazabilidad));
+    //
     __init = true;
 }
 
@@ -515,6 +515,18 @@ void FrmArticulos::bloquearCampos(bool state) {
     ui->Pestanas->blockSignals(!state);
     m_busqueda->blockSignals(!state);
 
+    ui->txtfecha_fecha_ultima_compra->setReadOnly(true);
+    ui->txtfechaUltimaVenta->setReadOnly(true);
+    ui->txtunidades_compradas->setReadOnly(true);
+    ui->txtunidades_vendidas->setReadOnly(true);
+    ui->txtimporte_acumulado_compras->setReadOnly(true);
+    ui->txtimporte_acumulado_ventas->setReadOnly(true);
+    ui->txtstock_fisico_almacen->setReadOnly(true);
+    ui->txtcantidad_pendiente_recibir->setReadOnly(true);
+    ui->txtunidades_reservadas->setReadOnly(true);
+    ui->txtstock_real_2->setReadOnly(true);
+    ui->txtfecha_prevista_recepcion->setReadOnly(true);
+
     if(state)
         emit unblock() ;
     else
@@ -587,20 +599,14 @@ void FrmArticulos::LLenarCampos(int index)
         ui->tablaProveedores->setColumnHidden(0,true);
         ui->tablaProveedores->setColumnHidden(8,true);
 
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(1,90);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(2,130);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(3,95);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(6,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);
-        ui->tablaProveedores->horizontalHeader()->setSectionResizeMode(7,QHeaderView::Fixed);
-        ui->tablaProveedores->horizontalHeader()->resizeSection(7,87);
+
+        ui->tablaProveedores->horizontalHeader()->resizeSection(1,105);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(2,140);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(3,125);
+        ui->tablaProveedores->horizontalHeader()->resizeSection(4,80);        
+        ui->tablaProveedores->horizontalHeader()->resizeSection(5,80);        
+        ui->tablaProveedores->horizontalHeader()->resizeSection(6,90);        
+
 
         // Grafica proveedores
         ui->graf_prov->Clear();
@@ -626,21 +632,22 @@ void FrmArticulos::LLenarCampos(int index)
         ui->txtOferta_Fecha_fin->blockSignals(false);
     }
 
-    else if(index == 3 /*ui->Pestanas->currentWidget() == ui->tab_precios_volumen*/)
+   // else if(index == 3 /*ui->Pestanas->currentWidget() == ui->tab_precios_volumen*/)
+   // {
+
+   // }
+
+
+    /*else if(index == 4 )
     {
-
-    }
-
-
-    else if(index == 4 /*web*/)
-    {
+        qDebug() << "web";
         //--------------------------------------------------------------
         // Recuperamos datos articulo distintivos según web/idioma/pais
         //--------------------------------------------------------------
         // Mostramos el primer pais que encontramos para el artículo
         //--------------------------------------------------------------
 
-    }
+    }*/
     else if(index == ui->Pestanas->indexOf(ui->tab_imagenes))
     {
         //-----------------------------
@@ -673,6 +680,17 @@ void FrmArticulos::LLenarCampos(int index)
         ui->txtcantidad_pendiente_recibir->setText(QString::number(oArticulo->cantidad_pendiente_recibir));
         ui->txtfecha_prevista_recepcion->setDate(oArticulo->fecha_prevista_recepcion);
         ui->txtunidades_reservadas->setText(QString::number(oArticulo->unidades_reservadas));
+
+        //Oculto datos si no son relevantes
+        ui->txtfecha_fecha_ultima_compra->setVisible(oArticulo->unidades_compradas > 0);
+        ui->lblFechaCompra->setVisible(oArticulo->unidades_compradas > 0);
+
+        ui->txtfechaUltimaVenta->setVisible(oArticulo->unidades_vendidas > 0);
+        ui->lblFechaVenta->setVisible(oArticulo->unidades_vendidas > 0);
+
+        ui->txtfecha_prevista_recepcion->setVisible(oArticulo->cantidad_pendiente_recibir > 0);
+        ui->lblFechaPrevistaRecepcion->setVisible(oArticulo->cantidad_pendiente_recibir > 0);
+
         GraficaImportes();
     }
 
@@ -1161,7 +1179,7 @@ void FrmArticulos::btnEditarTarifa_clicked()
 
 void FrmArticulos::anadir_proveedor_clicked()
 {
-    FrmAsociarProveedor frmAsociar;
+    FrmAsociarProveedor frmAsociar(this);
     frmAsociar.setAnadir();
     if(frmAsociar.exec() == QDialog::Accepted)
     {
@@ -1199,7 +1217,7 @@ void FrmArticulos::editar_proveedor_clicked()
 
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
 
-    FrmAsociarProveedor frmAsociar;
+    FrmAsociarProveedor frmAsociar(this);
     frmAsociar.seteditar(pKey.toString());
     if(frmAsociar.exec() == QDialog::Accepted) {
         bool ok = oArticulo->guardarProveedorAlternativo(pKey.toInt(),frmAsociar.codigo,frmAsociar.pvd,
