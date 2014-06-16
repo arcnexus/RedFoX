@@ -822,20 +822,6 @@ void FrmArticulos::VaciarCampos()
    ui->txtCoste_real->setText("0,00");
 }
 
-void FrmArticulos::ChangeValues_TablaProveedores(int row, int column)
-{
-    if (column == 4)
-       TimedMessageBox::Box(this,
-                                                 tr("Se ha cambiado el valor"));
-//    else if(column == 1 && !helped_table->item(row,0)->text().isEmpty())
-//        comprobarCantidad(row);
-//    else if(column == 5 && !helped_table->item(row,4)->text().isEmpty())
-//        comprobadto(row);
-//    else if(column == 9)
-//        comprobarStock(row);
-
-    rellenar_grafica_proveedores();
-}
 
 void FrmArticulos::filter_table(QString texto, QString orden, QString modo)
 {
@@ -1272,8 +1258,8 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
     QVariant pKey=modelProv->data(index1,Qt::EditRole);
 
     if (QMessageBox::question(this,tr("Re-asignar proveedor"),
-                          tr("¿Desea cambiar el proveedor principal?"),tr("No"),tr("Sí")) == QMessageBox::Accepted){
-
+                          tr("¿Desea cambiar el proveedor principal?"),tr("No"),tr("Sí")) == QMessageBox::Accepted)
+    {
         bool resultado = oArticulo->cambiarProveedorPrincipal(oArticulo->id,pKey.toInt());
         if(resultado)
 
@@ -1283,6 +1269,10 @@ void FrmArticulos::asignar_proveedor_principal_clicked()
             index1=modelProv->index(celda.row(),2);
             pKey=modelProv->data(index1,Qt::EditRole);
             ui->txtproveedor->setText(pKey.toString());
+
+            ui->txtcoste->setText(Configuracion_global->toFormatoMoneda(modelProv->data(modelProv->index(celda.row(),4),Qt::DisplayRole).toString()));
+            ui->txtCoste_real->setText(Configuracion_global->toFormatoMoneda(modelProv->data(modelProv->index(celda.row(),5),Qt::DisplayRole).toString()));
+            on_txtCoste_real_editingFinished();
     }
 
 }

@@ -166,7 +166,6 @@ private:
     void LLenarCampos(int index);
     void CargarCamposEnArticulo();
     void VaciarCampos();
-    void ChangeValues_TablaProveedores(int row, int column);
 
     bool anadir;
     void rellenar_grafica_proveedores();

@@ -26,7 +26,6 @@ db_consulta_view::~db_consulta_view()
 void db_consulta_view::set_texto_tabla(QString tabla)
 {
     ui->lbltabla->setText(tabla);
-
 }
 
 void db_consulta_view::set_SQL(QString cSQL)
@@ -55,16 +54,20 @@ void db_consulta_view::set_filtro(QString filtro)
         sentido = "DESC";
     cSQLFiltered = "";
     cSQLFiltered.append(cSQL);
-    cSQLFiltered.append(" where ");
-    cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
+
+    if(cSQL.contains("where"))
+        cSQLFiltered.append(" and ");
+    else
+        cSQLFiltered.append(" where ");
+
     cSQLFiltered.append(" like '%");
     cSQLFiltered.append(filtro);
     cSQLFiltered.append("%'");
-    if(ui->lbltabla->text() == "articulos")
+    if(ui->lbltabla->text() == "articulos" && (!cSQL.contains("vista_art_prov")))
         cSQLFiltered.append(" and tarifa = "+QString::number(this->id_tarifa_cliente)+" ");
     cSQLFiltered.append(" order by ");
     cSQLFiltered.append(ui->cboCampoBusqueda->currentText().trimmed());
-    cSQLFiltered.append(" %1").arg(sentido);
+    cSQLFiltered.append(QString(" %1").arg(sentido));
     if (db =="Maya" || db == "Group")
         modelo->setQuery(cSQLFiltered,Configuracion_global->groupDB);
     else if(db=="empresa")
