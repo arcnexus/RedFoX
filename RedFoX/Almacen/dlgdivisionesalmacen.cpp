@@ -143,7 +143,8 @@ void DlgDivisionesAlmacen::add_new(DlgDivisionesAlmacen::editState e)
 
 void DlgDivisionesAlmacen::on_btnEdit_clicked()
 {
-    bloquear_campos(false);
+    bloquear_campos(false);    
+    _img_changed = false;
     editando = true;
 }
 
@@ -165,10 +166,18 @@ void DlgDivisionesAlmacen::on_btnDeshacer_clicked()
 
 bool DlgDivisionesAlmacen::save_seccion(int row)
 {
-    QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("sections"));
+
     bool succes = model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("seccion")),ui->txtnombre->text());
+    QString slug = RedFoX::Core::Functions::slugifi(ui->txtnombre->text());
+    succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("slug")),slug);
     succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("codigo")),ui->txtcodigo->text());
-    succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("image")),imagen);
+
+    if(_img_changed)
+    {
+        QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("sections"));
+        succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("image")),imagen);
+    }
+
     succes &= model_secciones->submitAll();
     if(!succes)
         model_secciones->revertAll();
@@ -177,10 +186,18 @@ bool DlgDivisionesAlmacen::save_seccion(int row)
 
 bool DlgDivisionesAlmacen::save_family(int row)
 {
-    QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("families"));
+
     bool succes = model_familias->setData(model_familias->index(row,model_familias->fieldIndex("familia")),ui->txtnombre->text());
+    QString slug = RedFoX::Core::Functions::slugifi(ui->txtnombre->text());
+    succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("slug")),slug);
     succes &= model_familias->setData(model_familias->index(row,model_familias->fieldIndex("codigo")),ui->txtcodigo->text());
-    succes &= model_familias->setData(model_familias->index(row,model_familias->fieldIndex("image")),imagen);
+
+    if(_img_changed)
+    {
+        QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("families"));
+        succes &= model_familias->setData(model_familias->index(row,model_familias->fieldIndex("image")),imagen);
+    }
+
     succes &= model_familias->submitAll();
     if(!succes)
         model_familias->revertAll();
@@ -189,10 +206,18 @@ bool DlgDivisionesAlmacen::save_family(int row)
 
 bool DlgDivisionesAlmacen::save_subfamily(int row)
 {
-    QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("subfamilies"));
+
     bool succes = model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("sub_familia")),ui->txtnombre->text());
+    QString slug = RedFoX::Core::Functions::slugifi(ui->txtnombre->text());
+    succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("slug")),slug);
     succes &= model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("codigo")),ui->txtcodigo->text());
-    succes &= model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("image")),imagen);
+
+    if(_img_changed)
+    {
+        QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("subfamilies"));
+        succes &= model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("image")),imagen);
+    }
+
     succes &= model_subfamilias->submitAll();
     if(!succes)
         model_subfamilias->revertAll();
@@ -327,15 +352,8 @@ void DlgDivisionesAlmacen::on_btnCambiarimagen_clicked()
 
 void DlgDivisionesAlmacen::load_imagen(QSqlTableModel *model , int row)
 {
-    RedFoX::Core::Functions::loadImage(ui->lbl_imagen,model->record(row).value("image").toString());
-}
-
-void DlgDivisionesAlmacen::load_imagen(QByteArray b)
-{
-    QPixmap px;
-    px.loadFromData(b);
-    ui->lbl_imagen->setPixmap(px);
-    _current_img = b;
+    _img = model->record(row).value("image").toString();
+    RedFoX::Core::Functions::loadImage(ui->lbl_imagen,_img);
 }
 
 bool DlgDivisionesAlmacen::borrar_subfamilias(int id_familia)

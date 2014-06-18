@@ -19,6 +19,9 @@ namespace Functions {
                      QString user , QString password ,int port, UploadMetod metod );
     QString uploadImage(QString imgFile, QString target_folder);
 
+    QString slugifi(QString);
+
+
 }//End Functions
 }//End Core
 }//End RedFoX

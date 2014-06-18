@@ -48,7 +48,7 @@ private:
     bool _img_changed;
     QString _img;
     void load_imagen(QSqlTableModel * model, int row);
-    void load_imagen(QByteArray b);
+
     QByteArray _current_img;
 
     QSqlTableModel * model_secciones;

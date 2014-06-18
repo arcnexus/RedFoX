@@ -1,6 +1,6 @@
 #include "articulo.h"
 #include "../Almacen/frmtarifas.h"
-
+#include "../Core/Functions.h"
 Articulo::Articulo(QObject *parent) : QObject(parent)
 {
 }
@@ -310,6 +310,8 @@ bool Articulo::Guardar()
         return false;
     }
 
+    QString slug = RedFoX::Core::Functions::slugifi(this->descripcion_reducida);
+    articulo["slug"] = slug;
     articulo["codigo"] = this->codigo;
     articulo["codigo_barras"] = this->codigo_barras;
     articulo["codigo_fabricante"] = this->codigo_fabricante;

@@ -396,26 +396,29 @@ void FrmArticulos::on_botGuardar_clicked()
             if(_img4_changed)
                 data["imagen4"] = RedFoX::Core::Functions::uploadImage(_img4,QStringLiteral("articles"));
 
-            QString error;
-            int id_art = SqlCalls::SelectOneField("articulos_imagenes","id_articulo",QString("id_articulo =%1").arg(oArticulo->id),
-                                                  Configuracion_global->groupDB,error).toInt();
-            if(id_art >0)
+            if(!data.isEmpty())
             {
-                if(!SqlCalls::SqlUpdate(data,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error))
+                QString error;
+                int id_art = SqlCalls::SelectOneField("articulos_imagenes","id_articulo",QString("id_articulo =%1").arg(oArticulo->id),
+                                                      Configuracion_global->groupDB,error).toInt();
+                if(id_art >0)
                 {
-                    QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:\n%1")
-                                         .arg(error));
-                    return;
+                    if(!SqlCalls::SqlUpdate(data,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error))
+                    {
+                        QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:\n%1")
+                                             .arg(error));
+                        return;
+                    }
                 }
-            }
-            else
-            {
-                data["id_articulo"] = oArticulo->id;
-                if(SqlCalls::SqlInsert(data,"articulos_imagenes",Configuracion_global->groupDB,error) < 0)
+                else
                 {
-                    QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:\n%1")
-                                         .arg(error));
-                    return;
+                    data["id_articulo"] = oArticulo->id;
+                    if(SqlCalls::SqlInsert(data,"articulos_imagenes",Configuracion_global->groupDB,error) < 0)
+                    {
+                        QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:\n%1")
+                                             .arg(error));
+                        return;
+                    }
                 }
             }
             Configuracion_global->commit();

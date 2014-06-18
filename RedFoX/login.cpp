@@ -41,7 +41,7 @@ Login::Login(QWidget *parent) :
         //}
         //else
         //    QMessageBox::critical(0, "error:", Configuracion_global->globalDB.lastError().text());
-    }    
+    }
 }
 
 Login::~Login()
