@@ -9,6 +9,7 @@ CREATE TABLE `redfoxglobal`.`grupos` (
   `bd_user` varchar(45) DEFAULT 'root',
   `bd_pass` varchar(45) DEFAULT NULL,
   `bd_port` varchar(45) DEFAULT '3306',
+  `ruta_imagenes` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `redfoxglobal`.`usuarios` (

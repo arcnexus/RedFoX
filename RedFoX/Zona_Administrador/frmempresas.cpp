@@ -880,25 +880,44 @@ bool FrmEmpresas::_insertReports(QSqlDatabase db, QString empresa)
 
 void FrmEmpresas::_insertNewGroup(QString grupo)
 {
-    QSqlQuery q2(Configuracion_global->groupDB);
+    SqlData data;
+    data["nombre"] = ui->txtNombreGrupo->text();
+    data["bd_name"] = grupo;
+    data["bd_driver"] = "QMYSQL";//NOTE cambiar para multi driver
+    data["bd_host"] = ui->txtHost->text();
+    data["bd_user"] = ui->txtUser->text();
+    data["bd_pass"] = ui->txtPass->text();
+    data["bd_port"] = ui->spinPort->value();
 
-    q2.prepare("INSERT INTO `redfoxglobal`.`grupos` "
-               "(`nombre`, `bd_name`, `bd_driver`, "
-               "`bd_host`, `bd_user`, `bd_pass`, `bd_port`) "
-               "VALUES "
-               "(:nombre, :bd_name, :bd_driver, "
-               ":bd_host, :bd_user, :bd_pass, :bd_port) ");
+    QJsonObject jsonObj;
+    if(ui->rdbNewGroupImgPath->isChecked())
+    {
+        QString path = ui->txtNewGroupImgPath->text();
+        jsonObj["metod"] = "LOCAL";
+        jsonObj["path"] = path;
+        QDir dir(path);
+        dir.mkdir("articles");
+        dir.mkdir("sections");
+        dir.mkdir("families");
+        dir.mkdir("subfamilies");
+    }
+    else
+    {
+        jsonObj["metod"] = "FTP";
+        jsonObj["host"] = ui->txtNewGroupIMGHost->text();
+        jsonObj["user"] = ui->txtNewGroupIMGUser->text();
+        jsonObj["pass"] = ui->txtNewGroupIMGPass->text();
+        jsonObj["port"] = ui->spinNewGroupIMGPort->text();
+        jsonObj["folder"] = ui->txtNewGroupIMGFolder->text();
+    }
 
-    q2.bindValue(":nombre",ui->txtNombreGrupo->text());
-    q2.bindValue(":bd_name",grupo);
-    q2.bindValue(":bd_driver","QMYSQL");//NOTE cambiar para multi driver
-    q2.bindValue(":bd_host",ui->txtHost->text());
-    q2.bindValue(":bd_user",ui->txtUser->text());
-    q2.bindValue(":bd_pass",ui->txtPass->text());
-    q2.bindValue(":bd_port",ui->spinPort->value());
+    QJsonDocument doc(jsonObj);
+    QString json_string(doc.toJson(QJsonDocument::Compact));
+    data["ruta_imagenes"] = json_string;
 
-    if(!q2.exec())
-        emit groupError(q2.lastError().text());
+    QString error;
+    if(SqlCalls::SqlInsert(data,"redfoxglobal`.`grupos",Configuracion_global->globalDB,error) < 0 )
+        emit groupError(error);
     else
         getEmpresas();
 }
@@ -1210,4 +1229,10 @@ void FrmEmpresas::on_txtdireccion1_3_editingFinished()
 {
     if(!ui->txtprovincia_3->text().isEmpty())
         ui->txtcif_3->setFocus();
+}
+
+void FrmEmpresas::on_btnNewGroupImgPath_clicked()
+{
+    _newGroupIMGPath = QFileDialog::getExistingDirectory(this,tr("Carpeta de Imágenes"));
+    ui->txtNewGroupImgPath->setText(_newGroupIMGPath);
 }

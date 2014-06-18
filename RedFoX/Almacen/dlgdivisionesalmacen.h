@@ -45,6 +45,8 @@ private slots:
 
 private:
     Ui::DlgDivisionesAlmacen *ui;
+    bool _img_changed;
+    QString _img;
     void load_imagen(QSqlTableModel * model, int row);
     void load_imagen(QByteArray b);
     QByteArray _current_img;

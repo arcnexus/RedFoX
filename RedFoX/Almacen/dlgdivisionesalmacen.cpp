@@ -1,6 +1,7 @@
 #include "dlgdivisionesalmacen.h"
 #include "ui_dlgdivisionesalmacen.h"
 
+#include "../Core/Functions.h"
 DlgDivisionesAlmacen::DlgDivisionesAlmacen(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DlgDivisionesAlmacen)
@@ -128,6 +129,8 @@ void DlgDivisionesAlmacen::vaciar_campos()
     ui->txtnombre->clear();
     ui->lbl_imagen->setPixmap(QPixmap());
     _current_img.clear();
+    _img_changed = false;
+    _img = "";
 }
 
 void DlgDivisionesAlmacen::add_new(DlgDivisionesAlmacen::editState e)
@@ -162,10 +165,10 @@ void DlgDivisionesAlmacen::on_btnDeshacer_clicked()
 
 bool DlgDivisionesAlmacen::save_seccion(int row)
 {
-    QByteArray ba_64 = _current_img.toBase64();
+    QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("sections"));
     bool succes = model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("seccion")),ui->txtnombre->text());
     succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("codigo")),ui->txtcodigo->text());
-    succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("image")),ba_64);
+    succes &= model_secciones->setData(model_secciones->index(row,model_secciones->fieldIndex("image")),imagen);
     succes &= model_secciones->submitAll();
     if(!succes)
         model_secciones->revertAll();
@@ -174,10 +177,10 @@ bool DlgDivisionesAlmacen::save_seccion(int row)
 
 bool DlgDivisionesAlmacen::save_family(int row)
 {
-    QByteArray ba_64 = _current_img.toBase64();
+    QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("families"));
     bool succes = model_familias->setData(model_familias->index(row,model_familias->fieldIndex("familia")),ui->txtnombre->text());
     succes &= model_familias->setData(model_familias->index(row,model_familias->fieldIndex("codigo")),ui->txtcodigo->text());
-    succes &= model_familias->setData(model_familias->index(row,model_familias->fieldIndex("image")),ba_64);
+    succes &= model_familias->setData(model_familias->index(row,model_familias->fieldIndex("image")),imagen);
     succes &= model_familias->submitAll();
     if(!succes)
         model_familias->revertAll();
@@ -186,10 +189,10 @@ bool DlgDivisionesAlmacen::save_family(int row)
 
 bool DlgDivisionesAlmacen::save_subfamily(int row)
 {
-    QByteArray ba_64 = _current_img.toBase64();
+    QString imagen = RedFoX::Core::Functions::uploadImage(_img, QStringLiteral("subfamilies"));
     bool succes = model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("sub_familia")),ui->txtnombre->text());
     succes &= model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("codigo")),ui->txtcodigo->text());
-    succes &= model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("image")),ba_64);
+    succes &= model_subfamilias->setData(model_subfamilias->index(row,model_subfamilias->fieldIndex("image")),imagen);
     succes &= model_subfamilias->submitAll();
     if(!succes)
         model_subfamilias->revertAll();
@@ -316,25 +319,15 @@ void DlgDivisionesAlmacen::on_btnCambiarimagen_clicked()
     QString ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen MAX 15MB"),"","Imagenes (*.bmp *.png *.xpm *.jpg)");
     if (!ficheroImagen.isEmpty())
     {
-        QByteArray ba;
-        QFile f(ficheroImagen);
-        if(f.size() > 15777215) //15 MB
-        {
-            QMessageBox::warning(this,tr("Error de tamaño"),tr("Archivo demasiado grande.\Tamaño máximo 15Mb."));
-            return;
-        }
-        if(f.open(QIODevice::ReadOnly))
-            ba = f.readAll();
-        f.close();
-        load_imagen(ba);
+        _img_changed = true;
+        _img =ficheroImagen;
+        RedFoX::Core::Functions::loadImage(ui->lbl_imagen, ficheroImagen);
     }
 }
 
 void DlgDivisionesAlmacen::load_imagen(QSqlTableModel *model , int row)
 {
-    QByteArray ba1 = model->record(row).value("image").toByteArray();
-    QByteArray ba_64 = QByteArray::fromBase64(ba1);
-    load_imagen(ba_64);
+    RedFoX::Core::Functions::loadImage(ui->lbl_imagen,model->record(row).value("image").toString());
 }
 
 void DlgDivisionesAlmacen::load_imagen(QByteArray b)

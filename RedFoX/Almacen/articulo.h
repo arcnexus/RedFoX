@@ -83,7 +83,7 @@ public:
     QHash<QString,QVariant> Vender(QString codigo, int cantidad, int tarifa, int tipo_dto_tarifa, int id_familia_cliente,
                                    int id_cliente);
     bool Devolucion(int id, double cantidad, double pvp);
-    void CargarImagen(QLabel *label, QLabel *label2, QLabel *label3, QLabel *label4);
+
 
     static bool acumulado_ventas   (int id_articulo,float cantidad,double total, QDate fecha);
     static bool acumulado_compras  (int id_articulo,float cantidad,double total, QDate fecha);

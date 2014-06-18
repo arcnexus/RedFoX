@@ -51,6 +51,7 @@ ReportDesigWin::ReportDesigWin(QWidget *parent) :
 
 ReportDesigWin::~ReportDesigWin()
 {
+    disconnect(this,SLOT(sceneSelectionChanged()));
     delete ui;
     if(render)
         delete render;

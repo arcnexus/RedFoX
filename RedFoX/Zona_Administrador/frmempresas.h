@@ -78,6 +78,8 @@ private slots:
 
     void on_txtdireccion1_editingFinished();
 
+    void on_btnNewGroupImgPath_clicked();
+
 private:
     Ui::FrmEmpresas *ui;
     Empresa oEmpresa;
@@ -118,6 +120,8 @@ private:
 
     QCompleter * calle_completer;
     QSqlTableModel * calle_completer_model;
+
+    QString _newGroupIMGPath;
 };
 
 #endif // FRMEMPRESAS_H

@@ -5,6 +5,7 @@
 #include <QTime>
 #include "section.h"
 #include "Auxiliares/Globlal_Include.h"
+#include "../Core/Functions.h"
 ReportRenderer::ReportRenderer(QObject *parent) :
     QObject(parent)
 {
@@ -592,11 +593,11 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             }
                             else if(ele.attribute("id")=="Image")
                             {
-                                QByteArray b;
+                                QString b;
                                 QStringList value = ele.attribute("Path").split(".");
                                 if(value.size()== 3)
-                                    b = record.value(value.at(2)).toByteArray();
-                                ele.setAttribute("img-data",QString(b));
+                                    b = record.value(value.at(2)).toString();
+                                ele.setAttribute("Path",b);
                             }
                             child = child.nextSibling();
                         }
@@ -683,11 +684,11 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                         }
                                         else if(ele.attribute("id")=="Image")
                                         {
-                                            QByteArray b;
+                                            QString b;
                                             QStringList value = ele.attribute("Path").split(".");
                                             if(value.size()== 3)
-                                                b = iRecord.value(value.at(2)).toByteArray();
-                                            ele.setAttribute("img-data",QString(b));
+                                                b = iRecord.value(value.at(2)).toString();
+                                            ele.setAttribute("Path",b);
                                         }
                                         child = child.nextSibling();
                                     }
@@ -751,11 +752,11 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                                 }
                                 else if(ele.attribute("id")=="Image")
                                 {
-                                    QByteArray b;
+                                    QString b;
                                     QStringList value = ele.attribute("Path").split(".");
                                     if(value.size()== 3)
-                                        b = record.value(value.at(2)).toByteArray();
-                                   ele.setAttribute("img-data",QString(b));
+                                        b = record.value(value.at(2)).toString();
+                                   ele.setAttribute("Path",b);
                                 }
                                 child = child.nextSibling();
                             }
@@ -796,11 +797,11 @@ QDomDocument ReportRenderer::preRender(QPainter* painter ,QDomDocument in,QMap<Q
                             }
                             else if(ele.attribute("id")=="Image")
                             {
-                                QByteArray b;
+                                QString b;
                                 QStringList value = ele.attribute("Path").split(".");
                                 if(value.size()== 3)
-                                    b = record.value(value.at(2)).toByteArray();
-                                ele.setAttribute("img-data",QString(b));
+                                    b = record.value(value.at(2)).toString();
+                                ele.setAttribute("Path",b);
                             }
                             if(ele.attribute("id")=="Acumulador")
                             {
@@ -1419,20 +1420,8 @@ void ReportRenderer::drawImage(QDomElement e, QPainter *painter, double dpiX, do
     siz.setWidth(e.attribute("w").toDouble()* dpiX +10);
     siz.setHeight(e.attribute("h").toDouble()* dpiY);
 
-    if(m_fromDB)
-    {
-        QString s= e.attribute("img-data");
-        QByteArray r = s.toUtf8();
-        QPixmap pm1;
-        pm1.loadFromData(QByteArray::fromBase64(r));
-        m_image = pm1.toImage();        
-    }
-    else
-    {
-        QFile f(m_ruta);
-        if(f.open(QFile::ReadOnly))
-            m_image = QImage(m_ruta);
-    }
+    QPixmap pix = RedFoX::Core::Functions::getPixmap(m_ruta);
+    m_image = pix.toImage();
 
     painter->save();
     m_image = m_image.scaled(siz.toSize(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
@@ -1615,13 +1604,13 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
             }
             else if(ele.attribute("id")=="Image")
             {
-                QByteArray b;
+                QString b;
                 QStringList value = ele.attribute("Path").split(".");
                 if(value.size()== 3)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    b = selects.value(key).value(value.at(2)).toByteArray();
-                   ele.setAttribute("img-data",QString(b));
+                    b = selects.value(key).value(value.at(2)).toString();
+                    ele.setAttribute("Path",b);
                 }
             }
             else if(ele.attribute("id")=="Line")
@@ -1709,13 +1698,13 @@ QDomNode ReportRenderer::startPage(double pageUsable ,  int PFooterSiz, int RHSi
             }
             else if(ele.attribute("id")=="Image")
             {
-                QByteArray b;
+                QString b;
                 QStringList value = ele.attribute("Path").split(".");
                 if(value.size()== 3)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    b = selects.value(key).value(value.at(2)).toByteArray();
-                    ele.setAttribute("img-data",QString(b));
+                    b = selects.value(key).value(value.at(2)).toString();
+                    ele.setAttribute("Path",b);
                 }
             }
             else if(ele.attribute("id")=="Line")
@@ -1821,13 +1810,13 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
             }
             else if(ele.attribute("id")=="Image")
             {
-                QByteArray b;
+                QString b;
                 QStringList value = ele.attribute("Path").split(".");
                 if(value.size()== 3)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    b = selects.value(key).value(value.at(2)).toByteArray();
-                   ele.setAttribute("img-data",QString(b));
+                    b = selects.value(key).value(value.at(2)).toString();
+                   ele.setAttribute("Path",QString(b));
                 }
             }
             child = child.nextSibling();
@@ -1879,13 +1868,13 @@ void ReportRenderer::parseFooters(QDomNode RFooter, bool haveRfooter, QDomNode P
             }
             else if(ele.attribute("id")=="Image")
             {
-                QByteArray b;
+                QString b;
                 QStringList value = ele.attribute("Path").split(".");
                 if(value.size()== 3)
                 {
                     QString key = value.at(0) + "." + value.at(1);
-                    b = selects.value(key).value(value.at(2)).toByteArray();
-                    ele.setAttribute("img-data",QString(b));
+                    b = selects.value(key).value(value.at(2)).toString();
+                    ele.setAttribute("Path",b);
                 }
             }
             child = child.nextSibling();

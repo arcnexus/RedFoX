@@ -968,64 +968,6 @@ bool Articulo::Devolucion(int id, double cantidad, double pvp)
 
 }
 
-
-void Articulo::CargarImagen(QLabel *label1, QLabel *label2, QLabel *label3, QLabel *label4)
-{
-    QSqlQuery qryArticulo(Configuracion_global->groupDB);
-    qryArticulo.prepare("Select imagen1,imagen2,imagen3,imagen4 from articulos_imagenes where id_articulo = :id");
-    qryArticulo.bindValue(":id",this->id);
-    if (qryArticulo.exec())
-    {
-        if (qryArticulo.next()){
-            //--------
-            // imagen1
-            //--------
-            QSqlRecord registro =  qryArticulo.record();
-            QByteArray ba1 = registro.field("imagen1").value().toByteArray();
-            QByteArray ba_64 = QByteArray::fromBase64(ba1);
-            QPixmap pm11;
-            pm11.loadFromData(ba_64);
-            if(!registro.field("imagen1").value().isNull())
-                label1->setPixmap(pm11);
-            //--------
-            // imagen2
-            //--------
-            ba1 = registro.field("imagen2").value().toByteArray();
-            ba_64 = QByteArray::fromBase64(ba1);
-            QPixmap pm12;
-            pm12.loadFromData(ba_64);
-            if(!registro.field("imagen2").value().isNull())
-                label2->setPixmap(pm12);
-            //--------
-            // imagen3
-            //--------
-            ba1 = registro.field("imagen3").value().toByteArray();
-            ba_64 = QByteArray::fromBase64(ba1);
-            QPixmap pm13;
-            pm13.loadFromData(ba_64);
-            if(!registro.field("imagen3").value().isNull())
-                label3->setPixmap(pm13);
-            //--------
-            // imagen4
-            //--------
-            ba1 = registro.field("imagen4").value().toByteArray();
-            ba_64 = QByteArray::fromBase64(ba1);
-            QPixmap pm14;
-            pm14.loadFromData(ba_64);
-            if(!registro.field("imagen4").value().isNull())
-                label4->setPixmap(pm14);
-        } //else
-//            QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
-//                                    QObject::tr("No se pueden recuperar la imagenes asociadas al artículo"),
-//                                    QObject::tr("Ok"));
-    }
-    else
-        QMessageBox::warning(qApp->activeWindow(),QObject::tr("Error al recuperar"),
-                                QObject::tr("No se pueden recuperar la imagenes asociadas al artículo: %1").arg(qryArticulo.lastError().text()),
-                                QObject::tr("Ok"));
-}
-
-
 bool Articulo::set_pendiente_recibir(int id_articulo, double cantidad)
 {
     Q_ASSERT(id_articulo > 0);

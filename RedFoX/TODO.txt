@@ -227,3 +227,16 @@ ALTER TABLE `empresa`.`articulos_ofertas` ADD COLUMN `id_tarifa` INT NULL DEFAUL
 6/6/2014
 alter table `grupo`.`articulos` modify column `stock_fisico_almacen` float null default '0' AFTER `id_web` ,comment = 'utf8_general_ci'
 
+
+18/6/2014
+alter table `grupos` add column `ruta_imagenes` text not null default '' AFTER `bd_port` ,comment = 'utf8_general_ci'
+
+alter table `secciones` add column `slug` varchar(100) not null default '' AFTER `seccion` ,comment = 'utf8_unicode_ci'
+alter table `familias` add column `slug` varchar(100) not null default '' AFTER `familia` ,comment = 'utf8_unicode_ci'
+alter table `subfamilias` add column `slug` varchar(100) not null default '' AFTER `sub_familia` ,comment = 'utf8_unicode_ci'
+alter table `articulos` add column `slug` varchar(100) not null default '' AFTER `descripcion` ,comment = 'utf8_general_ci'
+alter table `articulos` drop column `imagen4`,drop column `imagen2`,drop column `imagen3`,drop column `imagen`,comment = 'utf8_general_ci'
+alter table `secciones` modify column `image` text null AFTER `id_web` ,comment = 'utf8_unicode_ci'
+alter table `familias` modify column `image` text null AFTER `id_seccion` ,comment = 'utf8_unicode_ci'
+alter table `subfamilias` modify column `image` text null AFTER `id_familia` ,comment = 'utf8_unicode_ci'
+alter table `articulos_imagenes` modify column `imagen1` text null AFTER `id_articulo` ,modify column `imagen2` text null AFTER `imagen1` ,modify column `imagen3` text null AFTER `imagen2` ,modify column `imagen4` text null AFTER `imagen3` ,comment = 'utf8_general_ci'

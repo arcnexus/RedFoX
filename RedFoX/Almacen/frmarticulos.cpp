@@ -17,6 +17,7 @@
 #include "Auxiliares/delegatekit.h"
 
 #include <QtConcurrent/QtConcurrent>
+#include "../Core/Functions.h"
 
 FrmArticulos::FrmArticulos(QWidget *parent, bool closeBtn) :
     MayaModule(module_zone(),module_name(),parent),
@@ -319,6 +320,7 @@ FrmArticulos::~FrmArticulos()
 void FrmArticulos::on_botAnadir_clicked()
 {    
     Configuracion_global->transaction();
+    _img1_changed = _img2_changed = _img3_changed = _img4_changed = false;
     QSqlQuery querySecciones(Configuracion_global->groupDB);
     querySecciones.prepare("select id from secciones order by id desc limit 1 ");
     if (querySecciones.exec())
@@ -384,6 +386,38 @@ void FrmArticulos::on_botGuardar_clicked()
         CargarCamposEnArticulo();
         if(oArticulo->Guardar())
         {
+            SqlData data;
+            if(_img1_changed)
+                data["imagen1"] = RedFoX::Core::Functions::uploadImage(_img1,QStringLiteral("articles"));
+            if(_img2_changed)
+                data["imagen2"] = RedFoX::Core::Functions::uploadImage(_img2,QStringLiteral("articles"));
+            if(_img3_changed)
+                data["imagen3"] = RedFoX::Core::Functions::uploadImage(_img3,QStringLiteral("articles"));
+            if(_img4_changed)
+                data["imagen4"] = RedFoX::Core::Functions::uploadImage(_img4,QStringLiteral("articles"));
+
+            QString error;
+            int id_art = SqlCalls::SelectOneField("articulos_imagenes","id_articulo",QString("id_articulo =%1").arg(oArticulo->id),
+                                                  Configuracion_global->groupDB,error).toInt();
+            if(id_art >0)
+            {
+                if(!SqlCalls::SqlUpdate(data,"articulos_imagenes",Configuracion_global->groupDB,QString("id_articulo=%1").arg(oArticulo->id),error))
+                {
+                    QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:\n%1")
+                                         .arg(error));
+                    return;
+                }
+            }
+            else
+            {
+                data["id_articulo"] = oArticulo->id;
+                if(SqlCalls::SqlInsert(data,"articulos_imagenes",Configuracion_global->groupDB,error) < 0)
+                {
+                    QMessageBox::warning(qApp->activeWindow(),tr("Guardar Imagen"),tr("No se ha podido guardar la imagen en la base de datos:\n%1")
+                                         .arg(error));
+                    return;
+                }
+            }
             Configuracion_global->commit();
             actualizar();
             bloquearCampos(true);
@@ -657,8 +691,17 @@ void FrmArticulos::LLenarCampos(int index)
         ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
         ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
         ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
-        oArticulo->CargarImagen(ui->lblImagenArticulo_1,ui->lblImagenArticulo_2,
-                                ui->lblImagenArticulo_3,ui->lblImagenArticulo_4);
+
+        QString error;
+        QMap<int, QSqlRecord> images = SqlCalls::SelectRecord("articulos_imagenes",QString("id_articulo=%1").arg(oArticulo->id),Configuracion_global->groupDB,error);
+        if(!images.isEmpty())
+        {
+            QSqlRecord r = images.first();
+            RedFoX::Core::Functions::loadImage(ui->lblImagenArticulo_1,r.value("imagen1").toString());
+            RedFoX::Core::Functions::loadImage(ui->lblImagenArticulo_2,r.value("imagen2").toString());
+            RedFoX::Core::Functions::loadImage(ui->lblImagenArticulo_3,r.value("imagen3").toString());
+            RedFoX::Core::Functions::loadImage(ui->lblImagenArticulo_4,r.value("imagen4").toString());
+        }
     }
 
 
@@ -820,6 +863,11 @@ void FrmArticulos::VaciarCampos()
    ui->chkArticulo_promocionado->setChecked(false);
    ui->txtoferta_pvp_fijo->setText("0");
    ui->txtCoste_real->setText("0,00");
+
+   ui->lblImagenArticulo_1->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+   ui->lblImagenArticulo_2->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+   ui->lblImagenArticulo_3->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
+   ui->lblImagenArticulo_4->setPixmap(QPixmap(":/Icons/PNG/paquete.png"));
 }
 
 
@@ -897,6 +945,7 @@ void FrmArticulos::on_botEditar_clicked()
     for(auto i= 0; i < ui->Pestanas->count(); i++)
         LLenarCampos(i);
 
+    _img1_changed = _img2_changed = _img3_changed = _img4_changed = false;
     Configuracion_global->transaction();
     this->anadir = false;
 
@@ -2105,22 +2154,22 @@ void FrmArticulos::togglechkmostrarvalores_comparativa()
 
 void FrmArticulos::on_botCambiarImagen_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_1,"imagen1");
+    CambiarImagen_clicked(ui->lblImagenArticulo_1,_img1_changed, _img1);
 }
 
 void FrmArticulos::on_botCambiarImagen_2_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_2,"imagen2");
+    CambiarImagen_clicked(ui->lblImagenArticulo_2,_img2_changed, _img2);
 }
 
 void FrmArticulos::on_botCambiarImagen_3_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_3,"imagen3");
+    CambiarImagen_clicked(ui->lblImagenArticulo_3,_img3_changed, _img3);
 }
 
 void FrmArticulos::on_botCambiarImagen_4_clicked()
 {
-    CambiarImagen_clicked(ui->lblImagenArticulo_4,"imagen4");
+    CambiarImagen_clicked(ui->lblImagenArticulo_4,_img4_changed, _img4);
 }
 
 void FrmArticulos::actualizar()
@@ -2136,12 +2185,17 @@ void FrmArticulos::actualizar()
 
 
 
-void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
+void FrmArticulos::CambiarImagen_clicked(QLabel *label , bool &bool_img, QString &string_img)
 {
     QString ficheroImagen;
     ficheroImagen = QFileDialog::getOpenFileName(this,tr("Abrir fichero de imagen"),"","Imagenes (*.bmp *.png *.xpm *.jpg)");
+
     if (!ficheroImagen.isEmpty()) {
 
+        RedFoX::Core::Functions::loadImage(label,ficheroImagen);
+        bool_img = true;
+        string_img = ficheroImagen;
+        /*
         QImage imagen(ficheroImagen);
 
         label->setPixmap(QPixmap::fromImage(imagen));
@@ -2184,7 +2238,7 @@ void FrmArticulos::CambiarImagen_clicked(QLabel *label, QString campo)
                                          Articulo.lastError().text()),tr("Ok"));
                 qDebug() << Articulo.lastError();
             }
-        }
+        }*/
     }
 }
 

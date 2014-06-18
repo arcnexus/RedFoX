@@ -10,6 +10,9 @@
 #include "Zona_Administrador/frmconfigmaya.h"
 #include "mainwindow.h"
 
+#include "Core/Functions.h"
+using namespace RedFoX;
+
 Login::Login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
@@ -38,7 +41,7 @@ Login::Login(QWidget *parent) :
         //}
         //else
         //    QMessageBox::critical(0, "error:", Configuracion_global->globalDB.lastError().text());
-    }
+    }    
 }
 
 Login::~Login()
@@ -90,6 +93,9 @@ void Login::on_btnAcceder_clicked()
     Configuracion_global->group_Driver = bd_driver;
     Configuracion_global->group_DBName = bd_name;
     Configuracion_global->groupDB = QSqlDatabase::addDatabase(bd_driver , "Maya");
+
+    QJsonDocument document = QJsonDocument::fromJson(rGrupo.value("ruta_imagenes").toString().toUtf8());
+    Configuracion_global->groupIMGJson = document.object();
 
     Configuracion_global->groupDB.setHostName(bd_host);
     Configuracion_global->groupDB.setUserName(bd_user);

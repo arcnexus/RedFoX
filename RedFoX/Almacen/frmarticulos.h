@@ -39,7 +39,7 @@ private slots:
 
     void on_botGuardar_clicked();
 
-    void CambiarImagen_clicked(QLabel *label ,QString campo);
+    void CambiarImagen_clicked(QLabel *label , bool &bool_img, QString &string_img);
 
     void on_botDeshacer_clicked();
 
@@ -196,6 +196,14 @@ private:
 
     bool __init;
     bool _closeBtn;
+    QString _img1;
+    QString _img2;
+    QString _img3;
+    QString _img4;
+    bool _img1_changed;
+    bool _img2_changed;
+    bool _img3_changed;
+    bool _img4_changed;
 };
 
 #endif // FRMARTICULOS_H

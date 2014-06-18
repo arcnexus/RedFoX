@@ -2,7 +2,7 @@
 #include "editimagedlg.h"
 
 #include "Auxiliares/Globlal_Include.h"
-
+#include "../Core/Functions.h"
 ReportImage::ReportImage(QString name,QGraphicsItem *parent) :
     Container(name,parent)
 {
@@ -70,22 +70,18 @@ void ReportImage::setruta(QString arg) {
                 db = QSqlDatabase::database("empresa");
 
             QString err;
-            QVariant v = SqlCalls::SelectOneField(l.at(1),l.at(2),QString(),db,err);
+            QString path = SqlCalls::SelectOneField(l.at(1),l.at(2),QString(),db,err).toString();
 
-       //     QByteArray b1 = QByteArray::fromBase64(v.toByteArray());
-            QPixmap pm1;
-            pm1.loadFromData(QByteArray::fromBase64(v.toByteArray()));
+            QPixmap pm1 = RedFoX::Core::Functions::getPixmap(path);
 
-            m_image = pm1.toImage();
-       //     this->setRect(0,0,m_image.size().width(),m_image.size().height());
+            m_image = pm1.toImage();       
         }
         else
         {
             QFile f(arg);
             if(f.open(QFile::ReadOnly))
             {
-                m_image = QImage(arg);
-         //       this->setRect(0,0,m_image.size().width(),m_image.size().height());
+                m_image = QImage(arg);         
             }
         }
         emit rutaChanged(arg);

@@ -15,7 +15,7 @@
 #include <QDoubleValidator>
 #include <QNetworkReply>
 
-
+#include <QJsonObject>
 class Configuracion: public QObject
 {
     Q_OBJECT
@@ -52,6 +52,8 @@ public:
     QString group_pass;
     int group_port;
     QString group_Driver;
+
+    QJsonObject groupIMGJson;
 
     QSqlDatabase empresaDB;
     QString nombre_bd_empresa;

@@ -138,12 +138,13 @@ CREATE TABLE `@grupo@`.`agentes_comisiones` (
   `porc_comision` DOUBLE NULL,
   PRIMARY KEY (`id`));
 CREATE TABLE `@grupo@`.`articulos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo_barras` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo_fabricante` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `kit` tinyint(1) DEFAULT '0',
   `descripcion` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `slug` varchar(100) NOT NULL DEFAULT '',
   `descripcion_reducida` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_proveedor` int(11) DEFAULT NULL,
   `id_familia` int(11) DEFAULT NULL,
@@ -159,7 +160,6 @@ CREATE TABLE `@grupo@`.`articulos` (
   `unidades_vendidas` float DEFAULT '0',
   `importe_acumulado_compras` double DEFAULT '0',
   `importe_acumulado_ventas` double DEFAULT '0' COMMENT '	',
-  `imagen` blob,
   `comentario` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `stock_maximo` float DEFAULT '0',
   `stock_minimo` float DEFAULT '0',
@@ -176,12 +176,9 @@ CREATE TABLE `@grupo@`.`articulos` (
   `localizacion_en_almacen` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_tipos_iva` int(11) DEFAULT NULL,
   `id_web` int(11) DEFAULT '0',
-  `stock_fisico_almacen` float DEFAULT 0,
+  `stock_fisico_almacen` float DEFAULT '0',
   `articulo_promocionado` tinyint(1) DEFAULT NULL,
   `mostrar_en_cuadro` tinyint(1) NOT NULL DEFAULT '0',
-  `imagen2` blob,
-  `imagen3` blob,
-  `imagen4` blob,
   `margen` double DEFAULT NULL,
   `margen_min` double DEFAULT NULL,
   `coste_real` double DEFAULT NULL,
@@ -192,11 +189,11 @@ CREATE TABLE `@grupo@`.`articulos` (
   UNIQUE KEY `cCodigo_UNIQUE` (`codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`articulos_imagenes` (
-  `id_articulo` INT NOT NULL,
-  `imagen1` LONGBLOB NULL,
-  `imagen2` LONGBLOB NULL,
-  `imagen3` LONGBLOB NULL,
-  `imagen4` LONGBLOB NULL,
+  `id_articulo` int(11) NOT NULL,
+  `imagen1` text,
+  `imagen2` text,
+  `imagen3` text,
+  `imagen4` text,
   PRIMARY KEY (`id_articulo`));
 CREATE TABLE `@grupo@`.`articulos_lotes` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -498,12 +495,13 @@ CREATE TABLE `@grupo@`.`empresas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 CREATE TABLE `@grupo@`.`familias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `familia` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_seccion` int(11) DEFAULT '0',
-  `image` mediumblob,
-  `type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`codigo` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+`familia` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+`slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+`id_seccion` int(11) DEFAULT '0',
+`image` text COLLATE utf8_unicode_ci,
+`type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 CREATE TABLE `@grupo@`.`formpago` (
@@ -725,8 +723,8 @@ CREATE TABLE `@grupo@`.`proveedores` (
 CREATE TABLE `@grupo@`.`secciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `seccion` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_web` int(11) DEFAULT NULL,
-  `image` mediumblob,
+  `slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `image` text COLLATE utf8_unicode_ci,
   `type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -734,8 +732,9 @@ CREATE TABLE `@grupo@`.`secciones` (
 CREATE TABLE `@grupo@`.`subfamilias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sub_familia` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slug` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `id_familia` int(11) DEFAULT '0',
-  `image` mediumblob,
+  `image` text COLLATE utf8_unicode_ci,
   `type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `codigo` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
