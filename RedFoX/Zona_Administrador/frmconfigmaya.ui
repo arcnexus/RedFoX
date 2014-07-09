@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>877</width>
-    <height>475</height>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -945,6 +945,29 @@ color: rgb(255,255,255);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>listWidget</tabstop>
+  <tabstop>radMysql</tabstop>
+  <tabstop>txtHost</tabstop>
+  <tabstop>txtUsuario</tabstop>
+  <tabstop>txtPassword</tabstop>
+  <tabstop>txtPuerto</tabstop>
+  <tabstop>radSqlite</tabstop>
+  <tabstop>txtdireccionBD</tabstop>
+  <tabstop>chkmedicum</tabstop>
+  <tabstop>chkconta</tabstop>
+  <tabstop>tabWidget_3</tabstop>
+  <tabstop>chkVademecum_alopatico</tabstop>
+  <tabstop>txtclaveV1_1</tabstop>
+  <tabstop>txtclaveV1_2</tabstop>
+  <tabstop>chkVademecum_homeopatia</tabstop>
+  <tabstop>txtclaveV2_1</tabstop>
+  <tabstop>txtclaveV2_2</tabstop>
+  <tabstop>chk_vademecum_fitoterapia</tabstop>
+  <tabstop>txtclaveV3_1</tabstop>
+  <tabstop>txtclaveV3_2</tabstop>
+  <tabstop>chkVademecum_MTC</tabstop>
+  <tabstop>txtclaveV4_1</tabstop>
+  <tabstop>txtclaveV4_2</tabstop>
   <tabstop>txtNameComplete</tabstop>
   <tabstop>txtname</tabstop>
   <tabstop>txtpass1</tabstop>
@@ -955,41 +978,29 @@ color: rgb(255,255,255);</string>
   <tabstop>txtmailpass1</tabstop>
   <tabstop>txtmailpass2</tabstop>
   <tabstop>chk_createSuper</tabstop>
-  <tabstop>btnSiguiente</tabstop>
-  <tabstop>btnInicio</tabstop>
-  <tabstop>txtclaveV4_1</tabstop>
-  <tabstop>chkVademecum_MTC</tabstop>
-  <tabstop>txtclaveV4_2</tabstop>
-  <tabstop>listWidget</tabstop>
-  <tabstop>txtHost</tabstop>
-  <tabstop>txtUsuario</tabstop>
-  <tabstop>txtdireccionBD</tabstop>
-  <tabstop>radMysql</tabstop>
-  <tabstop>radSqlite</tabstop>
-  <tabstop>txtPuerto</tabstop>
-  <tabstop>txtPassword</tabstop>
-  <tabstop>chkmedicum</tabstop>
-  <tabstop>chkconta</tabstop>
-  <tabstop>txtnombre_bd_MediTec</tabstop>
-  <tabstop>txtHostBD_MediTec</tabstop>
-  <tabstop>txtUsuarioDB_MediTec</tabstop>
-  <tabstop>txtPasswordDB_MediTec</tabstop>
-  <tabstop>txtPuerto_DB_MediTec</tabstop>
-  <tabstop>chkVademecum_alopatico</tabstop>
-  <tabstop>txtclaveV1_1</tabstop>
-  <tabstop>txtclaveV1_2</tabstop>
-  <tabstop>chkVademecum_homeopatia</tabstop>
-  <tabstop>txtclaveV2_2</tabstop>
-  <tabstop>chk_vademecum_fitoterapia</tabstop>
-  <tabstop>txtclaveV3_1</tabstop>
-  <tabstop>tabWidget_3</tabstop>
-  <tabstop>txtclaveV2_1</tabstop>
-  <tabstop>txtclaveV3_2</tabstop>
-  <tabstop>tabWidget_4</tabstop>
   <tabstop>cboUser_permiso</tabstop>
-  <tabstop>chkSuperUser_permiso</tabstop>
   <tabstop>cboGrupo_permiso</tabstop>
   <tabstop>cboEmpresa_permiso</tabstop>
+  <tabstop>tabWidget_4</tabstop>
+  <tabstop>cbo_user_edit</tabstop>
+  <tabstop>txtNameComplete_edit</tabstop>
+  <tabstop>txtname_edit</tabstop>
+  <tabstop>txtpass1_edit</tabstop>
+  <tabstop>txtsmtp_edit</tabstop>
+  <tabstop>spinSmtpPort_edit</tabstop>
+  <tabstop>txtmail_edit</tabstop>
+  <tabstop>txtmailpass1_edit</tabstop>
+  <tabstop>chk_Super_edit</tabstop>
+  <tabstop>btnGuardarEdit</tabstop>
+  <tabstop>txtUsuarioDB_MediTec</tabstop>
+  <tabstop>chkSuperUser_permiso</tabstop>
+  <tabstop>txtnombre_bd_MediTec</tabstop>
+  <tabstop>txtHostBD_MediTec</tabstop>
+  <tabstop>btnInicio</tabstop>
+  <tabstop>btnSiguiente</tabstop>
+  <tabstop>txtPasswordDB_MediTec</tabstop>
+  <tabstop>txtPuerto_DB_MediTec</tabstop>
+  <tabstop>btnCancel</tabstop>
  </tabstops>
  <resources>
   <include location="../maya.qrc"/>
